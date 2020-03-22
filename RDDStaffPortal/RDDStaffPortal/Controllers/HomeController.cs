@@ -10,6 +10,7 @@ namespace RDDStaffPortal.Controllers
     {
         /// <summary>
         /// This is test change in HomeController to check push from VS into GitHub
+        /// Successfully pushed changes from VS to GitHub & Now checking from GitHib to VS
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
