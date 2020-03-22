@@ -8,6 +8,10 @@ namespace RDDStaffPortal.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// This is test change in HomeController to check push from VS into GitHub
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
