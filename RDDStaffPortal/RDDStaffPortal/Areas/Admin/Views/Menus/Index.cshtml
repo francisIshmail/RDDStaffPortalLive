@@ -1,0 +1,395 @@
+﻿
+@{
+    ViewBag.Title = "Menu Master";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Add Modules & Menus</h4>
+
+
+              
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="row addwidgetclass mar-b10">
+                                <div class="col-md-12 padd-0">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Menu :</label>
+                                        <input type="hidden" id="txtMenuId" />
+                                        <input type="text" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">URL :</label>
+                                        <input type="text" class="form-control width220px" id="txtURL" placeholder="Enter URL">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">CSS Class :</label>
+                                        <input type="text" class="form-control width150px" id="txtCssClass" placeholder="Css Class">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Display Seq :</label>
+                                        <input type="text" class="form-control width100px" placeholder="Sequence" id="txtDisplaySeq">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width120px">Module :</label>
+                                        <div class="input-group width160px">
+                                            <select class="form-control" id="ddlModules">
+                                            </select>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Default</label>
+                                        <div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width120px"></label>
+                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu" >Save</button></div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Search</label>
+                                        <input type="text" class="form-control width180px" id="txtSearchMenus" placeholder="Search..">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="width30px">#</th>
+                                            <th class="width180px">Name</th>
+                                            <th class="width180px">URL</th>
+                                            <th class="width100px">Css Class</th>
+                                            <th class="width70px">SeqNo</th>
+                                            @*<th class="width1px" style="visibility:hidden" >Id</th>*@
+                                            <th class="width180px">Module</th>
+                                            <th class="width80px">Default</th>
+                                            <th class="width100px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblMenusList">
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            @*<div class="row mar-t10">
+                                <ul class="pagination pg-primary">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">«</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">»</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>*@
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModulesPopUp" tabindex="-1" role="dialog" aria-labelledby="ModulesPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           @*This DIV is to show alert message - success and Failed/Error*@
+            <div id="AlertMessage" >
+            </div>
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="ModulesPopUpLabel">Add Module</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email2" class="width100px">Module Name :</label>
+                    <input type="text" class="form-control" id="txtModuleName">
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email2" class="width100px">Css Class :</label>
+                    <input type="text" class="form-control" id="txtModuleCssClass">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="BtnAddModule">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--   Core JS Files   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#txtSearchMenus").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMenusList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+       // To bind Modules on PageLoad
+        BindModules();
+        GetMenuList();
+
+    });
+
+
+    // START : Add New Module //
+    $('#BtnAddModule').click(function () {
+        debugger;
+        if ($("#txtModuleName").val() == "") {
+            alert('please enter Module Name');
+            $("#txtModuleName").focus();
+            return false;
+        }
+        if ($("#txtModuleCssClass").val() == "") {
+            alert('please enter css class for Module');
+            $("#txtModuleCssClass").focus();
+            return false;
+        }
+        var ModuleData = {};
+        ModuleData["ModuleName"] = $("#txtModuleName").val();
+        ModuleData["ModuleCssClass"] = $("#txtModuleCssClass").val();
+
+        var data = JSON.stringify({
+            module: ModuleData,
+        });
+        $.ajax({
+            type: "Post",
+            url: "/Menus/AddModule",
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result == "Record Saved Successfully" || result == "Record Updated Successfully") {
+                    $('#AlertMessage').html('<div class="alert alert-success alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Success ! </strong> ' + result + '</div >');
+                    $("#txtModuleName").val('');
+                    $("#txtModuleCssClass").val(''); 
+                    BindModules();
+                }
+                else {
+                    $('#AlertMessage').html('<div class="alert alert-danger alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Failed ! </strong> ' + result + '</div >');
+                }
+            }
+        });
+    });
+    // END : Add New Module //
+
+
+    // START : Fill Modules in Drop down list
+    function BindModules() {
+        debugger;
+        $.ajax({
+            url: '/Menus/BindModules',
+            type: "GET",
+            dataType: "JSON",
+            success: function (modules) {
+                $("#ddlModules").html("");
+                $("#ddlModules").append($('<option/>', { value: -1, text: '--Select--' }));
+                $.each(modules, function (i, value) {
+                    $("#ddlModules").append(
+                        $('<option></option>').val(value.ModuleId).html(value.ModuleName));
+                });
+            }
+        });
+    }
+    // START : Fill Modules in Drop down list
+
+
+    // START : Bind data of existing Menus
+    function GetMenuList() {
+        $('#tblMenusList').html('');
+        $.get("/Menus/GetMenuList", null, BindMenus);
+        function BindMenus(MenuList) {
+            var SetData = $('#tblMenusList');
+            debugger;
+            for (var i = 0; i < MenuList.length; i++) {
+                var Data = "<tr class='row_" + MenuList[i].MenuId + "'>" +
+                    "<td>" + MenuList[i].MenuId + "</td>" +
+                    "<td>" + MenuList[i].MenuName + "</td>" +
+                    "<td>" + MenuList[i].URL + "</td>" +
+                    "<td>" + MenuList[i].MenuCssClass + "</td>" +
+                    "<td>" + MenuList[i].DisplaySeq + "</td>" +
+                    //"<td class='width1px' style='visibility: hidden' >" + MenuList[i].ModuleId + "</td>" +
+                    "<td>" + MenuList[i].ModuleId +'-'+ MenuList[i].ModuleName + "</td>";
+
+                    if (MenuList[i].IsDefault == true) {
+                        Data = Data + "<td> <div> <input type='checkbox' id='chkIsDefault' checked data-toggle='toggle' data-onstyle='primary' disabled></div></td>  ";
+                    }
+                    else {
+                        Data = Data + "<td> <div> <input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' disabled ></div></td>  ";
+                }
+
+                Data = Data + "<td> <button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button> " +
+                    "<button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete'><i class='fas fa-trash-alt'></i></button></td ></tr >";
+
+                SetData.append(Data);
+            }
+
+            //$('#tblUser').DataTable();
+        }
+
+    }
+    // START : Fill Modules in Drop down list
+
+
+
+    //START : Add New Menu in Module //
+    $('#btnSaveMenu').click(function () {
+
+        debugger;
+        if ($.trim($("#txtMenuName").val()) == "") {
+            alert('please enter Menu Name');
+            $("#txtMenuName").focus();
+            return false;
+        }
+        if ($.trim($("#txtURL").val()) == "") {
+            alert('please enter URL');
+            $("#txtURL").focus();
+            return false;
+        }
+        if ($.trim($("#txtCssClass").val()) == "") {
+            alert('please enter css Class');
+            $("#txtCssClass").focus();
+            return false;
+        }
+        if ($.trim($("#txtDisplaySeq").val()) == "") {
+            alert('please enter menu Display Sequence');
+            $("#txtDisplaySeq").focus();
+            return false;
+        }
+        
+        if ($("#ddlModules option:selected").index() <= 0) {
+            alert("Please Select Module");
+            $("#ddlModules").focus();
+            return false;
+        }
+        if ($("#txtMenuId").val() === "") {
+            $("#txtMenuId").val() = "0";
+        }
+        var MenuData = {};
+        MenuData["MenuId"] = $("#txtMenuId").val();
+        MenuData["MenuName"] = $("#txtMenuName").val();
+        MenuData["MenuCssClass"] = $("#txtCssClass").val();
+        MenuData["URL"] = $("#txtURL").val();
+        MenuData["DisplaySeq"] = $("#txtDisplaySeq").val();
+        MenuData["ModuleId"] = $("#ddlModules").val();
+        MenuData["ModuleName"] = $("#ddlModules :selected").text();
+        MenuData["IsDefault"] = $("#chkIsDefaultMenu").is(":checked");// $("#chkIsDefaultMenu").val();
+        var data = JSON.stringify({
+            menu: MenuData,
+        });
+
+            $.ajax({
+                type: "Post",
+                url: "/Menus/AddMenu",
+                data: data,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == "Record Saved Successfully" || result == "Record Updated Successfully") {
+                        alert(result);
+                        //$('#AlertMessage').html('<div class="alert alert-success alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Success ! </strong> ' + result + '</div >');
+                        $("#txtMenuName").val('');
+                        $("#txtCssClass").val('');
+                        $("#txtURL").val('');
+                        $("#txtDisplaySeq").val('');
+                        $("#txtDisplaySeq").val('');
+                        GetMenuList();
+                    }
+                    else {
+                        //$('#AlertMessage').html('<div class="alert alert-danger alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Failed ! </strong> ' + result + '</div >');
+                    }
+                }
+            });
+
+    });
+
+    //START : Add New Menu in Module //
+
+
+    // Edit row on edit button click
+    $(document).on("click", ".edit", function () {
+        debugger;
+
+        $('#txtMenuId').val($(this).closest('tr').find('td').eq(0).text());
+        $('#txtMenuName').val($(this).closest('tr').find('td').eq(1).text());
+        $('#txtURL').val($(this).closest('tr').find('td').eq(2).text());    
+        $('#txtCssClass').val($(this).closest('tr').find('td').eq(3).text());
+        $('#txtDisplaySeq').val($(this).closest('tr').find('td').eq(4).text());
+        var Module = $(this).closest('tr').find('td').eq(5).text();
+        var modules = Module.split('-');
+        $('#ddlModules').val(modules[0]);
+
+        var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
+        if (IsDefault == "on")
+            $('#chkIsDefaultMenu').prop("checked", true);
+        else
+            $('#chkIsDefaultMenu').prop("checked", false);
+
+    });
+
+
+    //// Add row on add button click
+    //$(document).on("click", ".add", function () {
+    //    debugger;
+    //    //var MenuId = $(this).closest('tr').find('td').eq(0).text();
+    //    //var MenuName = $(this).closest('tr').find('input[type="text"]').eq(0).val();
+    //    //var URL = $(this).closest('tr').find('input[type="text"]').eq(1).val();
+    //    //var CssClass = $(this).closest('tr').find('input[type="text"]').eq(2).val();
+    //    //var DisplaySeq = $(this).closest('tr').find('input[type="text"]').eq(2).val();
+    //    //var Module = $(this).closest('tr').find('td').eq(5).text();
+    //    //var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
+        
+    //});
+
+
+    //// Delete row on delete button click
+    //$(document).on("click", ".delete", function () {
+    //    //$(this).parents("tr").remove();
+    //    $(".add-new").removeAttr("disabled");
+    //    $(this).parents("tr").find(".add, .edit").toggle();
+    //});
+
+</script>
+
+
+
