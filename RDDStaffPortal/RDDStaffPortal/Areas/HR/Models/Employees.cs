@@ -7,5 +7,6 @@ namespace RDDStaffPortal.Areas.HR.Models
 {
     public class Employees
     {
+
     }
 }
