@@ -1,0 +1,54 @@
+﻿
+@model IEnumerable<RDDStaffPortal.Areas.Admin.Models.Menus>
+
+
+@*<li class="nav-item">
+        <a data-toggle="collapse" href="#Admin">
+            <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+        </a>
+        <div class="collapse" id="Admin">
+            <ul class="nav nav-collapse">
+                <li>
+                    <a href="#">
+                        <span class="sub-item">All Admin Setups</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>*@
+@if (Model != null)
+{
+    var prvModuleName = "";
+    
+    foreach (var item in Model)
+    {
+        if(prvModuleName ==""  || prvModuleName!=item.ModuleName) /// Create New Module
+        {
+            prvModuleName = item.ModuleName;
+            <li class="nav-item">
+                <a data-toggle="collapse" href="#Admin">
+                    <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+                </a>
+                <div class="collapse" id="@prvModuleName">
+                    <ul class="nav nav-collapse">
+                        @foreach (var submenus in (Model.Where(s => s.ModuleName == prvModuleName).ToList()))
+                        {
+                            <li>
+                                @Html.ActionLink(submenus.MenuName,submenus.URL,new AreaReference())
+                                @*<a href="@submenus.URL">
+                                    <span class="@submenus.MenuCssClass">@submenus.MenuName</span>
+                                </a>*@
+                            </li>
+                        }
+                    </ul>
+                </div> 
+             </li>
+        }
+     }
+ }
+            /**/
+
+
+
+

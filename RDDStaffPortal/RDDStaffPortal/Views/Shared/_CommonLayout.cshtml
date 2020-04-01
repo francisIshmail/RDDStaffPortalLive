@@ -216,6 +216,10 @@
 
                         </li>
                         <li class="nav-section"> </li>
+
+
+                        @Html.Action("GetMenus", "Home")
+
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#Admin">
                                 <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
@@ -316,7 +320,7 @@
                             <div class="collapse" id="Logistick">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="Report1.html">
+                                        <a href="@Url.Action("",""); ">
                                             <span class="sub-item">PO</span>
                                         </a>
                                     </li>
