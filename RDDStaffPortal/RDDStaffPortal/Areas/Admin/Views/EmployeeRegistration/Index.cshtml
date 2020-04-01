@@ -1,0 +1,868 @@
+﻿@model  RDDStaffPortal.DAL.DataModels.RDD_EmployeeRegistration
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+
+
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Employee Master</h4>
+                </div>
+                <div class="col-md-3 padd-0 pull-right text-right"><button class="btn btn-primary btn-round btn-xs">Quick Link Add</button></div>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-10 padd-l0">
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">First Name :</label>
+                                                <input type="hidden" id="EmployeeId" />
+                                                <input type="text" class="form-control" id="FName">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Last Name :</label>
+                                                <input type="text" class="form-control" id="LName">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Email :</label>
+                                                <input type="text" class="form-control" id="Email">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Gender :</label>
+                                                <select class="form-control form-control" id="Gender">
+                                                    <option value="">-Select Gender-</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Address :</label>
+                                                <input type="text" class="form-control" id="Current_Address">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Permanent Address :</label>
+                                                <input type="text" class="form-control" id="Permanent_Address">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Contact No :</label>
+                                                <input type="text" class="form-control" id="Contact_No">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Ext No :</label>
+                                                <input type="text" class="form-control" id="Ext_no">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Skype ID :</label>
+                                                <input type="text" class="form-control" id="IM_Id">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Marital Status :</label>
+                                                <select class="form-control" id="Marital_Status">
+                                                    <option value="">-Select Marital Status-</option>
+                                                    <option value="Single">Single</option>
+                                                    <option value="Married">Married</option>
+                                                    <option value="Widowed">Widowed</option>
+                                                    <option value="Separated">Separated</option>
+                                                    <option value="Divorced">Divorced</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">DOB :</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="DOB" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Citizenship :</label>
+                                                <input type="text" class="form-control" id="Citizenship">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Designation :</label>
+                                                @*<select class="form-control form-control" id="defaultSelect">*@
+                                                <div>
+                                                    @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select Designation-", new { @id = "DesigId", @class = "form-control" })
+                                                    @*<option value="">-Select Designation-</option>
+                                                        <option value="Male">Designation</option>
+                                                        <option value="Female">Designation</option>*@
+                                                    @*</select>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Department :</label>
+                                                <div>
+                                                    @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select Department-", new { @id = "DeptId", @class = "form-control" })
+                                                </div>
+                                                @*<select class="form-control form-control" id="defaultSelect">
+                                                        <option value="">-Select Department-</option>
+                                                        <option value="Male">Department</option>
+                                                        <option value="Female">Department</option>
+                                                    </select>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Emergency Contact No. :</label>
+                                                <input type="text" class="form-control" id="Emergency_Contact">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Passport No :</label>
+                                                <input type="text" class="form-control" id="passport_no">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-2 text-center">
+                                    <div class="input-file input-file-image">
+                                        <img class="img-upload-preview" width="170" src="http://placehold.it/150x150" alt="preview">
+                                        <input type="file" class="form-control form-control-file" id="uploadImg2" name="uploadImg2" accept="image/*" required="">
+                                        <label for="uploadImg2" class="  label-input-file btn btn-black btn-round">
+                                            <span class="btn-label">
+                                                <i class="fa fa-file-image"></i>
+                                            </span>
+                                            Upload a Image
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0 active show" id="pills-EducationalProfessionalInfo-tab" data-toggle="pill" href="#tab-EducationalProfessionalInfo" role="tab" aria-controls="pills-EducationalProfessionalInfo" aria-selected="false">Educational & Professional Info</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mar-0" id="pills-CountryBUAssignment-tab" data-toggle="pill" href="#tab-CountryBUAssignment" role="tab" aria-controls="pills-CountryBUAssignment" aria-selected="false">Country and BU Assignment</a>
+                                        </li>
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0" id="pills-Financial-tab" data-toggle="pill" href="#tab-Financial" role="tab" aria-controls="pills-Financial" aria-selected="true">Financial</a>
+                                        </li>
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0" id="pills-Leaves-tab" data-toggle="pill" href="#tab-Leaves" role="tab" aria-controls="pills-Leaves" aria-selected="true">Leaves</a>
+                                        </li>
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0" id="pills-Assets-tab" data-toggle="pill" href="#tab-Assets" role="tab" aria-controls="pills-Assets" aria-selected="true">Assets</a>
+                                        </li>
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0" id="pills-Loan-tab" data-toggle="pill" href="#tab-Loan" role="tab" aria-controls="pills-Loan" aria-selected="true">Loan</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab-content mt-2 mb-3" id="pills-EducationalProfessionalInfo">
+                                <div class="tab-pane fade active show" id="tab-EducationalProfessionalInfo" role="tabpanel" aria-labelledby="tab-EducationalProfessionalInfo">
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-10 padd-l0">
+                                            <div class="row">
+                                                <div class="col-xl-5 col-md-5">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Highest Quialification :</label>
+                                                        <input type="text" class="form-control" id="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Passing Year :</label>
+                                                        <select class="form-control form-control" id="defaultSelect">
+                                                            <option>2000</option>
+                                                            <option>2001</option>
+                                                            <option>2002</option>
+                                                            <option>2003</option>
+                                                            <option>2004</option>
+                                                            <option>2005</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Last Company :</label>
+                                                        <input type="text" class="form-control" id="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-3 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Joined Date :</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="datepicker" name="datepicker">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Last Working Day :</label>
+                                                        <input type="text" class="form-control" id="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+
+
+                                        <div class="col-xl-5 col-md-5">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Attachements :</label>
+                                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-5 col-md-5">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Description :</label>
+                                                <input type="text" class="form-control" id="">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-1 col-md-1">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px"></label>
+                                                <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new">Add</button></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="width180px">Attachements</th>
+                                                        <th class="width180px">Description</th>
+                                                        <th class="width100px">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="userTable">
+                                                    <tr>
+                                                        <td>Attachements name</td>
+                                                        <td>Description name</td>
+                                                        <td>
+                                                            <button type="button" title="Add" data-toggle="tooltip" class="btn btn-success add btn-sm"><i class="fas fa-plus"></i></button>
+                                                            <button type="button" title="Edit" data-toggle="tooltip" class="btn btn-info edit btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button type="button" title="Delete" data-toggle="tooltip" class="btn btn-danger delete btn-sm"><i class="fas fa-trash-alt"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Attachements name</td>
+                                                        <td>Description name</td>
+                                                        <td>
+                                                            <button type="button" title="Add" data-toggle="tooltip" class="btn btn-success add btn-sm"><i class="fas fa-plus"></i></button>
+                                                            <button type="button" title="Edit" data-toggle="tooltip" class="btn btn-info edit btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button type="button" title="Delete" data-toggle="tooltip" class="btn btn-danger delete btn-sm"><i class="fas fa-trash-alt"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Attachements name</td>
+                                                        <td>Description name</td>
+                                                        <td>
+                                                            <button type="button" title="Add" data-toggle="tooltip" class="btn btn-success add btn-sm"><i class="fas fa-plus"></i></button>
+                                                            <button type="button" title="Edit" data-toggle="tooltip" class="btn btn-info edit btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button type="button" title="Delete" data-toggle="tooltip" class="btn btn-danger delete btn-sm"><i class="fas fa-trash-alt"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Attachements name</td>
+                                                        <td>Description name</td>
+                                                        <td>
+                                                            <button type="button" title="Add" data-toggle="tooltip" class="btn btn-success add btn-sm"><i class="fas fa-plus"></i></button>
+                                                            <button type="button" title="Edit" data-toggle="tooltip" class="btn btn-info edit btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button type="button" title="Delete" data-toggle="tooltip" class="btn btn-danger delete btn-sm"><i class="fas fa-trash-alt"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Attachements name</td>
+                                                        <td>Description name</td>
+                                                        <td>
+                                                            <button type="button" title="Add" data-toggle="tooltip" class="btn btn-success add btn-sm"><i class="fas fa-plus"></i></button>
+                                                            <button type="button" title="Edit" data-toggle="tooltip" class="btn btn-info edit btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button type="button" title="Delete" data-toggle="tooltip" class="btn btn-danger delete btn-sm"><i class="fas fa-trash-alt"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-CountryBUAssignment" role="tabpanel" aria-labelledby="tab-CountryBUAssignment">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="timeline-title">Country Assignment</h4>
+                                                    <div class="demo-scrollbar scrollbar-inner" style="max-height: 100px">
+                                                        @foreach (var items in ViewBag.CountryList)
+                                                        {
+                                                            <li class="custom-control custom-checkbox">
+
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="Check_@items.CountryCode" />
+                                                                    <label for="@items.CountryCode">@items.CountryCode</label>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                        @*checked="@items.CountryCode"*@
+                                                        @*<div class="form-check form-check-inline">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="TZ">
+                <label class="custom-control-label" for="TZ">TZ</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="DU">
+                <label class="custom-control-label" for="DU">DU</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="KE">
+                <label class="custom-control-label" for="KE">KE</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="ZM">
+                <label class="custom-control-label" for="ZM">ZM</label>
+            </div>
+        </div>*@
+                                                        @*<div class="form-check form-check-inline">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="UG">
+                <label class="custom-control-label" for="UG">UG</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="ML">
+                <label class="custom-control-label" for="ML">ML</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="ET">
+                <label class="custom-control-label" for="ET">ET</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="RW">
+                <label class="custom-control-label" for="RW">RW</label>
+            </div>
+        </div>*@
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="timeline-title">BU Assignment</h4>
+                                                    <div class="demo-scrollbar scrollbar-inner" style="max-height: 100px">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 padd-0">
+                                                                <div class="form-group form-inline">
+                                                                    <label for="inlineinput" class="col-md-4 col-form-label padd-l0">BU Group ( DDL ) :</label>
+                                                                    <div class="col-md-8 p-0">
+                                                                        @Html.DropDownListFor(m => m.u_bugroup, ViewBag.BUList as SelectList, "-Select BU-", new { @id = "u_bugroup", @class = "form-control",onchange = "GetBU()" })
+                                                                        @*<select class="form-control form-control" id="defaultSelect">
+            <option>Valume</option>
+            <option>Value</option>
+            <option>Lifestyle</option>
+            <option>Trading</option>
+        </select>*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="APC">
+                                                                <label class="custom-control-label" for="APC">APC</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="MS-ESD">
+                                                                <label class="custom-control-label" for="MS-ESD">MS-ESD</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="HP-PG">
+                                                                <label class="custom-control-label" for="HP-PG">HP-PG</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="MS-OEM">
+                                                                <label class="custom-control-label" for="MS-OEM">MS-OEM</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="HP-IPG">
+                                                                <label class="custom-control-label" for="HP-IPG">HP-IPG</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="EPSON">
+                                                                <label class="custom-control-label" for="EPSON">EPSON</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="LENOVO">
+                                                                <label class="custom-control-label" for="LENOVO">LENOVO</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="CANON">
+                                                                <label class="custom-control-label" for="CANON">CANON</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-Financial" role="tabpanel" aria-labelledby="tab-Financial">
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Employee Id :</label>
+                                                <input type="text" class="form-control" id="EmployeeNo">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Currency :</label>
+                                                <select class="form-control form-control" id="Currency">
+                                                    <option>Valume</option>
+                                                    <option>Value</option>
+                                                    <option>Lifestyle</option>
+                                                    <option>Trading</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Salary :</label>
+                                                <input type="text" class="form-control" id="Salary">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Salary Start Date :</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="Salary_Start_Date" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Remark :</label>
+                                                <input type="text" class="form-control" id="Remark">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Account No :</label>
+                                                <input type="text" class="form-control" id="Account_No">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Bank Name :</label>
+                                                <input type="text" class="form-control" id="Bank_Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Branch Name :</label>
+                                                <input type="text" class="form-control" id="Branch_Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Bank Code :</label>
+                                                <input type="text" class="form-control" id="Bank_Code">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Tax No. :</label>
+                                                <input type="text" class="form-control" id="Tax_no">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Insurance No. :</label>
+                                                <input type="text" class="form-control" id="Insurance_no">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Other ref No. :</label>
+                                                <input type="text" class="form-control" id="other_ref_no">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-Leaves" role="tabpanel" aria-labelledby="tab-Leaves">
+                                    <p>tab-Assets</p>
+                                </div>
+                                <div class="tab-pane fade" id="tab-Assets" role="tabpanel" aria-labelledby="tab-Assets">
+                                    <p>tab-Assets</p>
+                                </div>
+                                <div class="tab-pane fade" id="tab-Loan" role="tabpanel" aria-labelledby="tab-Loan">
+                                    <p>Ptab-Loan</p>
+                                </div>
+                                <div class="tab-pane fade" id="tab-CountryBuAllocation" role="tabpanel" aria-labelledby="tab-CountryBuAllocation">
+                                    <p>tab-CountryBuAllocation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success" id="SaveEmpChanges">Submit</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	</div>
+<div class="custom-template">
+    <div class="title">Settings</div>
+    <div class="custom-content">
+        <div class="switcher">
+            <div class="switch-block">
+                <h4>Logo Header</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+                    <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+                    <br />
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+                </div>
+            </div>
+            <div class="switch-block">
+                <h4>Navbar Header</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="changeTopBarColor" data-color="dark"></button>
+                    <button type="button" class="changeTopBarColor" data-color="blue"></button>
+                    <button type="button" class="changeTopBarColor" data-color="purple"></button>
+                    <button type="button" class="changeTopBarColor" data-color="light-blue"></button>
+                    <button type="button" class="changeTopBarColor" data-color="green"></button>
+                    <button type="button" class="changeTopBarColor" data-color="orange"></button>
+                    <button type="button" class="changeTopBarColor" data-color="red"></button>
+                    <button type="button" class="changeTopBarColor" data-color="white"></button>
+                    <br />
+                    <button type="button" class="changeTopBarColor" data-color="dark2"></button>
+                    <button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
+                    <button type="button" class="changeTopBarColor" data-color="purple2"></button>
+                    <button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
+                    <button type="button" class="changeTopBarColor" data-color="green2"></button>
+                    <button type="button" class="changeTopBarColor" data-color="orange2"></button>
+                    <button type="button" class="changeTopBarColor" data-color="red2"></button>
+                </div>
+            </div>
+            <div class="switch-block">
+                <h4>Sidebar</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="selected changeSideBarColor" data-color="white"></button>
+                    <button type="button" class="changeSideBarColor" data-color="dark"></button>
+                    <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                    <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                    <button type="button" class="changeSideBarColor" data-color="red"></button>
+                </div>
+            </div>
+            <div class="switch-block">
+                <h4>Background</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+                    <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+                    <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+                    <button type="button" class="changeBackgroundColor" data-color="dark"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-toggle">
+        <i class="flaticon-settings"></i>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+    function GetBU() {
+    
+        var bugroup = $('#u_bugroup').val();
+        alert(bugroup)
+        $.ajax({
+            type: "Post",
+            url: "/EmployeeRegistration/GetBuList?bugroup=" + bugroup,
+            success: function (data) {
+                $("#DeptId").val(data.DeptId);
+                $("#DeptName").val(data.DeptName);
+            }
+        });
+    }
+    
+
+    $(document).ready(function () {
+        debugger
+        KeyNotPress();
+    });
+    function KeyNotPress() {
+        
+
+        $("#Contact_No").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                alert('Please Enter Number.');
+                $("#Contact_No").val('');
+                $("#Contact_No").focus();
+                return false;
+            }
+        });
+        $("#Ext_no").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                alert('Please Enter Number.');
+                $("#Ext_no").val('');
+                $("#Ext_no").focus();
+                return false;
+            }
+        });
+
+        
+        $("#Email").change(function () {
+            var email_add = $('#Email').val();
+
+            var emailaddressVal = $("#Email").val();
+
+            var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            if (!emailReg.test(emailaddressVal)) {
+                alert('Enter a valid email address.');
+
+                $("#Email").val('');
+
+                $("#Email").focus();
+               
+                return false;
+
+            }
+        });
+        
+    }
+
+
+
+    $('#SaveEmpChanges').click(function () {
+        debugger
+        //if ($("#DeptName").val() == "") {
+        //    alert('please enter Department');
+        //    $("#DeptName").focus();
+        //    return false;
+        //}
+       
+        var EmpData = {};
+        EmpData["EmployeeId"] = $("#EmployeeId").val();
+        EmpData["EmployeeNo"] = $("#EmployeeNo").val();
+        EmpData["FName"] = $("#FName").val();
+        EmpData["LName"] = $("#LName").val();
+        EmpData["Email"] = $("#Email").val();
+        EmpData["Gender"] = $("#Gender").val();
+        EmpData["Current_Address"] = $("#Current_Address").val();
+        EmpData["Permanent_Address"] = $("#Permanent_Address").val();
+        EmpData["Contact_No"] = $("#Contact_No").val();
+        EmpData["Ext_no"] = $("#Ext_no").val();
+        EmpData["IM_Id"] = $("#IM_Id").val();
+        EmpData["Marital_Status"] = $("#Marital_Status").val();
+        EmpData["DOB"] = $("#DOB").val();
+        EmpData["Citizenship"] = $("#Citizenship").val();
+        EmpData["DesigId"] = $("#DesigId").val();
+        EmpData["DeptId"] = $("#DeptId").val();
+        EmpData["Emergency_Contact"] = $("#Emergency_Contact").val();
+        EmpData["passport_no"] = $("#passport_no").val();
+
+     
+        EmpData["Currency"] = $("#Currency").val();
+        EmpData["Salary"] = $("#Salary").val();
+        EmpData["Salary_Start_Date"] = $("#Salary_Start_Date").val();
+        EmpData["Remark"] = $("#Remark").val();
+        EmpData["Account_No"] = $("#Account_No").val();
+        EmpData["Bank_Name"] = $("#Bank_Name").val();
+        EmpData["Branch_Name"] = $("#Branch_Name").val();
+        EmpData["Bank_Code"] = $("#Bank_Code").val();
+        EmpData["Tax_no"] = $("#Tax_no").val();
+        EmpData["Insurance_no"] = $("#Insurance_no").val();
+        EmpData["other_ref_no"] = $("#other_ref_no").val();
+
+        var data = JSON.stringify({
+            Emp: EmpData,
+        });
+
+        console.log(data);
+
+        $.ajax({
+            type: "Post",
+            url: "/EmployeeRegistration/AddEmpReg",
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                if (result == "Registration saved successfully." || result == "Registration updated successfully.") {
+
+                    alert(result);
+                    ClearControl();
+                    location.reload();
+
+                   // $("#DeptName").val('');
+
+                   // GetDeptList();
+                }
+                else {
+                    result == "Registration already exists.."
+                    alert(result);
+                  
+                }
+            }
+        });
+    });
+
+    function ClearControl()
+    {
+        $("#EmployeeId").val('');
+        $("#FName").val('');
+        $("#LName").val('');
+        $("#Email").val('');
+        $("#Gender").val('');
+        $("#Current_Address").val('');
+        $("#Permanent_Address").val('');
+        $("#Contact_No").val('');
+        $("#Ext_no").val('');
+        $("#IM_Id").val('');
+        $("#Marital_Status").val('');
+        $("#DOB").val('');
+        $("#Citizenship").val('');
+        $("#DesigId").val('');
+        $("#DeptId").val('');
+        $("#Emergency_Contact").val('');
+        $("#passport_no").val('');
+
+
+    }
+
+    </Script>
