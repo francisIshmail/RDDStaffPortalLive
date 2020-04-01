@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Add Designation</h4>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="row addwidgetclass mar-b10">
+                                <div class="col-md-12 padd-0">
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Designation :</label>
+                                        <input type="hidden" id="DesigId" />
+                                        <input type="text" class="form-control width300px" id="DesigName" placeholder="Enter Designation Name">
+
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Status</label>
+                                        <div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px"></label>
+                                        <div class="mar-t7"><button type="button" data-target="#myModal" class="btn btn-success submitbtn add-new" id="SaveDesigChanges">Submit</button></div>
+
+                                    </div>
+
+
+                                    <div class="form-group" style="width:610px;"></div>
+
+
+                                    <div class="form-group">
+                                        <label for="search" class="width100px">Search</label>
+                                        <input type="text" class="form-control width180px" id="txtSearchDesig" placeholder="Search for names..">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <table class="table table-bordered" id="tblItem">
+                                    <thead>
+                                        <tr>
+                                            <th class="width20px">Sr.No</th>
+                                            <th class="width100px">Designation</th>
+
+                                            <th class="width80px">Status</th>
+                                            <th class="width100px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="setDesigList">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            @*<div class="row mar-t10">
+                                <ul class="pagination pg-primary">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">«</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">»</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>*@
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+    // This is the code to filte r/search record
+
+
+    $("#txtSearchDesig").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+
+        $("#setDesigList tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $(document).ready(function () {
+
+
+
+        // To bind Modules on PageLoad
+
+        GetDesigList();
+
+    });
+
+
+    function GetDesigList() {
+        debugger
+        $('#setDesigList').html('');
+
+        $.get("/Designations/GetDesigList", null, DataBind);
+        function DataBind(DesigNameList) {
+            var SetData = $('#setDesigList');
+            for (var i = 0; i < DesigNameList.length; i++) {
+                var Data = "<tr class='row_ >" + DesigNameList[i].DeptId + "'>" +
+                    "<td>" + DesigNameList[i].DesigId + "</td>" +
+                    "<td  >" + DesigNameList[i].DesigName + "</td>"
+
+
+
+                if (DesigNameList[i].IsActive == true) {
+                    Data = Data + "<td> <div> <input type='checkbox' id='chkIsDefault' checked data-toggle='toggle' data-onstyle='primary' disabled></div></td>  ";
+                }
+                else {
+                    Data = Data + "<td> <div> <input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' disabled ></div></td>  ";
+                }
+
+                Data = Data + "<td> <button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button> " +
+                    "<button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete' id='btn_DeleteDetails'><i class='fas fa-trash-alt'></i></button></td ></tr >";
+
+
+
+                "</tr>";
+
+                SetData.append(Data);
+
+                //$('#LoadingStatus').html("Loading....");
+            }
+
+        }
+    }
+
+    $('#setDesigList').on('click', '#btn_DeleteDetails', function () {
+        var x = confirm("Are you sure you want to delete?");
+        if (x) {
+            var DesigID = $(this).closest("tr").find('td:eq(0)').text();
+            // alert(DeptID);
+            //var DeptId = $("#DeptId").val();
+            $.ajax({
+                type: "Post",
+                url: "/Designations/DeleteItem?DesigId=" + DesigID,
+                success: function (result) {
+                    if (result == "Designation Deleted Sucessfully.") {
+
+                        alert(result);
+                     
+                        GetDesigList();
+
+                    }
+                    else {
+                        
+                        alert(result);
+                        GetDesigList();
+                    }
+                }
+
+            });
+        }
+    });
+
+    $('#SaveDesigChanges').click(function () {
+        debugger
+        if ($("#DesigName").val() == "") {
+            alert('please enter Designation');
+            $("#DesigtName").focus();
+            return false;
+        }
+       
+        var DesigData = {};
+        DesigData["DesigId"] = $("#DesigId").val();
+        DesigData["DesigName"] = $("#DesigName").val();
+
+        DesigData["IsActive"] = $("#chkIsDefaultMenu").is(":checked");// $("#chkIsDefaultMenu").val();
+               var data = JSON.stringify({
+            Desig: DesigData,
+        });
+
+
+        $.ajax({
+            type: "Post",
+            url: "/Designations/AdddesigName",
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                if (result == "Designation saved successfully." || result == "Designation updated successfully.") {
+
+                    alert(result);
+                   // $("#DesigName").val('');
+                   
+                        //$('#chkIsDefaultMenu').val('on');
+                        //  debugger
+                    location.reload();
+                       //   $('#chkIsDefaultMenu').prop('checked', true);
+                    
+                  //  GetDesigList();
+                   
+                   
+                }
+                else {
+                    result == "Designation already exists.."
+                    alert(result);
+                    $("#DesigName").val('');
+                }
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+        
+        // Edit row on edit button click
+        $(document).on("click", ".edit", function () {
+            debugger;
+
+            $('#DesigId').val($(this).closest('tr').find('td').eq(0).text());
+            $('#DesigName').val($(this).closest('tr').find('td').eq(1).text());
+
+
+        });
+
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+            //$(this).parents("tr").remove();///To FRemove Direct Delete from Row
+            $(".add-new").removeAttr("disabled");
+        });
+    })
+</script>
+
+
+
+
