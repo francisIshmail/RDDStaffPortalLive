@@ -124,7 +124,9 @@
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -299,8 +301,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\HR\Controllers\" />
-    <Folder Include="Areas\HR\Models\" />
+    <Folder Include="Areas\HR\Views\Employees\" />
     <Folder Include="Areas\HR\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
