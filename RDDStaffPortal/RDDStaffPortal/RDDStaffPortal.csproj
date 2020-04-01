@@ -121,10 +121,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeRegistrationController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
+    <Compile Include="Areas\Admin\Models\Departments.cs" />
+    <Compile Include="Areas\Admin\Models\Designations.cs" />
+    <Compile Include="Areas\Admin\Models\EmployeeRegistration.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
-    <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Models\Employee_Fin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -265,7 +271,9 @@
     <Content Include="WebServices\AccountService.asmx" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Menus\Index.cshtml" />
-    <Content Include="Areas\HR\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Departments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Designations\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EmployeeRegistration\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -294,14 +302,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_CommonLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Home\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\HR\Controllers\" />
-    <Folder Include="Areas\HR\Models\" />
-    <Folder Include="Areas\HR\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
