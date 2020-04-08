@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RDDStaffPortal.Areas.Admin.Models;
-using RDDStaffPortal.DAL.InitialSetup;
+﻿using RDDStaffPortal.Areas.Admin.Models;
 using RDDStaffPortal.DAL.DataModels;
+using RDDStaffPortal.DAL.InitialSetup;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
@@ -31,7 +29,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                 rdd_module.cssClass = module.ModuleCssClass;
                 rdd_module.IsActive = true;
                 rdd_module.CreatedBy = User.Identity.Name;
-                result = moduleDbOp.Save(rdd_module);
+                result = moduleDbOp.save1(rdd_module);
             }
             catch (Exception ex)
             {
@@ -47,6 +45,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             try
             {
                 RDD_Menus rdd_menu = new RDD_Menus();
+                rdd_menu.Levels = menu.Levels;
                 rdd_menu.MenuId = menu.MenuId;
                 rdd_menu.MenuName = menu.MenuName;
                 rdd_menu.MenuCssClass = menu.MenuCssClass;
@@ -56,7 +55,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                 rdd_menu.DisplaySeq = menu.DisplaySeq;
                 rdd_menu.IsDefault = menu.IsDefault;
                 rdd_menu.CreatedBy = User.Identity.Name;
-                result = menuDbOp.Save(rdd_menu);
+                result = menuDbOp.save1(rdd_menu);
             }
             catch (Exception ex)
             {
@@ -67,17 +66,25 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
         public JsonResult GetMenuList()
         {
-            return Json(menuDbOp.GetMenuList(), JsonRequestBehavior.AllowGet);
+            return Json(menuDbOp.GetMenuList1(), JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult BindModules()
+        public ActionResult BindModules(int Levels)
         {
             List<RDD_Modules> modules = new List<RDD_Modules>();
-            modules = moduleDbOp.GetModuleList();
+            modules = moduleDbOp.GetModulesList3(Levels);
             return Json(modules, JsonRequestBehavior.AllowGet);
 
         }
+
+        public ActionResult DeleteMenu(int MenuId)
+        {
+            return Json( new { DeleteFlag = menuDbOp.DeleteMenu(MenuId) }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
 
 

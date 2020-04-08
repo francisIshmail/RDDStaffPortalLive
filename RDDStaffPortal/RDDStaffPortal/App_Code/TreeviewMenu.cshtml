@@ -1,0 +1,30 @@
+﻿@helper GetTreeview(List<RDDStaffPortal.DAL.DataModels.RDD_Menus> Treemenu, Int32 ParentId)
+{
+    foreach (var i in Treemenu.Where(a => a.ModuleId.Equals(ParentId)))
+    {
+    <li class="nav-item">
+        @{var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
+        @if (@i.Levels <= 0 || submenu > 0)
+        {
+            <a data-toggle="collapse" href="#@i.MenuName">
+                <i class="@i.MenuCssClass"></i> <p>@i.MenuName</p> <span class="caret"></span>
+            </a>
+        }
+        else
+        {
+            <a href="@i.URL"><span class="sub-item">@i.MenuName</span></a>
+        }
+        @if (submenu > 0)
+        {
+            <div class="collapse" id="@i.MenuName">
+                <ul class="nav nav-collapse" id="ulid">
+                    @TreeviewMenu.GetTreeview(Treemenu, i.MenuId)
+                </ul>
+            </div>
+
+        }
+    </li>
+    }
+}
+
+

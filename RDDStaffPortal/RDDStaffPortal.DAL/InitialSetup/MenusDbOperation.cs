@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RDDStaffPortal.DAL.DataModels;
-
+using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
     public class MenusDbOperation
     {
+        CommonFunction Com = new CommonFunction();
         /// <summary>
         ///  This method is to save the RDD_Menus, It accepts RDD_Menus class as argument and returns the message
         /// </summary>
@@ -74,6 +75,55 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return response;
         }
 
+
+        public string save1(RDD_Menus menus)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response = string.Empty;
+            try
+            {
+                SqlParameter[] Para = {
+                    new SqlParameter("@p_MenuId",menus.MenuId),
+                    new SqlParameter("@p_MenuName",menus.MenuName),
+                    new SqlParameter("@p_ModuleId",menus.ModuleId),
+                    new SqlParameter("@p_cssClass",menus.MenuCssClass),
+                    new SqlParameter("@p_URL",menus.URL),
+                    new SqlParameter("@p_DisplaySeq",menus.DisplaySeq),
+                    new SqlParameter("@p_IsDefault",menus.IsDefault),
+                    new SqlParameter("@p_CreatedBy",menus.CreatedBy),
+                    new SqlParameter("@p_Levels",menus.Levels),
+                    new SqlParameter("@p_response",response),                
+                };
+                str = Com.ExecuteNonQueryList("RDD_Menus_InsertUpdate", Para);
+                response = str[0].Responsemsg;
+            }
+            catch (Exception ex)
+            {
+                response = "Error occured : " + ex.Message;
+            }
+            return response;
+        }
+
+
+        public string DeleteMenu(int menuid)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response = string.Empty;
+            try
+            {
+                SqlParameter[] Para = {
+                    new SqlParameter("@p_MenuId",menuid),
+                    new SqlParameter("@p_response",response),
+                };
+                str = Com.ExecuteNonQueryList("RDD_Menus_Delete", Para);
+                response = str[0].Responsemsg;
+            }
+            catch (Exception ex)
+            {
+                response = "Error occured : " + ex.Message;
+            }
+            return response;
+        }
         public RDD_Menus GetMenusById(int MenuId)
         {
             RDD_Menus _Menus = new RDD_Menus();
@@ -132,7 +182,47 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
         }
 
-        public List<RDD_Menus> GetMenuList()
+
+        public List<RDD_Menus> GetMenuList1()
+        {
+            List<RDD_Menus> _MenusList = new List<RDD_Menus>();
+            try
+            {
+                SqlParameter[] parm = { };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Menus_GetData", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _MenusList.Add(new RDD_Menus()
+                        {
+                            //MenuId	MenuName	Levels	ModuleId		URL	DisplaySeq	
+                            MenuId = !string.IsNullOrWhiteSpace(dr["MenuId"].ToString()) ? Convert.ToInt32(dr["MenuId"].ToString()) : 0,
+                            ModuleId = !string.IsNullOrWhiteSpace(dr["ModuleId"].ToString()) ? Convert.ToInt32(dr["ModuleId"].ToString()) : 0,
+                            MenuName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                            MenuCssClass = !string.IsNullOrWhiteSpace(dr["MenuCssClass"].ToString()) ? dr["MenuCssClass"].ToString() : "",
+                            IsDefault = !string.IsNullOrWhiteSpace(dr["IsDefault"].ToString()) ?Convert.ToBoolean(dr["IsDefault"].ToString()) : false,                            
+                            DisplaySeq = !string.IsNullOrWhiteSpace(dr["DisplaySeq"].ToString()) ? Convert.ToInt32(dr["DisplaySeq"].ToString()) : 0,
+                            Levels = !string.IsNullOrWhiteSpace(dr["Levels"].ToString()) ? Convert.ToInt32(dr["Levels"].ToString()) : 0,
+                            URL = !string.IsNullOrWhiteSpace(dr["URL"].ToString()) ? dr["URL"].ToString() : "",
+                            ModuleName = !string.IsNullOrWhiteSpace(dr["ModuleName"].ToString()) ? dr["ModuleName"].ToString() : "",
+                        });
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return _MenusList;
+
+        }
+            public List<RDD_Menus> GetMenuList()
         {
             List<RDD_Menus> _MenusList = new List<RDD_Menus>();
 

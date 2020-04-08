@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="CommonFunction.cs" />
     <Compile Include="DataModels\RDD_Menus.cs" />
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="Db.cs" />

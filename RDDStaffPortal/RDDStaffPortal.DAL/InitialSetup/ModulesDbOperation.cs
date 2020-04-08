@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RDDStaffPortal.DAL.DataModels;
 using System.Configuration;
+using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
     public class ModulesDbOperation
     {
-        
+        CommonFunction Com = new CommonFunction();
         /// <summary>
         ///  This method is to save the RDD_Modules, It accepts RDD_Module class as argument and returns the message
         /// </summary>
@@ -83,6 +84,29 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return response;
         }
 
+       public  string save1(RDD_Modules modules)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response = string.Empty;
+            try
+            {
+                SqlParameter[] Para = { 
+                new SqlParameter("@p_ModuleId",modules.ModuleId),
+                new SqlParameter("@p_ModuleName",modules.ModuleName),
+                new SqlParameter("@p_cssClass",modules.cssClass),
+                new SqlParameter("@p_IsActive",modules.IsActive),
+                new SqlParameter("@p_CreatedBy",modules.CreatedBy),
+                new SqlParameter("@p_response",response),
+                };
+                str= Com.ExecuteNonQueryList("RDD_Modules_InsertUpdate", Para);              
+               response = str[0].Responsemsg;                               
+            }
+            catch (Exception ex)
+            {
+                response = "Error occured : " + ex.Message;
+            }
+            return response;            
+        }
         public RDD_Modules GetModuleById(int ModuleId)
         {
             RDD_Modules _Module = new RDD_Modules();
@@ -127,6 +151,120 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return _Module;
 
         }
+
+        public List<RDD_Modules> GetModulesList3(int levels) {
+            List<RDD_Modules> _ModuleList = new List<RDD_Modules>();
+            try
+            {
+                DataSet dsModules = Com.ExecuteDataSet("Select * from vw_rdd_modules  where Levels='"+levels+"'");
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _ModuleList.Add(new RDD_Modules()
+                        {
+                            ModuleId = !string.IsNullOrWhiteSpace(dr["MenuId"].ToString()) ? Convert.ToInt32(dr["MenuId"].ToString()) : 0,
+                            ModuleName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                           
+                        });
+                    }
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                _ModuleList = null;
+            }
+            
+            return _ModuleList;
+        }
+
+        public List<RDD_Modules> GetModuleList1()
+        {
+            List<RDD_Modules> _ModuleList = new List<RDD_Modules>();
+            try
+            {
+                SqlParameter[] parm =  { };                
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Modules_GetData",CommandType.StoredProcedure,parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach(DataRow dr in drc)
+                    {
+                        _ModuleList.Add(new RDD_Modules()
+                        {
+                            ModuleId =!string.IsNullOrWhiteSpace(dr["ModuleId"].ToString())?Convert.ToInt32(dr["ModuleId"].ToString()):0,
+                            ModuleName = !string.IsNullOrWhiteSpace(dr["ModuleName"].ToString()) ? dr["ModuleName"].ToString() : "",
+                            cssClass = !string.IsNullOrWhiteSpace(dr["cssClass"].ToString()) ? dr["cssClass"].ToString() : "",
+                            CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "",
+                            CreatedOn =!string.IsNullOrWhiteSpace(dr["Createdon"].ToString())? Convert.ToDateTime(dr["Createdon"].ToString()): Convert.ToDateTime(System.DateTime.Now),
+                            IsActive =!string.IsNullOrWhiteSpace(dr["IsActive"].ToString())? Convert.ToBoolean(dr["IsActive"].ToString()):false
+                        });                           
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                _ModuleList = null;
+            }
+            return _ModuleList;
+
+        }
+
+
+
+        public List<RDD_Menus> GetModuleList2()
+        {
+            List<RDD_Menus> _ModuleList = new List<RDD_Menus>();
+            try
+            {
+                SqlParameter[] parm = { };
+                
+
+                //DataSet dsModules = Com.ExecuteDataSet("select * from RDD_VW_Menu order by MOduleid");
+                DataSet dsModules = Com.ExecuteDataSet("select * from RDD_Menus where IsDeleted=0 order by Levels,DisplaySeq");
+
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _ModuleList.Add(new RDD_Menus()
+                        {
+                            ModuleId = !string.IsNullOrWhiteSpace(dr["ModuleId"].ToString()) ? Convert.ToInt32(dr["ModuleId"].ToString()) : 0,                          
+                            MenuId = !string.IsNullOrWhiteSpace(dr["MenuId"].ToString()) ? Convert.ToInt32(dr["MenuId"].ToString()) : 0,
+                            MenuName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                            URL = !string.IsNullOrWhiteSpace(dr["URL"].ToString()) ? dr["URL"].ToString() : "",
+                            MenuCssClass= !string.IsNullOrWhiteSpace(dr["cssclass"].ToString()) ? dr["cssclass"].ToString() : "",
+                            Levels =!string.IsNullOrWhiteSpace(dr["Levels"].ToString()) ? Convert.ToInt32(dr["Levels"].ToString()) : 0,
+                            //ModuleId = !string.IsNullOrWhiteSpace(dr["ModuleId"].ToString()) ? Convert.ToInt32(dr["ModuleId"].ToString()) : 0,
+                            //ModuleName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                            //MenuId = !string.IsNullOrWhiteSpace(dr["MenuId"].ToString()) ? Convert.ToInt32(dr["MenuId"].ToString()) : 0,
+                            //MenuName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                            //URL= !string.IsNullOrWhiteSpace(dr["URL"].ToString()) ? dr["URL"].ToString() : "",
+
+                        });
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _ModuleList = null;
+            }
+            
+            return _ModuleList;
+
+        }
+
 
         public List<RDD_Modules> GetModuleList()
         {

@@ -10,6 +10,7 @@ namespace RDDStaffPortal.Areas.Admin.Models
         public int MenuId { get; set; }
         public string MenuName { get; set; }
         public int ModuleId { get; set; }
+        public int Levels { get; set; }
         public string ModuleName { get; set; }
         public string MenuCssClass { get; set; }
         public string ModuleCssClass { get; set; }
