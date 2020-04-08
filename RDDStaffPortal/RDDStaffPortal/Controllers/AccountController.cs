@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RDDStaffPortal.DAL.InitialSetup;
 using RDDStaffPortal.Models;
 using RDDStaffPortal.WebServices;
 
@@ -11,6 +12,7 @@ namespace RDDStaffPortal.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        ModulesDbOperation moduleDbOp = new ModulesDbOperation();
         public ActionResult Index()
         {
             return View();
@@ -65,7 +67,15 @@ namespace RDDStaffPortal.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [ChildActionOnly]
+        public ActionResult GetMenuTree()
 
+
+
+        {
+            return PartialView(moduleDbOp.GetModuleList2());
+
+        }
 
 
     }

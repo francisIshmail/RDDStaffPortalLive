@@ -47,6 +47,7 @@
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
     <Compile Include="DataModels\RDD_Employee_Fin.cs" />
+    <Compile Include="CommonFunction.cs" />
     <Compile Include="DataModels\RDD_Menus.cs" />
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="Db.cs" />
