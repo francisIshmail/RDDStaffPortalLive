@@ -134,6 +134,8 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Areas\Admin\Models\Employee_Fin.cs" />
+    <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
+    <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -277,6 +279,8 @@
     <Content Include="Areas\Admin\Views\Departments\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Designations\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeRegistration\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\web.config" />
+    <Content Include="Areas\SAP\Views\BPMapping\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -311,6 +315,8 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\HR\Views\Employees\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\SAP\Models\" />
+    <Folder Include="Areas\SAP\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
