@@ -135,6 +135,8 @@
     <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Areas\Admin\Models\Employee_Fin.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
+    <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -342,6 +344,12 @@
     <Content Include="WebServices\AccountService.asmx" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Menus\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Departments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Designations\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EmployeeRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\web.config" />
+    <Content Include="Areas\SAP\Views\BPMapping\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\web.config" />
     <Content Include="App_Code\TreeviewMenu.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -388,6 +396,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\HR\Views\Employees\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\SAP\Models\" />
+    <Folder Include="Areas\SAP\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
