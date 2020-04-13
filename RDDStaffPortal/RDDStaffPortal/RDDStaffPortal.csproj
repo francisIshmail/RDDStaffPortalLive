@@ -123,17 +123,16 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EmployeeRegistrationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
-    <Compile Include="Areas\Admin\Models\EmployeeRegistration.cs" />
+    <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
-    <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\HR\Models\Employees.cs" />
-    <Compile Include="Areas\Admin\Models\Employee_Fin.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -279,6 +278,9 @@
     <Content Include="Areas\Admin\Views\Designations\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\web.config" />
+    <Content Include="Areas\HR\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeList\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EmploymentStatus\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -311,7 +313,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\HR\Views\Employees\" />
+    <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

@@ -47,13 +47,15 @@
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
     <Compile Include="DataModels\RDD_Employee_Fin.cs" />
+    <Compile Include="DataModels\RDD_EmploymentStatus.cs" />
     <Compile Include="DataModels\RDD_Menus.cs" />
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="InitialSetup\DepartmentsDbOperation.cs" />
     <Compile Include="InitialSetup\DesignationDbOperation.cs" />
-    <Compile Include="InitialSetup\EmployeeRegistrationDbOperation.cs" />
+    <Compile Include="HR\EmployeeRegistrationDbOperation.cs" />
+    <Compile Include="InitialSetup\EmpStatusDbOperations.cs" />
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -217,7 +217,7 @@
                         <li class="nav-section"> </li>
 
 
-                        @Html.Action("GetMenus", "Home")
+                        @*@Html.Action("GetMenus", "Home")*@
 
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#Admin">
@@ -244,14 +244,23 @@
 
 
                                     <li>
-                                        <a href="Report1.html">
+
+                                        <a href='@Url.Action("Index", "HR/EmployeeList")'>
+                                            <span class="sub-item">Employee List</span>
+
+                                        </a>
+                                    </li>
+                                    <li>
+
+                                        <a href='@Url.Action("Index", "HR/Employees")'>
                                             <span class="sub-item">Employee Master</span>
+
                                         </a>
                                     </li>
                                     <li>
 
                                         <a href='@Url.Action("Index", "Admin/Departments")'>
-                                            Department Master
+                                            <span class="sub-item">Department Master</span>
 
                                         </a>
                                     </li>
@@ -262,10 +271,11 @@
 
                                         </a>
                                     </li>
+
                                     <li>
 
-                                        <a href='@Url.Action("Index", "Admin/EmployeeRegistration")'>
-                                            <span class="sub-item">Employee Registration</span>
+                                        <a href='@Url.Action("Index", "Admin/EmploymentStatus")'>
+                                            <span class="sub-item">Status Master</span>
 
                                         </a>
                                     </li>
