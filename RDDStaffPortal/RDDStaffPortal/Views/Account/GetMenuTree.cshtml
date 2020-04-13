@@ -1,0 +1,14 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_Menus>
+
+
+
+@*<div class="treeview" id="link-content">*@
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    @*<li class="nav-item">*@
+        @TreeviewMenu.GetTreeview(Model, Model.FirstOrDefault().ModuleId)
+    @*</li>*@
+}
+@*</div>*@

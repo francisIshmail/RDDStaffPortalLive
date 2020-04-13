@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Customer Mapping</h4>
+                </div>
+                <div class="col-md-3 padd-0 pull-right text-right"><button class="btn btn-primary btn-round btn-xs">Add To Quick Link</button></div>
+            </div>
+
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="row rowmin">
+                                    <div class="col-xl-2 col-md-2">
+                                        <div class="form-group">
+                                            <label for="ddlParentDB" class="width100px">Select DB :</label>
+                                            <div class="select2-input">
+                                                <select id="ddlParentDB" name="basic" class="form-control">
+                                                    <option value="SAPAE">SAPAE</option>
+                                                    <option value="SAPKE">SAPKE</option>
+                                                    <option value="SAPTZ">SAPTZ</option>
+                                                    <option value="SAPUG">SAPUG</option>
+                                                    <option value="SAPZM">SAPZM</option>
+                                                    <option value="SAPML">SAPML</option>
+                                                    <option value="SAPTRI">SAPTRI</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-2 col-md-2">
+                                        <div class="form-group">
+                                            <label for="txtParentCardCode" class="width100px">Customer# :</label>
+                                            <input type="text" class="form-control" id="txtParentCardCode">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlPareentCardName" class="width100px">Select Main Customer :</label>
+                                            <div class="select2-input">
+                                                <select id="ddlPareentCardName" name="basic" class="form-control">
+                                                    <option value="CT">Connecticut</option>
+                                                    <option value="DE">Delaware</option>
+                                                    <option value="FL">Florida</option>
+                                                    <option value="GA">Georgia</option>
+                                                    <option value="IN">Indiana</option>
+                                                    <option value="ME">Maine</option>
+                                                    <option value="MD">Maryland</option>
+                                                    <option value="MA">Massachusetts</option>
+                                                    <option value="MI">Michigan</option>
+                                                    <option value="NH">New Hampshire</option>
+                                                    <option value="NJ">New Jersey</option>
+                                                    <option value="NY">New York</option>
+                                                    <option value="NC">North Carolina</option>
+                                                    <option value="OH">Ohio</option>
+                                                    <option value="PA">Pennsylvania</option>
+                                                    <option value="RI">Rhode Island</option>
+                                                    <option value="SC">South Carolina</option>
+                                                    <option value="VT">Vermont</option>
+                                                    <option value="VA">Virginia</option>
+                                                    <option value="WV">West Virginia</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtCustomerName" class="width100px">Customer Name :</label>
+                                            <input type="text" class="form-control" id="txtCustomerName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-2 col-md-2 pull-right text-right">
+                                        <div class="form-group padd-0">
+                                            <label for="email2" class="width100px"></label>
+                                            <div class="mar-t7"><button type="button" class="btn btn-success btn-sm mar-t8" id="addrow">Add Row </button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="reddotTable mar-t0">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead text-left width15per"><div>Customers</div></div>
+                                                <div class="reddotTableHead width15per"><div>database</div></div>
+                                                <div class="reddotTableHead text-left width15per"><div>Customer#</div></div>
+                                                <div class="reddotTableHead text-left  width30per"><div>Customer Name</div></div>
+                                                <div class="reddotTableHead width10per"><div>Action</div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody" id="AddCMRow">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-action">
+                                    <button class="btn btn-success ">Save</button>
+                                    <button class="btn btn-danger">Cancel</button>
+                                </div>
+                                <div class="sub-page-header">
+                                    <h4 class="sub-page-title">List of Mapped Customer</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="reddotTable mar-t0">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead text-left"><div>Name</div></div>
+                                                <div class="reddotTableHead"><div>Code</div></div>
+                                                <div class="reddotTableHead text-left"><div>DB</div></div>
+                                                <div class="reddotTableHead text-left"><div>Consolidating Codes</div></div>
+                                                <div class="reddotTableHead width8per"><div>Action</div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-left"><div>Orange Info</div></div>
+                                                <div class="reddotTableCell text-left"> <div>ORA0001</div> </div>
+                                                <div class="reddotTableCell text-left"> <div> SAPTZ </div> </div>
+                                                <div class="reddotTableCell text-left"> <div>SAPAE - ORA0001 , SAPKE - ORA0002 </div> </div>
+                                                <div class="reddotTableCell">
+                                                    <div>
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-info edit btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-left"><div>Orange Info</div></div>
+                                                <div class="reddotTableCell text-left"> <div>ORA0001</div> </div>
+                                                <div class="reddotTableCell text-left"> <div> SAPTZ </div> </div>
+                                                <div class="reddotTableCell text-left"> <div>SAPAE - ORA0001 , SAPKE - ORA0002 </div> </div>
+                                                <div class="reddotTableCell">
+                                                    <div>
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-info edit btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-left"><div>Orange Info</div></div>
+                                                <div class="reddotTableCell text-left"> <div>ORA0001</div> </div>
+                                                <div class="reddotTableCell text-left"> <div> SAPTZ </div> </div>
+                                                <div class="reddotTableCell text-left"> <div>SAPAE - ORA0001 , SAPKE - ORA0002 </div> </div>
+                                                <div class="reddotTableCell">
+                                                    <div>
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-info edit btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-left"><div>Orange Info</div></div>
+                                                <div class="reddotTableCell text-left"> <div>ORA0001</div> </div>
+                                                <div class="reddotTableCell text-left"> <div> SAPTZ </div> </div>
+                                                <div class="reddotTableCell text-left"> <div>SAPAE - ORA0001 , SAPKE - ORA0002 </div> </div>
+                                                <div class="reddotTableCell">
+                                                    <div>
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-info edit btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-left"><div>Orange Info</div></div>
+                                                <div class="reddotTableCell text-left"> <div>ORA0001</div> </div>
+                                                <div class="reddotTableCell text-left"> <div> SAPTZ </div> </div>
+                                                <div class="reddotTableCell text-left"> <div>SAPAE - ORA0001 , SAPKE - ORA0002 </div> </div>
+                                                <div class="reddotTableCell">
+                                                    <div>
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-info edit btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--   Core JS Files   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#ddlParentDB').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder:'--Select DB--'
+        });
+
+        $('#ddlPareentCardName').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select Customer--'
+        });
+
+        var counter = 0;
+
+        $("#addrow").on("click", function () {
+            var newRow = $("#AddCMRow");
+            var cols = "";
+            cols += '<div class="reddotTableRow odd-even-row">';
+            cols += ' <div class="reddotTableCell text-left"><div>Consiladating Customer 1</div></div>';
+            cols += ' <div class="reddotTableCell text-left">';
+            cols += ' <div>';
+            cols += ' <select class="form-control form-control-sm" id="smallSelect">';
+            cols += ' <option>Database Name 1</option>';
+            cols += ' <option>Database Name 2</option>';
+            cols += ' <option>Database Name 3</option>';
+            cols += ' </select>';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' <div class="reddotTableCell text-left"> <div> 25477 </div> </div>';
+            cols += ' <div class="reddotTableCell text-left">';
+            cols += ' <div>';
+            cols += ' <select id="basic2" name="basic" class="form-control form-control-sm">';
+            cols += ' <option value="CT">Connecticut</option>';
+            cols += ' <option value="DE">Delaware</option>';
+            cols += ' <option value="FL">Florida</option>';
+            cols += ' <option value="GA">Georgia</option>';
+            cols += ' <option value="IN">Indiana</option>';
+            cols += ' </select>';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' <div class="reddotTableCell">';
+            cols += ' <div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
+        });
+
+
+
+        $("#AddCMRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+
+    });
+
+</script>
+

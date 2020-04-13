@@ -12,105 +12,137 @@
                 <h4 class="page-title">Add Modules & Menus</h4>
             </div>
             <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <div class="row addwidgetclass mar-b10">
-                                <div class="col-md-12 padd-0">
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">Menu :</label>
-                                        <input type="hidden" id="txtMenuId" />
-                                        <input type="text" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">URL :</label>
-                                        <input type="text" class="form-control width220px" id="txtURL" placeholder="Enter URL">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">CSS Class :</label>
-                                        <input type="text" class="form-control width150px" id="txtCssClass" placeholder="Css Class">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">Display Seq :</label>
-                                        <input type="text" class="form-control width100px" placeholder="Sequence" id="txtDisplaySeq">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width120px">Module :</label>
-                                        <div class="input-group width160px">
-                                            <select class="form-control" id="ddlModules">
-                                            </select>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
+                <div class="col-md-2 padd-0">
+                    <div class="form-group">
+                        <label for="email2" class="width100px">Types :</label>
+                        <br />
+                        <input type="radio" id="rdbn" name="rdbtn" value="P"  checked   />Modules
+                        <input type="radio" id="rdbn"name="rdbtn"  value="M" />Menus
+
+                    </div>
+
+                </div>
+                <div class="col-md-1 padd-0">
+                    <div class="form-group">
+                        <label for="email2" class="width100px">Levels :</label>
+                        <select class="form-control" id="ddlLevels">
+                            <option value="-1">-Select-</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="row addwidgetclass mar-b10">
+                                    <div class="col-md-12 padd-0">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px">Menu :</label>
+                                            <input type="hidden" id="txtMenuId" />
+                                            <input type="text" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px">URL :</label>
+                                            <input type="text" class="form-control width220px" id="txtURL" placeholder="Enter URL">
+                                        </div>
+                                        <div class="form-group" id="divcss">
+                                            <label for="email2" class="width100px">CSS Class :</label>
+                                            <input type="text" class="form-control width150px" id="txtCssClass" placeholder="Css Class">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px">Display Seq :</label>
+                                            <input type="text" class="form-control width100px" placeholder="Sequence" id="txtDisplaySeq">
+                                        </div>
+                                        <div class="form-group" id="divmod">
+                                            <label for="email2" class="width120px">Module :</label>
+                                            <div class="input-group width160px">
+                                                <select class="form-control" id="ddlModules">
+                                                </select>
+                                                <input type="hidden" id="inpmodulehdn" />
+                                                @*<div class="input-group-append">
+                    <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
+                </div>*@
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">Default</label>
-                                        <div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px">Default</label>
+                                            <div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="email2" class="width120px"></label>
-                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu" >Save</button></div>
+                                        <div class="form-group">
+                                            <label for="email2" class="width120px"></label>
+                                            <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu">Save</button></div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px">Search</label>
-                                        <input type="text" class="form-control width180px" id="txtSearchMenus" placeholder="Search..">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2" class="width120px"></label>
+                                            <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnClearMenu">Clear</button></div>
+
+                                        </div>
+                                        
+
                                     </div>
 
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th class="width30px">#</th>
-                                            <th class="width180px">Name</th>
-                                            <th class="width180px">URL</th>
-                                            <th class="width100px">Css Class</th>
-                                            <th class="width70px">SeqNo</th>
-                                            @*<th class="width1px" style="visibility:hidden" >Id</th>*@
-                                            <th class="width180px">Module</th>
-                                            <th class="width80px">Default</th>
-                                            <th class="width100px">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblMenusList">
+                                <div class="row">
+                                    <table class="table table-bordered stripe display hover" id="tblMenusList">
+                                        <thead>
+                                            <tr class="tr">
+                                                <th class="width30px">#</th>
+                                                <th class="width180px">Name</th>
+                                                <th class="width70px">Levels</th>
+                                                <th class="width180px">URL</th>
+                                                <th class="width100px">Css Class</th>
+                                                <th class="width70px">SeqNo</th>
+                                                @*<th class="width1px" style="visibility:hidden" >Id</th>*@
+                                                <th class="width180px">Module</th>
+                                                <th class="width80px">Default</th>
+                                                <th></th>
+                                                <th class="width100px">Actions</th>
+                                            </tr>
+                                        </thead>
                                        
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <tbody>
+                                            <tr>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            @*<div class="row mar-t10">
-                                <ul class="pagination pg-primary">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">«</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">»</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>*@
+                                @*<div class="row mar-t10">
+                            <ul class="pagination pg-primary">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
+
+                            </div>
 
                         </div>
 
                     </div>
 
                 </div>
-
             </div>
-        </div>
     </div>
 </div>
 
@@ -163,22 +195,42 @@
         });
 
        // To bind Modules on PageLoad
-        BindModules();
+      //  BindModules();
         GetMenuList();
+       // $('#tblMenusList').DataTable().column(6).visible(false);
 
     });
+    $('#divmod').hide();
+    
+    $("#ddlLevels").on("change", function () {
+        var lvls = $('#ddlLevels').val();
+        if (lvls > 0) {
+            BindModules();
+            $('#divmod').show();
+        } else {
+            $('#divmod').hide();
+        }
+    });
 
-
+    $("input[id='rdbn']").on('click', function () {
+        debugger
+        var typ = $('#rdbn:checked').val();
+        if (typ == 'P') {
+            $('#divcss').show();
+        } else {
+            $('#divcss').hide();
+        }
+    });
     // START : Add New Module //
     $('#BtnAddModule').click(function () {
         debugger;
         if ($("#txtModuleName").val() == "") {
-            alert('please enter Module Name');
+            RdotAlerterrtxt('please enter Module Name');
             $("#txtModuleName").focus();
             return false;
         }
         if ($("#txtModuleCssClass").val() == "") {
-            alert('please enter css class for Module');
+            RdotAlerterrtxt('please enter css class for Module');
             $("#txtModuleCssClass").focus();
             return false;
         }
@@ -213,12 +265,16 @@
 
     // START : Fill Modules in Drop down list
     function BindModules() {
-        debugger;
+        debugger;   
         $.ajax({
-            url: '/Menus/BindModules',
-            type: "GET",
+            async: false,
+            cache: false,
+            type: "POST",
+            url: '/Menus/BindModules',                            
+            data: { Levels: $("#ddlLevels").val() - 1 },
             dataType: "JSON",
             success: function (modules) {
+                debugger;
                 $("#ddlModules").html("");
                 $("#ddlModules").append($('<option/>', { value: -1, text: '--Select--' }));
                 $.each(modules, function (i, value) {
@@ -227,88 +283,157 @@
                 });
             }
         });
+       
     }
     // START : Fill Modules in Drop down list
 
 
     // START : Bind data of existing Menus
     function GetMenuList() {
-        $('#tblMenusList').html('');
-        $.get("/Menus/GetMenuList", null, BindMenus);
-        function BindMenus(MenuList) {
-            var SetData = $('#tblMenusList');
-            debugger;
-            for (var i = 0; i < MenuList.length; i++) {
-                var Data = "<tr class='row_" + MenuList[i].MenuId + "'>" +
-                    "<td>" + MenuList[i].MenuId + "</td>" +
-                    "<td>" + MenuList[i].MenuName + "</td>" +
-                    "<td>" + MenuList[i].URL + "</td>" +
-                    "<td>" + MenuList[i].MenuCssClass + "</td>" +
-                    "<td>" + MenuList[i].DisplaySeq + "</td>" +
-                    //"<td class='width1px' style='visibility: hidden' >" + MenuList[i].ModuleId + "</td>" +
-                    "<td>" + MenuList[i].ModuleId +'-'+ MenuList[i].ModuleName + "</td>";
+       // $('#tblMenusList').html('');
 
-                    if (MenuList[i].IsDefault == true) {
-                        Data = Data + "<td> <div> <input type='checkbox' id='chkIsDefault' checked data-toggle='toggle' data-onstyle='primary' disabled></div></td>  ";
-                    }
-                    else {
-                        Data = Data + "<td> <div> <input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' disabled ></div></td>  ";
+        var colms = [
+            { "mDataProp": "MenuId", "sWidth": "10%" },
+            { "mDataProp": "MenuName", "sWidth": "30%" },
+            { "mDataProp": "Levels", "sWidth": "20%" },
+            { "mDataProp": "URL", "sWidth": "30%" },
+            { "mDataProp": "MenuCssClass", "sWidth": "30%" },
+            { "mDataProp": "DisplaySeq", "sWidth": "10%" },
+            {
+                "mDataProp": "ModuleName",
+                
+                "sWidth": "30%"
+            },
+            {
+                "mDataProp": "IsDefault",
+                "render": function (data) {
+                    if (data == true) {
+                        return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle' checked  disabled></span>";
+                                                  } else {
+                        return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle'  disabled></span>";
+                                                  }
                 }
 
-                Data = Data + "<td> <button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button> " +
-                    "<button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete'><i class='fas fa-trash-alt'></i></button></td ></tr >";
+                , "sWidth": "40%"
+            },
+            {
+                "mDataProp": "ModuleId",
+                "render": function (data) {
+                    
+                    return "<span><input id='inphdnmdl' type='hidden' value='" + data +"'/>";
+                    
+                }
 
-                SetData.append(Data);
+                , "sWidth": "0",
+
+
+
+
+            },
+            {
+                "data": null,
+                "defaultContent": "<button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button><button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete'><i class='fas fa-trash-alt'></i></button>",
+                "targets": -1, "sWidth": "50%"
             }
 
-            //$('#tblUser').DataTable();
-        }
+
+        ];
+       
+
+        RdottableNDW('tblMenusList', '/Menus/GetMenuList', colms);
+        //$.get("/Menus/GetMenuList", null, BindMenus);
+        //function BindMenus(MenuList) {
+        //    var SetData = $('#tblMenusList');
+        //    debugger;
+        //    for (var i = 0; i < MenuList.length; i++) {
+        //        var Data = "<tr class='row_" + MenuList[i].MenuId + "'>" +
+        //            "<td>" + MenuList[i].MenuId + "</td>" +                   
+        //            "<td>" + MenuList[i].MenuName + "</td>" +
+        //            "<td>" + MenuList[i].Levels + "</td>" +
+        //            "<td>" + MenuList[i].URL + "</td>" +
+        //            "<td>" + MenuList[i].MenuCssClass + "</td>" +
+        //            "<td>" + MenuList[i].DisplaySeq + "</td>" +
+                    
+        //            "<td><input id='inphdnmdl' type='hidden' value='" + MenuList[i].ModuleId+"'/>" +  MenuList[i].ModuleName + "</td>";
+
+        //            if (MenuList[i].IsDefault == true) {
+        //                Data = Data + "<td> <div> <input type='checkbox' id='chkIsDefault' checked data-toggle='toggle' data-onstyle='primary' disabled></div></td>  ";
+        //            }
+        //            else {
+        //                Data = Data + "<td> <div> <input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' disabled ></div></td>  ";
+        //        }
+
+        //        Data = Data + "<td> <button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button> " +
+        //            "<button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete'><i class='fas fa-trash-alt'></i></button></td ></tr >";
+
+        //        SetData.append(Data);
+        //    }
+
+        //    //$('#tblUser').DataTable()
+        //}
 
     }
     // START : Fill Modules in Drop down list
 
-
+    $('#btnClearMenu').click(function () {
+        $("#txtMenuName").val('');
+        $("#txtCssClass").val('');
+        $("#txtURL").val('');
+        $("#txtDisplaySeq").val('');
+        $("#txtDisplaySeq").val('');
+        $('#ddlLevels').val(-1).trigger('change');
+    })
 
     //START : Add New Menu in Module //
     $('#btnSaveMenu').click(function () {
 
         debugger;
+        var Moduleid = $("#ddlModules").val();
+        if ($("#ddlLevels").val() == 0) {
+            Moduleid = 0;
+        } else if ($("#ddlLevels").val() == -1) {
+            RdotAlerterrtxt('please select Levels');
+            $("#ddlLevels").focus();
+            return false;
+        }
         if ($.trim($("#txtMenuName").val()) == "") {
-            alert('please enter Menu Name');
+            RdotAlerterrtxt('please enter Menu Name');
             $("#txtMenuName").focus();
             return false;
         }
-        if ($.trim($("#txtURL").val()) == "") {
-            alert('please enter URL');
+        if ($.trim($("#txtURL").val()) == "" && $("#ddlLevels").val() > 0 && $('#rdbn:checked').val()=="M") {
+            RdotAlerterrtxt('please enter URL');
             $("#txtURL").focus();
             return false;
         }
-        if ($.trim($("#txtCssClass").val()) == "") {
-            alert('please enter css Class');
+        if ($.trim($("#txtCssClass").val()) == "" && $('#rdbn:checked').val() == "P") {
+            RdotAlerterrtxt('please enter css Class');
             $("#txtCssClass").focus();
             return false;
         }
         if ($.trim($("#txtDisplaySeq").val()) == "") {
-            alert('please enter menu Display Sequence');
+            RdotAlerterrtxt('please enter menu Display Sequence');
             $("#txtDisplaySeq").focus();
             return false;
         }
         
-        if ($("#ddlModules option:selected").index() <= 0) {
-            alert("Please Select Module");
+        if ($("#ddlModules option:selected").index() <= 0 && $("#ddlLevels").val() > 0) {
+            RdotAlerterrtxt("Please Select Module");
             $("#ddlModules").focus();
             return false;
         }
-        if ($("#txtMenuId").val() === "") {
-            $("#txtMenuId").val() = "0";
+       
+        if ($("#txtMenuId").val() == "") {
+            $("#txtMenuId").val('0');
         }
         var MenuData = {};
+        MenuData["Levels"] = $("#ddlLevels").val();
         MenuData["MenuId"] = $("#txtMenuId").val();
         MenuData["MenuName"] = $("#txtMenuName").val();
         MenuData["MenuCssClass"] = $("#txtCssClass").val();
         MenuData["URL"] = $("#txtURL").val();
         MenuData["DisplaySeq"] = $("#txtDisplaySeq").val();
-        MenuData["ModuleId"] = $("#ddlModules").val();
+        MenuData["ModuleId"] = Moduleid;
         MenuData["ModuleName"] = $("#ddlModules :selected").text();
         MenuData["IsDefault"] = $("#chkIsDefaultMenu").is(":checked");// $("#chkIsDefaultMenu").val();
         var data = JSON.stringify({
@@ -323,14 +448,18 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     if (result == "Record Saved Successfully" || result == "Record Updated Successfully") {
-                        alert(result);
+                        //alert(result);
+                        RdotAlertSucesstxt(result);
                         //$('#AlertMessage').html('<div class="alert alert-success alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Success ! </strong> ' + result + '</div >');
                         $("#txtMenuName").val('');
                         $("#txtCssClass").val('');
                         $("#txtURL").val('');
                         $("#txtDisplaySeq").val('');
                         $("#txtDisplaySeq").val('');
-                        GetMenuList();
+                        $('#ddlLevels').val(-1).trigger('change');
+                       // GetMenuList();
+                        $('#btnreload').trigger('click');
+                        
                     }
                     else {
                         //$('#AlertMessage').html('<div class="alert alert-danger alert-dismissible"><a href = "#" class= "close" data-dismiss="alert" aria-label="close" >&times;</a ><strong>Failed ! </strong> ' + result + '</div >');
@@ -345,16 +474,35 @@
 
     // Edit row on edit button click
     $(document).on("click", ".edit", function () {
-        debugger;
-
+        
+        if ($(this).closest('tr').find('td').eq(3).text() == '') {
+            $("input[name=rdbtn][value='P']").prop('checked', true);
+        } else {
+            $("input[name=rdbtn][value='M']").prop('checked', true);
+        }
         $('#txtMenuId').val($(this).closest('tr').find('td').eq(0).text());
         $('#txtMenuName').val($(this).closest('tr').find('td').eq(1).text());
-        $('#txtURL').val($(this).closest('tr').find('td').eq(2).text());    
-        $('#txtCssClass').val($(this).closest('tr').find('td').eq(3).text());
-        $('#txtDisplaySeq').val($(this).closest('tr').find('td').eq(4).text());
-        var Module = $(this).closest('tr').find('td').eq(5).text();
-        var modules = Module.split('-');
-        $('#ddlModules').val(modules[0]);
+        $('#ddlLevels').val($(this).closest('tr').find('td').eq(2).text()).trigger('change');
+        $('#txtURL').val($(this).closest('tr').find('td').eq(3).text());    
+        $('#txtCssClass').val($(this).closest('tr').find('td').eq(4).text());
+        $('#txtDisplaySeq').val($(this).closest('tr').find('td').eq(5).text());
+        //var Module = $(this).closest('tr').find('td').eq(6).text();
+        //var modules = Module.split('-');
+        //$('#ddlModules').val(modules[0]);
+
+       
+
+        var lvls = $('#ddlLevels').val();
+        if (lvls > 0) {
+            BindModules();
+            $('#divmod').show();
+        } else {
+            $('#divmod').hide();
+        }
+        $('#ddlModules').val($(this).closest('tr').find("input[id='inphdnmdl']").val()).trigger('change');
+        debugger;
+       // $('#inpmodulehdn').val();
+       
 
         var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
         if (IsDefault == "on")
@@ -364,6 +512,51 @@
 
     });
 
+    //Delete row on delete button click
+    $(document).on("click", ".delete", function () {        
+        var tr = $(this).closest("tr");
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {                
+                $.getJSON("/Menus/DeleteMenu", { MenuId: tr.find('td').eq(0).text() }).done(function (data) {
+                   
+                    if (data.DeleteFlag == "Deleted") {
+                       tr.remove();
+                        $('#btnreload').trigger('click');
+                    }
+                }); 
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your Code has been deleted.',
+                    'success'
+                )
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Code is safe :)',
+                    'error'
+                )
+            }
+        })
+              
+    });
 
     //// Add row on add button click
     //$(document).on("click", ".add", function () {
