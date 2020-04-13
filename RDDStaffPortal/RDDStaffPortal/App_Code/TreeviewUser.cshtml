@@ -1,0 +1,65 @@
+﻿
+    @helper GetTreeview(List<RDDStaffPortal.DAL.DataModels.RDD_Menus> Treemenu, Int32 ParentId)
+    {
+
+foreach (var i in Treemenu.Where(a => a.ModuleId.Equals(ParentId)))
+{
+
+
+        <ul>
+    @{ var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
+
+
+            @if (@i.Levels <= 0 || submenu > 0)
+                {
+
+
+                    <tr>
+                        <td colspan="6" align="center">
+
+
+                            <b>@i.MenuName</b>
+                            <input type="hidden" id="Inphdn" value="@i.MenuId">
+                        </td>
+                        <td align="center"><select class="form-control form-control-sm" id="smallSelect">
+    <option value="F">Full Authorization</option>
+    <option value="R">Readonly</option>
+    <option value="N">No Authorization</option>
+</select></td>
+
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td  colspan="6" align="center">
+                            @*<span style="width:15px; display:inline-block">&nbsp;</span>*@
+                            <b>@i.MenuName</b>
+                            <input type="hidden" id="Inphdn" value="@i.MenuId">
+                        </td>
+
+                        <td align="center"><select class="form-control form-control-sm" id="smallSelect">
+    <option value="F">Full Authorization</option>
+    <option value="R">Readonly</option>
+    <option value="N">No Authorization</option>
+</select></td>
+
+                    </tr>
+                }
+            @if (submenu > 0)
+            {
+
+        <ul>
+            @TreeviewUser.GetTreeview(Treemenu, i.MenuId);
+        </ul>
+
+
+            }
+
+</ul>
+        }
+
+
+    }
+
+

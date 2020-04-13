@@ -1,0 +1,72 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_User_Rights
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="row">
+
+                <table class="table table-bordered table-sm" id="tablePODetails">
+                    <thead>
+                        <tr class="tr">
+                            <td colspan="6" align="center"><b>Menu Name</b></td>
+                            <td align="center"><b>All</b></td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ Html.RenderAction("GetMenuTree", "UserRights", new { area = "Admin" }); }
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="email2" class="width120px"></label>
+                    <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu">Save</button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#btnSaveMenu').on("click", function () {
+            var Users = {
+                UserId: 'Pramod',
+                CreatedBy: 'Admin',
+                Flag:'I',
+                MenuDetails: [],
+
+            };
+            $("#tablePODetails tbody tr").each(function (index, item) {
+                var AuthoTypTxt = $(this).find("[id='smallSelect']").val();
+                var MenuTxt = $(this).find("[id='Inphdn']").val();
+                var MenuDetail = {
+                    MenuId: MenuTxt,
+                    AuthoTyp: AuthoTypTxt,
+
+                };
+                Users.MenuDetails.push(MenuDetail);
+            });
+
+            debugger
+            $.post("/SaveUserRights", Users).done(function (response) {
+
+
+            });
+
+
+
+
+        })
+    });
+    </script>

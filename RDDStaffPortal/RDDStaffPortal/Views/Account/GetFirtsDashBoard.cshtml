@@ -1,0 +1,8 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_firstDashBoard>
+
+@if (Model != null && Model.Count() > 0)
+{
+   
+    @FirstDashboard.GetFirstview(Model)
+   
+}

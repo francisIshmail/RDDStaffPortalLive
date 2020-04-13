@@ -217,18 +217,82 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
         }
 
+        public List<RDD_firstDashBoard> GetFirstDashBoards(string UserId)
+        {
+            List<RDD_firstDashBoard> _FirstDash = new List<RDD_firstDashBoard>();
+            try
+            {
+                SqlParameter[] parm = { };
 
 
-        public List<RDD_Menus> GetModuleList2()
+                //DataSet dsModules = Com.ExecuteDataSet("select * from RDD_VW_Menu order by MOduleid");
+                DataSet dsModules = Com.ExecuteDataSet("select * from RDD_First_DashBoard  where Userid='" + UserId+"'order by Displayseq");
+                //SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
+                //new SqlParameter("@Role",Role) };
+                //DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveMenu", CommandType.StoredProcedure, sqlpar);
+
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+
+                           var     colcss = "col-12 col-sm-6 col-md-3";
+                    if (dtModule.Rows.Count == 4)
+                    {
+                        colcss = "col-12 col-sm-6 col-md-3";
+                    }
+                    else if (dtModule.Rows.Count == 3)
+                    {
+                        colcss = "col-12 col-sm-6 col-md-4";
+                    }
+                    else if (dtModule.Rows.Count == 2)
+                    {
+                        colcss = "col-12 col-sm-6 col-md-6";
+                    }
+                    else if (dtModule.Rows.Count == 1)
+                    {
+                        colcss = "col-12 col-sm-6 col-md-12";
+                    }
+                        
+                    foreach (DataRow dr in drc)
+                    {
+                        _FirstDash.Add(new RDD_firstDashBoard()
+                        {
+                            colcss= colcss,
+                            FirstText = !string.IsNullOrWhiteSpace(dr["FirstText"].ToString()) ? dr["FirstText"].ToString() : "",                                                      
+                            SecondText = !string.IsNullOrWhiteSpace(dr["SecondText"].ToString()) ? dr["SecondText"].ToString() : "",
+                            cssclass = !string.IsNullOrWhiteSpace(dr["cssclass"].ToString()) ? dr["cssclass"].ToString() : "",
+                            DisplaySeq= !string.IsNullOrWhiteSpace(dr["DisplaySeq"].ToString()) ?Convert.ToInt32(dr["DisplaySeq"].ToString()) : 0,
+                            FirstValue =!string.IsNullOrWhiteSpace(dr["FirstValue"].ToString()) ? Convert.ToDecimal(dr["FirstValue"].ToString()) : 0,
+                            SecondValue = !string.IsNullOrWhiteSpace(dr["SecondValue"].ToString()) ? Convert.ToDecimal(dr["SecondValue"].ToString()) : 0,
+                            perValue= !string.IsNullOrWhiteSpace(dr["perValue"].ToString()) ? Convert.ToInt32(dr["perValue"].ToString()) : 0,
+
+                        });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _FirstDash = null;
+            }
+            return _FirstDash;
+        }
+
+        public List<RDD_Menus> GetModuleList2(string Username,string Role)
         {
             List<RDD_Menus> _ModuleList = new List<RDD_Menus>();
             try
             {
                 SqlParameter[] parm = { };
-                
+
 
                 //DataSet dsModules = Com.ExecuteDataSet("select * from RDD_VW_Menu order by MOduleid");
-                DataSet dsModules = Com.ExecuteDataSet("select * from RDD_Menus where IsDeleted=0 order by Levels,DisplaySeq");
+                //DataSet dsModules = Com.ExecuteDataSet("select * from RDD_Menus where IsDeleted=0 order by Levels,DisplaySeq");
+                SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
+                new SqlParameter("@Role",Role) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveMenu", CommandType.StoredProcedure, sqlpar);
 
                 if (dsModules.Tables.Count > 0)
                 {

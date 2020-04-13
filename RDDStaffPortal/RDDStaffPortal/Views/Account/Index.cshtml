@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<h2>Index</h2>
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Dashboard</h4>
+
+            </div>
+
+            @{ Html.RenderAction("GetFirtsDashBoard", "Account");}
+
+            </div>
+        </div>
+    </div>
+
+            @*@{ Html.RenderAction("GetMenuTree", "Account"); }*@

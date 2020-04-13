@@ -13,6 +13,7 @@ namespace RDDStaffPortal.Controllers
     {
         // GET: Account
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
+
         public ActionResult Index()
         {
             return View();
@@ -73,8 +74,18 @@ namespace RDDStaffPortal.Controllers
 
 
         {
-            return PartialView(moduleDbOp.GetModuleList2());
+            
+            return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name,"U"));
 
+        }
+
+
+
+        [HttpGet]
+        [ChildActionOnly]
+        public ActionResult GetFirtsDashBoard()
+        {
+            return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
         }
 
 
