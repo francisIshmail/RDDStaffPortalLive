@@ -1,0 +1,45 @@
+﻿@helper GetThirdview(List<RDDStaffPortal.DAL.DataModels.RDD_firstDashBoard> Thirdview)
+{
+    <div class="">
+
+        @*@{var submenu = Firstview.Count();}*@
+        @foreach (var i in Thirdview)
+        {
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.FirstText</div>
+                            <div class="card-tools">
+                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="far fa-eye"></i></button>
+                                <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Percentage</a>
+                                    <a class="dropdown-item" href="#">Number</a>
+                                    <a class="dropdown-item" href="#">Tabular</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="reddotTable mar-t0">
+                            <div class="reddotTableBody">
+                                <div class="reddotTableRow odd-even-row">
+                                    <div class="reddotTableHead text-left"><div>Company Name</div></div>
+                                    <div class="reddotTableHead"><div>Date</div></div>
+                                    <div class="reddotTableHead text-right"><div>Amount</div></div>
+                                </div>
+                            </div>
+                            <div class="reddotTableBody">
+                               
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            }
+        </div>
+}

@@ -8,10 +8,10 @@
 @if (Model != null && Model.Count() > 0)
 {
     @*<li class="nav-item">*@
-    <ul>
+    @*<div id="accordion">*@
         @TreeviewUser.GetTreeview(Model, Model.FirstOrDefault().ModuleId)
-    </ul>
-    
-    @*</li>*@
-}
-@*</div>*@
+
+    @*</div>*@
+        @*</li>*@
+        }
+        @*</div>*@

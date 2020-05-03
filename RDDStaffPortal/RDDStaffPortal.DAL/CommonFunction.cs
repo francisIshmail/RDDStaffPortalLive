@@ -25,6 +25,28 @@ namespace RDDStaffPortal.DAL
             public bool Outtf { get; set; }
             public string Responsemsg { get; set; }
         }
+
+        public int ExecuteNonQuery(string SqlCommondText)
+        {
+            int rowaffected = 0;
+            using (SqlConnection cn = new SqlConnection(Conn))
+            {
+                try
+                {                   
+                    cn.Open();                   
+                    SqlCmd = new SqlCommand(SqlCommondText, cn);
+                    rowaffected = SqlCmd.ExecuteNonQuery();                   
+                    cn.Close();
+                }
+                catch (Exception ex)
+                {
+                    if (trans != null)
+                        trans.Rollback();
+                    throw;
+                }
+            }
+            return rowaffected;
+        }
         /*Last Parameter As Out Parameter*/
         #region Sp_ForInsDelUpdDataOut
         public List<Outcls> ExecuteNonQueryList(string SqlCommondText, SqlParameter[] p)
@@ -175,7 +197,24 @@ namespace RDDStaffPortal.DAL
             return ds;
         }
         #endregion
-
+        public int ExecuteScalar(string sqlCommandText)
+        {
+            int numrows = 0;
+            using (SqlConnection cn = new SqlConnection(Conn))
+            {
+                try
+                {                   
+                    cn.Open();
+                    SqlCmd = new SqlCommand(sqlCommandText, cn);
+                    numrows = (int)SqlCmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    errormsg = ex.Message;
+                }
+            }
+            return numrows;
+        }
 
         #region Sp_RetriveSingleValueDecimal
         public decimal ExecuteScalarDec(string sqlCommandText, SqlParameter[] p)

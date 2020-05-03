@@ -1,0 +1,90 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_test_img
+
+@{
+    ViewBag.Title = "RDD_image1";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Test Image</h4>
+            </div>
+            <div class="rowmin">
+
+                <div class="title-action">
+                    <button class="btn btn-primary btn1" id="btnAdd"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add</button>
+                    <button type="submit" class="btn btn-primary btn1" id="btnSave" ><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Save</button>
+                    <button class="btn btn-warning btn1" id="btnCancel"><span class="glyphicon glyphicon-off"></span>&nbsp; Cancel</button>
+                    <input type="hidden" id="hdnOperationMode" value="" />
+                </div>
+                <img id="user_img" class="empimg" src="/Images/TempLogo/defaultimg.jpg" style="border-radius: 0; height:100px;width:100px; margin-left:0;" />
+                @Html.TextBoxFor(m => m.image1, new { type = "file", multiple = "multiple" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#user_img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+
+        }
+
+
+        $("#image1").change(function () {
+            readURL(this);
+            var data = new FormData();
+            var files = $("#image1").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+            $.ajax({
+                url: "/Admin/Test/Uploadfile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                        $("#user_img").val(response);
+                        //$('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RdotAlerterrtxt(er);
+                }
+            });
+        });
+
+
+        $('#btnSave').on("click", function () {
+            var Rdd = {};
+
+            $.post("/Saveimg", Rdd).done(function (response) {
+                debugger
+            });
+               
+            
+        
+            })
+        
+    })
+    </script>

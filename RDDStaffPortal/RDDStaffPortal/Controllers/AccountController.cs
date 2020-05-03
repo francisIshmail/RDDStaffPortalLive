@@ -70,9 +70,6 @@ namespace RDDStaffPortal.Controllers
 
         [ChildActionOnly]
         public ActionResult GetMenuTree()
-
-
-
         {
             
             return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name,"U"));
@@ -86,6 +83,12 @@ namespace RDDStaffPortal.Controllers
         public ActionResult GetFirtsDashBoard()
         {
             return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
+        }
+
+        [ChildActionOnly]
+        public ActionResult GetDashBoardView()
+        {
+            return PartialView(moduleDbOp.GetDashBoarMain());
         }
 
 

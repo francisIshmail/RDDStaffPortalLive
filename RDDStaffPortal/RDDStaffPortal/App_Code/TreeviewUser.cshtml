@@ -1,65 +1,113 @@
 ﻿
-    @helper GetTreeview(List<RDDStaffPortal.DAL.DataModels.RDD_Menus> Treemenu, Int32 ParentId)
-    {
-
-foreach (var i in Treemenu.Where(a => a.ModuleId.Equals(ParentId)))
+@helper GetTreeview(List<RDDStaffPortal.DAL.DataModels.RDD_Menus> Treemenu, Int32 ParentId)
 {
 
-
-        <ul>
-    @{ var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
-
-
-            @if (@i.Levels <= 0 || submenu > 0)
-                {
+    foreach (var i in Treemenu.Where(a => a.ModuleId.Equals(ParentId)))
+    {
 
 
-                    <tr>
-                        <td colspan="6" align="center">
+    <div>
+        @{ var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
 
 
-                            <b>@i.MenuName</b>
+        @if (@i.Levels <= 0 || submenu > 0)
+        {
+
+            <div class="card-header odd" id="heading-@i.MenuId">
+
+                <div class="row">
+                    <div class="col-md-10 padd-0">
+                        <a  role="button" data-toggle="collapse" href="#collapse-@i.MenuId" aria-expanded="false" aria-controls="collapse-@i.MenuId">
+                            @i.MenuName
                             <input type="hidden" id="Inphdn" value="@i.MenuId">
-                        </td>
-                        <td align="center"><select class="form-control form-control-sm" id="smallSelect">
-    <option value="F">Full Authorization</option>
-    <option value="R">Readonly</option>
-    <option value="N">No Authorization</option>
-</select></td>
+                        </a>
+                    </div>
+                    <div class="col-md-2 padd-0	">
+                        <select class="form-control form-control-sm" id="smallSelect-@i.MenuId">
+                            <option value="N">No Authorization</option>
+                            <option value="F">Full Authorization</option>
+                            <option value="R">Readonly</option>
+                        </select>
+                    </div>
+                </div>
 
-                    </tr>
-                }
-                else
-                {
-                    <tr>
-                        <td  colspan="6" align="center">
-                            @*<span style="width:15px; display:inline-block">&nbsp;</span>*@
-                            <b>@i.MenuName</b>
-                            <input type="hidden" id="Inphdn" value="@i.MenuId">
-                        </td>
-
-                        <td align="center"><select class="form-control form-control-sm" id="smallSelect">
-    <option value="F">Full Authorization</option>
-    <option value="R">Readonly</option>
-    <option value="N">No Authorization</option>
-</select></td>
-
-                    </tr>
-                }
-            @if (submenu > 0)
-            {
-
-        <ul>
-            @TreeviewUser.GetTreeview(Treemenu, i.MenuId);
-        </ul>
+            </div>
+            @*<tr>
+                <td colspan="6" align="center">
 
 
-            }
+                    <b>@i.MenuName</b>
+                    <input type="hidden" id="Inphdn" value="@i.MenuId">
+                </td>
+                <td align="center">
+                    <select class="form-control form-control-sm" id="smallSelect">
+                        <option value="F">Full Authorization</option>
+                        <option value="R">Readonly</option>
+                        <option value="N">No Authorization</option>
+                    </select>
+                </td>
 
-</ul>
+            </tr>*@
+        }
+        else
+        {
+            <div class="card-header even" id="heading-@i.MenuId">
+                <div class="row">
+                    <div class="col-md-10 padd-0">
+                        <span style="padding-left:10px">
+                            @i.MenuName
+                        </span>
+                        
+                        <input type="hidden" id="Inphdn" value="@i.MenuId">
+
+                    </div>
+                    <div class="col-md-2 padd-0">
+                        <select class="form-control form-control-sm" id="smallSelect-@i.MenuId">
+                            <option value="N">No Authorization</option>
+                            <option value="F">Full Authorization</option>
+                            <option value="R">Readonly</option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            @*<tr>
+                <td colspan="6" align="center">
+
+                    <b>@i.MenuName</b>
+                    <input type="hidden" id="Inphdn" value="@i.MenuId">
+                </td>
+
+                <td align="center">
+                    <select class="form-control form-control-sm" id="smallSelect">
+                        <option value="F">Full Authorization</option>
+                        <option value="R">Readonly</option>
+                        <option value="N">No Authorization</option>
+                    </select>
+                </td>
+
+            </tr>*@
+        }
+        @if (submenu > 0)
+        {
+            
+            <div id="collapse-@i.MenuId" class="collapse multi-collapse" data-parent="#accordion-@i.Levels" aria-labelledby="heading-@i.MenuId">
+                @*<div id="accordion">*@
+                    @*<div id="collapse-@i.MenuId-K" class="multi-collapse collapse" data-parent="#accordion" aria-labelledby="heading-@i.MenuId-K">
+                    <div id="accordion-@i.MenuId-K">*@
+                    @TreeviewUser.GetTreeview(Treemenu, i.MenuId)
+                    </div>
+                    @*</div>*@
+
+            
+
         }
 
+                </div>
+                }
 
-    }
+
+                }
 
 

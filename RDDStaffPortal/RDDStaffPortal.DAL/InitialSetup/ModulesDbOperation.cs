@@ -382,5 +382,51 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
         }
 
+
+        public List<RDD_DashBoard_Main> GetDashBoarMain()
+        {
+
+            List<RDD_DashBoard_Main> _MainDash = new List<RDD_DashBoard_Main>();
+            try
+            {
+                SqlParameter[] parm = { };
+
+
+                
+                DataSet dsModules = Com.ExecuteDataSet("select  * from RDD_DashBoardTemp");
+                //SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
+                //new SqlParameter("@Role",Role) };
+                //DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveMenu", CommandType.StoredProcedure, sqlpar);
+
+
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;                                                  
+                    foreach (DataRow dr in drc)
+                    {
+                       _MainDash.Add(new RDD_DashBoard_Main()
+                        {                           
+                            DashId = !string.IsNullOrWhiteSpace(dr["DashId"].ToString()) ? dr["DashId"].ToString() : "",
+                           DashName = !string.IsNullOrWhiteSpace(dr["DashName"].ToString()) ? dr["DashName"].ToString() : "",
+                          // colcss = colcss,
+                           ColumNames = !string.IsNullOrWhiteSpace(dr["ColumNames"].ToString()) ? dr["ColumNames"].ToString() : "",
+                           cssclass = !string.IsNullOrWhiteSpace(dr["cssclass"].ToString()) ? dr["cssclass"].ToString() : "",
+                           TypeOfChart = !string.IsNullOrWhiteSpace(dr["TypeOfChart"].ToString()) ? dr["TypeOfChart"].ToString() : "",
+                           Url = !string.IsNullOrWhiteSpace(dr["Url"].ToString()) ? dr["Url"].ToString() : "",
+                          NoOfColumn = !string.IsNullOrWhiteSpace(dr["NoOfColumn"].ToString()) ?Convert.ToInt32(dr["NoOfColumn"].ToString()) : 0,
+                       });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _MainDash = null;
+            }
+            return _MainDash;
+        }
+
     }
 }
