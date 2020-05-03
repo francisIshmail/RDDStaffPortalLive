@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RDDStaffPortal.Areas.Admin.Models
+namespace RDDStaffPortal.Areas.HR.Models
 {
-    public class EmployeeRegistration
+    public class Employees
     {
         public int DeptId { get; set; }
         public string DeptName { get; set; }
         public int DesigId { get; set; }
         public string DesigName { get; set; }
+        public int StatusId { get; set; }
+        public string StatusName { get; set; }
 
+        public bool Editflag { get; set; }
 
         public int EmployeeId { get; set; }
         public string FName { get; set; }
@@ -30,8 +33,8 @@ namespace RDDStaffPortal.Areas.Admin.Models
         public string Emergency_Contact { get; set; }
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
-
-
+        public string EmployeeNo { get; set; }
+        //finance
         public int FId { get; set; }
         public string Currency { get; set; }
         public int Salary { get; set; }
@@ -46,7 +49,7 @@ namespace RDDStaffPortal.Areas.Admin.Models
 
         public string other_ref_no { get; set; }
 
-        public string EmployeeNo { get; set; }
+       // public string EmployeeNo { get; set; }
 
 
 
@@ -54,8 +57,38 @@ namespace RDDStaffPortal.Areas.Admin.Models
 
         public string u_bugroup { get; set; }
         //Country
-        
+       public int CId { get; set; }
         public string CountryCode { get; set; }
+        public string CountryCodeName { get; set; }
+        public string Country { get; set; }
+        //Items of BU
+        public string ItmsGrpNam { get; set; }
 
+       //To Get Manager
+
+        public int ManagerId { get; set; }
+        public string ManagerName { get; set; }
+
+        //Additional fields
+
+        public int Empstatus { get; set; }
+        public string type_of_employement { get; set; }
+
+        public  DateTime Joining_Date { get; set; }
+
+        public int No_child { get; set; }
+
+        public string National_id { get; set; }
+
+        public DateTime Contract_Start_date { get; set; }
+        public string Note { get; set; }
+
+
+        public HttpPostedFileBase my_file { get; set; }
+       
+        public string ImagePath { get; set; }
+
+
+        
     }
 }

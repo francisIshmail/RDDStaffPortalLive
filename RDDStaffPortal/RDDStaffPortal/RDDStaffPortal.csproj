@@ -123,17 +123,18 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EmployeeRegistrationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightsController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
-    <Compile Include="Areas\Admin\Models\EmployeeRegistration.cs" />
+    <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\HR\Controllers\UserListController.cs" />
     <Compile Include="Areas\HR\Models\Employees.cs" />
-    <Compile Include="Areas\Admin\Models\Employee_Fin.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
@@ -372,6 +373,10 @@
     <Content Include="App_Code\ThirdDashBoard.cshtml" />
     <Content Include="Areas\Admin\Views\Test\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Test\RDD_image1.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeList\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EmploymentStatus\Index.cshtml" />
+    <Content Include="Areas\HR\Views\UserList\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -407,7 +412,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\HR\Views\Employees\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />

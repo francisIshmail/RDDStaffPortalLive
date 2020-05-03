@@ -1,0 +1,285 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">User List</h4>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control " placeholder="Search.."></div>
+                                    <div class="col-sm-2 col-md-2 padd-0 ml-auto text-right">
+                                        <span class="btn-label"><a href='/HR/Employees' class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>Add User </a></span>
+                                        @*<button class="btn btn-secondary btn-sm"> <span class="btn-label"> <i class="fa fa-plus"></i> </span> Add User</button>*@
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @foreach (var items in ViewBag.EmpDisplayList)
+            {
+        <div id="userTable">
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="user-box-section">
+                                    <div class="row">
+                                        <div class="col-1 col-1 padd-0">
+                                            <div class="avatar avatar-xxl">
+                                                <input type="image" class="avatar-img" width="150" src="data:image;base64,@Convert.ToBase64String((byte[])@items.ImagePath)" alt="preview">
+                                                @*<img src="img/jm_denis.jpg" alt="..." class="avatar-img">*@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-11 col-md-11">
+                                            <div class="row">
+                                                <div class="col-sm-10 col-md-10">
+                                                    @*<h4 class="user-name-title">Chetan Popat</h4>*@
+
+                                                    <h4 class="user-name-title">
+                                                        &nbsp;&nbsp;
+                                                        <label for="@items.FName">@items.FName</label>
+                                                        <label for="@items.LName">@items.LName</label>
+                                                    </h4>
+                                                    <div class="user-info-list">
+
+                                                        <a><i class="icon-envelope"></i>  <label for="@items.Email">@items.Email</label></a>
+                                                        <a>
+                                                            <i class="icon-badge"></i> <label class="card-category" for="@items.DesigName">@items.DesigName</label>
+                                                        </a>
+
+                                                        <a>
+                                                            <i class="icon-badge"></i><label for="@items.DeptName">@items.DeptName</label>
+                                                        </a>
+
+                                                        <a>
+                                                            <i class="icon-screen-smartphone"></i>  <label for="@items.Contact_No">@items.Contact_No</label>(Ext No:<label for="@items.Ext_no">@items.Ext_no</label>)
+                                                        </a>
+                                                        <a>
+                                                            <i class="icon-globe"></i><label for="@items.Country">@items.Country</label>
+                                                        </a>
+                                                        @*<a href="#"><i class="icon-globe"></i>India</a>*@
+                                                        @*<a href="#"><i class="icon-envelope"></i>chetan.popat@gmail.com</a>
+                                                    <a href="#"><i class="icon-badge"></i>Manager </a>
+                                                    <a href="#"><i class="icon-badge"></i>IT Department </a>
+                                                    <a href="#"><i class="icon-screen-smartphone"></i>+91 9226 704598 </a>
+                                                    <a href="#"><i class="icon-globe"></i>India</a>*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 padd-r0 text-right">
+                                                    @*<button type="button" class="btn btn-icon btn btn-secondary"> <i class="fa fa-edit"></i> </button>*@
+                                                    <a href='/HR/Employees?EmployeeId=@items.EmployeeId' class="btn btn-icon btn btn-secondary"><i class="fa fa-edit"></i> </a>
+
+                                                    <button type="button" class="btn btn-icon btn-success"> <i class="fa fa-eye"></i> </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mar-t10">
+                                                <div class="col-sm-6 col-md-6">
+                                                    <p class="user-info-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type  and scrambled it to make a type specimen book.</p>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 padd-r0 mar-t5">
+                                                    <div class="progress progress-sm">
+                                                        <div class="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mt-2">
+                                                        <p class="text-muted mb-0">Progress</p>
+                                                        <p class="text-muted mb-0">25%</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-2 padd-0">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <div class="icon-big text-center">
+                                                        <i class="icon-plane"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-stats padd-0">
+                                                    <div class="numbers">
+                                                        <p class="card-category">Leaves</p>
+                                                        <h4 class="view-title">View</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-2 padd-0">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <div class="icon-big text-center">
+                                                        <i class="icon-wallet"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-stats padd-0">
+                                                    <div class="numbers">
+                                                        <p class="card-category">Expenses</p>
+                                                        <h4 class="view-title">View</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-2 padd-0">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <div class="icon-big text-center">
+                                                        <i class="icon-globe"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-stats padd-0">
+                                                    <div class="numbers">
+                                                        <p class="card-category">Net</p>
+                                                        <h4 class="view-title">View</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ccol-sm-6 col-md-2 padd-0">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <div class="icon-big text-center">
+                                                        <i class="icon-docs"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-stats padd-0">
+                                                    <div class="numbers">
+                                                        <p class="card-category">45 Tasks</p>
+                                                        <h4 class="view-title">View</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-2 padd-0">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <div class="icon-big text-center">
+                                                        <i class="icon-speech"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-7 col-stats padd-0">
+                                                    <div class="numbers">
+                                                        <p class="card-category">968 Comments</p>
+                                                        <h4 class="view-title">View</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-2 mar-t10 padd-0">
+                                            <div class="row">
+                                                <div class="avatar-group">
+                                                    <div class="avatar avatar-sm">
+                                                        <input type="image" class="avatar-img rounded-circle border border-white" src="data:image;base64,@Convert.ToBase64String((byte[])@items.ImagePath)" alt="preview">
+                                                        @*<img src="img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle border border-white">*@
+                                                    </div>
+                                                    @*<div class="avatar avatar-sm">
+                                                    <img src="img/profile.jpg" alt="..." class="avatar-img rounded-circle border border-white">
+                                                </div>
+                                                <div class="avatar avatar-sm">
+                                                    <img src="img/profile2.jpg" alt="..." class="avatar-img rounded-circle border border-white">
+                                                </div>
+                                                <div class="avatar avatar-sm">
+                                                    <img src="img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle border border-white">
+                                                </div>
+                                                <div class="avatar avatar-sm">
+                                                    <span class="avatar-title rounded-circle border border-white bg-success">+</span>
+                                                </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            }
+
+            </div>
+    </div>
+
+</div>
+
+
+
+<div class="custom-template">
+    <div class="title">Settings</div>
+    <div class="custom-content">
+        <div class="switcher">
+            <div class="switch-block">
+                <h4>Logo Header</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+                    <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+                    <br />
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="custom-toggle">
+        <i class="flaticon-settings"></i>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTable .rowmin").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!--   Core JS Files   -->
+

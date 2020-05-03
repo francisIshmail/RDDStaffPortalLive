@@ -1,0 +1,1989 @@
+﻿@model  RDDStaffPortal.DAL.DataModels.RDD_EmployeeRegistration
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+
+
+}
+@Html.HiddenFor(m => m.ImagePath1)
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">User Profile</h4>
+
+            </div>
+            <div class="rowmin row">
+                <div class="col-md-4">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <div class="row user-profile-section">
+                                <div class="col-md-4 padd-0">
+                                   
+                                    <div class="avatar">
+                                        <div class="input-file input-file-image">
+
+                                            <input type="image" class="img-upload-preview avatar-img" width="170" src="data:image;base64,@Convert.ToBase64String(Model.ImagePath)" alt="preview">
+                                            <input type="file" class="form-control form-control-file" id="my_file" style="display: none;" name="my_file" accept="image/*" required="">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="user-profile">
+                                        <div class="name">
+                                            @Html.DisplayFor(m => m.FName)
+                                            @Html.DisplayFor(m => m.LName)
+                                           
+                                        </div>
+                                        <div class="designation"> @Html.DisplayFor(m => m.DesigName)</div>
+                                    </div>
+                                    <div class="user-info ">
+                                        <div class="row mar-t10">
+                                            <span href="#"><i class="icon-envelope" id="envelopeicon"></i>@Html.DisplayFor(m => m.Email)</span>
+                                        </div>
+
+                                        <div class="row mar-t7">
+                                            <span href="#"><i class="icon-screen-smartphone" id="smartphoneicon"></i>@Html.DisplayFor(m => m.Contact_No)</span>
+                                        </div>
+
+                                        <div class="row mar-t7">
+                                            <span href="#"><i class="icon-globe" id="globeicon"></i>@Html.DisplayFor(m => m.CountryName)</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                          <div class="row mar-t5"> <button type="button" class="btn btn-success btn-sm" id="SaveEmpChanges">Save Profile</button></div>
+                            <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd mar-t10" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active" id="v-pills-home-tab-nobd" data-toggle="pill" href="#v-pills-home-nobd" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true"><i class="fas fa-angle-double-right"></i> Personal</a>
+
+                                <a class="nav-link" id="v-pills-general-tab-nobd" data-toggle="pill" href="#v-pills-general-nobd" role="tab" aria-controls="v-pills-general-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> General</a>
+
+                                <a class="nav-link" id="v-pills-educational-professional-info-tab-nobd" data-toggle="pill" href="#v-pills-educational-professional-info-nobd" role="tab" aria-controls="v-pills-educational-professional-info-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Educational & Professional </a>
+
+                                <a class="nav-link" id="v-pills-attachments-tab-nobd" data-toggle="pill" href="#v-pills-attachments-nobd" role="tab" aria-controls="v-pills-attachments-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Attachments</a>
+
+                                @*<a class="nav-link" id="v-pills-country-BU-assignment-tab-nobd" data-toggle="pill" href="#v-pills-country-BU-assignment-nobd" role="tab" aria-controls="v-pills-country-BU-assignment-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Country and BU </a>*@
+
+                                <a class="nav-link" id="v-pills-financial-tab-nobd" data-toggle="pill" href="#v-pills-financial-nobd" role="tab" aria-controls="v-pills-financial-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Financial</a>
+
+                                <a class="nav-link" id="v-pills-leaves-tab-nobd" data-toggle="pill" href="#v-pills-leaves-nobd" role="tab" aria-controls="v-pills-leaves-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Leaves</a>
+
+                                <a class="nav-link" id="v-pills-assets-tab-nobd" data-toggle="pill" href="#v-pills-assets-nobd" role="tab" aria-controls="v-pills-assets-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Assets</a>
+
+                                <a class="nav-link" id="v-pills-loan-tab-nobd" data-toggle="pill" href="#v-pills-loan-nobd" role="tab" aria-controls="v-pills-loan-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Loan</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card ">
+                        <div class="card-body">
+                            <div class="tab-content" id="v-pills-without-border-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
+                                    
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Personal</div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.Editflag)
+
+                                        @Html.HiddenFor(m => m.IsActive)
+                                        <div class="col-12 col-md-12 padd-0">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">First Name :</label>
+                                                        @Html.HiddenFor(m => m.EmployeeId, new { @id = "EmployeeId" })
+                                                        @Html.HiddenFor(m => m.FId, new { @id = "FId" })
+
+
+                                                        @Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control", maxlength = "100" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Last Name :</label>
+                                                        @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control", maxlength = "100" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Employee No. :</label>
+                                                        <label for="EmployeeNo" class="form-control" id="lblempno">@ViewBag.EmployeeNo</label>
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Email :</label>
+                                                        @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Skype Id :</label>
+                                                        @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Cisco Extn No :</label>
+                                                        @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control", maxlength = "20" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Telephone No :</label>
+                                                        @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control", maxlength = "10" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Designation :</label>
+                                                        <div class="input-group">
+
+                                                            @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select Designation-", new { @id = "DesigId", @class = "form-control" })
+
+                                                            @*<div class="input-group-append">
+                                                                <span class="input-group-text" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></span>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Departments :</label>
+                                                        <div class="select2-input">
+                                                            @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select Department-", new { @id = "DeptId", @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Manager :</label>
+                                                        <div class="select2-input">
+                                                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select Manager-", new { @id = "ManagerId", @class = "form-control form-control-sm", multiple = "multiple", size = 5 })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Country :</label>
+                                                        <div class="select2-input">
+
+
+                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select Country-", new { @id = "CountryCodeName", @class = "form-control form-control-sm" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Emplyement Status :</label>
+                                                        <div class="input-group">
+                                                            @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select Employment Status-", new { @id = "StatusId", @class = "form-control form-control-sm" })
+                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Employement Type :</label>
+                                                        @Html.DropDownListFor(m => m.type_of_employement,
+                                             new List<SelectListItem> { new SelectListItem { Text = "-Select Employment Type-", Value = "0" },
+                                                 new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                                                 new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                                             }, new { @class = "form-control form-control-sm" })
+
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Joining Date :</label>
+                                                        <div class="input-group">
+                                                            @*<input type="text" class="form-control form-control-sm" id="datepicker" name="datepicker">*@
+                                                            @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "datepicker" })
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Status :</label>
+                                                        <div class="input-group"><input type="checkbox" id="chkIsActive" checked data-toggle="toggle" data-onstyle="primary"></div>
+                                                        @*<div class="input-group"><input type="checkbox" checked data-toggle="toggle" data-onstyle="primary"></div>*@
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-general-nobd" role="tabpanel" aria-labelledby="v-pills-general-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">General</div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-12 padd-0">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+
+                                                        <label for="email2" class="width100px">Current Address :</label>
+                                                        @Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" })
+                                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Permanent Address :</label>
+                                                        @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Gender :</label>
+                                                        @Html.DropDownListFor(m => m.Gender,
+                                          new List<SelectListItem> { new SelectListItem { Text = "-Select Gender-", Value = "0" },
+                                              new SelectListItem { Text = "Male", Value = "Male" },
+                                              new SelectListItem { Text = "Female", Value = "Female" }
+                                          }, new { @class = "form-control form-control-sm" })
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">DOB :</label>
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "datepicker" })
+                                                            @*<input type="text" class="form-control form-control-sm" id="datepicker" name="datepicker">*@
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Marrital Status :</label>
+                                                        @Html.DropDownListFor(m => m.Marital_Status,
+                                               new List<SelectListItem> { new SelectListItem { Text = "-Select Marital Status-", Value = "0" },
+                                                   new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+                                                   new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
+                                                    new SelectListItem { Text = "Divorced", Value = "Divorced" }
+                                               }, new { @class = "form-control form-control-sm" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">No of Childrens :</label>
+                                                        @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Citizenship :</label>
+                                                        @Html.TextBoxFor(m => m.Citizenship, new { @id = "Citizenship", @class = "form-control form-control-sm", maxlength = "800" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Passport No :</label>
+                                                        @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">National ID :</label>
+                                                        @Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Emergency Contact :</label>
+                                                        @Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Contract Start Date :</label>
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.Contract_Start_date, new { @id = "Contract_Start_Date", @class = "form-control form-control-sm", @name = "datepicker" })
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Note :</label>
+                                                        @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-educational-professional-info-nobd" role="tabpanel" aria-labelledby="v-pills-educational-professional-info-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Education and Professional</div>
+                                            @*<div class="card-tools">
+                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="fas fa-cog"></i></button>
+                                                <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">Percentage</a>
+                                                    <a class="dropdown-item" href="#">Number</a>
+                                                    <a class="dropdown-item" href="#">Tabular</a>
+
+                                                </div>
+
+
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-right padd-r0">
+                                        <button type="button" class="btn btn-success btn-sm mar-t8" id="addrow">Add</button></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="reddotTable">
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+                                                    <div class="reddotTableHead width15per text-left"><div>Type</div></div>
+                                                    <div class="reddotTableHead width15per text-left"><div>Institute / Company</div></div>
+                                                    <div class="reddotTableHead width25per text-left"><div>Description</div></div>
+                                                    <div class="reddotTableHead width25per text-left"><div>Start Date</div></div>
+                                                    <div class="reddotTableHead width25per text-left"><div>End Date</div></div>
+                                                    <div class="reddotTableHead width10per text-right"><div>Score / Salary</div></div>
+                                                    <div class="reddotTableHead width5per"><div>Action</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableBody" id="AddCMRow">
+
+
+                                                @if (Model.EmpInfoProEdus != null) 
+                                                {
+                                                    foreach (RDDStaffPortal.DAL.DataModels.EmpInfoProEdunew EmpPrEdu in Model.EmpInfoProEdus)
+                                                    {
+                                                <div class="reddotTableRow odd-even-row">
+                                                    @Html.HiddenFor(u => EmpPrEdu.EId, new { @class = "form-control" })
+                                                    @*<div class="reddotTableCell text-left" style="display:none">
+
+        </div>*@
+                                                    <div class="reddotTableCell width15per text-left">
+                                                        @Html.DropDownListFor(u => EmpPrEdu.Type, new List<SelectListItem> {
+         new SelectListItem { Text = "Professional", Value = "Professional" },
+    new SelectListItem { Text = "Educational", Value = "Educational" } }, EmpPrEdu.Type, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="reddotTableCell text-left">
+                                                        @Html.TextBoxFor(u => EmpPrEdu.Institute,
+            new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>
+                                                    <div class="reddotTableCell text-left">@Html.TextBoxFor(u => EmpPrEdu.StartDate, new { @class = "form-control", @name = "datepicker" }) </div>
+                                                    
+                                                    <div class="reddotTableCell text-left">@Html.TextBoxFor(u => EmpPrEdu.EndDate, new { @class = "form-control", @name = "datepicker" }) </div>
+                                                    <div> @Html.TextBoxFor(u => EmpPrEdu.Score, new { @class = "form-control" })  </div>
+                                                    <div class="reddotTableCell width15per">
+
+                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                                    }
+                                                }
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="v-pills-attachments-nobd" role="tabpanel" aria-labelledby="v-pills-attachments-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Attachement</div>
+                                            @*<div class="card-tools">
+                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="fas fa-cog"></i></button>
+                                                <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">Percentage</a>
+                                                    <a class="dropdown-item" href="#">Number</a>
+                                                    <a class="dropdown-item" href="#">Tabular</a>
+
+                                                </div>
+
+
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-right padd-r0"><button type="button" class="btn btn-success btn-sm mar-t8" id="addAttachments">Add</button></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="reddotTable">
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+                                                    <div class="reddotTableHead width45per text-left"><div>Description</div></div>
+                                                    <div class="reddotTableHead width45per text-left"><div>Browse</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Action</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableBody" id="AddAttachmentsRow">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-country-BU-assignment-nobd" role="tabpanel" aria-labelledby="v-pills-country-BU-assignment-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Country and BU </div>
+                                            @*<div class="card-tools">
+                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="fas fa-cog"></i></button>
+                                                <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">Percentage</a>
+                                                    <a class="dropdown-item" href="#">Number</a>
+                                                    <a class="dropdown-item" href="#">Tabular</a>
+
+                                                </div>
+
+
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="timeline-title">Country Assignment</h4>
+                                                    <hr />
+                                                    <div class="demo-scrollbar scrollbar-inner" style="max-height: 100px">
+                                                        <div class="form-check form-check-inline">
+                                                            <div class="custom-control custom-checkbox">
+                                                                @foreach (var items in ViewBag.CountryList)
+                                                                {
+                                                                    <li class="custom-control custom-checkbox">
+
+                                                                        <div class="checkbox">
+                                                                            <input type="checkbox" id="Check_@items.CountryCode" />
+                                                                            <label for="@items.CountryCode">@items.CountryCode</label>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="timeline-title">BU Assignment</h4>
+                                                    <hr />
+                                                    <div class="demo-scrollbar scrollbar-inner" style="max-height: 100px">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 padd-0">
+                                                                <div class="form-group form-inline">
+                                                                    <label for="inlineinput" class="col-md-4 col-form-label padd-l0">BU Group  :</label>
+                                                                    <div class="col-md-8 p-0">
+                                                                        @Html.DropDownListFor(m => m.u_bugroup, ViewBag.BUList as SelectList, "-Select BU-", new { @id = "u_bugroup", @class = "form-control", onchange = "GetBU()" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="form-check form-check-inline" id="divBuList">
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-financial-nobd" role="tabpanel" aria-labelledby="v-pills-financial-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Financial</div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Currency :</label>
+                                                @Html.DropDownListFor(m => m.Currency, ViewBag.CurrencyList as SelectList, new { @id = "Currency", @class = "form-control form-control-sm" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Account No :</label>
+                                                @Html.TextBoxFor(m => m.Account_No, new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Insurance No. :</label>
+                                                @Html.TextBoxFor(m => m.Insurance_no, new { @id = "Insurance_no", @class = "form-control form-control-sm", maxlength = "100" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Salary :</label>
+                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" })
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Bank Name :</label>
+                                                @Html.TextBoxFor(m => m.Bank_Name, new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Other ref No. :</label>
+                                                @Html.TextBoxFor(m => m.other_ref_no, new { @id = "other_ref_no", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Salary Start Date :</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Salary_Start_Date, new { @id = "Salary_Start_Date", @class = "form-control form-control-sm", @name = "datepicker" })
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Branch Name :</label>
+                                                @Html.TextBoxFor(m => m.Branch_Name, new { @id = "Branch_Name", @class = "form-control form-control-sm", maxlength = "15" })
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Tax No. :</label>
+                                                @Html.TextBoxFor(m => m.Tax_no, new { @id = "Tax_no", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Remark :</label>
+                                                @Html.TextBoxFor(m => m.Remark, new { @id = "Remark", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Bank Code :</label>
+                                                @Html.TextBoxFor(m => m.Bank_Code, new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20" })
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-leaves-nobd" role="tabpanel" aria-labelledby="v-pills-leaves-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Leaves</div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Employee Name :</label>
+                                                <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Approver Name :</label>
+                                                <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Mobile No. :</label>
+                                                <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mar-b10">
+                                        <div class="col-xl-2 col-md-2">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">From Date :</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="datepickerFromDate" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2 col-md-2">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">To Date :</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="datepickerToDate" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 col-md-8">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Leave Reason :</label>
+                                                <input type="text" class="form-control form-control-sm" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-action">
+                                        <button class="btn btn-success btn-sm ">Apply</button>
+                                        <button class="btn btn-danger btn-sm ">Reset</button>
+                                    </div>
+
+                                    <div class="card-header">
+                                        <div class="card-title">Leave Record</div>
+                                    </div>
+
+                                    <div class="reddotTable">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead width20per"><div>From Date</div></div>
+                                                <div class="reddotTableHead width20per"><div>To Date</div></div>
+                                                <div class="reddotTableHead width20per"><div>Total Days</div></div>
+                                                <div class="reddotTableHead width20per"><div>Contact No</div></div>
+                                                <div class="reddotTableHead width20per"><div>Status </div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>3 Aprl 2020</div></div>
+                                                <div class="reddotTableCell"><div>5 Days</div></div>
+                                                <div class="reddotTableCell"><div>9226704598</div></div>
+                                                <div class="reddotTableCell"><div>Pending</div></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-assets-nobd" role="tabpanel" aria-labelledby="v-pills-assets-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Assets</div>
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="reddotTable">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead width15per"><div>Asset No</div></div>
+                                                <div class="reddotTableHead width15per"><div>Modal No</div></div>
+                                                <div class="reddotTableHead width15per"><div>Asset Type</div></div>
+                                                <div class="reddotTableHead width15per"><div>Serial No</div></div>
+                                                <div class="reddotTableHead width15per"><div>Date of Purchase</div></div>
+                                                <div class="reddotTableHead width15per"><div>Invoice No</div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>AS/4598</div></div>
+                                                <div class="reddotTableCell"><div>558877</div></div>
+                                                <div class="reddotTableCell"><div>Computer</div></div>
+                                                <div class="reddotTableCell"><div>SRL/704598</div></div>
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>00265</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>AS/4598</div></div>
+                                                <div class="reddotTableCell"><div>558877</div></div>
+                                                <div class="reddotTableCell"><div>Computer</div></div>
+                                                <div class="reddotTableCell"><div>SRL/704598</div></div>
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>00265</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>AS/4598</div></div>
+                                                <div class="reddotTableCell"><div>558877</div></div>
+                                                <div class="reddotTableCell"><div>Computer</div></div>
+                                                <div class="reddotTableCell"><div>SRL/704598</div></div>
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>00265</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>AS/4598</div></div>
+                                                <div class="reddotTableCell"><div>558877</div></div>
+                                                <div class="reddotTableCell"><div>Computer</div></div>
+                                                <div class="reddotTableCell"><div>SRL/704598</div></div>
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>00265</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div>AS/4598</div></div>
+                                                <div class="reddotTableCell"><div>558877</div></div>
+                                                <div class="reddotTableCell"><div>Computer</div></div>
+                                                <div class="reddotTableCell"><div>SRL/704598</div></div>
+                                                <div class="reddotTableCell"><div>30 Mar 2020</div></div>
+                                                <div class="reddotTableCell"><div>00265</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-loan-nobd" role="tabpanel" aria-labelledby="v-pills-loan-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Loan</div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="reddotTable">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead width15per text-right"><div>Loan Approved Date</div></div>
+                                                <div class="reddotTableHead width15per text-right"><div>Approved Loan Amt.</div></div>
+                                                <div class="reddotTableHead width15per text-right"><div>Paid Amt.</div></div>
+                                                <div class="reddotTableHead width15per text-right"><div>Balance</div></div>
+                                                <div class="reddotTableHead width40per text-left"><div>Remark</div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-right"><div>05 April 2020</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>8877</div></div>
+                                                <div class="reddotTableCell text-left"><div>are the distinct options that</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-right"><div>05 April 2020</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>8877</div></div>
+                                                <div class="reddotTableCell text-left"><div>are the distinct options that</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-right"><div>05 April 2020</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>8877</div></div>
+                                                <div class="reddotTableCell text-left"><div>are the distinct options that</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-right"><div>05 April 2020</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>8877</div></div>
+                                                <div class="reddotTableCell text-left"><div>are the distinct options that</div></div>
+                                            </div>
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell text-right"><div>05 April 2020</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>58877</div></div>
+                                                <div class="reddotTableCell text-right"><div>8877</div></div>
+                                                <div class="reddotTableCell text-left"><div>are the distinct options that</div></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+@*<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTable .col-md-3").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>*@
+<!--   Core JS Files   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<Script type="text/javascript">
+
+
+
+    function GetBU() {
+        debugger
+
+        var bugroup = $('#u_bugroup').val();
+        //   alert(bugroup)
+        $.ajax({
+            type: "GET",
+            url: "/Employees/GetBuList?bugroup=" + bugroup,
+
+            success: function (data) {
+                $("#divBuList").html("");
+
+                //  console.log(data);
+                str = "";
+                for (i = 0; i < data.length; i++) {
+                    str = str + "<input type='checkbox' name='type' value='" + data[i].ItmsGrpNam + "' />" + data[i].ItmsGrpNam;
+
+                }
+                //console.log(str);
+                $("#divBuList").html(str);
+                // $('#divBuList').append('<input type="checkbox" name="myCheckbox" />Test');
+                // $('#divBuList').appendTo('<input type="checkbox" /> Test');
+                //var container = $('#divBuList');
+                //for (var i = 0; i < 20; i++) {
+                //    container.append('<input type="checkbox" name="radio_group" value="' + i + '">');
+                //}
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        
+        KeyNotPress();
+        debugger;
+
+       // $('.name').hide();
+       // $('.designation').hide();
+       
+        
+         //$("#divfname").attr("disabled", "disabled");
+
+        // $("EmpPrEdu_EId").attr('disabled', "disabled");
+
+        debugger
+        if ($('#Editflag').val() == "False") {
+
+            debugger
+            $('#envelopeicon').hide();
+            $('#globeicon').hide();
+            $('#smartphoneicon').hide();
+
+            if ($('#IsActive').val() == "True") {
+                $('#chkIsActive').prop("checked", true);
+            }
+            //var now = new Date();
+            //var day = ("0" + now.getDate()).slice(-2);
+            //var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+            //$('#End_date').val(today);
+
+            //$('#Joining_date').datetimepicker({
+            //    defaultDate: new Date(),
+            //    format: 'DD/MM/YYYY',
+            //});
+            // $("#Joining_date").data("datetimepicker").date(null);           $('#Joining_date').val('');
+
+
+            $('#Joining_date').val('');
+            $('#DOB').val('');
+            $('#Salary_Start_Date').val('');
+            $('#Contract_Start_Date').val('');
+            // $('#StartDate').val('');
+            // $('#End_date').val('');
+
+            //$('#Start_Date').val('');
+            //var now = new Date();
+            //var day = ("0" + now.getDate()).slice(-2);
+            //var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //var today = (day) + "/" + (month) + "/" + now.getFullYear();
+
+            //$('#StartDate').val(today);
+
+        }
+        else {
+            debugger
+
+            if ($('#IsActive').val() == "True") {
+
+                $('#chkIsActive').prop("checked", true);
+
+            }
+            else { $('#chkIsActive').prop("checked", false); }
+
+           // $("#EmpPrEdu_StartDate").val('');
+
+            $("#EmpPrEdu_StartDate").datetimepicker({
+                defaultDate: new Date(),
+                format: 'DD/MM/YYYY',
+            });
+           // $("#EmpPrEdu_EndDate").val('');
+            $("#EmpPrEdu_EndDate").datetimepicker({
+                defaultDate: new Date(),
+                format: 'DD/MM/YYYY',
+            });
+
+
+            // var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
+
+            //alert(IsDefault);
+            //if (IsDefault == "true")
+            //    $('#chkIsActive').prop("checked", true);
+            //else
+            //    $('#chkIsActive').prop("checked", false);
+            //}
+        }
+    });
+
+
+    //$("#chkIsActive").is(":checked")
+    //$('#Joining_date1').datetimepicker({
+    //    defaultDate: new Date($('#Joining_Date').val()),
+    //    format: 'DD/MM/YYYY',
+    //});
+
+
+   
+
+    function KeyNotPress() {
+
+
+        $("#Contact_No").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('Please Enter Number.');
+                $("#Contact_No").val('');
+                $("#Contact_No").focus();
+                return false;
+            }
+        });
+
+        $("#No_child").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('Please Enter  only Number.');
+                $("#No_child").val('');
+                $("#No_child").focus();
+                return false;
+            }
+        });
+
+        $("#Ext_no").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('Please Enter only Number.');
+                $("#Ext_no").val('');
+                $("#Ext_no").focus();
+                return false;
+            }
+        });
+        $("#Emergency_Contact").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('please Enter only Number');
+                $("#Emergency_Contact").val('');
+                $("#Emergency_Contact").focus();
+                return false;
+            }
+        });
+        $("#Salary").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('Please Enter only Number.');
+                $("#Salary").val('');
+                $("#Salary").focus();
+                return false;
+            }
+        });
+        $("#Account_No").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                RdotAlerterrtxt('Please Enter only Number.');
+                $("#Account_No").val('');
+                $("#Account_No").focus();
+                return false;
+            }
+        });
+    }
+
+
+    $("#Email").change(function () {
+        debugger
+        var email_add = $('#Email').val();
+
+        var emailaddressVal = $("#Email").val();
+
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+        if (!emailReg.test(emailaddressVal)) {
+            RdotAlerterrtxt('Enter a valid email address.');
+
+            $("#Email").val('');
+
+            $("#Email").focus();
+
+            return false;
+
+        }
+        else {
+            var email_add = $('#Email').val();
+            var Email = email_add.split("@@");
+            var domainname = Email[1];
+
+
+            //var value = domainname.split("co.");
+            //var domain1 = value[0];
+            //var domain1 = value[1];
+
+            //alert(domainname);
+            if (domainname != "reddotdistribution.com") {
+                alert("Please Enter Valid Official DomainName")
+                $("#Email").val('');
+
+                $("#Email").focus();
+
+                return false;
+            }
+
+
+        }
+    });
+
+    $('#btncancel').click(function () {
+        location.reload();
+    });
+
+    $('#SaveEmpChanges').click(function () {
+        debugger
+        //var res = validate();
+        ////alert(res);
+        //if (res == false) {
+        //    return false;
+        //};
+
+
+        // var ImagePath = $("#my_file").val();
+        //var files = $("#my_file").get(0).files;
+        //alert(files);
+        var Empno = $('#lblempno').text();
+        //alert(empno);
+
+        var ManagersName = "";
+        $("#ManagerId option:selected").each(function () {
+            ManagersName += $(this).text() + " , ";
+        });
+
+        //for Country Chk
+        var arrayItem = [];
+        var commasepratedId = "";
+        $("#divCountryList li input[type=checkbox]").each(function (index, val) {
+            // debugger
+            var chkId = $(val).attr("Id");
+            var arr = chkId.split('_');
+            var currentchkId = arr[1];
+            var IsChecked = $("#" + chkId).is(":checked", true);
+            if (IsChecked) {
+                arrayItem.push(currentchkId);
+            }
+        });
+        if (arrayItem.length != 0) {
+            commasepratedId = arrayItem.toString();
+
+        }
+
+        debugger
+
+        var EmpData = {};
+        EmpData["IsActive"] = $("#chkIsActive").is(":checked");
+
+
+        // EmpData["my_file"] = $("#my_file").val();
+        EmpData["FId"] = $("#FId").val();
+
+        EmpData["EmployeeId"] = $("#EmployeeId").val();
+
+        EmpData["FName"] = $("#FName").val();
+        EmpData["LName"] = $("#LName").val();
+        EmpData["Email"] = $("#Email").val();
+        EmpData["Gender"] = $("#Gender").val();
+        EmpData["Current_Address"] = $("#Current_Address").val();
+        EmpData["Permanent_Address"] = $("#Permanent_Address").val();
+        EmpData["Contact_No"] = $("#Contact_No").val();
+        EmpData["Ext_no"] = $("#Ext_no").val();
+        EmpData["IM_Id"] = $("#IM_Id").val();
+        EmpData["Marital_Status"] = $("#Marital_Status").val();
+        EmpData["DOB"] = $("#DOB").val();
+        EmpData["Citizenship"] = $("#Citizenship").val();
+        EmpData["DesigId"] = $("#DesigId").val();
+        EmpData["DeptId"] = $("#DeptId").val();
+        EmpData["Emergency_Contact"] = $("#Emergency_Contact").val();
+        EmpData["passport_no"] = $("#passport_no").val();
+
+        EmpData["Currency"] = $("#Currency").val();
+        EmpData["Salary"] = $("#Salary").val();
+        EmpData["Salary_Start_Date"] = $("#Salary_Start_Date").val();
+        EmpData["Remark"] = $("#Remark").val();
+        EmpData["Account_No"] = $("#Account_No").val();
+        EmpData["Bank_Name"] = $("#Bank_Name").val();
+        EmpData["Branch_Name"] = $("#Branch_Name").val();
+        EmpData["Bank_Code"] = $("#Bank_Code").val();
+        EmpData["Tax_no"] = $("#Tax_no").val();
+        EmpData["Insurance_no"] = $("#Insurance_no").val();
+        EmpData["other_ref_no"] = $("#other_ref_no").val();
+        EmpData["CountryCode"] = commasepratedId;
+        EmpData["EmployeeNo"] = $('#lblempno').text();
+        EmpData["CountryCodeName"] = $("#CountryCodeName").val();
+        EmpData["ManagerName"] = ManagersName;
+        EmpData["StatusId"] = $("#StatusId").val();
+        EmpData["type_of_employement"] = $("#type_of_employement").val();
+        EmpData["Joining_date"] = $("#Joining_date").val();
+        EmpData["No_child"] = $("#No_child").val();
+        EmpData["National_id"] = $("#National_id").val();
+        EmpData["Contract_Start_Date"] = $("#Contract_Start_Date").val();
+        EmpData["NOTE"] = $("#NOTE").val();
+
+        debugger
+
+        var EmpInfoProEdu = [];
+        EmpInfoProEdu.length = 0;
+        // var n = $("#AddCMRow .reddotTableRow").length;
+        var i = 0;
+        $("#AddCMRow .reddotTableRow").each(function () {
+            //  $(".reddotTableRow").each(function () {
+            debugger
+            var obj = {
+
+                EId: $(this).find('#EmpPrEdu_EId').val(),
+                Type: $(this).find('#EmpPrEdu_Type option:selected').text(),
+                Institute: $(this).find('#EmpPrEdu_Institute').val(),
+                StartDate: $(this).find('#EmpPrEdu_StartDate').val(),
+                EndDate: $(this).find('#EmpPrEdu_EndDate').val(),
+                Description: $(this).find('#EmpPrEdu_Description').val(),
+                Score: $(this).find('#EmpPrEdu_Score').val(),
+            }
+            EmpInfoProEdu.push(obj);
+            i++;
+
+        });
+
+
+
+        // var data = '{ Emp:' + JSON.stringify(EmpData) + ', EmpProEduInfo:' + JSON.stringify(EmpInfoProEdu) +' }'
+
+        // console.log(data);
+        debugger
+        $.ajax({
+            type: "Post",
+            url: "/Employees/AddEmpReg",
+            data: '{ EmpData:' + JSON.stringify(EmpData) + ', EmpInfoProEdu:' + JSON.stringify(EmpInfoProEdu) + ' }',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+
+
+                if (result == "Registration saved successfully.") {
+
+                    RdotAlertSucesstxt(result);
+                    //alert(result);
+                    ClearControl();
+                    
+                }
+                else if (result == "Registration updated successfully.")
+                {
+                    RdotAlertSucesstxt(result);
+                }
+                else {
+                    RdotAlerterrtxt(result);
+
+                }
+            }
+
+        });
+
+    });
+
+    function ClearControl() {
+        $("#AddCMRow").remove();
+      
+        $("#EmployeeId").val('');
+        $("#FName").val('');
+        $("#LName").val('');
+        $("#Email").val('');
+        // $("#Gender").val('');
+        $("#Current_Address").val('');
+        $("#Permanent_Address").val('');
+        $("#Contact_No").val('');
+        $("#Ext_no").val('');
+        $("#IM_Id").val('');
+        // $("#Marital_Status").val('');
+        $("#DOB").val('');
+        $("#Citizenship").val('');
+        // $("#DesigId").val('');
+        // $("#DeptId").val('');
+        $("#Emergency_Contact").val('');
+        $("#passport_no").val('');
+
+       
+        $('#DesigId').find('option:first').attr('selected', 'selected');
+        $('#DeptId').find('option:first').attr('selected', 'selected');
+        $('#StatusId').find('option:first').attr('selected', 'selected');
+        $('#CountryCodeName').val(0).trigger('change');
+       
+        $('#type_of_employement').val(0).trigger('change');
+        $("#Joining_date").val('');
+        $("#Contract_Start_Date").val('');
+        $('#Marital_Status').val(0).trigger('change');
+        $("#Contract_Start_Date").val('');
+        
+        $('#Gender').val(0).trigger('change');
+        $("#National_id").val('');
+        $("#NOTE").val(''); 
+
+        $("#Currency").val(''); 
+        $("#Account_No").val('');
+        $("#Insurance_no").val(''); 
+        $("#Salary").val('0'); 
+        $("#Bank_Name").val(''); 
+        $("#other_ref_no").val(''); 
+        $("#Branch_Name").val(''); 
+        $("#Tax_no").val(''); 
+        $("#Remark").val(''); 
+        $("#Bank_Code").val(''); 
+        $("#Salary_Start_Date").val('');
+    }
+
+    function validate() {
+
+        var ValFlag = true;
+
+        if ($("#FName").val() == "") {
+            RdotAlerterrtxt('please Enter First Name');
+            // alert('please Enter First Name');
+            $("#FName").focus();
+            return ValFlag = false;
+        }
+
+
+        if ($("#LName").val() == "") {
+            RdotAlerterrtxt('please Enter Last Name');
+            $("#LName").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#Email").val() == "") {
+            RdotAlerterrtxt('please Enter Email');
+            $("#Email").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#Contact_No").val() == "") {
+            RdotAlerterrtxt('please Enter Contact No');
+            $("#Contact_No").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#DesigId option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Designation');
+            $("#DesigId").focus();
+            return ValFlag = false;
+        }
+        if ($("#DeptId option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Department');
+            $("#DeptId").focus();
+            return ValFlag = false;
+        }
+
+
+        if ($("#CountryCodeName option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Country');
+            $("#CountryCodeName").focus();
+            return ValFlag = false;
+        }
+
+
+        if ($("#StatusId option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Employment Status');
+            $("#StatusId").focus();
+            return ValFlag = false;
+        }
+
+
+        if ($("#type_of_employement option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Employment Type');
+            $("#type_of_employement").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#Joining_date").val() == "") {
+            RdotAlerterrtxt('please Joining Date');
+            $("#Joining_date").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#Current_Address").val() == "") {
+            RdotAlerterrtxt('please Enter Current Address');
+            $("#Current_Address").focus();
+            return ValFlag = false;
+        }
+
+        if ($("#Permanent_Address").val() == "") {
+            RdotAlerterrtxt('please Enter Permanent Address');
+            $("#Permanent_Address").focus();
+            return false;
+        }
+
+        if ($("#Gender option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Gender');
+            $("#Gender").focus();
+            return false;
+        }
+        if ($("#DOB").val() == "") {
+            RdotAlerterrtxt('please select Date Of Birth');
+            $("#DOB").focus();
+            return false;
+        }
+
+        if ($("#Marital_Status option:selected").index() <= 0) {
+            RdotAlerterrtxt('please select Marital Status');
+            $("#Marital_Status").focus();
+            return false;
+        }
+        if ($("#Citizenship").val() == "") {
+            RdotAlerterrtxt('please Enter Citizenship');
+            $("#Citizenship").focus();
+            return false;
+        }
+
+        if ($("#National_id").val() == "") {
+            RdotAlerterrtxt('please Enter National Id');
+            $("#National_id").focus();
+            return false;
+        }
+        if ($("#No_child").val() == "") {
+            RdotAlerterrtxt('please Enter No of Child');
+            $("#No_child").focus();
+            return false;
+        }
+        if ($("#Account_No").val() != "") {
+
+            if ($("#Branch_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Branch Name');
+                $("#Branch_Name").focus();
+                return false;
+            }
+
+            else if ($("#Bank_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Name');
+                $("#Bank_Name").focus();
+                return false;
+            }
+            else if ($("#Bank_Code").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Code');
+                $("#Bank_Code").focus();
+                return false;
+            }
+
+        }
+
+
+        if ($("#Branch_Name").val() != "") {
+
+            if ($("#Account_No").val() == "") {
+                RdotAlerterrtxt('please Enter Account No');
+                $("#Account_No").focus();
+                return false;
+            }
+
+            else if ($("#Bank_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Name');
+                $("#Bank_Name").focus();
+                return false;
+            }
+            else if ($("#Bank_Code").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Code');
+                $("#Bank_Code").focus();
+                return false;
+            }
+
+        }
+        if ($("#Bank_Name").val() != "") {
+
+            if ($("#Account_No").val() == "") {
+                RdotAlerterrtxt('please Enter Account No');
+                $("#Account_No").focus();
+                return false;
+            }
+
+            else if ($("#Branch_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Branch Name');
+                $("#Branch_Name").focus();
+                return false;
+            }
+            else if ($("#Bank_Code").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Code');
+                $("#Bank_Code").focus();
+                return false;
+            }
+
+        }
+        if ($("#Bank_Code").val() != "") {
+
+            if ($("#Account_No").val() == "") {
+                RdotAlerterrtxt('please Enter Account No');
+                $("#Account_No").focus();
+                return false;
+            }
+
+            else if ($("#Branch_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Branch Name');
+                $("#Branch_Name").focus();
+                return false;
+            }
+            else if ($("#Bank_Name").val() == "") {
+                RdotAlerterrtxt('please Enter Bank Name');
+                $("#Bank_Name").focus();
+                return false;
+            }
+
+        }
+
+        if ($("#Currency option:selected").index() != 0) {
+
+            if ($("#Salary").val() == "0") {
+                RdotAlerterrtxt('please Enter Salary');
+                $("#Salary").focus();
+                return false;
+            }
+
+            if ($("#Salary_Start_Date").val() == "") {
+                RdotAlerterrtxt('please Enter Salary Start Date');
+                $("#Salary_Start_Date").focus();
+                return false;
+            }
+        }
+
+
+
+        if ($("#Salary").val() != "0") {
+
+            if ($("#Currency option:selected").index() <= 0) {
+                RdotAlerterrtxt('please select Currency ');
+                $("#Currency").focus();
+                return false;
+            }
+
+            if ($("#Salary_Start_Date").val() == "") {
+                RdotAlerterrtxt('please Enter Salary Start Date');
+                $("#Salary_Start_Date").focus();
+                return false;
+            }
+        }
+
+        if ($("#Salary_Start_Date").val() != "") {
+
+            if ($("#Currency option:selected").index() <= 0) {
+                RdotAlerterrtxt('please select Currency ');
+                $("#Currency").focus();
+                return false;
+            }
+
+            if ($("#Salary").val() == "") {
+                RdotAlerterrtxt('please Enter Salary');
+                $("#Salary").focus();
+                return false;
+            }
+        }
+
+        return ValFlag;
+
+    }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#user_img').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+    $("input[id='my_file']").on("change", function () {
+        debugger
+        readURL(this);
+        var data = new FormData();
+        var files = $("input[id = 'my_file']").get(0).files;
+        if (files.length > 0) {
+            data.append("MyImages", files[0]);
+        }
+        $.ajax({
+            url: "/HR/Employees/Uploadfile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                //code after success
+                debugger
+                if (response == "InvalidError") {
+                    RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                }
+                else {
+                    debugger;
+                    $("input[type='image']").val(response);
+                    //$('input[name="Photo_imghdn"]').val('/Images/' + response);
+                }
+
+            },
+            error: function (er) {
+                RdotAlerterrtxt(er);
+            }
+        });
+
+    })
+    $("input[type='image']").click(function () {
+        debugger
+        $("input[id='my_file']").click();
+
+    });
+    $(function () {
+        debugger
+        $('#Joining_date').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+        $('#DOB').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+
+        $('#Contract_Start_Date').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+        $('#Salary_Start_Date').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+       
+        $('#Empdate').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+    });
+
+
+
+
+    $("#addrow").on("click", function () {
+
+        var counter = 0;
+        var newRow = $("#AddCMRow");
+        var cols = "";
+        cols += '<div class="reddotTableRow odd-even-row">';
+
+        @*cols += '<div> @Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" })</div>';*@
+        cols += ' <div class="reddotTableCell text-left"><div>';
+
+        cols += '<select class="form-control" id="EmpPrEdu_Type" name="EmpPrEdu.Type"><option value="Professional">Professional</option>';
+        cols += '  <option value="Educational">Educational</option>';
+        cols += ' </select >@Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" }) ';
+
+
+
+
+        @*cols += ' @Html.DropDownListFor(m => m.Type, new List<SelectListItem> {
+                 new SelectListItem { Text = "Professional", Value = "Professional" },
+           new SelectListItem { Text = "Educational", Value = "Educational" } }, new { @class = "form-control" })';*@
+
+
+
+        //cols += ' <select id="ddlEduProType" name="basic" class="form-control form-control-sm">';
+        //cols += ' <option value="Educational">Educational</option>';
+        //cols += ' <option value="Professional">Professional</option>';
+
+        //cols += ' </select>';
+        cols += '</div ></div > ';
+
+      //  cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control" id=""> </div> </div>';
+        cols += ' <div class="reddotTableCell text-left"> <div>  @Html.TextBoxFor(m => m.Institute, new { @id = "EmpPrEdu_Institute", @class = "form-control", maxlength = "100" }) </div> </div>';
+        cols += ' <div class="reddotTableCell text-left"> <div>  @Html.TextBoxFor(m => m.Description, new { @id = "EmpPrEdu_Description", @class = "form-control", maxlength = "500" }) </div> </div>';
+       // cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control" id=""> </div> </div>';
+
+        cols += ' <div class="reddotTableCell text-left"><div> ';
+        cols += ' <div class="input-group" id="Empdate"> ';
+        //cols += ' <input type="text" class="form-control" id="StartDate" name="datepicker"> ';
+        cols += ' @Html.TextBoxFor(m => m.StartDate , new { @id = "EmpPrEdu_StartDate", @class = "form-control",@name="datepicker"})';
+
+
+        cols += ' <div class="input-group-append"> ';
+        cols += ' <span class="input-group-text"> ';
+        cols += ' <i class="far fa-calendar-alt"></i> ';
+        cols += ' </span> ';
+        cols += ' </div> ';
+        cols += ' </div> ';
+        cols += ' </div > </div > ';
+        cols += ' <div class="reddotTableCell text-left"><div> ';
+        cols += ' <div class="input-group"> ';
+        //cols += ' <input type="text" class="form-control" id="EndDate" name="datepicker"> ';
+         cols += ' @Html.TextBoxFor(m => m.EndDate, new { @id = "EmpPrEdu_EndDate", @class = "form-control" })';
+        cols += ' <div class="input-group-append"> ';
+        cols += ' <span class="input-group-text"> ';
+        cols += ' <i class="far fa-calendar-alt"></i> ';
+        cols += ' </span> ';
+        cols += ' </div> ';
+        cols += ' </div> ';
+        cols += ' </div > </div > ';
+        //cols += ' <div class="reddotTableCell text-right"> <div> <input type="text" class="form-control" id=""> </div> </div>';
+        cols += ' <div class="reddotTableCell text-left"> <div>  @Html.TextBoxFor(m => m.Score, new { @id = "EmpPrEdu_Score", @class = "form-control" }) </div> </div>';
+        cols += ' <div class="reddotTableCell">';
+        cols += ' <div>';
+        cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+        cols += ' </div>';
+        cols += ' </div>';
+        cols += ' </div>';
+        newRow.append(cols);
+
+        $("table.order-list").append(newRow);
+        debugger;
+        $("#EmpPrEdu_StartDate").val('');
+
+        $("#EmpPrEdu_StartDate").datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+        $("#EmpPrEdu_EndDate").val('');
+        $("#EmpPrEdu_EndDate").datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+        counter++;
+    });
+
+
+    $('#AddCMRow').on('click', '.ibtnDel', function (event) {
+        debugger;
+        var counter = 0;
+        var tr = $(this).closest(".reddotTableRow");
+        var delid = tr.find("[id='EmpPrEdu_EId']").val();
+        if (delid == "0") {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        }
+        else {
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.getJSON("/Employees/DeleteRecord", { EId: delid }).done(function (data) {
+
+                        if (data.DeleteFlag == "Deleted Sucessfully.") {
+                            tr.remove();
+                            //$('#btnreload').trigger('click');
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your Educational Info has been deleted.',
+                        'success'
+                    )
+
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Educational Info is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+
+        }
+
+
+    });
+
+
+
+
+
+
+
+</Script>
+
+<script>
+
+    $(document).ready(function () {
+        var counter = 0;
+
+        $("#addAttachments").on("click", function () {
+            var newRow = $("#AddAttachmentsRow");
+            var cols = "";
+            cols += '<div class="reddotTableRow odd-even-row">';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file" id="exampleFormControlFile1"> </div> </div>';
+            cols += ' <div class="reddotTableCell">';
+            cols += ' <div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
+        });
+
+
+
+        $("#AddAttachmentsRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+
+
+    });
+
+
+
+
+</script>
+@*<script>
+
+    $('#datetime').datetimepicker({
+        format: 'MM/DD/YYYY H:mm',
+    });
+    $('#datepicker').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+
+    $('#datepicker1').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+    $('#datepickernew').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+
+    $('#datepickerFromDate').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+
+    $('#datepickerToDate').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+    $('#timepicker').datetimepicker({
+        format: 'h:mm A',
+    });
+
+    $('#basic').select2({
+        theme: "bootstrap"
+    });
+
+    $('#multiple').select2({
+        theme: "bootstrap"
+    });
+
+    $('#multiplenew').select2({
+        theme: "bootstrap"
+    });
+
+    $('#multiple-states').select2({
+        theme: "bootstrap"
+    });
+
+    $('#tagsinput').tagsinput({
+        tagClass: 'badge-info'
+    });
+
+    $(function () {
+        $("#slider").slider({
+            range: "min",
+            max: 100,
+            value: 40,
+        });
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [75, 300]
+        });
+    });
+    $(document).ready(function () {
+        $('.scrollbar-inner').scrollbar();
+    });
+
+</script>*@
+@*<script>
+    $("input[type='image']").click(function () {
+        $("input[id='my_file']").click();
+    });
+</script>*@
+
+
+
+
+
+
+

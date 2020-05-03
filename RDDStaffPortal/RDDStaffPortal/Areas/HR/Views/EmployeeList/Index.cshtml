@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Employees List</h4>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="form-group">
+                                    <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control " placeholder="Search.."></div>
+                                </div>
+                                <div class="row rowmin user-box mar-t10" id="userTable">
+                                    @foreach (var items in ViewBag.EmpDisplayList)
+                                    {
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="card card-stats card-round">
+                                                <div class="card-body ">
+                                                    <div class="row align-items-center">
+                                                        <div class="avatar">
+                                                            <img src="~/img/jm_denis.jpg" alt="..." class="avatar-img rounded">
+                                                        </div>
+                                                        <div class="col col-stats ml-3 ml-sm-0 padd-r0">
+                                                            @*<div class="icon-preview userdetilsicon"><i class="far fa-eye"></i></div>*@
+                                                            <div class="icon-preview userdetilsicon"> <a href='/HR/Employees?EmployeeId=@items.EmployeeId' class="far fa-eye"> </a></div>
+                                                            <div class="numbers member-name">
+                                                                <label for="@items.EmployeeId" hidden>@items.EmployeeId</label>
+                                                                <h5 class="card-title">
+                                                                    <label for="@items.FName">@items.FName</label>
+                                                                    <label for="@items.LName">@items.LName</label>
+                                                                </h5>
+                                                                <p> <label class="card-category" for="@items.DesigName">@items.DesigName</label></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="user-Info">
+                                                       
+                                                        <p><small class="text-muted"><i class="icon-user"></i><label for="@items.EmployeeNo">@items.EmployeeNo</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-user"></i><label for="@items.Country">@items.Country</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-envelope"></i>  <label for="@items.Email">@items.Email</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-phone"></i>  <label for="@items.Contact_No">@items.Contact_No</label>(Ext No:<label for="@items.Ext_no">@items.Ext_no</label>)</small></p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    }
+
+
+
+                                    </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+@*<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">User</h4>
+
+            </div>
+            <div class="rowmin">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="form-group">
+                                    <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control " placeholder="Search.."></div>
+                                </div>
+                                <div class="rowmin user-box mar-t10" id="userTable">
+                                    @foreach (var items in ViewBag.EmpDisplayList)
+                                    {
+                                        <div class="col-sm-6 col-md-3">
+
+                                            <div class="card card-stats card-round">
+
+                                                <div class="card-body ">
+                                                    <div class="row align-items-center">
+                                                        <div class="avatar">
+                                                            <img src="~/img/jm_denis.jpg" alt="..." class="avatar-img rounded">
+                                                        </div>
+
+                                                        <div class="col col-stats ml-3 ml-sm-0 padd-r0">
+
+                                                            <div class="icon-preview userdetilsicon"> <a href='/HR/Employees?EmployeeId=@items.EmployeeId' class="far fa-eye"><span class='glyphicon glyphicon-edit'></span>  </a></div>
+                                                            </div>
+                                                                </div>
+
+                                                            <div class="numbers member-name">
+
+
+                                                                <label for="@items.EmployeeId" hidden>@items.EmployeeId</label>
+                                                                <h5 class="card-title">
+                                                                    <label for="@items.FName">@items.FName</label>
+                                                                    <label for="@items.LName">@items.LName</label>
+                                                                </h5>
+                                                                <p> <label class="card-category" for="@items.DesigName">@items.DesigName</label></p>
+
+
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="user-Info">
+                                                        <p><small class="text-muted"><i class="icon-user"></i>668547</small></p>
+                                                        <p><small class="text-muted"><i class="icon-user"></i><label for="@items.EmployeeNo">@items.EmployeeNo</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-user"></i><label for="@items.Country">@items.Country</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-envelope"></i>  <label for="@items.Email">@items.Email</label></small></p>
+                                                        <p><small class="text-muted"><i class="icon-phone"></i>  <label for="@items.Contact_No">@items.Contact_No</label></small></p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                        </div>
+                                    }
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+<div class="custom-template">
+    <div class="title">Settings</div>
+    <div class="custom-content">
+        <div class="switcher">
+            <div class="switch-block">
+                <h4>Logo Header</h4>
+                <div class="btnSwitch">
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+                    <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+                    <br />
+                    <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+                    <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="custom-toggle">
+        <i class="flaticon-settings"></i>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTable .col-md-3").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+

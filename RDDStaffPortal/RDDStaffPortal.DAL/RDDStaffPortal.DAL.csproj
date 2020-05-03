@@ -72,6 +72,7 @@
     <Compile Include="DataModels\RDD_Employee_Fin.cs" />
     <Compile Include="CommonFunction.cs" />
     <Compile Include="DataModels\RDD_firstDashBoard.cs" />
+    <Compile Include="DataModels\RDD_EmploymentStatus.cs" />
     <Compile Include="DataModels\RDD_Menus.cs" />
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="DataModels\RDD_test_img.cs" />
@@ -81,7 +82,8 @@
     <Compile Include="InitialSetup\DashBoardDbOperation.cs" />
     <Compile Include="InitialSetup\DepartmentsDbOperation.cs" />
     <Compile Include="InitialSetup\DesignationDbOperation.cs" />
-    <Compile Include="InitialSetup\EmployeeRegistrationDbOperation.cs" />
+    <Compile Include="HR\EmployeeRegistrationDbOperation.cs" />
+    <Compile Include="InitialSetup\EmpStatusDbOperations.cs" />
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
     <Compile Include="InitialSetup\RDD_Test_ImgDBOP.cs" />
