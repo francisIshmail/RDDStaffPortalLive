@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
-namespace RDDStaffPortal.DAL.DataModels
+namespace RDDStaffPortal.Areas.HR.Models
 {
-    public class RDD_EmployeeRegistration
+    public class Employees
     {
-        // public List<RDD_Departments> Dept {get;set;}
-        //Employee Details
-        public string CountryName { get; set; }
-        public bool IsActive { get; set; }
         public int DeptId { get; set; }
         public string DeptName { get; set; }
         public int DesigId { get; set; }
         public string DesigName { get; set; }
-        public bool Editflag { get; set; }
         public int StatusId { get; set; }
         public string StatusName { get; set; }
+
+        public bool Editflag { get; set; }
+
         public int EmployeeId { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
@@ -33,14 +29,12 @@ namespace RDDStaffPortal.DAL.DataModels
         public string Marital_Status { get; set; }
         public DateTime DOB { get; set; }
         public string Citizenship { get; set; }
-     
+
         public string Emergency_Contact { get; set; }
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
-
         public string EmployeeNo { get; set; }
-        //FINAnce
-
+        //finance
         public int FId { get; set; }
         public string Currency { get; set; }
         public int Salary { get; set; }
@@ -53,25 +47,24 @@ namespace RDDStaffPortal.DAL.DataModels
         public string Tax_no { get; set; }
         public string Insurance_no { get; set; }
 
-        public  string other_ref_no { get; set; }
+        public string other_ref_no { get; set; }
+
        // public string EmployeeNo { get; set; }
 
 
+
         //BU
+
         public string u_bugroup { get; set; }
-
-
         //Country
-        //
-        public int CId { get; set; }
+       public int CId { get; set; }
         public string CountryCode { get; set; }
         public string CountryCodeName { get; set; }
         public string Country { get; set; }
         //Items of BU
-
         public string ItmsGrpNam { get; set; }
 
-        //To Get Manager
+       //To Get Manager
 
         public int ManagerId { get; set; }
         public string ManagerName { get; set; }
@@ -81,7 +74,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public int Empstatus { get; set; }
         public string type_of_employement { get; set; }
 
-        public DateTime Joining_Date { get; set; }
+        public  DateTime Joining_Date { get; set; }
 
         public int No_child { get; set; }
 
@@ -91,37 +84,11 @@ namespace RDDStaffPortal.DAL.DataModels
         public string Note { get; set; }
 
 
-        public string ImagePath1 { get; set; }
+        public HttpPostedFileBase my_file { get; set; }
+       
+        public string ImagePath { get; set; }
 
-        public byte[] ImagePath { get; set; }
-        public string LogoType { get; set; }
 
-        // public HttpPostedFileBase my_file { get; set; }
-
-        //Educational and professional
-
-        public int EId { get; set; }
-        public string Type { get; set; }
-        public string Institute { get; set; }
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-        public string Description { get; set; }
-        public int Score { get; set; }
-        public List<EmpInfoProEdunew> EmpInfoProEdus { get; set; }
-
-        public EmpInfoProEdunew EmpInfoProEdu { get; set; }
+        
     }
-    public class EmpInfoProEdunew
-    {
-        public int EId { get; set; }
-        public string Type { get; set; }
-        public string Institute { get; set; }
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-        public string Description { get; set; }
-        public int Score { get; set; }
-    }
-  
 }

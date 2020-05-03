@@ -9,8 +9,7 @@ using RDDStaffPortal.DAL.DataModels;
 using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
-
-
+using System.Web.Helpers;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -18,38 +17,56 @@ namespace RDDStaffPortal.Areas.HR.Controllers
     {
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
         // GET: Admin/EmployeeRegistration
-        //public ActionResult Update(int EmployeeId)
+        //public ActionResult Create()
         //{
-
-
-
-
         //    return View();
-
         //}
-
-
-        //public ActionResult Edit(int EmployeeId)
+        //[Route("Create")]
+        //[HttpPost]
+        //public ActionResult Create(Employees model)
         //{
-        //    string result = string.Empty;
-        //    try
+        //    HttpPostedFileBase file = Request.Files["ImageData"];
+        //    ContentRepository service = new ContentRepository();
+        //    int i = service.UploadImageInDataBase(file, model);
+        //    if (i == 1)
         //    {
-        //        RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
-
-
+        //        return RedirectToAction("Index");
         //    }
-        //    catch (Exception ex)
-        //    {
-        //        result = "Error occured :" + ex.Message;
-        //    }
-
-        //    return View("Index");
-        //    //  return Json(result, JsonRequestBehavior.AllowGet);
+        //    return View(model);
         //}
-        public ActionResult Index(int? EmployeeId)
+        //private readonly DBContext db = new DBContext();
+        //public int UploadImageInDataBase(HttpPostedFileBase file, ContentViewModel contentViewModel)
+        //{
+        //    contentViewModel.Image = ConvertToBytes(file);
+        //    var Content = new Content
+        //    {
+        //        Title = contentViewModel.Title,
+        //        Description = contentViewModel.Description,
+        //        Contents = contentViewModel.Contents,
+        //        Image = contentViewModel.Image
+        //    };
+        //    db.Contents.Add(Content);
+        //    int i = db.SaveChanges();
+        //    if (i == 1)
+        //    {
+        //        return 1;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
+        //public byte[] ConvertToBytes(HttpPostedFileBase image)
+        //{
+        //    byte[] imageBytes = null;
+        //    BinaryReader reader = new BinaryReader(image.InputStream);
+        //    imageBytes = reader.ReadBytes((int)image.ContentLength);
+        //}
+            public ActionResult Index(int? EmployeeId)
 
         {
-
+           
+                       
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("EXEC EmpReg_GetDDLDataToBind");
             List<RDD_EmployeeRegistration> DeptList = new List<RDD_EmployeeRegistration>();
@@ -150,20 +167,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
           
             DS = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
-            List<RDD_EmployeeRegistration> MaxId = new List<RDD_EmployeeRegistration>();
-            if (DS.Tables.Count > 0)
-            {
-                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
-                {
-                    RDD_EmployeeRegistration EmpNO = new RDD_EmployeeRegistration();
-                    EmpNO.EmployeeNo = DS.Tables[0].Rows[i]["EmpNO"].ToString();
 
-                    MaxId.Add(EmpNO);
+             string NextEmpNo = DS.Tables[0].Rows[0]["EmpNO"].ToString();
 
-                }
-            }
 
-             DS = Db.myGetDS("EXEC RDD_GETCurrency");
+            DS = Db.myGetDS("EXEC RDD_GETCurrency");
             List<RDD_EmployeeRegistration> CurrencyList = new List<RDD_EmployeeRegistration>();
             if (DS.Tables.Count > 0)
             {
@@ -187,19 +195,36 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             ViewBag.CountryList = CountryList;
             ViewBag.ManagerList = new SelectList(ManagerList, "ManagerId", "Managername");
             ViewBag.ddlCountry = new SelectList(ddlCountry, "CountryCodeName", "Country");
-            ViewBag.MaxId = MaxId;
+            
             ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency"); 
 
             if (EmployeeId == null)
             {
                 RDD_EmployeeRegistration objemp = new RDD_EmployeeRegistration();
+                ViewBag.EmployeeNo = NextEmpNo;
                 objemp.Editflag = false;
+
+                objemp.ImagePath1 = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
+                objemp.LogoType = ".jpg";
+                byte[] file;
+                using (var stream = new FileStream(objemp.ImagePath1, FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = new BinaryReader(stream))
+                    {
+                        file = reader.ReadBytes((int)stream.Length);
+                    }
+                }
+                objemp.ImagePath = file;
                 return View(objemp);
             }
             else
             {
                 RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
+                ViewBag.EmployeeNo = objemp.EmployeeNo;
+                
                 objemp.Editflag = true;
+
+              
                 return View(objemp);
             }
 
@@ -231,81 +256,95 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
 
-        public JsonResult AddEmpReg(Employees Emp)
+        public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu)
         {
-            //if(Emp.my_file != null)
-            //{
-            //    string filename = Path.GetFileNameWithoutExtension(Emp.my_file.FileName);
-            //    string extension = Path.GetExtension(Emp.my_file.FileName);
-            //    filename = filename + DateTime.Now.ToString("yymmssff") + extension;
-            //    Emp.ImagePath = filename;
-            //    Emp.my_file.SaveAs(Path.Combine(Server.MapPath("~/HR/Images"), filename));
-               
-            //}
-           
+
           
             string result = string.Empty;
             try
             {
                 RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();
-                rdd_empreg.ImagePath = Emp.ImagePath;
+              //  rdd_empreg.ImagePath = EmpData.ImagePath;
                 
+                rdd_empreg.EmployeeId = EmpData.EmployeeId;
+                rdd_empreg.CountryCodeName = EmpData.CountryCodeName;
+                rdd_empreg.ManagerName = EmpData.ManagerName;
+                rdd_empreg.EmployeeNo = EmpData.EmployeeNo;
+                rdd_empreg.FName = EmpData.FName;
+                rdd_empreg.LName = EmpData.LName;
+                rdd_empreg.Email = EmpData.Email;
+                rdd_empreg.Gender = EmpData.Gender;
+                rdd_empreg.Current_Address = EmpData.Current_Address;
+                rdd_empreg.Permanent_Address = EmpData.Permanent_Address;
+                rdd_empreg.Contact_No = EmpData.Contact_No;
+                rdd_empreg.Ext_no = EmpData.Ext_no;
+                rdd_empreg.IM_Id = EmpData.IM_Id;
+                rdd_empreg.Marital_Status = EmpData.Marital_Status;
+                rdd_empreg.DOB = EmpData.DOB;
 
-                rdd_empreg.EmployeeId = Emp.EmployeeId;
-                rdd_empreg.CountryCodeName = Emp.CountryCodeName;
-                rdd_empreg.ManagerName = Emp.ManagerName;
-                rdd_empreg.EmployeeNo = Emp.EmployeeNo;
-                rdd_empreg.FName = Emp.FName;
-                rdd_empreg.LName = Emp.LName;
-                rdd_empreg.Email = Emp.Email;
-                rdd_empreg.Gender = Emp.Gender;
-                rdd_empreg.Current_Address = Emp.Current_Address;
-                rdd_empreg.Permanent_Address = Emp.Permanent_Address;
-                rdd_empreg.Contact_No = Emp.Contact_No;
-                rdd_empreg.Ext_no = Emp.Ext_no;
-                rdd_empreg.IM_Id = Emp.IM_Id;
-                rdd_empreg.Marital_Status = Emp.Marital_Status;
-                rdd_empreg.DOB = Emp.DOB;
+                rdd_empreg.Citizenship = EmpData.Citizenship;
+                rdd_empreg.DesigId = EmpData.DesigId;
+                rdd_empreg.DeptId = EmpData.DeptId;
+                rdd_empreg.Emergency_Contact = EmpData.Emergency_Contact;
+                rdd_empreg.passport_no = EmpData.passport_no;
 
-                rdd_empreg.Citizenship = Emp.Citizenship;
-                rdd_empreg.DesigId = Emp.DesigId;
-                rdd_empreg.DeptId = Emp.DeptId;
-                rdd_empreg.Emergency_Contact = Emp.Emergency_Contact;
-                rdd_empreg.passport_no = Emp.passport_no;
-
-                rdd_empreg.StatusId = Emp.StatusId;
-                rdd_empreg.type_of_employement = Emp.type_of_employement;
-                rdd_empreg.Joining_Date = Emp.Joining_Date;
-                rdd_empreg.No_child = Emp.No_child;
-                rdd_empreg.National_id = Emp.National_id;
-                rdd_empreg.Contract_Start_date = Emp.Contract_Start_date;
-                rdd_empreg.Note = Emp.Note;
-
+                rdd_empreg.StatusId = EmpData.StatusId;
+                rdd_empreg.type_of_employement = EmpData.type_of_employement;
+                rdd_empreg.Joining_Date = EmpData.Joining_Date;
+                rdd_empreg.No_child = EmpData.No_child;
+                rdd_empreg.National_id = EmpData.National_id;
+                rdd_empreg.Contract_Start_date = EmpData.Contract_Start_date;
+                rdd_empreg.Note = EmpData.Note;
+                rdd_empreg.IsActive = EmpData.IsActive;
 
 
                 rdd_empreg.CreatedBy = User.Identity.Name;
 
-                rdd_empreg.FId = Emp.FId;
+                rdd_empreg.FId = EmpData.FId;
 
-                rdd_empreg.Currency = Emp.Currency;
-                rdd_empreg.Salary = Emp.Salary;
-                rdd_empreg.Salary_Start_Date = Emp.Salary_Start_Date;
-                rdd_empreg.Remark = Emp.Remark;
-                rdd_empreg.Account_No = Emp.Account_No;
-                rdd_empreg.Bank_Name = Emp.Bank_Name;
-                rdd_empreg.Branch_Name = Emp.Branch_Name;
-                rdd_empreg.Bank_Code = Emp.Bank_Code;
-                rdd_empreg.Tax_no = Emp.Tax_no;
-                rdd_empreg.Insurance_no = Emp.Insurance_no;
-                rdd_empreg.other_ref_no = Emp.other_ref_no;
+                rdd_empreg.Currency = EmpData.Currency;
+                rdd_empreg.Salary = EmpData.Salary;
+                rdd_empreg.Salary_Start_Date = EmpData.Salary_Start_Date;
+                rdd_empreg.Remark = EmpData.Remark;
+                rdd_empreg.Account_No = EmpData.Account_No;
+                rdd_empreg.Bank_Name = EmpData.Bank_Name;
+                rdd_empreg.Branch_Name = EmpData.Branch_Name;
+                rdd_empreg.Bank_Code = EmpData.Bank_Code;
+                rdd_empreg.Tax_no = EmpData.Tax_no;
+                rdd_empreg.Insurance_no = EmpData.Insurance_no;
+                rdd_empreg.other_ref_no = EmpData.other_ref_no;
 
 
-                rdd_empreg.CId = Emp.CId;
-                rdd_empreg.CountryCode = Emp.CountryCode;
+                rdd_empreg.CId = EmpData.CId;
+                rdd_empreg.CountryCode = EmpData.CountryCode;
                 //rdd_empreg.ItmsGrpNam = Emp.ItmsGrpNam;
 
-                result = EmpDbOp.Save(rdd_empreg);
 
+
+                //int i = 0;
+                //if(EmpInfoProEdu!=null)
+                //    {
+                //    while (i <= EmpInfoProEdu.Count)
+                //    {
+                //        i++;
+                //    }
+
+                //}
+
+                string TempPath = (string)Session["FILE"];
+                if (TempPath != null && TempPath != "")
+                {
+                    rdd_empreg.ImagePath1 = TempPath;
+                    rdd_empreg.LogoType = (string)Session["type"];
+                }
+                else
+                {
+                    rdd_empreg.ImagePath1 = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
+                    rdd_empreg.LogoType = ".jpg";
+                }
+
+                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu);
+               
             }
             catch (Exception ex)
             {
@@ -313,7 +352,69 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-      
+
+        
+            public JsonResult DeleteRecord(int EId)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = EmpDbOp.Delete(EId);
+            }
+            catch (Exception ex)
+            {
+                result = "Error occured :" + ex.Message;
+            }
+            return Json(new { DeleteFlag= result }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Uploadfile()
+        {
+            string _imgname = string.Empty;
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var pic = System.Web.HttpContext.Current.Request.Files["MyImages"];
+                if (pic.ContentLength > 0)
+                {
+                    var _ext = Path.GetExtension(pic.FileName);
+                    if (_ext.ToLower() != ".jpeg" && _ext.ToLower() != ".jpg" && _ext.ToLower() != ".png" && _ext.ToLower() != ".bmp")
+                        return Json("InvalidError", JsonRequestBehavior.AllowGet);
+                    var fileName = Path.GetFileName(pic.FileName);
+
+
+                    _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var _comPath = Server.MapPath("/Images/TempLogo/Temp") + "Abc" + _ext;
+                    _imgname = "user_" + _imgname + "Abc" + _ext;
+
+                    ViewBag.Msg = _comPath;
+                    var path = _comPath;
+
+                    string[] files = System.IO.Directory.GetFiles(Server.MapPath("/Images/TempLogo"), "Temp" + "Abc" + ".*");
+                    foreach (string f in files)
+                    {
+                        System.IO.File.Delete(f);
+                    }
+
+                    Session["FILE"] = _comPath;
+                    Session["type"] = _ext;
+                    // Saving Image in Original Mode
+                    pic.SaveAs(path);
+
+                    // resizing image
+                    MemoryStream ms = new MemoryStream();
+                    WebImage img = new WebImage(_comPath);
+
+                    if (img.Width > 200)
+                        img.Resize(200, 200);
+                    img.Save(_comPath);
+                    // end resize
+                }
+            }
+
+            return Json(Convert.ToString(_imgname), JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
 

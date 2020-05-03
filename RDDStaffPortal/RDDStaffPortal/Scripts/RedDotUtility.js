@@ -21,6 +21,8 @@ function RdotAlertSucesstxt(txt) {
     }])
 }
 
+
+
 function RdottableNDW(tblid, url1, colms) {
     //$('#' + tblid + ' tfoot th').each(function () {
     //    var title = $('#' + tblid + ' tfoot th').eq($(this).index()).text();

@@ -7,10 +7,12 @@ namespace RDDStaffPortal.Areas.HR.Models
 {
     public class Employees
     {
+        public string CountryName { get; set; }
+        public bool IsActive { get; set; }
         public int DeptId { get; set; }
         public string DeptName { get; set; }
         public int DesigId { get; set; }
-        public string DesigName { get; set; }
+        public string DesigName { get; set; } 
         public int StatusId { get; set; }
         public string StatusName { get; set; }
 
@@ -49,7 +51,7 @@ namespace RDDStaffPortal.Areas.HR.Models
 
         public string other_ref_no { get; set; }
 
-       // public string EmployeeNo { get; set; }
+        // public string EmployeeNo { get; set; }
 
 
 
@@ -57,14 +59,14 @@ namespace RDDStaffPortal.Areas.HR.Models
 
         public string u_bugroup { get; set; }
         //Country
-       public int CId { get; set; }
+        public int CId { get; set; }
         public string CountryCode { get; set; }
         public string CountryCodeName { get; set; }
         public string Country { get; set; }
         //Items of BU
         public string ItmsGrpNam { get; set; }
 
-       //To Get Manager
+        //To Get Manager
 
         public int ManagerId { get; set; }
         public string ManagerName { get; set; }
@@ -74,7 +76,7 @@ namespace RDDStaffPortal.Areas.HR.Models
         public int Empstatus { get; set; }
         public string type_of_employement { get; set; }
 
-        public  DateTime Joining_Date { get; set; }
+        public DateTime Joining_Date { get; set; }
 
         public int No_child { get; set; }
 
@@ -84,11 +86,39 @@ namespace RDDStaffPortal.Areas.HR.Models
         public string Note { get; set; }
 
 
-        public HttpPostedFileBase my_file { get; set; }
-       
-        public string ImagePath { get; set; }
+       // public HttpPostedFileBase my_file { get; set; }
+
+    public string ImagePath1 { get; set; }
+
+        public byte[] ImagePath { get; set; }
+        public string LogoType { get; set; }
+
+        //Educational and professional
+        public int EId { get; set; }
+        public string Type { get; set; }
+        public string Institute { get; set; }
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+        public string Description { get; set; }
+        public int Score { get; set; }
 
 
-        
+
+        public List<EmpInfoProEdunew> EmpInfoProEdunews { get; set; }
+
+        public EmpInfoProEdunew EmpInfoProEdu { get; set; }
+    }
+    public class EmpInfoProEdunew
+    {
+        public int EId { get; set; }
+        public string Type { get; set; }
+        public string Institute { get; set; }
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+        public string Description { get; set; }
+        public int Score { get; set; }
+
     }
 }

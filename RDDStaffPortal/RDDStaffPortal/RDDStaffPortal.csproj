@@ -133,6 +133,7 @@
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\HR\Controllers\UserListController.cs" />
     <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
+    <Content Include="Content\bootstrap-treeview.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\demo.css" />
     <Content Include="Content\fonts.css" />
@@ -363,6 +365,7 @@
     <Content Include="Areas\HR\Views\Employees\Index.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmploymentStatus\Index.cshtml" />
+    <Content Include="Areas\HR\Views\UserList\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -397,10 +400,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\HR\Views\Employees\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
+    <Folder Include="Images\TempLogo\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -431,7 +434,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28968/</IISUrl>
+          <IISUrl>http://localhost:28970/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
