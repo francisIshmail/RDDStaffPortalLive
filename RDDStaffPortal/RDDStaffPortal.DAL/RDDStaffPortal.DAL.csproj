@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\Rdd_comonDrop.cs" />
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />

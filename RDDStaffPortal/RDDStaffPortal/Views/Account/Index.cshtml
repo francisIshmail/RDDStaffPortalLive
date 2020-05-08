@@ -3,30 +3,3 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
-<script src="~/Scripts/Application/Dashboardjs.js"></script>
-<h2>Index</h2>
-<div class="main-panel">
-    <div class="content">
-        <div class="page-inner">
-            <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
-
-            </div>
-
-            @{ Html.RenderAction("GetDashBoardView", "Account");}
-
-        </div>
-    </div>
-</div>
-
-@*@{ Html.RenderAction("GetMenuTree", "Account"); }*@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        //$(function () {
-
-        $(".edit").attr('title', 'Edit');
-        $(".delete").attr('title', 'Delete');
-        DashBoard.initialize();
-    });
-</script>

@@ -29,14 +29,14 @@
                                                 </div>
                                             </div>
 
-                                        <div class="col-md-1">
+                                        @*<div class="col-md-1">
                                             <div class="form-group padd-0">
                                                 <label for="email2" class="width100px"></label>
                                                 <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
                                             </div>
 
 
-                                        </div>
+                                        </div>*@
                                         <div class="col-md-2">
                                             <div class="form-group padd-0">
                                                 <label for="email2" class="width100px"></label>
@@ -239,13 +239,36 @@
             $('#Userid').val(0);
            // $('#Userid').selectpicker('refresh');
         });
+        var tf = true;
+        $("#Userid").on("change", function () {
 
+            var Userid = $('#Userid Option:selected').val();
+            if (Userid == '0' && tf==true) {
+                RdotAlerterrtxt("Please select  User");               
+                return false
+
+            }
+            tf = true;
+            $.get("/GetUserRightsList", { UserId: Userid }).done(function (response) {
+
+                var ary = [];
+                ary = response;
+                var n = 0;
+
+                while (ary.length > n) {
+                    $(".card-header").find("[id='smallSelect-" + ary[n].Code + "']").val(ary[n].CodeName);
+
+                    n++;
+                }
+            });
+            $('#btnSaveMenu').show();
+        })
 
         $("[id^='smallSelect']").on('change', function () {
             debugger
             var tid = $(this).attr("id");
             var k = tid.split('-');            
-            $("[id='accordion-" + k[1] + "']").find("[id^='smallSelect']").val($(this).val());
+            $("[id='collapse-" + k[1] + "']").find("[id^='smallSelect']").val($(this).val());
 
         })
         $('#Userid').select2({
@@ -305,6 +328,7 @@
             debugger
            $.post("/SaveUserRights", Users).done(function (response) {
                if (response.SaveFlag == true) {
+                   tf = false;
                    RdotAlertSucesstxt('Save Succcesfully');
                    $("[id*='smallSelect']").val("N");
                    $('#Userid').val("0").trigger("change");

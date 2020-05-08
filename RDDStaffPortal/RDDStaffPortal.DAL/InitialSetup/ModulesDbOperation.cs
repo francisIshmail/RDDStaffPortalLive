@@ -411,6 +411,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                            DashName = !string.IsNullOrWhiteSpace(dr["DashName"].ToString()) ? dr["DashName"].ToString() : "",
                           // colcss = colcss,
                            ColumNames = !string.IsNullOrWhiteSpace(dr["ColumNames"].ToString()) ? dr["ColumNames"].ToString() : "",
+                           FieldName = !string.IsNullOrWhiteSpace(dr["FieldName"].ToString()) ? dr["FieldName"].ToString() : "",
                            cssclass = !string.IsNullOrWhiteSpace(dr["cssclass"].ToString()) ? dr["cssclass"].ToString() : "",
                            TypeOfChart = !string.IsNullOrWhiteSpace(dr["TypeOfChart"].ToString()) ? dr["TypeOfChart"].ToString() : "",
                            Url = !string.IsNullOrWhiteSpace(dr["Url"].ToString()) ? dr["Url"].ToString() : "",

@@ -253,6 +253,32 @@ function RdottableNDW1(tblid, url1, colms) {
     
 }
 
+function RdottableDash(tblid, url1, colms) {
+    $('#' + tblid+'').DataTable({
+        "searching": false,
+        "processing": true,
+        "serverSide": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bInfo": false,
+        "ajax": url1,
+        "columns": colms
+    });
+}
+
+var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/*json date format dd-MMM-yyyy*/
+function RdotdatefrmtRes1(dte) {
+    var now = new Date(parseInt(dte.substr(6)));
+    var now = new Date(now);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "-" + RdotMMNames[month - 1] + "-" + now.getFullYear();
+    return today;
+}
+
 //Table Number  N & Text T Tab Event
 function RdottableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
     $(tbl).on("keydown", ide, function (e) {

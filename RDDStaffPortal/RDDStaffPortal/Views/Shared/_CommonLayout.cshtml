@@ -209,7 +209,7 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
-                                        @using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { @class = "dropdown-item" }))
+                                        @using (Html.BeginForm("/SignOut", "Account", new { area = "" }, FormMethod.Post, new { @class = "dropdown-item", @role = "form" }))
                                         {
                                             <a href="javascript:;" onclick="document.forms[0].submit();">Sign Out</a>
                                         }
@@ -632,8 +632,13 @@
     <script src="~/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
     <!-- jQuery Scrollbar -->
     <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
+    <!-- Chart JS -->
+    <script src="~/js/plugin/chart.js/chart.min.js"></script>
+    <!-- jQuery Sparkline -->
+    <script src="~/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <!-- Chart Circle -->
+    <script src="~/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="js/canvasjs.min.js"></script>
 
     @*datatable*@
     <script src="~/Scripts/datatables/js/jquery.dataTables.min.js"></script>
@@ -675,11 +680,11 @@
     @*--end voice-*@
 
     <script src="~/Scripts/RedDotUtility.js"></script>
-    
+
     <script>
 
-                                    //$('#ulid li').removeAttr('class','');
-                                    //$('#ulid li a').removeAttr('data-toggle', '');
+                                            //$('#ulid li').removeAttr('class','');
+                                            //$('#ulid li a').removeAttr('data-toggle', '');
 
     </script>
 
