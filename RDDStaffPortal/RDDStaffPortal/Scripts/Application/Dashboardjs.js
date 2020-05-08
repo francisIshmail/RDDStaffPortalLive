@@ -40,14 +40,14 @@
 
 			$(this).find(".ds2").text(lbl[0] + " Acheived");
 
-			if ($(this).find(".ds1").text() == "Reveanu Target") {
+			if ($(this).find(".ds1").text() == "Revenue Target") {
 				$(this).find(".A1").text(Cards[0].RevTarget);
 				$(this).find(".B1").text(Cards[0].ActualRev);
 				$(this).find(".perv").text(Cards[0].RevTrgetAcheivedPercent);
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevTrgetAcheivedPercent+'')
 				
 
-			} else if ($(this).find(".ds1").text() == "Revenue Forcost") {
+			} else if ($(this).find(".ds1").text() == "Revenue Forecast") {
 				$(this).find(".A1").text(Cards[0].RevForecast);
 				$(this).find(".B1").text(Cards[0].ActualRev);
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
@@ -165,7 +165,7 @@
 						}
 					})
 				} else {
-					colms.push({ 'mDataProp': fld[i] + '', "sWidth": "30%" })
+					colms.push({ 'mDataProp': fld[i] + '', "sWidth": "40%" })
 				}
 
 				i++;
