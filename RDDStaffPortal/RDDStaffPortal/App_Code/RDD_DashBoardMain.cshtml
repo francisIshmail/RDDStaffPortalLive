@@ -1,0 +1,238 @@
+﻿@helper GetSecondview(List<RDDStaffPortal.DAL.DataModels.RDD_DashBoard_Main> Dashview)
+{
+    <div id="Cards" class="row">
+
+        @{ var submenu = Dashview.Where(a => a.TypeOfChart == "Firstcard").Count();}
+        @foreach (var i in Dashview.Where(a => a.TypeOfChart == "Firstcard"))
+        {
+            var colcss = "col-12 col-sm-6 col-md-3";
+
+            if (submenu == 4)
+            {
+                colcss = "col-12 col-sm-6 col-md-3";
+            }
+            else if (submenu == 3)
+            {
+                colcss = "col-12 col-sm-6 col-md-4";
+            }
+            else if (submenu == 2)
+            {
+                colcss = "col-12 col-sm-6 col-md-6";
+            }
+            else if (submenu == 1)
+            {
+                colcss = "col-12 col-sm-6 col-md-12";
+            }
+
+        <div class="@colcss" id="@i.TypeOfChart">
+            <input type="hidden" id="hdnurl" value="@i.Url" />
+            <input type="hidden" id="hdnColumns" value="@i.ColumNames" />
+            <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+            
+            <div class="card">
+                <div class="card-body" id="@i.DashId">
+
+                    <div class="d-flex justify-content-between">
+                        <div >
+                            <h5><b class="ds1">@i.DashName</b></h5>
+                        </div>
+                        <h3 class="text-@i.cssclass fw-bold A1">$170</h3>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div >
+                            <h5><b class="ds2">SecondText</b></h5>
+                        </div>
+                        <h3 class="text-success fw-bold B1">170</h3>
+
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-@i.cssclass w-75" style="" role="progressbar" aria-valuemin="75" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <p class="text-muted mb-0">Change</p>
+                        <p class="text-muted mb-0 perv">75%</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        }
+    </div>
+
+    foreach (var i in Dashview.Where(a => a.TypeOfChart == "MultilineChart"))
+    {
+
+        <div class="row" id="lins">
+            <div class="col-md-12">
+                <div class="card" id="@i.TypeOfChart">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                    <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName</div>
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Percentage</a>
+                                            <a class="dropdown-item" href="#">Number</a>
+                                            <a class="dropdown-item" href="#">Tabular</a>
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="@i.DashId"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+    <div class="row" id="pis">
+        @foreach (var i in Dashview.Where(a => a.TypeOfChart == "PiChart"))
+        {
+
+            <div class="col-md-6" id="@i.TypeOfChart">
+
+                <div class="card">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnColumns" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName </div>
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Percentage</a>
+                                            <a class="dropdown-item" href="#">Number</a>
+                                            <a class="dropdown-item" href="#">Tabular</a>
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="@i.DashId"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+
+    foreach (var i in Dashview.Where(a => a.TypeOfChart == "BarChart"))
+    {
+        <div class="row" id="bars">
+            <div class="col-md-12">
+                <div class="card" id="@i.TypeOfChart">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                    <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName</div>
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Percentage</a>
+                                            <a class="dropdown-item" href="#">Number</a>
+                                            <a class="dropdown-item" href="#">Tabular</a>
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="@i.DashId"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row" id="dt">
+        @foreach (var i in Dashview.Where(a => a.TypeOfChart == "Datatables1"))
+        {
+
+
+            <div class="col-md-4" id="@i.TypeOfChart">
+                <div class="card">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnColumns" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnField" value="@i.FieldName" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName</div>
+                            <div class="card-tools">
+                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="far fa-eye"></i></button>
+                                <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Percentage</a>
+                                    <a class="dropdown-item" href="#">Number</a>
+                                    <a class="dropdown-item" href="#">Tabular</a>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="@i.DashId">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody><tr></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+}

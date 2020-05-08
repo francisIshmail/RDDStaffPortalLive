@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.DAL.InitialSetup
@@ -19,7 +20,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
         {
             return new RDD_User_Rights
             {
-
+               
             };
         }
 
@@ -46,9 +47,9 @@ namespace RDDStaffPortal.DAL.InitialSetup
                     i++;
                 }
                 SqlParameter[] Para = {
-                    
+
                     new SqlParameter("@tblRights",dte),
-                    new SqlParameter("@flag",UserRights.Flag)
+                    new SqlParameter("@UserId",UserRights.UserId)
                     
                     
                 };
@@ -61,6 +62,80 @@ namespace RDDStaffPortal.DAL.InitialSetup
             }
             
             return t;
+        }
+
+        public List<Rdd_comonDrop> GetUserList()
+        {
+            List<Rdd_comonDrop> _UserList = new List<Rdd_comonDrop>();
+            try
+            {
+                SqlParameter[] parm = { };
+
+
+               
+                DataSet dsModules = Com.ExecuteDataSet("RDD_View_User", CommandType.StoredProcedure, parm);
+
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _UserList.Add(new Rdd_comonDrop()
+                        {
+                          
+                            Code = !string.IsNullOrWhiteSpace(dr["Code"].ToString()) ? dr["Code"].ToString() : "",
+                           CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",
+                           
+
+                        });
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _UserList = null;
+            }
+
+            return _UserList;
+        }
+
+
+
+        public List<Rdd_comonDrop> GetUserRightsList(string UserId)
+        {
+            List<Rdd_comonDrop> _UserRightsList = new List<Rdd_comonDrop>();
+            try
+            {
+                SqlParameter[] parm = { new SqlParameter("@UserId", UserId) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_View_User_Rights", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _UserRightsList.Add(new Rdd_comonDrop()
+                        {
+
+                            Code = !string.IsNullOrWhiteSpace(dr["Code"].ToString()) ? dr["Code"].ToString() : "",
+                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",
+
+
+                        });
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _UserRightsList = null;
+            }
+
+            return _UserRightsList;
         }
     }
 }

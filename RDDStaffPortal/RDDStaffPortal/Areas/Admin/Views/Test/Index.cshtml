@@ -1,0 +1,143 @@
+﻿@model IEnumerable<RDDStaffPortal.DAL.DataModels.RDD_Test>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    var counter = 1;
+}
+
+@*
+*@
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script src="~/Scripts/Application/Test.js"></script>
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Test Master</h4>
+            </div>
+            <div class="rowmin">
+
+                <div class="title-action">
+                   
+                    <input type="hidden" id="hdnOperationMode" value="" />
+                    <div class="input-group-append">
+                        <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+                <input id="hdnCode" type="hidden" />
+                <input id="hdnDescription" type="hidden" />
+                <div class="modal fade" id="ModulesPopUp" tabindex="-1" role="dialog" aria-labelledby="ModulesPopUpLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                           
+                            <div id="AlertMessage">
+                            </div>
+
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="ModulesPopUpLabel">Add Module</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnmodelcls">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered" id="tblUnits1">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.CODE)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DESCRIPTION)
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
+
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.TextBox(string.Concat("txtCODE", counter), null, new { @class = "grid-control" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBox(string.Concat("txtDESCRIPTION", counter), null, new { @class = "grid-control" })
+                                            </td>
+                                            <td>
+                                                <input id="toggle-demo1" class="toggle" type="checkbox" checked disabled data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger">
+                                            </td>
+
+
+                                        </tr>
+
+                                    </tbody>
+
+
+
+
+
+
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn1" id="btnSave" ><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                                <div class="col-md-12 table-responsive">
+                                    <div id="tbldiv">
+                                        <table class="table table-bordered stripe display hover" id="tblUnits">
+                                            <thead>
+                                                <tr class="tr">
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.CODE)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.DESCRIPTION)
+                                                    </th>
+                                                    <th>status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                          
+                                            <tbody>
+                                                <tr></tr>
+                                            </tbody>
+
+
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("SingleCon", true)
+                @Html.Hidden("Counter", counter)
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        //$(function () {
+
+                        $(".edit").attr('title', 'Edit');
+                        $(".delete").attr('title', 'Delete');
+                        test.initialize();
+                    });
+                </script>
+                <style>
+                    table {
+                        position: relative !important;
+                    }
+
+                    .bootstrap-datetimepicker-widget li {
+                        display: block !important;
+                    }
+                </style>

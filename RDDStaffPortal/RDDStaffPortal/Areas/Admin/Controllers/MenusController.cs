@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class MenusController : Controller
     {
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
@@ -77,15 +77,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
 
 
-            //string MenuId1 = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
-            //string MenuName1 = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
-            //string Levels1 = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
-            //string URL1 = Request.Form.GetValues("columns[3][search][value]").FirstOrDefault();
-            //string CssClass1 = Request.Form.GetValues("columns[4][search][value]").FirstOrDefault();
-            //string SeqNo1 = Request.Form.GetValues("columns[5][search][value]").FirstOrDefault();
-            //string Module1 = Request.Form.GetValues("columns[6][search][value]").FirstOrDefault();
-            //string Default1 = Request.Form.GetValues("columns[7][search][value]").FirstOrDefault();
-
+           
 
             if (pageSize == -1)
             {

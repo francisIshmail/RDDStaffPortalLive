@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace RDDStaffPortal.DAL.DataModels
 {
@@ -11,6 +12,8 @@ namespace RDDStaffPortal.DAL.DataModels
     {
         public string MenuId { get; set; }
         public string UserId { get; set; }
+
+       // public List<SelectListItem> UserList { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
 

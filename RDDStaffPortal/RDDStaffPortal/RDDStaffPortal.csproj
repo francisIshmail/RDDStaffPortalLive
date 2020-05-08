@@ -138,6 +138,7 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -154,6 +155,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
     <Content Include="Content\bootstrap-treeview.css" />
@@ -251,6 +253,8 @@
     <Content Include="js\plugin\webfont\webfont.min.js" />
     <Content Include="js\setting-demo.js" />
     <Content Include="js\setting-demo2.js" />
+    <Content Include="Scripts\Application\Dashboardjs.js" />
+    <Content Include="Scripts\Application\Test.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\flaticon\Flaticon.eot" />
@@ -343,6 +347,9 @@
     <Content Include="Scripts\sweetalret\sweetalert2.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.css" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.js" />
+    <Content Include="Scripts\VoiceRec\controller.js" />
+    <Content Include="Scripts\VoiceRec\jquery.min.js" />
+    <Content Include="Scripts\VoiceRec\speechRecognition.js" />
     <Content Include="WebServices\AccountService.asmx" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Menus\Index.cshtml" />
@@ -362,6 +369,10 @@
     <Content Include="Scripts\datatables-responsive\dataTables.responsive.scss" />
     <Content Include="Scripts\datatables\images\Sorting icons.psd" />
     <Content Include="App_Code\FirstDashboard.cshtml" />
+    <Content Include="App_Code\SecondDashBoard.cshtml" />
+    <Content Include="App_Code\ThirdDashBoard.cshtml" />
+    <Content Include="Areas\Admin\Views\Test\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Test\RDD_image1.cshtml" />
     <Content Include="Areas\HR\Views\Employees\Index.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmploymentStatus\Index.cshtml" />
@@ -397,6 +408,7 @@
     <Content Include="Views\Account\GetMenuTree.cshtml" />
     <Content Include="Views\Account\GetFirtsDashBoard.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\GetDashBoardView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -435,7 +447,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28970/</IISUrl>
+          <IISUrl>http://localhost:28968/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
