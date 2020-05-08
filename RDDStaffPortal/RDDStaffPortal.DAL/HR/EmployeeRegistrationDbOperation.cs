@@ -86,8 +86,16 @@ namespace RDDStaffPortal.DAL.HR
                             {
                                 cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = EmpData.IM_Id;
                             }
+                            cmd.Parameters.Add("@p_ManagerId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerId);
 
-
+                            if (EmpData.About == null)
+                            {
+                                cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = DBNull.Value;
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = EmpData.About;
+                            }
                             // cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = Emp.IM_Id;
                             cmd.Parameters.Add("@p_Marital_Status", SqlDbType.VarChar, 25).Value = EmpData.Marital_Status;
 
@@ -118,14 +126,15 @@ namespace RDDStaffPortal.DAL.HR
                             }
                             cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
                             // cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 10).Value = Emp.ManagerName;
-                            if (EmpData.ManagerName == null)
-                            {
-                                cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = EmpData.ManagerName;
-                            }
+                           
+                            //if (EmpData.ManagerName == null)
+                            //{
+                            //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = DBNull.Value;
+                            //}
+                            //else
+                            //{
+                            //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = EmpData.ManagerName;
+                            //}
                             cmd.Parameters.Add("@p_CountryCode", SqlDbType.VarChar, 10).Value = EmpData.CountryCodeName;
                             cmd.Parameters.Add("@p_EmployeeNo", SqlDbType.VarChar, 10).Value = EmpData.EmployeeNo;
 
@@ -192,7 +201,18 @@ namespace RDDStaffPortal.DAL.HR
 
 
                             cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = EmpData.Salary;
-                            cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = EmpData.Salary_Start_Date;
+
+                            
+                            if (EmpData.Salary_Start_Date.Year < (DateTime.Now.Year - 1))
+                            {
+                                cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = DBNull.Value; ;
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = EmpData.Salary_Start_Date;
+                            }
+                           
+
                             if (EmpData.Remark == null)
                             {
                                 cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = DBNull.Value;
@@ -429,7 +449,11 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.LName = DS.Tables[0].Rows[0]["LName"].ToString();
                         }
-                        if (DS.Tables[0].Rows[0]["EmployeeNo"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["EmployeeNo"]))
+                            if (DS.Tables[0].Rows[0]["AboutUs"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["AboutUs"]))
+                            {
+                                emp.About = DS.Tables[0].Rows[0]["AboutUs"].ToString();
+                            }
+                            if (DS.Tables[0].Rows[0]["EmployeeNo"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["EmployeeNo"]))
                         {
                             emp.EmployeeNo = DS.Tables[0].Rows[0]["EmployeeNo"].ToString();
                         }
@@ -470,7 +494,14 @@ namespace RDDStaffPortal.DAL.HR
                             emp.Citizenship = DS.Tables[0].Rows[0]["Citizenship"].ToString();
                         }
 
-
+                        if (DS.Tables[0].Rows[0]["manager"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["manager"]))
+                        {
+                            emp.ManagerId = Convert.ToInt32(DS.Tables[0].Rows[0]["manager"]);
+                        }
+                        if (DS.Tables[0].Rows[0]["ManagerName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["ManagerName"]))
+                        {
+                            emp.ManagerName = DS.Tables[0].Rows[0]["ManagerName"].ToString();
+                        }
                         if (DS.Tables[0].Rows[0]["DesigId"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["DesigId"]))
                         {
                             emp.DesigId = Convert.ToInt32(DS.Tables[0].Rows[0]["DesigId"]);
@@ -553,6 +584,8 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.Contract_Start_date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Contract_Start_Date"]);
                         }
+  
+
                         if (DS.Tables[0].Rows[0]["NOTE"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["NOTE"]))
                         {
                             emp.Note = DS.Tables[0].Rows[0]["NOTE"].ToString();
@@ -587,6 +620,7 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.Salary_Start_Date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"]);
                         }
+                       
 
                         if (DS.Tables[0].Rows[0]["Bank_Name"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Bank_Name"]))
                         {
