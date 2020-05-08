@@ -1,9 +1,12 @@
 .bg-gradient-primary{ background-image: linear-gradient(#f34f46, #CE352C);}
+body {
+    letter-spacing: 0;
+}
 /*New CSS WIDTH PERCENTAGE START*/
-
 /*New CSS WIDTH PERCENTAGE START*/
-
-.width1per{width:1%!important}.width2per{width:2%!important}.width3per{width:3%!important}.width4per{width:4%!important}.width5per{width:5%!important}.width6per{width:6%!important}.width7per{width:7%!important}.width8per{width:8%!important}.width9per{width:9%!important}.width10per{width:10%!important}.width11per{width:11%!important}.width12per{width:12%!important}.width13per{width:13%!important}.width14per{width:14%!important}.width15per{width:15%!important}.width16per{width:16%!important}.width17per{width:17%!important}.width18per{width:18%!important}.width19per{width:19%!important}.width20per{width:20%!important}.width21per{width:21%!important}.width22per{width:22%!important}.width23per{width:23%!important}.width24per{width:24%!important}.width25per{width:25%!important}.width26per{width:26%!important}.width27per{width:27%!important}.width28per{width:28%!important}.width29per{width:29%!important}.width30per{width:30%!important}.width31per{width:31%!important}.width32per{width:32%!important}.width33per{width:33%!important}.width34per{width:34%!important}.width35per{width:35%!important}.width36per{width:36%!important}.width37per{width:37%!important}.width38per{width:38%!important}.width39per{width:39%!important}.width40per{width:40%!important}.width41per{width:41%!important}.width42per{width:42%!important}.width43per{width:43%!important}.width44per{width:44%!important}.width45per{width:45%!important}.width46per{width:46%!important}.width47per{width:47%!important}.width48per{width:48%!important}.width49per{width:49%!important}.width50per{width:50%!important}.width51per{width:51%!important}.width52per{width:52%!important}.width53per{width:53%!important}.width54per{width:54%!important}.width55per{width:55%!important}.width56per{width:56%!important}.width57per{width:57%!important}.width58per{width:58%!important}.width59per{width:59%!important}.width60per{width:60%!important}.width61per{width:61%!important}.width62per{width:62%!important}.width63per{width:63%!important}.width64per{width:64%!important}.width65per{width:65%!important}.width66per{width:66%!important}.width67per{width:67%!important}.width68per{width:68%!important}.width69per{width:69%!important}.width70per{width:70%!important}.width71per{width:71%!important}.width72per{width:72%!important}.width73per{width:73%!important}.width74per{width:74%!important}.width75per{width:75%!important}.width76per{width:76%!important}.width77per{width:77%!important}.width78per{width:78%!important}.width79per{width:79%!important}.width80per{width:80%!important}.width81per{width:81%!important}.width82per{width:82%!important}.width83per{width:83%!important}.width84per{width:84%!important}.width85per{width:85%!important}.width86per{width:86%!important}.width87per{width:87%!important}.width88per{width:88%!important}.width89per{width:89%!important}.width90per{width:90%!important}.width91per{width:91%!important}.width92per{width:92%!important}.width93per{width:93%!important}.width94per{width:94%!important}.width95per{width:95%!important}.width96per{width:96%!important}
+.width1per {
+    width: 1% !important
+}.width2per{width:2%!important}.width3per{width:3%!important}.width4per{width:4%!important}.width5per{width:5%!important}.width6per{width:6%!important}.width7per{width:7%!important}.width8per{width:8%!important}.width9per{width:9%!important}.width10per{width:10%!important}.width11per{width:11%!important}.width12per{width:12%!important}.width13per{width:13%!important}.width14per{width:14%!important}.width15per{width:15%!important}.width16per{width:16%!important}.width17per{width:17%!important}.width18per{width:18%!important}.width19per{width:19%!important}.width20per{width:20%!important}.width21per{width:21%!important}.width22per{width:22%!important}.width23per{width:23%!important}.width24per{width:24%!important}.width25per{width:25%!important}.width26per{width:26%!important}.width27per{width:27%!important}.width28per{width:28%!important}.width29per{width:29%!important}.width30per{width:30%!important}.width31per{width:31%!important}.width32per{width:32%!important}.width33per{width:33%!important}.width34per{width:34%!important}.width35per{width:35%!important}.width36per{width:36%!important}.width37per{width:37%!important}.width38per{width:38%!important}.width39per{width:39%!important}.width40per{width:40%!important}.width41per{width:41%!important}.width42per{width:42%!important}.width43per{width:43%!important}.width44per{width:44%!important}.width45per{width:45%!important}.width46per{width:46%!important}.width47per{width:47%!important}.width48per{width:48%!important}.width49per{width:49%!important}.width50per{width:50%!important}.width51per{width:51%!important}.width52per{width:52%!important}.width53per{width:53%!important}.width54per{width:54%!important}.width55per{width:55%!important}.width56per{width:56%!important}.width57per{width:57%!important}.width58per{width:58%!important}.width59per{width:59%!important}.width60per{width:60%!important}.width61per{width:61%!important}.width62per{width:62%!important}.width63per{width:63%!important}.width64per{width:64%!important}.width65per{width:65%!important}.width66per{width:66%!important}.width67per{width:67%!important}.width68per{width:68%!important}.width69per{width:69%!important}.width70per{width:70%!important}.width71per{width:71%!important}.width72per{width:72%!important}.width73per{width:73%!important}.width74per{width:74%!important}.width75per{width:75%!important}.width76per{width:76%!important}.width77per{width:77%!important}.width78per{width:78%!important}.width79per{width:79%!important}.width80per{width:80%!important}.width81per{width:81%!important}.width82per{width:82%!important}.width83per{width:83%!important}.width84per{width:84%!important}.width85per{width:85%!important}.width86per{width:86%!important}.width87per{width:87%!important}.width88per{width:88%!important}.width89per{width:89%!important}.width90per{width:90%!important}.width91per{width:91%!important}.width92per{width:92%!important}.width93per{width:93%!important}.width94per{width:94%!important}.width95per{width:95%!important}.width96per{width:96%!important}
 .width97per{width:97%!important}.width98per{width:98%!important}.width99per{width:99%!important}.width100per{width:100%!important}
 /*New CSS WIDTH PERCENTAGE END*/
 
@@ -206,7 +209,7 @@
 .form-inline label{text-align:left!important; justify-content:left!important;}
 
 .card .card-action {
-    padding: 10px 20px !important;
+    padding: 7px 10px !important;
     background: #dfe1e7 !important;
     border-top: 1px solid #fdada8 !important;
     border-radius: 0 0 5px 5px;
@@ -215,7 +218,15 @@
 }
 .form-check, .form-group{padding:5px 0;}
 
-.image-upload {border: 2px solid #ccc; padding: 30px 10px; }
+    .form-group label {
+        font-size: 13px !important;
+        margin-bottom: .2rem !important;
+    }
+
+    .image-upload {
+        border: 2px solid #ccc;
+        padding: 30px 10px;
+    }
 .image-upload > input {display: none;}
 .image-upload img { width: 120px; height: 120px;  cursor: pointer; }
 
@@ -248,10 +259,63 @@
 .reddotTableBody { display: table-row-group;}
 .reddotTableHead { background:#7b9aa7; color:#fff; font-size:14px; border-bottom:none; line-height:17px;}
 
-.widview-btn{ padding:2px 10px!important}
+.sm-form .reddotTableHead {
+    font-size: 11px;
+    line-height: 13px;
+    border: 1px solid #fff
+}
+
+.sm-form .reddotTableCell .btn-sm {
+    font-size: 11px;
+    padding: 2px 10px;
+}
+
+.sm-form .reddotTableCell .input-group-text {
+    font-size: 12px;
+    padding: .270rem .40rem;    
+}
+
+.sm-form .reddotTableCell .form-control {
+    padding: .15rem .5rem !important;
+    height: 1.40rem !important;
+    font-size: 11px !important;
+}
+
+.sm-form .reddotTableCell {
+    padding: .15rem .2rem !important;
+    height: 1.40rem !important;
+    font-size: 11px !important;
+    border: 1px solid #fff
+}
+
+.sm-form .reddotTableCell {
+    padding: 3px;
+}
+.widview-btn {
+    padding: 2px 10px !important
+}
 .card .card-header, .card-light .card-header{padding: 0.60rem 1.25rem!important}
 .card-title{font-size: 16px!important}
 
+.panel {
+    border: 1px solid #ccc;
+    border-radius: 4px !important;
+    overflow: hidden;
+    margin: -1px !important;
+}
+    .panel .panel-heading {
+        background: #266091;
+        padding: 4px 10px;
+        font-size: 16px;
+        color: #fff;
+        width: 100%;
+        margin-bottom: 10px;
+        line-height: 22px;
+        position: relative;
+        display: block;
+        
+        font-weight: normal !important;
+    }
 .main-panel > .container {
     padding: 0px !important;
     min-height: calc(100% - 123px);
@@ -259,6 +323,16 @@
     overflow: hidden;
     width: 100%;
     max-width: unset;
+}
+
+.text-center {
+    text-align: center !important;
+}
+.text-left {
+    text-align: left !important;
+}
+.text-right {
+    text-align: right !important;
 }
 
 .table-title .add-new {
@@ -362,30 +436,7 @@ table.table {
     height: 37px !important;
     padding: .65rem 2.4rem;
 }
-.toggle-on.btn{}
-/*.odd-even {
-    background: #dbe8ea;
-    border-left: none !important;
-    margin-top: 1px;
-    position: relative;
-    padding: 5px 0 5px 5px;
-    line-height: 10px !important;
-}
 
-.odd-even:hover {
-        border-left: none !important;
-        background: #cae0fb;
-    }
-
-.odd-even:nth-child(even) {
-        background: #f1f6f7;
-        border-left: none !important;
-    }
-
-.odd-even:nth-child(even):hover {
-            border-left: none !important;
-            background: #cae0fb;
-        }*/
 
 .user-box {
     padding: 0;
@@ -500,4 +551,381 @@ table.table {
         letter-spacing: 0;
     }
 
-.select2-input .select2{margin-bottom:0}
+.select2-input .select2 {
+    margin-bottom: 0;
+    width: 100% !important;
+}
+.reddotTableCell .form-control {
+    padding: .15rem .5rem !important;
+    height: 2em !important;
+}
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+    margin: 1px 0 0 3px;
+    font-size: 10px;
+    padding: 1px 18px 0px 3px;
+    border-radius: 4px;
+}
+
+/*.multipleselect .select2-selection {
+    border-color: #b9bec8 !important;
+    height: 42px !important;
+}*/
+
+
+.col-md-10 > a {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    line-height: 31px;
+}
+
+.col-md-10 > a:after {
+    content: "\f067"; /* fa-chevron-down */
+    font-family: 'FontAwesome';
+    position: absolute;
+    left: 0;
+}
+
+.col-md-10 > a[aria-expanded="true"]:after {
+    content: "\f068"; /* fa-chevron-up */
+}
+
+#accordion .odd {
+    background: #dbe8ea;
+    border-left: 2px solid #266091;
+    margin-top: 1px;
+    position: relative;
+    padding: 5px 0 5px 5px;
+    line-height: 10px !important;
+}
+
+#accordion .even {
+    background: #cae0fb;
+    border-left: 2px solid #266091;
+    margin-top: 1px;
+    position: relative;
+    padding: 5px 0 5px 5px;
+    line-height: 10px !important;
+}
+
+.pull-left{float:left!important}
+.pull-right {
+    float: right !important
+}
+#accordion .card-header {
+    padding: 0.20rem 1.25rem !important;
+}
+
+.modal-header {
+    background: #e7483e !important;
+    padding:5px 12px;
+}
+
+    .modal-header .modal-title{color:#fff}
+    .modal-header .close {
+        color: #fff;
+        opacity: 10;
+    }
+
+.modal-footer {
+    padding: 7px 10px !important;
+    background: #dfe1e7 !important;
+    border-top: 1px solid #fdada8 !important;
+    border-radius: 0 0 5px 5px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.editable-form .editable {
+    color: #000;
+    font-size: .8125rem
+}
+
+.editable-form .editable-click {
+    border-color: #000
+}
+
+.editable-container.editable-inline {
+    max-width: 100%
+}
+
+    .editable-container.editable-inline .editableform {
+        max-width: 100%
+    }
+
+        .editable-container.editable-inline .editableform .control-group {
+            max-width: 100%;
+            white-space: initial
+        }
+
+            .editable-container.editable-inline .editableform .control-group > div {
+                max-width: 100%
+            }
+
+            .editable-container.editable-inline .editableform .control-group .editable-input input,
+            .editable-container.editable-inline .editableform .control-group .editable-input textarea {
+                max-width: 100%;
+                width: 100%
+            }
+
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .form-control,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .asColorPicker-input,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .dataTables_wrapper select,
+            .dataTables_wrapper .editable-container.editable-inline .editableform .control-group .editable-input .combodate select,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .jsgrid .jsgrid-table .jsgrid-filter-row input[type=text],
+            .jsgrid .jsgrid-table .jsgrid-filter-row .editable-container.editable-inline .editableform .control-group .editable-input .combodate input[type=text],
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .jsgrid .jsgrid-table .jsgrid-filter-row select,
+            .jsgrid .jsgrid-table .jsgrid-filter-row .editable-container.editable-inline .editableform .control-group .editable-input .combodate select,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .jsgrid .jsgrid-table .jsgrid-filter-row input[type=number],
+            .jsgrid .jsgrid-table .jsgrid-filter-row .editable-container.editable-inline .editableform .control-group .editable-input .combodate input[type=number],
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .select2-container--default .select2-selection--single,
+            .select2-container--default .editable-container.editable-inline .editableform .control-group .editable-input .combodate .select2-selection--single,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .select2-container--default .select2-selection--single .select2-search__field,
+            .select2-container--default .select2-selection--single .editable-container.editable-inline .editableform .control-group .editable-input .combodate .select2-search__field,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .typeahead,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .tt-query,
+            .editable-container.editable-inline .editableform .control-group .editable-input .combodate .tt-hint {
+                padding-left: 0;
+                padding-right: 0
+            }
+
+@media (max-width: 991px) {
+    .editable-container.editable-inline .editableform .control-group .editable-buttons {
+        display: block;
+        margin-top: 10px
+    }
+}
+
+/*.btn-group-sm > .btn,
+.btn-sm {
+    padding: 0.49rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem
+}*/
+
+.btn-warning {
+    color: #fff
+}
+
+.user-box-section .avatar-xxl {
+    width: 7rem;
+    height:7rem;
+}
+
+.user-box-section h4.user-name-title {
+    letter-spacing: 0;
+}
+
+.user-box-section .avatar-img {
+    border-radius: 10px;
+}
+
+.user-profile-section .avatar-img {
+    border-radius: 10px;
+    min-height: 120px;
+}
+
+.user-box-section .user-info-list a {
+    padding-right: 1.4rem;
+    color: #848797;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+.user-box-section .user-info-text {
+    padding-right: 1.4rem;
+    color: #9d9fa9;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    height: 45px;
+    overflow: hidden;
+}
+    .user-box-section .user-info-list a:hover{ text-decoration:none; color:#23b7e5}
+    .user-box-section .user-info-list a i {
+        padding-right: 0.4rem; font-weight:bold
+    }
+
+.user-box-section .avatar-sm{ cursor:pointer}
+.user-box-section .card-category {
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-top: 0;
+}
+
+.user-box-section .icon-big {
+    font-size: 34px;
+    color: #9d9fa9;
+}
+.user-box-section .view-title {
+    margin: 0;
+    color: #23b7e5;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.6;
+    letter-spacing: 0;
+    cursor: pointer
+}
+
+.nav-pills.flex-column.nav-pills-no-bd .nav-link {
+    border-radius:10px !important;
+    margin-bottom: 1px;
+    text-align: left;
+    padding: 5px 10px;
+    background: #fafbfb;
+}
+
+    .nav-pills.flex-column.nav-pills-no-bd .nav-link.active {
+        border-radius:10px !important;
+        margin-bottom: 1px;
+        background: #e7483e;
+        color: #fff !important
+    }
+    .nav-pills.flex-column.nav-pills-no-bd .nav-link:hover {
+        border-radius: 10px !important;
+        margin-bottom: 1px;
+        background: #e7483e;
+        color: #fff !important
+    }
+.user-profile-section{margin-bottom:20px}
+
+
+    .user-profile-section .avatar {
+        width: 100%;
+        height: auto;
+    }
+    .user-profile-section .avatar img {
+        border-radius: 10px !important;
+    }
+
+    .user-profile-section .user-profile .name {
+        font-size: 14px;
+        color: #000 !important;
+        font-weight: bold;
+    }
+    .user-profile-section .user-profile .designation {
+        font-size: 12px;
+        color: #74788d !important;
+        font-weight: bold;
+    }
+
+.nav-link i {
+    margin-right: 5px;
+    width: 20px;
+    text-align: center;
+}
+
+.user-profile-section .user-info span {
+    color: #848797;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 0;
+}
+
+        .user-profile-section .user-info span i {
+            padding-right: 0.4rem;
+            font-weight: bold;
+        }
+
+    .connected, .sortable, .exclude, .handles {
+        margin: auto;
+        padding: 0;
+        /*width: 310px;*/
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+.sortable.grid {
+overflow: hidden;
+}
+        .connected li, .sortable li, .exclude li, .handles li {
+            list-style: none;
+            border: 1px solid #CCC;
+            background: #F6F6F6;
+            color: #000;
+            margin: 3px 5px;
+            padding: 1px 5px;
+            height: 25px;
+            border-radius: 3px !important;
+            font-size: 13px;
+        }
+.handles span {
+cursor: move;
+}
+li.disabled {
+opacity: 0.5;
+}
+/*.sortable.grid li {
+line-height: 80px;
+float: left;
+width: 80px;
+height: 80px;
+text-align: center;
+}*/
+li.highlight {
+    background: #e0eaf1;
+}
+/*#connected {
+width: 440px;
+overflow: hidden;
+margin: auto;
+}
+.connected {
+float: left;
+width: 200px;
+}
+.connected.no2 {
+float: right;
+}*/
+li.sortable-placeholder {
+border: 1px dashed #CCC;
+background: none;
+}
+
+.tab-content .card-header {
+    padding: 0 0 0.60rem 0 !important;
+    margin-bottom: 10px;
+}
+
+.switch input {
+    position: absolute;
+    opacity: 0;
+}
+
+/**
+ * 1. Adjust this to size
+ */
+
+.switch {
+    display: inline-block;
+    font-size: 20px; /* 1 */
+    height: 1.5em;
+    width: 3em;
+    background: #d4d9e3;
+    border-radius: 1em;
+}
+
+    .switch div {
+        height: 1.5em;
+        width: 1.5em;
+        border-radius: 1em;
+        background: #FFF;
+        box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.3);
+        -webkit-transition: all 300ms;
+        -moz-transition: all 300ms;
+        transition: all 300ms;
+    }
+
+    .switch input:checked + div {
+        -webkit-transform: translate3d(100%, 0, 0);
+        -moz-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+        background: #3b62ed;
+    }

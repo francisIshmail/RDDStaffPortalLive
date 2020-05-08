@@ -6,13 +6,13 @@ using System.Web;
 namespace RDDStaffPortal.Areas.HR.Models
 {
     public class Employees
-    {
+    { public string About { get; set; }
         public string CountryName { get; set; }
         public bool IsActive { get; set; }
         public int DeptId { get; set; }
         public string DeptName { get; set; }
         public int DesigId { get; set; }
-        public string DesigName { get; set; } 
+        public string DesigName { get; set; }
         public int StatusId { get; set; }
         public string StatusName { get; set; }
 
@@ -86,9 +86,9 @@ namespace RDDStaffPortal.Areas.HR.Models
         public string Note { get; set; }
 
 
-       // public HttpPostedFileBase my_file { get; set; }
+        // public HttpPostedFileBase my_file { get; set; }
 
-    public string ImagePath1 { get; set; }
+        public string ImagePath1 { get; set; }
 
         public byte[] ImagePath { get; set; }
         public string LogoType { get; set; }
@@ -108,7 +108,18 @@ namespace RDDStaffPortal.Areas.HR.Models
         public List<EmpInfoProEdunew> EmpInfoProEdunews { get; set; }
 
         public EmpInfoProEdunew EmpInfoProEdu { get; set; }
+
+        public List<EmpDocnew> Empdocnews { get; set; }
+
+        public EmpDocnew EmpDoc { get; set; }
     }
+public class EmpDocnew
+{ 
+          public int DId { get; set; }
+
+        public string description { get; set; }
+        public string link { get; set; }
+}
     public class EmpInfoProEdunew
     {
         public int EId { get; set; }

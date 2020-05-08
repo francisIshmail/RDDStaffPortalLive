@@ -9,6 +9,7 @@ using RDDStaffPortal.DAL.DataModels;
 using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
+using System.Diagnostics;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -47,7 +48,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     EmpLst.DeptName = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["DeptName"].ToString()) ? DS.Tables[0].Rows[i]["DeptName"].ToString() : "";
                     EmpLst.Contact_No = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Contact_No"].ToString()) ? DS.Tables[0].Rows[i]["Contact_No"].ToString() : "";
                     EmpLst.Ext_no = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Ext_no"].ToString()) ? DS.Tables[0].Rows[i]["Ext_no"].ToString() : "";
-
+                    EmpLst.About = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["AboutUs"].ToString()) ? DS.Tables[0].Rows[i]["AboutUs"].ToString() : "";
 
                     if (DS.Tables[0].Rows[i]["ImagePath"] != null && DS.Tables[0].Rows[i]["ImagePath"].ToString().Length > 0)
 
@@ -60,9 +61,26 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                         EmpLst.ImagePath = file;
                     }
 
-                    string base64String = Convert.ToBase64String(EmpLst.ImagePath);
+                    DataRow[] dr = DS.Tables[0].Select("Country = '" + EmpLst.Country+"'");
+
+                    List <CountryLists> Countrylst1 = new List<CountryLists>();
+                    for (int j = 0; j < dr.Length; j++)
+                    {
+                        Countrylst1.Add(new CountryLists
+                        {
+                            Empid = Convert.ToInt32(dr[j]["EmployeeId"].ToString()),
+                            Imagepath = (byte[])dr[j]["ImagePath"]
+                        }
+                      );
+
+                    }
+
+                    EmpLst.CountryLists = Countrylst1;
+
+                        string base64String = Convert.ToBase64String(EmpLst.ImagePath);
                     EmpLst.ImagePath1 = base64String;
-                    EmpDisplayList.Add(EmpLst);
+
+                    EmpDisplayList.Add(EmpLst); 
                 }
 
 

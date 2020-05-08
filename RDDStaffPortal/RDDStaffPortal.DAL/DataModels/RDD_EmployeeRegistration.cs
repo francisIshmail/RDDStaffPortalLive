@@ -11,6 +11,7 @@ namespace RDDStaffPortal.DAL.DataModels
     {
         // public List<RDD_Departments> Dept {get;set;}
         //Employee Details
+        public string About { get; set; }
         public string CountryName { get; set; }
         public bool IsActive { get; set; }
         public int DeptId { get; set; }
@@ -111,6 +112,17 @@ namespace RDDStaffPortal.DAL.DataModels
         public List<EmpInfoProEdunew> EmpInfoProEdus { get; set; }
 
         public EmpInfoProEdunew EmpInfoProEdu { get; set; }
+
+        public List<CountryLists> CountryLists { get; set; }
+
+        public CountryLists CountryList { get; set; }
+    }
+
+
+    public class CountryLists
+    {
+        public int Empid { get; set; }
+        public byte[] Imagepath { get; set; }
     }
     public class EmpInfoProEdunew
     {
