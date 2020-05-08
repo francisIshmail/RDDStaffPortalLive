@@ -65,7 +65,7 @@ namespace RDDStaffPortal.Controllers
                 Session.Clear();
             }
             // FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("/Login", "Account");
         }
 
         [ChildActionOnly]
