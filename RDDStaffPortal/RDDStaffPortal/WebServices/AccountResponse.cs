@@ -13,5 +13,11 @@ namespace RDDStaffPortal.WebServices
         public string Email { get; set; }
     }
 
+    public class MembershipResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+
 
 }
