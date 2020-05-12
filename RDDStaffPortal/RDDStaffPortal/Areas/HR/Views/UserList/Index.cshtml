@@ -92,7 +92,7 @@
 
                                             <div class="row mar-t10">
                                                 <div class="col-sm-6 col-md-6">
-                                                    <p class="user-info-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type  and scrambled it to make a type specimen book.</p>
+                                                    <p class="user-info-text"><label for="@items.About">@items.About</label></p>
                                                 </div>
                                                 <div class="col-sm-6 col-md-6 padd-r0 mar-t5">
                                                     <div class="progress progress-sm">
@@ -192,23 +192,18 @@
                                         <div class="col-sm-6 col-md-2 mar-t10 padd-0">
                                             <div class="row">
                                                 <div class="avatar-group">
-                                                    <div class="avatar avatar-sm">
-                                                        <input type="image" class="avatar-img rounded-circle border border-white" src="data:image;base64,@Convert.ToBase64String((byte[])@items.ImagePath)" alt="preview">
-                                                        @*<img src="img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle border border-white">*@
+                                                    @foreach (var items1 in @items.CountryLists)
+                                                    {
+                                                        <div class="avatar avatar-sm">
+
+
+                                                         <input type="image" class="avatar-img rounded-circle border border-white" src="data:image;base64,@Convert.ToBase64String((byte[])@items1.Imagepath)" alt="preview">
+                                                            @*<img src="img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle border border-white">*@
+                                                           
+                                                        </div>
+                                                    }
                                                     </div>
-                                                    @*<div class="avatar avatar-sm">
-                                                    <img src="img/profile.jpg" alt="..." class="avatar-img rounded-circle border border-white">
-                                                </div>
-                                                <div class="avatar avatar-sm">
-                                                    <img src="img/profile2.jpg" alt="..." class="avatar-img rounded-circle border border-white">
-                                                </div>
-                                                <div class="avatar avatar-sm">
-                                                    <img src="img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle border border-white">
-                                                </div>
-                                                <div class="avatar avatar-sm">
-                                                    <span class="avatar-title rounded-circle border border-white bg-success">+</span>
-                                                </div>*@
-                                                </div>
+                                                   
                                             </div>
                                         </div>
                                     </div>

@@ -62,7 +62,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         //    BinaryReader reader = new BinaryReader(image.InputStream);
         //    imageBytes = reader.ReadBytes((int)image.ContentLength);
         //}
-            public ActionResult Index(int? EmployeeId)
+         public ActionResult Index(int? EmployeeId)
 
         {
            
@@ -115,8 +115,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration MangLst = new RDD_EmployeeRegistration();
-                    MangLst.ManagerId = Convert.ToInt32(DS.Tables[0].Rows[i]["ManagerId"]);
-                    MangLst.ManagerName = DS.Tables[0].Rows[i]["ManagerName"].ToString();
+                    MangLst.ManagerId = Convert.ToInt32(DS.Tables[0].Rows[i]["EmployeeId"]);
+                    MangLst.ManagerName = DS.Tables[0].Rows[i]["Empname"].ToString();
                     ManagerList.Add(MangLst);
 
                 }
@@ -267,8 +267,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
               //  rdd_empreg.ImagePath = EmpData.ImagePath;
                 
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
+                rdd_empreg.About = EmpData.About;
                 rdd_empreg.CountryCodeName = EmpData.CountryCodeName;
-                rdd_empreg.ManagerName = EmpData.ManagerName;
+                rdd_empreg.ManagerId = EmpData.ManagerId;
+              //  rdd_empreg.ManagerName = EmpData.ManagerName;
                 rdd_empreg.EmployeeNo = EmpData.EmployeeNo;
                 rdd_empreg.FName = EmpData.FName;
                 rdd_empreg.LName = EmpData.LName;
@@ -382,9 +384,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     var fileName = Path.GetFileName(pic.FileName);
 
 
-                    _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
-                    var _comPath = Server.MapPath("/Images/TempLogo/Temp") + "Abc" + _ext;
-                    _imgname = "user_" + _imgname + "Abc" + _ext;
+                   // _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var _comPath = Server.MapPath("/Images/TempLogo/Temp") +"user_" + _imgname + "Abc" + _ext;
+                    _imgname = "Tempuser_" +  "Abc" + _ext;
 
                     ViewBag.Msg = _comPath;
                     var path = _comPath;
@@ -411,10 +413,18 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
             }
 
-            return Json(Convert.ToString(_imgname), JsonRequestBehavior.AllowGet);
+            return Json(_imgname, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetEmpNxtNo()
+        {
+           DataSet DS = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
 
+            string NextEmpNo = DS.Tables[0].Rows[0]["EmpNO"].ToString();
+
+            return Json(NextEmpNo, JsonRequestBehavior.AllowGet);
+            
+        }
     }
 }
 
