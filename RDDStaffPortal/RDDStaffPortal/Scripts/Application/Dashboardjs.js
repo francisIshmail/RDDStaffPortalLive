@@ -7,7 +7,7 @@
 	Attachevent: function () {
 		;
 		var Cards = [];
-		$("#Firstcard").each(function (index, item) {
+		$("#Firstcard").each(function (index, item){
 			
 			var url = $(this).find("#hdnurl").val();
 			$.ajax({
@@ -40,27 +40,27 @@
 
 			$(this).find(".ds2").text(lbl[0] + " Acheived");
 
-			if ($(this).find(".ds1").text() == "Reveanu Target") {
-				$(this).find(".A1").text(Cards[0].RevTarget);
-				$(this).find(".B1").text(Cards[0].ActualRev);
+			if ($(this).find(".ds1").text() == "Revenue Target") {
+				$(this).find(".A1").text("$" + Cards[0].RevTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevTrgetAcheivedPercent);
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevTrgetAcheivedPercent+'')
 				
 
 			} else if ($(this).find(".ds1").text() == "Revenue Forcost") {
-				$(this).find(".A1").text(Cards[0].RevForecast);
-				$(this).find(".B1").text(Cards[0].ActualRev);
+				$(this).find(".A1").text("$" + Cards[0].RevForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevForecastAcheivedPercent + '')
 			} else if ($(this).find(".ds1").text()== "GP Target") {
-				$(this).find(".A1").text(Cards[0].GPTarget);
-				$(this).find(".B1").text(Cards[0].ActualGP);
-				$(this).find(".perv").text(Cards[0].GPTrgetAcheivedPercent);
+				$(this).find(".A1").text("$" + Cards[0].GPTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$(this).find(".B1").text("$" + Cards[0].ActualGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$(this).find(".perv").text("$" +Cards[0].GPTrgetAcheivedPercent);
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].GPTrgetAcheivedPercent + '')
 
 			} else {
-				$(this).find(".A1").text(Cards[0].GPForecast);
-				$(this).find(".B1").text(Cards[0].ActualGP);
+				$(this).find(".A1").text("$" + Cards[0].GPForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$(this).find(".B1").text("$" + Cards[0].ActualGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].GPForecastAcheivedPercent);
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].GPForecastAcheivedPercent + '')
 			}
@@ -80,7 +80,7 @@
 				async: false,
 				cache: false,
 				type: "POST",
-				url: '/GetPichart',
+				url: url,
 				dataType: 'Json',
 				contentType: "Application/json",
 				dataType: 'JSON',
@@ -164,8 +164,27 @@
 							return (RdotdatefrmtRes1(data));
 						}
 					})
-				} else {
-					colms.push({ 'mDataProp': fld[i] + '', "sWidth": "30%" })
+				} else if (Col[i] == 'Amount') {
+					colms.push({
+						'mDataProp': fld[i] + '',
+						"render": function (data) {
+							debugger
+							var num = $.fn.dataTable.render.number(',', '.', 2).display(data);
+							//var k = "";
+							//if (num.length >= 4) {
+							//	k = '$' + (num / 1000) + 'k'
+							//} else if (num.length >= 6) {
+							//	k = '$' + (num / 100000) + 'm'
+							//} else if (num.length >= 9) {
+							//	k = '$' + (num / 100000) + 'b'
+							//}
+							return num ;     
+						}
+					})
+                }
+
+				else {
+					colms.push({ 'mDataProp': fld[i] + '' })
 				}
 
 				i++;
@@ -241,11 +260,13 @@
 				});
 				i++;
             }
-			
+			debugger
 			var mySalesAllCountry = new Chart(ids, {
 				type: 'bar',
+				
 				data: {
-					labels: lblarr1,					
+					labels: lblarr1,
+					
 					datasets: ds
 				},
 				options: {
@@ -262,6 +283,35 @@
 						xPadding: 10,
 						yPadding: 10,
 						caretPadding: 10
+					},
+					scales: {
+						xAxes: [{
+							ticks: {}
+						}],
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								userCallback: function (value, index, values) {
+									var abr = "";
+									if (value < 0) {
+										value = -(value);
+										abr = '-';
+									} else if (value == 0) {
+										return '$ ' + value.toString();
+                                    }
+										if (value >= 1000000000) {
+											values = (value / 1000000000) + 'b';
+										} else if (value >= 1000000) {
+											values = (value / 1000000) + 'm';
+										} else if (value >= 1000) {
+											values = (value / 1000) + 'k';
+										}
+									
+									
+									return '$ ' + abr+ values.toString();// value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								}
+							}
+						}]
 					},
 					layout: {
 						padding: { left: 15, right: 15, top: 15, bottom: 15 }
@@ -336,18 +386,19 @@
 						pointRadius: 4,
 						backgroundColor: 'transparent',
 						fill: true,
-						borderWidth: 2,
+					borderWidth: 2,					
 					data: pts[i]
 				});
 				i++;
 			}
 
 			var myMultipleLineChart = new Chart(ids, {
-				type: 'line',
-				data: {
+				type: 'line',				
+				data: {					
 					labels:lblarr1,
-					datasets: ds
+					datasets: ds,					
 				},
+				
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
@@ -362,6 +413,37 @@
 						xPadding: 10,
 						yPadding: 10,
 						caretPadding: 10
+					},					
+					scales: {
+						xAxes: [{
+							ticks: {}
+						}],
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,					
+								userCallback: function (value, index, values) {									
+									if (value > 0) {
+										if (value >= 1000000000) {
+											values = (value / 1000000000) + 'b';
+										} else if (value >= 1000000) {
+											values = (value / 1000000) + 'm';
+										} else if (value >= 1000) {
+											values = (value / 1000) + 'k';
+										}
+									} else {
+										if (value <= 1000) {
+											values = (value / 1000) + 'k';
+										} else if (value <= 1000000) {
+											values = (value / 1000000) + 'm';
+										} else if (value <= 1000000000) {
+											values = (value / 1000000000) + 'b';
+										}
+									}
+
+									return '$ ' + values.toString();// value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								}
+							}
+						}]
 					},
 					layout: {
 						padding: { left: 15, right: 15, top: 15, bottom: 15 }

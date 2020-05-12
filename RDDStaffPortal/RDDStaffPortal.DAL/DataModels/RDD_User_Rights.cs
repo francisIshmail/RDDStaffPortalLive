@@ -26,6 +26,11 @@ namespace RDDStaffPortal.DAL.DataModels
 
         public MenuDetail MenuDetail { get; set; }
 
+
+        public List<DashDetail> DashDetails { get; set; }
+
+        public DashDetail DashDetail { get; set; }
+
         public bool Saveflag { get; set; }
 
 
@@ -37,5 +42,10 @@ namespace RDDStaffPortal.DAL.DataModels
         public string MenuId { get; set; }
         public string AuthoTyp { get; set; }
     }
-
+    public class DashDetail
+    {
+        public string DashId { get; set; }
+        public string AuthoTyp { get; set; }
     }
+
+}
