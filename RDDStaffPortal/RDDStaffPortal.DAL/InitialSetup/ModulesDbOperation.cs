@@ -393,7 +393,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
 
                 
-                DataSet dsModules = Com.ExecuteDataSet("select  * from RDD_DashBoardTemp");
+                DataSet dsModules = Com.ExecuteDataSet("select  * from RDD_DashBoardTemp Where IsNull(IsActive,1)=1");
                 //SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
                 //new SqlParameter("@Role",Role) };
                 //DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveMenu", CommandType.StoredProcedure, sqlpar);

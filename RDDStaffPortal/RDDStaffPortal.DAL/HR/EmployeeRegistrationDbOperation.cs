@@ -743,7 +743,53 @@ namespace RDDStaffPortal.DAL.HR
             return emp;
         }
 
+        public int GetEmployeeIdByLoginName(string LoginName)
+        {
+            int EmployeeId = 0;
+             using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+                {
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlTransaction transaction;
+                    using (transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "RDD_GetEmployeeIdByLoginName";
+                            cmd.Connection = connection;
+                            cmd.Transaction = transaction;
 
+                            cmd.Parameters.Add("@p_LoginName", SqlDbType.NVarChar,50).Value = LoginName;
+
+                            cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                            cmd.ExecuteNonQuery();
+                            EmployeeId = (int)cmd.Parameters["@p_EmployeeId"].Value;
+                            cmd.Dispose();
+                            transaction.Commit();
+
+                        }
+
+                        catch (Exception ex)
+                        {
+                            EmployeeId = 0;
+                            transaction.Rollback();
+                        }
+                        finally
+                        {
+                            if (connection.State == ConnectionState.Open)
+                            {
+                                connection.Close();
+                            }
+                        }
+                    }
+                }
+            return EmployeeId;
+
+        }
         public string Delete(int EId)
         {
             string response = string.Empty;

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using RDDStaffPortal.DAL.InitialSetup;
@@ -33,16 +36,6 @@ namespace RDDStaffPortal.Controllers
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
-                    //Services.Dashboard dashboardService = new Services.Dashboard();
-                    //List<MonthWiseRevenueAndGP> MonthwiseRevGPList = new List<MonthWiseRevenueAndGP>();
-                    //string LoggedInUser = User.Identity.Name;
-                    //if (string.IsNullOrEmpty(LoggedInUser))
-                    //{
-                    //    LoggedInUser = login.UserName;
-                    //}
-                    //MonthwiseRevGPList = dashboardService.GetMonthWiseRevenueAndGP(LoggedInUser);
-                    //Session["MonthwiseRevGPList"] = MonthwiseRevGPList;
-
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else

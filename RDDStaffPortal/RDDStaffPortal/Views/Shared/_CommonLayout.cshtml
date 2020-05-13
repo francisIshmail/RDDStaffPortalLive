@@ -199,13 +199,13 @@
                                                     }
                                                 </h6>
                                                 @*<p class="text-muted">hello@example.com</p>*@
-                                                <a href="#" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                <a href="/HR/Employees/ViewProfile" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">My Profile</a>
+                                        <a class="dropdown-item" href="/HR/Employees/ViewProfile">My Profile</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
@@ -230,8 +230,12 @@
                 <div class="sidebar-content">
                     <ul class="nav nav-primary">
                         <li class="nav-item active">
-                            <a data-toggle="collapse" href="/Dashboard/Index" class="collapsed" aria-expanded="false">
-                                <i class="fas fa-home"></i> <p>Dashboard</p>
+                            @*<a data-toggle="collapse"  href="@Url.Action("Index","Dashboard" )"  class="collapsed" aria-expanded="false">
+            <i class="fas fa-home"></i>   <p>Dashboard</p>
+        </a>*@
+
+                            <a  href="/Dashboard/Index" >
+                                <i class="fas fa-home"></i>   <p>Dashboard</p>
                             </a>
 
                         </li>
@@ -670,7 +674,7 @@
 
     <script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
 
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    @*<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
     <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
     <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>
     @*voice recogngition*@
@@ -682,7 +686,10 @@
     <script src="~/Scripts/RedDotUtility.js"></script>
 
     <script>
+        $('a.collapsed das').on("click", function () {
+            debugger;
 
+        });
                                             //$('#ulid li').removeAttr('class','');
                                             //$('#ulid li a').removeAttr('data-toggle', '');
 

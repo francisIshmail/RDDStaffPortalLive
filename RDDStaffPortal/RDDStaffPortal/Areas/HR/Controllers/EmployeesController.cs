@@ -10,6 +10,7 @@ using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
 using System.Web.Helpers;
+using System.Web.Routing;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -254,7 +255,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         }
 
+        public ActionResult ViewProfile()
+        {
+            //Response.Redirect("/Employee/EmployeeId")
+            //;
+            // return RedirectToAction("Index/"+1);
 
+            return RedirectToAction("Index", new RouteValueDictionary( new { controller = "Employees", action = "Index", EmployeeId = EmpDbOp.GetEmployeeIdByLoginName ( User.Identity.Name )}));
+        }
 
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu)
         {
@@ -356,7 +364,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         }
 
         
-            public JsonResult DeleteRecord(int EId)
+       public JsonResult DeleteRecord(int EId)
         {
             string result = string.Empty;
             try

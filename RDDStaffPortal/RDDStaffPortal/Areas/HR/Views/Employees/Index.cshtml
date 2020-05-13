@@ -12,7 +12,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">User Profile</h4>
+                <h4 class="page-title">Employee Profile</h4>
 
             </div>
             <div class="rowmin row">
@@ -258,7 +258,7 @@
                                                         <label for="email2" class="width100px">Status :</label>
                                                         <div class="input-group">
                                                             <label class="switch">
-                                                                <input type="checkbox" id="chkIsActive"> @*<div></div>*@
+                                                                <input type="checkbox" id="chkIsActive"> <div></div>
                                                             </label>
                                                         </div>
                                                         @*<div class="input-group"><input type="checkbox" id="chkIsActive" checked data-toggle="toggle" data-onstyle="primary"></div>*@
@@ -982,7 +982,7 @@
 
 
 
-@*<script>
+<script>
         $(document).ready(function () {
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -991,7 +991,7 @@
                 });
             });
         });
-    </script>*@
+    </script>
 
 
 <Script type="text/javascript">
@@ -1046,6 +1046,58 @@
     $(document).ready(function () {
 
         debugger
+
+        function readURL(input) {
+            debugger;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("input[type='image']").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("input[id='my_file']").on("change", function () {
+            debugger;
+            readURL(this);
+            var data = new FormData();
+            var files = $("input[id = 'my_file']").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+            $.ajax({
+                url: "/HR/Employees/Uploadfile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                        $("input[type='image']").val(response);
+                        $('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RdotAlerterrtxt(er);
+                }
+            });
+
+        })
+        $("input[type='image']").click(function () {
+            debugger
+            $("input[id='my_file']").click();
+
+        });
+
+
 
         //$.ajax({
 
@@ -1757,55 +1809,9 @@
         return ValFlag;
 
     }
-    function readURL(input) {
-        debugger;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("input[type='image']").attr('src', e.target.result);
-            }
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("input[id='my_file']").on("change", function () {
-        debugger;
-        readURL(this);
-        var data = new FormData();
-        var files = $("input[id = 'my_file']").get(0).files;
-        if (files.length > 0) {
-            data.append("MyImages", files[0]);
-        }
-        $.ajax({
-            url: "/HR/Employees/Uploadfile",
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
-                //code after success
-                debugger
-                if (response == "InvalidError") {
-                    RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
-                }
-                else {
-                    debugger;
-                    $("input[type='image']").val(response);
-                    $('input[name="Photo_imghdn"]').val('/Images/' + response);
-                }
 
-            },
-            error: function (er) {
-                RdotAlerterrtxt(er);
-            }
-        });
 
-    })
-    $("input[type='image']").click(function () {
-        debugger
-        $("input[id='my_file']").click();
-
-    });
     $(function () {
         debugger
         //$('#Joining_date').datetimepicker({
