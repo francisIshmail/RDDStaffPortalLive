@@ -326,6 +326,7 @@
 
 
 		$("#lins #MultilineChart").each(function (index, item) {
+			debugger
 			var url1 = $(this).find("#hdnurl").val();
 			var lbl2 = $(this).find("#hdnlbl2").val().split(",");
 			var lbl1 = $(this).find("#hdnlbl1").val().split(",");
@@ -421,7 +422,8 @@
 						yAxes: [{
 							ticks: {
 								beginAtZero: true,					
-								userCallback: function (value, index, values) {									
+								userCallback: function (value, index, values) {	
+									debugger
 									if (value > 0) {
 										if (value >= 1000000000) {
 											values = (value / 1000000000) + 'b';
@@ -429,7 +431,9 @@
 											values = (value / 1000000) + 'm';
 										} else if (value >= 1000) {
 											values = (value / 1000) + 'k';
-										}
+										} else {
+											values = value;
+                                        }
 									} else {
 										if (value <= 1000) {
 											values = (value / 1000) + 'k';

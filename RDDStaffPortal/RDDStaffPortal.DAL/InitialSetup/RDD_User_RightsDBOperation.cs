@@ -54,6 +54,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 dte1.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
                 dte1.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
                 dte1.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
+                dte1.Columns.Add(new DataColumn("IsActive", typeof(int)));
                 while (i < k)
                 {
 
