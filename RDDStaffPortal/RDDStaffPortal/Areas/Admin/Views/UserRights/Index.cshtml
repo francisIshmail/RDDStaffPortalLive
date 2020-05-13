@@ -26,17 +26,17 @@
                                                     </select>
                                                 </div>
 
-                                                </div>
                                             </div>
+                                        </div>
 
                                         @*<div class="col-md-1">
-                                            <div class="form-group padd-0">
-                                                <label for="email2" class="width100px"></label>
-                                                <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
-                                            </div>
+                <div class="form-group padd-0">
+                    <label for="email2" class="width100px"></label>
+                    <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
+                </div>
 
 
-                                        </div>*@
+            </div>*@
                                         <div class="col-md-2">
                                             <div class="form-group padd-0">
                                                 <label for="email2" class="width100px"></label>
@@ -45,7 +45,7 @@
 
 
                                         </div>
-                                        
+
 
 
                                     </div>
@@ -67,121 +67,28 @@
 
 
 
-                                                </div>*@
+                    </div>*@
                                                 @{ Html.RenderAction("GetMenuTree", "UserRights", new { area = "Admin" }); }
 
                                             </div>
                                         </div>
+                                   
+
                                         <div class="tab-pane fade" id="tab-Dashboards" role="tabpanel" aria-labelledby="tab-Dashboards">
-                                            <div class="row rowmin">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label for="email2" class="width100px">Module :</label>
-                                                        <input type="text" class="form-control" id="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 padd-0">
-                                                    <div class="form-group padd-0">
-                                                        <label for="email2" class="width100px"></label>
-                                                        <div class="mar-t7"><button type="button" class="btn btn-success btn-sm mar-t8">Search</button></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="reddotTable mar-t0">
-                                                    <div class="reddotTableBody">
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableHead text-left"><div>Module</div></div>
-                                                            <div class="reddotTableHead text-left"><div>Sub Menu</div></div>
-                                                            <div class="reddotTableHead text-left width15per"><div>Authorization</div></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="reddotTableBody">
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableCell text-left"><div>Module Name</div></div>
-                                                            <div class="reddotTableCell text-left"><div>Sub Module Name</div></div>
-                                                            <div class="reddotTableCell text-left width15per">
-                                                                <div>
-                                                                    <select class="form-control form-control-sm" id="smallSelect">
-                                                                        <option>Full Authorization</option>
-                                                                        <option>Readonly</option>
-                                                                        <option>No Authorization</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableCell text-left"><div>Module Name</div></div>
-                                                            <div class="reddotTableCell text-left"><div>Sub Module Name</div></div>
-                                                            <div class="reddotTableCell text-left width15per">
-                                                                <div>
-                                                                    <select class="form-control form-control-sm" id="smallSelect">
-                                                                        <option>Full Authorization</option>
-                                                                        <option>Readonly</option>
-                                                                        <option>No Authorization</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableCell text-left"><div>Module Name</div></div>
-                                                            <div class="reddotTableCell text-left"><div>Sub Module Name</div></div>
-                                                            <div class="reddotTableCell text-left width15per">
-                                                                <div>
-                                                                    <select class="form-control form-control-sm" id="smallSelect">
-                                                                        <option>Full Authorization</option>
-                                                                        <option>Readonly</option>
-                                                                        <option>No Authorization</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableCell text-left"><div>Module Name</div></div>
-                                                            <div class="reddotTableCell text-left"><div>Sub Module Name</div></div>
-                                                            <div class="reddotTableCell text-left width15per">
-                                                                <div>
-                                                                    <select class="form-control form-control-sm" id="smallSelect">
-                                                                        <option>Full Authorization</option>
-                                                                        <option>Readonly</option>
-                                                                        <option>No Authorization</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableCell text-left"><div>Module Name</div></div>
-                                                            <div class="reddotTableCell text-left"><div>Sub Module Name</div></div>
-                                                            <div class="reddotTableCell text-left width15per">
-                                                                <div>
-                                                                    <select class="form-control form-control-sm" id="smallSelect">
-                                                                        <option>Full Authorization</option>
-                                                                        <option>Readonly</option>
-                                                                        <option>No Authorization</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @{ Html.RenderAction("GetWidget", "UserRights", new { area = "Admin" }); }
                                         </div>
+                                        </div>
+
+
+
+
+
+
+
                                     </div>
 
-
-
-
-
                                 </div>
-
-                            </div>
 
                         </div>
                     </div>
@@ -303,6 +210,7 @@
             var Users = {
                 UserId: $('#Userid Option:selected').val(),                
                 MenuDetails: [],
+                DashDetails:[]
 
             };
             if (Users.UserId == '0') {
@@ -311,7 +219,7 @@
 
             }
             debugger;
-            $(".card-header").each(function (index, item) {
+            $(".Menu1").each(function (index, item) {
                 var AuthoTypTxt = $(this).find("[id*='smallSelect'] option:selected").val();
                 var MenuTxt = $(this).find("[id='Inphdn']").val();
 
@@ -323,7 +231,19 @@
                 if (MenuTxt != undefined)
                 Users.MenuDetails.push(MenuDetail);
             });
-         
+            $(".dash").each(function (index, item) {
+                var AuthoTypTxt = $(this).find("[id*='smallSelect'] option:selected").val();
+                var MenuTxt = $(this).find("[id='Inphdn']").val();
+
+                var DashDetail = {
+                    DashId: MenuTxt,
+                    AuthoTyp: AuthoTypTxt,
+
+                };
+                if (MenuTxt != undefined)
+                    Users.DashDetails.push(DashDetail);
+            });
+            
 
             debugger
            $.post("/SaveUserRights", Users).done(function (response) {

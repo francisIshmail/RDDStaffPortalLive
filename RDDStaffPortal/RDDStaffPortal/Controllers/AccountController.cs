@@ -81,7 +81,7 @@ namespace RDDStaffPortal.Controllers
         [ChildActionOnly]
         public ActionResult GetDashBoardView()
         {
-            return PartialView(moduleDbOp.GetDashBoarMain());
+            return PartialView(moduleDbOp.GetDashBoarMain(User.Identity.Name,"U"));
         }
 
 

@@ -283,6 +283,7 @@
     <Content Include="fonts\summernote\summernote.ttf" />
     <Content Include="fonts\summernote\summernote.woff" />
     <Content Include="img\bg\Thumbs.db" />
+    <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.min.js" />
@@ -342,6 +343,7 @@
     <Content Include="Scripts\datatables\js\jszip.min.js" />
     <Content Include="Scripts\datatables\js\pdfmake.min.js" />
     <Content Include="Scripts\datatables\js\vfs_fonts.js" />
+    <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\RedDotUtility.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.min.js" />
@@ -379,6 +381,8 @@
     <Content Include="Areas\HR\Views\EmployeeList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmploymentStatus\Index.cshtml" />
     <Content Include="Areas\HR\Views\UserList\Index.cshtml" />
+    <Content Include="App_Code\WidgetUser.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRights\GetWidget.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

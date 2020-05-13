@@ -46,8 +46,23 @@ namespace RDDStaffPortal.DAL.InitialSetup
                     dte.Rows.Add(UserRights.MenuDetails[i].MenuId,UserRights.UserId,UserRights.CreatedBy,DateTime.Now,UserRights.MenuDetails[i].AuthoTyp);
                     i++;
                 }
-                SqlParameter[] Para = {
+                DataTable dte1 = new DataTable();
+                k = UserRights.DashDetails.Count;
+                i = 0;
+                dte1.Columns.Add(new DataColumn("DashId", typeof(string)));
+                dte1.Columns.Add(new DataColumn("UserId", typeof(string)));
+                dte1.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
+                dte1.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
+                dte1.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
+                dte1.Columns.Add(new DataColumn("IsActive", typeof(int)));
+                while (i < k)
+                {
 
+                    dte1.Rows.Add(UserRights.DashDetails[i].DashId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.DashDetails[i].AuthoTyp,0);
+                    i++;
+                }
+                SqlParameter[] Para = {
+                     new SqlParameter("@tbldash",dte1),
                     new SqlParameter("@tblRights",dte),
                     new SqlParameter("@UserId",UserRights.UserId)
                     
@@ -105,7 +120,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
 
         public List<Rdd_comonDrop> GetUserRightsList(string UserId)
-        {
+                {
             List<Rdd_comonDrop> _UserRightsList = new List<Rdd_comonDrop>();
             try
             {

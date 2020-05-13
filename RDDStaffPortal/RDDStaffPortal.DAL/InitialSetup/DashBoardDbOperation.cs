@@ -172,8 +172,132 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return _DtDash;
         }
 
+        public List<Sales_BU> GetSalesSummery(string username)
+        {
+            List<Sales_BU> _DtDash = new List<Sales_BU>();
+            try
+            {
+                SqlParameter[] parm = { };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_UserName", username) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Dashboard_GetSalesSummary", CommandType.StoredProcedure, sqlpar);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+
+                    //dtModule.Columns[0].ColumnName = "CompanyName";
+                    dtModule.Columns[2].ColumnName = "Points1";
+                    dtModule.Columns[3].ColumnName = "Points2";
+                    dtModule.Columns[4].ColumnName = "Points3";
+                    dtModule.Columns[5].ColumnName = "Points4";
+                    dtModule.Columns[6].ColumnName = "Points5";
+                    dtModule.Columns[7].ColumnName = "Points6";
+
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _DtDash.Add(new Sales_BU()
+                        {
+                            Points1 = !string.IsNullOrWhiteSpace(dr["Points1"].ToString()) ? Convert.ToDecimal(dr["Points1"].ToString()) : 0,
+                            Points2 = !string.IsNullOrWhiteSpace(dr["Points2"].ToString()) ? Convert.ToDecimal(dr["Points2"].ToString()) : 0,
+                            Points3 = !string.IsNullOrWhiteSpace(dr["Points3"].ToString()) ? Convert.ToDecimal(dr["Points3"].ToString()) : 0,
+                            Points4 = !string.IsNullOrWhiteSpace(dr["Points4"].ToString()) ? Convert.ToDecimal(dr["Points4"].ToString()) : 0,
+                            Points5 = !string.IsNullOrWhiteSpace(dr["Points5"].ToString()) ? Convert.ToDecimal(dr["Points5"].ToString()) : 0,
+                            Points6 = !string.IsNullOrWhiteSpace(dr["Points6"].ToString()) ? Convert.ToDecimal(dr["Points6"].ToString()) : 0,
+                           
 
 
+                        });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _DtDash = null;
+            }
+            return _DtDash;
+        }
+
+
+        public List<Pichart_Dash> GetPichart1(string username)
+        {
+            List<Pichart_Dash> _DtDash = new List<Pichart_Dash>();
+            try
+            {
+                SqlParameter[] parm = { };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_UserName", username) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Dashboard_CustomerStatusStatistics", CommandType.StoredProcedure, sqlpar);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+
+                    dtModule.Columns[1].ColumnName = "lblname";
+                    dtModule.Columns[0].ColumnName = "Points1";
+                    dtModule.Columns[2].ColumnName = "Bgcolor";
+
+
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _DtDash.Add(new Pichart_Dash()
+                        {
+                            lblname = !string.IsNullOrWhiteSpace(dr["lblname"].ToString()) ? dr["lblname"].ToString() : "",
+                            points = !string.IsNullOrWhiteSpace(dr["Points1"].ToString()) ? Convert.ToDecimal(dr["Points1"].ToString()) : 0,
+                            bgcolrs = !string.IsNullOrWhiteSpace(dr["Bgcolor"].ToString()) ? dr["Bgcolor"].ToString() : "",
+
+
+                        });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _DtDash = null;
+            }
+            return _DtDash;
+        }
+        public List<Pichart_Dash> GetPichart2(string username)
+        {
+            List<Pichart_Dash> _DtDash = new List<Pichart_Dash>();
+            try
+            {
+                SqlParameter[] parm = { };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_UserName", username) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Dashboard_CustomerStatusStatistics", CommandType.StoredProcedure, sqlpar);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[1];
+
+                    dtModule.Columns[1].ColumnName = "lblname";
+                    dtModule.Columns[0].ColumnName = "Points1";
+                    dtModule.Columns[2].ColumnName = "Bgcolor";
+
+
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _DtDash.Add(new Pichart_Dash()
+                        {
+                            lblname = !string.IsNullOrWhiteSpace(dr["lblname"].ToString()) ? dr["lblname"].ToString() : "",
+                            points = !string.IsNullOrWhiteSpace(dr["Points1"].ToString()) ? Convert.ToDecimal(dr["Points1"].ToString()) : 0,
+                            bgcolrs=!string.IsNullOrWhiteSpace(dr["Bgcolor"].ToString()) ? dr["Bgcolor"].ToString() : "",
+
+
+                        });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _DtDash = null;
+            }
+            return _DtDash;
+        }
         public List<Sales_BU> GetSales_BU(string username)
         {
             List<Sales_BU> _DtDash = new List<Sales_BU>();

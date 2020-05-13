@@ -383,7 +383,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
         }
 
 
-        public List<RDD_DashBoard_Main> GetDashBoarMain()
+        public List<RDD_DashBoard_Main> GetDashBoarMain(string Username,string Role)
         {
 
             List<RDD_DashBoard_Main> _MainDash = new List<RDD_DashBoard_Main>();
@@ -392,11 +392,11 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 SqlParameter[] parm = { };
 
 
-                
-                DataSet dsModules = Com.ExecuteDataSet("select  * from RDD_DashBoardTemp Where IsNull(IsActive,1)=1");
-                //SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
-                //new SqlParameter("@Role",Role) };
-                //DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveMenu", CommandType.StoredProcedure, sqlpar);
+
+                // DataSet dsModules = Com.ExecuteDataSet("select  * from RDD_DashBoardTemp");
+                SqlParameter[] sqlpar =  {new SqlParameter("@UserId",Username) ,
+                new SqlParameter("@Role",Role) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_RetriveDashBoard", CommandType.StoredProcedure, sqlpar);
 
 
                 if (dsModules.Tables.Count > 0)
