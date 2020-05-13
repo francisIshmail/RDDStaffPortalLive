@@ -58,7 +58,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 while (i < k)
                 {
 
-                    dte1.Rows.Add(UserRights.DashDetails[i].DashId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.DashDetails[i].AuthoTyp);
+                    dte1.Rows.Add(UserRights.DashDetails[i].DashId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.DashDetails[i].AuthoTyp,0);
                     i++;
                 }
                 SqlParameter[] Para = {
