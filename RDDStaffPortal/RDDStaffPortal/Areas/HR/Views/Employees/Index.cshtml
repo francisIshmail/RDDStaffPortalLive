@@ -526,48 +526,48 @@
                                                 </div>
                                             </div>
                                             <div class="reddotTableBody" id="AddAttachmentsRow">
-                                                
+
                                                 @*@if (Model.EmpInfoProEdu != null)*@
-                                                    @if (Model.DocumentList != null)
+                                                @if (Model.DocumentList != null)
+                                                {
+                                                    foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
                                                     {
-                                                        foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
-                                                        {
-                                                            <div class="reddotTableRow odd-even-row">
-                                                                @Html.HiddenFor(u => Doc.DId, new { @class = "form-control" })
-                                                                @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
-                                                                <div class="reddotTableCell width15per text-left">
-                                                                    <div>
-                                                                        @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName)
+                                                        <div class="reddotTableRow odd-even-row">
+                                                            @Html.HiddenFor(u => Doc.DId, new { @class = "form-control" })
+                                                            @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
+                                                            <div class="reddotTableCell width15per text-left">
+                                                                <div>
+                                                                    @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName)
 
-                                                                    </div>
                                                                 </div>
-                                                                <div class="reddotTableCell text-left">
-                                                                    <div>
-                                                                        @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "grid-control", type = "File", multiple = "multiple", @Title = Doc.DocPath })
-                                                                        @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
-                                                                    </div>
-                                                                </div>
-                                                                @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
-                                                                <div class="reddotTableCell text-left"><div>@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })  </div></div>
-
-                                                                
-                                                               
-                                                                <div class="reddotTableCell width15per">
-                                                                    <div>
-
-                                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
-                                                                    </div>
-                                                                </div>
-
-
-
-
                                                             </div>
-                                                            counter1++;
-                                                        }
-                                                    }
+                                                            <div class="reddotTableCell text-left">
+                                                                <div>
+                                                                    @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "grid-control", type = "File", multiple = "multiple", @Title = Doc.DocPath })
+                                                                    @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
+                                                            <div class="reddotTableCell text-left"><div>@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })  </div></div>
 
-                                                </div>
+
+
+                                                            <div class="reddotTableCell width15per">
+                                                                <div>
+
+                                                                    <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                        </div>
+                                                        counter1++;
+                                                    }
+                                                }
+
+                                            </div>
 
                                         </div>
                                     </div>
@@ -685,7 +685,7 @@
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Salary :</label>
-                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", Value="" })
+                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", Value = "" })
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
@@ -1081,8 +1081,8 @@
 
 
     $(document).ready(function () {
-      
-       
+
+
 
 
         $("#AddAttachmentsRow").on("change", "input[id^='fileInput']", function (event) {
@@ -1108,56 +1108,6 @@
                     else {
                         debugger;
                        tr.find("input[id^='hdnfileInput']").val(response);
-
-        debugger
-
-        function readURL(input) {
-            debugger;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("input[type='image']").attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("input[id='my_file']").on("change", function () {
-            debugger;
-            readURL(this);
-            var data = new FormData();
-            var files = $("input[id = 'my_file']").get(0).files;
-            if (files.length > 0) {
-                data.append("MyImages", files[0]);
-            }
-            $.ajax({
-                url: "/HR/Employees/Uploadfile",
-                type: "POST",
-                processData: false,
-                contentType: false,
-                data: data,
-                success: function (response) {
-                    //code after success
-                    debugger
-                    if (response == "InvalidError") {
-                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
-                    }
-                    else {
-                        debugger;
-                        $("input[type='image']").val(response);
-                        $('input[name="Photo_imghdn"]').val('/Images/' + response);
-                    }
-
-                },
-                error: function (er) {
-                    RdotAlerterrtxt(er);
-                }
-            });
-
-        })
-        $("input[type='image']").click(function () {
-            debugger
-            $("input[id='my_file']").click();
 
                        // $('input[name="Photo_imghdn"]').val('/Images/' + response);
                     }
@@ -1223,7 +1173,7 @@
 
         debugger
 
-     
+
 
         //GetEmpNo();
 
@@ -1521,7 +1471,7 @@
         EmpData["NOTE"] = $("#NOTE").val();
         debugger
         EmpDatas = [];
-       
+
         debugger
          var i = 0;
 
@@ -1532,16 +1482,16 @@
                // DId: $(this).find("input[id^='DId']").val(),
                 DcumenName: $(this).find("input[id^='docdescription']").val(),
                 DocPath: $(this).find("input[id^='hdnfileInput']").val(),
-               
+
             }
-           
+
             EmpDatas.push(obj1);
             i++;
 
         });
 
         var EmpInfoProEdu = [];
-       
+
         EmpInfoProEdu.length = 0;
         // var n = $("#AddCMRow .reddotTableRow").length;
         i = 0;
@@ -1926,53 +1876,6 @@
         return ValFlag;
 
     }
-    function readURL(input) {
-        debugger;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("input[type='image']").attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("input[id='my_file']").on("change", function () {
-        debugger;
-        readURL(this);
-        var data = new FormData();
-        var files = $("input[id = 'my_file']").get(0).files;
-        if (files.length > 0) {
-            data.append("MyImages", files[0]);
-        }
-        $.ajax({
-            url: "/HR/Employees/Uploadfile",
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
-                //code after success
-                debugger
-                if (response == "InvalidError") {
-                    RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
-                }
-                else {
-                    debugger;
-                    $("input[type='image']").val(response);
-                    $('input[name="Photo_imghdn"]').val('/Images/' + response);
-                }
-
-            },
-            error: function (er) {
-                RdotAlerterrtxt(er);
-            }
-        });
-
-    })
-    $("input[type='image']").click(function () {
-        debugger
-        $("input[id='my_file']").click();
 
     $(function () {
         debugger
@@ -2180,7 +2083,7 @@
             cols += '<div class="reddotTableRow odd-even-row">';
 
             cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id="docdescription' + counter + '"></div> </div>';
-            cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file"  id="fileInput' + counter + '" multiple /><input id="hdnfileInput'+counter+'" type="hidden"/> </div> </div>';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file"  id="fileInput' + counter + '" multiple /><input id="hdnfileInput' + counter + '" type="hidden"/> </div> </div>';
 
             cols += ' <div class="reddotTableCell">';
             cols += ' <div>';
@@ -2203,74 +2106,74 @@
 
         debugger
 
-      
 
-   });
+
+    });
 
 </script>
 <script>
 
-        //$('#datetime').datetimepicker({
-        //format: 'MM/DD/YYYY H:mm',
-        //});
-        //$('#Joiningdatepicker').datetimepicker({
-        //    format: 'MM/DD/YYYY',
-        //});
+            //$('#datetime').datetimepicker({
+            //format: 'MM/DD/YYYY H:mm',
+            //});
+            //$('#Joiningdatepicker').datetimepicker({
+            //    format: 'MM/DD/YYYY',
+            //});
 
-        //$('#datepicker1').datetimepicker({
-        //    format: 'MM/DD/YYYY',
-        //});
-        //$('#datepickernew').datetimepicker({
-        //    format: 'MM/DD/YYYY',
-        //});
+            //$('#datepicker1').datetimepicker({
+            //    format: 'MM/DD/YYYY',
+            //});
+            //$('#datepickernew').datetimepicker({
+            //    format: 'MM/DD/YYYY',
+            //});
 
-        //$('#datepickerFromDate').datetimepicker({
-        //    format: 'MM/DD/YYYY',
-        //});
+            //$('#datepickerFromDate').datetimepicker({
+            //    format: 'MM/DD/YYYY',
+            //});
 
-        //$('#datepickerToDate').datetimepicker({
-        //    format: 'MM/DD/YYYY',
-        //});
-        //$('#timepicker').datetimepicker({
-        //    format: 'h:mm A',
-        //});
+            //$('#datepickerToDate').datetimepicker({
+            //    format: 'MM/DD/YYYY',
+            //});
+            //$('#timepicker').datetimepicker({
+            //    format: 'h:mm A',
+            //});
 
-        //$('#basic').select2({
-        //    theme: "bootstrap"
-        //});
+            //$('#basic').select2({
+            //    theme: "bootstrap"
+            //});
 
-        //$('#multiple').select2({
-        //    theme: "bootstrap"
-        //});
+            //$('#multiple').select2({
+            //    theme: "bootstrap"
+            //});
 
-        //$('#multiplenew').select2({
-        //    theme: "bootstrap"
-        //});
+            //$('#multiplenew').select2({
+            //    theme: "bootstrap"
+            //});
 
-        //$('#multiple-states').select2({
-        //    theme: "bootstrap"
-        //});
+            //$('#multiple-states').select2({
+            //    theme: "bootstrap"
+            //});
 
-        //$('#tagsinput').tagsinput({
-        //    tagClass: 'badge-info'
-        //});
+            //$('#tagsinput').tagsinput({
+            //    tagClass: 'badge-info'
+            //});
 
-        //$(function () {
-        //    $("#slider").slider({
-        //        range: "min",
-        //        max: 100,
-        //        value: 40,
-        //    });
-        //    $("#slider-range").slider({
-        //        range: true,
-        //        min: 0,
-        //        max: 500,
-        //        values: [75, 300]
-        //    });
-        //});
-        //$(document).ready(function () {
-        //    $('.scrollbar-inner').scrollbar();
-        //});
+            //$(function () {
+            //    $("#slider").slider({
+            //        range: "min",
+            //        max: 100,
+            //        value: 40,
+            //    });
+            //    $("#slider-range").slider({
+            //        range: true,
+            //        min: 0,
+            //        max: 500,
+            //        values: [75, 300]
+            //    });
+            //});
+            //$(document).ready(function () {
+            //    $('.scrollbar-inner').scrollbar();
+            //});
 
 </script>
 

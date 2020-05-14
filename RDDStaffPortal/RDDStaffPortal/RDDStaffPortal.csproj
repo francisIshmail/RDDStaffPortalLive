@@ -175,7 +175,6 @@
     <Content Include="fonts\simple-line-icons\Simple-Line-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\TempLogo\defaultimg.jpg" />
-    <Content Include="Images\TempLogo\TempAbc.jpg" />
     <Content Include="img\bg\background_01.jpg" />
     <Content Include="img\bg\background_02.jpg" />
     <Content Include="img\bg\background_03.jpg" />
@@ -424,7 +423,6 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
-    <Folder Include="Images\TempLogo\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
