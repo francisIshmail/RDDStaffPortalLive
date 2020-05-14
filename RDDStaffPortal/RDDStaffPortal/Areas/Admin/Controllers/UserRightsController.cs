@@ -44,12 +44,14 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
         [ChildActionOnly]
         public ActionResult GetMenuTree()
-
-
-
         {
             return PartialView(moduleDbOp.GetModuleList2("Admin", "A"));
 
+        }
+        [ChildActionOnly]
+        public ActionResult GetWidget()
+        {
+            return PartialView(moduleDbOp.GetDashBoarMain("Admin","A"));
         }
     }
 }

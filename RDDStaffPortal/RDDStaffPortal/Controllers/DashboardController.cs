@@ -107,44 +107,128 @@ namespace RDDStaffPortal.Controllers
 
         }
 
-        [Route("GetPichart")]
-        public ActionResult GetPichart()
+        [Route("GetPichart1")]
+        public ActionResult GetPichart1()
+        
         {
             JsonResult result = new JsonResult();
-
+            List<Pichart_Dash> data1 = new List<Pichart_Dash>();
             List<Pichart_Dash> data = new List<Pichart_Dash>();
             //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
-            data.Add(new Pichart_Dash
+            data1 = _DashDbOp.GetPichart1(User.Identity.Name);
+            List<string> bgarr = new List<string> { "#26d41d", "#ed7d31", "#a5a5a5", "#ffc000", "#4472c4" };
+            Int32 i = 0;
+            if (data1.Count != null)
             {
-                lblname = "Active",
-                bgcolrs = "#26d41d",
-                points = 50
-            });
-            data.Add(new Pichart_Dash
+                while (i < data1.Count)
+                {
+                    data.Add(new Pichart_Dash
+                    {
+                        lblname = data1[i].lblname,
+                        bgcolrs = data1[i].bgcolrs,
+                        points = data1[i].points
+                    });
+                    i++;
+                }
+
+            }
+            
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Active",
+            //    bgcolrs = "#26d41d",
+            //    points = 50
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Dormant",
+            //    bgcolrs = "#ed7d31",
+            //    points = 35
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Hard Block",
+            //    bgcolrs = "#a5a5a5",
+            //    points = 15
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Soft Block",
+            //    bgcolrs = "#ffc000",
+            //    points = 20
+            //});
+            ////"#26d41d", "#ed7d31", "#a5a5a5", "#ffc000", "#4472c4"
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Block List",
+            //    bgcolrs = "#4472c4",
+            //    points =7
+            //});
+
+
+
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+
+            return result;
+
+        }
+
+        [Route("GetPichart2")]
+        public ActionResult GetPichart2()
+        {
+            JsonResult result = new JsonResult();
+            List<Pichart_Dash> data1 = new List<Pichart_Dash>();
+            List<Pichart_Dash> data = new List<Pichart_Dash>();
+            //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
+            data1 = _DashDbOp.GetPichart2(User.Identity.Name);
+            List<string> bgarr = new List<string> { "#26d41d", "#ed7d31", "#a5a5a5", "#ffc000", "#4472c4" };
+            Int32 i = 0;
+            if (data1.Count != null)
             {
-                lblname = "Dormant",
-                bgcolrs = "#ed7d31",
-                points = 35
-            });
-            data.Add(new Pichart_Dash
-            {
-                lblname = "Hard Block",
-                bgcolrs = "#a5a5a5",
-                points = 15
-            });
-            data.Add(new Pichart_Dash
-            {
-                lblname = "Soft Block",
-                bgcolrs = "#ffc000",
-                points = 20
-            });
-            //"#26d41d", "#ed7d31", "#a5a5a5", "#ffc000", "#4472c4"
-            data.Add(new Pichart_Dash
-            {
-                lblname = "Block List",
-                bgcolrs = "#4472c4",
-                points =7
-            });
+                while (i < data1.Count)
+                {
+                    data.Add(new Pichart_Dash
+                    {
+                        lblname = data1[i].lblname,
+                        bgcolrs = data1[i].bgcolrs,
+                        points = data1[i].points
+                    });
+                    i++;
+                }
+               
+            }
+            
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Active",
+            //    bgcolrs = "#26d41d",
+            //    points = 50
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Dormant",
+            //    bgcolrs = "#ed7d31",
+            //    points = 35
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Hard Block",
+            //    bgcolrs = "#a5a5a5",
+            //    points = 15
+            //});
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Soft Block",
+            //    bgcolrs = "#ffc000",
+            //    points = 20
+            //});
+            ////"#26d41d", "#ed7d31", "#a5a5a5", "#ffc000", "#4472c4"
+            //data.Add(new Pichart_Dash
+            //{
+            //    lblname = "Block List",
+            //    bgcolrs = "#4472c4",
+            //    points =7
+            //});
 
 
 
@@ -221,7 +305,7 @@ namespace RDDStaffPortal.Controllers
                            .ToList();
 
             List<BarChart_Dash> data = new List<BarChart_Dash>();
-            //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
+            
             List<decimal> numbers = lst.AsEnumerable()
                           .Select(r => r.Points3)
                           .ToList();
@@ -244,39 +328,107 @@ namespace RDDStaffPortal.Controllers
             return result;
 
         }
+        [Route("Getlinechart1")]
+        public ActionResult Getlinechart1()
+        {
+            JsonResult result = new JsonResult();
 
+            List<Sales_BU> lst = new List<Sales_BU>();
+            //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
+
+
+            lst = _DashDbOp.GetSalesSummery(User.Identity.Name);
+
+            List<string> list = new List<string> { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+
+            List<BarChart_Dash> data = new List<BarChart_Dash>();
+            //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
+            List<decimal> numbers = lst.AsEnumerable()
+                           .Select(r => r.Points1)
+                           .ToList();
+
+            data.Add(new BarChart_Dash
+            {
+                lbls = list,
+                points = numbers
+
+            });
+            numbers = lst.AsEnumerable()
+                          .Select(r => r.Points2)
+                          .ToList();
+
+            data.Add(new BarChart_Dash
+            {
+
+                points = numbers
+
+            });
+            numbers = lst.AsEnumerable()
+                          .Select(r => r.Points3)
+                          .ToList();
+
+            data.Add(new BarChart_Dash
+            {
+
+                points = numbers
+
+            });
+            
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+
+            return result;
+
+        }
 
         [Route("Getlinechart2")]
         public ActionResult Getlinechart2()
         {
             JsonResult result = new JsonResult();
 
-            List<BarChart_Dash> data = new List<BarChart_Dash>();
+            List<Sales_BU> lst = new List<Sales_BU>();
             //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
 
-            List<decimal> numbers = new List<decimal>(12) { 30, 45, 45, 68, 69, 90, 100, 158, 177, 200, 245, 256 };
+
+            lst = _DashDbOp.GetSalesSummery(User.Identity.Name);
+
+
+            List<string> list = new List<string> { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+
+            List<BarChart_Dash> data = new List<BarChart_Dash>();
+            //'Active', 'Dormant', 'Hard Block', 'Soft Block', 'Block List'
+            List<decimal> numbers  = lst.AsEnumerable()
+                          .Select(r => r.Points4)
+                          .ToList();
+
             data.Add(new BarChart_Dash
             {
-                points = numbers,
-            });
-            numbers = new List<decimal>(12) { 10, 20, 55, 75, 80, 48, 59, 55, 23, 107, 60, 87 };
-            data.Add(new BarChart_Dash
-            {
-                points = numbers,
+                lbls=list,
+                points = numbers
 
             });
-            numbers = new List<decimal>(12) { 5, 6, 44, 55, 34, 67, 59, 65, 87, 11, 50, 67 };
+            numbers = lst.AsEnumerable()
+                          .Select(r => r.Points5)
+                          .ToList();
+
             data.Add(new BarChart_Dash
             {
-                points = numbers,
+
+                points = numbers
 
             });
-            numbers = new List<decimal>(12) { 10, 30, 58, 79, 90, 105, 117, 160, 185, 210, 185, 194 };
+            numbers = lst.AsEnumerable()
+                          .Select(r => r.Points6)
+                          .ToList();
+
             data.Add(new BarChart_Dash
             {
-                points = numbers,
+
+                points = numbers
 
             });
+
             result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
 
             return result;

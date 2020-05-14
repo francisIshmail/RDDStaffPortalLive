@@ -53,5 +53,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public decimal Points2 { get; set; }
         public decimal Points3 { get; set; }
         public decimal Points4 { get; set; }
+        public decimal Points5 { get; set; }
+        public decimal Points6 { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
 using System.Web.Helpers;
+using System.Web.Routing;
 using System.Net;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
@@ -295,6 +296,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         }
 
+        public ActionResult ViewProfile()
+        {
+            //Response.Redirect("/Employee/EmployeeId")
+            //;
+            // return RedirectToAction("Index/"+1);
 
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
