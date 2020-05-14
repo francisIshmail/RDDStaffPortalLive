@@ -31,7 +31,7 @@
 		});
 		
 		$("#Cards #Firstcard").each(function (index, item) {
-			
+            debugger;
 			var url = $(this).find("#hdnurl").val();
 			var Col = $(this).find("#hdnColumns").val();
 			var Noc = $(this).find("#hdnNoofColumns").val();
@@ -47,7 +47,7 @@
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevTrgetAcheivedPercent+'')
 				
 
-			} else if ($(this).find(".ds1").text() == "Revenue Forcost") {
+			} else if ($(this).find(".ds1").text() == "Revenue Forecast") {
 				$(this).find(".A1").text("$" + Cards[0].RevForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
