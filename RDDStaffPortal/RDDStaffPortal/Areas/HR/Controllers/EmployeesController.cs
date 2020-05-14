@@ -11,12 +11,14 @@ using RDDStaffPortal.DAL;
 using System.IO;
 using System.Web.Helpers;
 using System.Web.Routing;
+using System.Net;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
     public class EmployeesController : Controller
     {
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
+       
         // GET: Admin/EmployeeRegistration
         //public ActionResult Create()
         //{
@@ -63,11 +65,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         //    BinaryReader reader = new BinaryReader(image.InputStream);
         //    imageBytes = reader.ReadBytes((int)image.ContentLength);
         //}
-         public ActionResult Index(int? EmployeeId)
+        public ActionResult Index(int? EmployeeId)
 
         {
-           
-                       
+           string username = User.Identity.Name;
+
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("EXEC EmpReg_GetDDLDataToBind");
             List<RDD_EmployeeRegistration> DeptList = new List<RDD_EmployeeRegistration>();
@@ -109,7 +111,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
 
 
-            DS = Db.myGetDS("EXEC RDD_GetManagerList");
+            DS = Db.myGetDS("EXEC RDD_GetManagerList '"+username+"'");
             List<RDD_EmployeeRegistration> ManagerList = new List<RDD_EmployeeRegistration>();
             if (DS.Tables.Count > 0)
             {
@@ -184,10 +186,49 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     CurrencyList.Add(CurrencyLst);
                 }
             }
+            //if (EmployeeId == null)
+            //{
+                    string url = "https://restcountries.eu/rest/v1/all";
 
+                    // Web Request with the given url.
+                    WebRequest request = WebRequest.Create(url);
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    WebResponse resp = request.GetResponse();
+                    Stream dataStream = resp.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string jsonResponse = null;
+                    // Store the json response into jsonResponse variable.
+                    jsonResponse = reader.ReadLine();
 
+                List<RDD_EmployeeRegistration> CitizenshipLst = new List<RDD_EmployeeRegistration>();
+                if (jsonResponse != null)
+                    {
+                        //// Deserialize the jsonRespose object to the CountryModel. You're getting a JSON array [].
+                        List<CountryModel> countryModel = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CountryModel>>(jsonResponse);
 
+                    int i = 0;
+                    
+                    while (i<countryModel.Count)
+                        
+                    {
+                        RDD_EmployeeRegistration  CitizenshipLt = new RDD_EmployeeRegistration();
+                        CitizenshipLt.Citizenship = countryModel[i].name.ToString();
+                        CitizenshipLst.Add(CitizenshipLt);
+                    i++;
+                        
+                    }
+                        //// Set the List Item with the countries.
+//IEnumerable<SelectListItem> countries = countryModel.Select(x => new SelectListItem() { Value = x.name, Text = x.name });
 
+                    //// Create a ViewBag pr;operty with the final content.
+                    ///90
+                    //sss
+                       // ViewBag.Countries = countries;
+                    }
+
+            //// }
+           
+            ViewBag.CitizenshipLst = new SelectList(CitizenshipLst, "Citizenship", "Citizenship");
             ViewBag.DeptList = new SelectList(DeptList, "DeptId", "DeptName");
             ViewBag.DesigList = new SelectList(DesigList, "DesigId", "DesigName");
             ViewBag.StatusList = new SelectList(StatusList, "StatusId", "StatusName");
@@ -210,9 +251,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 byte[] file;
                 using (var stream = new FileStream(objemp.ImagePath1, FileMode.Open, FileAccess.Read))
                 {
-                    using (var reader = new BinaryReader(stream))
+                    using (var reader1 = new BinaryReader(stream))
                     {
-                        file = reader.ReadBytes((int)stream.Length);
+                        file = reader1.ReadBytes((int)stream.Length);
                     }
                 }
                 objemp.ImagePath = file;
@@ -261,16 +302,15 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             //;
             // return RedirectToAction("Index/"+1);
 
-            return RedirectToAction("Index", new RouteValueDictionary( new { controller = "Employees", action = "Index", EmployeeId = EmpDbOp.GetEmployeeIdByLoginName ( User.Identity.Name )}));
-        }
-
-        public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu)
+        [HttpPost]
+        public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
 
-          
-            string result = string.Empty;
+                    string result = string.Empty;
             try
             {
+
+               
                 RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();
               //  rdd_empreg.ImagePath = EmpData.ImagePath;
                 
@@ -327,19 +367,33 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                 rdd_empreg.CId = EmpData.CId;
                 rdd_empreg.CountryCode = EmpData.CountryCode;
+
+
+                
                 //rdd_empreg.ItmsGrpNam = Emp.ItmsGrpNam;
 
-
-
-                //int i = 0;
-                //if(EmpInfoProEdu!=null)
+             
+               //List<DocumentList> Dclst = new List<DocumentList>();
+                //if (files != null)
+                //{
+                //    foreach  (var file in files)
                 //    {
-                //    while (i <= EmpInfoProEdu.Count)
-                //    {
-                //        i++;
+                //        if (file != null && file.ContentLength > 0)
+                //        {
+
+                //            string abc1 = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                //            file.SaveAs(Path.Combine(Server.MapPath("/Uploads"), abc1));
+                //            string abc = "/Uploads/" + abc1;
+                //            Dclst.Add(new DocumentList()
+                //            {
+                //                DcumenName = file.FileName,
+                //                DocPath = abc
+                //            });
+
+                //        }
                 //    }
-
                 //}
+
 
                 string TempPath = (string)Session["FILE"];
                 if (TempPath != null && TempPath != "")
@@ -353,7 +407,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     rdd_empreg.LogoType = ".jpg";
                 }
 
-                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu);
+                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
                
             }
             catch (Exception ex)
@@ -364,7 +418,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         }
 
         
-       public JsonResult DeleteRecord(int EId)
+        public JsonResult DeleteRecord(int EId)
         {
             string result = string.Empty;
             try
@@ -433,6 +487,53 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             return Json(NextEmpNo, JsonRequestBehavior.AllowGet);
             
         }
+
+
+
+        [HttpPost]
+        public JsonResult UploadDoc()
+        {
+            string fname = "";           
+            string _imgname = string.Empty;
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    System.Web.HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {       
+                        HttpPostedFileBase file = files[i];
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                            var _ext = Path.GetExtension(fname);
+                        }
+                        // Get the complete folder path and store the file inside it.  
+                        _imgname = Path.Combine(Server.MapPath("/Uploads/"), fname);
+                        file.SaveAs(_imgname);
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json(fname, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json(fname, JsonRequestBehavior.AllowGet);
+            }
+           
+        }
+
     }
 }
 

@@ -15,7 +15,7 @@ namespace RDDStaffPortal.DAL.HR
     public class EmployeeRegistrationDbOperation
     {
        // public string Save(RDD_EmployeeRegistration EmpData)
-         public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu)
+         public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu,List<DocumentList> DocumentList)
       
         {
             string response = string.Empty;
@@ -302,6 +302,53 @@ namespace RDDStaffPortal.DAL.HR
                             response = cmd.Parameters["@p_Response"].Value.ToString();
 
                             cmd.Dispose();
+
+
+                            if(DocumentList != null)
+                            {
+                                for (int i = 0; i < DocumentList.Count; i++)
+                                {
+                                    cmd = new SqlCommand();
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.CommandText = "RDD_Employees_Doc_InsertUpdate";
+                                    cmd.Connection = connection;
+                                    cmd.Transaction = transaction;
+
+                                   // EmpData.DocumentList[i].DcumenName,
+                                      //  EmpData.DocumentList[i].DocPath
+                        cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+                                   
+                                  //  cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = DocumentList[i].DId;
+
+                                    if (DocumentList[i].DcumenName == null)
+                                    {
+                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 50).Value = DocumentList[i].DcumenName;
+                                    }
+                                    if (DocumentList[i].DocPath == null)
+                                    {
+                                        cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DocumentList[i].DocPath;
+                                    }
+                                    
+                                    cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+
+                                    cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                
+                                cmd.ExecuteNonQuery();
+                                response = cmd.Parameters["@p_Response"].Value.ToString();
+
+                                cmd.Dispose();
+                                }
+                            }
 
 
                             if (EmpInfoProEdu != null)
@@ -678,9 +725,34 @@ namespace RDDStaffPortal.DAL.HR
                         }
                     }
 
+                    List<DocumentList> DocumentList = new List<DocumentList>();
+                    if (DocumentList != null)
+                    {
+                        for (int i = 0; i < DS.Tables[2].Rows.Count; i++)
+                        {
+                            DocumentList Doc = new DocumentList();
+
+                            DataTable Ds = DS.Tables[2];
+                            if (DS.Tables[2].Rows[i]["Id"] != null && !DBNull.Value.Equals(DS.Tables[2].Rows[i]["Id"]))
+                            {
+                                Doc.DId = Convert.ToInt32(DS.Tables[2].Rows[i]["Id"]);
+                            }
+                            if (DS.Tables[2].Rows[i]["Description"] != null && !DBNull.Value.Equals(DS.Tables[2].Rows[i]["Description"]))
+                            {
+                                Doc.DcumenName = DS.Tables[2].Rows[i]["Description"].ToString();
+                            }
+                            if (DS.Tables[2].Rows[i]["link"] != null && !DBNull.Value.Equals(DS.Tables[2].Rows[i]["link"]))
+                            {
+                                Doc.DocPath = DS.Tables[2].Rows[i]["link"].ToString();
+                            }
+
+                           DocumentList.Add(Doc);
+                        }
+                    }
+                    emp.DocumentList = DocumentList;
                     //Edit for Edu Table Data
-                   
-                        List<EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
+
+                    List<EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
                     if (EmpInfoProEdu != null)
                     {
                         for (int i = 0; i < DS.Tables[1].Rows.Count; i++)
@@ -718,8 +790,6 @@ namespace RDDStaffPortal.DAL.HR
                                 Eduinfo.EndDate = Convert.ToDateTime(DS.Tables[1].Rows[i]["End_date"]);
                             }
 
-
-
                             if (DS.Tables[1].Rows[i]["Type"] != null && !DBNull.Value.Equals(DS.Tables[1].Rows[i]["Type"]))
                             {
                                 Eduinfo.Type = DS.Tables[1].Rows[i]["Type"].ToString();
@@ -729,11 +799,14 @@ namespace RDDStaffPortal.DAL.HR
                             {
                                 Eduinfo.Score = Convert.ToInt32(DS.Tables[1].Rows[i]["Score"]);
                             }
+
                             EmpInfoProEdu.Add(Eduinfo);
                         }
                     }
-                    emp.EmpInfoProEdus = EmpInfoProEdu;
 
+                    emp.EmpInfoProEdus = EmpInfoProEdu;
+                   
+                    
                 }
             }
             catch (Exception ex)
