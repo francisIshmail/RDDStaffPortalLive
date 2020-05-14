@@ -5,8 +5,9 @@
 		DashBoard.Attachevent();
 	},
 	Attachevent: function () {
-		;
+		
 		var Cards = [];
+	
 		$("#Firstcard").each(function (index, item){
 			
 			var url = $(this).find("#hdnurl").val();
@@ -47,7 +48,7 @@
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevTrgetAcheivedPercent+'')
 				
 
-			} else if ($(this).find(".ds1").text() == "Revenue Forcost") {
+			} else if ($(this).find(".ds1").text() == "Revenue Forecast") {
 				$(this).find(".A1").text("$" + Cards[0].RevForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
@@ -196,7 +197,7 @@
 		});
 
 
-		$("#bars #BarChart").each(function (index, item) {
+		$("#bars,#bars1 #BarChart,#BarChart1").each(function (index, item) {
 			
 			var url1 = $(this).find("#hdnurl").val();
 			var lbl2 = $(this).find("#hdnlbl2").val().split(",");
@@ -261,6 +262,15 @@
 				i++;
             }
 			debugger
+			if (ids == 'DASH017') {
+				ids = 'multipleLineChart1';
+				$('#second_tab,#pills-Month-tab1').show();
+			} else if (ids == 'DASH018') {
+				ids = 'SalesAllCountry1';
+				$('#second_tab,#pills-Quarter-tab1').show();
+				
+			}
+			$("#bars1,#bars1").hide();
 			var mySalesAllCountry = new Chart(ids, {
 				type: 'bar',
 				
@@ -324,7 +334,7 @@
 
 		});
 
-
+		var tf1 = true;
 		$("#lins #MultilineChart").each(function (index, item) {
 			debugger
 			var url1 = $(this).find("#hdnurl").val();
@@ -392,14 +402,13 @@
 				});
 				i++;
 			}
-
-			var myMultipleLineChart = new Chart(ids, {
-				type: 'line',				
-				data: {					
-					labels:lblarr1,
-					datasets: ds,					
+			var chartoption = {
+				type: 'line',
+				data: {
+					labels: lblarr1,
+					datasets: ds,
 				},
-				
+
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
@@ -414,15 +423,15 @@
 						xPadding: 10,
 						yPadding: 10,
 						caretPadding: 10
-					},					
+					},
 					scales: {
 						xAxes: [{
 							ticks: {}
 						}],
 						yAxes: [{
 							ticks: {
-								beginAtZero: true,					
-								userCallback: function (value, index, values) {	
+								beginAtZero: true,
+								userCallback: function (value, index, values) {
 									debugger
 									if (value > 0) {
 										if (value >= 1000000000) {
@@ -433,7 +442,7 @@
 											values = (value / 1000) + 'k';
 										} else {
 											values = value;
-                                        }
+										}
 									} else {
 										if (value <= 1000) {
 											values = (value / 1000) + 'k';
@@ -453,8 +462,25 @@
 						padding: { left: 15, right: 15, top: 15, bottom: 15 }
 					}
 				}
-			});
+			};
+			if (ids == 'DASH005') {
+				ids = 'multipleLineChart';
+				$('#first_tab,#pills-Month-tab').show();
+			} else if (ids == 'DASH016') {
+				ids = 'SalesAllCountry';
+				$('#first_tab,#pills-Quarter-tab').show();
+			}
+			$('#lins,#lins').hide();
+			var myMultipleLineChart = new Chart(ids,chartoption);
 			myMultipleLineChart.render();
+
+			//if (tf1 == true) {
+			//	var myMultipleLineChart1 = new Chart("#multipleLineChart", chartoption);
+			//	myMultipleLineChart1.render();
+			//	tf1 = false;
+   //         }
+			
+			
 			
 		});
 
