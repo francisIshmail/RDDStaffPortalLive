@@ -4,15 +4,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
     var counter = 1;
+    var counter1 = 1;
 
-}
+} @*<img src="/Images/TempLogo/defaultimg.jpg" id="my_image"/>*@
 @Html.HiddenFor(m => m.ImagePath1)
 
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">User Profile</h4>
+                <h4 class="page-title">Employee Profile</h4>
 
             </div>
             <div class="rowmin row">
@@ -26,7 +27,7 @@
                                     <div class="avatar">
                                         <div class="input-file input-file-image">
                                             <div>
-                                                <input type="image" class="img-upload-preview avatar-img" width="170" src="data:image;base64,@Convert.ToBase64String(Model.ImagePath)" alt="preview">
+                                                <input type="image" id="my_image" class="img-upload-preview avatar-img" width="170" src="data:image;base64,@Convert.ToBase64String(Model.ImagePath)" alt="preview">
 
                                                 <input type="file" class="form-control form-control-file" id="my_file" style="display: none;" name="my_file" accept="image/*" required="">
                                             </div>
@@ -258,7 +259,7 @@
                                                         <label for="email2" class="width100px">Status :</label>
                                                         <div class="input-group">
                                                             <label class="switch">
-                                                                <input type="checkbox" id="chkIsActive"> @*<div></div>*@
+                                                                <input type="checkbox" id="chkIsActive"> <div></div>
                                                             </label>
                                                         </div>
                                                         @*<div class="input-group"><input type="checkbox" id="chkIsActive" checked data-toggle="toggle" data-onstyle="primary"></div>*@
@@ -358,14 +359,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
+
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Nationality :</label>
-                                                        @*<select id="Citizenship">
-                                                                <option value="select"></option>
-                                                            </select>*@
-
-                                                        @Html.TextBoxFor(m => m.Citizenship, new { @id = "Citizenship", @class = "form-control form-control-sm", maxlength = "800" })
-                                                        @*@Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select Country-", new { @id = "CountryCodeName", @class = "form-control form-control-sm" })*@
+                                                        @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipLst as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
 
                                                     </div>
                                                 </div>
@@ -529,8 +526,48 @@
                                                 </div>
                                             </div>
                                             <div class="reddotTableBody" id="AddAttachmentsRow">
+                                                
+                                                @*@if (Model.EmpInfoProEdu != null)*@
+                                                    @if (Model.DocumentList != null)
+                                                    {
+                                                        foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
+                                                        {
+                                                            <div class="reddotTableRow odd-even-row">
+                                                                @Html.HiddenFor(u => Doc.DId, new { @class = "form-control" })
+                                                                @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
+                                                                <div class="reddotTableCell width15per text-left">
+                                                                    <div>
+                                                                        @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName)
 
-                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="reddotTableCell text-left">
+                                                                    <div>
+                                                                        @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "grid-control", type = "File", multiple = "multiple", @Title = Doc.DocPath })
+                                                                        @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
+                                                                    </div>
+                                                                </div>
+                                                                @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
+                                                                <div class="reddotTableCell text-left"><div>@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })  </div></div>
+
+                                                                
+                                                               
+                                                                <div class="reddotTableCell width15per">
+                                                                    <div>
+
+                                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                                    </div>
+                                                                </div>
+
+
+
+
+                                                            </div>
+                                                            counter1++;
+                                                        }
+                                                    }
+
+                                                </div>
 
                                         </div>
                                     </div>
@@ -648,7 +685,7 @@
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Salary :</label>
-                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" })
+                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", Value="" })
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
@@ -982,16 +1019,16 @@
 
 
 
-@*<script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#userTable .col-md-3").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTable .col-md-3").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-    </script>*@
+    });
+</script>
 
 
 <Script type="text/javascript">
@@ -1044,29 +1081,99 @@
 
 
     $(document).ready(function () {
+      
+       
+
+
+        $("#AddAttachmentsRow").on("change", "input[id^='fileInput']", function (event) {
+            debugger
+            var tr = $(this).closest(".reddotTableRow");
+            var data = new FormData();
+            var files =tr.find("input[id ^= 'fileInput']").get(0).files;
+            if (files.length > 0) {
+                data.append("Files", files[0]);
+            }
+            $.ajax({
+                url: "/HR/Employees/UploadDoc",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                       // RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                       tr.find("input[id^='hdnfileInput']").val(response);
+
+                       // $('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RdotAlerterrtxt(er);
+                }
+            });
+
+        });
+
+
+        function readURL(input) {
+            debugger;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("input[type='image']").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("input[id='my_file']").on("change", function () {
+            debugger;
+            readURL(this);
+            var data = new FormData();
+            var files = $("input[id = 'my_file']").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+            $.ajax({
+                url: "/HR/Employees/Uploadfile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                        $("input[type='image']").val(response);
+                        $('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RdotAlerterrtxt(er);
+                }
+            });
+
+        })
+        $("input[type='image']").click(function () {
+            debugger
+            $("input[id='my_file']").click();
+
+        });
 
         debugger
 
-        //$.ajax({
-
-        //    async: false,
-        //    cache: false,
-        //   type: "POST",
-        //    url: "https://restcountries.eu/rest/v2/all",
-        //    crossDomain: true,
-        //   contentType: "Application/json",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        debugger;
-        //        $.each(data.aaData, function (i, obj) {
-        //            debugger
-        //            alert(obj.value + ":" + obj.text);
-        //            var div_data = "<option value=" + obj.value + ">" + obj.text + "</option>";
-        //            alert(div_data);
-        //            $(div_data).appendTo('#Citizenship');
-        //        });
-        //    }
-        //});
+     
 
         //GetEmpNo();
 
@@ -1309,7 +1416,11 @@
         debugger
 
         var EmpData = {};
+
+
+        //EmpData["Countries"] = $("#Countries").val();
         EmpData["IsActive"] = $("#chkIsActive").is(":checked");
+
 
 
         // EmpData["my_file"] = $("#my_file").val();
@@ -1358,13 +1469,32 @@
         EmpData["National_id"] = $("#National_id").val();
         EmpData["Contract_Start_Date"] = $("#Contract_Start_Date").val();
         EmpData["NOTE"] = $("#NOTE").val();
-
         debugger
+        EmpDatas = [];
+       
+        debugger
+         var i = 0;
+
+        $("#AddAttachmentsRow .reddotTableRow").each(function () {
+            //  $(".reddotTableRow").each(function () {
+            debugger
+            var obj1 = {
+               // DId: $(this).find("input[id^='DId']").val(),
+                DcumenName: $(this).find("input[id^='docdescription']").val(),
+                DocPath: $(this).find("input[id^='hdnfileInput']").val(),
+               
+            }
+           
+            EmpDatas.push(obj1);
+            i++;
+
+        });
 
         var EmpInfoProEdu = [];
+       
         EmpInfoProEdu.length = 0;
         // var n = $("#AddCMRow .reddotTableRow").length;
-        var i = 0;
+        i = 0;
         $("#AddCMRow .reddotTableRow").each(function () {
             //  $(".reddotTableRow").each(function () {
             debugger
@@ -1394,7 +1524,7 @@
         $.ajax({
             type: "Post",
             url: "/Employees/AddEmpReg",
-            data: '{ EmpData:' + JSON.stringify(EmpData) + ', EmpInfoProEdu:' + JSON.stringify(EmpInfoProEdu) + ' }',
+            data: '{ EmpData:' + JSON.stringify(EmpData) + ', EmpInfoProEdu:' + JSON.stringify(EmpInfoProEdu) + ',EmpDatas:' + JSON.stringify(EmpDatas) + ' }',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (result) {
@@ -1413,10 +1543,10 @@
                     RdotAlertSucesstxt(result);
                   // ClearControl();
                 }
-                else {
-                    RdotAlerterrtxt(result);
+                //else {
+                //    RdotAlerterrtxt(result);
 
-                }
+                //}
             }
 
         });
@@ -1425,29 +1555,14 @@
 
     function ClearControl() {
 
-       //var loc = $(this).attr("/Images/TempLogo/defaultimg.jpg");
-        //$('.img-upload-preview avatar-img').attr("src", loc);
-
-       //// var $image = $('.img-upload-preview avatar-img');
-       // $image.removeAttr('src').replaceWith('/Images/TempLogo / defaultimg.jpg');
-
-       // $('#image-zoom').attr('src', '/Images/TempLogo/defaultimg.jpg');
-       //// $(".img-upload-preview avatar-img").attr(src, "/Images/TempLogo/defaultimg.jpg");
-       // $(".img-upload-preview avatar-img").remove();
-       // $('.img-upload-preview avatar-img').attr('src', '');
-
-       // $("#image-zoom").removeAttr('src');
-
-
         GetEmpNo();
-
+        $("#my_image").attr("src", "/Images/TempLogo/defaultimg.jpg");
         $(".name").remove();
         $(".designation").remove();
         $('#userinfo').remove();
         $('#chkIsActive').prop("checked", false);
+        $("#AddAttachmentsRow").remove();
         $("#AddCMRow").remove();
-
-
         $("#EmployeeId").val('');
         $("#FName").val('');
         $("#LName").val('');
@@ -1461,12 +1576,11 @@
         $("#IM_Id").val('');
         // $("#Marital_Status").val('');
         $("#DOB").val('');
-        $("#Citizenship").val('');
+       // $("#Citizenship").val('');
         // $("#DesigId").val('');
         // $("#DeptId").val('');
         $("#Emergency_Contact").val('');
         $("#passport_no").val('');
-
         $("#Salary_Start_Date").val('');
         $('#DesigId').find('option:first').attr('selected', 'selected');
         $('#DeptId').find('option:first').attr('selected', 'selected');
@@ -1475,11 +1589,10 @@
 
         //
         $('#ManagerId').val("0").trigger("change");
-
+        $('#Citizenship').val("0").trigger("change");
 
        // $('#ManagerId').find('option:first').attr('selected', 'selected');
         $('#CountryCodeName').find('option:first').attr('selected', 'selected');
-
         $('#type_of_employement').val(0).trigger('change');
         $("#Joining_date").val('');
         $("#Contract_Start_Date").val('');
@@ -1493,7 +1606,7 @@
         $("#Currency").val('');
         $("#Account_No").val('');
         $("#Insurance_no").val('');
-        $("#Salary").val('0');
+        $("#Salary").val('');
         $("#Bank_Name").val('');
         $("#other_ref_no").val('');
         $("#Branch_Name").val('');
@@ -1721,9 +1834,13 @@
             }
         }
 
+        if ($("#Salary").val() == "0") {
+            RdotAlerterrtxt('Salary Should be Greater Than 0');
+            $("#Salary").focus();
+            return ValFlag = false;
+        }
 
-
-        if ($("#Salary").val() != "0") {
+        if ($("#Salary").val() != ""){
 
             if ($("#Currency option:selected").index() <= 0) {
                 RdotAlerterrtxt('please select Currency ');
@@ -1738,6 +1855,8 @@
                 return false;
             }
         }
+
+
 
         if ($("#Salary_Start_Date").val() != "") {
 
@@ -1757,55 +1876,7 @@
         return ValFlag;
 
     }
-    function readURL(input) {
-        debugger;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("input[type='image']").attr('src', e.target.result);
-            }
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("input[id='my_file']").on("change", function () {
-        debugger;
-        readURL(this);
-        var data = new FormData();
-        var files = $("input[id = 'my_file']").get(0).files;
-        if (files.length > 0) {
-            data.append("MyImages", files[0]);
-        }
-        $.ajax({
-            url: "/HR/Employees/Uploadfile",
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
-                //code after success
-                debugger
-                if (response == "InvalidError") {
-                    RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
-                }
-                else {
-                    debugger;
-                    $("input[type='image']").val(response);
-                    $('input[name="Photo_imghdn"]').val('/Images/' + response);
-                }
-
-            },
-            error: function (er) {
-                RdotAlerterrtxt(er);
-            }
-        });
-
-    })
-    $("input[type='image']").click(function () {
-        debugger
-        $("input[id='my_file']").click();
-
-    });
     $(function () {
         debugger
         //$('#Joining_date').datetimepicker({
@@ -1843,6 +1914,10 @@
         });
 
         $('#ManagerId').select2({
+            theme: "bootstrap"
+        });
+
+        $('#Citizenship').select2({
             theme: "bootstrap"
         });
 
@@ -1995,24 +2070,21 @@
     });
 
 
-
-
-
-
-
 </Script>
 
 <script>
     /*<input type="file" class="form-control form-control-sm-file" id="docname">*/
     $(document).ready(function () {
-        var counter = 0;
+        var counter = 1;
 
         $("#addAttachments").on("click", function () {
             var newRow = $("#AddAttachmentsRow");
             var cols = "";
             cols += '<div class="reddotTableRow odd-even-row">';
-            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id="docdescription"> </div> </div>';
-            cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file"  id="fileInput" multiple /> </div> </div>';
+
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id="docdescription' + counter + '"></div> </div>';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file"  id="fileInput' + counter + '" multiple /><input id="hdnfileInput'+counter+'" type="hidden"/> </div> </div>';
+
             cols += ' <div class="reddotTableCell">';
             cols += ' <div>';
             cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
@@ -2032,17 +2104,11 @@
         });
 
 
+        debugger
 
+      
 
-    });
-
-
-
-
-    //});
-
-
-
+   });
 
 </script>
 <script>
@@ -2110,11 +2176,7 @@
         //});
 
 </script>
-@*<script>
-        $("input[type='image']").click(function () {
-            $("input[id='my_file']").click();
-        });
-    </script>*@
+
 
 
 

@@ -417,6 +417,7 @@
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
     <Folder Include="Images\TempLogo\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -447,7 +448,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28968/</IISUrl>
+          <IISUrl>http://localhost:28970/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
