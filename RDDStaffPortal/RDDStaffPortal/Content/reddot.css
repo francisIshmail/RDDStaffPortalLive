@@ -929,3 +929,8 @@ background: none;
         transform: translate3d(100%, 0, 0);
         background: #3b62ed;
     }
+
+.select2-container--bootstrap {
+    display: block;
+    width: 100% !important;
+}

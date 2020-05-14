@@ -32,7 +32,7 @@
 		});
 		
 		$("#Cards #Firstcard").each(function (index, item) {
-			
+            debugger;
 			var url = $(this).find("#hdnurl").val();
 			var Col = $(this).find("#hdnColumns").val();
 			var Noc = $(this).find("#hdnNoofColumns").val();
