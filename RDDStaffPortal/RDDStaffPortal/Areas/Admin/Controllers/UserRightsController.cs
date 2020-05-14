@@ -13,9 +13,12 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         RDD_User_RightsDBOperation Rdduser = new RDD_User_RightsDBOperation();
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
         public ActionResult Index()
+        {                           
+            return View();
+        }
+
+        public ActionResult UserDashWidget()
         {
-            
-               
             return View();
         }
         [Route("SaveUserRights")]
@@ -52,6 +55,18 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         public ActionResult GetWidget()
         {
             return PartialView(moduleDbOp.GetDashBoarMain("Admin","A"));
+        }
+        [ChildActionOnly]
+        public ActionResult GetUserWidget()
+        {
+            return PartialView(Rdduser.GetUserWidget(User.Identity.Name));
+        }
+
+        [Route("SaveUserDash")]
+        public ActionResult SaveUserDash(RDD_DashBoard_Main UsersWidget)
+        {
+            UsersWidget.UserId = User.Identity.Name;
+            return Json(new { SaveFlag = Rdduser.Save2(UsersWidget) }, JsonRequestBehavior.AllowGet);
         }
     }
 }

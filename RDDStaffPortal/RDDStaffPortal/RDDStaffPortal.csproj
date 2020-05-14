@@ -382,6 +382,9 @@
     <Content Include="Areas\HR\Views\UserList\Index.cshtml" />
     <Content Include="App_Code\WidgetUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserRights\GetWidget.cshtml" />
+    <Content Include="App_Code\WidgetUserBase.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRights\GetUserWidget.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRights\UserDashWidget.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
