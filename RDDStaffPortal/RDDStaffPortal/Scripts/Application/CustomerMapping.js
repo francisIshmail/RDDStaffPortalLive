@@ -6,7 +6,7 @@
 	},
 	Attachevent: function () {
 
-		var arr1 = [];
+		
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
@@ -112,7 +112,11 @@
 					}
 					if (move.find("input[id='hdnuse']").val() == "false") {
 						debugger
+						var arr1 = [];
 						arr1.push(move.attr("data-id"));
+						$(".basket_list  ul li").each(function () {														
+							arr1.push($(this).attr("data-id"));								
+						});						
 						var recipientsArray = arr1.sort();					
 						for (var i = 0; i < recipientsArray.length - 1; i++) {
 							if (recipientsArray[i + 1] == recipientsArray[i]) {
