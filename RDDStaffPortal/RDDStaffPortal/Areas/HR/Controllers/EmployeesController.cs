@@ -296,12 +296,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         }
 
-        public ActionResult ViewProfile()
-        {
-            //Response.Redirect("/Employee/EmployeeId")
-            //;
-            // return RedirectToAction("Index/"+1);
-
+        //public ActionResult ViewProfile()
+        //{
+        //    //Response.Redirect("/Employee/EmployeeId")
+        //    //;
+        //    // return RedirectToAction("Index/"+1);
+        //}
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {

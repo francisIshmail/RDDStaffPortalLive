@@ -262,11 +262,12 @@
 				i++;
             }
 			debugger
+			$("#second_tab").find(".card-title").text($("#bars1").find(".card-title").text());
 			if (ids == 'DASH017') {
-				ids = 'multipleLineChart1';
+				ids = 'multipleLineChart1';				
 				$('#second_tab,#pills-Month-tab1').show();
 			} else if (ids == 'DASH018') {
-				ids = 'SalesAllCountry1';
+				ids = 'SalesAllCountry1';				
 				$('#second_tab,#pills-Quarter-tab1').show();
 				
 			}
@@ -463,12 +464,15 @@
 					}
 				}
 			};
+			$("#first_tab").find(".card-title").text($("#lins").find(".card-title").text());
 			if (ids == 'DASH005') {
 				ids = 'multipleLineChart';
 				$('#first_tab,#pills-Month-tab').show();
+				
 			} else if (ids == 'DASH016') {
 				ids = 'SalesAllCountry';
 				$('#first_tab,#pills-Quarter-tab').show();
+				
 			}
 			$('#lins,#lins').hide();
 			var myMultipleLineChart = new Chart(ids,chartoption);

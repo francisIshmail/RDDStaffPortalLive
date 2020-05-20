@@ -62,7 +62,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult GetMenuTree()
+        public ActionResult GetMenuTreeMenu()
         {
             
             return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name,"U"));
