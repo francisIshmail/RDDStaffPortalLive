@@ -327,7 +327,28 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
     
     $('#txtsearch').keyup(function () {
         table.search($(this).val()).draw(); 
-        $("#product  li").draggable();
+        $("#product  li").draggable({
+
+            // brings the item back to its place when dragging is over
+            revert: true,
+
+            // once the dragging starts, we decrease the opactiy of other items
+            // Appending a class as we do that with CSS
+            drag: function (event, ui) {
+                debugger
+                ui.helper.data('dropped', false);
+                $(this).addClass("active");
+                $(this).closest("#product").addClass("active");
+
+            },
+
+            // removing the CSS classes once dragging is over.
+            stop: function (event, ui) {
+                //alert('stop: dropped=' + ui.helper.data('dropped'));
+                $(this).removeClass("active").closest("#product").removeClass("active");
+               
+            }
+        });
         
        
     })

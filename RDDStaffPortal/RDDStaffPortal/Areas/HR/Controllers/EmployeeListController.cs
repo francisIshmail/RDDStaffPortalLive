@@ -11,6 +11,7 @@ using RDDStaffPortal.DAL;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
+    [Authorize]
     public class EmployeeListController : Controller
     {
         // GET: HR/EmployeeList

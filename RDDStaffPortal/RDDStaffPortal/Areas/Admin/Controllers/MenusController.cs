@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
-    //[Authorize]
+   [Authorize]
     public class MenusController : Controller
     {
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();

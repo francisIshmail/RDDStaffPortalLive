@@ -9,6 +9,7 @@ using RDDStaffPortal.DAL.DataModels;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    [Authorize]
     public class EmploymentStatusController : Controller
     {
         EmpStatusDbOperations StatusDbOp = new EmpStatusDbOperations();

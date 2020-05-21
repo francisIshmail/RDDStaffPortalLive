@@ -8,8 +8,8 @@ using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
-{      
-    
+{
+    [Authorize]
     public class DesignationsController : Controller
     {
      

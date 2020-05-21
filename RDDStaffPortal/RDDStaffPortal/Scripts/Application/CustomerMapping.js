@@ -38,19 +38,25 @@
 
 			// once the dragging starts, we decrease the opactiy of other items
 			// Appending a class as we do that with CSS
-			drag: function () {
+			drag: function (event, ui) {
+				debugger
+				ui.helper.data('dropped', false);
 				$(this).addClass("active");
 				$(this).closest("#product").addClass("active");
+					
 			},
 
 			// removing the CSS classes once dragging is over.
-			stop: function () {
+			stop: function (event, ui) {
+				//alert('stop: dropped=' + ui.helper.data('dropped'));
 				$(this).removeClass("active").closest("#product").removeClass("active");
+				
 			}
 		});
 
 		
 
+		
 		// jQuery Ui Droppable
 		$(".basket").droppable({
 
@@ -65,6 +71,7 @@
 			tolerance: "touch",
 			drop: function (event, ui) {
 				debugger
+				ui.helper.data('dropped', true);
 				var k1 = 0;
 				var basket = $(this),
 					move = ui.draggable,
@@ -78,11 +85,13 @@
 					// Add the dragged item to the basket))
 
 					if ($("#pri1").find("ul li ").length == 1 && basket.find(".basket_list").attr("id") == 'pri1') {
+						
 						RdotAlerterrtxt('You can add only one primary account');
 						return
 					}
 					if (move.find("input[id='hdnCustyp']").val() == 'P') {
 						if (basket.find(".basket_list").attr("id") == 'sec1') {
+							
 							RdotAlerterrtxt('You can add only primary account');
 							return
                         }
@@ -94,16 +103,12 @@
                         }
 						
 						move.css("background-color", "orange");
-						move.css("left", "0px");
-						move.css("top", "0px");						
+												
 						$("#hdnflag").val(true);
 						
 						var ParentCode = move.attr("data-id");
 						var ParentDb =move.find("input[id='hdndbname']").val();
-						//$.getJSON("/GetCustMapParentData", { ParentCode=ParentCode, ParentDb=ParentDb }).done(function (data) {
-						//	debugger
-						//	var k = data;
-						//});
+						
 
 						AddSecondary(ParentCode, ParentDb);
 
@@ -136,14 +141,11 @@
 							addBasket(basket, move);
 							k1 = 1;
 						}
-						move.css("left", "0px");
-						move.css("top", "0px");
-						//$("#hdnflag").val(false);
+						
 						
 						
 					} else {
-						move.css("left", "0px");
-						move.css("top", "0px");
+						
 						RdotAlerterrtxt('Alredy use');
                     }
 					

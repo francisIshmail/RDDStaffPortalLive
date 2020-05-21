@@ -15,6 +15,7 @@ using System.Net;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
