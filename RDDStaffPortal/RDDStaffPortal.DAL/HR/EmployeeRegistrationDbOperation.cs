@@ -47,6 +47,7 @@ namespace RDDStaffPortal.DAL.HR
                             SqlCommand cmd = new SqlCommand();
 
                             cmd.CommandType = CommandType.StoredProcedure;
+                           // cmd.CommandText = "RDD_Employees_InsertUpdate";
                             cmd.CommandText = "RDD_Employees_InsertUpdate";
                             cmd.Connection = connection;
                             cmd.Transaction = transaction;
@@ -314,12 +315,12 @@ namespace RDDStaffPortal.DAL.HR
                                     cmd.Connection = connection;
                                     cmd.Transaction = transaction;
 
-                                   // EmpData.DocumentList[i].DcumenName,
-                                      //  EmpData.DocumentList[i].DocPath
-                        cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+                                    // EmpData.DocumentList[i].DcumenName,
+                                    //  EmpData.DocumentList[i].DocPath
+                                    cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
 
-                                   
-                                  //  cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = DocumentList[i].DId;
+
+                                    cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = DocumentList[i].DId;
 
                                     if (DocumentList[i].DcumenName == null)
                                     {
@@ -337,16 +338,16 @@ namespace RDDStaffPortal.DAL.HR
                                     {
                                         cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DocumentList[i].DocPath;
                                     }
-                                    
+                                    cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
                                     cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
 
                                     cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                                
-                                cmd.ExecuteNonQuery();
-                                response = cmd.Parameters["@p_Response"].Value.ToString();
 
-                                cmd.Dispose();
+                                    cmd.ExecuteNonQuery();
+                                    response = cmd.Parameters["@p_Response"].Value.ToString();
+
+                                    cmd.Dispose();
                                 }
                             }
 
@@ -412,7 +413,7 @@ namespace RDDStaffPortal.DAL.HR
 
                                     }
 
-
+                                    cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
 
                                     // cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = EmpInfoProEdu[i].Description;
                                     // cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = EmpInfoProEdu[i].Score;
@@ -918,7 +919,61 @@ namespace RDDStaffPortal.DAL.HR
             return response;
 
         }
+        public string DeleteAttc(int DId)
+        {
+            string response = string.Empty;
+            try
+            {
+                using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+                {
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlTransaction transaction;
+                    using (transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "RDD_Employees_DocAttachment_Delete";
+                            cmd.Connection = connection;
+                            cmd.Transaction = transaction;
 
+                            cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = Convert.ToInt16(DId);
+
+                            cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+                            cmd.ExecuteNonQuery();
+                            response = cmd.Parameters["@p_Response"].Value.ToString();
+                            cmd.Dispose();
+                            transaction.Commit();
+
+                        }
+
+                        catch (Exception ex)
+                        {
+                            response = "Error occured : " + ex.Message;
+                            transaction.Rollback();
+                        }
+                        finally
+                        {
+                            if (connection.State == ConnectionState.Open)
+                            {
+                                connection.Close();
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                response = "Error occured : " + ex.Message;
+            }
+            return response;
+
+        }
     }
 }
 

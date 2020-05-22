@@ -131,9 +131,11 @@
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\HR\Controllers\UserListController.cs" />
+    <Compile Include="Areas\HR\Models\BUCountries.cs" />
     <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
@@ -165,6 +167,8 @@
     <Content Include="Content\fonts.min.css" />
     <Content Include="Content\reddot.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="dragdrop\jquery-ui-1.9.0.custom.min.js" />
+    <Content Include="dragdrop\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\flaticon\flaticon.css" />
     <Content Include="fonts\flaticon\flaticon.html" />
@@ -354,6 +358,9 @@
     <Content Include="Scripts\VoiceRec\controller.js" />
     <Content Include="Scripts\VoiceRec\jquery.min.js" />
     <Content Include="Scripts\VoiceRec\speechRecognition.js" />
+    <Content Include="Uploads\aboutus.png" />
+    <Content Include="Uploads\giraffe.JPG" />
+    <Content Include="Uploads\lions.JPG" />
     <Content Include="WebServices\AccountService.asmx" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Menus\Index.cshtml" />
@@ -383,6 +390,7 @@
     <Content Include="Areas\HR\Views\UserList\Index.cshtml" />
     <Content Include="App_Code\WidgetUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserRights\GetWidget.cshtml" />
+    <Content Include="Areas\HR\Views\BUCountries\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -415,6 +423,8 @@
     <Content Include="Views\Account\GetFirtsDashBoard.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\GetDashBoardView.cshtml" />
+    <Content Include="Uploads\Red Dot Distribution  Technology with a Difference.xlsx" />
+    <Content Include="Uploads\SINV Mapping for e-invoicing.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -422,8 +432,6 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
-    <Folder Include="Images\TempLogo\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

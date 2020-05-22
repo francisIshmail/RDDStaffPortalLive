@@ -37,6 +37,22 @@ function RdotAlerterrDt() {
     }])
 }
 
+function RdotAlerterrtxt1(txt) {
+   // swal({
+
+    swal("Warning",'<p style="font-size: 12px;text-align:center">' + txt + '</p>', "warning")
+
+    //    title: "Are you sure?",
+    //    text: "Your will not be able to recover this imaginary file!",
+    //    type: "warning",
+    //    showCancelButton: true,
+    //    confirmButtonClass: "btn-danger",
+    //    confirmButtonText: "Yes, delete it!",
+    //    closeOnConfirm: false
+    //});
+}
+
+
 function  RdotAlerterrtxt(txt) {
     Swal.queue([{
         type: 'error',

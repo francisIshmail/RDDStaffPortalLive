@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
+    <Compile Include="DataModels\RDD_BUCountries.cs" />
     <Compile Include="DataModels\Rdd_comonDrop.cs" />
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="DataModels\RDD_User_Rights.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="HR\BUCountriesDbOperations.cs" />
     <Compile Include="InitialSetup\DashBoardDbOperation.cs" />
     <Compile Include="InitialSetup\DepartmentsDbOperation.cs" />
     <Compile Include="InitialSetup\DesignationDbOperation.cs" />
