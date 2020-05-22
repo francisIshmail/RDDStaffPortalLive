@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\Rdd_comonDrop.cs" />
     <Compile Include="DataModels\RDD_customermapping.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
     <Compile Include="InitialSetup\RDD_CustomerMergingDbOperation.cs" />
+    <Compile Include="InitialSetup\RDD_Log.cs" />
     <Compile Include="InitialSetup\RDD_Test_ImgDBOP.cs" />
     <Compile Include="InitialSetup\RDD_User_RightsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
