@@ -21,13 +21,13 @@
 
 		];
 		//SAPAE   SAPKE	 SAPTZ	 SAPUG	SAPZM	SAPML	SAPTRI
-		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, 0);
-		RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, 1);
-		RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, 2);
-		RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, 3);
-		RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, 4);
-		RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, 5);
-		RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, 6);
+		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, "SAPAE");
+        RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, "SAPKE");
+        RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, "SAPTZ");
+        RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, "SAPUG");
+        RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM");
+        RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML");
+        RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI");
 		
 		debugger
 		// jQuery UI Draggable

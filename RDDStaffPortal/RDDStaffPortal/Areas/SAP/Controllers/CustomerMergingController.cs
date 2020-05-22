@@ -38,7 +38,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
         }
         [Route("GetCustMapData")]
-        public ActionResult GetData(int Code)
+        public ActionResult GetData(string Code)
         {
             JsonResult result = new JsonResult();
             try
