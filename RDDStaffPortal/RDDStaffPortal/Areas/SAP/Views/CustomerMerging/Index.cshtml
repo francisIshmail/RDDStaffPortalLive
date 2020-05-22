@@ -1,0 +1,225 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_customermapping
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
+<script src="~/Scripts/RedDotUtility.js"></script>
+@*<script src="~/Scripts/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>*@
+<script src="~/Scripts/Application/CustomerMapping.js"></script>
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Customers Merge</h4>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="rowmin row mar-b10">
+                                    <div class="col-xl-1 col-md-1">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px mar-t4">Customer :</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-4 col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" id="txtsearch">
+                                        </div>
+                                    </div>
+
+                                    @*<div class="col-xl-1 col-md-1  padd-l0">
+                <div class="form-group">
+                    <button type="button" class="btn btn-success btn-sm" id="addrow">Search</button>
+                </div>
+            </div>*@
+                                </div>
+                                <div class="rowmin row">
+                                    <div class="col-md-8" id="product">
+                                        <div class="row">
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPAE</div>
+                                                    <table id="tblSAPAE" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPAE</td></tr>
+                                                        </thead>
+                                                        <tbody class="clear"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPKE</div>
+                                                    <table id="tblSAPKE" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPKE</td></tr>
+                                                        </thead>
+                                                        <tbody class="table-success"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPTZ</div>
+                                                    <table id="tblSAPTZ" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPTZ</td></tr>
+                                                        </thead>
+                                                        <tbody class="clear"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPUG</div>
+                                                    <table id="tblSAPUG" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPUG</td></tr>
+                                                        </thead>
+                                                        <tbody class="table-success"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4" id="sidebar">
+                                        <div class="panel">
+                                            <div class="panel-heading text-center" id="hdntitle">Merge Box</div>
+
+                                            <div class="basket">
+                                                <div class="basket_list" id="pri1">
+                                                    <input id="hdnflag" value="false" type="hidden"/>
+                                                    <div class="head">
+                                                        <span class="name">Primary Account -  Single</span>
+
+                                                    </div>
+                                                    <ul id="pr1">
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="basket">
+                                                <div class="basket_list" id="sec1">
+                                                    <div class="head">
+                                                        <span class="name">Secondary Account -  Multiples</span>
+
+                                                    </div>
+                                                    <ul id="se1">
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-action">
+                                                <button class="btn btn-success btn-sm" id="btnmerge">Merge</button>
+                                                <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                               
+                                <div class="rowmin row">
+                                    
+                                    <div class="col-md-8" id="product1">
+                                        <div class="row">
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPZM</div>
+                                                    <table id="tblSAPZM" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPZM</td></tr>
+                                                        </thead>
+                                                        <tbody class="table-success"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPML</div>
+                                                    <table id="tblSAPML" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPML</td></tr>
+                                                        </thead>
+                                                        <tbody class="table-success"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">SAPTRI</div>
+                                                    <table id="tblSAPTRI" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">SAPTRI</td></tr>
+                                                        </thead>
+                                                        <tbody class="table-success"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$(function () {
+
+
+        CustomerMapping.initialize();
+    });
+</script>
+<style>
+    table {
+        position: relative !important;
+    }
+
+    .bootstrap-datetimepicker-widget li {
+        display: block !important;
+    }
+</style>

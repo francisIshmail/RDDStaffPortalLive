@@ -528,7 +528,7 @@
                                                 </div>
                                             </div>
                                             <div class="reddotTableBody" id="AddAttachmentsRow">
-                                                
+
                                                 @*@if (Model.EmpInfoProEdu != null)*@
                                                     @if (Model.DocumentList != null)
                                                     {
@@ -581,7 +581,7 @@
                                                     }
                                                     }
 
-                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -1119,8 +1119,8 @@
 
 
     $(document).ready(function () {
-
-
+      
+       
 
 
         $("#AddAttachmentsRow").on("change", "input[id^='fileInput']", function (event) {
@@ -1146,6 +1146,56 @@
                     else {
                         debugger;
                        tr.find("input[id^='hdnfileInput']").val(response);
+
+        debugger
+
+        function readURL(input) {
+            debugger;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("input[type='image']").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("input[id='my_file']").on("change", function () {
+            debugger;
+            readURL(this);
+            var data = new FormData();
+            var files = $("input[id = 'my_file']").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+            $.ajax({
+                url: "/HR/Employees/Uploadfile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                        $("input[type='image']").val(response);
+                        $('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RdotAlerterrtxt(er);
+                }
+            });
+
+        })
+        $("input[type='image']").click(function () {
+            debugger
+            $("input[id='my_file']").click();
 
                        // $('input[name="Photo_imghdn"]').val('/Images/' + response);
                     }
@@ -1211,7 +1261,7 @@
 
         debugger
 
-
+     
 
         //GetEmpNo();
 
@@ -1523,7 +1573,7 @@
         EmpData["NOTE"] = $("#NOTE").val();
         debugger
         EmpDatas = [];
-
+       
         debugger
          var i = 0;
 
@@ -1535,16 +1585,16 @@
                 DId: $(this).find('#DId').val(),
                 DcumenName: $(this).find("input[id^='docdescription']").val(),
                 DocPath: $(this).find("input[id^='hdnfileInput']").val(),
-
+               
             }
-
+           
             EmpDatas.push(obj1);
             i++;
 
         });
 
         var EmpInfoProEdu = [];
-
+       
         EmpInfoProEdu.length = 0;
         // var n = $("#AddCMRow .reddotTableRow").length;
         i = 0;
@@ -2236,7 +2286,7 @@
 
         debugger
 
-
+      
 
    });
 

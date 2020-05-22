@@ -62,65 +62,111 @@
 
         }
     </div>
-    @*foreach (var i in Dashview.Where(a => a.TypeOfChart == "MultilineChart"))
-    {
+    <div class="row" id="first_tab" style="display:none;">
 
-<div class="col-md-12">
-    <div class="card full-height">
-        <div class="card-header">
-            <div class="card-head-row">
-                <div class="card-title">Sales Summery</div>
-                <div class="card-tools">
-                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
-                        <li class="nav-item mar-l5">
-                            <a class="nav-link active mar-0" id="pills-Month-tab" data-toggle="pill" href="#pills-Month" role="tab" aria-selected="true">This Month</a>
-                        </li>
-                        <li class="nav-item mar-l5">
-                            <a class="nav-link mar-0 " id="pills-Quarter-tab" data-toggle="pill" href="#pills-Quarter" role="tab" aria-selected="false">This Quarter</a>
-                        </li>
-                        <li class="nav-item">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Sales Summary</div>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                                <li class="nav-item mar-l5">
+                                    <a class="nav-link active mar-0" id="pills-Month-tab" style="display:none" data-toggle="pill" href="#pills-Month" role="tab" aria-selected="true">Revenue</a>
+                                </li>
+                                <li class="nav-item mar-l5">
+                                    <a class="nav-link mar-0 " id="pills-Quarter-tab" style="display:none" data-toggle="pill" href="#pills-Quarter" role="tab" aria-selected="false">GP</a>
+                                </li>
 
 
-                            <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Percentage</a>
-                                <a class="dropdown-item" href="#">Number</a>
-                                <a class="dropdown-item" href="#">Tabular</a>
-
-                            </div>
-                        </li>
-                    </ul>
+                                <li class="nav-item">
 
 
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
+                                    <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Percentage</a>
+                                        <a class="dropdown-item" href="#">Number</a>
+                                        <a class="dropdown-item" href="#">Tabular</a>
 
-            <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                                    </div>
+                                </li>
+                            </ul>
 
-                <div class="tab-pane fade show active" id="pills-Month" role="tabpanel" aria-labelledby="pills-Month-tab">
-                    <div class="chart-container"> <canvas id="multipleLineChart"></canvas> </div>
-                </div>
 
-                <div class="tab-pane fade" id="pills-Quarter" role="tabpanel" aria-labelledby="pills-Quarter-tab">
-                    <div class="chart-container">
-                        <canvas id="SalesAllCountry"></canvas>
+                        </div>
                     </div>
-                    <div id="myChartLegend"></div>
                 </div>
-                <div class="tab-pane fade" id="pills-Year" role="tabpanel" aria-labelledby="pills-Year-tab">
-                    <div class="chart-container">
-                        <canvas id="multipleBarChart"></canvas>
+                <div class="card-body">
+
+                    <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+
+                        <div class="tab-pane fade show active" id="pills-Month" role="tabpanel" aria-labelledby="pills-Month-tab">
+                            <div class="chart-container"> <canvas id="multipleLineChart"></canvas> </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-Quarter" role="tabpanel" aria-labelledby="pills-Quarter-tab">
+                            <div class="chart-container"> <canvas id="SalesAllCountry"></canvas> </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-</div>
+
+    <div class="row" id="second_tab" style="display:none;">
+
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Sales Summary</div>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                                <li class="nav-item mar-l5">
+                                    <a class="nav-link active mar-0" id="pills-Month-tab1" style="display:none" data-toggle="pill" href="#pills-Month1" role="tab" aria-selected="true">Revenue</a>
+                                </li>
+                                <li class="nav-item mar-l5">
+                                    <a class="nav-link  mar-0 " id="pills-Quarter-tab1" style="display:none" data-toggle="pill" href="#pills-Quarter1" role="tab" aria-selected="false">GP</a>
+                                </li>
 
 
-    }*@
+                                <li class="nav-item">
+
+
+                                    <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Percentage</a>
+                                        <a class="dropdown-item" href="#">Number</a>
+                                        <a class="dropdown-item" href="#">Tabular</a>
+
+                                    </div>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+
+                        <div class="tab-pane fade show active" id="pills-Month1" role="tabpanel" aria-labelledby="pills-Month-tab1">
+                            <div class="chart-container"> <canvas id="multipleLineChart1"></canvas> </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-Quarter1" role="tabpanel" aria-labelledby="pills-Quarter-tab1">
+                            <div class="chart-container"> <canvas id="SalesAllCountry1"></canvas> </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     foreach (var i in Dashview.Where(a => a.TypeOfChart == "MultilineChart"))
     {
@@ -168,6 +214,47 @@
     }
 
 
+    foreach (var i in Dashview.Where(a => a.TypeOfChart == "BarChart1"))
+    {
+        <div class="row" id="bars1">
+            <div class="col-md-12">
+                <div class="card" id="@i.TypeOfChart">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                    <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName</div>
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Percentage</a>
+                                            <a class="dropdown-item" href="#">Number</a>
+                                            <a class="dropdown-item" href="#">Tabular</a>
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="@i.DashId"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     <div class="row" id="pis">
         @foreach (var i in Dashview.Where(a => a.TypeOfChart == "PiChart"))
         {
@@ -210,6 +297,8 @@
 
         }
     </div>
+
+
 
     foreach (var i in Dashview.Where(a => a.TypeOfChart == "BarChart"))
     {

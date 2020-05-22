@@ -34,6 +34,8 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -53,18 +55,23 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
     <Compile Include="DataModels\Rdd_comonDrop.cs" />
+    <Compile Include="DataModels\RDD_customermapping.cs" />
+    <Compile Include="DataModels\RDD_CustomerMerging.cs" />
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
@@ -89,6 +96,8 @@
     <Compile Include="InitialSetup\EmpStatusDbOperations.cs" />
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
+    <Compile Include="InitialSetup\RDD_CustomerMergingDbOperation.cs" />
+    <Compile Include="InitialSetup\RDD_Log.cs" />
     <Compile Include="InitialSetup\RDD_Test_ImgDBOP.cs" />
     <Compile Include="InitialSetup\RDD_User_RightsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
@@ -98,6 +107,5 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

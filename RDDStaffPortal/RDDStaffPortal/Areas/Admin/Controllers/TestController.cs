@@ -11,6 +11,7 @@ using System.IO;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         // GET: Test

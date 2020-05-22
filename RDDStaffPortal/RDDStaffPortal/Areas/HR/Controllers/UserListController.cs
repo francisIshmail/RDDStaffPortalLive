@@ -13,6 +13,8 @@ using System.Diagnostics;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
+    [Authorize]
+
     public class UserListController : Controller
     {
         // GET: HR/UserList

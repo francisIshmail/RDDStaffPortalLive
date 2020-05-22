@@ -1,0 +1,71 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_DashBoard_Main
+
+@{
+    ViewBag.Title = "UserDashWidget";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">User Dash Widget</h4>
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @{ Html.RenderAction("GetUserWidget", "UserRights", new { area = "Admin" }); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rowmin">
+                <div>
+                    <button id="btnsave" type="button" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var UsersWidget = {
+            UserDashWidgets:[]          
+        };
+        $("#btnsave").on("click", function () {
+
+            debugger
+            $(".card-header").each(function (index, item) {
+                debugger
+                var DashidTxt = $(this).find("[id='Inphdn']").val();
+                var IsActiveTxt = $(this).find("[id='ChkDash']").is(":checked");
+
+                var UserDashWidget = {
+                    DashId: DashidTxt,
+                    IsActive: IsActiveTxt,
+
+
+                };
+                if (DashidTxt != undefined)
+                    UsersWidget.UserDashWidgets.push(UserDashWidget);
+            });
+                $.post("/SaveUserDash", UsersWidget).done(function (response) {
+                    if (response.SaveFlag == true) {
+                        tf = false;
+                        RdotAlertSucesstxt('Save Succcesfully');
+
+                    } else {
+                        RdotAlerterrtxt('Error Occur');
+                    }
+
+                });
+           
+        })
+       
+
+    });
+    </script>

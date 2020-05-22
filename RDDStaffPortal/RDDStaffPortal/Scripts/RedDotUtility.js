@@ -283,6 +283,111 @@ function RdottableDash(tblid, url1, colms) {
     });
 }
 
+
+
+function RdottableNDWPara1(tblid, url1, colms, Code) {
+    var newrow = {
+        Code: Code
+    }
+    var table = $('#' + tblid + '').DataTable({
+        "ColumnDefs": [{ "searchable": false, "orderable": true, "targets": [0] }],
+        "order": [[0, 'asc']],
+        //"scrollY": true,
+        //  "scrollX": true,
+        "filter": true,
+        "paging": true,
+        "ordering": true,
+        "info": false,
+        "rowReorder": {
+            dataSrc: 'id',
+            selector: 'tr'
+        },
+        "language":
+        {
+            "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+        },
+        "dom": 'lBfrtip',
+        "pagingType":"simple",
+       // "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]], 
+        "buttons": [
+           
+            {
+                text: 'Reload Data',
+                attr: {
+                    id: 'btnreload',
+                    style: 'display:none;'
+                   
+                },
+                className:'reloadcss',
+                action: function () {
+                    table.ajax.reload();
+                },
+            }
+        ],
+        "processing": true,
+        "serverSide": true,
+        "destroy": true,
+        "ajax":
+        {
+            "async": false,
+            "cache": false,
+            "type": "POST",
+            "url": url1,
+            "data": newrow,
+            "dataType": "json",
+        },
+
+        "aoColumns": colms
+    });
+
+    
+    $('#txtsearch').keyup(function () {
+        table.search($(this).val()).draw(); 
+        $("#product  li").draggable({
+
+            // brings the item back to its place when dragging is over
+            revert: true,
+
+            // once the dragging starts, we decrease the opactiy of other items
+            // Appending a class as we do that with CSS
+            drag: function (event, ui) {
+                debugger
+                ui.helper.data('dropped', false);
+                $(this).addClass("active");
+                $(this).closest("#product").addClass("active");
+
+            },
+
+            // removing the CSS classes once dragging is over.
+            stop: function (event, ui) {
+                //alert('stop: dropped=' + ui.helper.data('dropped'));
+                $(this).removeClass("active").closest("#product").removeClass("active");
+               
+            }
+        });
+        
+       
+    })
+    
+
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    
+
+   $(".dataTables_filter").hide();
+
+    $('#' + tblid + '_length').hide();
+
+    
+}
+
+
 var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 /*json date format dd-MMM-yyyy*/

@@ -99,7 +99,7 @@ namespace RDDStaffPortal.WebServices
         /// <param name="rol"></param>
         /// <returns></returns>
         [WebMethod]
-        private MembershipResponse CreateUserAccount(string UserId, string UserEmail, string quest, string ans, string rol)
+        private MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
 
@@ -109,7 +109,7 @@ namespace RDDStaffPortal.WebServices
             try
             {
                 MembershipCreateStatus sts;
-                MembershipUser newUser = Membership.CreateUser(UserId, randomPassword, UserEmail, quest, ans, true, out sts);
+                MembershipUser newUser = Membership.CreateUser(UserName, randomPassword, UserEmail, quest, ans, true, out sts);
                 membershipResponse.Success = true;
             }
             catch (MembershipCreateUserException e1)
@@ -126,7 +126,7 @@ namespace RDDStaffPortal.WebServices
             }
             try
             {
-                Roles.AddUserToRole(UserId, rol);
+                Roles.AddUserToRole(UserName, rol);
                 membershipResponse.Success = true;
             }
             catch (Exception e2)
@@ -139,7 +139,7 @@ namespace RDDStaffPortal.WebServices
             //temprorary close this later , open below three lines
             //lblMsg.Text = "Successfully Registered : User '" + dealerDesiredID + "' , Login Information sent to user on EMail Id : '" + dealerEmail + "'  " + randomPassword;
 
-            membershipResponse.Message = "Successfully Registered : User '" + UserId + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
+            membershipResponse.Message = "Successfully Registered : User '" + UserName + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
 
             ////sending mail here to the new user 
             //myGlobal.sendMailToNewUser(rol, dealerDesiredID, randomPassword, dealerEmail);
