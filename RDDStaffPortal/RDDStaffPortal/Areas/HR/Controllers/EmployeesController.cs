@@ -10,8 +10,8 @@ using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
 using System.Web.Helpers;
-using System.Web.Routing;
 using System.Net;
+using System.Web.Routing;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -314,8 +314,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                
                 RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();
+
+               
+
               //  rdd_empreg.ImagePath = EmpData.ImagePath;
-                
+
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
                 rdd_empreg.About = EmpData.About;
                 rdd_empreg.CountryCodeName = EmpData.CountryCodeName;
@@ -395,7 +398,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 //        }
                 //    }
                 //}
-
+               
 
                 string TempPath = (string)Session["FILE"];
                 if (TempPath != null && TempPath != "")
@@ -434,6 +437,20 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             return Json(new { DeleteFlag= result }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult DeleteAttachRecord(int DId)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = EmpDbOp.DeleteAttc(DId);
+            }
+            catch (Exception ex)
+            {
+                result = "Error occured :" + ex.Message;
+            }
+            return Json(new { DeleteFlag = result }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Uploadfile()
         {
             string _imgname = string.Empty;
@@ -448,7 +465,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     var fileName = Path.GetFileName(pic.FileName);
 
 
-                   // _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                  // _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
                     var _comPath = Server.MapPath("/Images/TempLogo/Temp") +"user_" + _imgname + "Abc" + _ext;
                     _imgname = "Tempuser_" +  "Abc" + _ext;
 
@@ -492,6 +509,22 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
 
+        public FileResult Download(string parentPartId)
+        {
+            
+                byte[] fileBytes = null;
+                string FileVirtualPath = null;
+                if (parentPartId != null)
+                {
+                   
+                    FileVirtualPath = "~/Uploads/" + parentPartId;
+
+
+                }
+                return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+               
+           
+           }
         [HttpPost]
         public JsonResult UploadDoc()
         {
@@ -514,8 +547,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                         }
                         else
                         {
+
                             fname = file.FileName;
+
                             var _ext = Path.GetExtension(fname);
+                           
                         }
                         // Get the complete folder path and store the file inside it.  
                         _imgname = Path.Combine(Server.MapPath("/Uploads/"), fname);

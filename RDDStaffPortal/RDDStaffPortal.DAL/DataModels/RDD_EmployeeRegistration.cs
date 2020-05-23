@@ -44,6 +44,7 @@ namespace RDDStaffPortal.DAL.DataModels
         }
         // public List<RDD_Departments> Dept {get;set;}
         //Employee Details
+        public string EmpName { get; set; }
         public string About { get; set; }
         public string CountryName { get; set; }
         public bool IsActive { get; set; }
@@ -107,6 +108,7 @@ namespace RDDStaffPortal.DAL.DataModels
         //Items of BU
 
         public string ItmsGrpNam { get; set; }
+        public int ItmsGrpCod { get; set; }
 
         //To Get Manager
 

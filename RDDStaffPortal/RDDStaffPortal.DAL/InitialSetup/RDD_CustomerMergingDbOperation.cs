@@ -15,16 +15,17 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
         CommonFunction Com = new CommonFunction();
 
-        public  List<RDD_CustomerMerging> GetRDDCustMergList(int i)
+        public  List<RDD_CustomerMerging> GetRDDCustMergList(string DBName)
         {
             List<RDD_CustomerMerging> Objlist = new List<RDD_CustomerMerging>();
             try
-            {                
-                SqlParameter[] parm = { };
+            {
+                SqlParameter[] parm = { new SqlParameter("@p_DBName", DBName) };
+
                 DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
                 if (dsModules.Tables.Count > 0)
                 {
-                    DataTable dtModule = dsModules.Tables[i];
+                    DataTable dtModule = dsModules.Tables[0];
                     DataRowCollection drc = dtModule.Rows;
                     foreach (DataRow dr in drc)
                     {

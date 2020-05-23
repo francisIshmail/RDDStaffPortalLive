@@ -520,8 +520,10 @@
                                         <div class="reddotTable">
                                             <div class="reddotTableBody">
                                                 <div class="reddotTableRow odd-even-row">
+                                                    @*<div class="reddotTableHead width5per text-left"><div>Id</div></div>*@
                                                     <div class="reddotTableHead width45per text-left"><div>Description</div></div>
                                                     <div class="reddotTableHead width45per text-left"><div>Browse</div></div>
+                                                    @*<div class="reddotTableHead width5per text-left"><div></div></div>*@
                                                     <div class="reddotTableHead width10per"><div>Action</div></div>
                                                 </div>
                                             </div>
@@ -533,29 +535,41 @@
                                                     foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
                                                     {
                                                         <div class="reddotTableRow odd-even-row">
-                                                            @Html.HiddenFor(u => Doc.DId, new { @class = "form-control" })
+                                                            @Html.Hidden(string.Concat("DId"), Doc.DId)
+
                                                             @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
                                                             <div class="reddotTableCell width15per text-left">
                                                                 <div>
-                                                                    @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName)
+                                                                    @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName, new { @class = "form-control form-control-sm" })
 
                                                                 </div>
                                                             </div>
                                                             <div class="reddotTableCell text-left">
                                                                 <div>
-                                                                    @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "grid-control", type = "File", multiple = "multiple", @Title = Doc.DocPath })
+                                                                    @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "form - control form - control - sm - file", type = "File", multiple = "multiple", @Title = Doc.DocPath })
                                                                     @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
                                                                 </div>
                                                             </div>
                                                             @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
-                                                            <div class="reddotTableCell text-left"><div>@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })  </div></div>
 
 
 
                                                             <div class="reddotTableCell width15per">
                                                                 <div>
-
+                                                                    @*<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm" data-original-title="Download File"> <i class="fas fa-download"></i></button>*@
                                                                     <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="reddotTableCell text-left">
+                                                                <div>
+                                                                    @*@Html.ActionLink("Download","Uploads", new { ImageName = Doc.DocPath })*@
+
+                                                                    @Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })
+
+
+
+                                                                    @*@Html.ActionLink(string.Concat("Uploads"), new { filename = Doc.DocPath })*@
+
                                                                 </div>
                                                             </div>
 
@@ -685,7 +699,7 @@
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Salary :</label>
-                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", Value = "" })
+                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" })
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
@@ -1021,6 +1035,30 @@
 
 <script>
     $(document).ready(function () {
+
+        // if ($("#FName").val().length == 0) {
+
+
+        // $('#Id_Card_Type').css('border-color', 'red');
+        ////  return false;
+        //}
+
+
+
+
+
+        //$("#FName").keyup(function () {
+        //    if ($("#FName").val().length == 0) {
+        //        $("#FName").css("background-color", "orange");
+        //        return false;
+        //    }
+        //    $("#FName").css("background-color", "white");
+        //});
+
+
+
+
+
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#userTable .col-md-3").filter(function () {
@@ -1191,6 +1229,13 @@
         debugger
         if ($('#Editflag').val() == "False") {
 
+            //if ($('#FName').val() == '') {
+            //    $('#FName').css('border-color', 'red');
+            //}
+            //else {
+            //    $('#FNamecs').css('border-color', '');
+            //}
+
             debugger
             $('#envelopeicon').hide();
             $('#globeicon').hide();
@@ -1201,7 +1246,7 @@
             }
 
 
-
+            $('#Salary').val('');
 
             $('#Joining_date').val('');
             $('#DOB').val('');
@@ -1219,6 +1264,11 @@
             if ($('#Salary_Start_Date').val() == "01/01/0001 12:00:00 AM") {
               // $("#Salary_Start_Date").datetimepicker().val('')
                 $('#Salary_Start_Date').val('');
+
+            }
+            if ($('#Salary').val() == "0") {
+
+                $('#Salary').val('');
 
             }
 
@@ -1241,6 +1291,8 @@
                 defaultDate: new Date(),
                 format: 'DD/MM/YYYY',
             });
+
+
 
 
             //if ($('#Salary_Start_Date').val() == null
@@ -1479,7 +1531,8 @@
             //  $(".reddotTableRow").each(function () {
             debugger
             var obj1 = {
-               // DId: $(this).find("input[id^='DId']").val(),
+                //DId: $(this).find("input[id^='DId']").val(),
+                DId: $(this).find('#DId').val(),
                 DcumenName: $(this).find("input[id^='docdescription']").val(),
                 DocPath: $(this).find("input[id^='hdnfileInput']").val(),
 
@@ -1528,8 +1581,6 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-
-
 
                 if (result == "Registration saved successfully.") {
 
@@ -1622,17 +1673,26 @@
 
         if ($("#FName").val() == "") {
             RdotAlerterrtxt('please Enter First Name');
+
             // alert('please Enter First Name');
             $("#FName").focus();
-            return ValFlag = false;
-        }
+           // $("#FName").addClass('errorClass');
 
+            return ValFlag = false;
+
+        }
+        //else {
+
+        //    $('#FName').css('border-color', 'Green');
+        //}
 
         if ($("#LName").val() == "") {
             RdotAlerterrtxt('please Enter Last Name');
+
             $("#LName").focus();
             return ValFlag = false;
         }
+
 
         if ($("#Email").val() == "") {
             RdotAlerterrtxt('please Enter Email');
@@ -1821,7 +1881,7 @@
         if ($("#Currency option:selected").index() != 0) {
 
             if ($("#Salary").val() == "0") {
-                RdotAlerterrtxt('please Enter Salary');
+                RdotAlerterrtxt('Should be Greater Than 0');
                 $("#Salary").focus();
                 return false;
             }
@@ -1832,13 +1892,20 @@
                 $("#Salary_Start_Date").val('');
                 return false;
             }
+
+            if ($("#Salary").val() == "") {
+                RdotAlerterrtxt('Please Enter Salary');
+                $("#Salary").focus();
+                return false;
+            }
         }
 
-        if ($("#Salary").val() == "0") {
-            RdotAlerterrtxt('Salary Should be Greater Than 0');
-            $("#Salary").focus();
-            return ValFlag = false;
-        }
+
+        //if ($("#Salary").val() == 0) {
+        //    RdotAlerterrtxt('Salary Should be Greater than 0 1');
+        //    $("#Salary").focus();
+        //    return ValFlag = false;
+        //}
 
         if ($("#Salary").val() != ""){
 
@@ -1868,6 +1935,12 @@
 
             if ($("#Salary").val() == "") {
                 RdotAlerterrtxt('please Enter Salary');
+                $("#Salary").focus();
+                return false;
+            }
+
+            if ($("#Salary").val() == 0) {
+                RdotAlerterrtxt('Salary Should be Greater than 0');
                 $("#Salary").focus();
                 return false;
             }
@@ -2082,11 +2155,12 @@
             var cols = "";
             cols += '<div class="reddotTableRow odd-even-row">';
 
-            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id="docdescription' + counter + '"></div> </div>';
+            //cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control form-control-sm" id="DId"></div> </div>';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="hidden" class="form-control form-control-sm" id="DId"><input type="text" class="form-control form-control-sm" id="docdescription' + counter + '"></div> </div>';
             cols += ' <div class="reddotTableCell text-left"> <div> <input type="file" class="form-control form-control-sm-file"  id="fileInput' + counter + '" multiple /><input id="hdnfileInput' + counter + '" type="hidden"/> </div> </div>';
 
             cols += ' <div class="reddotTableCell">';
-            cols += ' <div>';
+            cols += ' <div >';
             cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
             cols += ' </div>';
             cols += ' </div>';
@@ -2099,8 +2173,64 @@
 
 
         $("#AddAttachmentsRow").on("click", ".ibtnDel", function (event) {
-            $(this).closest(".reddotTableRow").remove();
-            counter -= 1
+            debugger;
+            var counter = 0;
+            var tr = $(this).closest(".reddotTableRow");
+            var delid = tr.find("[id='DId']").val();
+            if (delid == "") {
+                $(this).closest(".reddotTableRow").remove();
+                counter -= 1
+            }
+            else {
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false,
+                })
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.getJSON("/Employees/DeleteAttachRecord", { DId: delid }).done(function (data) {
+
+                            if (data.DeleteFlag == "Deleted Sucessfully.") {
+                                tr.remove();
+                                //$('#btnreload').trigger('click');
+                            }
+                        });
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'Your Document  has been deleted.',
+                            'success'
+                        )
+
+                    } else if (
+                        // Read more about handling dismissals
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your Document  is safe :)',
+                            'error'
+                        )
+                    }
+                })
+
+
+
+            }
+
+
+
+            //$(this).closest(".reddotTableRow").remove();
+            //counter -= 1
         });
 
 
@@ -2113,67 +2243,67 @@
 </script>
 <script>
 
-            //$('#datetime').datetimepicker({
-            //format: 'MM/DD/YYYY H:mm',
-            //});
-            //$('#Joiningdatepicker').datetimepicker({
-            //    format: 'MM/DD/YYYY',
-            //});
+        //$('#datetime').datetimepicker({
+        //format: 'MM/DD/YYYY H:mm',
+        //});
+        //$('#Joiningdatepicker').datetimepicker({
+        //    format: 'MM/DD/YYYY',
+        //});
 
-            //$('#datepicker1').datetimepicker({
-            //    format: 'MM/DD/YYYY',
-            //});
-            //$('#datepickernew').datetimepicker({
-            //    format: 'MM/DD/YYYY',
-            //});
+        //$('#datepicker1').datetimepicker({
+        //    format: 'MM/DD/YYYY',
+        //});
+        //$('#datepickernew').datetimepicker({
+        //    format: 'MM/DD/YYYY',
+        //});
 
-            //$('#datepickerFromDate').datetimepicker({
-            //    format: 'MM/DD/YYYY',
-            //});
+        //$('#datepickerFromDate').datetimepicker({
+        //    format: 'MM/DD/YYYY',
+        //});
 
-            //$('#datepickerToDate').datetimepicker({
-            //    format: 'MM/DD/YYYY',
-            //});
-            //$('#timepicker').datetimepicker({
-            //    format: 'h:mm A',
-            //});
+        //$('#datepickerToDate').datetimepicker({
+        //    format: 'MM/DD/YYYY',
+        //});
+        //$('#timepicker').datetimepicker({
+        //    format: 'h:mm A',
+        //});
 
-            //$('#basic').select2({
-            //    theme: "bootstrap"
-            //});
+        //$('#basic').select2({
+        //    theme: "bootstrap"
+        //});
 
-            //$('#multiple').select2({
-            //    theme: "bootstrap"
-            //});
+        //$('#multiple').select2({
+        //    theme: "bootstrap"
+        //});
 
-            //$('#multiplenew').select2({
-            //    theme: "bootstrap"
-            //});
+        //$('#multiplenew').select2({
+        //    theme: "bootstrap"
+        //});
 
-            //$('#multiple-states').select2({
-            //    theme: "bootstrap"
-            //});
+        //$('#multiple-states').select2({
+        //    theme: "bootstrap"
+        //});
 
-            //$('#tagsinput').tagsinput({
-            //    tagClass: 'badge-info'
-            //});
+        //$('#tagsinput').tagsinput({
+        //    tagClass: 'badge-info'
+        //});
 
-            //$(function () {
-            //    $("#slider").slider({
-            //        range: "min",
-            //        max: 100,
-            //        value: 40,
-            //    });
-            //    $("#slider-range").slider({
-            //        range: true,
-            //        min: 0,
-            //        max: 500,
-            //        values: [75, 300]
-            //    });
-            //});
-            //$(document).ready(function () {
-            //    $('.scrollbar-inner').scrollbar();
-            //});
+        //$(function () {
+        //    $("#slider").slider({
+        //        range: "min",
+        //        max: 100,
+        //        value: 40,
+        //    });
+        //    $("#slider-range").slider({
+        //        range: true,
+        //        min: 0,
+        //        max: 500,
+        //        values: [75, 300]
+        //    });
+        //});
+        //$(document).ready(function () {
+        //    $('.scrollbar-inner').scrollbar();
+        //});
 
 </script>
 

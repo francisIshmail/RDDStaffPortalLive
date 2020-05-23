@@ -162,4 +162,6 @@ namespace RDDStaffPortal.Areas.HR.Models
         public int Score { get; set; }
 
     }
+    
+   
 }

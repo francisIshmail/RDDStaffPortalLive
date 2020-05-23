@@ -1,0 +1,433 @@
+﻿ @model RDDStaffPortal.DAL.DataModels.RDD_BUCountries
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+
+<link href="~/dragdrop/main.css" rel="stylesheet" />
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">BU Assignment</h4>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="rowmin row mar-b10">
+                                    <div class="col-xl-1 col-md-1">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px mar-t4">Sales Person :</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-4 col-md-4">
+                                        <div class="form-group">
+
+                                            @Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm", @onchange = "SearchByEmp()" })
+
+
+
+                                        </div>
+                                    </div>
+
+                                    @*<div class="col-xl-1 col-md-1  padd-l0">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success btn-sm" id="SearchByEmp">Search</button>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="rowmin row">
+                                    <div class="col-md-2" id="product">
+                                        <div class="row">
+                                            <div class="col-md-12 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center panelbg-1">BU</div>
+
+                                                    <ul class="clear">
+                                                        @foreach (var items in ViewBag.BUItmList)
+                                                        {
+                                                            <li data-id="@items.ItmsGrpCod" class="ui-draggable ui-draggable-handle">
+                                                                @*<a href="#"> commodo luctus </a>*@
+                                                                <a href="#"> @items.ItmsGrpNam </a>
+
+                                                                @*<label for="@items.ItmsGrpNam">@items.ItmsGrpNam</label>*@
+                                                            </li>
+                                                        }
+                                                    </ul>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-10" id="sidebar">
+
+                                        <div class="row">
+                                            @foreach (var items in ViewBag.CountryList)
+                                            {
+                                                <div class="col-md-3 padd-l5 padd-r5 mar-b10" id="@items.CountryCode">
+                                                    <div class="panel">
+                                                        <div class="panel-heading text-center">
+
+
+                                                            <label id="CountryCode_@items.CountryCode">@items.CountryCode</label>
+
+                                                        </div>
+                                                        <div class="basket">
+                                                            <div class="basket_list">
+
+                                                                <ul class="@items.CountryCode">
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="card-action">
+                                                            <button class="btn btn-success btn-sm" value="@items.CountryCode" id="SaveEmpBu_@items.CountryCode" onclick="SaveEmpBUCoutry('@items.CountryCode')">Save</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="~/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>
+
+
+    <script>
+        //$('#SearchByEmp').click(function () {
+
+        function SearchByEmp() {
+            debugger
+            // var CId = $("#CId").val();
+            var empid = $("#EmployeeId").val();
+            var url = "/BUCountries/GetBUByEmpId?empid=" + empid;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    debugger
+                    if (data.length > 0) {
+                        var i = 0;
+                        while (i < data.length) {
+                            $('#' + data[i].CountryCodeName + '').find("ul").append('<li data-id="' + data[i].BU + '">'
+                                + '<span class="name">' + data[i].ItmsGrpNam + '</span>' + '<input type="hidden" id="hdncoid" value="' + data[i].CId + '"></input>'
+                                ////+ '<input class="count" value="1" type="text">'
+                                //+ '<button class="delete" id="btndel" onclick="deleterecord(' + data[i].CId + ')">&#10005;</button>');
+                                + '<input type="hidden" id="hdnflag" value="1"></input><button class="delete" id="btndel">&#10005;</button>');
+
+                            i++;
+                        }
+                    }
+                    else {
+                        // $('#EmployeeId').val("0").trigger("change");
+                        $(".basket_list  ul li").each(function () {
+                            $(this).closest("li").remove();
+                        });
+
+                    }
+
+
+                }
+
+            })
+        }
+
+
+        $(".basket_list").on("click", "ul li .delete", function () {
+            debugger;
+            var buId = $(this).closest("li").find("input[id='hdncoid']").val();
+            //var vt = tr.attr("data-id");
+            var tr = $(this).closest("li");
+            if (buId == 0) {
+                //$(".basket_list").on("click", "ul li .delete", function () {
+                tr.remove();
+                // });
+
+            }
+            else {
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false,
+                })
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.getJSON("/BUCountries/DeleteRecord", { buId: buId }).done(function (data) {
+                            debugger
+                            if (data.DeleteFlag == "Deleted Sucessfully.") {
+
+                                tr.remove();
+
+                            }
+                            else {
+
+                                // return
+                            }
+
+                        });
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'Your Record  has been deleted.',
+                            'success'
+                        )
+                    }
+                    else if (
+                        // Read more about handling dismissals
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your Record  is safe :)',
+                            'error'
+                        )
+                    }
+                })
+            }
+
+        });
+
+
+
+
+        //$('#sidebar').on('click', 'button', function () {
+        //    debugger
+        //    var divaa = $(this).attr('value');
+
+        //})
+
+
+
+        // $("button[id^='SaveEmpBu']").on("click", function () {
+        function SaveEmpBUCoutry(countryCode) {
+            debugger
+            // var abc = $(this).attr('value');
+
+          
+          
+            var BUCoun = {
+                BUCountriesnew: []
+            }
+            //
+            // var BUCountrie = [];
+            $("." + countryCode + " li").each(function () {
+                debugger
+                var empid = $("#EmployeeId").val(); 
+                var cId = $(this).find("#hdncoid").val();
+
+                var Countrycode = countryCode;
+                var k = $(this).text();
+                var l = $(this).attr("data-id");
+                var BUCountrie = {
+                    Empid: empid,
+                    CountryCode: Countrycode,
+                    // BUName: k,
+                    BUId: l,
+                    CId: cId
+                }
+
+                BUCoun.BUCountriesnew.push(BUCountrie);
+            });
+
+
+            $.ajax({
+                type: "Post",
+                url: "/BUCountries/AddBUcountries",
+                data: '{ BUCoun:' + JSON.stringify(BUCoun) + '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+
+                    //$("." + countryCode + " li").each(function () {
+                    //    }
+
+
+                    $("." + countryCode + " li").each(function () {
+                        var tr1 = $(this).closest("li");
+                        tr1.find("#hdnflag").val(1);
+                        tr1.find(".name").css("background", "");
+                    })
+                    var t2 = false;
+                    var tmsg = "";
+                    $(".basket_list  ul li").each(function () {
+                        debugger
+                        var tr1 = $(this).closest("li");
+                        var k1 = tr1.find("#hdnflag").val();
+                        if (k1 == 0) {
+                            debugger
+                            tmsg = $(this).closest("ul").attr("class");
+                            t2 = true;
+                          
+                        }
+
+                    });
+                    if (t2 == true) {
+                        RdotAlerterrtxt1(" Please Save  Records Of " + tmsg)
+                        return
+                    }
+                    $(".basket_list  ul li").each(function () {
+                        $(this).closest("li").remove();
+                    });
+
+                    if (result == "saved successfully.") {
+                      
+                        RdotAlertSucesstxt(result);
+                        $('#EmployeeId').val("0").trigger("change");
+                        $(".basket_list  ul li").each(function () {
+                            $(this).closest("li").remove();
+                        });
+
+
+                    }
+                    else if (result == "updated successfully.") {
+                        RdotAlertSucesstxt(result);
+                        // ClearControl();
+                    }
+
+                }
+
+            });
+        }
+        // });
+
+
+
+        //$(document).ready(function () {
+        $(function () {
+            debugger
+
+            $('#EmployeeId').select2({
+                theme: "bootstrap"
+            });
+
+            $('#SalesPerson').select2({
+                theme: "bootstrap"
+            });
+
+
+        });
+        // });
+
+        $(function () {
+
+            // jQuery UI Draggable
+            $("#product li").draggable({
+
+                // brings the item back to its place when dragging is over
+                revert: true,
+
+                // once the dragging starts, we decrease the opactiy of other items
+                // Appending a class as we do that with CSS
+                drag: function () {
+                    $(this).addClass("active");
+                    $(this).closest("#product").addClass("active");
+                },
+
+                // removing the CSS classes once dragging is over.
+                stop: function () {
+                    $(this).removeClass("active").closest("#product").removeClass("active");
+                }
+            });
+
+            // jQuery Ui Droppable
+            $(".basket").droppable({
+
+                // The class that will be appended to the to-be-dropped-element (basket)
+                activeClass: "active",
+
+                // The class that will be appended once we are hovering the to-be-dropped-element (basket)
+                hoverClass: "hover",
+
+                // The acceptance of the item once it touches the to-be-dropped-element basket
+                // For different values http://api.jqueryui.com/droppable/#option-tolerance
+                tolerance: "touch",
+                drop: function (event, ui) {
+                    debugger
+                    var basket = $(this),
+                        move = ui.draggable,
+
+                        itemId = basket.find("ul li[data-id='" + move.attr("data-id") + "']");
+
+                    // To increase the value by +1 if the same item is already in the basket
+                    if (itemId.html() != null) {
+                        itemId.find("input").val(parseInt(itemId.find("input").val()) + 1);
+                    }
+                    else {
+                        // Add the dragged item to the basket
+                        addBasket(basket, move);
+
+                        // Updating the quantity by +1" rather than adding it to the basket
+                        move.find("input").val(parseInt(move.find("input").val()) + 1);
+                    }
+                }
+            });
+
+            // This function runs onc ean item is added to the basket
+
+            function addBasket(basket, move) {
+                basket.find("ul").append('<li data-id="' + move.attr("data-id") + '">'
+                    + '<span class="name" style="background: #76ff80 !important">' + move.find("a").html() + '</span>' + '<input type="hidden" id="hdncoid" value="0"></input>'
+                    // $('#EmployeeId').val("0").trigger("change");
+                    + '<input type="hidden" id="hdnflag" value="0"></input><button class="delete" >&#10005;</button>');
+            }
+
+
+            // The function that is triggered once delete button is pressed
+            //$(".basket_list").on("click", "ul li .delete", function () {
+            //    $(this).closest("li").remove();
+            //});
+
+        });
+
+    </script>
+
+    <style>
+        .panel-heading label {
+            color: #fff !important
+        }
+
+        .greenbu {
+            background: #76ff80 !important;
+        }
+    </style>
+
+  
