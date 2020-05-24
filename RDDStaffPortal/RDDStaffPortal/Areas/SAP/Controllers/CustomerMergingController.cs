@@ -50,18 +50,25 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
                 int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
 
-
+                if (startRec == 0)
+                {
+                    startRec = 1;
+                }
+                else
+                {
+                    startRec = (startRec / pageSize) + 1;
+                }
                 if (pageSize == -1)
                 {
                     draw = "2";
                 }
 
-                List<RDD_CustomerMerging> data = _CustMerg.GetRDDCustMergList(Code);
+              List<RDD_CustomerMerging> data = _CustMerg.GetRDDCustMergList(Code,pageSize,startRec,search);
 
                 int totalRecords = 0;
-                if (data != null)
+                if (data != null && data.Count !=0)
                 {
-                    totalRecords = data.Count;
+                   totalRecords = data[0].TOTAL;
                 }
                 else
                     totalRecords = 0;
@@ -77,17 +84,17 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
                 }
 
-                int recFilter = data.Count;
+                int recFilter = totalRecords;// data.Count;
 
 
-                if (pageSize != -1)
-                {
-                    data = data.Skip(startRec).Take(pageSize).ToList();
-                }
-                else
-                {
+                //if (pageSize != -1)
+                //{
+                //    data = data.Skip(startRec).Take(pageSize).ToList();
+                //}
+                //else
+                //{
                     data = data.ToList();
-                }
+                //}
 
                 // Loading drop down lists.
                 result = this.Json(new { draw = Convert.ToInt32(draw), recordsTotal = totalRecords, recordsFiltered = recFilter, data = data }, JsonRequestBehavior.AllowGet);
