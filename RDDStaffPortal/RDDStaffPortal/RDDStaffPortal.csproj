@@ -131,6 +131,9 @@
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
+    <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
+    <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
@@ -393,6 +396,10 @@
     <Content Include="Areas\Admin\Views\UserRights\GetUserWidget.cshtml" />
     <Content Include="Areas\Admin\Views\UserRights\UserDashWidget.cshtml" />
     <Content Include="Areas\SAP\Views\CustomerMerging\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\web.config" />
+    <Content Include="App_Code\Dow_Reports.cshtml" />
+    <Content Include="Areas\Reports\Views\DownloadReports\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\DownloadReports\GetReport.cshtml" />
     <Content Include="Areas\HR\Views\BUCountries\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -436,6 +443,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Reports\Data\" />
+    <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
   </ItemGroup>

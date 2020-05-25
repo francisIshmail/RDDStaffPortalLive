@@ -295,7 +295,7 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
         //"scrollY": true,
         //  "scrollX": true,
         "filter": true,
-        "paging": true,
+       // "paging": true,
         "ordering": true,
         "info": false,
         "rowReorder": {
@@ -307,7 +307,7 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
             "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
         },
         "dom": 'lBfrtip',
-        "pagingType":"simple",
+       "pagingType":"simple",
        // "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]], 
         "buttons": [
            

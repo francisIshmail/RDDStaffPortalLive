@@ -15,14 +15,22 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
         CommonFunction Com = new CommonFunction();
 
-        public  List<RDD_CustomerMerging> GetRDDCustMergList(string DBName)
+        public  List<RDD_CustomerMerging> GetRDDCustMergList(string DBName,int pagesize,int pageno,string psearch)
         {
             List<RDD_CustomerMerging> Objlist = new List<RDD_CustomerMerging>();
             try
             {
-                SqlParameter[] parm = { new SqlParameter("@p_DBName", DBName) };
+                SqlParameter[] parm = { new SqlParameter("@p_Search", psearch)
+                        , new SqlParameter("@p_PageNo", pageno),
+                new SqlParameter("@p_PageSize",pagesize),
+                new SqlParameter("@p_SortColumn", "CardName"),
+                new SqlParameter("@p_SortOrder", "ASC"),
+                new SqlParameter("@p_DBName", DBName)
+                };
 
-                DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping_new", CommandType.StoredProcedure, parm);
+               
                 if (dsModules.Tables.Count > 0)
                 {
                     DataTable dtModule = dsModules.Tables[0];
@@ -36,18 +44,19 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             DBName=dr["DBNAME"].ToString(),
                             CustTyp=dr["typ"].ToString(),
                             bgcolor=dr["bgcolor"].ToString(),
-                            IsAlreadyMapped=Convert.ToBoolean(dr["IsAlreadyMapped"].ToString())
-                        });
+                            IsAlreadyMapped=Convert.ToBoolean(dr["IsAlreadyMapped"].ToString()),
+                            TOTAL=Convert.ToInt32(dr["TotalCount"].ToString())
+                    });
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 Objlist = null;
             }
            
-
+            
 
             return Objlist;
         }
