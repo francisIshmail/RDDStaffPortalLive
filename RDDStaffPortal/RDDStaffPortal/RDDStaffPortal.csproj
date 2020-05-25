@@ -133,7 +133,6 @@
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
-    <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
@@ -142,7 +141,6 @@
     <Compile Include="Areas\HR\Models\Employees.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
-    <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
