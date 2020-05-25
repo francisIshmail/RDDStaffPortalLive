@@ -133,7 +133,6 @@
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
-    <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeesController.cs" />
@@ -446,8 +445,6 @@
     <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
-    <Folder Include="Images\TempLogo\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
