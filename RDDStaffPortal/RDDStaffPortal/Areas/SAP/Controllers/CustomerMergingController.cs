@@ -78,9 +78,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                    !string.IsNullOrWhiteSpace(search))
                 {
                     // Apply search
-                    data = data.Where(p => p.CardName.ToString().ToString().ToLower().Contains(search.ToLower()) 
-                                          
-                                          ).ToList();
+                    data = data.Where(p => p.CardName.ToString().ToString().ToLower().Contains(search.ToLower()) ).ToList();
 
                 }
 
