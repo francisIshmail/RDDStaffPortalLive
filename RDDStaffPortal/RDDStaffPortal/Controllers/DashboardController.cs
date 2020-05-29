@@ -17,6 +17,11 @@ namespace RDDStaffPortal.Controllers
         {
             return View();
         }
+        //[Route("GetProfileImg")]
+        //public ActionResult GetProfileImg()
+        //{
+        //    return Json(_DashDbOp.GetProfilimg(User.Identity.Name));
+        //}
         [Route("GetDatatable1")]
         public ActionResult GetDatatable1()
         {

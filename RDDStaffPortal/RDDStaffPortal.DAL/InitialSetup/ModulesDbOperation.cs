@@ -19,6 +19,35 @@ namespace RDDStaffPortal.DAL.InitialSetup
         /// </summary>
         /// <param name="modules"></param>
         /// <returns></returns>
+        /// 
+
+        public string GetProfilimg(string UserName)
+        {
+            byte[] file1 = null;
+            string base64String = null;
+            SqlParameter[] parm = { new SqlParameter("@p_LoginName",UserName),
+                    };
+            DataSet dsModules = Com.ExecuteDataSet("RDD_GetEmployeeIdByimage", CommandType.StoredProcedure, parm);
+            if (dsModules.Tables.Count > 0)
+            {
+                DataTable dtModule = dsModules.Tables[0];
+                DataRowCollection drc = dtModule.Rows;
+                if (dtModule.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in drc)
+                    {
+                        if (dr["ImagePath"] != null && dr["ImagePath"].ToString().Length > 0)
+
+                        {
+                            file1 = (byte[])dr["ImagePath"];
+                        }
+                    }
+
+                }
+                base64String = Convert.ToBase64String(file1);
+            }
+            return base64String;
+        }
         public string Save( RDD_Modules modules )
         {
             string response = string.Empty;

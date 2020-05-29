@@ -1,9 +1,120 @@
+/* Smartphones (portrait and landscape) ---------- */
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .widget-icon{display:none!important}
+    .selectwidget-section .widget-content {
+        width: 100% !important;
+        padding: 10px !important;
+        text-align: center !important;
+    }
+        .selectwidget-section .widget-content .widget-name {
+            line-height: 20px !important;
+        }
+    .selectwidget-section .editable {
+        text-align: center !important;
+    }
+        .selectwidget-section .editable .switchbox {
+            float: none !important;
+            margin: 0 auto !important;
+        }
+}
+
+
+
+/* Smartphones (portrait) ---------- */
+@media screen and (max-width: 320px) {
+    .widget-icon {
+        display: none !important
+    }
+    .selectwidget-section .widget-content {
+        width: 100% !important;
+        padding: 10px !important;
+        text-align: center !important;
+    }
+        .selectwidget-section .widget-content .widget-name {
+            line-height: 20px !important;
+        }
+    .selectwidget-section .editable {
+        text-align: center !important;
+    }
+        .selectwidget-section .editable .switchbox {
+            float: none !important;
+            margin: 0 auto !important;
+        }
+}
+
+
+
+/* Smartphones (landscape) ---------- */
+@media screen and (min-width: 321px) {
+
+}
+
+
+
+/* Tablets, iPads (portrait and landscape) ---------- */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .widget-icon {
+        display: none !important
+    }
+
+    .selectwidget-section .widget-content {
+        width: 100% !important;
+        padding: 10px !important;
+        text-align: center !important;
+    }
+
+        .selectwidget-section .widget-content .widget-name {
+            line-height: 20px !important;
+        }
+
+    .selectwidget-section .editable {
+        text-align: center !important;
+    }
+
+        .selectwidget-section .editable .switchbox {
+            float: none !important;
+            margin: 0 auto !important;
+        }
+}
+
+
+
+/* Tablets, iPads (portrait) ---------- */
+@media screen and (min-width: 768px) {
+    /* styles */
+}
+
+
+
+/* Tablets, iPads (landscape) ---------- */
+@media screen and (min-width: 1024px) {
+    /* styles */
+}
+
+
+
+/* Desktops and laptops ---------- */
+@media screen and (min-width: 1224px) {
+    /* styles */
+}
+
+
+
+/* Large screens ---------- */
+@media screen and (min-width: 1824px) {
+    /* styles */
+}
+
+
+
+
+/* ------ Media Queries MEDIA QUERIES END ------ */
+
+
 .bg-gradient-primary{ background-image: linear-gradient(#f34f46, #CE352C);}
 body {
     letter-spacing: 0;
 }
-
-
 /*New CSS WIDTH PERCENTAGE START*/
 /*New CSS WIDTH PERCENTAGE START*/
 .width1per {
@@ -966,8 +1077,8 @@ background: none;
         font-size: 14px;
         border-radius: 5px 5px 0 0;
         margin-bottom: 0;
-        text-align: center;
-        height: 45px;
+        text-align:center;
+       
     }
 .download-reports .report-s .download-box {
     padding: 5px 15px 15px 15px;
@@ -1124,6 +1235,71 @@ background: none;
 
     .widget-toggle.active {
         background: url(../img/sidebar-arrows.png) no-repeat 0 0;
+    }
+
+.modal-50per {
+    max-width:50%;
+    margin: 1.75rem auto
+}
+.modal-60per {
+    max-width: 60%;
+    margin: 1.75rem auto
+}
+.modal-70per {
+    max-width: 70%;
+    margin: 1.75rem auto
+}
+.modal-80per {
+    max-width: 80%;
+    margin: 1.75rem auto
+}
+.modal-90per {
+    max-width: 90%;
+    margin: 1.75rem auto
+}
+
+
+.selectwidget-section .widget-icon {
+    display: inline-flex;
+    width: 55px;
+    height: 55px;
+    margin: 0 10px 0 0;
+    align-items: center;
+    justify-content: center;
+    background: #e7483e !important;
+    float: left;
+    color: #fff;
+    font-size: 20px;
+}
+
+.selectwidget-section .widget-content {
+    display: inline;
+    vertical-align: top;
+    padding: 10px 0 10px 0;
+    float: left;
+    width: 80%;
+   
+}
+
+    .selectwidget-section .widget-content .widget-name {
+        font-size: 15px;
+        line-height: 32px;
+           }
+
+    .selectwidget-section .widget-content .subblock {
+        font-size: 11px;
+        color: #7d8c95;
+    }
+
+
+.selectwidget-section .editable {
+    padding: 9px 0 0 0;
+}
+
+    .selectwidget-section .editable .switchbox {
+        margin-top: 6px;
+        display: inline-block;
+        float: left;
     }
 
 /*.sidebar.sidebar-style-2 .nav .nav-item a {

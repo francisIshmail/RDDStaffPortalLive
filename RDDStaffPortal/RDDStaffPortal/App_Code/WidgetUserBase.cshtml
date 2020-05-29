@@ -1,32 +1,46 @@
 ﻿@helper GetWidgetUserview(List<RDDStaffPortal.DAL.DataModels.RDD_DashBoard_Main> Dashview)
 {
-    <div>
-        @foreach (var i in Dashview)
-        {
-            <div class="card-header odd dash" id="heading-@i.DashId">
+                                  <div class="row rowmin">
+                                      @foreach (var i in Dashview)
+                                      {
 
-                <div class="row">
-                    <div class="col-md-10 padd-0">
-                        <a role="button" data-toggle="collapse" href="#collapse-@i.DashId" aria-expanded="false" aria-controls="collapse-@i.DashId">
-                            @i.DashName -- @i.TypeOfChart
-                            <input type="hidden" id="Inphdn" value="@i.DashId">
-                        </a>
-                    </div>
-                    <div class="col-md-2 padd-0	">
-                        @if (i.IsActive == 0)
-                        {
-                            <input id="ChkDash" type="checkbox" checked>
-                        }
-                        else
-                        {
-                             <input id="ChkDash" type="checkbox" >
-                        }
+                                      <div class="col-md-6 mar-b10" >
+                                          <div class="panel">
+                                              <div class="row">
+                                                  <div class="col-sm-10 col-md-10 padd-0">
+                                                      <div class="widget-icon"> <i class="fas fa-table"></i> </div>
+                                                      <div class="widget-content">
+                                                          <span class="widget-name">
+                                                              @i.DashName -- @i.TypeOfChart
+                                                              <input type="hidden" id="Inphdn" value="@i.DashId">
+                                                          </span>
 
-                    </div>
-                </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-sm-1 col-md-1 text-right">
+                                                      <div class="editable">
+                                                          <div class="switchbox">
+                                                              <label class="switch">
+                                                                  @if (i.IsActive == 0)
+                                                                  {
+                                                                  <input id="ChkDash" type="checkbox" checked>
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                  <input id="ChkDash" type="checkbox">
+                                                                  } <div></div>
+                                                              </label>
+                                                          </div>
 
-            </div>
+                                                      </div>
 
-        }
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
 
-    </div>}
+                                      
+
+                                      }
+
+                                  </div>}

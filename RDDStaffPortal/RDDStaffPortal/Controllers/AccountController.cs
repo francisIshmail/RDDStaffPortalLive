@@ -36,6 +36,7 @@ namespace RDDStaffPortal.Controllers
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
+                   Session["LoginName"] = moduleDbOp.GetProfilimg(login.UserName);
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else

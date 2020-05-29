@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="quick-actions-scroll scrollbar-outer">
                                     <div class="quick-actions-items">
-                                        <div class="row m-0">
+                                        <div class="row m-0" id="widgetlist">
                                             <a class="col-6 col-md-4 p-0" href="#">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-danger rounded-circle">
@@ -91,6 +91,7 @@
                                                     <span class="text">Reports</span>
                                                 </div>
                                             </a>
+                                           
                                             <a class="col-6 col-md-4 p-0" href="#">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-success rounded-circle">
@@ -153,7 +154,7 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="~/img/profile.jpg" alt="Img Profile">
+                                                    <img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="Img Profile">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="block">
@@ -183,14 +184,14 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="~/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                    <img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="~/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                            <div class="avatar-lg"><img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
                                             <div class="u-text">
                                                 <h6>
                                                     @if (User.Identity.IsAuthenticated)
@@ -496,6 +497,8 @@
                 </div>
             </div>
         </div>
+
+
         <!-- End Sidebar -->
         <!--Start : Add page body here -->
         @RenderBody()
@@ -686,6 +689,9 @@
             debugger;
 
         });
+
+
+       
                                                     //$('#ulid li').removeAttr('class','');
                                                     //$('#ulid li a').removeAttr('data-toggle', '');
 

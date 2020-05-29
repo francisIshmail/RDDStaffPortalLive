@@ -87,6 +87,8 @@
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="DataModels\RDD_test_img.cs" />
     <Compile Include="DataModels\RDD_User_Rights.cs" />
+    <Compile Include="DataModels\RDD_WebReportsList.cs" />
+    <Compile Include="DataModels\RDD_WebReportsUser.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HR\BUCountriesDbOperations.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="InitialSetup\RDD_Log.cs" />
     <Compile Include="InitialSetup\RDD_Test_ImgDBOP.cs" />
     <Compile Include="InitialSetup\RDD_User_RightsDBOperation.cs" />
+    <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
