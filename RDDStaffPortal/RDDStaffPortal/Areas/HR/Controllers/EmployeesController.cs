@@ -19,6 +19,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
     public class EmployeesController : Controller
     {
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
+
+        Common cm = new Common();
+
+        public ActionResult gethistory(int empid,string tblname)
+        {
+
+            return Json(cm.GetChangeLog(empid,tblname),JsonRequestBehavior.AllowGet);
+        }
        
         // GET: Admin/EmployeeRegistration
         //public ActionResult Create()
@@ -263,6 +271,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             else
             {
                 RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
+              //  Session["FILE"] = objemp.ImagePath;
                 ViewBag.EmployeeNo = objemp.EmployeeNo;
                 
                 objemp.Editflag = true;
@@ -351,7 +360,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.Contract_Start_date = EmpData.Contract_Start_date;
                 rdd_empreg.Note = EmpData.Note;
                 rdd_empreg.IsActive = EmpData.IsActive;
-
+                rdd_empreg.ImagePath1 = EmpData.ImagePath1;
 
                 rdd_empreg.CreatedBy = User.Identity.Name;
 
@@ -399,8 +408,17 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 //    }
                 //}
                
+                if(rdd_empreg.ImagePath1=="" || rdd_empreg.ImagePath1==null)
+                {
+                    rdd_empreg.imgbool =false;
+                }
+                else
+                {
+                    rdd_empreg.imgbool =true;
+                }
 
                 string TempPath = (string)Session["FILE"];
+
                 if (TempPath != null && TempPath != "")
                 {
                     rdd_empreg.ImagePath1 = TempPath;
@@ -408,12 +426,16 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
                 else
                 {
+                   
+                  
                     rdd_empreg.ImagePath1 = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
                     rdd_empreg.LogoType = ".jpg";
+                   
                 }
-
-                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
                
+                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+                Session["FILE"] = null;
+
             }
             catch (Exception ex)
             {

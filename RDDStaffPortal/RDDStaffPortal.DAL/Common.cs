@@ -9,7 +9,7 @@ using RDDStaffPortal.DAL.InitialSetup;
 
 namespace RDDStaffPortal.DAL
 {
-    class Common
+  public  class Common
     {
 
         CommonFunction Com = new CommonFunction();

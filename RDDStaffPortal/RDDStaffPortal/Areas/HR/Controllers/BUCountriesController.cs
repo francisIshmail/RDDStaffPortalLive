@@ -114,8 +114,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                 }
             }
-           // ViewBag.BUItmList = BUItmList;
-            //retuen view()
+         
            return Json(BUItmList, JsonRequestBehavior.AllowGet);
         }
 

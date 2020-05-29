@@ -31,6 +31,7 @@
     @*<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">*@
 </head>
 <body>
+    @*<div class="loader1" id="loader"></div>*@
     <div class="wrapper">
         <div class="main-header">
             <!-- Logo Header -->
@@ -67,12 +68,12 @@
                                 <div class="quick-actions-scroll scrollbar-outer">
                                     <div class="quick-actions-items">
                                         <div class="row m-0">
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="#" data-toggle="modal" data-target="#exampleModalCenter">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-danger rounded-circle">
                                                         <i class="far fa-calendar-alt"></i>
                                                     </div>
-                                                    <span class="text">Calendar</span>
+                                                    <span class="text">Report</span>
                                                 </div>
                                             </a>
                                             <a class="col-6 col-md-4 p-0" href="#">
@@ -496,6 +497,7 @@
                 </div>
             </div>
         </div>
+
         <!-- End Sidebar -->
         <!--Start : Add page body here -->
         @RenderBody()
@@ -610,7 +612,7 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-   
+
 
     <script src="~/js/core/jquery.3.2.1.min.js"></script>
 
@@ -686,8 +688,8 @@
             debugger;
 
         });
-                                                    //$('#ulid li').removeAttr('class','');
-                                                    //$('#ulid li a').removeAttr('data-toggle', '');
+                                                        //$('#ulid li').removeAttr('class','');
+                                                        //$('#ulid li a').removeAttr('data-toggle', '');
 
     </script>
 

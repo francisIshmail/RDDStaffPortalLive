@@ -128,7 +128,10 @@
 
         function SearchByEmp() {
             debugger
-            // var CId = $("#CId").val();
+            $(".basket_list  ul li").each(function () {
+                $(this).closest("li").remove();
+            });
+           
             var empid = $("#EmployeeId").val();
             var url = "/BUCountries/GetBUByEmpId?empid=" + empid;
 
@@ -142,10 +145,7 @@
                         while (i < data.length) {
                             $('#' + data[i].CountryCodeName + '').find("ul").append('<li data-id="' + data[i].BU + '">'
                                 + '<span class="name">' + data[i].ItmsGrpNam + '</span>' + '<input type="hidden" id="hdncoid" value="' + data[i].CId + '"></input>'
-                                ////+ '<input class="count" value="1" type="text">'
-                                //+ '<button class="delete" id="btndel" onclick="deleterecord(' + data[i].CId + ')">&#10005;</button>');
                                 + '<input type="hidden" id="hdnflag" value="1"></input><button class="delete" id="btndel">&#10005;</button>');
-
                             i++;
                         }
                     }
@@ -276,10 +276,6 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-
-                    //$("." + countryCode + " li").each(function () {
-                    //    }
-
 
                     $("." + countryCode + " li").each(function () {
                         var tr1 = $(this).closest("li");

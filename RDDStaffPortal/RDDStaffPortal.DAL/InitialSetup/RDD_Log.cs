@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
-    class RDD_Log
+   public class RDD_Log
     {
        public int Id { get; set;}
        public string TableName { get; set; }

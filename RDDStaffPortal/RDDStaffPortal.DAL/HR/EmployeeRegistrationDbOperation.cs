@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RDDStaffPortal.DAL.DataModels;
+using RDDStaffPortal.DAL.InitialSetup;
 using static RDDStaffPortal.DAL.CommonFunction;
 
 
@@ -33,15 +34,19 @@ namespace RDDStaffPortal.DAL.HR
                     {
                         try
                         {
-
                             byte[] file;
-                            using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
-                            {
-                                using (var reader = new BinaryReader(stream))
+                           
+
+                                using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
                                 {
-                                    file = reader.ReadBytes((int)stream.Length);
+                                    using (var reader = new BinaryReader(stream))
+                                    {
+                                        file = reader.ReadBytes((int)stream.Length);
+                                    }
                                 }
-                            }
+                            
+
+                           
                             Int32 Emp_ID = 0;
 
                             SqlCommand cmd = new SqlCommand();
@@ -54,9 +59,10 @@ namespace RDDStaffPortal.DAL.HR
 
                             cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.EmployeeId);
 
-
                             //.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary,1000).Value = file;
+                           
                             cmd.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary, file.Length).Value = file;
+
                             cmd.Parameters.Add("@p_LogoType", SqlDbType.VarChar, 20).Value = EmpData.LogoType;
 
                             //cmd.Parameters.Add("@p_ePath", SqlDbType.VarBinary, 1000).Value = EmpData.ImagePath;
@@ -69,6 +75,7 @@ namespace RDDStaffPortal.DAL.HR
                             cmd.Parameters.Add("@p_Permanent_Address", SqlDbType.VarChar, 200).Value = EmpData.Permanent_Address;
                             cmd.Parameters.Add("@p_Contact_No", SqlDbType.VarChar, 25).Value = EmpData.Contact_No;
                             // cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 25).Value = Emp.Ext_no;
+                            cmd.Parameters.Add("@p_imgbool", SqlDbType.VarChar, 25).Value = EmpData.imgbool;
 
                             if (EmpData.Ext_no == null)
                             {
@@ -430,7 +437,22 @@ namespace RDDStaffPortal.DAL.HR
                                     cmd.Dispose();
                                 }
                             }
-                                transaction.Commit();
+
+
+                            cmd = new SqlCommand();
+
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "RDD_SetEmployeeProfileCompletedPercentage";
+                         
+                            cmd.Connection = connection;
+                            cmd.Transaction = transaction;
+
+                           cmd.Parameters.Add("@EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+                            cmd.ExecuteNonQuery();
+                            cmd.Dispose();
+
+                            transaction.Commit();
 
                             
                                        
@@ -467,6 +489,11 @@ namespace RDDStaffPortal.DAL.HR
 
 
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+
+
+
+
             DataSet DS = Db.myGetDS("EXEC  dbo.RDD_EmpInfo_GetData  '" + EmployeeId + "'");
 
             try
@@ -713,6 +740,7 @@ namespace RDDStaffPortal.DAL.HR
                         //emp.ImagePath = (byte[])DS.Tables[0].Rows[0]["ImagePath"];
                         string base64String = Convert.ToBase64String(emp.ImagePath);
                         emp.ImagePath1 = base64String;
+                        
 
                         //emp.ImagePath = Convert.ToByte(DS.Tables[0].Rows[0]["ImagePath"]);
 
@@ -725,6 +753,7 @@ namespace RDDStaffPortal.DAL.HR
                             emp.LogoType = DS.Tables[0].Rows[0]["LogoType"].ToString();
                         }
                     }
+
 
                     List<DocumentList> DocumentList = new List<DocumentList>();
                     if (DocumentList != null)
@@ -751,9 +780,45 @@ namespace RDDStaffPortal.DAL.HR
                         }
                     }
                     emp.DocumentList = DocumentList;
+
+                    ////Find Log History//
+                    //List<LogList> Log = new List<LogList>();
+                    //if (Log != null)
+                    //{
+                    //    for (int i = 0; i < DS.Tables[3].Rows.Count; i++)
+
+                    //    {
+                    //        LogList loginfo = new LogList();
+                    //        DataTable Ds = DS.Tables[3];
+                    //        if (DS.Tables[3].Rows[i]["ColDescription"] != null && !DBNull.Value.Equals(DS.Tables[3].Rows[i]["ColDescription"]))
+                    //        {
+                    //            loginfo.ColDescription = DS.Tables[3].Rows[i]["ColDescription"].ToString();
+                    //        }
+                    //        if (DS.Tables[3].Rows[i]["OldValue"] != null && !DBNull.Value.Equals(DS.Tables[3].Rows[i]["OldValue"]))
+                    //        {
+                    //            loginfo.OldValue = DS.Tables[3].Rows[i]["OldValue"].ToString();
+                    //        }
+                    //        if (DS.Tables[3].Rows[i]["NewValue"] != null && !DBNull.Value.Equals(DS.Tables[3].Rows[i]["NewValue"]))
+                    //        {
+                    //            loginfo.NewValue = DS.Tables[3].Rows[i]["NewValue"].ToString();
+                    //        }
+                    //        if (DS.Tables[3].Rows[i]["ChangedBy"] != null && !DBNull.Value.Equals(DS.Tables[3].Rows[i]["ChangedBy"]))
+                    //        {
+                    //            loginfo.ChangedBy = DS.Tables[3].Rows[i]["ChangedBy"].ToString();
+                    //        }
+                    //        if (DS.Tables[3].Rows[i]["ChangedOn"] != null && !DBNull.Value.Equals(DS.Tables[3].Rows[i]["ChangedOn"]))
+                    //        {
+                    //            loginfo.ChangedOn = Convert.ToDateTime(DS.Tables[3].Rows[i]["ChangedOn"].ToString());
+                    //        }
+                    //        Log.Add(loginfo);
+                    //    }
+                    //}
+                    //emp.LogList = Log;
+
+
                     //Edit for Edu Table Data
 
-                    List<EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
+                    List <EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
                     if (EmpInfoProEdu != null)
                     {
                         for (int i = 0; i < DS.Tables[1].Rows.Count; i++)

@@ -51,6 +51,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     EmpLst.Contact_No = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Contact_No"].ToString()) ? DS.Tables[0].Rows[i]["Contact_No"].ToString() : "";
                     EmpLst.Ext_no = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Ext_no"].ToString()) ? DS.Tables[0].Rows[i]["Ext_no"].ToString() : "";
                     EmpLst.About = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["AboutUs"].ToString()) ? DS.Tables[0].Rows[i]["AboutUs"].ToString() : "";
+                   // EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"].ToString());
+                    if (DS.Tables[0].Rows[i]["ProfileCompletedPercentage"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"]))
+                    {
+                        EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"]);
+                    }
 
                     if (DS.Tables[0].Rows[i]["ImagePath"] != null && DS.Tables[0].Rows[i]["ImagePath"].ToString().Length > 0)
 

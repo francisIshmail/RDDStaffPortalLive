@@ -34,7 +34,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     EmpLst.Contact_No = DS.Tables[0].Rows[i]["Contact_No"].ToString();
                     EmpLst.EmployeeNo= DS.Tables[0].Rows[i]["EmployeeNo"].ToString();
                     EmpLst.Ext_no = DS.Tables[0].Rows[i]["Ext_no"].ToString();
-
+                   // EmpLst.About = DS.Tables[0].Rows[i]["About"].ToString();
+                   // EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"].ToString());
                     EmpDisplayList.Add(EmpLst);
                 }
             }
