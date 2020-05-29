@@ -1,0 +1,45 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_Reports
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Download Reports</h4>
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="tab-content download-reports" id="v-pills-tabContent">
+                                <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                                    <div class="accordion accordion-secondary">
+                                        @{ Html.RenderAction("GetReport", "DownloadReports", new { area = "Reports" }); }
+                                    </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+</div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("input[id='Salary_Start_Date']").datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+    });
+</script>

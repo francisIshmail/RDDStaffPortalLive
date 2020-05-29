@@ -14,5 +14,6 @@ namespace RDDStaffPortal.DAL.DataModels
         public bool IsAlreadyMapped { get; set; }
         public string  bgcolor { get; set; }
         public string CustTyp { get; set; }
+        public int TOTAL { get; set; }
     }
 }

@@ -99,7 +99,7 @@ namespace RDDStaffPortal.WebServices
         /// <param name="rol"></param>
         /// <returns></returns>
         [WebMethod]
-        private MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
+        public MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
 
@@ -153,7 +153,7 @@ namespace RDDStaffPortal.WebServices
         /// <param name="role"></param>
         /// <returns></returns>
         [WebMethod]
-        private MembershipResponse CreateRole(string role)
+        public MembershipResponse CreateRole(string role)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
             try
@@ -184,11 +184,57 @@ namespace RDDStaffPortal.WebServices
         }
 
         /// <summary>
+        /// This methos is used to Delete existing Role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public MembershipResponse DeleteRole(string role)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(role))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter Role";
+                    return membershipResponse;
+                }
+
+                if (Roles.RoleExists(role))
+                {
+                    string[] UsersInRole = Roles.GetUsersInRole(role);
+                    if(UsersInRole.Length>0)
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "Error! " + role + " is assigned to users, You can not delete it.";
+                        return membershipResponse;
+                    }
+                    else
+                    {
+                        Roles.DeleteRole(role);
+                        membershipResponse.Success = true; membershipResponse.Message = "Role '" + role.Trim() + "' Deleted Successfully";
+                        return membershipResponse;
+                    }
+                }
+                else
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Error! "+role+" does not exist in database to delete";
+                    return membershipResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
+
+
+        /// <summary>
         /// This method is used to get all Roles from system.
         /// </summary>
         /// <returns></returns>
         [WebMethod]
-        private string[] GetRoles()
+        public string[] GetRoles()
         {
             try
             {
@@ -202,13 +248,51 @@ namespace RDDStaffPortal.WebServices
             
         }
 
+
+        /// <summary>
+        /// This method is used to get all Roles from system.
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public string[] GetRolesForUser(string UserName)
+        {
+            try
+            {
+                return Roles.GetRolesForUser(UserName);
+            }
+            catch (Exception ex)
+            {
+                string[] msg = new string[] { ex.Message };
+                return msg;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to check LoggedIn User is in specific Role
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public bool IsUserInRole(string RoleName)
+        {
+            try
+            {
+                return Roles.IsUserInRole(RoleName);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// This methos is used to Add User to Role
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
         [WebMethod]
-        private MembershipResponse AddUserToRole(string UserName, string role)
+        public MembershipResponse AddUserToRole(string UserName, string role)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
             try
@@ -255,7 +339,7 @@ namespace RDDStaffPortal.WebServices
         /// <param name="role"></param>
         /// <returns></returns>
         [WebMethod]
-        private MembershipResponse RemoveUserFromRole(string UserName, string role)
+        public MembershipResponse RemoveUserFromRole(string UserName, string role)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
             try
@@ -297,7 +381,7 @@ namespace RDDStaffPortal.WebServices
 
 
 
-        private string GetErrorMessage(MembershipCreateStatus status)
+        public string GetErrorMessage(MembershipCreateStatus status)
         {
             switch (status)
             {

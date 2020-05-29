@@ -1,0 +1,8 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_Reports>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    @Dow_Reports.GetDow_Report(Model, Model.FirstOrDefault().reportcategory)
+}
+@*</div>*@

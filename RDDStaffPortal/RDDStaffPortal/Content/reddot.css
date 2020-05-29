@@ -1062,6 +1062,29 @@ background: none;
     padding: 20px !important
 }
 
+.download-reports.tab-content .card-header {
+    padding: 0.60rem 1.25rem !important;
+    margin-bottom: 0px;
+}
+.download-reports .accordion .card {
+    
+    border-radius: 5px !important;
+}
+.download-reports .card .card-header {
+    
+     border-radius: 5px !important;
+}
+.download-reports .fas {
+    font-size: 24px;
+    margin-right: 15px;
+}
+.download-reports .card {
+    margin-bottom: 5px !important
+}
+.download-reports .card-body {
+    padding: 20px !important
+}
+
 .download-reports .report-s .reportpanel {
     border-radius: 5px;
     background-color: #ffffff;
