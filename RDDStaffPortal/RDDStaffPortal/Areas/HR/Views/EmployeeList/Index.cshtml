@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="form-group">
-                                    <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control " placeholder="Search.."></div>
+                                    <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control" placeholder="Search.."></div>
                                 </div>
                                 <div class="row rowmin user-box mar-t10" id="userTable">
                                     @foreach (var items in ViewBag.EmpDisplayList)
@@ -113,6 +113,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+        debugger
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#userTable .col-md-3").filter(function () {
@@ -121,4 +122,5 @@
         });
     });
 </script>
+
 

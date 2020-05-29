@@ -126,6 +126,7 @@
     <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
@@ -183,7 +184,6 @@
     <Content Include="fonts\simple-line-icons\Simple-Line-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\TempLogo\defaultimg.jpg" />
-    <Content Include="Images\TempLogo\TempAbc.jpg" />
     <Content Include="img\bg\background_01.jpg" />
     <Content Include="img\bg\background_02.jpg" />
     <Content Include="img\bg\background_03.jpg" />
@@ -404,6 +404,7 @@
     <Content Include="Areas\HR\Views\BUCountries\Index.cshtml" />
     <Content Include="Areas\Reports\Views\WebReports\Index.cshtml" />
     <Content Include="App_Code\WidgetUserBase.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRoles\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

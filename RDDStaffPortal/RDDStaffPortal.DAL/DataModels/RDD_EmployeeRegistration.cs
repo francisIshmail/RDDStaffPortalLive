@@ -9,6 +9,7 @@ namespace RDDStaffPortal.DAL.DataModels
 {
     public class RDD_EmployeeRegistration
     {
+      
         public class Translations
         {
             public string de { get; set; }
@@ -78,7 +79,7 @@ namespace RDDStaffPortal.DAL.DataModels
 
         public string EmployeeNo { get; set; }
         //FINAnce
-
+        public int ProfileCompletedPercentage { get; set; }
         public int FId { get; set; }
         public string Currency { get; set; }
         public int Salary { get; set; }
@@ -132,6 +133,9 @@ namespace RDDStaffPortal.DAL.DataModels
 
         public string ImagePath1 { get; set; }
 
+
+        public bool imgbool { get; set; }
+
         public byte[] ImagePath { get; set; }
         public string LogoType { get; set; }
 
@@ -158,8 +162,22 @@ namespace RDDStaffPortal.DAL.DataModels
         public List<DocumentList> DocumentList {get;set;}
 
         public DocumentList Documents { get; set; }
-    }
 
+
+        public List<LogList> LogList { get; set; }
+
+        public LogList LogInfo { get; set; }
+
+    }
+    public class LogList
+    {
+        public string ColDescription { get; set; }
+        public string OldValue { get; set; }
+        public string NewValue { get; set; }
+        public string ChangedBy { get; set; }
+        public DateTime ChangedOn { get; set; }
+
+    }
 
     public class CountryLists
     {

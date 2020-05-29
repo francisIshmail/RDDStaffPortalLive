@@ -73,6 +73,8 @@ namespace RDDStaffPortal.Areas.HR.Models
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
         public string EmployeeNo { get; set; }
+
+        public int ProfileCompletedPercentage { get; set; }
         //finance
         public int FId { get; set; }
         public string Currency { get; set; }
