@@ -292,36 +292,48 @@ namespace RDDStaffPortal.WebServices
         /// <param name="role"></param>
         /// <returns></returns>
         [WebMethod]
-        public MembershipResponse AddUserToRole(string UserName, string role)
+        public MembershipResponse AddUserToRole(string UserName, List<string> role)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
             try
             {
-                if (string.IsNullOrEmpty(UserName))
+                string k = "";
+                int i = 0;
+                while(role.Count>i )
                 {
-                    membershipResponse.Success = false; membershipResponse.Message = "Please enter Login UserName";
-                    return membershipResponse;
-                }
-                if (string.IsNullOrEmpty(role))
-                {
-                    membershipResponse.Success = false; membershipResponse.Message = "Please enter Role";
-                    return membershipResponse;
-                }
+                    if (string.IsNullOrEmpty(UserName))
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "Please enter Login UserName";
+                        return membershipResponse;
+                    }
+                    if (string.IsNullOrEmpty(role[i]))
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "Please enter Role";
+                        return membershipResponse;
+                    }
 
-                if (Membership.FindUsersByName(UserName) == null)
-                {
-                    membershipResponse.Success = false; membershipResponse.Message = "Error! User Does not Exists in Database, refresh page for the latest state";
-                    return membershipResponse;
-                }
+                    if (Membership.FindUsersByName(UserName) == null)
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "Error! User Does not Exists in Database, refresh page for the latest state";
+                        return membershipResponse;
+                    }
 
-                if (!Roles.RoleExists(role))
-                {
-                    membershipResponse.Success = false; membershipResponse.Message = "Error! Role Does not Exists in Database, refresh page for the latest state";
-                    return membershipResponse;
-                }
+                    if (!Roles.RoleExists(role[i]))
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "Error! Role Does not Exists in Database, refresh page for the latest state";
+                        return membershipResponse;
+                    }
 
-                Roles.AddUserToRole(UserName, role);
-                membershipResponse.Success = true; membershipResponse.Message = "Successfully assigned role - '" + role + "' to user '" + UserName + "'.";
+                    Roles.AddUserToRole(UserName, role[i]);
+
+                    k= (i == 0) ?  role[i] : " , " +role[i] ;
+
+                    
+                   
+                    i++;
+                }
+               
+                membershipResponse.Success = true; membershipResponse.Message = "Successfully assigned role - '" + k + "' to user '" + UserName + "'.";
                 return membershipResponse;
 
             }
