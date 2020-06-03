@@ -3,7 +3,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
-
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script src="~/Scripts/Application/UserRole.js"></script>
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
@@ -11,15 +12,15 @@
                 <h4 class="page-title">User Roles</h4>
             </div>
             @*<div class="row">
-                <div class="card">
+                    <div class="card">
 
-                    <div class="form-group">
-                        <button style="margin-right:10px" class="btn btn-primary" onclick="CreateRole()">Manage Role</button>
+                        <div class="form-group">
+                            <button style="margin-right:10px" class="btn btn-primary" onclick="CreateRole()">Manage Role</button>
+                        </div>
+
+
                     </div>
-
-
-                </div>
-            </div>*@
+                </div>*@
 
             <div class="rowmin">
                 <div class="col-md-12">
@@ -29,84 +30,68 @@
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
                                         <div class="form-group">
-                                            <label for="email2" class="width100px mar-t4">User :</label>
+                                            <label for="email2" class="width100px mar-t4">User search :</label>
+
+
                                         </div>
                                     </div>
-
                                     <div class="col-xl-4 col-md-4">
-                                        <div class="form-group">
-                                            @*@Html.DropDownListFor(m => m.ColName, ViewBag.Users as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm", @onchange = "SearchByEmp()" })*@
+                                        <div class="select2-input">
+                                            <select class="form-control" id="Userid" name="basic">
+                                            </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="rowmin row">
+                                    <div class="col-md-8" id="product">
+                                        <div class="row">
+                                            <div class="col-md-18 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center panelbg-1">Roles</div>
 
-                                    <div class="col-xl-7 col-md-7">
-                                        <div class="form-group">
-                                            <button style="margin-right:10px" class="btn btn-success pull-right" onclick="CreateRole()">Create Role</button>
+                                                    <ul class="clear">
+                                                        @foreach (var items in ViewBag.UserRoles)
+                                                        {
+                                                            <li data-id="@items" class="ui-draggable ui-draggable-handle">
+                                                                <a href="#"> @items </a>
+                                                                <input type='hidden' id='hdnuse' value='false' />
+                                                            </li>
+                                                        }
+                                                    </ul>
+
+                                                </div>
+
                                             </div>
                                         </div>
 
-                                        @*<div class="col-xl-1 col-md-1  padd-l0">
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-success btn-sm" id="SearchByEmp">Search</button>
-                                            </div>
-                                        </div>*@
                                     </div>
-                                    <div class="rowmin row">
-                                        <div class="col-md-2" id="product">
-                                            <div class="row">
-                                                <div class="col-md-18 padd-l5 padd-r5">
-                                                    <div class="panel">
-                                                        <div class="panel-heading text-center panelbg-1">Roles</div>
+                                    <div class="col-md-4" id="sidebar">
+                                        <div class="panel">
+                                            <div class="panel-heading text-center" id="hdntitle">Authorized  Roles</div>
 
-                                                        <ul class="clear">
-                                                            @foreach (var items in ViewBag.UserRoles)
-                                                            {
-                                                                <li data-id="@items" class="ui-draggable ui-draggable-handle">
-                                                                    <a href="#"> @items </a>
-                                                                </li>
-                                                            }
-                                                        </ul>
+                                            <div class="basket">
+                                                <div class="basket_list" id="pri1">
 
-                                                    </div>
 
+                                                    <ul id="pr1">
+                                                    </ul>
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="col-md-10" id="sidebar">
-
-                                            <div class="row">
-                                                @*@foreach (var items in ViewBag.CountryList)
-                    {
-                        <div class="col-md-3 padd-l5 padd-r5 mar-b10" id="@items.CountryCode">
-                            <div class="panel">
-                                <div class="panel-heading text-center">
 
 
-                                    <label id="CountryCode_@items.CountryCode">@items.CountryCode</label>
-
-                                </div>
-                                <div class="basket">
-                                    <div class="basket_list">
-
-                                        <ul class="@items.CountryCode"></ul>
-                                    </div>
-                                </div>
-
-                                <div class="card-action">
-                                    <button class="btn btn-success btn-sm" value="@items.CountryCode" id="SaveEmpBu_@items.CountryCode" onclick="SaveEmpBUCoutry('@items.CountryCode')">Save</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    }*@
+                                            <div class="card-action">
+                                                <button class="btn btn-success btn-sm" id="btnsave">Save</button>
+                                                <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
                                             </div>
-
                                         </div>
 
                                     </div>
 
                                 </div>
+
+
+                            </div>
 
                         </div>
                     </div>
@@ -184,147 +169,149 @@
                 </div>
 
             </div>
-            </div>
+        </div>
     </div>
 
 </div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="~/Scripts/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>
-<link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
+@*<script src="~/Scripts/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>*@
+
 
 <script type="text/javascript">
 
 
-            $(document).ready(function () {
-                // To bind Roles on PageLoad
-                //GetRoles();
-            });
+    $(document).ready(function () {
+        // To bind Roles on PageLoad
+        //GetRoles();
+        UserRole.initialize();
 
 
-            /// This is to OPEN Create Role pop-up window
-            function CreateRole() {
-                $("#NewRole").modal();
-                // To bind Roles on PageLoad
-                GetRoles();
+    });
+
+    /// This is to OPEN Create Role pop-up window
+    function CreateRole() {
+        $("#NewRole").modal();
+        // To bind Roles on PageLoad
+        GetRoles();
+    }
+
+    function GetRoles() {
+        debugger
+        $('#setRolesList').html('');
+
+        $.get("/UserRoles/GetRoles", null, DataBind);
+        function DataBind(Roles) {
+            debugger;
+            var AppendRoles = $('#setRolesList');
+            for (var i = 0; i < Roles.length; i++) {
+                debugger;
+                var Data = "<tr class='row_ >" + i + "'>" +
+                    "<td>" + (i + 1) + "</td>" +
+                    "<td  >" + Roles[i] + "</td>"
+
+                Data = Data + "<td> <button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete' id='btn_DeleteRole' ><i class='fas fa-trash-alt'></i></button></td ></tr >";
+
+                "</tr>";
+
+                AppendRoles.append(Data);
+
             }
+        }
+    }
 
-            function GetRoles() {
-                debugger
-                $('#setRolesList').html('');
 
-                $.get("/UserRoles/GetRoles", null, DataBind);
-                function DataBind(Roles) {
-                    debugger;
-                    var AppendRoles = $('#setRolesList');
-                    for (var i = 0; i < Roles.length; i++) {
-                        debugger;
-                        var Data = "<tr class='row_ >" + i + "'>" +
-                            "<td>" + (i + 1) + "</td>" +
-                            "<td  >" + Roles[i] + "</td>"
-
-                        Data = Data + "<td> <button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete' id='btn_DeleteRole' ><i class='fas fa-trash-alt'></i></button></td ></tr >";
-
-                        "</tr>";
-
-                        AppendRoles.append(Data);
-
-                    }
+    $('#SaveRole').click(function () {
+        debugger
+        if ($("#RoleName").val() == "") {
+            alert('please enter Role');
+            $("#RoleName").focus();
+            return false;
+        }
+        $.ajax({
+            type: "Post",
+            url: "/UserRoles/CreateRole",
+            data: "{'RoleName':'" + $("#RoleName").val() + "'}",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                debugger;
+                if (result.Success == true) {
+                    RdotAlertSucesstxt(result.Message);
+                    $("#RoleName").val('');
+                    GetRoles();
+                }
+                else {
+                    RdotAlerterrtxt(result.Message);
+                    $("#RoleName").val('');
                 }
             }
+        });
+    });
 
 
-            $('#SaveRole').click(function () {
-                debugger
-                if ($("#RoleName").val() == "") {
-                    alert('please enter Role');
-                    $("#RoleName").focus();
-                    return false;
-                }
-                $.ajax({
-                    type: "Post",
-                    url: "/UserRoles/CreateRole",
-                    data: "{'RoleName':'" + $("#RoleName").val() + "'}",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        debugger;
-                        if (result.Success == true) {
-                            RdotAlertSucesstxt(result.Message);
-                            $("#RoleName").val('');
-                            GetRoles();
-                        }
-                        else {
-                            RdotAlerterrtxt(result.Message);
-                            $("#RoleName").val('');
-                        }
+    $('#setRolesList').on('click', '#btn_DeleteRole', function () {
+
+        var Role = $(this).closest("tr").find('td:eq(1)').text();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.getJSON("/UserRoles/DeleteRole", { RoleName: Role }).done(function (data) {
+                    if (data.Success == true) {
+                        RdotAlertSucesstxt(data.Message);
+                        $("#RoleName").val('');
+                        GetRoles();
                     }
+                    else {
+                        RdotAlerterrtxt(data.Message);
+                        $("#RoleName").val('');
+                    }
+
                 });
-            });
+                //swalWithBootstrapButtons.fire(
+                //    'Deleted!',
+                //    'Your Record  has been deleted.',
+                //    'success'
+                //)
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+        })
+
+    });
 
 
-            $('#setRolesList').on('click', '#btn_DeleteRole', function () {
+    $("#txtSearchRole").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
 
-                var Role = $(this).closest("tr").find('td:eq(1)').text();
-
-                const swalWithBootstrapButtons = Swal.mixin({
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger',
-                    buttonsStyling: false,
-                })
-                swalWithBootstrapButtons.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.value) {
-                        $.getJSON("/UserRoles/DeleteRole", { RoleName: Role }).done(function (data) {
-                            if (data.Success == true) {
-                                RdotAlertSucesstxt(data.Message);
-                                $("#RoleName").val('');
-                                GetRoles();
-                            }
-                            else {
-                                RdotAlerterrtxt(data.Message);
-                                $("#RoleName").val('');
-                            }
-
-                        });
-                        //swalWithBootstrapButtons.fire(
-                        //    'Deleted!',
-                        //    'Your Record  has been deleted.',
-                        //    'success'
-                        //)
-                    }
-                    else if (
-                        // Read more about handling dismissals
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                            'Cancelled',
-                            'Your Record  is safe :)',
-                            'error'
-                        )
-                    }
-                })
-
-            });
-
-
-            $("#txtSearchRole").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-
-                $("#setRolesList tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
+        $("#setRolesList tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 
 
 
- </script>
+</script>
 

@@ -266,6 +266,7 @@
     <Content Include="Scripts\Application\CustomerMapping.js" />
     <Content Include="Scripts\Application\Dashboardjs.js" />
     <Content Include="Scripts\Application\Test.js" />
+    <Content Include="Scripts\Application\UserRole.js" />
     <Content Include="Scripts\Application\Webreports.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
