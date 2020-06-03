@@ -107,6 +107,7 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendMail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
