@@ -1,0 +1,6 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_RightSide>
+    
+@if(Model.Count()>0 && Model!= null)
+{
+    @RDD_RighSide.GetRightSide(Model)
+}

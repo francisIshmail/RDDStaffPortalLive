@@ -1,30 +1,18 @@
 ﻿var UserRole = {
 	initialize: function () {
 
-		$.fn.dataTable.ext.errorMode = 'none';
+        $.fn.dataTable.ext.errorMode = 'none';
+
 		UserRole.Attachevent();
 	},
 	Attachevent: function () {
 
-        $.getJSON("/GetUserList").done(function (data) {
-            $("#Userid").empty();
-            $('#Userid').append('<option value="0" selected="">-Select-</option>');
-            var ary = [];
-            ary = data;
-            for (var i = 0; i < ary.length; i++) {
-                $('#Userid').append('<option value="' + ary[i].Code + '" selected="">' + ary[i].CodeName + '</option>');
-            }
-            $('#Userid').val(0);
-            // $('#Userid').selectpicker('refresh');
-        });
-        $('#Userid').select2({
-            theme: "bootstrap"
-        });
+        var selectedObjs;
+       // var draggableOptions = ;
 
-
-
-
-
+        // drop down image fill with name 
+        RdotDropimg("Userid", "/GetUserList");
+        
         var tf = true;
         $("#Userid").on("change", function () {
 
@@ -37,64 +25,83 @@
             tf = true;
             // RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid);
             $(".basket_list  ul").empty();
-            $("#product  li").draggable({
+            $('#product ul li').css("background-color", "");
+            $('#product ul li a').css("color", "black");
+            $('#product ul li').removeClass("selected");
 
-                // brings the item back to its place when dragging is over
-                revert: true,
-
-                // once the dragging starts, we decrease the opactiy of other items
-                // Appending a class as we do that with CSS
-                drag: function (event, ui) {
-
-                    ui.helper.data('dropped', false);
-                    $(this).addClass("active");
-                    $(this).closest("#product").addClass("active");
-
-                },
-
-                // removing the CSS classes once dragging is over.
-                stop: function (event, ui) {
-                    //alert('stop: dropped=' + ui.helper.data('dropped'));
-                    $(this).removeClass("active").closest("#product").removeClass("active");
-
-                }
-            });
+            $('#product ul li').find("input[id='hdnuse']").val('false');
             debugger
             AddSecondary(Userid);
         });
 
+       
         // jQuery UI Draggable
-        $("#product  li").draggable({
 
-            // brings the item back to its place when dragging is over
+        //$("#product  li").draggable({
+
+        //    // brings the item back to its place when dragging is over
+        //    revert: true,
+
+        //    // once the dragging starts, we decrease the opactiy of other items
+        //    // Appending a class as we do that with CSS
+        //    drag: function (event, ui) {
+        //        debugger
+        //        ui.helper.data('dropped', false);
+        //        $(this).addClass("active");
+        //        $(this).closest("#product").addClass("active");
+
+        //    },
+           
+
+        //    // removing the CSS classes once dragging is over.
+        //    stop: function (event, ui) {
+        //        //alert('stop: dropped=' + ui.helper.data('dropped'));
+        //        $(this).removeClass("active").closest("#product").removeClass("active");
+
+        //    }
+        //});
+
+        $('#product  li').draggable({
             revert: true,
-
-            // once the dragging starts, we decrease the opactiy of other items
-            // Appending a class as we do that with CSS
-            drag: function (event, ui) {
-
-                ui.helper.data('dropped', false);
-                $(this).addClass("active");
-                $(this).closest("#product").addClass("active");
-
+            start: function (event, ui) {
+                //get all selected...
+                if (ui.helper.hasClass('selected')) selectedObjs = $('li.selected');
+                else {
+                    selectedObjs = $(ui.helper);
+                    $('li.selected').removeClass('selected')
+                }
             },
-
-            // removing the CSS classes once dragging is over.
-            stop: function (event, ui) {
-                //  alert('stop: dropped=' + ui.helper.data('dropped'));
-                $(this).removeClass("active").closest("#product").removeClass("active");
+            drag: function (event, ui) {
+                selectedObjs.each(function () {
+                              ui.helper.data('dropped', false);
+                    $(this).addClass("selected");
+                    $(this).closest("#product").addClass("selected");                  
+                })
+               
+            },
+                 stop: function (event, ui) {
+                //alert('stop: dropped=' + ui.helper.data('dropped'));
+                     selectedObjs.each(function () {
+                         $(this).removeClass("selected").closest("#product").removeClass("selected");
+                     })
 
             }
+        }
+
+        ).click(function (e) {           
+            if ($(this).find("input[id='hdnuse']").val() == "true") {
+                RdotAlerterrtxt('Alredy use');
+                return
+            }
+            $(this).toggleClass('selected')
         });
-
-
 
 
         // jQuery Ui Droppable
         $(".basket").droppable({
 
             // The class that will be appended to the to-be-dropped-element (basket)
-            activeClass: "active",
+            activeClass: "selected",
 
             // The class that will be appended once we are hovering the to-be-dropped-element (basket)
             hoverClass: "hover",
@@ -102,52 +109,65 @@
             // The acceptance of the item once it touches the to-be-dropped-element basket
             // For different values http://api.jqueryui.com/droppable/#option-tolerance
             tolerance: "touch",
+            
+           
             drop: function (event, ui) {
                 debugger
-                ui.helper.data('dropped', true);
-                var k1 = 0;
-                var basket = $(this),
-                    move = ui.draggable,
-                    itemId = basket.find("ul li[data-id='" + move.attr("data-id") + "']");
+                var t1 = 0;
+               // while (selectedObjs.length > t1) {
+                    selectedObjs.each(function (e,k) {
+                        ui.helper.data('dropped', true);
+                        //  var k1 = 0;                
+                        var basket =
+                            $(this),
+                            move = ui.draggable;
 
-                // To increase the value by +1 if the same item is already in the basket
+                        //itemId = basket.find("ul li[data-id='" + move.attr("data-id") + "']");
+
+                        // To increase the value by +1 if the same item is already in the basket
 
 
-                if (move.find("input[id='hdnuse']").val() == "false") {
-                    debugger
-                    var arr1 = [];
-                    arr1.push(move.attr("data-id"));
-                    $(".basket_list  ul li").each(function () {
-                        arr1.push($(this).attr("data-id"));
-                    });
-                    var recipientsArray = arr1.sort();
-                    for (var i = 0; i < recipientsArray.length - 1; i++) {
-                        if (recipientsArray[i + 1] == recipientsArray[i]) {
-                            return
+
+                        if (k.children[1].attributes["value"].value == "false") {
+                            debugger
+                            var arr1 = [];
+                            arr1.push(k.attributes["data-id"].value);
+                            $(".basket_list  ul li").each(function () {
+                                arr1.push($(this).attr("data-id"));
+                            });
+                            var recipientsArray = arr1.sort();
+                            for (var i = 0; i < recipientsArray.length - 1; i++) {
+                                if (recipientsArray[i + 1] == recipientsArray[i]) {
+                                    return
+                                }
+                            }
+
+                            //if (basket.find(".basket_list").attr("id") == 'pri1') {
+                            //	//$("#hdntitle").text(move.find("input[id='hdndbname']").val());
+                            //	move.css("background-color", "hotpink");
+                            //} else {//
+                            //	move.css("background-color", "orange");
+                            //}
+                          // k.css("background-color", "orange");
+                            $(".demo").find(selectedObjs[e]).removeClass('selected');
+                            $(".demo").find(selectedObjs[e]).find("input[id='hdnuse']").val('true');
+                            $(".demo").find(selectedObjs[e]).css("background-color", "orange");
+                            //var k1 = 0;
+
+                            addBasket(basket, k);
+                            k1 = 1;
+
+
+
+
+                        } else {
+
+                            RdotAlerterrtxt('Alredy use');
                         }
-                    }
-
-                    //if (basket.find(".basket_list").attr("id") == 'pri1') {
-                    //	//$("#hdntitle").text(move.find("input[id='hdndbname']").val());
-                    //	move.css("background-color", "hotpink");
-                    //} else {//
-                    //	move.css("background-color", "orange");
-                    //}
-                    move.css("background-color", "orange");
-                    //var k1 = 0;
-                    if (k1 == 0) {
-                        addBasket(basket, move);
-                        k1 = 1;
-                    }
-
-
-
-                } else {
-
-                    RdotAlerterrtxt('Alredy use');
-                }
-
-
+                        
+                    });
+                   // t1 = t1 + 1;
+               // }
                 // Updating the quantity by +1" rather than adding it to the basket
                 //move.find("input").val(parseInt(move.find("input").val()) + 1);
 
@@ -176,7 +196,8 @@
                             + '<button class="delete">&#10005;</button>');
 
 
-                        $('#product ul li:contains(' + response[i] + ')').css("background-color", "blue");
+                        $('#product ul li:contains(' + response[i] + ')').css("background-color", "green");
+                        $('#product ul li a:contains(' + response[i] + ')').css("color", "white");
 
                         $('#product ul li:contains(' + response[i] + ')').find("input[id='hdnuse']").val('true');
 
@@ -194,8 +215,8 @@
         // This function runs onc ean item is added to the basket
         function addBasket(basket, move) {
             debugger
-            basket.find("ul").append('<li data-id="' + move.attr("data-id") + '">'
-                + '<span class="name">' + move.find("a").html() + '</span>'
+            $(".basket_list").find("ul").append('<li data-id="' + move.attributes["data-id"].value + '">'
+                + '<span class="name">' + move.innerText + '</span>'
                 + '<input  type="hidden" id="hdntyp" value="N"/>'
                 + '<button class="delete">&#10005;</button>');
         }
@@ -286,6 +307,8 @@
                     var kl = $(this).attr("data-id");
                     if (kl == Role) {
                         $(this).css("background-color", "");
+                        $(this).find("input[id='hdnuse']").val('false');
+                       
                     }
                 })
                 $(this).closest("li").remove();

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace RDDStaffPortal.DAL.DataModels
 {
-   public  class Rdd_comonDrop
+   public partial class RDD_RightSide
     {
-        public string Code { get; set; }
-        public string CodeName { get; set; }
-
-        public string imagepath { get; set; }
+        public string MenuName { get; set; }
+        public string NavUrl { get; set; }
+        public string typs { get; set; }
     }
 }

@@ -13,9 +13,34 @@ namespace RDDStaffPortal.Controllers
     {
         // GET: Dashboard
         DashBoardDbOperation _DashDbOp = new DashBoardDbOperation();
+        RDD_QuickLinksDBOperation _RDD_QuickOP = new RDD_QuickLinksDBOperation();
+        ModulesDbOperation moduleDbOp = new ModulesDbOperation();
+       
         public ActionResult Index()
         {
             return View();
+        }
+
+
+
+
+        [Route("QuickLinkInsert")]
+        public ActionResult QuickLinkInsert(RDD_QuickLinks Rdd_Q)
+        {
+            Rdd_Q.UserName = User.Identity.Name;
+           
+            return Json(_RDD_QuickOP.Save(Rdd_Q), JsonRequestBehavior.AllowGet);
+        }
+        [Route("DeleteActivity")]
+        public ActionResult DeleteActivity(int QuickLinkid)
+        {
+           
+            return Json(_RDD_QuickOP.DeleteActivity(QuickLinkid) , JsonRequestBehavior.AllowGet);
+        }
+
+        public  ActionResult GetRightSide()
+        {
+            return PartialView(_RDD_QuickOP.GetRightside(User.Identity.Name));
         }
         //[Route("GetProfileImg")]
         //public ActionResult GetProfileImg()

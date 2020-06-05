@@ -62,7 +62,8 @@ namespace RDDStaffPortal.Controllers
             return RedirectToAction("/Login", "Account");
         }
 
-        [ChildActionOnly]
+        
+       // [ChildActionOnly]
         public ActionResult GetMenuTreeMenu()
         {
             //if (User.Identity.Name == "")
@@ -70,12 +71,10 @@ namespace RDDStaffPortal.Controllers
             //    return RedirectToAction("/Login", "Account");
 
             //}
-            return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name,"U"));
+            return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name, "U"));
 
         }
-
-
-
+       
         [HttpGet]
         [ChildActionOnly]
         public ActionResult GetFirtsDashBoard()
@@ -83,7 +82,7 @@ namespace RDDStaffPortal.Controllers
            
             return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
         }
-
+       
         [ChildActionOnly]
         public ActionResult GetDashBoardView()
         {

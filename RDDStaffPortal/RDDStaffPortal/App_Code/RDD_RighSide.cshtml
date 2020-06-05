@@ -1,0 +1,38 @@
+﻿@helper GetRightSide(List<RDDStaffPortal.DAL.DataModels.RDD_RightSide> RDD_R)
+{
+// your helper can contain code and/or markup, e.g.
+// var msg = "Hello " + name;
+// <p>@msg</p>
+// For more information, visit https://go.microsoft.com/fwlink/?LinkID=204658
+foreach (var list in RDD_R.GroupBy(x => x.typs).Select(x => x.First()).ToList())
+{
+        <div class="col-md-12 padd-l0">
+            <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="Search-@list.typs-QuickLinks" placeholder="Search @list.typs - Quick Links">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="demo-scrollbar-130 scrollbar-inner">
+                        <ul class="widgets-list" id="@list.typs-1">
+
+                            @foreach (var i in RDD_R.Where(a => a.typs == "Forms"))
+                            {
+
+
+                                <li><a href="@i.NavUrl"><i class="fas fa-hand-point-right"></i> @i.MenuName</a></li>
+
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+}

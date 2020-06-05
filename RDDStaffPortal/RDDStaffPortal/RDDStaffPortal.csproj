@@ -406,6 +406,8 @@
     <Content Include="Areas\Reports\Views\WebReports\Index.cshtml" />
     <Content Include="App_Code\WidgetUserBase.cshtml" />
     <Content Include="Areas\Admin\Views\UserRoles\Index.cshtml" />
+    <Content Include="App_Code\RDD_RighSide.cshtml" />
+    <Content Include="App_Code\WidgetUser.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -443,6 +445,7 @@
     <Content Include="Uploads\Red Dot Distribution  Technology with a Difference.xlsx" />
     <Content Include="Uploads\SINV Mapping for e-invoicing.xlsx" />
     <Content Include="Views\Account\GetMenuTreeMenu.cshtml" />
+    <Content Include="Views\Dashboard\GetRightSide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

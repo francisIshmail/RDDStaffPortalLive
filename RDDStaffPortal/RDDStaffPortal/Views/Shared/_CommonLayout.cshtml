@@ -276,8 +276,9 @@
                                     </ul>
                                 </div>
                             </li>*@
-
+                    
                         @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }|
+                    
                         @*<li class="nav-item">
                                 <a data-toggle="collapse" href="#Admin">
                                     <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
@@ -663,7 +664,8 @@
     <script src="~/js/demo.js"></script>
 
 
-    <script src="~/js/plugin/select2/select2.full.min.js"></script>
+    
+
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
     <script src="~/Scripts/datatables/js/buttons.flash.min.js"></script>
     <script src="~/Scripts/datatables/buttons.colvis.js"></script>
@@ -690,7 +692,85 @@
         $('a.collapsed das').on("click", function () {
             debugger;
 
+
+
+
         });
+        function tempAlert(msg, duration) {
+            var el = document.createElement("div");
+            //el.setAttribute("class", "alert alert-success");
+            el.setAttribute("style","position:absolute;top:8%;left:20%;background-color:green;color:white;");
+            el.innerHTML = msg;
+            setTimeout(function () {
+                el.parentNode.removeChild(el);
+            }, duration);
+            document.body.appendChild(el);
+        }
+        
+        $(".fa-ellipsis-h").on("click", function (e) {
+            debugger;
+            var tr = $(this).closest(".fa-ellipsis-h");
+            var tr1 = $(this).closest("a");
+            var MenuName = (this).offsetParent.previousElementSibling.childNodes[0].innerText;
+            var lnk = (this).offsetParent.previousElementSibling.attributes[0].textContent;
+            var k = parseInt(tr.offsetParent().find("#hdnQLink").val());
+            if (k == 0) {
+                var Rdd_Q = {
+                    URL: lnk,
+                    FormName: MenuName
+                }
+               // $.post("/QuickLinkInsert", Rdd_Q).done(function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/QuickLinkInsert",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        Rdd_Q: Rdd_Q
+                    }),
+                    success: function (response) {
+                        debugger
+                        if (response.Saveflag == true) {
+                            tr[0].title = 'Remove Quick Links';
+                            tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
+                            tempAlert('Add to Quick Links', 500);
+                            $(".rights1").load("/Dashboard/GetRightSide");
+                            //  RdotAlertSucesstxt(response.ErrorMsg);
+                        } else {
+                            tempAlert(response.ErrorMsg, 500);
+                            //  RdotAlerterrtxt(response.ErrorMsg);
+                        }
+                    }
+                });
+            } else {
+                $.post("/DeleteActivity", { QuickLinkid: k }).done(function (response) {
+                    if (response == true) {
+                        tr[0].title = 'Added Quick Links';
+                        tr.offsetParent().find("#hdnQLink").val('0');
+                        tempAlert('Remove Quick Links', 500);
+                        $(".rights1").load("/Dashboard/GetRightSide");
+                    } else {
+                        tempAlert('Error Occur', 500);
+                    }
+                })
+
+            }
+
+           // $('#kbc').load("/Account/GetMenuTreeMenu");
+
+           // e.preventDefault();
+
+
+
+
+        })
+
+
+       
+        
+
+
+        
                                                     //$('#ulid li').removeAttr('class','');
                                                     //$('#ulid li a').removeAttr('data-toggle', '');
 

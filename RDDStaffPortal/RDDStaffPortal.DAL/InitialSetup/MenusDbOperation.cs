@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using RDDStaffPortal.DAL.DataModels;
 using static RDDStaffPortal.DAL.CommonFunction;
 
@@ -82,7 +83,9 @@ namespace RDDStaffPortal.DAL.InitialSetup
             string response = string.Empty;
             try
             {
-                SqlParameter[] Para = {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] Para = {
                     new SqlParameter("@p_MenuId",menus.MenuId),
                     new SqlParameter("@p_MenuName",menus.MenuName),
                     new SqlParameter("@p_ModuleId",menus.ModuleId),
@@ -92,10 +95,14 @@ namespace RDDStaffPortal.DAL.InitialSetup
                     new SqlParameter("@p_IsDefault",menus.IsDefault),
                     new SqlParameter("@p_CreatedBy",menus.CreatedBy),
                     new SqlParameter("@p_Levels",menus.Levels),
-                    new SqlParameter("@p_response",response),                
+                    new SqlParameter("@p_response",response),
                 };
-                str = Com.ExecuteNonQueryList("RDD_Menus_InsertUpdate", Para);
-                response = str[0].Responsemsg;
+                    str = Com.ExecuteNonQueryList("RDD_Menus_InsertUpdate", Para);
+                    response = str[0].Responsemsg;
+                    scope.Complete();
+
+                }
+
             }
             catch (Exception ex)
             {

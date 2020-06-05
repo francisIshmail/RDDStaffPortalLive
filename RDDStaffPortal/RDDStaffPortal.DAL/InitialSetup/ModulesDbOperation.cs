@@ -337,6 +337,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             URL = !string.IsNullOrWhiteSpace(dr["URL"].ToString()) ? dr["URL"].ToString() : "",
                             MenuCssClass= !string.IsNullOrWhiteSpace(dr["cssclass"].ToString()) ? dr["cssclass"].ToString() : "",
                             Levels =!string.IsNullOrWhiteSpace(dr["Levels"].ToString()) ? Convert.ToInt32(dr["Levels"].ToString()) : 0,
+                            QuickLink= !string.IsNullOrWhiteSpace(dr["QuickLink"].ToString()) ? Convert.ToInt32(dr["QuickLink"].ToString()) : 0,
                             //ModuleId = !string.IsNullOrWhiteSpace(dr["ModuleId"].ToString()) ? Convert.ToInt32(dr["ModuleId"].ToString()) : 0,
                             //ModuleName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
                             //MenuId = !string.IsNullOrWhiteSpace(dr["MenuId"].ToString()) ? Convert.ToInt32(dr["MenuId"].ToString()) : 0,

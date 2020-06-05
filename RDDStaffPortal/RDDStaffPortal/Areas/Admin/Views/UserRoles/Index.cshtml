@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
+
+<link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
+
 <script src="~/Scripts/RedDotUtility.js"></script>
 <script src="~/Scripts/Application/UserRole.js"></script>
 <div class="main-panel">
@@ -11,20 +14,15 @@
             <div class="page-header">
                 <h4 class="page-title">User Roles</h4>
             </div>
-            @*<div class="row">
-                    <div class="card">
-
-                        <div class="form-group">
-                            <button style="margin-right:10px" class="btn btn-primary" onclick="CreateRole()">Manage Role</button>
-                        </div>
-
-
-                    </div>
-                </div>*@
+            <div class="row">
+                   
+                </div>
 
             <div class="rowmin">
                 <div class="col-md-12">
+                  
                     <div class="card">
+                       
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="rowmin row mar-b10">
@@ -48,17 +46,17 @@
                                             <div class="col-md-18 padd-l5 padd-r5">
                                                 <div class="panel">
                                                     <div class="panel-heading text-center panelbg-1">Roles</div>
-
-                                                    <ul class="clear">
-                                                        @foreach (var items in ViewBag.UserRoles)
-                                                        {
-                                                            <li data-id="@items" class="ui-draggable ui-draggable-handle">
-                                                                <a href="#"> @items </a>
-                                                                <input type='hidden' id='hdnuse' value='false' />
-                                                            </li>
-                                                        }
-                                                    </ul>
-
+                                                    <div class="demo">
+                                                        <ul class="clear">
+                                                            @foreach (var items in ViewBag.UserRoles)
+                                                            {
+                                                                <li data-id="@items" class="ui-draggable ui-draggable-handle">
+                                                                    <a href="#"> @items </a>
+                                                                    <input type='hidden' id='hdnuse' value='false' />
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -66,6 +64,9 @@
 
                                     </div>
                                     <div class="col-md-4" id="sidebar">
+                                        <div class="form-group">
+                                            <button style="margin-right:10px" class="btn btn-primary" onclick="CreateRole()">Manage Role</button>
+                                        </div>
                                         <div class="panel">
                                             <div class="panel-heading text-center" id="hdntitle">Authorized  Roles</div>
 
@@ -176,7 +177,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-@*<script src="~/Scripts/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>*@
+
 
 
 <script type="text/javascript">
@@ -189,6 +190,8 @@
 
 
     });
+
+
 
     /// This is to OPEN Create Role pop-up window
     function CreateRole() {
@@ -314,4 +317,11 @@
 
 
 </script>
+
+<style>
+
+    .selected {
+        background-color: #4af !important;
+    }
+</style>
 

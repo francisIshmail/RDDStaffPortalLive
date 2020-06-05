@@ -7,20 +7,28 @@
 <script src="~/Scripts/Application/Dashboardjs.js"></script>
 <h2>Index</h2>
 <div class="main-panel">
-    <div class="content">
+    <div class="container">
         <div class="page-inner">
-            <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
+            <div class="rowmin row allwidgets">
+                <div class="col-12 col-md-9 padd-0">
+                    <div class="leftwidgets">
+                        @{ Html.RenderAction("GetDashBoardView", "Account");}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="rightwidgets">
+                        <div class="row rights1">
+                            @{ Html.RenderAction("GetRightSide", "Dashboard");}
+                        </div>
+                    </div>
+                </div>
 
             </div>
-
-            @{ Html.RenderAction("GetDashBoardView", "Account");}
-
-
-
         </div>
     </div>
 </div>
+
 
 
 <!-- Modal -->
@@ -37,13 +45,37 @@
                 <div class="demo-scrollbar scrollbar-inner" style="max-height: 300px">
                     @{ Html.RenderAction("GetUserWidget", "UserRights", new { area = "Admin" }); }
                 </div>
-                   
 
 
 
-                </div>
+
+            </div>
             <div class="modal-footer">
                 <button id="btnsave" type="button" class="btn btn-success btn-sm">Save</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="NewTaskWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="NewTaskWidgetspopup" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-80per modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">New Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section">
+               
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnsave1" type="button" class="btn btn-success btn-sm">Save</button>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -62,21 +94,44 @@
         $('.scrollbar-inner').scrollbar();
     });
 </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //$(function () {
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$(function () {
 
-            $("#widgetlist").append('<a class="col-6 col-md-4 p-0" href="#" data-toggle="modal" data-target="#SelectWidgetspopup">'
-                + ' <div class="quick-actions-item">'
-                + '  <div class="avatar-item bg-danger rounded-circle">'
-                + '    <i class="fas fa-table"></i>'
-                + ' </div>'
-                + '<span class="text">Select Widgets</span>'
-                + ' </div ></a>');
+        $("#widgetlist").append('<a class="col-6 col-md-4 p-0" href="#" data-toggle="modal" data-target="#SelectWidgetspopup">'
+            + ' <div class="quick-actions-item">'
+            + '  <div class="avatar-item bg-danger rounded-circle">'
+            + '    <i class="fas fa-table"></i>'
+            + ' </div>'
+            + '<span class="text">Select Widgets</span>'
+            + ' </div ></a>');
+
+        $("#widgetlist").append('<a class="col-6 col-md-4 p-0" href="#" data-toggle="modal" data-target="#NewTaskWidgetspopup">'
+            + ' <div class="quick-actions-item">'
+            + '  <div class="avatar-item bg-danger rounded-circle">'
+            + '    <i class="fas fa-table"></i>'
+            + ' </div>'
+            + '<span class="text">Create Task</span>'
+            + ' </div ></a>');
 
         $(".edit").attr('title', 'Edit');
         $(".delete").attr('title', 'Delete');
+
+
+
+
+        $("#Search-Forms-QuickLinks").on("keyup", function () {
+            debugger
+            var value = $(this).val().toLowerCase();
+            $("#Forms-1 li").find("a").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
         DashBoard.initialize();
+
+
+
     });
 </script>
 
