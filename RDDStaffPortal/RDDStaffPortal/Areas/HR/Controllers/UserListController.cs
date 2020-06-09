@@ -10,6 +10,7 @@ using System.Data;
 using RDDStaffPortal.DAL;
 using System.IO;
 using System.Diagnostics;
+using RDDStaffPortal.WebServices;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -17,9 +18,33 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
     public class UserListController : Controller
     {
+        AccountService accountservice = new AccountService();
+        Common cm = new Common();
         // GET: HR/UserList
+        //public ActionResult gethistory(int empid, string tblname)
+        //{
+
+        //    return Json(cm.GetChangeLog(empid, tblname), JsonRequestBehavior.AllowGet);
+        //}
         public ActionResult Index()
         {
+
+            string loginuser = User.Identity.Name;
+            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            DataSet ds = Db.myGetDS("EXEC RDD_GetUserType '"+loginuser+"'");
+            List<RDD_EmployeeRegistration> loginuserList = new List<RDD_EmployeeRegistration>();
+            if (ds.Tables.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
+                    EmpLst.IsUserInRoleHeadOfFinance = ds.Tables[0].Rows[i]["IsFinanceUser"].ToString();
+                    EmpLst.IsUserInRoleHR = ds.Tables[0].Rows[i]["IsHRUser"].ToString();                   
+                    loginuserList.Add(EmpLst);
+                }
+            }
+            ViewBag.loginuserList = loginuserList;
+            
 
             string Temppath = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
             // objemp.LogoType = ".jpg";
@@ -90,19 +115,6 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     EmpDisplayList.Add(EmpLst); 
                 }
 
-
-                //for (int i = 0; i < DS.Tables[1].Rows.Count; i++)
-
-                //{
-                //    RDD_EmployeeRegistration EmpLst1 = new RDD_EmployeeRegistration();
-                //    DataTable Ds = DS.Tables[1];
-
-                //    if (DS.Tables[1].Rows[i]["ImagePath"] != null && !DBNull.Value.Equals(DS.Tables[1].Rows[i]["ImagePath"]))
-                //    {
-                //        EmpLst1.ImagePath = (byte[])DS.Tables[1].Rows[i]["ImagePath"];
-                //    }
-
-                //}
 
 
 

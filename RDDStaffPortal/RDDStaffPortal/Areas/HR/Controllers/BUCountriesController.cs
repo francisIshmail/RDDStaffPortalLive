@@ -17,24 +17,51 @@ namespace RDDStaffPortal.Areas.HR.Controllers
     public class BUCountriesController : Controller
     {
         BUCountriesDbOperations BUDbOp = new BUCountriesDbOperations();
-        
+        Common cm = new Common();
         // GET: HR/BUCountries
-        public ActionResult Index() 
+        //public ActionResult GetEmpList()
+        //{ 
+        //}
+
+        [Route("GetEmpList")]
+        public ActionResult GetEmpList()
         {
+
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("exec RDD_GetBUList");
-            List<RDD_EmployeeRegistration> EmpList = new List<RDD_EmployeeRegistration>();
+            List<Rdd_comonDrop> EmpList = new List<Rdd_comonDrop>();
             if (DS.Tables.Count > 0)
             {
                 for (int i = 0; i < DS.Tables[2].Rows.Count; i++)
                 {
-                    RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
-                    EmpLst.EmployeeId = Convert.ToInt32(DS.Tables[2].Rows[i]["EmployeeId"]);
-                    EmpLst.EmpName = DS.Tables[2].Rows[i]["Empname"].ToString();
+                    Rdd_comonDrop EmpLst = new Rdd_comonDrop();
+                    EmpLst.Code = DS.Tables[2].Rows[i]["EmployeeId"].ToString();
+                    EmpLst.CodeName = DS.Tables[2].Rows[i]["Empname"].ToString();
+                    EmpLst.imagepath = Convert.ToBase64String((byte[])DS.Tables[2].Rows[i]["ImagePath"]);
                     EmpList.Add(EmpLst);
 
                 }
             }
+            return Json(EmpList, JsonRequestBehavior.AllowGet);
+           
+        }
+        public ActionResult Index() 
+        {
+            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            DataSet DS = Db.myGetDS("exec RDD_GetBUList");
+            //List<RDD_EmployeeRegistration> EmpList = new List<RDD_EmployeeRegistration>();
+            //if (DS.Tables.Count > 0)
+            //{
+            //    for (int i = 0; i < DS.Tables[2].Rows.Count; i++)
+            //    {
+            //        RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
+            //        EmpLst.EmployeeId = Convert.ToInt32(DS.Tables[2].Rows[i]["EmployeeId"]);
+            //        EmpLst.EmpName = DS.Tables[2].Rows[i]["Empname"].ToString();
+
+            //        EmpList.Add(EmpLst);
+
+            //    }
+            //}
 
 
 
@@ -64,7 +91,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
             }
 
-            ViewBag.EmpList = new SelectList(EmpList, "EmployeeId", "EmpName");
+           // ViewBag.EmpList = new SelectList(EmpList, "EmployeeId", "EmpName");
             ViewBag.BUItmList = BUItmList;
             ViewBag.CountryList = CountryList;
 
@@ -123,7 +150,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             string result = string.Empty;
             try
             {
-                result = BUDbOp.Delete(buId);
+              
+                result = BUDbOp.Delete(buId, User.Identity.Name);
             }
             catch (Exception ex)
             {
@@ -131,6 +159,15 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             return Json(new { DeleteFlag = result }, JsonRequestBehavior.AllowGet);
 
+        }
+
+
+
+
+        public ActionResult gethistory(int empid, string tblname)
+        {
+
+            return Json(cm.GetChangeLog(empid, tblname), JsonRequestBehavior.AllowGet);
         }
     }
 }

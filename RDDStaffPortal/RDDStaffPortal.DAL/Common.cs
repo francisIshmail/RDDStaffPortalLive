@@ -58,6 +58,6 @@ namespace RDDStaffPortal.DAL
             return objLog;
 
         }
-
+      
     }
 }

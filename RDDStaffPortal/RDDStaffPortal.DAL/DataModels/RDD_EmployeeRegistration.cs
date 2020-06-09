@@ -7,6 +7,12 @@ using System.Web;
 
 namespace RDDStaffPortal.DAL.DataModels
 {
+    public class RDD_EmpRole
+    {
+    
+    
+    
+    }
     public class RDD_EmployeeRegistration
     {
       
@@ -70,9 +76,9 @@ namespace RDDStaffPortal.DAL.DataModels
         public DateTime DOB { get; set; }
         public string Citizenship { get; set; }
 
-      //  public List<SelectListItem> Citizenshiplist { get; set; }
-
-
+        //  public List<SelectListItem> Citizenshiplist { get; set; }
+        public string IsUserInRoleHR { get; set; }
+        public string IsUserInRoleHeadOfFinance { get; set; }
         public string Emergency_Contact { get; set; }
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
@@ -167,7 +173,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public List<LogList> LogList { get; set; }
 
         public LogList LogInfo { get; set; }
-
+      
     }
     public class LogList
     {

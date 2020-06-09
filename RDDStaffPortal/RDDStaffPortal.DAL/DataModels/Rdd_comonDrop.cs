@@ -10,5 +10,6 @@ namespace RDDStaffPortal.DAL.DataModels
     {
         public string Code { get; set; }
         public string CodeName { get; set; }
+        public string imagepath { get; set; }
     }
 }

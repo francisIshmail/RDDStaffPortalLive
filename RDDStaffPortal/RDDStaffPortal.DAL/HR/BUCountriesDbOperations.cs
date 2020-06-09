@@ -16,7 +16,7 @@ namespace RDDStaffPortal.DAL.HR
         public string Save(RDD_BUCountries BUCountrie)
 
         {
-           // string username = User.Identity.Name;
+          //string username = User.Identity.Name;
             string response = string.Empty;
             string result = string.Empty;
             try
@@ -90,7 +90,7 @@ namespace RDDStaffPortal.DAL.HR
 
 
 
-        public string Delete(int DId)
+        public string Delete(int DId,string name)
         {
             string response = string.Empty;
             try
@@ -113,7 +113,7 @@ namespace RDDStaffPortal.DAL.HR
                             cmd.Transaction = transaction;
 
                             cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = Convert.ToInt16(DId);
-
+                            cmd.Parameters.Add("@p_UpdatedBy", SqlDbType.VarChar, 50).Value = name;
                             cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
                             cmd.ExecuteNonQuery();
                             response = cmd.Parameters["@p_Response"].Value.ToString();

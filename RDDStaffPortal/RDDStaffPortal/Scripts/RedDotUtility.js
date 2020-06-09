@@ -579,3 +579,68 @@ function RdotTableRowDel(tbl, btndel) {
         $(this).closest("tr").remove();
     });
 }
+function RdotDropimg(ids, url) {
+    $.getJSON(url).done(function (data) {
+        $('#' + ids + '').empty();
+        $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
+        var ary = [];
+        ary = data;
+        for (var i = 0; i < ary.length; i++) {
+            $('#' + ids + '').append('<option value="' + ary[i].Code + '" selected="" data-class="avatar" data-style="data:image/jpeg;base64,' + ary[i].imagepath + '" >' + ary[i].CodeName + '</option>');
+        }
+        $('#' + ids + '').val(0);
+        // $('#Userid').selectpicker('refresh');
+    });
+    $('#' + ids + '').select2({
+        theme: "bootstrap",
+        templateSelection: formatState,
+        templateResult: formatState
+    });
+
+    function formatState(state) {
+        if (!state.id) { return state.text; }
+
+        var optimage = $(state.element).attr('data-style');
+        var $state = '';
+        if (optimage != undefined) {
+            $state = $(
+                '<span ><img sytle="display: inline-block;" src="' + optimage + '" width="30px" />' + state.text + '</span>'
+            );
+        }
+        return $state;
+    }
+}
+
+
+
+function RdotDropimg1(ids, url,path) {
+    $.getJSON(url).done(function (data) {
+        $('' + ids + '').empty();
+        $('' + ids + '').append('<option value="0" selected="">-Select-</option>');
+        var ary = [];
+        ary = data;
+        for (var i = 0; i < ary.length; i++) {
+            $('' + ids + '').append('<option value="' + ary[i].CodeName + '" text="' + ary[i].CodeName + '"  data-class="avatar" data-image="' + path + '' + ary[i].Code + '.png" >' + ary[i].CodeName + '</option>');
+        }
+        $('' + ids + '').val(0);
+        // $('#Userid').selectpicker('refresh');
+    });
+    $('' + ids + '').select2({
+        theme: "bootstrap",
+        templateSelection: formatState,
+        templateResult: formatState
+    });
+
+    function formatState(state) {
+        if (!state.id) { return state.text; }
+
+        var optimage = $(state.element).attr('data-image');
+        var $state = '';
+        if (optimage != undefined) {
+            $state = $(
+                '<span ><img sytle="display: inline-block;" src="' + optimage + '" width="30px" />' + state.text + '</span>'
+            );
+        }
+        return $state;
+    }
+}
