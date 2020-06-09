@@ -101,10 +101,10 @@ namespace RDDStaffPortal.DAL.InitialSetup
                         {
 
                             Code = !string.IsNullOrWhiteSpace(dr["Code"].ToString()) ? dr["Code"].ToString() : "",
-                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",
-                           imagepath= Convert.ToBase64String((byte[])dr["ImagePath"])
+                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",                                                    
+                            imagepath =Convert.ToBase64String((byte[])dr["ImagePath"])                       
 
-                        });
+                    });
                     }
 
                 }

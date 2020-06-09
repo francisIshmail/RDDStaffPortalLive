@@ -133,6 +133,7 @@
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
+    <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeListController.cs" />
@@ -536,6 +537,8 @@
     <Content Include="Scripts\Application\CustomerMapping.js" />
     <Content Include="Scripts\Application\Dashboardjs.js" />
     <Content Include="Scripts\Application\Test.js" />
+    <Content Include="Scripts\Application\UserRole.js" />
+    <Content Include="Scripts\Application\Webreports.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\flaticon\Flaticon.eot" />
@@ -673,9 +676,11 @@
     <Content Include="Areas\Reports\Views\DownloadReports\Index.cshtml" />
     <Content Include="Areas\Reports\Views\DownloadReports\GetReport.cshtml" />
     <Content Include="Areas\HR\Views\BUCountries\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\WebReports\Index.cshtml" />
+    <Content Include="App_Code\WidgetUserBase.cshtml" />
     <Content Include="Areas\Admin\Views\UserRoles\Index.cshtml" />
-    <Content Include="Content\famfamfam_flags-master\.gitignore" />
-    <Content Include="Content\famfamfam_flags-master\README.md" />
+    <Content Include="App_Code\RDD_RighSide.cshtml" />
+    <Content Include="App_Code\WidgetUser.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -713,6 +718,7 @@
     <Content Include="Uploads\Red Dot Distribution  Technology with a Difference.xlsx" />
     <Content Include="Uploads\SINV Mapping for e-invoicing.xlsx" />
     <Content Include="Views\Account\GetMenuTreeMenu.cshtml" />
+    <Content Include="Views\Dashboard\GetRightSide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -753,9 +759,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28975/</IISUrl>
+          <IISUrl>http://localhost:28977/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28975/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28977/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

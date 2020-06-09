@@ -304,7 +304,11 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
         },
         "language":
         {
-            "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+            "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>",
+            //"paginate": {
+            //    next: '&#8594;', // or '→'
+            //    previous: '&#8592;' // or '←' 
+            //}
         },
         "dom": 'lBfrtip',
        "pagingType":"simple",

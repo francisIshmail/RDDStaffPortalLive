@@ -1,72 +1,83 @@
-﻿@helper GetDow_Report(List<RDDStaffPortal.DAL.DataModels.RDD_Reports> TreeReport, string ParentId)
+﻿@using System.Web.Mvc.Html;
+@helper GetDow_Report(System.Web.Mvc.HtmlHelper h, List<RDDStaffPortal.DAL.DataModels.RDD_Reports> TreeReport, string ParentId)
 {
 
 
     <div class="card">
 
-        @foreach(var list in TreeReport.GroupBy(x => x.reportcategory).Select(x => x.First()).ToList())
+        @foreach (var list in TreeReport.GroupBy(x => x.reportcategory).Select(x => x.First()).ToList())
 
         {
-       
 
-        <div class="card-header collapsed" id="headingOne" data-toggle="collapse" data-target="#collapse-@list.reportTitle" aria-expanded="false" aria-controls="collapse"@list.reportTitle role="button">
-            <div class="icon-preview"><i class="fas fa-file-download"></i></div>
-            <div class="span-title">
-               @list.reportcategory 
+
+            <div class="card-header collapsed" id="headingOne" data-toggle="collapse" data-target="#collapse-@list.reportTitle" aria-expanded="false" aria-controls="collapse" @list.reportTitle role="button">
+                <div class="icon-preview"><i class="fas fa-file-download"></i></div>
+                <div class="span-title">
+                    @list.reportcategory
+                </div>
+                <div class="span-mode"></div>
             </div>
-            <div class="span-mode"></div>
-        </div>
 
 
-        <div id="collapse-@list.reportTitle" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                <div class="row rowmin report-s">
-                    @foreach (var i in TreeReport.Where(a => a.reportcategory.Equals(@list.reportcategory)))
-            
-                    {
-                        <div class="col-md-3 mar-b10">
-                            <div class="reportpanel">
-                                <h4>@i.reportTitle</h4>
-                                <div class="download-box">
-                                    <div class="form-group text-center">
-                                        <label for="smallSelect">Select Date</label>
-                                        @*@Html.TextBox("Dtae21", new { @id = "Salary_Start_Date", @class = "form-control form-control-sm", @name = "Salary_Start_Date" })*@
-                                        <div class="input-group">
-                                            <input id="Salary_Start_Date" class="form-control form-control-sm" type="text" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </span>
+            <div id="collapse-@list.reportTitle" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row rowmin report-s">
+                        @foreach (var i in TreeReport.Where(a => a.reportcategory.Equals(@list.reportcategory)))
+
+                        {
+                            <div class="col-md-3 mar-b10">
+                                <div class="reportpanel">
+                                    <h4>@i.reportTitle</h4>
+                                    <div class="download-box">
+                                        <div class="form-group text-center">
+                                            <label for="smallSelect">Select Date</label>
+                                            @*@Html.TextBox("Dtae21", new { @id = "Salary_Start_Date", @class = "form-control form-control-sm", @name = "Salary_Start_Date" })*@
+                                            <div class="input-group">
+                                                <input id="Salary_Start_Date" class="form-control form-control-sm" type="text" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
                                             </div>
-                                            </div>
+                                            <input id="filepath" value="@i.reportFilePath"  type="hidden"/>
+                                            <input id="filname" value="@i.fileName1" type="hidden"/>
                                             <button class="btn btn-primary btn-border btn-round btn-sm">
-                                                <span class="btn-label"> <i class="fas fa-download"></i> </span> <a href="~/Uploads/SINV Mapping for e-invoicing.xlsx">Download</a>
+                                                <span class="btn-label"> <i class="fas fa-download"></i> </span>
+                                                @*<a href="~/Uploads/SINV Mapping for e-invoicing.xlsx">Download</a>*@
+                                                @*@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })*@
+                                               
+
+                                                @h.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = list.reportFilePath+""+ list.fileurl + "\\"+list.fileName1,Date1=System.DateTime.Now.ToString("dd-MM-yyyy") })
+
+
                                             </button>
-                                            
+
+
 
                                         </div>
                                     </div>
+                                </div>
                             </div>
-                        </div>
 
-                    }
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
 
 
         }
 
         @*@if (submenu1 > 0)
-        {
-            @Dow_Reports.GetDow_Report(TreeReport, ParentId);
-        }*@
+            {
+                @Dow_Reports.GetDow_Report(TreeReport, ParentId);
+            }*@
 
     </div>
 
 
 
-                    
-                }
+
+}
 
 

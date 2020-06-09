@@ -75,7 +75,9 @@
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
+    <Compile Include="DataModels\RDD_QuickLinks.cs" />
     <Compile Include="DataModels\RDD_Reports.cs" />
+    <Compile Include="DataModels\RDD_RightSide.cs" />
     <Compile Include="DataModels\RDD_Test.cs" />
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
@@ -87,6 +89,8 @@
     <Compile Include="DataModels\RDD_Modules.cs" />
     <Compile Include="DataModels\RDD_test_img.cs" />
     <Compile Include="DataModels\RDD_User_Rights.cs" />
+    <Compile Include="DataModels\RDD_WebReportsList.cs" />
+    <Compile Include="DataModels\RDD_WebReportsUser.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HR\BUCountriesDbOperations.cs" />
@@ -98,12 +102,15 @@
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
     <Compile Include="InitialSetup\RDD_CustomerMergingDbOperation.cs" />
+    <Compile Include="InitialSetup\RDD_QuickLinksDBOperation.cs" />
     <Compile Include="InitialSetup\RDD_Reports_DBOperation.cs" />
     <Compile Include="InitialSetup\RDD_Log.cs" />
     <Compile Include="InitialSetup\RDD_Test_ImgDBOP.cs" />
     <Compile Include="InitialSetup\RDD_User_RightsDBOperation.cs" />
+    <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendMail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

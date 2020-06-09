@@ -14,6 +14,6 @@ namespace RDDStaffPortal.DAL.DataModels
         public string reportFilePath { get; set; }
         public string fileName1 { get; set; }
 
-       
+        public string fileurl { get; set; }
     }
 }

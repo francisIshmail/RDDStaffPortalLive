@@ -12,18 +12,38 @@
         }
         else
         {
-            <a href="@i.URL"><span class="sub-item">@i.MenuName</span></a>
-        }
-        @if (submenu > 0)
-        {
-            <div class="collapse" id="@i.MenuName">
-                <ul class="nav nav-collapse" id="ulid">
-                    @TreeviewMenu.GetTreeview(Treemenu, i.MenuId)
-                </ul>
-            </div>
 
-        }
-    </li>
+    <a href="@i.URL"><span class="sub-item">@i.MenuName</span></a>
+
+            if (@i.QuickLink == 0)
+            {
+                <div class="quickmenu">
+                    <input type="hidden" id="hdnQLink" value="@i.QuickLink">
+                    <button class="btn btn-toggle ml-auto" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i title="Added Quick Links" class="fas fa-ellipsis-h"></i></button>
+                </div>
+            }
+            else
+            {
+    <div class="quickmenu">
+        <input type="hidden" id="hdnQLink" value="@i.QuickLink">
+        <button class="btn btn-toggle ml-auto" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i title="Remove Quick Links" class="fas fa-ellipsis-h"></i></button>
+    </div>
+                    }
+
+
+
+
+                    }
+                    @if (submenu > 0)
+                    {
+                        <div class="collapse" id="@i.MenuName">
+                            <ul class="nav nav-collapse" id="ulid">
+                                @TreeviewMenu.GetTreeview(Treemenu, i.MenuId)
+                            </ul>
+                        </div>
+
+                    }
+            </li>
     }
 }
 

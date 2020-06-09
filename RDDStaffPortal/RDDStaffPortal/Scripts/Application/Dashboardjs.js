@@ -488,5 +488,42 @@
 			
 		});
 
+
+
+		var UsersWidget = {
+			UserDashWidgets: []
+		};
+		$("#btnsave").on("click", function () {
+
+			debugger
+			$(".mar-b10").each(function (index, item) {
+				debugger
+				var DashidTxt = $(this).find("[id='Inphdn']").val();
+				var IsActiveTxt = $(this).find("[id='ChkDash']").is(":checked");
+
+				var UserDashWidget = {
+					DashId: DashidTxt,
+					IsActive: IsActiveTxt,
+
+
+				};
+				if (DashidTxt != undefined)
+					UsersWidget.UserDashWidgets.push(UserDashWidget);
+			});
+			$.post("/SaveUserDash", UsersWidget).done(function (response) {
+				if (response.SaveFlag == true) {
+					tf = false;
+					RdotAlertSucesstxt('Save Succcesfully');
+					$('.close').trigger("click");
+
+				} else {
+					RdotAlerterrtxt('Error Occur');
+				}
+
+			});
+
+		})
+		
+
 	}
 }

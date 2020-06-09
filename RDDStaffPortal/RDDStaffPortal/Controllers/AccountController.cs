@@ -36,6 +36,7 @@ namespace RDDStaffPortal.Controllers
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
+                   Session["LoginName"] = moduleDbOp.GetProfilimg(login.UserName);
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
@@ -61,7 +62,8 @@ namespace RDDStaffPortal.Controllers
             return RedirectToAction("/Login", "Account");
         }
 
-        [ChildActionOnly]
+        
+       // [ChildActionOnly]
         public ActionResult GetMenuTreeMenu()
         {
             //if (User.Identity.Name == "")
@@ -69,12 +71,10 @@ namespace RDDStaffPortal.Controllers
             //    return RedirectToAction("/Login", "Account");
 
             //}
-            return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name,"U"));
+            return PartialView(moduleDbOp.GetModuleList2(User.Identity.Name, "U"));
 
         }
-
-
-
+       
         [HttpGet]
         [ChildActionOnly]
         public ActionResult GetFirtsDashBoard()
@@ -82,7 +82,7 @@ namespace RDDStaffPortal.Controllers
            
             return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
         }
-
+       
         [ChildActionOnly]
         public ActionResult GetDashBoardView()
         {

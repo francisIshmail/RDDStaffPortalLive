@@ -40,6 +40,31 @@
         $("input[id='Salary_Start_Date']").datetimepicker({
             defaultDate: new Date(),
             format: 'DD/MM/YYYY',
+        });  
+        /*Date Change Event*/
+        $("input[id='Salary_Start_Date']").on("dp.change", function (e) {
+            debugger
+            var tr1 = $(this).closest("input[id='Salary_Start_Date']").offsetParent().offsetParent();
+            var date = new Date(e.date._d);
+            var k = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '-' + date.getFullYear();
+            var fl1 = tr1.find("#filepath").val();
+            var flname1 = tr1.find("#filname").val();
+            tr1.find("a").attr("href", "/Reports/DownloadReports/Download?parentPartId="+fl1 + '' + k + '\\' + flname1+"&Date1="+k);
         });
+        function url1() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        var url2 = url1();
+        if (url2.Date1 != undefined || url2.Date1 !=null ) {
+            RdotAlerterrtxt("Report does not exist for selected Date "+ url2.Date1+"");           
+            window.history.replaceState(null, null, "/Reports/DownloadReports/Index");
+        }
     });
 </script>

@@ -2,49 +2,28 @@
 using RDDStaffPortal.DAL.InitialSetup;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 
-namespace RDDStaffPortal.Areas.SAP.Controllers
+namespace RDDStaffPortal.Areas.Reports.Controllers
 {
-  [Authorize]
-    public class CustomerMergingController : Controller
+    [Authorize]
+    public class WebReportsController : Controller
     {
-        // GET: CustomerMerging
-        RDD_CustomerMergingDbOperation _CustMerg = new RDD_CustomerMergingDbOperation();
+        // GET: Reports/WebReports
+
+
+        RDD_WebReportsDBOperation _ReptOp = new RDD_WebReportsDBOperation();
         public ActionResult Index()
         {
             return View();
         }
 
 
-      
-
-
-        [Route("SaveCustMap")]
-        public ActionResult Save(RDD_customermapping Cust)
-        {
-            Cust.CreatedBy = User.Identity.Name;
-            return Json( _CustMerg.save(Cust) , JsonRequestBehavior.AllowGet);
-        }
-
-        [Route("DeleteCustMap")]
-        public ActionResult DeleCustMap(string code, string dbname, string typ)
-        {
-            return Json(new { data = _CustMerg.DeleteActivity(code, dbname, typ) });
-        }
-
-        [Route("GetCustMapParentData")]
-        public ActionResult GetCustMapParentData(string ParentCode,string ParentDb)
-        {
-            return Json(_CustMerg.GetRDDCustMerParent(ParentCode, ParentDb));
-
-        }
-        [Route("GetCustMapData")]
-        public ActionResult GetData(string Code)
+        [Route("GetWebReportMapData")]
+        public ActionResult GetData(string Code=null)
         {
             JsonResult result = new JsonResult();
             try
@@ -69,12 +48,12 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                     draw = "2";
                 }
 
-              List<RDD_CustomerMerging> data = _CustMerg.GetRDDCustMergList(Code,pageSize,startRec,search);
+                List<RDD_WebReportsList> data = _ReptOp.GetRDD_WebReportList(pageSize, startRec, search,Code);
 
                 int totalRecords = 0;
-                if (data != null && data.Count !=0)
+                if (data != null && data.Count != 0)
                 {
-                   totalRecords = data[0].TOTAL;
+                    totalRecords = data[0].TotalCount;
                 }
                 else
                     totalRecords = 0;
@@ -84,7 +63,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                    !string.IsNullOrWhiteSpace(search))
                 {
                     // Apply search
-                    data = data.Where(p => p.CardName.ToString().ToString().ToLower().Contains(search.ToLower()) ).ToList();
+                    data = data.Where(p => p.reportTitle.ToString().ToString().ToLower().Contains(search.ToLower())).ToList();
 
                 }
 
@@ -97,7 +76,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 //}
                 //else
                 //{
-                    data = data.ToList();
+                data = data.ToList();
                 //}
 
                 // Loading drop down lists.
@@ -108,10 +87,31 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
                 throw;
             }
-            
-           
+
+
 
             return result;
+        }
+
+        [Route("GetCustMapWeb")]
+        public ActionResult GetCustMapParentData(string CustCode)
+        {
+            return Json(_ReptOp.GetRDD_WebReportUserList(CustCode));
+
+        }
+
+
+        [Route("DeleteActivityWebReport")]
+        public ActionResult DeleteActivity(string Username,int Code)
+        {
+            return Json(new { data = _ReptOp.DeleteActivity(Username, Code) }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Route("SaveWebRep")]
+        public ActionResult save(RDD_WebReportsUser WURep)
+        {
+            return Json(_ReptOp.Save(WURep), JsonRequestBehavior.AllowGet);
         }
     }
 }

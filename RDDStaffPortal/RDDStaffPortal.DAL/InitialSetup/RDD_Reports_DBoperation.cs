@@ -37,7 +37,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             reportFilePath = !string.IsNullOrWhiteSpace(dr["reportFilePath"].ToString()) ? dr["reportFilePath"].ToString():"",
                             reportTitle = !string.IsNullOrWhiteSpace(dr["reportTitle"].ToString()) ? dr["reportTitle"].ToString():"",
                             reportType   = !string.IsNullOrWhiteSpace(dr["reportType"].ToString()) ? dr["reportType"].ToString():"",
-                           
+                           fileurl= DateTime.Now.ToString("MM-dd-yyyy")
                         });
                     }
 
