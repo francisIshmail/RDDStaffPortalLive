@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.Helpers;
 using System.Net;
 using System.Web.Routing;
+using RDDStaffPortal.WebServices;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -21,13 +22,21 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
 
         Common cm = new Common();
+        AccountService accountservice = new AccountService();
+
+
+        public ActionResult GetCreateUserAcc(string username, string useremail, string ques, string ans, string role)
+        {
+            return Json(accountservice.CreateUserAccount(username, useremail, ques, ans , role), JsonRequestBehavior.AllowGet);
+
+        }
 
         public ActionResult gethistory(int empid,string tblname)
         {
 
             return Json(cm.GetChangeLog(empid,tblname),JsonRequestBehavior.AllowGet);
         }
-       
+
         // GET: Admin/EmployeeRegistration
         //public ActionResult Create()
         //{
@@ -77,7 +86,38 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         public ActionResult Index(int? EmployeeId)
 
         {
-           string username = User.Identity.Name;
+            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+         
+            string username = User.Identity.Name;
+            if (EmployeeId != null)
+            {
+              
+                DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
+                string name = ds1.Tables[0].Rows[0]["LoginName"].ToString();
+                
+                if (username.ToLower() == name.ToLower())
+                {
+                    string com = "True";
+                    ViewBag.comparename = com;
+                }
+            }
+          
+            DataSet ds = Db.myGetDS("EXEC RDD_GetUserType '" + username + "'");
+            List<RDD_EmployeeRegistration> loginuserList = new List<RDD_EmployeeRegistration>();
+            if (ds.Tables.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
+                    EmpLst.IsUserInRoleHeadOfFinance = ds.Tables[0].Rows[i]["IsFinanceUser"].ToString();
+                    EmpLst.IsUserInRoleHR = ds.Tables[0].Rows[i]["IsHRUser"].ToString();
+
+
+                    loginuserList.Add(EmpLst);
+                }
+            }
+            ViewBag.loginuserList = loginuserList;
+
 
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("EXEC EmpReg_GetDDLDataToBind");
@@ -194,50 +234,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                     CurrencyList.Add(CurrencyLst);
                 }
-            }
-            //if (EmployeeId == null)
-            //{
-                    string url = "https://restcountries.eu/rest/v1/all";
+            }      
 
-                    // Web Request with the given url.
-                    WebRequest request = WebRequest.Create(url);
-                    request.Credentials = CredentialCache.DefaultCredentials;
-                    WebResponse resp = request.GetResponse();
-                    Stream dataStream = resp.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    string jsonResponse = null;
-                    // Store the json response into jsonResponse variable.
-                    jsonResponse = reader.ReadLine();
-
-                List<RDD_EmployeeRegistration> CitizenshipLst = new List<RDD_EmployeeRegistration>();
-                if (jsonResponse != null)
-                    {
-                        //// Deserialize the jsonRespose object to the CountryModel. You're getting a JSON array [].
-                        List<CountryModel> countryModel = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CountryModel>>(jsonResponse);
-
-                    int i = 0;
-                    
-                    while (i<countryModel.Count)
-                        
-                    {
-                        RDD_EmployeeRegistration  CitizenshipLt = new RDD_EmployeeRegistration();
-                        CitizenshipLt.Citizenship = countryModel[i].name.ToString();
-                        CitizenshipLst.Add(CitizenshipLt);
-                    i++;
-                        
-                    }
-                        //// Set the List Item with the countries.
-//IEnumerable<SelectListItem> countries = countryModel.Select(x => new SelectListItem() { Value = x.name, Text = x.name });
-
-                    //// Create a ViewBag pr;operty with the final content.
-                    ///90
-                    //sss
-                       // ViewBag.Countries = countries;
-                    }
-
-            //// }
-           
-            ViewBag.CitizenshipLst = new SelectList(CitizenshipLst, "Citizenship", "Citizenship");
             ViewBag.DeptList = new SelectList(DeptList, "DeptId", "DeptName");
             ViewBag.DesigList = new SelectList(DesigList, "DesigId", "DesigName");
             ViewBag.StatusList = new SelectList(StatusList, "StatusId", "StatusName");
@@ -247,9 +245,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             ViewBag.ManagerList = new SelectList(ManagerList, "ManagerId", "Managername");
             ViewBag.ddlCountry = new SelectList(ddlCountry, "CountryCodeName", "Country");
             
-            ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency"); 
+            ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency");
 
-            if (EmployeeId == null)
+            // if (EmployeeId == null)
+            if (EmployeeId == null )
             {
                 RDD_EmployeeRegistration objemp = new RDD_EmployeeRegistration();
                 ViewBag.EmployeeNo = NextEmpNo;
@@ -285,6 +284,29 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
         }
+       [Route("GetCountrywthFlag")]
+        public ActionResult GetCountrywthFlag()
+        {
+
+           DataSet DS = Db.myGetDS("EXEC RDD_GetNationalityList");
+            List<Rdd_comonDrop> CitizenshipList = new List<Rdd_comonDrop>();
+            if (DS.Tables.Count > 0)
+            {
+                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                {
+                    Rdd_comonDrop CitizenshipLst = new Rdd_comonDrop();
+
+                    CitizenshipLst.CodeName = (DS.Tables[0].Rows[i]["Citizenship"]).ToString();
+                    CitizenshipLst.Code= (DS.Tables[0].Rows[i]["Code"]).ToString();
+
+                    CitizenshipList.Add(CitizenshipLst);
+                }
+            }
+            return Json(CitizenshipList, JsonRequestBehavior.AllowGet);
+           // ViewBag.CitizenshipList = new SelectList(CitizenshipList, "CodeName", "Code");
+           // return View();
+                 
+        }
         public ActionResult GetBuList(string bugroup)
         {
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
@@ -316,16 +338,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
-
                     string result = string.Empty;
             try
             {
-
                
-                RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();
-
-               
-
+                RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();             
+                
               //  rdd_empreg.ImagePath = EmpData.ImagePath;
 
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
@@ -383,31 +401,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.CountryCode = EmpData.CountryCode;
 
 
-                
-                //rdd_empreg.ItmsGrpNam = Emp.ItmsGrpNam;
-
-             
-               //List<DocumentList> Dclst = new List<DocumentList>();
-                //if (files != null)
-                //{
-                //    foreach  (var file in files)
-                //    {
-                //        if (file != null && file.ContentLength > 0)
-                //        {
-
-                //            string abc1 = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                //            file.SaveAs(Path.Combine(Server.MapPath("/Uploads"), abc1));
-                //            string abc = "/Uploads/" + abc1;
-                //            Dclst.Add(new DocumentList()
-                //            {
-                //                DcumenName = file.FileName,
-                //                DocPath = abc
-                //            });
-
-                //        }
-                //    }
-                //}
-               
+              
                 if(rdd_empreg.ImagePath1=="" || rdd_empreg.ImagePath1==null)
                 {
                     rdd_empreg.imgbool =false;

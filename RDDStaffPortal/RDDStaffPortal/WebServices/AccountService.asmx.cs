@@ -137,12 +137,19 @@ namespace RDDStaffPortal.WebServices
             }
 
             //temprorary close this later , open below three lines
-            //lblMsg.Text = "Successfully Registered : User '" + dealerDesiredID + "' , Login Information sent to user on EMail Id : '" + dealerEmail + "'  " + randomPassword;
+            //lblMsg.Text = "Successfully Registered : User '" + dealerDesiredID + "' , Login Information sent to user on EMail Id : '" + dealerEmail + "'  " + randomPassword
 
             membershipResponse.Message = "Successfully Registered : User '" + UserName + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
+            var mailformat = "<div>Hello  '" + UserName + "',</div><br/>";
+            mailformat = mailformat + "<div>Your Account has Been Registerd Successfully .</div>";
+
+
 
             ////sending mail here to the new user 
             //myGlobal.sendMailToNewUser(rol, dealerDesiredID, randomPassword, dealerEmail);
+
+
+
 
             return membershipResponse;
         }

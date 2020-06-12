@@ -30,11 +30,18 @@
                                     <div class="col-xl-4 col-md-4">
                                         <div class="form-group">
 
-                                            @Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm", @onchange = "SearchByEmp()" })
-
+                                            @*@Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm" })*@
+                                                                                      
+                                            <select  id="EmpName" name="EmpName" class="form-control form-control-sm">
+                                            </select>
                                         </div>
                                     </div>
-
+                                    <div class="col-xl-1 col-md-1 ml-auto text-right">
+                                        <button class="btn btn-primary btn-border btn-round widview-btn" type="button" onclick="gethistoryLog('RDD_BUMapping')" id="RDD_BUMapping" title="View All" data-toggle="modal" data-target="#HistoryLogPopup">
+                                            <i class="fas fa-history" data-toggle="tooltip" title="View Change Log"></i>
+                                        </button>
+                                    </div>
+                                    
                                     @*<div class="col-xl-1 col-md-1  padd-l0">
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-success btn-sm" id="SearchByEmp">Search</button>
@@ -52,6 +59,7 @@
                                                         @foreach (var items in ViewBag.BUItmList)
                                                         {
                                                             <li data-id="@items.ItmsGrpCod" class="ui-draggable ui-draggable-handle">
+
                                                                 @*<a href="#"> commodo luctus </a>*@
                                                                 <a href="#"> @items.ItmsGrpNam </a>
 
@@ -115,51 +123,171 @@
 
     </div>
 
+    <div class="modal fade" id="HistoryLogPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered width70per" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Change Log</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="email2" class="width60px">Search :</label>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" class="form-control form-control-sm" id="myInput">
+                        </div>
 
+                    </div>
+                    <div class="demo-scrollbar scrollbar-inner" style="max-height: 300px">
+                        <div class="reddotTable  sm-form">
+                            <div class="reddotTableBody">
+                                <div class="reddotTableRow odd-even-row">
+                                    <div class="reddotTableHead width25per"><div>Field Type</div></div>
+                                    <div class="reddotTableHead width25per"><div>Old Value</div></div>
+                                    <div class="reddotTableHead width25per"><div>New Value</div></div>
+                                    <div class="reddotTableHead width15per"><div>Amended By</div></div>
+                                    <div class="reddotTableHead width15per"><div>Amended On </div></div>
+                                </div>
+                            </div>
+                            <div class="reddotTableBody" id="loghistory">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script src="~/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>
-
-
+    <script src="~/Scripts/RedDotUtility.js"></script>
     <script>
-        //$('#SearchByEmp').click(function () {
-
-        function SearchByEmp() {
+        $(document).ready(function () {
             debugger
-            $(".basket_list  ul li").each(function () {
-                $(this).closest("li").remove();
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#loghistory .reddotTableRow").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
-           
-            var empid = $("#EmployeeId").val();
-            var url = "/BUCountries/GetBUByEmpId?empid=" + empid;
+        });
+    </script>
+    <script>
+
+        function gethistoryLog(gettablename) {
+            debugger
+           // $("#loghistory").empty();
+
+            //  $('#loader').show();
+            debugger
+            var empid = $("#EmpName option:selected").val();
+
+            if (empid == "0") {
+
+              //  RdotAlerterrtxt('please select EmployeeName');
+
+                // $("#").focus();
+               // return;
+                $("#loghistory").empty();
+            }
+            else {
+
+            $("#loghistory").empty();
+                var tblname = gettablename;
 
             $.ajax({
-                type: "GET",
-                url: url,
+                type: "POST",
+                url: "/HR/BUCountries/gethistory",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    empid: empid, tblname: tblname
+
+                }),
                 success: function (data) {
                     debugger
-                    if (data.length > 0) {
-                        var i = 0;
-                        while (i < data.length) {
-                            $('#' + data[i].CountryCodeName + '').find("ul").append('<li data-id="' + data[i].BU + '">'
-                                + '<span class="name">' + data[i].ItmsGrpNam + '</span>' + '<input type="hidden" id="hdncoid" value="' + data[i].CId + '"></input>'
-                                + '<input type="hidden" id="hdnflag" value="1"></input><button class="delete" id="btndel">&#10005;</button>');
-                            i++;
-                        }
-                    }
-                    else {
-                        // $('#EmployeeId').val("0").trigger("change");
-                        $(".basket_list  ul li").each(function () {
-                            $(this).closest("li").remove();
-                        });
+                    // console.log(response);
+                    var i = 0;
+                    while (i < data.length) {
+                        $("#loghistory").append(' <div class="reddotTableRow odd-even-row">'
 
+                            + '<div class= "reddotTableCell">' + data[i].ColDescription + '</div>'
+                            + ' <div class="reddotTableCell">' + data[i].OldValue + '</div>'
+                            + '  <div class= "reddotTableCell">' + data[i].NewValue + '</div>'
+                            + '   <div class= "reddotTableCell">' + data[i].ChangedBy + '</div>'
+                            + ' <div class= "reddotTableCell">' + RdotdatefrmtRes1(data[i].ChangedOn) + '</div></div>'
+                        );
+                        i++;
                     }
 
-
+                },
+                error: function (data) {
+                    $("#loghistory").empty();
                 }
-
-            })
+            });
         }
+
+        }
+
+
+
+        //$('#SearchByEmp').click(function () {
+        $(document).ready(function () {
+            // drop down image fill with name
+            RdotDropimg("EmpName", "/GetEmpList");
+            $("#EmpName").on("change", function () {
+
+                SearchByEmp($("#EmpName option:selected").val());
+
+            });
+
+            function SearchByEmp(empid) {
+                debugger
+                $(".basket_list  ul li").each(function () {
+                    $(this).closest("li").remove();
+                });
+
+                //  var empid = $("#EmployeeId").val();
+                var url = "/BUCountries/GetBUByEmpId?empid=" + empid;
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        debugger
+                        if (data.length > 0) {
+                            var i = 0;
+                            while (i < data.length) {
+                                $('#' + data[i].CountryCodeName + '').find("ul").append('<li data-id="' + data[i].BU + '">'
+                                    + '<span class="name">' + data[i].ItmsGrpNam + '</span>' + '<input type="hidden" id="hdncoid" value="' + data[i].CId + '"></input>'
+                                    + '<input type="hidden" id="hdnflag" value="1"></input><button class="delete" id="btndel">&#10005;</button>');
+                                i++;
+                            }
+                        }
+                        else {
+                            // $('#EmployeeId').val("0").trigger("change");
+                            $(".basket_list  ul li").each(function () {
+                                $(this).closest("li").remove();
+                            });
+
+                        }
+
+
+                    }
+
+                })
+            }
+
+        });
+
 
 
         $(".basket_list").on("click", "ul li .delete", function () {
@@ -240,8 +368,8 @@
             debugger
             // var abc = $(this).attr('value');
 
-          
-          
+
+
             var BUCoun = {
                 BUCountriesnew: []
             }
@@ -249,7 +377,10 @@
             // var BUCountrie = [];
             $("." + countryCode + " li").each(function () {
                 debugger
-                var empid = $("#EmployeeId").val(); 
+                var empid = $("#EmpName option:selected").val();
+               // var empid = $("#EmployeeId").val();
+
+
                 var cId = $(this).find("#hdncoid").val();
 
                 var Countrycode = countryCode;
@@ -290,7 +421,7 @@
                             debugger
                             tmsg = $(this).closest("ul").attr("class");
                             t2 = true;
-                          
+
                         }
 
                     });
@@ -303,13 +434,16 @@
                     });
 
                     if (result == "saved successfully.") {
-                      
+
                         RdotAlertSucesstxt(result);
                         $('#EmployeeId').val("0").trigger("change");
+
+                        $('#EmpName').val("0").trigger("change");
+
+                       // $("#EmpName option:selected").empty();
                         $(".basket_list  ul li").each(function () {
                             $(this).closest("li").remove();
                         });
-
 
                     }
                     else if (result == "updated successfully.") {
@@ -413,7 +547,23 @@
         });
 
     </script>
+    <script>
 
+
+        $(document).ready(function () {
+            debugger
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#loghistory .reddotTableRow").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('.scrollbar-inner').scrollbar();
+        });
+    </script>
     <style>
         .panel-heading label {
             color: #fff !important
@@ -424,4 +574,4 @@
         }
     </style>
 
-  
+

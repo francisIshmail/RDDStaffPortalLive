@@ -8,6 +8,7 @@ using RDDStaffPortal.DAL.HR;
 using RDDStaffPortal.DAL.DataModels;
 using System.Data;
 using RDDStaffPortal.DAL;
+using RDDStaffPortal.WebServices;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -15,8 +16,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
     public class EmployeeListController : Controller
     {
         // GET: HR/EmployeeList
+        AccountService accountservice = new AccountService();
         public ActionResult Index()
         {
+
+           // bool result = accountservice.IsUserInRole("HR");
+
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("EXEC RDD_DisplayEmployeeList");
             List <RDD_EmployeeRegistration> EmpDisplayList = new List<RDD_EmployeeRegistration>();
