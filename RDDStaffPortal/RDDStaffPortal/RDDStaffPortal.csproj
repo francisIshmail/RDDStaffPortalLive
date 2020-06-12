@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -133,6 +136,7 @@
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
+    <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
@@ -408,6 +412,9 @@
     <Content Include="Areas\Admin\Views\UserRoles\Index.cshtml" />
     <Content Include="App_Code\RDD_RighSide.cshtml" />
     <Content Include="App_Code\WidgetUser.cshtml" />
+    <Content Include="Areas\Reports\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Reports\Inventory.cshtml" />
+    <Content Include="Areas\Reports\Views\Reports\BackLogSheet.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

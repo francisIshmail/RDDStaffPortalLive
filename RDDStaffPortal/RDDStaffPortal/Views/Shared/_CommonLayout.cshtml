@@ -707,9 +707,9 @@
             document.body.appendChild(el);
         }
         
-        $(".fa-ellipsis-h").on("click", function (e) {
+        $(".Quic").on("click", function (e) {
             debugger;
-            var tr = $(this).closest(".fa-ellipsis-h");
+            var tr = $(this).closest(".Quic");
             var tr1 = $(this).closest("a");
             var MenuName = (this).offsetParent.previousElementSibling.childNodes[0].innerText;
             var lnk = (this).offsetParent.previousElementSibling.attributes[0].textContent;
@@ -732,6 +732,9 @@
                         debugger
                         if (response.Saveflag == true) {
                             tr[0].title = 'Remove Quick Links';
+                            tr.removeClass("icon-star Quic");   
+                            tr.addClass("fas fa-star Quic");
+                                                   
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
                             tempAlert('Add to Quick Links', 500);
                             $(".rights1").load("/Dashboard/GetRightSide");
@@ -746,6 +749,8 @@
                 $.post("/DeleteActivity", { QuickLinkid: k }).done(function (response) {
                     if (response == true) {
                         tr[0].title = 'Added Quick Links';
+                        tr.removeClass("fas fa-star Quic");
+                        tr.addClass("icon-star Quic");
                         tr.offsetParent().find("#hdnQLink").val('0');
                         tempAlert('Remove Quick Links', 500);
                         $(".rights1").load("/Dashboard/GetRightSide");

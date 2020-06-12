@@ -68,6 +68,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
+    <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
     <Compile Include="DataModels\Rdd_comonDrop.cs" />
     <Compile Include="DataModels\RDD_customermapping.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
+    <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
     <Compile Include="SendMail.cs" />
   </ItemGroup>
   <ItemGroup>
