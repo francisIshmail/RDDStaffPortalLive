@@ -98,7 +98,7 @@
                                 <div class="col-xl-2 col-md-2 ml-auto text-right">
                                     <div class="form-group">
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
-                                        <button type="button" class="btn btn-success btn-sm" onclick="exportToExcel()" data-toggle="tooltip" title="Export to Excel"><i class="fas fa-file-excel"></i></button>
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Export to Excel"><a href="/Reports/Reports/DownloadToExcel2" class="fas fa-file-excel"></a></button>
 
 
                                     </div>
@@ -197,37 +197,7 @@
     var tblhead1 = ['Country', 'ItemCode', 'ItemDesc', 'WhseName', 'WhseStatus', 'BU', 'OrderType', 'Qty', 'WhseOwner', 'ProdCategory', 'ProdLine', 'ProdGroup'];
     var tblhide = ['ItemDesc', 'ProdCategory', 'ProdLine', 'ProdGroup'];
     $(".loader1").hide();
-    //function startLoader() {
-    //    $("#btnExport").text('Loading..');
-    //    $("#btnExport").attr('disabled',true);
-    //}
-    //function stopLoader() {
-    //    $("#btnExport").text('Export..');
-    //    $("#btnExport").attr('disabled', false);
-    //}
-    function exportToExcel() {
-        $.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            url: '@Url.Action("DownloadToExcel2", "Reports")',
-            beforeSend: function () {
-                $(".loader1").show();
-            },
-            success: function (response) {
-                var blob = new Blob([response], { type: 'application/ms-excel' });
-                var downloadUrl = URL.createObjectURL(blob);
-                var a = document.createElement("a");
-                a.href = downloadUrl;
-                a.download = "ReportFile.xls";
-                document.body.appendChild(a);
-                a.click();
-            },
-            complete: function () {
-                $(".loader1").hide();
-            }
-        });
-        return false;
-    }
+    
     $(document).ready(function () {
         var k1 = 0;
         while (tblhead1.length > k1) {

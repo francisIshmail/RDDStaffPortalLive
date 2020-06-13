@@ -12,7 +12,10 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using DataTable = System.Data.DataTable;
+using ClosedXML.Excel;
 
 namespace RDDStaffPortal.Areas.Reports.Controllers
 {
@@ -247,41 +250,103 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
         public ActionResult DownloadToExcel3()
         {
-            var grdReport = new System.Web.UI.WebControls.GridView();
             DataTable dt = _ReptOp.Getdata3(User.Identity.Name);
-            dt.Columns.Remove("RowNum");
-            dt.Columns.Remove("TotalCount");
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "BackLogSheet.xlsx");
+                }
+            }
+            //var grdReport = new System.Web.UI.WebControls.GridView();
+            //DataTable dt = _ReptOp.Getdata3(User.Identity.Name);
+            //dt.Columns.Remove("RowNum");
+            //dt.Columns.Remove("TotalCount");
 
-            grdReport.DataSource = dt;
-            grdReport.DataBind();
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-            grdReport.RenderControl(htw);
-            byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
-            return File(bindata, "application/ms-excel", "ReportFile.xls");
+            //grdReport.DataSource = dt;
+            //grdReport.DataBind();
+            //System.IO.StringWriter sw = new System.IO.StringWriter();
+            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            //grdReport.RenderControl(htw);
+            //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
+            //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
 
         public ActionResult DownloadToExcel2()
         {
-            var grdReport = new System.Web.UI.WebControls.GridView();
-            grdReport.DataSource = _ReptOp.Getdata1(User.Identity.Name);
-            grdReport.DataBind();
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-            grdReport.RenderControl(htw);
-            byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
-            return File(bindata, "application/ms-excel", "ReportFile.xls");
+            DataTable dt = _ReptOp.Getdata1(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "InventorySheet.xlsx");
+                }
+            }
+            //var grdReport = new System.Web.UI.WebControls.GridView();
+            //grdReport.DataSource = _ReptOp.Getdata1(User.Identity.Name);
+            //grdReport.DataBind();
+            //System.IO.StringWriter sw = new System.IO.StringWriter();
+            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            //grdReport.RenderControl(htw);
+            //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
+            //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
-        public ActionResult DownloadToExcel1()
+        public FileResult DownloadToExcel1()
         {
-            var grdReport = new System.Web.UI.WebControls.GridView();
-            grdReport.DataSource = _ReptOp.Getdata(User.Identity.Name);
-            grdReport.DataBind();
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-            grdReport.RenderControl(htw);
-            byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
-            return File(bindata, "application/ms-excel", "ReportFile.xls");
+            DataTable dt = _ReptOp.Getdata(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Stocksheet.xlsx");
+                }
+            }
+            //var grdReport = new System.Web.UI.WebControls.GridView();
+            //grdReport.DataSource = _ReptOp.Getdata(User.Identity.Name);
+            //grdReport.DataBind();
+            //System.IO.StringWriter sw = new System.IO.StringWriter();
+            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            //grdReport.RenderControl(htw);
+            //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
+            //return File(bindata, "application/ms-excel", "ReportFile.xls");
+        }
+       // [HttpPost]
+
+        [Route("DownloadExcelTes")]
+        public FileResult DownloadExcelTes()
+        {
+           
+            DataTable dt= _ReptOp.Getdata(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                }
+            }
+            //var gv = new GridView();
+            //gv.DataSource = _ReptOp.Getdata(User.Identity.Name);
+            //gv.DataBind();
+            //Response.ClearContent();
+            //Response.Buffer = true;
+            //Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+            //Response.ContentType = "application/ms-excel";
+            //Response.Charset = "";
+            //StringWriter objStringWriter = new StringWriter();
+            //HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+            //gv.RenderControl(objHtmlTextWriter);
+            //Response.Output.Write(objStringWriter.ToString());
+            //Response.Flush();
+            //Response.End();
+           // return View("Index");
         }
         [HttpPost]
 
