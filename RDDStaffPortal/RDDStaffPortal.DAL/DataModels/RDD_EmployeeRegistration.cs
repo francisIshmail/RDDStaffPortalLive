@@ -51,6 +51,11 @@ namespace RDDStaffPortal.DAL.DataModels
         }
         // public List<RDD_Departments> Dept {get;set;}
         //Employee Details
+        public int JobBandId { get; set; }
+        public string JobBandName { get; set; }
+
+        public int JobGradeId { get; set; }
+        public string JobGradeName { get; set; }
         public string EmpName { get; set; }
         public string About { get; set; }
         public string CountryName { get; set; }
@@ -118,7 +123,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public int ItmsGrpCod { get; set; }
 
         //To Get Manager
-
+        public int ManagerIdL2 { get; set; }
         public int ManagerId { get; set; }
         public string ManagerName { get; set; }
 

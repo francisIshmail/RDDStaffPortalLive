@@ -1,0 +1,347 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_JobGrade
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Add Job Grade</h4>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="row addwidgetclass mar-b10">
+                                <div class="col-md-12 padd-0">
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Job Grade :</label>
+                                        <input type="hidden" id="JobGradeId" />
+                                        <input type="text" class="form-control width300px" id="JobGradeName" placeholder="Enter Job Grade">
+
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Status</label>
+                                        <div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px"></label>
+                                        <div class="mar-t7"><button type="button" data-target="#myModal" class="btn btn-success submitbtn add-new" id="SaveJobGradeChanges">Submit</button></div>
+
+                                    </div>
+
+
+                                    @*<div class="form-group" style="width:610px;"></div>*@
+
+
+
+                                    <div class="form-group">
+                                        <label for="search" class="width100px">Search</label>
+                                        <input type="text" class="form-control width180px" id="txtSearchJobGrade" placeholder="Search for names..">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <table class="table table-bordered" id="tblItem">
+                                    <thead>
+                                        <tr>
+                                            <th class="width20px">Sr.No</th>
+                                            <th class="width100px">Job Grade</th>
+
+                                            <th class="width80px">Status</th>
+                                            <th class="width100px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="setJobGradeList">
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<!--   Core JS Files   -->
+@*Create pop up for delete confirmation*@
+@*<div class="modal fade" id="ItemDeleteConfirmation">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Delete JobGrade</h4>
+            </div>
+            <div class="modal-body">
+                <h4> Are you sure you want to delete this record ? </h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-danger" data-dismiss="modal"> Cancel</a>
+                <a href="#" class="btn btn-primary" onclick="ConfirmDelete()"> Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>*@
+<span class="input-group-text" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></span>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Job Grade</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email2" class="width100px">Job Grade :</label>
+                    <input type="text" class="form-control" id="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+    // This is the code to filte r/search record
+
+
+    $("#txtSearchJobGrade").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+
+        $("#setJobGradeList tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $(document).ready(function () {
+
+
+
+        // To bind Modules on PageLoad
+
+       GetJobGradeList();
+
+    });
+
+
+    function GetJobGradeList() {
+        debugger
+        $('#setJobGradeList').html('');
+
+        $.get("/JobGrade/GetJobGradeList", null, DataBind);
+        function DataBind(JobGradeNameList) {
+            var SetData = $('#setJobGradeList');
+            for (var i = 0; i < JobGradeNameList.length; i++) {
+                var Data = "<tr class='row_ >" + JobGradeNameList[i].JobGradeId + "'>" +
+                    "<td>" + JobGradeNameList[i].JobGradeId + "</td>" +
+                    "<td  >" + JobGradeNameList[i].JobGradeName + "</td>"
+
+
+
+                if (JobGradeNameList[i].IsActive == true) {
+                    Data = Data + "<td> <div> <input type='checkbox' id='chkIsDefault' checked data-toggle='toggle' data-onstyle='primary' disabled></div></td>  ";
+                }
+                else {
+                    Data = Data + "<td> <div> <input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' disabled ></div></td>  ";
+                }
+
+                Data = Data + "<td> <button type='button' title='Edit' data-toggle='tooltip' class='btn btn-info edit'><i class='fas fa-edit'></i></button> " +
+                    "<button type='button' title='Delete' data-toggle='tooltip' class='btn btn-danger delete' id='btn_DeleteDetails'><i class='fas fa-trash-alt'></i></button></td ></tr >";
+
+
+
+                "</tr>";
+
+                SetData.append(Data);
+
+                //$('#LoadingStatus').html("Loading....");
+            }
+
+        }
+    }
+
+
+    $('#setJobGradeList').on('click', '#btn_DeleteDetails', function () {
+        var JobGradeId = $(this).closest("tr").find('td:eq(0)').text();
+       var tr = $(this).closest("tr");
+        {
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.getJSON("/JobGrade/DeleteItem", { JobGradeId: JobGradeId }).done(function (data) {
+                        debugger
+                        if (data.DeleteFlag == "Deleted Sucessfully.") {
+
+                            tr.remove();
+
+                        }
+                        else {
+
+                            // return
+                        }
+
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your Record  has been deleted.',
+                        'success'
+                        
+                    )
+                }
+                else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Record  is safe :)',
+                        'error'
+                    )
+                }
+                $("#JobGradeId").val('');
+                $("#JobGradeName").val('');
+                GetJobGradeList();
+            })
+        }
+        
+    });
+
+
+
+
+
+
+    $('#SaveJobGradeChanges').click(function () {
+        debugger
+        if ($("#JobGradeName").val() == "") {
+            alert('please enter GradeName');
+            $("#JobGradeName").focus();
+            return false;
+        }
+        //var data = $("#SubmitForm").serialize();
+        //var status = $('#chkstatus').is(':checked');
+
+
+        var JobGradeData = {};
+        JobGradeData["JobGradeId"] = $("#JobGradeId").val();
+        JobGradeData["JobGradeName"] = $("#JobGradeName").val();
+
+        JobGradeData["IsActive"] = $("#chkIsDefaultMenu").is(":checked");// $("#chkIsDefaultMenu").val();
+        var data = JSON.stringify({
+           dataJobGrade: JobGradeData,
+        });
+
+       // console.log(data);
+
+        $.ajax({
+            type: "Post",
+            url: "/JobGrade/AddJobGrade",
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                if (result == "JobGrade saved successfully." || result == "JobGrade updated successfully.") {
+                    RdotAlertSucesstxt(result);
+                    GetJobGradeList();
+                    $("#JobGradeId").val('');
+                    $("#JobGradeName").val('');
+                   // alert(result);
+                   // location.reload();
+                   // $("#DeptName").val('');
+
+                   // GetDeptList();
+                }
+                else {
+                    result == "JobGrade already exists.."
+                    RdotAlerterrtxt1(result);
+                    GetJobGradeList();
+                   // alert(result);
+                    $("#JobGradeId").val('');
+                    $("#JobGradeName").val('');
+                }
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+       
+        // Edit row on edit button click
+        $(document).on("click", ".edit", function () {
+            debugger;
+
+            $('#JobGradeId').val($(this).closest('tr').find('td').eq(0).text());
+            $('#JobGradeName').val($(this).closest('tr').find('td').eq(1).text());
+
+
+           
+
+        });
+
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+            //$(this).parents("tr").remove();///To FRemove Direct Delete from Row
+            $(".add-new").removeAttr("disabled");
+        });
+    });
+
+
+
+
+
+
+</script>
+

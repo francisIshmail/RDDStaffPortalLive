@@ -124,12 +124,16 @@
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JobBandController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JobGradeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
+    <Compile Include="Areas\Admin\Models\JobBand.cs" />
+    <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
@@ -681,6 +685,8 @@
     <Content Include="Areas\Admin\Views\UserRoles\Index.cshtml" />
     <Content Include="App_Code\RDD_RighSide.cshtml" />
     <Content Include="App_Code\WidgetUser.cshtml" />
+    <Content Include="Areas\Admin\Views\JobGrade\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\JobBand\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -759,9 +765,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28977/</IISUrl>
+          <IISUrl>http://localhost:28978/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28977/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28978/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

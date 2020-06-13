@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using RDDStaffPortal.DAL.DataModels;
 using System.Configuration;
 using static RDDStaffPortal.DAL.CommonFunction;
+using System.IO;
+
+
+
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
@@ -25,27 +29,40 @@ namespace RDDStaffPortal.DAL.InitialSetup
         {
             byte[] file1 = null;
             string base64String = null;
-            SqlParameter[] parm = { new SqlParameter("@p_LoginName",UserName),
-                    };
-            DataSet dsModules = Com.ExecuteDataSet("RDD_GetEmployeeIdByimage", CommandType.StoredProcedure, parm);
-            if (dsModules.Tables.Count > 0)
+            try
             {
-                DataTable dtModule = dsModules.Tables[0];
-                DataRowCollection drc = dtModule.Rows;
-                if (dtModule.Rows.Count > 0)
+                SqlParameter[] parm = { new SqlParameter("@p_LoginName",UserName),
+                    };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_GetEmployeeIdByimage", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
                 {
-                    foreach (DataRow dr in drc)
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    if (dtModule.Rows.Count > 0)
                     {
-                        if (dr["ImagePath"] != null && dr["ImagePath"].ToString().Length > 0)
-
+                        foreach (DataRow dr in drc)
                         {
-                            file1 = (byte[])dr["ImagePath"];
+                            if (dr["ImagePath"] != null && dr["ImagePath"].ToString().Length > 0)
+
+                            {
+                                file1 = (byte[])dr["ImagePath"];
+                            }
                         }
+                        base64String = Convert.ToBase64String(file1);
                     }
 
+
+
+
                 }
-                base64String = Convert.ToBase64String(file1);
             }
+            catch (Exception)
+            {
+
+                base64String = null;
+            }  
+
+           
             return base64String;
         }
         public string Save( RDD_Modules modules )
