@@ -171,7 +171,7 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-70per" role="document">
+    <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Show/Hide Columns</h5>
@@ -180,10 +180,10 @@
                 </button>
             </div>
             <div class="modal-body selectwidget-section">
-                <div class="row rowmin">
-                    <div class="col-md-12 mar-b10">
+                <div class="row rowmin" id="idchk">
+                    @*<div class="col-md-12 mar-b10">
                         <div class="row" id="idchk"> </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -205,10 +205,13 @@
         while (tblhead1.length > k1) {
             if (jQuery.inArray(tblhead1[k1], tblhide) !== -1) {
                 $('div#' + tblhead1[k1] + '1').addClass("Abc");
-                $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1]+"' type='checkbox' ></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                //$("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1]+"' type='checkbox' ></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                $('div#' + tblhead1[k1] + '1').addClass("Abc");
+                $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='ChkDash' type='checkbox' class='colorinput-input'><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
             } else {
                 $('div#' + tblhead1[k1] + '1').removeClass("Abc");
-                $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] +"' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='ChkDash' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
+              // $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] +"' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
             }
             k1++;
         }
