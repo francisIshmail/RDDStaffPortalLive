@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
-
+using RDDStaffPortal.DAL;
 
 namespace RDDStaffPortal.WebServices
 {
@@ -102,6 +102,7 @@ namespace RDDStaffPortal.WebServices
         public MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
+            SendMail sendmail = new SendMail();
 
             membershipResponse.Success = false;
 
@@ -140,15 +141,20 @@ namespace RDDStaffPortal.WebServices
             //lblMsg.Text = "Successfully Registered : User '" + dealerDesiredID + "' , Login Information sent to user on EMail Id : '" + dealerEmail + "'  " + randomPassword
 
             membershipResponse.Message = "Successfully Registered : User '" + UserName + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
-            var mailformat = "<div>Hello  '" + UserName + "',</div><br/>";
-            mailformat = mailformat + "<div>Your Account has Been Registerd Successfully .</div>";
-
+            var mailformat = "<div>Warm Welcome to <b>Red Dot Distribution</b> Family.<br/><br/>";
+            mailformat = mailformat + "<div>Dear  " + UserName + ",</div><br/>";
+            mailformat = mailformat + "<div>Congratulations !!  You have been registered on Red Dot Distribution website. You can login to our site using the following credentials,</div><br/>";
+           
+            mailformat = mailformat + "<div>Login Name -<b> " + UserName + " </b><br/>Password - <b>" + randomPassword + "</b><br/><a href=https://app.reddotdistribution.com/Login.aspx > Click Here To Login </a></div><br/>";
+     
+            mailformat = mailformat + "<div>This is system generated password , We urged you to change the password at the earliest using the <b>Change Password</b> option in your profile.</div><br/>";
+            mailformat = mailformat + "<div>Best Regards,<br/>Red Dot Distribution</div>";
 
 
             ////sending mail here to the new user 
             //myGlobal.sendMailToNewUser(rol, dealerDesiredID, randomPassword, dealerEmail);
 
-
+            SendMail.Send(UserEmail, "", "Your have been registered on Red Dot Distribution portal", mailformat , true);
 
 
             return membershipResponse;
@@ -398,6 +404,102 @@ namespace RDDStaffPortal.WebServices
             }
         }
 
+        /// <summary>
+        /// This method is used to verify if entered email address is registered in portal or not. returns TRUE if registered email else return FALSE.
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public MembershipResponse ValidateEmail(string Email)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                string UserName = Membership.GetUserNameByEmail(Email);
+                if(string.IsNullOrEmpty(UserName) )
+                {
+                    membershipResponse.Success = false; membershipResponse.Message ="Invalid Email Address.";
+                }
+                else
+                {
+                    membershipResponse.Success = true; membershipResponse.Message = "Valid Email Address";
+                }
+                return membershipResponse;
+
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to chnage password from User Login.
+        /// </summary>
+        /// <param name="old_password"></param>
+        /// <param name="new_password"></param>
+        /// <param name="confirm_password"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public MembershipResponse ChangePassword(string old_password, string new_password, string confirm_password)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                if(string.IsNullOrEmpty(old_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter old password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(new_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter new password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(confirm_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter confirm password.";
+                    return membershipResponse;
+                }
+                else if ( new_password!=confirm_password)
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "New Password and confirm password must be same.";
+                    return membershipResponse;
+                }
+                else
+                {
+                    MembershipUser membershipUser = Membership.Providers["AspNetSqlMembershipProvider"].GetUser(User.Identity.Name, false);
+                    if (membershipUser != null)
+                    {
+                        if (membershipUser.IsLockedOut) //if is locked then unlock
+                            membershipUser.UnlockUser();
+
+                        if(membershipUser.ChangePassword(old_password, new_password))
+                        {
+                            membershipResponse.Success = true; membershipResponse.Message = "Password changed successfully.";
+                            return membershipResponse;
+                        }
+                        else
+                        {
+                            membershipResponse.Success = false; membershipResponse.Message = "Failed to change password, Please try retry";
+                            return membershipResponse;
+                        }
+                    }
+                    else
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "UserNotFound - Failed to change password, Please try retry";
+                        return membershipResponse;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
 
 
         public string GetErrorMessage(MembershipCreateStatus status)

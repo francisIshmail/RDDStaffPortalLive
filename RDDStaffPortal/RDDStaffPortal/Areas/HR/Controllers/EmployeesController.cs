@@ -24,10 +24,31 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         Common cm = new Common();
         AccountService accountservice = new AccountService();
 
+       // public ActionResult ToUpdateAcc(string email, string Fname,string Lname)
+       // { 
+       //    // return Json() 
+                
+       //}
 
-        public ActionResult GetCreateUserAcc(string username, string useremail, string ques, string ans, string role)
+
+        public ActionResult GetCreateUserAcc(string username, string useremail, string ques, string ans, string role,string fname,string lname)
         {
-            return Json(accountservice.CreateUserAccount(username, useremail, ques, ans , role), JsonRequestBehavior.AllowGet);
+         
+            string result = string.Empty;
+
+            var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+            if (k.Success == true)
+            {
+
+                var t = EmpDbOp.Update(useremail, fname, lname);
+                if (t == false)
+                {
+                    k.Message = "Error";
+                }
+               // result = rdd_empreg.Update();
+            }
+
+            return Json(new  { Message=k.Message }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -91,8 +112,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             string username = User.Identity.Name;
             if (EmployeeId != null)
             {
-              
-                DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
+               // DataSet ds1 = Db.myGetDS("exec RDD_UpdateEmployeeLogin");
+                 DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
                 string name = ds1.Tables[0].Rows[0]["LoginName"].ToString();
                 
                 if (username.ToLower() == name.ToLower())
@@ -159,6 +180,33 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
             }
 
+            List<RDD_EmployeeRegistration> JobBandList = new List<RDD_EmployeeRegistration>();
+            if (DS.Tables.Count > 0)
+            {
+                for (int i = 0; i < DS.Tables[3].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration JobbandLst = new RDD_EmployeeRegistration();
+                    JobbandLst.JobBandId = Convert.ToInt32(DS.Tables[3].Rows[i]["JobBandId"]);
+                    JobbandLst.JobBandName = DS.Tables[3].Rows[i]["JobBandName"].ToString();
+                    JobBandList.Add(JobbandLst);
+                }
+
+            }
+
+            List<RDD_EmployeeRegistration> JobGradeList = new List<RDD_EmployeeRegistration>();
+            if (DS.Tables.Count > 0)
+            {
+                for (int i = 0; i < DS.Tables[4].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration jobgradeLst = new RDD_EmployeeRegistration();
+                    jobgradeLst.JobGradeId = Convert.ToInt32(DS.Tables[4].Rows[i]["JobGradeId"]);
+                    jobgradeLst.JobGradeName = DS.Tables[4].Rows[i]["JobGradeName"].ToString();
+                    JobGradeList.Add(jobgradeLst);
+                }
+
+            }
+
+
 
             DS = Db.myGetDS("EXEC RDD_GetManagerList '"+username+"'");
             List<RDD_EmployeeRegistration> ManagerList = new List<RDD_EmployeeRegistration>();
@@ -173,6 +221,23 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                 }
             }
+
+            DS = Db.myGetDS("EXEC RDD_GetManagerList '" + username + "'");
+            List<RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
+            if (DS.Tables.Count > 0)
+            {
+                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration MangLstl2 = new RDD_EmployeeRegistration();
+                    MangLstl2.ManagerIdL2 = Convert.ToInt32(DS.Tables[0].Rows[i]["EmployeeId"]);
+                    MangLstl2.ManagerName = DS.Tables[0].Rows[i]["Empname"].ToString();
+                    ManagerListL2.Add(MangLstl2);
+
+                }
+            }
+
+
+
 
             DS = Db.myGetDS("EXEC RDD_BU");
             List<RDD_EmployeeRegistration> BUList = new List<RDD_EmployeeRegistration>();
@@ -234,7 +299,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                     CurrencyList.Add(CurrencyLst);
                 }
-            }      
+            }
+            ViewBag.JobBandList = new SelectList(JobBandList, "JobBandId", "JobBandName");
+            ViewBag.JobGradeList = new SelectList(JobGradeList, "JobGradeId", "JobGradeName");
 
             ViewBag.DeptList = new SelectList(DeptList, "DeptId", "DeptName");
             ViewBag.DesigList = new SelectList(DesigList, "DesigId", "DesigName");
@@ -243,6 +310,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
             ViewBag.CountryList = CountryList;
             ViewBag.ManagerList = new SelectList(ManagerList, "ManagerId", "Managername");
+            ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+
+            
             ViewBag.ddlCountry = new SelectList(ddlCountry, "CountryCodeName", "Country");
             
             ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency");
@@ -345,6 +415,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();             
                 
               //  rdd_empreg.ImagePath = EmpData.ImagePath;
+                rdd_empreg.JobBandId = EmpData.JobBandId;
+                rdd_empreg.JobGradeId = EmpData.JobGradeId;
+                rdd_empreg.ManagerIdL2 = EmpData.ManagerIdL2;
 
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
                 rdd_empreg.About = EmpData.About;
@@ -427,7 +500,17 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                    
                 }
                
+
+
                 result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+
+              //  string[] UserName = EmpData.Email.Split('@');
+
+             //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+              // result = response.Message;
+
+
+
                 Session["FILE"] = null;
 
             }
@@ -437,6 +520,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
 
         
         public JsonResult DeleteRecord(int EId)
@@ -587,6 +671,52 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
            
         }
+
+
+        public ActionResult Fillmanagerl2(int managerL1Id)
+        {
+            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            DataSet DS = Db.myGetDS("exec RDD_GetManagerL2 '" + managerL1Id+"'");
+            List <RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
+            if (DS.Tables.Count > 0)
+            {
+                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                {
+                    RDD_EmployeeRegistration MangLstl2 = new RDD_EmployeeRegistration();
+                    MangLstl2.ManagerIdL2 = Convert.ToInt32(DS.Tables[0].Rows[i]["EmployeeId"]);
+                    MangLstl2.ManagerName = DS.Tables[0].Rows[i]["Empname"].ToString();
+                    ManagerListL2.Add(MangLstl2);
+
+                }
+            }
+
+            return Json(ManagerListL2, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        //public ActionResult Fillmanagerl1(int managerL1)
+        //{
+        //    Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+        //    DataSet DS = Db.myGetDS("exec RDD_GetManagerL2 '" + managerL1 + "'");
+        //    List<RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
+        //    if (DS.Tables.Count > 0)
+        //    {
+        //        for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+        //        {
+        //            RDD_EmployeeRegistration MangLstl2 = new RDD_EmployeeRegistration();
+        //            MangLstl2.ManagerIdL2 = Convert.ToInt32(DS.Tables[0].Rows[i]["EmployeeId"]);
+        //            MangLstl2.ManagerName = DS.Tables[0].Rows[i]["Empname"].ToString();
+        //            ManagerListL2.Add(MangLstl2);
+
+        //        }
+        //    }
+
+        //    return Json(ManagerListL2, JsonRequestBehavior.AllowGet);
+        //}
+
+
+
 
     }
 }

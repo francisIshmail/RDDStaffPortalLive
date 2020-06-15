@@ -41,6 +41,12 @@ namespace RDDStaffPortal.Areas.HR.Models
     }
     public class Employees
     {
+        public int ManagerIdL2 { get; set; }
+        public int JobBandId { get; set; }
+        public string JobBandName { get; set; }
+
+        public int JobGradeId { get; set; }
+        public string JobGradeName { get; set; }
         public string About { get; set; }
         public string CountryName { get; set; }
         public bool IsActive { get; set; }
@@ -106,7 +112,7 @@ namespace RDDStaffPortal.Areas.HR.Models
         public string ItmsGrpNam { get; set; }
 
         //To Get Manager
-
+        public int ManagerL2 { get; set; }
         public int ManagerId { get; set; }
         public string ManagerName { get; set; }
 

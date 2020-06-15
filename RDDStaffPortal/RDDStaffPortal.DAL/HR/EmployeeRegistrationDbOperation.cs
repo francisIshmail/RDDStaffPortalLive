@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
 using static RDDStaffPortal.DAL.CommonFunction;
@@ -15,9 +16,10 @@ namespace RDDStaffPortal.DAL.HR
 {
     public class EmployeeRegistrationDbOperation
     {
-       // public string Save(RDD_EmployeeRegistration EmpData)
-         public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu,List<DocumentList> DocumentList)
-      
+        CommonFunction Com = new CommonFunction();
+        // public string Save(RDD_EmployeeRegistration EmpData)
+        public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
+
         {
             string response = string.Empty;
             string result = string.Empty;
@@ -35,24 +37,24 @@ namespace RDDStaffPortal.DAL.HR
                         try
                         {
                             byte[] file;
-                           
 
-                                using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
+
+                            using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
+                            {
+                                using (var reader = new BinaryReader(stream))
                                 {
-                                    using (var reader = new BinaryReader(stream))
-                                    {
-                                        file = reader.ReadBytes((int)stream.Length);
-                                    }
+                                    file = reader.ReadBytes((int)stream.Length);
                                 }
-                            
+                            }
 
-                           
+
+
                             Int32 Emp_ID = 0;
 
                             SqlCommand cmd = new SqlCommand();
 
                             cmd.CommandType = CommandType.StoredProcedure;
-                           // cmd.CommandText = "RDD_Employees_InsertUpdate";
+                            // cmd.CommandText = "RDD_Employees_InsertUpdate";
                             cmd.CommandText = "RDD_Employees_InsertUpdate";
                             cmd.Connection = connection;
                             cmd.Transaction = transaction;
@@ -60,7 +62,7 @@ namespace RDDStaffPortal.DAL.HR
                             cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.EmployeeId);
 
                             //.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary,1000).Value = file;
-                           
+
                             cmd.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary, file.Length).Value = file;
 
                             cmd.Parameters.Add("@p_LogoType", SqlDbType.VarChar, 20).Value = EmpData.LogoType;
@@ -95,6 +97,14 @@ namespace RDDStaffPortal.DAL.HR
                                 cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = EmpData.IM_Id;
                             }
                             cmd.Parameters.Add("@p_ManagerId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerId);
+
+                            
+
+                            cmd.Parameters.Add("@p_ManagerL2Id", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerIdL2);
+                            cmd.Parameters.Add("@p_JobBandId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobBandId);
+                            cmd.Parameters.Add("@p_JobGradeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobGradeId);
+
+
 
                             if (EmpData.About == null)
                             {
@@ -134,7 +144,7 @@ namespace RDDStaffPortal.DAL.HR
                             }
                             cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
                             // cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 10).Value = Emp.ManagerName;
-                           
+
                             //if (EmpData.ManagerName == null)
                             //{
                             //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = DBNull.Value;
@@ -210,7 +220,7 @@ namespace RDDStaffPortal.DAL.HR
 
                             cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = EmpData.Salary;
 
-                            
+
                             if (EmpData.Salary_Start_Date.Year < (DateTime.Now.Year - 1))
                             {
                                 cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = DBNull.Value; ;
@@ -219,7 +229,7 @@ namespace RDDStaffPortal.DAL.HR
                             {
                                 cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = EmpData.Salary_Start_Date;
                             }
-                           
+
 
                             if (EmpData.Remark == null)
                             {
@@ -312,7 +322,7 @@ namespace RDDStaffPortal.DAL.HR
                             cmd.Dispose();
 
 
-                            if(DocumentList != null)
+                            if (DocumentList != null)
                             {
                                 for (int i = 0; i < DocumentList.Count; i++)
                                 {
@@ -443,19 +453,24 @@ namespace RDDStaffPortal.DAL.HR
 
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.CommandText = "RDD_SetEmployeeProfileCompletedPercentage";
-                         
+
                             cmd.Connection = connection;
                             cmd.Transaction = transaction;
 
-                           cmd.Parameters.Add("@EmployeeId", SqlDbType.Int).Value = Emp_ID;
+                            cmd.Parameters.Add("@EmployeeId", SqlDbType.Int).Value = Emp_ID;
 
                             cmd.ExecuteNonQuery();
                             cmd.Dispose();
 
+
+
+
+
+
                             transaction.Commit();
 
-                            
-                                       
+
+
 
                         }
 
@@ -484,7 +499,7 @@ namespace RDDStaffPortal.DAL.HR
 
         public RDD_EmployeeRegistration Edit(int? EmployeeId)
         {
-         
+
             RDD_EmployeeRegistration emp = new RDD_EmployeeRegistration();
 
 
@@ -524,11 +539,11 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.LName = DS.Tables[0].Rows[0]["LName"].ToString();
                         }
-                            if (DS.Tables[0].Rows[0]["AboutUs"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["AboutUs"]))
-                            {
-                                emp.About = DS.Tables[0].Rows[0]["AboutUs"].ToString();
-                            }
-                            if (DS.Tables[0].Rows[0]["EmployeeNo"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["EmployeeNo"]))
+                        if (DS.Tables[0].Rows[0]["AboutUs"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["AboutUs"]))
+                        {
+                            emp.About = DS.Tables[0].Rows[0]["AboutUs"].ToString();
+                        }
+                        if (DS.Tables[0].Rows[0]["EmployeeNo"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["EmployeeNo"]))
                         {
                             emp.EmployeeNo = DS.Tables[0].Rows[0]["EmployeeNo"].ToString();
                         }
@@ -616,10 +631,41 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.passport_no = DS.Tables[0].Rows[0]["passport_no"].ToString();
                         }
-                        if (DS.Tables[0].Rows[0]["manager"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["manager"]))
+                        if (DS.Tables[0].Rows[0]["managerL2"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["managerL2"]))
                         {
-                            emp.ManagerName = DS.Tables[0].Rows[0]["manager"].ToString();
+                            emp.ManagerIdL2 = Convert.ToInt32(DS.Tables[0].Rows[0]["managerL2"].ToString());
                         }
+                        if (DS.Tables[0].Rows[0]["ManagerNameL2"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["ManagerNameL2"]))
+                        {
+                            emp.ManagerName = DS.Tables[0].Rows[0]["ManagerNameL2"].ToString();
+                        }
+
+                        if (DS.Tables[0].Rows[0]["JobBand"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobBand"]))
+                        {
+                            emp.JobBandId = Convert.ToInt32(DS.Tables[0].Rows[0]["JobBand"]);
+                        }
+                        if (DS.Tables[0].Rows[0]["JobBandName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobBandName"]))
+                        {
+                            emp.JobBandName = DS.Tables[0].Rows[0]["JobBandName"].ToString();
+                        }
+
+                        if (DS.Tables[0].Rows[0]["JobGrade"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobGrade"]))
+                        {
+                            emp.JobGradeId= Convert.ToInt32(DS.Tables[0].Rows[0]["JobGrade"]);
+                        }
+                        if (DS.Tables[0].Rows[0]["JobGradeName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobGradeName"]))
+                        {
+                            emp.JobGradeName = DS.Tables[0].Rows[0]["JobGradeName"].ToString();
+                        }
+
+
+
+
+
+
+
+
+
                         if (DS.Tables[0].Rows[0]["Country"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Country"]))
                         {
                             emp.CountryCodeName = DS.Tables[0].Rows[0]["Country"].ToString();
@@ -659,7 +705,7 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.Contract_Start_date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Contract_Start_Date"]);
                         }
-  
+
 
                         if (DS.Tables[0].Rows[0]["NOTE"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["NOTE"]))
                         {
@@ -695,7 +741,7 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.Salary_Start_Date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"]);
                         }
-                       
+
 
                         if (DS.Tables[0].Rows[0]["Bank_Name"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Bank_Name"]))
                         {
@@ -740,7 +786,7 @@ namespace RDDStaffPortal.DAL.HR
                         //emp.ImagePath = (byte[])DS.Tables[0].Rows[0]["ImagePath"];
                         string base64String = Convert.ToBase64String(emp.ImagePath);
                         emp.ImagePath1 = base64String;
-                        
+
 
                         //emp.ImagePath = Convert.ToByte(DS.Tables[0].Rows[0]["ImagePath"]);
 
@@ -776,7 +822,7 @@ namespace RDDStaffPortal.DAL.HR
                                 Doc.DocPath = DS.Tables[2].Rows[i]["link"].ToString();
                             }
 
-                           DocumentList.Add(Doc);
+                            DocumentList.Add(Doc);
                         }
                     }
                     emp.DocumentList = DocumentList;
@@ -818,7 +864,7 @@ namespace RDDStaffPortal.DAL.HR
 
                     //Edit for Edu Table Data
 
-                    List <EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
+                    List<EmpInfoProEdunew> EmpInfoProEdu = new List<EmpInfoProEdunew>();
                     if (EmpInfoProEdu != null)
                     {
                         for (int i = 0; i < DS.Tables[1].Rows.Count; i++)
@@ -871,8 +917,8 @@ namespace RDDStaffPortal.DAL.HR
                     }
 
                     emp.EmpInfoProEdus = EmpInfoProEdu;
-                   
-                    
+
+
                 }
             }
             catch (Exception ex)
@@ -885,47 +931,47 @@ namespace RDDStaffPortal.DAL.HR
         public int GetEmployeeIdByLoginName(string LoginName)
         {
             int EmployeeId = 0;
-             using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+            using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+            {
+                if (connection.State == ConnectionState.Closed)
                 {
-                    if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                }
+                SqlTransaction transaction;
+                using (transaction = connection.BeginTransaction())
+                {
+                    try
                     {
-                        connection.Open();
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "RDD_GetEmployeeIdByLoginName";
+                        cmd.Connection = connection;
+                        cmd.Transaction = transaction;
+
+                        cmd.Parameters.Add("@p_LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+
+                        cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        EmployeeId = (int)cmd.Parameters["@p_EmployeeId"].Value;
+                        cmd.Dispose();
+                        transaction.Commit();
+
                     }
-                    SqlTransaction transaction;
-                    using (transaction = connection.BeginTransaction())
+
+                    catch (Exception ex)
                     {
-                        try
+                        EmployeeId = 0;
+                        transaction.Rollback();
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
                         {
-                            SqlCommand cmd = new SqlCommand();
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.CommandText = "RDD_GetEmployeeIdByLoginName";
-                            cmd.Connection = connection;
-                            cmd.Transaction = transaction;
-
-                            cmd.Parameters.Add("@p_LoginName", SqlDbType.NVarChar,50).Value = LoginName;
-
-                            cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Direction = ParameterDirection.Output;
-                            cmd.ExecuteNonQuery();
-                            EmployeeId = (int)cmd.Parameters["@p_EmployeeId"].Value;
-                            cmd.Dispose();
-                            transaction.Commit();
-
-                        }
-
-                        catch (Exception ex)
-                        {
-                            EmployeeId = 0;
-                            transaction.Rollback();
-                        }
-                        finally
-                        {
-                            if (connection.State == ConnectionState.Open)
-                            {
-                                connection.Close();
-                            }
+                            connection.Close();
                         }
                     }
                 }
+            }
             return EmployeeId;
 
         }
@@ -1037,6 +1083,107 @@ namespace RDDStaffPortal.DAL.HR
                 response = "Error occured : " + ex.Message;
             }
             return response;
+
+        }
+
+        public bool Update(string useremail, string fname, string lname)
+        {
+          
+            bool t = true;
+            try
+            {
+                SqlParameter[] Para = {
+                     new SqlParameter("@p_Email",useremail),
+                    new SqlParameter("@p_FName",fname),
+                    new SqlParameter("@p_LName",lname)
+
+
+                };
+                t = Com.ExecuteNonQuery("RDD_UpdateEmployeeLogin", Para);
+                //using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+                //{
+                //    if (connection.State == ConnectionState.Closed)
+                //    {
+                //        connection.Open();
+                //    }
+                //    SqlTransaction transaction;
+                //    using (transaction = connection.BeginTransaction())
+                //    {
+                //        try
+                //        {
+                //            SqlCommand cmd = new SqlCommand();
+                //            cmd.CommandType = CommandType.StoredProcedure;
+                //            cmd.CommandText = "RDD_UpdateEmployeeLogin"; 
+                //            cmd.Parameters.Add("@p_Email", SqlDbType.VarChar, 100).Value = useremail;
+                //            cmd.Parameters.Add("@p_FName", SqlDbType.VarChar, 150).Value = fname;
+
+                //            cmd.Parameters.Add("@p_LName", SqlDbType.VarChar, 150).Value = lname;
+
+                //            cmd.ExecuteNonQuery();
+                //            cmd.Dispose();
+                //            transaction.Commit();
+
+                //        }
+
+                //        catch (Exception ex)
+                //        {
+                //          //  t = "Error occured : " + ex.Message;
+                //            transaction.Rollback();
+                //        }
+                //        finally
+                //        {
+                //            if (connection.State == ConnectionState.Open)
+                //            {
+                //                connection.Close();
+                //            }
+                //        }
+                //    }
+                //}
+            }
+
+            catch (Exception ex)
+            {
+               // response = "Error occured : " + ex.Message;
+            }
+            return t;
+            //bool t = true;
+            //SqlCommand cmd = new SqlCommand();
+            //try
+            //{
+
+            //    cmd = new SqlCommand();
+
+            //    cmd.CommandType = CommandType.StoredProcedure;
+            //    cmd.CommandText = "RDD_UpdateEmployeeLogin";
+
+            //    //cmd.Connection = connection;
+            //    // cmd.Transaction = transaction;
+
+            //    // cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+            //    cmd.Parameters.Add("@p_FName", SqlDbType.VarChar, 150).Value = fname;
+
+            //    cmd.Parameters.Add("@p_LName", SqlDbType.VarChar, 150).Value = lname;
+            //    cmd.Parameters.Add("@p_Email", SqlDbType.VarChar, 100).Value = useremail;
+
+            //   cmd.ExecuteNonQuery();
+            //    cmd.Dispose();
+            //   //  transaction.Commit();
+
+
+
+
+            //}
+
+            //catch (Exception ex)
+            //{
+
+            //}
+            //finally
+            //{
+
+            //}
+            //return t;
 
         }
     }

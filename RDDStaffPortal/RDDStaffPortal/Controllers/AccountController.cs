@@ -36,7 +36,21 @@ namespace RDDStaffPortal.Controllers
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
-                   Session["LoginName"] = moduleDbOp.GetProfilimg(login.UserName);
+                    var ab = moduleDbOp.GetProfilimg(login.UserName);
+                    if (ab == null)
+                    {
+                        string ImagePath1 = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
+                        byte[] file;
+                        using (var stream = new FileStream(ImagePath1, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var reader1 = new BinaryReader(stream))
+                            {
+                                file = reader1.ReadBytes((int)stream.Length);
+                            }
+                        }
+                        ab = Convert.ToBase64String(file);
+                    }
+                   Session["LoginName"] = ab;
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else

@@ -43,7 +43,7 @@
                                     </div>
 
 
-                                    <div class="form-group" style="width:610px;"></div>
+                                    @*<div class="form-group" style="width:610px;"></div>*@
 
 
 
@@ -222,8 +222,7 @@
         var x = confirm("Are you sure you want to delete?");
         if (x) {
             var DeptID = $(this).closest("tr").find('td:eq(0)').text();
-            // alert(DeptID);
-            //var DeptId = $("#DeptId").val();
+           
             $.ajax({
                 type: "Post",
                 url: "/Departments/DeleteItem?DeptId=" + DeptID,
@@ -303,16 +302,22 @@
             success: function (result) {
 
                 if (result == "Department saved successfully." || result == "Department updated successfully.") {
-
-                    alert(result);
-                    location.reload();
-                   // $("#DeptName").val('');
+                    RdotAlertSucesstxt(result);
+                    GetDeptList();
+                    //alert(result);
+                    //location.reload();
+                    $("#DeptId").val('');
+                    
+                    $("#DeptName").val('');
 
                    // GetDeptList();
                 }
                 else {
                     result == "Department already exists.."
-                    alert(result);
+                    RdotAlerterrtxt1(result);
+                    // alert(result);
+                    $("#DeptId").val('');
+
                     $("#DeptName").val('');
                 }
             }

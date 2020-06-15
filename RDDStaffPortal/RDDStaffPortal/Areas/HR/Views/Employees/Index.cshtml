@@ -16,7 +16,7 @@
 @Html.HiddenFor(m => m.ImagePath1)
 @Html.HiddenFor(m => m.ImagePath)
 
-
+<div class="loader1" id="loader"></div>
 
 <div class="main-panel">
     <div class="container">
@@ -304,11 +304,11 @@
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
                                                     <div class="form-group">
-                                                        <label for="email2" class="width100px">Manager :</label>
+                                                        <label for="email2" class="width100px">Manager L1:</label>
                                                         <div class="select2-input">
                                                             @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                                                             {
-                                                                @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm" })
+                                                                @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm", @onchange = "FillManagerL2()" })
                                                             }
                                                             else
                                                             { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm", @disabled = "disabled" })}
@@ -316,6 +316,23 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Manager L2:</label>
+                                                        <div class="select2-input">
+                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                            {
+                                                                @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm", @disabled = "disabled" })}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Country :</label>
@@ -330,9 +347,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+                                            </div>
+
+
+                                            <div class="row">
+
+
+
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
-                                                        <label for="email2" class="width100px">Emplyement Status :</label>
+                                                        <label for="email2" class="width100px">Employment Status :</label>
                                                         <div class="select2-input">
                                                             @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                                                             {
@@ -344,13 +370,10 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
 
-
-                                            <div class="row">
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
-                                                        <label for="email2" class="width100px">Employement Type :</label>
+                                                        <label for="email2" class="width100px">Employment Type :</label>
                                                         @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                                                         {
                                                             @Html.DropDownListFor(m => m.type_of_employement,
@@ -361,10 +384,10 @@
                                                         }
                                                         else
                                                         { @Html.DropDownListFor(m => m.type_of_employement,
-                    new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                   new SelectListItem { Text = "PartTime", Value = "PartTime" },
-                   new SelectListItem { Text = "FullTime", Value = "FullTime" }
-                    }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}
+              new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+             new SelectListItem { Text = "PartTime", Value = "PartTime" },
+             new SelectListItem { Text = "FullTime", Value = "FullTime" }
+              }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}
                                                     </div>
                                                 </div>
 
@@ -387,7 +410,43 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-4 col-md-4">
+
+
+
+                                            </div>
+                                            <div class="row">
+
+
+                                                    <div class="col-xl-4 col-md-4 multipleselect">
+                                                        <div class="form-group">
+                                                            <label for="email2" class="width100px">Job Grade :</label>
+                                                            <div class="select2-input">
+                                                                @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-4 multipleselect">
+                                                        <div class="form-group">
+                                                            <label for="email2" class="width100px">Job Band :</label>
+                                                            <div class="select2-input">
+                                                                @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Status :</label>
                                                         <div class="input-group">
@@ -403,39 +462,37 @@
                                                         </div>
 
                                                     </div>
-                                                </div>
-
-
+                                               
                                             </div>
-                                            <div class="row">
-                                                <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="email2" class="width100px">About :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
-                                                        }
-
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="email2" class="width100px">About :</label>
+                                                            @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {
-                                                                @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;", @disabled = "disabled" })
+                                                                @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
                                                             }
 
                                                             else
                                                             {
-                                                                @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                {
+                                                                    @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;", @disabled = "disabled" })
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
+                                                                }
                                                             }
-                                                        }
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
 
-
                                         </div>
-
-                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-general-nobd" role="tabpanel" aria-labelledby="v-pills-general-tab-nobd">
                                     <div class="card-header">
@@ -512,8 +569,8 @@
                                                             else
                                                             { @Html.DropDownListFor(m => m.Gender,
 new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                       new SelectListItem { Text = "Male", Value = "Male" },
-                       new SelectListItem { Text = "Female", Value = "Female" }
+                     new SelectListItem { Text = "Male", Value = "Male" },
+                     new SelectListItem { Text = "Female", Value = "Female" }
 }, new { @class = "form-control form-control-sm" })
                                                         }
                                                     }
@@ -571,11 +628,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                             }
                                                             else
                                                             { @Html.DropDownListFor(m => m.Marital_Status,
-                             new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                       new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
-                       new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
-                        new SelectListItem { Text = "Divorced", Value = "Divorced" }
-                             }, new { @class = "form-control form-control-sm" })}
+                           new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                     new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+                     new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
+                      new SelectListItem { Text = "Divorced", Value = "Divorced" }
+                           }, new { @class = "form-control form-control-sm" })}
                                                     }
                                                     </div>
                                                 </div>
@@ -1242,9 +1299,75 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 </script>
 
+<script>
+    $(window).on('load', function () {
+        $('.loader1').css('display', 'none');
+    });
+</script>
 
 
 <script>
+
+    function FillManagerL2() {
+        var managerL1Id = $('#ManagerId').val();
+        //  alert(GroupId);
+        $.ajax({
+            url: '/Employees/Fillmanagerl2',
+            type: "GET",
+            dataType: "JSON",
+            data: { managerL1Id: managerL1Id },
+            success: function (ManagerListL2) {
+                $("#ManagerIdL2").html("");
+
+                $("#ManagerIdL2").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                $.each(ManagerListL2, function (i, RDD_EmployeeRegistration) {
+                    $("#ManagerIdL2").append(
+                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
+
+                    
+                });
+            }
+        });
+    }
+
+    //function FillManagerL1() {
+    //    var managerL1 = $('#ManagerId').val();
+    //    //  alert(GroupId);
+    //    $.ajax({
+    //        url: '/Employees/Fillmanagerl1',
+    //        type: "GET",
+    //        dataType: "JSON",
+    //        data: { managerL1: managerL1 },
+    //        success: function (ManagerListL1) {
+    //           // $("#ManagerIdL2").html("");
+
+    //           // $("#ManagerIdL2").append($('<option/>', { value: 0, text: '--Select--' }));
+
+    //            $.each(ManagerListL1, function (i, RDD_EmployeeRegistration) {
+    //                $("#ManagerIdL2").append(
+    //                    $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
+
+
+    //            });
+    //        }
+    //    });
+    //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     $(document).ready(function () {
@@ -1256,7 +1379,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             debugger
             $("input[id='Citizenship']:hidden").val($(this).val());
         })
- 
+
 
     });
     debugger
@@ -1531,6 +1654,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         }
         else {
             debugger
+           // var l1Id = $('#ManagerId').val();
+
+        //    $("#ManagerIdL2 option[value='ManagerId']").remove();
+
+           // $("#ManagerIdL2 option[value='4']").remove();
+
           //  $("select[name='hdnCitizenship']").val($("input[id='Citizenship']:hidden").val()).trigger('change');
 
 
@@ -1697,7 +1826,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
             //alert(domainname);
             if (domainname != "reddotdistribution.com") {
-                alert("Please Enter Valid Official DomainName")
+                RdotAlerterrtxt('Please Enter Valid Official DomainName');
+            
                 $("#Email").val('');
 
                 $("#Email").focus();
@@ -1714,6 +1844,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     });
 
     $('#SaveEmpChanges').click(function () {
+        $('.Loader1').css('display', 'block');
         debugger
         var res = validate();
         //alert(res);
@@ -1754,6 +1885,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         debugger
 
         var EmpData = {};
+       
+        EmpData["ManagerIdL2"] = $("#ManagerIdL2").val();
+        EmpData["JobBandId"] = $("#JobBandId").val();
+        EmpData["JobGradeId"] = $("#JobGradeId").val();
       //  EmpData["Citizenship"] = $('#Citizenship Option:selected').text();
        EmpData["Citizenship"] = $("#Citizenship").val();
 
@@ -1856,9 +1991,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             i++;
 
         });
+       // $(".loader1").show();
 
         debugger
         $.ajax({
+
                 type: "POST",
             url: "/Employees/AddEmpReg",
             contentType: "application/json",
@@ -1866,7 +2003,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             data: JSON.stringify({ EmpData:EmpData , EmpInfoProEdu: EmpInfoProEdu ,EmpDatas:EmpDatas }),
 
             success: function (result) {
-
+                $('.loader1').css('display', 'block');
 
                 if (result == "Registration saved successfully.") {
                     GetCreateUserAcc();
@@ -1875,11 +2012,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     ClearControl();
 
                 }
+               
                 else if (result == "Registration updated successfully.")
                 {
+                  
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
                     RdotAlertSucesstxt(result);
                   // ClearControl();
+                    $('.loader1').css('display', 'none');
                 }
 
             },
@@ -1893,7 +2033,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
     function GetCreateUserAcc() {
         debugger
-    
+        var fname = $("#FName").val(); 
+        var lname = $("#LName").val();
+        
         var useremail = $("#Email").val();
         var username = useremail.substring(0, useremail.lastIndexOf("@@"));
         var ques = "What is your favorite website ?";
@@ -1906,13 +2048,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    username: username, useremail: useremail, ques: ques, ans: ans, role: role
+                    username: username, useremail: useremail, ques: ques, ans: ans, role: role, fname: fname, lname: lname
 
                 }),
                 success: function (data) {
                     debugger
                       var mess = data.Message;
                     RdotAlertSucesstxt(mess);
+                    $('.loader1').css('display', 'none');
 
 
                 },
@@ -1922,7 +2065,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             });
         }
 
-  //  }
+
+  
     function ClearControl() {
 
         GetEmpNo();
@@ -1956,8 +2100,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $('#DeptId').find('option:first').attr('selected', 'selected');
         $('#StatusId').find('option:first').attr('selected', 'selected');
 
-
+        $('#JobBandId').find('option:first').attr('selected', 'selected');
+        $('#JobGradeId').find('option:first').attr('selected', 'selected');
         //
+        $('#ManagerIdL2').val("0").trigger("change");
         $('#ManagerId').val("0").trigger("change");
         $('#Citizenship').val("0").trigger("change");
 
@@ -2312,7 +2458,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $('#ManagerId').select2({
             theme: "bootstrap"
         });
-
+        
+        $('#ManagerIdL2').select2({
+            theme: "bootstrap"
+        });
         //$('#Citizenship').select2({
         //    theme: "bootstrap"
         //});
