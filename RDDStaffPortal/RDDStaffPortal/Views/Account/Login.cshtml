@@ -134,7 +134,7 @@
                                     <form class="user">
                                         <div class="form-group has-error">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Enter your Email ID" aria-label="Email ID">
+                                                <input type="text" class="form-control" id="emailid" placeholder="Enter your Email ID" aria-label="Email ID">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                                 </div>
@@ -142,7 +142,7 @@
                                             <!--<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>-->
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-12 col-lg-12 col-md-12 mar-t10 text-left"> <a href="#" class="btn btn-primary login-btn" id="SendEmail"> Send </a></div>
+                                            <div class="col-xl-12 col-lg-12 col-md-12 mar-t10 text-left"> <button type="button" class="btn btn-primary login-btn" id="SendEmail"> Send </button></div>
                                         </div>
                                     </form>
                                 </div>
@@ -166,10 +166,18 @@
                 $("#Loginbox").hide();
                 $("#ForgetPasswordbox").show();
             });
+            $("#ForgetPassword").click(function () {
+                //$("#Loginbox").show();
+                //$("#ForgetPasswordbox").hide();
+            })
 
             $("#SendEmail").click(function () {
-                $("#Loginbox").show();
-                $("#ForgetPasswordbox").hide();
+
+                $.getJSON("/ForgetPas", { email: $("#emailid").val() }, function(response) {
+                    debugger
+                   
+                })
+                
             });
         </script>
 

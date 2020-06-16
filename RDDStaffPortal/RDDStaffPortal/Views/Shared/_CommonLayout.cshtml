@@ -94,7 +94,7 @@
                                                     <span class="text">Reports</span>
                                                 </div>
                                             </a>
-                                           
+
                                             <a class="col-6 col-md-4 p-0" href="#">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-success rounded-circle">
@@ -210,6 +210,7 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="/HR/Employees/ViewProfile">My Profile</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ChangePasswordPopup">Change Password</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
@@ -277,9 +278,9 @@
                                     </ul>
                                 </div>
                             </li>*@
-                    
+
                         @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }|
-                    
+
                         @*<li class="nav-item">
                                 <a data-toggle="collapse" href="#Admin">
                                     <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
@@ -616,6 +617,45 @@
             <i class="flaticon-settings"></i>
         </div>
     </div>
+    <div class="modal fade" id="ChangePasswordPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
+        <div class="modal-dialog width30per mar-0auto" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                    <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group form-inline">
+                        <label for="inlineinput" class="col-md-4 col-form-label">Old Password :</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control input-full" id="idopass" placeholder="Old Password">
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label for="inlineinput" class="col-md-4 col-form-label">New Password :</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control input-full" id="idnpass" placeholder="New Password">
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label for="inlineinput" class="col-md-4 col-form-label">Conform Password :</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control input-full" id="idcpass" placeholder="Conform Password">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnpass" class="btn btn-success btn-sm">Save</button>
+                    <button type="button" id="btncls" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!--   Core JS Files   -->
 
 
@@ -665,7 +705,7 @@
     <script src="~/js/demo.js"></script>
 
 
-    
+
 
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
     <script src="~/Scripts/datatables/js/buttons.flash.min.js"></script>
@@ -705,14 +745,14 @@
         function tempAlert(msg, duration) {
             var el = document.createElement("div");
             //el.setAttribute("class", "alert alert-success");
-            el.setAttribute("style","position:absolute;top:8%;left:20%;background-color:green;color:white;");
+            el.setAttribute("style", "position:absolute;top:8%;left:20%;background-color:green;color:white;");
             el.innerHTML = msg;
             setTimeout(function () {
                 el.parentNode.removeChild(el);
             }, duration);
             document.body.appendChild(el);
         }
-        
+
         $(".Quic").on("click", function (e) {
             debugger;
             var tr = $(this).closest(".Quic");
@@ -725,7 +765,7 @@
                     URL: lnk,
                     FormName: MenuName
                 }
-               // $.post("/QuickLinkInsert", Rdd_Q).done(function (response) {
+                // $.post("/QuickLinkInsert", Rdd_Q).done(function (response) {
                 $.ajax({
                     type: "POST",
                     url: "/QuickLinkInsert",
@@ -738,9 +778,9 @@
                         debugger
                         if (response.Saveflag == true) {
                             tr[0].title = 'Remove Quick Links';
-                            tr.removeClass("icon-star Quic");   
+                            tr.removeClass("icon-star Quic");
                             tr.addClass("fas fa-star Quic");
-                                                   
+
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
                             tempAlert('Add to Quick Links', 500);
                             $(".rights1").load("/Dashboard/GetRightSide");
@@ -767,9 +807,9 @@
 
             }
 
-           // $('#kbc').load("/Account/GetMenuTreeMenu");
+            // $('#kbc').load("/Account/GetMenuTreeMenu");
 
-           // e.preventDefault();
+            // e.preventDefault();
 
 
 
@@ -777,13 +817,29 @@
         })
 
 
-       
-        
+        //$("#btnpass").on("click", function){
+
+        //    $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }
 
 
-        
-                                                    //$('#ulid li').removeAttr('class','');
-                                                    //$('#ulid li a').removeAttr('data-toggle', '');
+        //    )
+        //})
+      //  })
+
+        $("#btnpass").on("click", function () {
+            $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }, function (response) {
+                if (response.data.Success == true) {
+                    $("#btncls").trigger("click");
+                    $("input[type='password']").val('');
+                    RdotAlertSucesstxt(response.data.Message);
+                   
+                } else {
+                    RdotAlerterrtxt1(response.data.Message);
+                }
+            })
+        })
+                                                        //$('#ulid li').removeAttr('class','');
+                                                        //$('#ulid li a').removeAttr('data-toggle', '');
 
     </script>
 

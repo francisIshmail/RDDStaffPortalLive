@@ -748,6 +748,9 @@
     <Content Include="Uploads\SINV Mapping for e-invoicing.xlsx" />
     <Content Include="Views\Account\GetMenuTreeMenu.cshtml" />
     <Content Include="Views\Dashboard\GetRightSide.cshtml" />
+    <Content Include="Views\Account\ResetPwd.cshtml" />
+    <Content Include="Views\Account\ErrorPage.cshtml" />
+    <Content Include="Views\Account\SuccessPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -788,9 +791,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28978/</IISUrl>
+          <IISUrl>http://localhost:28975/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28978/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28975/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

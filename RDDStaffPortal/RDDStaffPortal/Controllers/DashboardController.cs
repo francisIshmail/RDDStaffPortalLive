@@ -21,7 +21,7 @@ namespace RDDStaffPortal.Controllers
             return View();
         }
 
-
+        
 
 
         [Route("QuickLinkInsert")]

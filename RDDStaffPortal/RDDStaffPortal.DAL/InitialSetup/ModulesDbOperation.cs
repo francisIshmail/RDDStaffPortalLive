@@ -129,6 +129,48 @@ namespace RDDStaffPortal.DAL.InitialSetup
             }
             return response;
         }
+        public List<Outcls> Ret_Code_ForgetPass(string email)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response = string.Empty;
+            try
+            {
+                SqlParameter[] Para = {
+                new SqlParameter("@EmailId",email),              
+                new SqlParameter("@newpwd",response),
+                };
+                str = Com.ExecuteNonQueryList("Insert_RDD_ForgetPass", Para);
+               
+            }
+            catch (Exception ex)
+            {
+               str[0].Responsemsg = "Error occured : " + ex.Message;
+                str[0].Outtf = false;
+
+            }
+            return str;
+        }
+        public string Ret_Code(string email,string code)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response ="";
+            try
+            {
+                SqlParameter[] Para = {
+                new SqlParameter("@p_emailid",email),
+                new SqlParameter("@p_code",code),
+                 
+                };  
+               response = Com.ExecuteScalars("RDD_Ret_RDD_ForgetPass", Para);
+
+            }
+            catch (Exception ex)
+            {
+               response = "Error Occur";
+
+            }
+            return response;
+        }
 
        public  string save1(RDD_Modules modules)
         {
