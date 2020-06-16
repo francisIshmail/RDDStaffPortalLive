@@ -22,6 +22,7 @@ namespace RDDStaffPortal.WebServices
     // [System.Web.Script.Services.ScriptService]
     public class AccountService : System.Web.Services.WebService
     {
+        Common commonMethods = new Common();
 
         [WebMethod]
         public string HelloWorld()
@@ -501,8 +502,65 @@ namespace RDDStaffPortal.WebServices
             }
         }
 
+        [WebMethod]
+        public MembershipResponse ResetPassword(string Email, string VerificationCode, string NewPassword)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(Email))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Invalid email request to Reset Password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(VerificationCode))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Password reset verification code can not be empty.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(NewPassword))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "New password can not be empty.";
+                    return membershipResponse;
+                }
+                else
+                {
+                    MembershipUser membershipUser = Membership.GetUser(Email);
+                    if(membershipUser!=null)
+                    {
+                        if (membershipUser.IsLockedOut) //if is locked then unlock
+                            membershipUser.UnlockUser();
 
-        public string GetErrorMessage(MembershipCreateStatus status)
+                        commonMethods.ResetPassword(Email, "BeforeResetPassword", VerificationCode);
+                        if(membershipUser.ChangePassword("pass*123", NewPassword))
+                        {
+                            membershipResponse.Success = true; membershipResponse.Message = "Password changed successfully.";
+                            commonMethods.ResetPassword(Email, "AfterResetPassword", VerificationCode);
+                            return membershipResponse;
+                        }
+                        else
+                        {
+                            membershipResponse.Success = false; membershipResponse.Message = "Failed to change password, please retry";
+                            return membershipResponse;
+                        }
+                    }
+                    else
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = Email+" is not registered email in portal.";
+                        return membershipResponse;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
+
+            public string GetErrorMessage(MembershipCreateStatus status)
         {
             switch (status)
             {

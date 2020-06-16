@@ -58,6 +58,24 @@ namespace RDDStaffPortal.DAL
             return objLog;
 
         }
-      
+
+        public bool ResetPassword( string Email, string Operation,string VerificationCode )
+        {
+            bool Result = false;
+            try
+            {
+                SqlParameter[] parm = { new SqlParameter("@p_EmailId", Email) ,
+                                    new SqlParameter("@p_Operation", Operation),
+                                    new SqlParameter("@p_VerificationCode",VerificationCode )};
+
+                Result=  Com.ExecuteNonQuery("RDD_ResetPassword", parm);
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                Result = false;
+                return Result;
+            }
+        }
     }
 }
