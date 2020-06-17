@@ -2,28 +2,175 @@
 @{
     Layout = null;
 }
-
-<!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ResetPwd</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Red Dot Distribution :: Technology with a Difference</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="~/img/reddot.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="~/js/plugin/webfont/webfont.min.js"></script>
+    <script src="~/js/jquery-1.2.6.min.js"></script>
+
+
+
+    <!-- CSS Files -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/atlantis.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts.min.css" rel="stylesheet" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/Content/reddot.css" rel="stylesheet" />
 </head>
+
 <body>
-    <div>
-        <div class="form-group form-inline">
-            <label for="inlineinput" class="col-md-4 col-form-label">New Password :</label>
-            <div class="col-md-8">
-                <input type="password" class="form-control input-full" id="idnpass" placeholder="New Password">
+
+
+
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center  mar-t100" id="Loginbox">
+
+            <div class="col-xl-5 col-lg-6 col-md-9">
+                <h1 class="h4 text-gray-900 padd-l30 padd-r30 padd-t30 padd-b10 text-center"><img src="~/img/reddot-logo.png" alt="#"></h1>
+
+                <div class="card o-hidden border-0 shadow-lg my-3 login-bg">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="padd-20">
+                                <div class="text-center">
+
+                                    <p class="mar-0">Technology with a Difference</p>
+                                    <p>Africa's No.1 IT Distribution Company</p>
+                                </div>
+
+                               
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <input type="password" class="form-control" id="idnpass" placeholder="New Password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            </div>
+                                        </div>
+                                        <!--<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            @*<input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username">*@
+                                            <input type="password" class="form-control" id="idcpass" placeholder="Conform Password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            </div>
+                                        </div>
+                                        <!--<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>-->
+                                    </div>
+                                    <div class="row">
+                                        <input id="hdnemail" type="hidden" value="@HttpContext.Current.Request.QueryString["E"]" />
+                                        <input id="hdncode" type="hidden" value="@HttpContext.Current.Request.QueryString["VC"]" />
+                                        <div class="col-xl-6 col-lg-6 col-md-12 mar-t10 text-left">
+                                            @*<a href="#" class="btn btn-primary login-btn"> Login </a>*@
+
+
+                                            <button id="btnsucccha" class="btn btn-primary login-btn">Change Password</button>
+
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6 col-md-12 mar-t20 text-right"> <a href="/account/login" class="link text-right" id="ForgetPassword">Login</a></div>
+                                    </div>
+                                    @*<div class="text-center padd-t30">
+                                            Don't have an account? <a class="small" href="register.html">Register</a>
+                                        </div>*@
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            <label for="inlineinput" class="col-md-4 col-form-label">Conform Password :</label>
-            <div class="col-md-8">
-                <input type="password" class="form-control input-full" id="idcpass" placeholder="Conform Password">
-            </div>
-        </div>
+
+
     </div>
+
+    <div id="slideshow">
+        <img src="~/img/bg/background_01.jpg" alt="#" class="active" />
+        <img src="~/img/bg/background_02.jpg" alt="#" />
+        <img src="~/img/bg/background_03.jpg" alt="#" />
+
+    </div>
+
+
+
 </body>
+
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<style>
+</style>
+<script>
+
+        $(document).ready(function () {
+
+            var t = true;
+            var pass = "";
+            var repass = '';
+            var emailReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{7,}$/;
+            $("input[type='password']").blur(function () {
+                debugger
+                 pass = $("input[id='idnpass']").val();
+                repass = $('input[id=idcpass]').val();
+                $("#idnpass").prev("span").remove();
+                 if (!emailReg.test(pass)) {                  
+                    $("#idnpass").before('<span class="has-error">Minimum Seven characters, at least one uppercase letter, one lowercase letter, one number and one special character.</span>');
+                    t = true;
+                }                
+                else if (pass != repass) {
+                    $('#idnpass').addClass('has-error');
+                    $('#idcpass').addClass('has-error');
+                    t = true;
+                }
+                else {
+                    t = false;
+                    $('#idnpass').removeClass('has-error').addClass('has-success');
+                    $('#idcpass').removeClass('has-error').addClass('has-success');
+                }
+            });
+
+            $("#btnsucccha").on("click", function () {
+                debugger
+                if (pass.length == 0) {
+
+                    RdotAlerterrtxt1("Please Enter Password");
+                    $("input[id='idnpass']").focus();
+                    return
+                }
+                if (repass.length == 0) {
+
+                    RdotAlerterrtxt1("Please Enter Confirm Password");
+                    $("input[id='idcpass']").focus();
+                    return
+                }
+                if (t == true) {
+                    RdotAlerterrtxt1("Password does not match");
+                    return
+                }
+                $.getJSON("/ResetPassword", { Passd: $("#idnpass").val(), email: $("#hdnemail").val(), code: $("#hdncode").val() }, function (response) {
+                    debugger
+                    if (response.Success == true) {
+
+                        RdotAlertSucesstxt(response.Message);
+                         var newUrl= '@Url.Action("Login", "Account")';
+                        window.location.href = newUrl;
+
+                    } else {
+                        RdotAlerterrtxt1(response.Message);
+
+                    }
+                })
+            })
+        });
+</script>

@@ -94,6 +94,17 @@
     });
 </script>
 <script type="text/javascript">
+
+    $(function () {
+        $("body").on("keyup", function () {
+            debugger
+           var value = $("#Search-Forms-QuickLinks").val().toLowerCase();
+            $("#Forms-1 li").find("a").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    })
+
     $(document).ready(function () {
         //$(function () {
 
@@ -119,14 +130,7 @@
 
 
 
-        $("#Search-Forms-QuickLinks").on("keyup", function () {
-            debugger
-            var value = $(this).val().toLowerCase();
-            $("#Forms-1 li").find("a").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
+       
         DashBoard.initialize();
 
 

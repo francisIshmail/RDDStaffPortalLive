@@ -525,7 +525,7 @@ namespace RDDStaffPortal.WebServices
                 }
                 else
                 {
-                    MembershipUser membershipUser = Membership.GetUser(Email);
+                    MembershipUser membershipUser = Membership.GetUser(Membership.GetUserNameByEmail(Email));
                     if(membershipUser!=null)
                     {
                         if (membershipUser.IsLockedOut) //if is locked then unlock

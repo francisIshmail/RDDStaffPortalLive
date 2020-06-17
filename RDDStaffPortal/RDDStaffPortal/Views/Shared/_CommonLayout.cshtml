@@ -507,6 +507,7 @@
         <!-- End Sidebar -->
         <!--Start : Add page body here -->
         @RenderBody()
+        <button id="btnrel"></button>
         <!--End : Add page body here -->
 
     </div>
@@ -622,7 +623,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
-                    <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -734,7 +735,9 @@
     @*</script>*@
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/flags.css" />*@
 
-    <script>
+<script type="text/javascript">
+   
+    $(document).ready(function () {
         $('a.collapsed das').on("click", function () {
             debugger;
 
@@ -752,7 +755,13 @@
             }, duration);
             document.body.appendChild(el);
         }
+        
 
+        //$("body").click(function (e) {
+        //    $('.scrollbar-inner').scrollbar();
+        //});
+
+       
         $(".Quic").on("click", function (e) {
             debugger;
             var tr = $(this).closest(".Quic");
@@ -771,41 +780,56 @@
                     url: "/QuickLinkInsert",
                     contentType: "application/json",
                     dataType: "json",
+                    async: false,
                     data: JSON.stringify({
                         Rdd_Q: Rdd_Q
                     }),
                     success: function (response) {
                         debugger
                         if (response.Saveflag == true) {
+                             @*var newUrl= '@Url.Action("index", "Dashboard")';
+                        window.location.href = newUrl;*@
+                            $(".rights1").load('@Url.Action("GetRightSide", "Dashboard")');
+
                             tr[0].title = 'Remove Quick Links';
                             tr.removeClass("icon-star Quic");
                             tr.addClass("fas fa-star Quic");
 
+
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
-                            tempAlert('Add to Quick Links', 500);
-                            $(".rights1").load("/Dashboard/GetRightSide");
+
+                            e.preventDefault();
+                           
+                            // tempAlert('Add to Quick Links', 500);
                             //  RdotAlertSucesstxt(response.ErrorMsg);
                         } else {
-                            tempAlert(response.ErrorMsg, 500);
+                            //  tempAlert(response.ErrorMsg, 500);
                             //  RdotAlerterrtxt(response.ErrorMsg);
                         }
                     }
+
                 });
             } else {
                 $.post("/DeleteActivity", { QuickLinkid: k }).done(function (response) {
                     if (response == true) {
+                         @*var newUrl= '@Url.Action("index", "Dashboard")';
+                        window.location.href = newUrl;*@
+                        $(".rights1").load('@Url.Action("GetRightSide", "Dashboard")');
+
                         tr[0].title = 'Added Quick Links';
                         tr.removeClass("fas fa-star Quic");
                         tr.addClass("icon-star Quic");
                         tr.offsetParent().find("#hdnQLink").val('0');
-                        tempAlert('Remove Quick Links', 500);
-                        $(".rights1").load("/Dashboard/GetRightSide");
+                       
+                        e.preventDefault();
+                        // tempAlert('Remove Quick Links', 500);
                     } else {
-                        tempAlert('Error Occur', 500);
+                        // tempAlert('Error Occur', 500);
                     }
                 })
 
             }
+
 
             // $('#kbc').load("/Account/GetMenuTreeMenu");
 
@@ -816,6 +840,7 @@
 
         })
 
+        
 
         //$("#btnpass").on("click", function){
 
@@ -824,24 +849,69 @@
 
         //    )
         //})
-      //  })
+        //  })
+
+
+        var t = true;
+        var pass = "";
+        var repass = '';
+        var emailReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{7,}$/;
+        $("input[id='idnpass'],input[id='idcpass']").blur(function () {
+            debugger
+            pass = $("input[id='idnpass']").val();
+            repass = $('input[id=idcpass]').val();
+            $("#idnpass").prev("span").remove();
+            if (!emailReg.test(pass)) {            
+                $("#idnpass").before('<span class="has-error">Minimum Seven characters, at least one uppercase letter, one lowercase letter, one number and one special character.</span>');
+                t = true;
+            }
+            else if (pass != repass) {
+                $('#idnpass').addClass('has-error');
+                $('#idcpass').addClass('has-error');
+                t = true;
+            }
+            else {
+                t = false;
+                $('#idnpass').removeClass('has-error').addClass('has-success');
+                $('#idcpass').removeClass('has-error').addClass('has-success');
+            }
+        });
 
         $("#btnpass").on("click", function () {
+            if (pass.length == 0) {
+                RdotAlerterrtxt1("Please Enter Password");
+                $("input[id='idnpass']").focus();
+                return
+            }
+            if (repass.length == 0) {
+                RdotAlerterrtxt1("Please Enter Confirm Password");
+                $("input[id='idcpass']").focus();
+                return
+            }
+            if (t == true) {
+                RdotAlerterrtxt1("Password does not match");
+                return
+            }
             $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }, function (response) {
                 if (response.data.Success == true) {
                     $("#btncls").trigger("click");
                     $("input[type='password']").val('');
                     RdotAlertSucesstxt(response.data.Message);
-                   
+
                 } else {
                     RdotAlerterrtxt1(response.data.Message);
                 }
             })
         })
-                                                        //$('#ulid li').removeAttr('class','');
-                                                        //$('#ulid li a').removeAttr('data-toggle', '');
+        //$('#ulid li').removeAttr('class','');
+    })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 
-    </script>
+</script>
+    <style>
+        .demo-scrollbar {
+            height: 300px;
+        }
+    </style>
 
 </body>
 </html>

@@ -99,7 +99,7 @@ namespace RDDStaffPortal.Controllers
                 if (str[0].Outtf == true)
                 {
                     string mailFormat = "<p class='MsoNormal'><br>" +
-                                                        "Dear <a href = '" + email + "' target = '_blank' > " + email + " </a>  <br>" +
+                                                        "Dear <a href = 'mailto:" + email + "' target = '_blank' > " + email + "</a><br>" +
                                                         "<br>" +
                                                         " Please click on below link to reset your password<br>" +
                                                         "<br>" +
@@ -128,22 +128,70 @@ namespace RDDStaffPortal.Controllers
         }
         [Route("ResetPwd")]
         public ActionResult ResetPwd()
-        {
-            string E = Request.QueryString["E"].ToString();
-            string VC = Request.QueryString["VC"].ToString();
-            string i = moduleDbOp.Ret_Code(E, VC);
-            if (i != "Found Record")
+      {
+            try
             {
+                string E = Request.QueryString["E"].ToString();
+                string VC = Request.QueryString["VC"].ToString();
+                string i = moduleDbOp.Ret_Code(E, VC);
+                if (i != "Found Record")
+                {
+                    Session["Errormsg"] = i;
+                    return RedirectToAction("ErrorPage", "Account");
+                }
+            }
+            catch (Exception)
+            {
+
+                Session["Errormsg"] = "Error Occur";
                 return RedirectToAction("ErrorPage", "Account");
             }
+
+           
 
             return View();
 
         }
+       
         [Route("ResetPassword")]
-        public ActionResult ResetPassword()
+        public ActionResult ResetPassword(string Passd,string email,string code)
         {
-            return RedirectToAction("SuccessPage", "Account");
+            
+           
+            AccountService accountService = new AccountService();
+           var k= accountService.ResetPassword(email, code, Passd);
+            string str = "SuccessPage";
+            if (k.Success == true)
+            {
+
+                string mailFormat = "<p class='MsoNormal'><br>" +
+                                                        "Dear <a href = 'mailto:" + email + "' target = '_blank'>" + email + " </a> <br>" +
+                                                        "<br>" +
+                                                        " You've successfully changed your Red Dot Distribution Partner password<br>" +
+                                                        "<br>" +
+                                                        
+                                                      
+                                                        "<br>" +
+                                                        "Best Regards,<br>" +
+                                                        "Red Dot Distribution </p> ";
+                var k1 = SendMail.Send(email, "", "your password was successfully reset", mailFormat, true);
+                if (k1 != "Mail Sent Succcessfully")
+                {
+                    k.Success = false;
+                    Session["Errormsg"] = k.Message;
+                }
+               
+
+
+                
+            }
+            else
+            {
+                Session["Errormsg"] = k.Message;
+                str = "ErrorPage";
+            }
+            return Json(k,JsonRequestBehavior.AllowGet);
+
         } 
         public ActionResult ErrorPage()
         {
