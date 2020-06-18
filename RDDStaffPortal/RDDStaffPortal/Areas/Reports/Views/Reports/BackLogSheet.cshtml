@@ -201,6 +201,7 @@
 
    
     $(document).ready(function () {
+        $(".loader1").show();
         var k1 = 0;
         while (tblhead1.length > k1) {
             if (jQuery.inArray(tblhead1[k1], tblhide) !== -1) {
@@ -285,12 +286,16 @@
                     $("#Ist").hide();
                     RdotAlerterrtxt1("No Record Found");
                 }
+            }, complete: function () {
+                $(".loader1").hide();
             }
+            
         });
 
 
         $("#btnsave").on("click", function () {
             debugger
+            $(".loader1").show();
             tblhide = [];
             $('input:checkbox').each(function () {
 
@@ -354,12 +359,15 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
 
         })
 
         $('.next').bind('click', function () {
+            $(".loader1").show();
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -409,11 +417,14 @@
                         RdotAlerterrtxt1("No Record Found");
                     }
 
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });
 
         $('.prev').bind('click', function () {
+            $(".loader1").show();
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -459,11 +470,14 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });
 
         $("#btnApply").on("click", function () {
+            $(".loader1").show();
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/BackLogSheetReport",
@@ -506,11 +520,14 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         })
         $("#Search-Forms-QuickLinks").on("keyup", function () {
             var value = $(this).val().toLowerCase();
+            $(".loader1").show();
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/BackLogSheetReport",
@@ -553,6 +570,8 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });

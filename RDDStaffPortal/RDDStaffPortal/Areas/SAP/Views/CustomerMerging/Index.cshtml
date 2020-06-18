@@ -20,6 +20,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
@@ -40,6 +41,7 @@
                 </div>
             </div>*@
                                 </div>
+                                <div class="loader1"></div>
                                 <div class="rowmin row">
                                     <div class="col-md-8" id="product">
                                         <div class="row">
@@ -81,7 +83,7 @@
                                             </div>
 
 
-                                         
+
                                         </div>
 
                                     </div>
@@ -91,7 +93,7 @@
 
                                             <div class="basket">
                                                 <div class="basket_list" id="pri1">
-                                                    <input id="hdnflag" value="false" type="hidden"/>
+                                                    <input id="hdnflag" value="false" type="hidden" />
                                                     <div class="head">
                                                         <span class="name">Primary Account -  Single</span>
 
@@ -120,9 +122,9 @@
 
                                     </div>
                                 </div>
-                               
+
                                 <div class="rowmin row">
-                                    
+
                                     <div class="col-md-8" id="product1">
                                         <div class="row">
                                             <div class="col-md-4 padd-l5 padd-r5">
@@ -211,8 +213,9 @@
     $(document).ready(function () {
         //$(function () {
 
-
+        $(".loader1").show();
         CustomerMapping.initialize();
+        $(".loader1").hide();
     });
 </script>
 <style>

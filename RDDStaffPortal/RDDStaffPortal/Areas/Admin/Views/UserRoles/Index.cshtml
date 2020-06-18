@@ -42,6 +42,7 @@
                                 </div>
                                 <div class="rowmin row">
                                     <div class="col-md-8" id="product">
+                                        <div class="loader1"></div>
                                         <div class="row">
                                             <div class="col-md-18 padd-l5 padd-r5">
                                                 <div class="panel">
@@ -186,7 +187,9 @@
     $(document).ready(function () {
         // To bind Roles on PageLoad
         //GetRoles();
+        $(".loader1").show();
         UserRole.initialize();
+        $(".loader1").hide();
 
 
     });

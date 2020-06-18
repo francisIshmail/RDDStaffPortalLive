@@ -300,12 +300,15 @@
                     $("#Ist").hide();
                     RdotAlerterrtxt1("No Record Found");
                 }
+            }, complete: function () {
+                $(".loader1").hide();
             }
         });
 
 
         $("#btnsave").on("click", function () {
             debugger
+            $(".loader1").show();
             tblhide = [];
             $('input:checkbox').each(function () {
 
@@ -372,12 +375,15 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
 
         })
 
         $('.next').bind('click', function () {
+            $(".loader1").show();
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -430,11 +436,13 @@
                         RdotAlerterrtxt1("No Record Found");
                     }
 
-                }
+                }, complete: function () {
+                    $(".loader1").hide();}
             });
         });
 
         $('.prev').bind('click', function () {
+            $(".loader1").show();
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -483,12 +491,66 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });
 
-
+        $("#btnApply").on("click", function () {
+            $(".loader1").show();
+            $.ajax({
+                type: "POST",
+                url: "/Reports/Reports/StockSheetReport",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    pagesize: 50,
+                    pageno: curPage,
+                    psearch: value1,
+                    Country: $("#Country").val(),
+                    BUGroup: $("#BUGroup").val(),
+                    BU: $("#BU").val(),
+                    Whsename: $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val()
+                }),
+                success: function (data) {
+                    $("#Ist").show();
+                    $("div#Ist").not(':first').remove();
+                    arr = data;
+                    if (arr.data != null && arr.data.length != 0) {
+                        var i = 0;
+                        while (arr.data.length > i) {
+                            var tr = $("#Ist").clone();
+                            var tr1 = $("#Ind").closest();
+                            var k = 0;
+                            var l1 = tr.find(".reddotTableCell").length;
+                            while (l1 > k) {
+                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                var t = tblhead1[k];
+                                debugger
+                                if (jQuery.inArray(t, tblhide) !== -1) {
+                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                }
+                                k++;
+                            }
+                            $("#Ibody").append(tr);
+                            i++;
+                        }
+                        $("#Ist")[0].remove();
+                    } else {
+                        $("#Ist").hide();
+                        RdotAlerterrtxt1("No Record Found");
+                    }
+                }, complete: function () {
+                    $(".loader1").hide();
+                }
+            });
+        })
         $("#Search-Forms-QuickLinks").on("keyup", function () {
+            $(".loader1").show();
             var value = $(this).val().toLowerCase();
             $.ajax({
                 type: "POST",
@@ -535,6 +597,8 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });

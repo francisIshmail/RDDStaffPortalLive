@@ -9,6 +9,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="rowmin row allwidgets">
+                <div class="loader1"></div>
                 <div class="col-12 col-md-9 padd-0">
                     <div class="leftwidgets">
                         @{ Html.RenderAction("GetDashBoardView", "Account");}
@@ -105,7 +106,14 @@
         });
     })
 
+
     $(document).ready(function () {
+
+        $(".loader1").show();
+
+   $("body").click(function (e) {
+            $('.scrollbar-inner').scrollbar();
+        });
         //$(function () {
 
         $("#widgetlist").append('<a class="col-6 col-md-4 p-0" href="#" data-toggle="modal" data-target="#SelectWidgetspopup">'
@@ -132,7 +140,7 @@
 
        
         DashBoard.initialize();
-
+        $(".loader1").hide();
 
 
     });

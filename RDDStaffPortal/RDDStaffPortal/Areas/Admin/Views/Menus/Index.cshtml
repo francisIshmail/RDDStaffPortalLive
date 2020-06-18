@@ -16,8 +16,8 @@
                     <div class="form-group">
                         <label for="email2" class="width100px">Types :</label>
                         <br />
-                        <input type="radio" id="rdbn" name="rdbtn" value="P"  checked   />Modules
-                        <input type="radio" id="rdbn"name="rdbtn"  value="M" />Menus
+                        <input type="radio" id="rdbn" name="rdbtn" value="P" checked />Modules
+                        <input type="radio" id="rdbn" name="rdbtn" value="M" />Menus
 
                     </div>
 
@@ -36,116 +36,118 @@
                 </div>
 
             </div>
-                <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="row addwidgetclass mar-b10">
-                                    <div class="col-md-12 padd-0">
-                                        <div class="form-group">
-                                            <label for="email2" class="width100px">Menu :</label>
-                                            <input type="hidden" id="txtMenuId" />
-                                            <input type="text" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
+           
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="row addwidgetclass mar-b10">
+                                <div class="col-md-12 padd-0">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Menu :</label>
+                                        <input type="hidden" id="txtMenuId" />
+                                        <input type="text" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">URL :</label>
+                                        <input type="text" class="form-control width220px" id="txtURL" placeholder="Enter URL">
+                                    </div>
+                                    <div class="form-group" id="divcss">
+                                        <label for="email2" class="width100px">CSS Class :</label>
+                                        <input type="text" class="form-control width150px" id="txtCssClass" placeholder="Css Class">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Display Seq :</label>
+                                        <input type="text" class="form-control width100px" placeholder="Sequence" id="txtDisplaySeq">
+                                    </div>
+                                    <div class="form-group" id="divmod">
+                                        <label for="email2" class="width120px">Module :</label>
+                                        <div class="input-group width160px">
+                                            <select class="form-control" id="ddlModules">
+                                            </select>
+                                            <input type="hidden" id="inpmodulehdn" />
+                                            @*<div class="input-group-append">
+                                            <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
+                                        </div>*@
                                         </div>
-                                        <div class="form-group">
-                                            <label for="email2" class="width100px">URL :</label>
-                                            <input type="text" class="form-control width220px" id="txtURL" placeholder="Enter URL">
-                                        </div>
-                                        <div class="form-group" id="divcss">
-                                            <label for="email2" class="width100px">CSS Class :</label>
-                                            <input type="text" class="form-control width150px" id="txtCssClass" placeholder="Css Class">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email2" class="width100px">Display Seq :</label>
-                                            <input type="text" class="form-control width100px" placeholder="Sequence" id="txtDisplaySeq">
-                                        </div>
-                                        <div class="form-group" id="divmod">
-                                            <label for="email2" class="width120px">Module :</label>
-                                            <div class="input-group width160px">
-                                                <select class="form-control" id="ddlModules">
-                                                </select>
-                                                <input type="hidden" id="inpmodulehdn" />
-                                                @*<div class="input-group-append">
-                    <span class="input-group-text" data-toggle="modal" data-target="#ModulesPopUp"><i class="fas fa-plus"></i></span>
-                </div>*@
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email2" class="width100px">Default</label>
-                                            <input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary">
-                                            @*<div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>*@
-                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Default</label>
+                                        <input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary">
+                                        @*<div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>*@
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="email2" class="width120px"></label>
-                                            <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu">Save</button></div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email2" class="width120px"></label>
-                                            <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnClearMenu">Clear</button></div>
-
-                                        </div>
-                                        
+                                    <div class="form-group">
+                                        <label for="email2" class="width120px"></label>
+                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnSaveMenu">Save</button></div>
 
                                     </div>
+                                    <div class="form-group">
+                                        <label for="email2" class="width120px"></label>
+                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new" id="btnClearMenu">Clear</button></div>
+
+                                    </div>
+
 
                                 </div>
-                                <div class="row">
-                                    <div class="table-responsive">
-                                        <table class="display table table-striped table-hover dataTable table-head-bg-info" id="tblMenusList">
-                                            <thead>
-                                                <tr>
-                                                    <th >#</th>
-                                                    <th>Name</th>
-                                                    <th>Levels</th>
-                                                    <th>URL</th>
-                                                    <th>Css Class</th>
-                                                    <th>SeqNo</th>
-                                                    @*<th class="width1px" style="visibility:hidden" >Id</th>*@
-                                                    <th>Module</th>
-                                                    <th>Default</th>
-                                                    <th></th>
-                                                    <th style="width: 10%">Actions</th>
-                                                </tr>
-                                            </thead>
 
-                                            <tbody>
-                                                <tr>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="loader1"></div>
+                                <div class="table-responsive">
+                                    <table class="display table table-striped table-hover dataTable table-head-bg-info" id="tblMenusList">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Levels</th>
+                                                <th>URL</th>
+                                                <th>Css Class</th>
+                                                <th>SeqNo</th>
+                                                @*<th class="width1px" style="visibility:hidden" >Id</th>*@
+                                                <th>Module</th>
+                                                <th>Default</th>
+                                                <th></th>
+                                                <th style="width: 10%">Actions</th>
+                                            </tr>
+                                        </thead>
 
-                                    @*<div class="row mar-t10">
-            <ul class="pagination pg-primary">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">«</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </div>*@
-
+                                        <tbody>
+                                            <tr>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+
+                            @*<div class="row mar-t10">
+                            <ul class="pagination pg-primary">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
 
                         </div>
 
                     </div>
 
                 </div>
+
             </div>
+        </div>
     </div>
 </div>
 
@@ -189,7 +191,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-
+        $(".loader1").show();
         $("#txtSearchMenus").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#tblMenusList tr").filter(function () {
@@ -200,6 +202,7 @@
        // To bind Modules on PageLoad
       //  BindModules();
         GetMenuList();
+        $(".loader1").hide();
        // $('#tblMenusList').DataTable().column(6).visible(false);
 
     });
@@ -536,7 +539,11 @@
         }).then((result) => {
             if (result.value) {                
                 $.getJSON("/Menus/DeleteMenu", { MenuId: tr.find('td').eq(0).text() }).done(function (data) {
-                   
+                    if (data.DeleteFlag == "Already Use") {
+                        RdotAlerterrtxt1(data.DeleteFlag);
+                        return
+                        $('#btnreload').trigger('click');
+                    }
                     if (data.DeleteFlag == "Deleted") {
                        tr.remove();
                         $('#btnreload').trigger('click');

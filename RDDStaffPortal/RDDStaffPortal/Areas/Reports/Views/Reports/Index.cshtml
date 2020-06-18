@@ -238,6 +238,7 @@
         return false;
     }
     $(document).ready(function () {
+        $(".loader1").show();
         var k1 = 0;
         while (tblhead1.length > k1) {
             debugger
@@ -294,6 +295,7 @@
         var value1 = $("#Search-Forms-QuickLinks").val().toLowerCase();
         var arr = [];
         var curPage = 1;
+       
         $.ajax({
             type: "POST",
             url: "/Reports/Reports/StockSheetReport",
@@ -340,10 +342,13 @@
                     RdotAlerterrtxt1("No Record Found");
                 }
             }
+            , complete: function () {
+                $(".loader1").hide();
+            }
         });
 
         $("#btnApply").on("click", function () {
-
+            $(".loader1").show();
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/StockSheetReport",
@@ -389,6 +394,8 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });
@@ -461,12 +468,15 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
 
         })
 
         $('.next').bind('click', function () {
+            $(".loader1").show();
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -520,10 +530,15 @@
                     }
 
                 }
+                , complete: function () {
+                    $(".loader1").hide();
+
+                }
             });
         });
 
         $('.prev').bind('click', function () {
+            $(".loader1").show();
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -573,12 +588,17 @@
                         RdotAlerterrtxt1("No Record Found");
                     }
                 }
+                , complete: function () {
+                    $(".loader1").hide();
+
+                }
             });
         });
 
 
         $("#Search-Forms-QuickLinks").on("keyup", function () {
             var value = $(this).val().toLowerCase();
+            $(".loader1").show();
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/StockSheetReport",
@@ -624,6 +644,9 @@
                         $("#Ist").hide();
                         RdotAlerterrtxt1("No Record Found");
                     }
+                },
+                complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });

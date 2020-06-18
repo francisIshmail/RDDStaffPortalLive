@@ -634,13 +634,14 @@
                             <input type="password" class="form-control input-full" id="idopass" placeholder="Old Password">
                         </div>
                     </div>
-                    <div class="form-group form-inline">
+                    <div class="form-group form-inline" id="dividnpass">
                         <label for="inlineinput" class="col-md-4 col-form-label">New Password :</label>
                         <div class="col-md-8">
                             <input type="password" class="form-control input-full" id="idnpass" placeholder="New Password">
                         </div>
                     </div>
-                    <div class="form-group form-inline">
+                    <small id="emailHelp" class="form-text text-danger"></small>
+                    <div class="form-group form-inline" id="dividcpass">
                         <label for="inlineinput" class="col-md-4 col-form-label">Conform Password :</label>
                         <div class="col-md-8">
                             <input type="password" class="form-control input-full" id="idcpass" placeholder="Conform Password">
@@ -755,11 +756,8 @@
             }, duration);
             document.body.appendChild(el);
         }
-        
+   
 
-        //$("body").click(function (e) {
-        //    $('.scrollbar-inner').scrollbar();
-        //});
 
        
         $(".Quic").on("click", function (e) {
@@ -860,20 +858,20 @@
             debugger
             pass = $("input[id='idnpass']").val();
             repass = $('input[id=idcpass]').val();
-            $("#idnpass").prev("span").remove();
+            $("#emailHelp").text('');
             if (!emailReg.test(pass)) {            
-                $("#idnpass").before('<span class="has-error">Minimum Seven characters, at least one uppercase letter, one lowercase letter, one number and one special character.</span>');
+                $("#emailHelp").text('Minimum Seven characters, at least one uppercase letter, one lowercase letter, one number and one special character.');
                 t = true;
             }
             else if (pass != repass) {
-                $('#idnpass').addClass('has-error');
-                $('#idcpass').addClass('has-error');
+                $('#dividnpass').addClass('has-error');
+                $('#dividcpass').addClass('has-error');
                 t = true;
             }
             else {
                 t = false;
-                $('#idnpass').removeClass('has-error').addClass('has-success');
-                $('#idcpass').removeClass('has-error').addClass('has-success');
+                $('#dividnpass').removeClass('has-error').addClass('has-success');
+                $('#dividcpass').removeClass('has-error').addClass('has-success');
             }
         });
 

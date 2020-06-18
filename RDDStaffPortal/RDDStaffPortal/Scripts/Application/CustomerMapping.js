@@ -307,6 +307,7 @@
 		//});
 
 		$("#btnmerge").on("click", function () {
+			$(".loader1").show();
 			debugger
 			var Parent_DBNametxt = '';
 			var Parent_CardCodetxt = '';
@@ -347,10 +348,12 @@
 			});
 			if (Cust.CustomerName == '') {
 				RdotAlerterrtxt('Please Add Primary Account');
+				$(".loader1").hide();
 				return
             }
 			if (Cust.ChildLists.length == 0) {
 				RdotAlerterrtxt('Please Add Secondary Account');
+				$(".loader1").hide();
 				return
             }
 			$.post("/SaveCustMap", Cust).done(function (response) {
@@ -362,7 +365,8 @@
 					$('#txtsearch').trigger("keyup");
 				} else {
 					RdotAlerterr(response.errormsg);
-                }
+				}
+				$(".loader1").hide();
             })
 
 

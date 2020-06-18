@@ -15,10 +15,11 @@
         
         var tf = true;
         $("#Userid").on("change", function () {
-
+            $(".loader1").show();
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0' && tf == true) {
                 RdotAlerterrtxt("Please select  User");
+                $(".loader1").hide();
                 return false
 
             }
@@ -32,6 +33,7 @@
             $('#product ul li').find("input[id='hdnuse']").val('false');
             debugger
             AddSecondary(Userid);
+            $(".loader1").hide();
         });
 
        
@@ -338,6 +340,7 @@
         //Save 
         $("#btnsave").on("click", function () {
             debugger
+            $(".loader1").show();
             var UserName = $('#Userid Option:selected').val();
             var WebRepLists = [];
             $("#pri1  ul li").each(function () {
@@ -352,10 +355,12 @@
             });
             if (UserName == '') {
                 RdotAlerterrtxt('Please Select User Name');
+                $(".loader1").hide();
                 return
             }
             if (WebRepLists.length == 0) {
                 RdotAlerterrtxt('Please Add Report');
+                $(".loader1").hide();
                 return
             }
             $.post("/UserRoles/AddUserToRole", { Username: UserName, Role: WebRepLists }).done(function (response) {
@@ -381,6 +386,7 @@
                 } else {
                     RdotAlerterr(response.Message);
                 }
+                $(".loader1").hide();
             })
 
 
