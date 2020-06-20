@@ -1507,6 +1507,10 @@ background: none;
     border-top: 3px #48ABF7 solid;
 }
 
+.demo-scrollbar-50 {
+    height: 50px;
+}
+
 .demo-scrollbar-100 {
     height: 100px;
 }

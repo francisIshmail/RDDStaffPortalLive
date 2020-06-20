@@ -7,9 +7,11 @@
 <script src="~/Scripts/Application/Dashboardjs.js"></script>
 <div class="main-panel">
     <div class="container">
+
         <div class="page-inner">
+            <div class="loader1"></div>
             <div class="rowmin row allwidgets">
-                <div class="loader1"></div>
+
                 <div class="col-12 col-md-9 padd-0">
                     <div class="leftwidgets">
                         @{ Html.RenderAction("GetDashBoardView", "Account");}

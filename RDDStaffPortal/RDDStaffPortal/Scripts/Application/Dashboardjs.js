@@ -7,7 +7,8 @@
 	Attachevent: function () {
 		
 		var Cards = [];
-	
+		$(".loader1").show();
+
 		$("#Firstcard").each(function (index, item){
 			
 			var url = $(this).find("#hdnurl").val();
@@ -524,6 +525,7 @@
 
 		})
 		
+		$(".loader1").hide();
 
 	}
 }

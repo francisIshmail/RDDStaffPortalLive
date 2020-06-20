@@ -6,7 +6,7 @@
 	},
 	Attachevent: function () {
 
-		
+		$('#product1,#product').hide();
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
@@ -28,7 +28,7 @@
         RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM");
         RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML");
         RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI");
-		
+		$('#product1,#product').show();
 		debugger
 		// jQuery UI Draggable
 		$("#product  li").draggable({

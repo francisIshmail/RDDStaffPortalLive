@@ -18,7 +18,7 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card"> 
                         <div class="card-body">
 
                             <div class="table-responsive">
@@ -94,11 +94,11 @@
                                             <div class="basket">
                                                 <div class="basket_list" id="pri1">
                                                     <input id="hdnflag" value="false" type="hidden" />
-                                                    <div class="head">
+                                                    <div class="head" >
                                                         <span class="name">Primary Account -  Single</span>
 
                                                     </div>
-                                                    <ul id="pr1">
+                                                    <ul id="pr1" class="demo-scrollbar-50">
                                                     </ul>
                                                 </div>
                                             </div>
@@ -109,10 +109,10 @@
                                                         <span class="name">Secondary Account -  Multiples</span>
 
                                                     </div>
-                                                    <ul id="se1">
+                                                    <ul id="se1"  class="demo-scrollbar-130 scrollbar-inner">
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> 
 
                                             <div class="card-action">
                                                 <button class="btn btn-success btn-sm" id="btnmerge">Merge</button>
@@ -214,6 +214,7 @@
         //$(function () {
 
         $(".loader1").show();
+        $('.scrollbar-inner').scrollbar();
         CustomerMapping.initialize();
         $(".loader1").hide();
     });
