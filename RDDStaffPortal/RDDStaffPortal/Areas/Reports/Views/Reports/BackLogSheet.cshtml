@@ -13,7 +13,7 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-sm mar-b10" id="FilterBtn">  Search <span class="btn-label"> </span> <i class="fas fa-angle-down"></i></button>
+                    <button class="btn btn-info btn-sm mar-b10" id="FilterBtn">  <span class="btn-label"> </span> <i class="fas fa-filter"></i></button>
                 </div>
             </div>
             <div class="rowmin" id="FilterSection" style="display:none">
@@ -48,7 +48,7 @@
                                 <div class="col-xl-1 col-md-1 ml-auto">
                                     <div class="form-group">
                                         <label for="email2" class="width100px"></label>
-                                        <button class="btn btn-success btn-sm" id="btnApply">Apply</button>
+                                        <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +74,8 @@
 
                                 <div class="col-xl-2 col-md-2 ml-auto text-right">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Export to Excel"><a href="/Reports/Reports/DownloadToExcel3" class="fas fa-file-excel"></a></button>
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Export to Excel"><a href="/Reports/Reports/DownloadToExcel3" class="fas fa-file-excel"></a></button>
 
 
                                     </div>
@@ -200,7 +200,9 @@
     $(".loader1").hide();
 
    
-    $(document).ready(function () 
+    $(document).ready(function () {
+
+
 
         $(".loader1").show();
         var k1 = 0;
