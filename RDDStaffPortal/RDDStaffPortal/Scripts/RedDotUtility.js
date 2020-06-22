@@ -167,6 +167,9 @@ function RdottableNDW(tblid, url1, colms) {
         },
 
         "aoColumns": colms
+        , "fnDrawCallback": function () {
+            $("input[id='chkIsDefault']").bootstrapToggle();
+        }
     });
 
     var delay = (function () {
