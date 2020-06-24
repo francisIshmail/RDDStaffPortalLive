@@ -218,6 +218,15 @@ body {
     color: #F25961 !important;
 }
 
+.card-body .icon-preview {
+    cursor: pointer;
+    margin-top: 4px;
+    color: #e7483e;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    font-size:20px;
+}
+
 .panelbg-1 {
     background: #23b7e5 !important;
 }
@@ -338,10 +347,9 @@ body {
 }
 
 .login-section .form-control {
-    border-color: #cacaca!important;
-    color: #b3b3b3!important;
+    border-color: #cacaca;
+    color: #b3b3b3;
 }
-
 
 .login-section .login-btn{background: #ed1b24!important;
     padding:9px 25px!important;
@@ -427,25 +435,6 @@ body {
     vertical-align: top;
     border-radius: 5px;
 }
-/*Nikhilesh  Left & Right*/
-.reddotTableCellLeft {
-    display: table-cell;
-    padding: 5px;
-    text-align: left;
-    border: 2px solid #fff;
-    line-height: 17px;
-    vertical-align: top;
-    border-radius: 5px;
-}
-.reddotTableCellRight {
-    display: table-cell;
-    padding: 5px;
-    text-align: right;
-    border: 2px solid #fff;
-    line-height: 17px;
-    vertical-align: top;
-    border-radius: 5px;
-}
 .reddotTableHead {
     display: table-cell;
     padding: 5px;
@@ -497,25 +486,6 @@ body {
     font-size: 11px !important;
     border: 1px solid #fff
 }
-.sm-form .reddotTableCellLeft {
-    display: table-cell;
-    padding: 5px;
-    text-align: left;
-    border: 2px solid #fff;
-    line-height: 17px;
-    vertical-align: top;
-    border-radius: 5px;
-}
-
-.sm-form .reddotTableCellRight {
-    display: table-cell;
-    padding: 5px;
-    text-align: right;
-    border: 2px solid #fff;
-    line-height: 17px;
-    vertical-align: top;
-    border-radius: 5px;
-}
 
 .sm-form .reddotTableCell {
     padding: 3px;
@@ -556,8 +526,8 @@ body {
     margin: -1px !important;
 }
     .panel .panel-heading {
-        background: #ed1b24 !important; /*#266091;*/
-        padding: 4px 10px;
+        background: #ed1b24 !important; /*#266091;*/ 
+            padding: 4px 10px;
         font-size: 16px;
         color: #fff;
         width: 100%;
@@ -567,6 +537,26 @@ body {
         display: block;
         font-weight: normal !important;
     }
+/*Nikhilesh Left & Right*/
+.reddotTableCellLeft {
+    display: table-cell;
+    padding: 5px;
+    text-align: left;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
+}
+
+.reddotTableCellRight {
+    display: table-cell;
+    padding: 5px;
+    text-align: right;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
+}
 .main-panel > .container {
     padding: 0px !important;
     min-height: calc(100% - 123px);
@@ -1542,10 +1532,6 @@ background: none;
 }
 .border2 {
     border-top: 3px #48ABF7 solid;
-}
-
-.demo-scrollbar-50 {
-    height: 50px;
 }
 
 .demo-scrollbar-100 {
@@ -3103,16 +3089,6 @@ img.fnone {
                 height: 40px;
                 line-height: 40px;
             }
-.excel-btn {
-    vertical-align: middle;
-    cursor: pointer;
-    display: inline-block;
-}
-
-    .excel-btn .fa-file-excel {
-        font-size: 31px;
-        color: #03603e;
-    }
 
             .file-upload .file-select.file-select-disabled:hover .file-select-name {
                 line-height: 40px;
@@ -3121,4 +3097,67 @@ img.fnone {
             }
 .font-11px .form-group label {
     font-size: 11px!important;
+}
+
+.table-responsive {
+    width: 100% !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    white-space: nowrap;
+}
+
+.modal {
+    top: 80px;
+}
+
+@media (min-width: 1200px) {
+    .col-xl-1 {
+        width: auto !important;
+    }
+}
+
+@media (min-width: 768px){
+    .col-md-1 {
+        width: auto !important;
+    }}
+
+.excel-btn {
+    vertical-align: middle;
+    cursor:pointer;
+            display: inline-block;
+}
+    .excel-btn .fa-file-excel {
+        font-size: 31px;
+        color: #03603e;
+    }
+
+.sidebar .nav > .nav-item a p, .sidebar[data-background-color="white"] .nav > .nav-item a p {
+    font-size: 13px;
+    margin-bottom: 0px;
+    margin-right: 5px;
+    white-space: nowrap;
+    color: #8d9498;
+}
+.sidebar.sidebar-style-2 .nav .nav-item a {
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+.sidebar .nav-collapse li a .sub-item, .sidebar[data-background-color="white"] .nav-collapse li a .sub-item {
+    font-size: 12px;
+    position: relative;
+    margin-left: 25px;
+    opacity: .85;
+}
+
+.sidebar .nav-collapse li a, .sidebar[data-background-color="white"] .nav-collapse li a {
+    margin-bottom: 0px !important;
+    padding: 5px 0px !important;
+}
+
+.sidebar .nav-collapse, .sidebar[data-background-color="white"] .nav-collapse {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
