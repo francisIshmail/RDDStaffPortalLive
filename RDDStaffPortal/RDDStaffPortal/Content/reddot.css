@@ -427,6 +427,25 @@ body {
     vertical-align: top;
     border-radius: 5px;
 }
+/*Nikhilesh  Left & Right*/
+.reddotTableCellLeft {
+    display: table-cell;
+    padding: 5px;
+    text-align: left;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
+}
+.reddotTableCellRight {
+    display: table-cell;
+    padding: 5px;
+    text-align: right;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
+}
 .reddotTableHead {
     display: table-cell;
     padding: 5px;
@@ -477,6 +496,25 @@ body {
     height: 1.40rem !important;
     font-size: 11px !important;
     border: 1px solid #fff
+}
+.sm-form .reddotTableCellLeft {
+    display: table-cell;
+    padding: 5px;
+    text-align: left;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
+}
+
+.sm-form .reddotTableCellRight {
+    display: table-cell;
+    padding: 5px;
+    text-align: right;
+    border: 2px solid #fff;
+    line-height: 17px;
+    vertical-align: top;
+    border-radius: 5px;
 }
 
 .sm-form .reddotTableCell {
@@ -3065,6 +3103,16 @@ img.fnone {
                 height: 40px;
                 line-height: 40px;
             }
+.excel-btn {
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+
+    .excel-btn .fa-file-excel {
+        font-size: 31px;
+        color: #03603e;
+    }
 
             .file-upload .file-select.file-select-disabled:hover .file-select-name {
                 line-height: 40px;

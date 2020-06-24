@@ -795,36 +795,52 @@
 
 
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
-
-                            e.preventDefault();
                            
-                            // tempAlert('Add to Quick Links', 500);
-                            //  RdotAlertSucesstxt(response.ErrorMsg);
+                           
                         } else {
                             //  tempAlert(response.ErrorMsg, 500);
                             //  RdotAlerterrtxt(response.ErrorMsg);
                         }
+                    }, complete: function () {
+                        $(document).ready(function () {
+                            $('.scrollbar-inner').scrollbar();
+                        });
                     }
 
                 });
             } else {
-                $.post("/DeleteActivity", { QuickLinkid: k }).done(function (response) {
-                    if (response == true) {
+               // $.post("/DeleteActivity", { QuickLinkid: k }).done(function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/DeleteActivity",
+                    contentType: "application/json",
+                    dataType: "json",
+                    async: false,
+                    data: JSON.stringify({
+                        QuickLinkid: k
+                    }),
+                    success: function (response) {
+                        if (response == true) {
                          @*var newUrl= '@Url.Action("index", "Dashboard")';
                         window.location.href = newUrl;*@
-                        $(".rights1").load('@Url.Action("GetRightSide", "Dashboard")');
+                            $(".rights1").load('@Url.Action("GetRightSide", "Dashboard")');
 
-                        tr[0].title = 'Added Quick Links';
-                        tr.removeClass("fas fa-star Quic");
-                        tr.addClass("icon-star Quic");
-                        tr.offsetParent().find("#hdnQLink").val('0');
-                       
-                        e.preventDefault();
-                        // tempAlert('Remove Quick Links', 500);
-                    } else {
-                        // tempAlert('Error Occur', 500);
+                            tr[0].title = 'Added Quick Links';
+                            tr.removeClass("fas fa-star Quic");
+                            tr.addClass("icon-star Quic");
+                            tr.offsetParent().find("#hdnQLink").val('0');
+                           
+
+                            // tempAlert('Remove Quick Links', 500);
+                        } else {
+                            // tempAlert('Error Occur', 500);
+                        }
+                    }, complete: function () {
+                        $(document).ready(function () {
+                            $('.scrollbar-inner').scrollbar();
+                        });
                     }
-                })
+                });
 
             }
 
@@ -840,6 +856,15 @@
 
         
 
+        $('#ChangePasswordPopup').on('hidden.bs.modal', function (e) {
+            $(this)
+                .find("input,textarea,select")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end().find("#emailHelp").text('');
+        })
         //$("#btnpass").on("click", function){
 
         //    $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }
@@ -848,19 +873,26 @@
         //    )
         //})
         //  })
+        
+        $("input[id='idnpass'],input[id='idcpass']").on("keypress", function (e) {                 
+            $("#emailHelp").text('');
+            if (e.charCode==95) {
+                $("#emailHelp").text('Underscore not allow.');
+                e.preventDefault();
+            }
 
-
+        });
         var t = true;
         var pass = "";
         var repass = '';
-        var emailReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{7,}$/;
-        $("input[id='idnpass'],input[id='idcpass']").blur(function () {
-            debugger
+        var emailReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{8,}$/;
+        $("input[id='idnpass'],input[id='idcpass']").blur(function (e) {
+            
             pass = $("input[id='idnpass']").val();
             repass = $('input[id=idcpass]').val();
             $("#emailHelp").text('');
             if (!emailReg.test(pass)) {            
-                $("#emailHelp").text('Minimum Seven characters, at least one uppercase letter, one lowercase letter, one number and one special character.');
+                $("#emailHelp").text('Minimum Eight characters, at least one uppercase letter, one lowercase letter, one number and one special character & Underscore not allow.');
                 t = true;
             }
             else if (pass != repass) {

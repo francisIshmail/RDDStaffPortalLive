@@ -9,12 +9,11 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Inventory Sheet Report</h4>
-            </div>
-            <div class="rowmin">
-                <div class="col-md-12">
-                    <button class="btn btn-info btn-sm mar-b10" id="FilterBtn">  <span class="btn-label"> </span> <i class="fas fa-filter"></i></button>
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Inventory Sheet Report</h4>
                 </div>
+                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+
             </div>
             <div class="rowmin" id="FilterSection" style="display:none">
 
@@ -97,9 +96,9 @@
 
                                 <div class="col-xl-2 col-md-2 ml-auto text-right">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Export to Excel"><a href="/Reports/Reports/DownloadToExcel2" class="fas fa-file-excel"></a></button>
-
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+                                        
+                                        <a href="/Reports/Reports/DownloadToExcel2" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
 
                                     </div>
                                 </div>
@@ -118,9 +117,9 @@
                                             <div class="reddotTableHead"><div> WhseStatus</div></div>
                                             <div class="reddotTableHead"><div> BU</div></div>
                                             <div class="reddotTableHead"><div> OrderType</div></div>
-                                           
+
                                             <div class="reddotTableHead"><div> Qty</div></div>
-                                           
+
                                             <div class="reddotTableHead"><div> WhseOwner</div></div>
                                             <div class="reddotTableHead"><div> ProdCategory</div></div>
                                             <div class="reddotTableHead"><div> ProdLine</div></div>
@@ -131,20 +130,20 @@
                                     <div id="Ibody" class="reddotTableBody">
                                         <div id="Ist" class="reddotTableRow odd-even-row">
 
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                           
-                                           
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+
+
 
                                         </div>
 
@@ -186,7 +185,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btnsave" type="button" class="btn btn-info btn-sm">Save</button>
+                <button id="btnsave" type="button" class="btn btn-info btn-sm">Apply</button>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -280,13 +279,13 @@
                         var tr = $("#Ist").clone();
                         var tr1 = $("#Ind").closest();
                         var k = 0;
-                        var l1 = tr.find(".reddotTableCell").length;
+                        var l1 = tr.find(".Abcd").length;
                         while (l1 > k) {
-                            tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                             var t = tblhead1[k];
                             debugger
                             if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                tr.find(".Abcd").eq(k).addClass("Abc")
                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                             }
 
@@ -349,16 +348,16 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 if (jQuery.inArray(t, tblhide) !== -1) {
                                     debugger
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc");
+                                    tr.find(".Abcd").eq(k).addClass("Abc");
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc");
                                 } else {
-                                    tr.find(".reddotTableCell").eq(k).removeClass("Abc");
+                                    tr.find(".Abcd").eq(k).removeClass("Abc");
                                     tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc");
                                 }
 
@@ -416,13 +415,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -474,13 +473,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -527,13 +526,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -582,13 +581,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -618,6 +617,6 @@
 </script>
 <style>
     .Abc {
-        display: none;
+        display: none !important;
     }
 </style>

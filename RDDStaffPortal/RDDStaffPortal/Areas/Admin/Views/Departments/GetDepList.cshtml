@@ -1,0 +1,40 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_Departments>
+
+@foreach (var items in Model)
+{
+
+
+<div class="col-12 col-sm-6 col-md-2">
+    <div class="card danger-border">
+        <div class="card-body">
+            <div class="departmentedit">
+                <div class="quickmenu">
+                    <button class="btn btn-toggle ml-auto" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item announce" href="#" data-toggle="modal"><i class="fas fa-pencil-alt"></i> Edit</a>
+                        <a class="dropdown-item announcedel" href="#" data-toggle="modal"><i class="fas fa-trash-alt"></i>Delete</a>
+
+                    </div>
+                </div>
+                <input type="hidden" id="hdnDepid-@items.DeptId" value="@items.DeptId" />
+                @if (@items.IsActive == true)
+                {
+                    <input type="hidden" id="hdnIsActive-@items.DeptId" value=true />
+                }
+                else
+                {
+                    <input type="hidden" id="hdnIsActive-@items.DeptId" value=false />
+                }
+
+
+                <input type="hidden" id="hdnDeptname-@items.DeptId" value="@items.DeptName" />
+                <div class="text-center mar-t10 min-height50px">
+                    <h6>@items.DeptName</h6>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+}

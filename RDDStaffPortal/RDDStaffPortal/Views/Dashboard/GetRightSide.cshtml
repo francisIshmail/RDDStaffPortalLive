@@ -1,6 +1,33 @@
 ﻿@model List<RDDStaffPortal.DAL.DataModels.RDD_RightSide>
-    
-@if(Model.Count()>0 && Model!= null)
+
+@if (Model.Count() > 0 && Model != null)
 {
     @RDD_RighSide.GetRightSide(Model)
+}
+else
+{
+    <div class="col-md-12 padd-l0">
+        <div class="card">
+            <div class="card-header">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="Search-1-QuickLinks" placeholder="Search Forms- Quick Links">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="demo-scrollbar-130 scrollbar-inner">
+                    <ul class="widgets-list" id="Forms-1">
+
+                       
+
+                            
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 }

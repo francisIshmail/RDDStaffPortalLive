@@ -710,6 +710,7 @@
     <Content Include="Areas\Reports\Views\Reports\BackLogSheet.cshtml" />
     <Content Include="Areas\Admin\Views\JobGrade\Index.cshtml" />
     <Content Include="Areas\Admin\Views\JobBand\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Departments\GetDepList.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

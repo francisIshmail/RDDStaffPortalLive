@@ -100,7 +100,7 @@
 
     $(function () {
         $("body").on("keyup", function () {
-            debugger
+           
            var value = $("#Search-Forms-QuickLinks").val().toLowerCase();
             $("#Forms-1 li").find("a").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
