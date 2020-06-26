@@ -1,9 +1,11 @@
 ﻿using RDDStaffPortal.DAL.DataModels;
+using RDDStaffPortal.DAL.DataModels.Report;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -147,6 +149,75 @@ namespace RDDStaffPortal.DAL.Report
             return Objlist;
         }
 
+        public List<RDD_Expense> GetRDDExpenseList(string UserName, int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb,string Month,string year)
+        {
+            List<RDD_Expense> Objlist = new List<RDD_Expense>();
+            try
+            {
+
+                SqlParameter[] parm = { new SqlParameter("@p_Search", psearch)
+                        , new SqlParameter("@p_PageNo", pageno),
+                new SqlParameter("@p_PageSize",pagesize),
+                new SqlParameter("@p_SortColumn", "Country"),
+                new SqlParameter("@p_SortOrder", "Desc"),
+                new SqlParameter("@p_UserName", UserName),
+                new SqlParameter("@p_Country", Country),
+                new SqlParameter("@P_Project", Project),
+                new SqlParameter("@p_SourceDb", SourceDb),
+                new SqlParameter("@p_Month",Month),
+                new SqlParameter("@p_Year",year),
+                new SqlParameter("@p_flag","I")
+                };
+                //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheet", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        Objlist.Add(new RDD_Expense()
+                        {
+                            SourceDb = !string.IsNullOrWhiteSpace(dr["SourceDb"].ToString()) ? dr["SourceDb"].ToString() : "",
+                            Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
+                            Project = !string.IsNullOrWhiteSpace(dr["Project"].ToString()) ? dr["Project"].ToString() : "",
+                            Acct = !string.IsNullOrWhiteSpace(dr["Acct"].ToString()) ? dr["Acct"].ToString() : "",
+                            AcctCode = !string.IsNullOrWhiteSpace(dr["AcctCode"].ToString()) ? dr["AcctCode"].ToString() : "",
+                            Country = !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "",
+                            Qtr = !string.IsNullOrWhiteSpace(dr["Qtr"].ToString()) ? dr["Qtr"].ToString() : "",
+                           Refrence= !string.IsNullOrWhiteSpace(dr["Refrence"].ToString()) ? dr["Refrence"].ToString() : "",
+                            TxDate  = !string.IsNullOrWhiteSpace(dr["TxDate"].ToString()) ?Convert.ToDateTime(dr["TxDate"].ToString()) :System.DateTime.Now ,
+                            SourceDbCode = !string.IsNullOrWhiteSpace(dr["SourceDbCode"].ToString()) ? dr["SourceDbCode"].ToString() : "",
+                            TransType= !string.IsNullOrWhiteSpace(dr["TransType"].ToString()) ? dr["TransType"].ToString() : "",
+                           weekNo= !string.IsNullOrWhiteSpace(dr["weekNo"].ToString()) ? dr["weekNo"].ToString() : "",
+                           TransId = !string.IsNullOrWhiteSpace(dr["TransId"].ToString()) ? dr["TransId"].ToString() : "",
+                           TotalSC = !string.IsNullOrWhiteSpace(dr["TotalSC"].ToString()) ? Convert.ToDecimal(dr["TotalSC"].ToString()) : 0,
+                            RowNum = !string.IsNullOrWhiteSpace(dr["RowNum"].ToString()) ? Convert.ToInt32(dr["RowNum"].ToString()) : 0,
+                            Rate = !string.IsNullOrWhiteSpace(dr["Rate"].ToString()) ? Convert.ToDecimal(dr["Rate"].ToString()) : 0,
+                            DebitSC = !string.IsNullOrWhiteSpace(dr["DebitSC"].ToString()) ? Convert.ToDecimal(dr["DebitSC"].ToString()) : 0,
+                            TotalLC = !string.IsNullOrWhiteSpace(dr["TotalLC"].ToString()) ? Convert.ToDecimal(dr["TotalLC"].ToString()) : 0,
+                            TotalFC = !string.IsNullOrWhiteSpace(dr["TotalFC"].ToString()) ? Convert.ToDecimal(dr["TotalFC"].ToString()) : 0,
+                            DebitLC = !string.IsNullOrWhiteSpace(dr["DebitLC"].ToString()) ? Convert.ToDecimal(dr["DebitLC"].ToString()) : 0,
+                            CreditLC = !string.IsNullOrWhiteSpace(dr["CreditLC"].ToString()) ? Convert.ToDecimal(dr["CreditLC"].ToString()) : 0,
+                            DebitFC = !string.IsNullOrWhiteSpace(dr["DebitFC"].ToString()) ? Convert.ToDecimal(dr["DebitFC"].ToString()) : 0,
+                            CreditFC = !string.IsNullOrWhiteSpace(dr["CreditFC"].ToString()) ?Convert.ToDecimal(dr["CreditFC"].ToString()) : 0,
+                            Year = !string.IsNullOrWhiteSpace(dr["Year"].ToString()) ? dr["Year"].ToString() : "",
+                            month = !string.IsNullOrWhiteSpace(dr["month"].ToString()) ? dr["month"].ToString() : "",
+                            TotalCount = !string.IsNullOrWhiteSpace(dr["TotalCount"].ToString()) ? Convert.ToInt32(dr["TotalCount"].ToString()) : 0
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Objlist = null;
+            }
+
+
+
+            return Objlist;
+        }
         public DataSet GetDrop()
         {
             SqlParameter[] parm = {               
@@ -161,13 +232,30 @@ namespace RDDStaffPortal.DAL.Report
             DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet_Drop", CommandType.StoredProcedure, parm);
             return dsModules;
         }
+        public DataSet GetDrop2()
+        {
+            SqlParameter[] parm = {
+                };
+            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_Expense_Drop", CommandType.StoredProcedure, parm);
+            return dsModules;
+        }
         public DataTable Getdata3(string Username)
         {
             SqlParameter[] parm = { 
-                new SqlParameter("@p_flag","I1")
+                new SqlParameter("@p_flag","II")
                 };
            
             DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet", CommandType.StoredProcedure, parm);
+            DataTable dt = dsModules.Tables[0];
+            return dt;
+        }
+        public DataTable Getdata4(string Username)
+        {
+            SqlParameter[] parm = {
+                new SqlParameter("@p_flag","II")
+                };
+
+            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheet", CommandType.StoredProcedure, parm);
             DataTable dt = dsModules.Tables[0];
             return dt;
         }

@@ -16,6 +16,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataTable = System.Data.DataTable;
 using ClosedXML.Excel;
+using RDDStaffPortal.DAL.DataModels.Report;
 
 namespace RDDStaffPortal.Areas.Reports.Controllers
 {
@@ -236,7 +237,82 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             return View(_RDD_Back);
         }
 
+        public ActionResult ExpenseSheet()
+        {
+           RDD_Expense _RDD_Exp = new RDD_Expense();
 
+            List<Rdd_comonDrop> CountryList = new List<Rdd_comonDrop>();
+
+            List<Rdd_comonDrop> ProjectList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> SourceDbList = new List<Rdd_comonDrop>();
+
+            List<Rdd_comonDrop> MonthList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> YearList = new List<Rdd_comonDrop>();
+            DataSet dsModules = _ReptOp.GetDrop2();
+            if (dsModules.Tables.Count > 0)
+            {
+                DataTable dtModule;
+                DataRowCollection drc;
+                dtModule = dsModules.Tables[0];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    SourceDbList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["SourceDb"].ToString()) ? dr["SourceDb"].ToString() : "",
+                    });
+                }
+
+                dtModule = dsModules.Tables[2];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    ProjectList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["Project"].ToString()) ? dr["Project"].ToString() : "",
+                    });
+                }
+                dtModule = dsModules.Tables[3];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    MonthList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["MONTH"].ToString()) ? dr["MONTH"].ToString() : "",
+                    });
+                }
+
+
+                dtModule = dsModules.Tables[4];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    YearList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["Year"].ToString()) ? dr["Year"].ToString() : "",
+                    });
+                }
+                dtModule = dsModules.Tables[1];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    CountryList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["country"].ToString()) ? dr["country"].ToString() : "",
+                    });
+                }
+
+
+
+            }
+
+            ViewBag.SourceDbList = new SelectList(SourceDbList, "Code", "Code");
+            ViewBag.ProjectList = new SelectList(ProjectList, "Code", "Code");
+            ViewBag.CountryList = new SelectList(CountryList, "Code", "Code");
+            ViewBag.MonthList = new SelectList(MonthList, "Code", "Code");
+            ViewBag.YearList = new SelectList(YearList, "Code", "Code");
+            return View(_RDD_Exp);
+        }
 
         public ActionResult BackLogSheetReport(int pagesize, int pageno, string psearch, string MappBU, string BUGroup, string MappProj)
         {
@@ -246,6 +322,11 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
         public ActionResult StockSheetReport(int pagesize, int pageno, string psearch, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus)
         {
             return Json(new { data = _ReptOp.GetRDDCustMergList(User.Identity.Name, pagesize, pageno, psearch,Country,BUGroup,BU,Whsename,WhseOwn,WhseStatus) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ExpenseSheetReport(int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb, string Month, string year)
+        {
+            return Json(new { data = _ReptOp.GetRDDExpenseList(User.Identity.Name, pagesize, pageno, psearch, Country,Project,SourceDb,Month,year) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DownloadToExcel3()
@@ -273,7 +354,31 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
             //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
+        public ActionResult DownloadToExcel4()
+        {
+            DataTable dt = _ReptOp.Getdata4(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ExpenseSheet.xlsx");
+                }
+            }
+            //var grdReport = new System.Web.UI.WebControls.GridView();
+            //DataTable dt = _ReptOp.Getdata3(User.Identity.Name);
+            //dt.Columns.Remove("RowNum");
+            //dt.Columns.Remove("TotalCount");
 
+            //grdReport.DataSource = dt;
+            //grdReport.DataBind();
+            //System.IO.StringWriter sw = new System.IO.StringWriter();
+            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            //grdReport.RenderControl(htw);
+            //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
+            //return File(bindata, "application/ms-excel", "ReportFile.xls");
+        }
         public ActionResult DownloadToExcel2()
         {
             DataTable dt = _ReptOp.Getdata1(User.Identity.Name);
