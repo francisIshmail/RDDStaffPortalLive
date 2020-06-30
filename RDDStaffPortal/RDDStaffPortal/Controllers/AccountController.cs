@@ -109,7 +109,7 @@ namespace RDDStaffPortal.Controllers
                                                         "<br>" +
                                                         "Best Regards,<br>" +
                                                         "Red Dot Distribution </p> ";
-                    var k = SendMail.Send(email, "", "Reset Password Link For Red Dot Distribution Portal", mailFormat, true);
+                    var k = SendMail.Send(email, "", "Reset your account password", mailFormat, true);
                     if (k != "Mail Sent Succcessfully")
                     {
                         response.Success = false;

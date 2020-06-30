@@ -95,6 +95,7 @@
     <Compile Include="DataModels\RDD_WebReportsList.cs" />
     <Compile Include="DataModels\RDD_WebReportsUser.cs" />
     <Compile Include="DataModels\Report\RDD_Expense.cs" />
+    <Compile Include="DataModels\Report\RDD_TrailBalance.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HR\BUCountriesDbOperations.cs" />

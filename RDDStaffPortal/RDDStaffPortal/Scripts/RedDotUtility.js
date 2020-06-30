@@ -179,7 +179,13 @@ function RdottableNDW(tblid, url1, colms) {
             timer = setTimeout(callback, ms);
         };
     })();
+    $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+        debugger
 
+        RdotAlerterrtxt1(message);
+
+        location.reload("/login/login");
+    };
     table.columns().eq(0).each(function (colIdx) {
         $('input', $('#' + tblid + ' tfoot th')[colIdx]).bind('keyup', function () {
             debugger;
@@ -650,4 +656,78 @@ function RdotDropimg1(ids, url,path) {
         }
         return $state;
     }
+}
+
+// This function is to show sucess message
+
+function RedDotAlert_Success(message) {
+
+    Swal.queue([{
+
+        type: 'success',
+
+        title: 'Success..',
+
+        html: '<p style="font-size: 12px;text-align:center">' + message + '</p>',
+
+        allowOutsideClick: false,
+
+        showLoaderOnConfirm: true,
+
+    }])
+
+}
+
+
+
+// This function is to show error message
+
+function RedDotAlert_Error(message) {
+
+    Swal.queue([{
+
+        type: 'error',
+
+        title: 'Oops...',
+
+        html: '<p style="font-size: 12px;text-align:center">' + message + '</p>',
+
+        allowOutsideClick: false,
+
+        showLoaderOnConfirm: true,
+
+    }])
+
+}
+
+
+
+// This function is to shoq Warning error message
+
+function RedDotAlert_Warning(message) {
+
+    swal("Warning", '<p style="font-size: 12px;text-align:center">' + message + '</p>', "warning")
+
+}
+
+
+
+// This function is to show Invalid date message
+
+function RedDotAlert_InvalidDate(message) {
+
+    Swal.queue([{
+
+        type: 'error',
+
+        title: 'Oops...',
+
+        text: message,
+
+        allowOutsideClick: false,
+
+        showLoaderOnConfirm: true,
+
+    }])
+
 }

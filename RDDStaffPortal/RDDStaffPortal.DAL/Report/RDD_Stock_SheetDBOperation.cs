@@ -155,7 +155,8 @@ namespace RDDStaffPortal.DAL.Report
             try
             {
 
-                SqlParameter[] parm = { new SqlParameter("@p_Search", psearch)
+                SqlParameter[] parm = {
+                    new SqlParameter("@p_Search", psearch)
                         , new SqlParameter("@p_PageNo", pageno),
                 new SqlParameter("@p_PageSize",pagesize),
                 new SqlParameter("@p_SortColumn", "Country"),
@@ -220,43 +221,93 @@ namespace RDDStaffPortal.DAL.Report
         }
         public DataSet GetDrop()
         {
-            SqlParameter[] parm = {               
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
                 };
-              DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetStockSheets_Drop", CommandType.StoredProcedure, parm);
+               dsModules = Com.ExecuteDataSet("RDD_Rpt_GetStockSheets_Drop", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+
+                dsModules = null;
+            }
+            
             return dsModules;
         }
         public DataSet GetDrop1()
         {
-            SqlParameter[] parm = {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
                 };
-            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet_Drop", CommandType.StoredProcedure, parm);
+                dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet_Drop", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+           
             return dsModules;
         }
         public DataSet GetDrop2()
         {
-            SqlParameter[] parm = {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
                 };
-            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_Expense_Drop", CommandType.StoredProcedure, parm);
+                dsModules = Com.ExecuteDataSet("RDD_Rpt_Expense_Drop", CommandType.StoredProcedure, parm);
+               
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+               
+            }
             return dsModules;
         }
         public DataTable Getdata3(string Username)
         {
-            SqlParameter[] parm = { 
+            DataTable dt = null;
+            try
+            {
+                SqlParameter[] parm = {
                 new SqlParameter("@p_flag","II")
                 };
-           
-            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet", CommandType.StoredProcedure, parm);
-            DataTable dt = dsModules.Tables[0];
+
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet", CommandType.StoredProcedure, parm);
+                dt= dsModules.Tables[0];
+            }
+            catch (Exception)
+            {
+
+                dt = null;
+            }
+            
             return dt;
         }
         public DataTable Getdata4(string Username)
         {
-            SqlParameter[] parm = {
+            DataTable dt = null;
+            try
+            {
+                SqlParameter[] parm = {
                 new SqlParameter("@p_flag","II")
                 };
 
-            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheet", CommandType.StoredProcedure, parm);
-            DataTable dt = dsModules.Tables[0];
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheet", CommandType.StoredProcedure, parm);
+                dt = dsModules.Tables[0];
+            }
+            catch (Exception)
+            {
+
+                dt = null;
+            }
+           
             return dt;
         }
         public DataTable Getdata(string Username)
@@ -277,18 +328,120 @@ namespace RDDStaffPortal.DAL.Report
         public DataTable Getdata1(string Username)
         {
             DataTable dt = new DataTable();
+            try
+            {
+                string qur = " select Country, cSimpleCode as  [ItemCode], stockdescription as [ItemDesc], warehousename, " +
+               "WhseStatus, groupDesc as [BU],OrderType," +
+               " QtyOnHand as  [Qty],    " +
+               "WhseOwner,ProdCategory,ProdLine," +
+               "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
 
-            string qur = " select Country, cSimpleCode as  [ItemCode], stockdescription as [ItemDesc], warehousename, " +
-                "WhseStatus, groupDesc as [BU],OrderType," +
-                " QtyOnHand as  [Qty],    " +
-                "WhseOwner,ProdCategory,ProdLine," +
-                "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
 
+                DataSet dsModules = Com.ExecuteDataSet(qur);
+                dt = dsModules.Tables[0];
+            }
+            catch (Exception)
+            {
 
-            DataSet dsModules = Com.ExecuteDataSet(qur);
-            dt = dsModules.Tables[0];
+                dt = null;
+            }
+           
             return dt;
             // return dsModules;
+        }
+    
+        public DataTable Getdata5(string UserName)
+        {
+            DataTable dt = null;
+            try
+            {
+                SqlParameter[] parm = {
+                new SqlParameter("@p_UserName", UserName),
+
+                };
+                //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_TrailBalanceData_Sp", CommandType.StoredProcedure, parm);
+                dt = dsModules.Tables[0];
+            }
+            catch (Exception)
+            {
+
+                dt = null;
+            }
+
+            return dt;
+        }
+        public List<RDD_TrailBalance> GetTrailBalance(string UserName)
+        {
+            List<RDD_TrailBalance> Objlist = new List<RDD_TrailBalance>();
+            try
+            {
+
+                SqlParameter[] parm = { 
+                new SqlParameter("@p_UserName", UserName),
+                
+                };
+                //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_TrailBalanceData_Sp", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        Objlist.Add(new RDD_TrailBalance()
+                        {
+                       AcctName = !string.IsNullOrWhiteSpace(dr["AcctName"].ToString()) ? dr["AcctName"].ToString(): "",
+                        AcctCode = !string.IsNullOrWhiteSpace(dr["AcctCode"].ToString()) ? dr["AcctCode"].ToString(): "",
+                        Postable = !string.IsNullOrWhiteSpace(dr["Postable"].ToString()) ? dr["Postable"].ToString():" ",
+                        AcctLevel = !string.IsNullOrWhiteSpace(dr["AcctLevel"].ToString()) ? Convert.ToInt32(dr["AcctLevel"].ToString()):0,
+                       FatherAcct = !string.IsNullOrWhiteSpace(dr["FatherAcct"].ToString()) ? dr["FatherAcct"].ToString(): "",
+                    LocCreditTRI = !string.IsNullOrWhiteSpace(dr["LocCreditTRI"].ToString()) ? Convert.ToDecimal(dr["LocCreditTRI"].ToString()): 0,
+                    LocDebitTRI = !string.IsNullOrWhiteSpace(dr["LocDebitTRI"].ToString()) ? Convert.ToDecimal(dr["LocDebitTRI"].ToString()):0,
+                    SysCreditTRI = !string.IsNullOrWhiteSpace(dr["SysCreditTRI"].ToString()) ? Convert.ToDecimal(dr["SysCreditTRI"].ToString()):0,
+                    SysDebitTRI = !string.IsNullOrWhiteSpace(dr["SysDebitTRI"].ToString()) ? Convert.ToDecimal(dr["SysDebitTRI"].ToString()):0,
+                    LocCreditTZ = !string.IsNullOrWhiteSpace(dr["LocCreditTZ"].ToString()) ? Convert.ToDecimal(dr["LocCreditTZ"].ToString()):0,
+                    LocDebitTZ = !string.IsNullOrWhiteSpace(dr["LocDebitTZ"].ToString()) ? Convert.ToDecimal(dr["LocDebitTZ"].ToString()):0,
+                    SysCreditTZ = !string.IsNullOrWhiteSpace(dr["SysCreditTZ"].ToString()) ? Convert.ToDecimal(dr["SysCreditTZ"].ToString()):0,
+                    SysDebitTZ = !string.IsNullOrWhiteSpace(dr["SysDebitTZ"].ToString()) ? Convert.ToDecimal(dr["SysDebitTZ"].ToString()):0,
+                    LocCreditKE = !string.IsNullOrWhiteSpace(dr["LocCreditKE"].ToString()) ? Convert.ToDecimal(dr["LocCreditKE"].ToString()):0,
+                    LocDebitKE = !string.IsNullOrWhiteSpace(dr["LocDebitKE"].ToString()) ? Convert.ToDecimal(dr["LocDebitKE"].ToString()):0,
+                    SysCreditKE = !string.IsNullOrWhiteSpace(dr["SysCreditKE"].ToString()) ? Convert.ToDecimal(dr["SysCreditKE"].ToString()):0,
+                    SysDebitKE = !string.IsNullOrWhiteSpace(dr["SysDebitKE"].ToString()) ? Convert.ToDecimal(dr["SysDebitKE"].ToString()):0,
+                    LocCreditUG = !string.IsNullOrWhiteSpace(dr["LocCreditUG"].ToString()) ? Convert.ToDecimal(dr["LocCreditUG"].ToString()):0,
+                    LocDebitUG = !string.IsNullOrWhiteSpace(dr["LocDebitUG"].ToString()) ? Convert.ToDecimal(dr["LocDebitUG"].ToString()):0,
+                    SysCreditUG = !string.IsNullOrWhiteSpace(dr["SysCreditUG"].ToString()) ? Convert.ToDecimal(dr["SysCreditUG"].ToString()):0,
+                    SysDebitUG = !string.IsNullOrWhiteSpace(dr["SysDebitUG"].ToString()) ? Convert.ToDecimal(dr["SysDebitUG"].ToString()):0,
+                    LocCreditZM = !string.IsNullOrWhiteSpace(dr["LocCreditZM"].ToString()) ? Convert.ToDecimal(dr["LocCreditZM"].ToString()):0,
+                    LocDebitZM = !string.IsNullOrWhiteSpace(dr["LocDebitZM"].ToString()) ? Convert.ToDecimal(dr["LocDebitZM"].ToString()):0,
+                    SysCreditZM = !string.IsNullOrWhiteSpace(dr["SysCreditZM"].ToString()) ? Convert.ToDecimal(dr["SysCreditZM"].ToString()):0,
+                    SysDebitZM = !string.IsNullOrWhiteSpace(dr["SysDebitZM"].ToString()) ? Convert.ToDecimal(dr["SysDebitZM"].ToString()):0,
+                    LocCreditMA = !string.IsNullOrWhiteSpace(dr["LocCreditMA"].ToString()) ? Convert.ToDecimal(dr["LocCreditMA"].ToString()):0,
+                    LocDebitMA = !string.IsNullOrWhiteSpace(dr["LocDebitMA"].ToString()) ? Convert.ToDecimal(dr["LocDebitMA"].ToString()):0,
+                    SysCreditMA = !string.IsNullOrWhiteSpace(dr["SysCreditMA"].ToString()) ? Convert.ToDecimal(dr["SysCreditMA"].ToString()):0,
+                    SysDebitMA = !string.IsNullOrWhiteSpace(dr["SysDebitMA"].ToString()) ? Convert.ToDecimal(dr["SysDebitMA"].ToString()):0,
+                    LocCreditTRNGL = !string.IsNullOrWhiteSpace(dr["LocCreditTRNGL"].ToString()) ? Convert.ToDecimal(dr["LocCreditTRNGL"].ToString()):0,
+                    LocDebitTRNGL = !string.IsNullOrWhiteSpace(dr["LocDebitTRNGL"].ToString()) ? Convert.ToDecimal(dr["LocDebitTRNGL"].ToString()):0,
+                    SysCreditTRNGL = !string.IsNullOrWhiteSpace(dr["SysCreditTRNGL"].ToString()) ? Convert.ToDecimal(dr["SysCreditTRNGL"].ToString()):0,
+                    SysDebitTRNGL = !string.IsNullOrWhiteSpace(dr["SysDebitTRNGL"].ToString()) ? Convert.ToDecimal(dr["SysDebitTRNGL"].ToString()):0,
+                    LocCreditTotal = !string.IsNullOrWhiteSpace(dr["LocCreditTotal"].ToString()) ? Convert.ToDecimal(dr["LocCreditTotal"].ToString()):0,
+                    SysCreditTotal = !string.IsNullOrWhiteSpace(dr["SysCreditTotal"].ToString()) ? Convert.ToDecimal(dr["SysCreditTotal"].ToString()):0,
+                    LocDebitTotal = !string.IsNullOrWhiteSpace(dr["LocDebitTotal"].ToString()) ? Convert.ToDecimal(dr["LocDebitTotal"].ToString()):0,
+                    SysDebitTotal = !string.IsNullOrWhiteSpace(dr["SysDebitTotal"].ToString()) ? Convert.ToDecimal(dr["SysDebitTotal"].ToString()):0,
+
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Objlist = null;
+            }
+
+
+
+            return Objlist;
         }
 
     }

@@ -32,7 +32,7 @@
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center  mar-t100" id="Loginbox">
+        <div class="row justify-content-center login-section mar-t100" id="Loginbox">
 
             <div class="col-xl-5 col-lg-6 col-md-9">
                 <h1 class="h4 text-gray-900 padd-l30 padd-r30 padd-t30 padd-b10 text-center"><img src="~/img/reddot-logo.png" alt="#"></h1>
@@ -43,47 +43,51 @@
                             <div class="padd-20">
                                 <div class="text-center">
 
-                                    <p class="mar-0">Technology with a Difference</p>
-                                    <p>Africa's No.1 IT Distribution Company</p>
+                                    <p class="mar-0">RESET PASSWORD</p>
+
                                 </div>
 
-                               
-                                    <div class="form-group" id="dividnpass">
-                                        <div class="input-group">
 
-                                            <input type="password" class="form-control" id="idnpass" placeholder="New Password">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            </div>
+                                <div class="form-group" id="dividnpass">
+                                    <div class="input-group">
+
+                                        <input type="password" class="form-control" id="idnpass" placeholder="New Password">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
-                                        <small id="emailHelp" class="form-text text-danger"></small>
                                     </div>
-                                    <div class="form-group" id="dividcpass">
-                                        <div class="input-group">
-                                            @*<input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username">*@
-                                            <input type="password" class="form-control" id="idcpass" placeholder="Conform Password">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            </div>
+                                    <small id="emailHelp" class="form-text text-danger"></small>
+                                </div>
+                                <div class="form-group" id="dividcpass">
+                                    <div class="input-group">
+                                        @*<input type="text" class="form-control" placeholder="Password" aria-label="Recipient's username">*@
+                                        <input type="password" class="form-control" id="idcpass" placeholder="Confirm Password">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
-                                        <!--<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>-->
                                     </div>
-                                    <div class="row">
-                                        <input id="hdnemail" type="hidden" value="@HttpContext.Current.Request.QueryString["E"]" />
-                                        <input id="hdncode" type="hidden" value="@HttpContext.Current.Request.QueryString["VC"]" />
-                                        <div class="col-xl-6 col-lg-6 col-md-12 mar-t10 text-left">
-                                            @*<a href="#" class="btn btn-primary login-btn"> Login </a>*@
+                                    <!--<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>-->
+                                </div>
+
+                                <input id="hdnemail" type="hidden" value="@HttpContext.Current.Request.QueryString["E"]" />
+                                <input id="hdncode" type="hidden" value="@HttpContext.Current.Request.QueryString["VC"]" />
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 mar-t10 text-left">
+                                        @*<a href="#" class="btn btn-primary login-btn"> Login </a>*@
 
 
-                                            <button id="btnsucccha" class="btn btn-primary login-btn">Change Password</button>
+                                        <button id="btnsucccha" class="btn btn-primary login-btn">RESET PASSWORD</button>
 
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-12 mar-t20 text-right"> <a href="/account/login" class="link text-right" id="ForgetPassword">Login</a></div>
                                     </div>
-                                    @*<div class="text-center padd-t30">
-                                            Don't have an account? <a class="small" href="register.html">Register</a>
-                                        </div>*@
-                               
+                                    <div class="col-xl-6 col-lg-6 col-md-12 mar-t20 text-right"> <a href="/account/login" class="link text-right" id="ForgetPassword">GO TO LOGIN </a></div>
+                                </div>
+
+
+
+                                @*<div class="text-center padd-t30">
+            Don't have an account? <a class="small" href="register.html">Register</a>
+        </div>*@
+
                             </div>
                         </div>
                     </div>
@@ -172,8 +176,8 @@
                     if (response.Success == true) {
 
                         RdotAlertSucesstxt(response.Message);
-                         var newUrl= '@Url.Action("Login", "Account")';
-                        window.location.href = newUrl;
+                         @*var newUrl= '@Url.Action("Login", "Account")';
+                        window.location.href = newUrl;*@
 
                     } else {
                         RdotAlerterrtxt1(response.Message);
