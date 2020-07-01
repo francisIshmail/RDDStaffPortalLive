@@ -167,14 +167,21 @@ namespace RDDStaffPortal.Controllers
                 string mailFormat = "<p class='MsoNormal'><br>" +
                                                         "Dear <a href = 'mailto:" + email + "' target = '_blank'>" + email + " </a> <br>" +
                                                         "<br>" +
-                                                        " You've successfully changed your Red Dot Distribution Partner password<br>" +
+                                                        " We are happy to inform you that your password has been changed successfully for <b><a href='mailto: " + email + "' target='_blank'>" + email + " </a> </b><br>" +
                                                         "<br>" +
-                                                        
-                                                      
+                                                        "Go ahead and login with your new password using below link <br>"+
+                                                        "<br>"+
+                                                        "URL Link: <a href ='https://app.reddotdistribution.com/Account/Login' target ='_blank'>https://app.reddotdistribution.com/Account/Login</a><br>" +
+                                                        "<br>"+
+                                                        "If you did this, you can safely disregard this email.<br>"+
+                                                        "<br>"+
+                                                        "If you didn't do this, please contact <span style='color:#2F5496'><a href='mailto:Helpdesk@reddotdistribution.com' target='_blank'>Helpdesk@reddotdistribution.com</a> </span><br>"+
+                                                        "<br>"+
+                                                       "<br>"+
                                                         "<br>" +
                                                         "Best Regards,<br>" +
                                                         "Red Dot Distribution </p> ";
-                var k1 = SendMail.Send(email, "", "your password was successfully reset", mailFormat, true);
+                var k1 = SendMail.Send(email, "", "Password Changed Successfully.", mailFormat, true);
                 if (k1 != "Mail Sent Succcessfully")
                 {
                     k.Success = false;

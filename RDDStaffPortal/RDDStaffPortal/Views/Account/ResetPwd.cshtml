@@ -40,6 +40,7 @@
                 <div class="card o-hidden border-0 shadow-lg my-3 login-bg">
                     <div class="row">
                         <div class="col-lg-12">
+                            <div class="loader1"></div>
                             <div class="padd-20">
                                 <div class="text-center">
 
@@ -85,8 +86,8 @@
 
 
                                 @*<div class="text-center padd-t30">
-            Don't have an account? <a class="small" href="register.html">Register</a>
-        </div>*@
+                Don't have an account? <a class="small" href="register.html">Register</a>
+            </div>*@
 
                             </div>
                         </div>
@@ -118,7 +119,7 @@
 <script>
 
         $(document).ready(function () {
-
+            $(".loader1").hide();
             $("input[id='idnpass'],input[id='idcpass']").on("keypress", function (e) {
                 $("#emailHelp").text('');
                 if (e.charCode == 95) {
@@ -155,22 +156,30 @@
 
             $("#btnsucccha").on("click", function () {
                 debugger
+                $(".loader1").show();
+                $("#btnsucccha").attr("disabled", true);
                 if (pass.length == 0) {
-
                     RdotAlerterrtxt1("Please Enter Password");
                     $("input[id='idnpass']").focus();
+                    $(".loader1").hide();
+                    $("#btnsucccha").attr("disabled", false);
                     return
                 }
                 if (repass.length == 0) {
 
                     RdotAlerterrtxt1("Please Enter Confirm Password");
                     $("input[id='idcpass']").focus();
+                    $(".loader1").hide();
+                    $("#btnsucccha").attr("disabled", false);
                     return
                 }
                 if (t == true) {
                     RdotAlerterrtxt1("Password does not match");
+                    $(".loader1").hide();
+                    $("#btnsucccha").attr("disabled", false);
                     return
                 }
+
                 $.getJSON("/ResetPassword", { Passd: $("#idnpass").val(), email: $("#hdnemail").val(), code: $("#hdncode").val() }, function (response) {
                     debugger
                     if (response.Success == true) {
@@ -183,6 +192,8 @@
                         RdotAlerterrtxt1(response.Message);
 
                     }
+                    $(".loader1").hide();
+                    $("#btnsucccha").attr("disabled", false);
                 })
             })
         });
