@@ -85,13 +85,13 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             ActualGP = !string.IsNullOrWhiteSpace(dr["ActualGP"].ToString()) ? Convert.ToDecimal(dr["ActualGP"].ToString()) : 0,
                            ActualRev = !string.IsNullOrWhiteSpace(dr["ActualRev"].ToString()) ? Convert.ToDecimal(dr["ActualRev"].ToString()) : 0,
                            GPForecast = !string.IsNullOrWhiteSpace(dr["GPForecast"].ToString()) ? Convert.ToDecimal(dr["GPForecast"].ToString()) : 0,
-                            GPForecastAcheivedPercent= !string.IsNullOrWhiteSpace(dr["GPForecastAcheivedPercent"].ToString()) ? Convert.ToDecimal(dr["GPForecastAcheivedPercent"].ToString()) : 0,
+                            GPForecastAcheivedPercent= !string.IsNullOrWhiteSpace(dr["GPForecastAcheivedPercent"].ToString()) ? Convert.ToInt32(dr["GPForecastAcheivedPercent"].ToString()) : 0,
                             GPTarget = !string.IsNullOrWhiteSpace(dr["GPTarget"].ToString()) ? Convert.ToDecimal(dr["GPTarget"].ToString()) : 0,
-                            GPTrgetAcheivedPercent = !string.IsNullOrWhiteSpace(dr["GPTrgetAcheivedPercent"].ToString()) ? Convert.ToDecimal(dr["GPTrgetAcheivedPercent"].ToString()) : 0,
+                            GPTrgetAcheivedPercent = !string.IsNullOrWhiteSpace(dr["GPTrgetAcheivedPercent"].ToString()) ? Convert.ToInt32(dr["GPTrgetAcheivedPercent"].ToString()) : 0,
                             RevForecast = !string.IsNullOrWhiteSpace(dr["RevForecast"].ToString()) ? Convert.ToDecimal(dr["RevForecast"].ToString()) : 0,
-                            RevForecastAcheivedPercent = !string.IsNullOrWhiteSpace(dr["RevForecastAcheivedPercent"].ToString()) ? Convert.ToDecimal(dr["RevForecastAcheivedPercent"].ToString()) : 0,
+                            RevForecastAcheivedPercent = !string.IsNullOrWhiteSpace(dr["RevForecastAcheivedPercent"].ToString()) ? Convert.ToInt32(dr["RevForecastAcheivedPercent"].ToString()) : 0,
                             RevTarget = !string.IsNullOrWhiteSpace(dr["RevTarget"].ToString()) ? Convert.ToDecimal(dr["RevTarget"].ToString()) : 0,
-                            RevTrgetAcheivedPercent = !string.IsNullOrWhiteSpace(dr["RevTrgetAcheivedPercent"].ToString()) ? Convert.ToDecimal(dr["RevTrgetAcheivedPercent"].ToString()) : 0,
+                            RevTrgetAcheivedPercent = !string.IsNullOrWhiteSpace(dr["RevTrgetAcheivedPercent"].ToString()) ? Convert.ToInt32(dr["RevTrgetAcheivedPercent"].ToString()) : 0,
                         });
                     }
 

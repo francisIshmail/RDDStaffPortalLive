@@ -131,6 +131,7 @@ function RdottableNDW(tblid, url1, colms) {
         //  "scrollX": true,
         "filter": true,
         "paging": true,
+        "pageLength": 20,
         "ordering": true,
         "info": true,
         "dataSrc": "",
@@ -167,9 +168,9 @@ function RdottableNDW(tblid, url1, colms) {
         },
 
         "aoColumns": colms
-        , "fnDrawCallback": function () {
-            $("input[id='chkIsDefault']").bootstrapToggle();
-        }
+        //, "fnDrawCallback": function () {
+        //    $("input[id='chkIsDefault']").bootstrapToggle();
+        //}
     });
 
     var delay = (function () {
@@ -294,7 +295,7 @@ function RdottableDash(tblid, url1, colms) {
 
 
 
-function RdottableNDWPara1(tblid, url1, colms, Code) {
+function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
     var newrow = {
         Code: Code
     }
@@ -305,6 +306,7 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
         //  "scrollX": true,
         "filter": true,
        // "paging": true,
+        "pageLength": pageL,
         "ordering": true,
         "info": false,
         "rowReorder": {

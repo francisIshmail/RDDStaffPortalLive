@@ -26,10 +26,10 @@
             tf = true;
             // RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid);
             $(".basket_list  ul").empty();
-            $('#product ul li').css("background-color", "");
-            $('#product ul li a').css("color", "black");
-            $('#product ul li').removeClass("selected");
-
+           // $('#product ul li').css("background-color", "");
+           // $('#product ul li a').css("color", "black");
+          //  $('#product ul li').removeClass("selected");
+            $('#product ul li').removeClass("disabled");
             $('#product ul li').find("input[id='hdnuse']").val('false');
             debugger
             AddSecondary(Userid);
@@ -153,7 +153,8 @@
                           // k.css("background-color", "orange");
                             $(".demo").find(selectedObjs[e]).removeClass('selected');
                             $(".demo").find(selectedObjs[e]).find("input[id='hdnuse']").val('true');
-                            $(".demo").find(selectedObjs[e]).css("background-color", "orange");
+                           // $(".demo").find(selectedObjs[e]).css("background-color", "orange");
+                            $(".demo").find(selectedObjs[e]).addClass("disabled");
                             //var k1 = 0;
 
                             addBasket(basket, k);
@@ -198,11 +199,11 @@
                             + '<button class="delete">&#10005;</button>');
 
 
-                        $('#product ul li:contains(' + response[i] + ')').css("background-color", "green");
-                        $('#product ul li a:contains(' + response[i] + ')').css("color", "white");
+                       // $('#product ul li:contains(' + response[i] + ')').css("background-color", "green");
+                       // $('#product ul li a:contains(' + response[i] + ')').css("color", "white");
 
                         $('#product ul li:contains(' + response[i] + ')').find("input[id='hdnuse']").val('true');
-
+                        $('#product ul li:contains(' + response[i] + ')').addClass("disabled");
                         i++;
                     }
 
@@ -264,8 +265,8 @@
                                 if (response.Success == true) {
                                     //$(".reloadcss").trigger("click");
                                     // $('#txtsearch').trigger("keyup");
-                                    $('#product ul li:contains(' + Role + ')').css("background-color", "");
-
+                                  //  $('#product ul li:contains(' + Role + ')').css("background-color", "");
+                                    $('#product ul li:contains(' + Role + ')').removeClass("disabled")
                                     $('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                                     tr.remove();
                                 } else {
@@ -289,9 +290,9 @@
                     ) {
                         //$(".reloadcss").trigger("click");
                         // $('#txtsearch').trigger("keyup");
-                        $('#product ul li:contains(' + Role + ')').css("background-color", "");
+                        //$('#product ul li:contains(' + Role + ')').css("background-color", "");
 
-                        $('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
+                        //$('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                         swalWithBootstrapButtons.fire(
                             'Cancelled',
                             'Your Code is safe :)',
@@ -308,8 +309,10 @@
                 $("#product  li").each(function () {
                     var kl = $(this).attr("data-id");
                     if (kl == Role) {
-                        $(this).css("background-color", "");
+                       // $(this).css("background-color", "");
                         $(this).find("input[id='hdnuse']").val('false');
+                        $(this).removeClass("disabled")
+                        
                        
                     }
                 })

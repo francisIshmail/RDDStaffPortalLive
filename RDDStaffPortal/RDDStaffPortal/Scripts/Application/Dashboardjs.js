@@ -46,25 +46,29 @@
 				$(this).find(".A1").text("$" + Cards[0].RevTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevTrgetAcheivedPercent);
-				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevTrgetAcheivedPercent+'')
+				var newClass = (Cards[0].RevTrgetAcheivedPercent > 100) ? 100 : Cards[0].RevTrgetAcheivedPercent;
+				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + newClass+'')
 				
 
 			} else if ($(this).find(".ds1").text() == "Revenue Forecast") {
 				$(this).find(".A1").text("$" + Cards[0].RevForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
-				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].RevForecastAcheivedPercent + '')
+				var newClass = (Cards[0].RevForecastAcheivedPercent > 100) ? 100 : Cards[0].RevForecastAcheivedPercent;
+				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' +newClass  + '')
 			} else if ($(this).find(".ds1").text()== "GP Target") {
 				$(this).find(".A1").text("$" + Cards[0].GPTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-				$(this).find(".perv").text("$" +Cards[0].GPTrgetAcheivedPercent);
-				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].GPTrgetAcheivedPercent + '')
+				$(this).find(".perv").text(Cards[0].GPTrgetAcheivedPercent);
+				var newClass = (Cards[0].GPTrgetAcheivedPercent > 100) ? 100 : Cards[0].GPTrgetAcheivedPercent;
+				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + newClass + '')
 
 			} else {
 				$(this).find(".A1").text("$" + Cards[0].GPForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].GPForecastAcheivedPercent);
-				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + Cards[0].GPForecastAcheivedPercent + '')
+				var newClass = (Cards[0].GPForecastAcheivedPercent > 100) ? 100 : Cards[0].GPForecastAcheivedPercent;
+				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + newClass + '')
 			}
 			
 

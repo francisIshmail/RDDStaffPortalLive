@@ -21,13 +21,13 @@
 
 		];
 		//SAPAE   SAPKE	 SAPTZ	 SAPUG	SAPZM	SAPML	SAPTRI
-		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, "SAPAE");
-        RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, "SAPKE");
-        RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, "SAPTZ");
-        RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, "SAPUG");
-        RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM");
-        RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML");
-        RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI");
+		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, "SAPAE",10);
+        RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, "SAPKE",10);
+        RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, "SAPTZ",10);
+        RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, "SAPUG",10);
+        RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM",10);
+        RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML",10);
+        RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI",10);
 		$('#product1,#product').show();
 		debugger
 		// jQuery UI Draggable

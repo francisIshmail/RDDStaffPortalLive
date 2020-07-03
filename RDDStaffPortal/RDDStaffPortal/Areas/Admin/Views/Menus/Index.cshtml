@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive-xl">
                             <div class="row addwidgetclass mar-b10">
                                 <div class="col-md-12 padd-0">
                                     <div class="form-group">
@@ -74,19 +74,22 @@
                                     <div class="form-group">
                                         <label for="email2" class="width100px">Default</label>
                                         <div class="mar-t7">
-                                         
-                                            <input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary">
+                                            <div class="input-group">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="chkIsDefaultMenu" value="true" checked><div></div>
+                                                </label>
+                                                </div>
                                             </div>
-                                            @*<div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>*@
+                                            @*data-toggle="toggle" data-onstyle="primary"<div><input type="checkbox" id="chkIsDefaultMenu" checked data-toggle="toggle" data-onstyle="primary"></div>*@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email2" class="width120px"></label>
+                                            <label for="email2" class="width60px"></label>
                                             <div class="mar-t7"><button type="button" class="btn btn-info submitbtn add-new" id="btnSaveMenu">Save</button></div>
 
                                         </div>
                                         <div class="form-group">
-                                            <label for="email2" class="width120px"></label>
+                                            <label for="email2" class="width60px"></label>
                                             <div class="mar-t7"><button type="button" class="btn btn-danger submitbtn add-new" id="btnClearMenu">Clear</button></div>
 
                                         </div>
@@ -97,7 +100,7 @@
                             </div>
                             <div class="row">
                                 <div class="loader1"></div>
-                                <div class="table-responsive">
+                                <div class="table-responsive-xl">
                                     <table class="display table table-striped table-hover dataTable table-head-bg-info" id="tblMenusList">
                                         <thead>
                                             <tr>
@@ -106,7 +109,7 @@
                                                 <th>Levels</th>
                                                 <th>URL</th>
                                                 <th>Css Class</th>
-                                                <th>SeqNo</th>
+                                                <th>Seq No</th>
                                                 @*<th class="width1px" style="visibility:hidden" >Id</th>*@
                                                 <th>Module</th>
                                                 <th>Default</th>
@@ -305,26 +308,43 @@
             { "mDataProp": "MenuId", "sWidth": "10%" },
             { "mDataProp": "MenuName", "sWidth": "30%" },
             { "mDataProp": "Levels", "sWidth": "20%" },
-            { "mDataProp": "URL", "sWidth": "30%" },
+            { "mDataProp": "URL", "sWidth": "40%" },
             { "mDataProp": "MenuCssClass", "sWidth": "30%" },
-            { "mDataProp": "DisplaySeq", "sWidth": "10%" },
+            { "mDataProp": "DisplaySeq", "sWidth": "20%" },
             {
                 "mDataProp": "ModuleName",
                 
-                "sWidth": "30%"
+                "sWidth": "40%"
             },
             {
                 "mDataProp": "IsDefault",
                 "render": function (data) {
                     if (data == true) {
-                        return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' checked  disabled></span>";
-                                                  } else {
-                        return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='black' disabled></span>";
-                                                  }
+                        return "<div class='input - group'>" +
+                            " <label class='switch'>" +
+                            " <input type='checkbox' id='chkIsDefault' disabled value='true' checked><div></div>" +
+                            "</label>" +
+                            "</div >" +
+                            "</div >"
+                    }
+                        else {
+                        return "<div class='input - group'>" +
+                            " <label class='switch'>" +
+                            " <input type='checkbox' id='chkIsDefault'disabled value='false' ><div></div>" +
+                            "</label>" +
+                            "</div >" +
+                            "</div >"
+                   
+                    }
+                    //if (data == true) {
+                    //    return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='primary' checked  disabled></span>";
+                    //                              } else {
+                    //    return "<span><input id='chkIsDefault' type='checkbox' data-toggle='toggle' data-onstyle='black' disabled></span>";
+                    //                              }
                 }
 
 
-                , "sWidth": "40%"
+                , "sWidth": "25%"
             },
             {
 
@@ -335,7 +355,7 @@
                     
                 }
 
-                , "sWidth": "0",
+                , "sWidth": "10%",
 
 
 
@@ -344,7 +364,7 @@
             {
                 "data": null,
                 "defaultContent": "<button type='button' data-toggle='tooltip' title='' class='btn btn-primary btn-xs mar-1 padd-l7 padd-r7 edit' data-original-title='Edit Task'><i class='fa fa-edit'></i></button><button type='button' data-toggle='tooltip' title='' class='btn btn-danger btn-xs mar-1 padd-l7 padd-r7 delete' data-original-title='Remove'><i class='fa fa-trash-alt'></i></button>",
-                "targets": -1, "sWidth": "50%"
+                "targets": -1, "sWidth": "25%"
             }
 
 
@@ -352,7 +372,7 @@
        
 
         RdottableNDW('tblMenusList', '/Menus/GetMenuList', colms);
-        $(".toggle btn btn-primary").css("width", "0pxs");
+       // $(".toggle btn btn-primary").css("width", "0pxs");
         //$.get("/Menus/GetMenuList", null, BindMenus);
         //function BindMenus(MenuList) {
         //    var SetData = $('#tblMenusList');
@@ -395,7 +415,17 @@
         $("#txtDisplaySeq").val('');
         $('#ddlLevels').val(-1).trigger('change');
     })
+    $("input[type='checkbox']").on("click", function () {
+        if ($("#chkIsDefaultMenu").val() == 'true') {
+            $("#chkIsDefaultMenu").val('false');
+            $("#chkIsDefaultMenu").removeAttr('checked');
+        } else {
+            $("#chkIsDefaultMenu").attr('checked', 'checked');
+            $("#chkIsDefaultMenu").val('true')
+        }
 
+    }
+    )
     //START : Add New Menu in Module //
     $('#btnSaveMenu').click(function () {
 
@@ -517,10 +547,13 @@
        
 
         var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
-        if (IsDefault == "on")
-            $('#chkIsDefaultMenu').prop("checked", true);
-        else
-            $('#chkIsDefaultMenu').prop("checked", false);
+        if (IsDefault == "false") {
+            $("#chkIsDefaultMenu").val('false');
+            $("#chkIsDefaultMenu").removeAttr('checked');
+        } else {
+            $("#chkIsDefaultMenu").attr('checked', 'checked');
+            $("#chkIsDefaultMenu").val('true')
+        }
 
     });
 

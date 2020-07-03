@@ -35,13 +35,13 @@ namespace RDDStaffPortal.DAL.DataModels
         public decimal RevTarget{get;set;}
         public decimal RevForecast { get;set;}
         public decimal ActualRev { get;set;}
-        public decimal RevTrgetAcheivedPercent { get;set;}
-        public decimal RevForecastAcheivedPercent { get;set;}
+        public int RevTrgetAcheivedPercent { get;set;}
+        public int RevForecastAcheivedPercent { get;set;}
         public decimal GPTarget { get;set; }
         public decimal GPForecast { get;set;}
         public decimal ActualGP { get;set;}
-        public decimal GPTrgetAcheivedPercent { get;set;}
-       public decimal GPForecastAcheivedPercent { get; set; }
+        public int GPTrgetAcheivedPercent { get;set;}
+       public int GPForecastAcheivedPercent { get; set; }
     }
 
 

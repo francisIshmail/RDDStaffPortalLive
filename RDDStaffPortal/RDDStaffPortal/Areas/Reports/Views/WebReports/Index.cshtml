@@ -23,11 +23,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive-lg">
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
                                         <div class="form-group">
-                                            <label for="email2" class="width100px mar-t4">User search :</label>
+                                            <label for="email2" class="width100px mar-t4">Employee </label>
                                            
 
                                         </div>
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                     </div>
-                                    <div class="rowmin row mar-b10">
+                                    <div class="rowmin row mar-b10" style="display:none" >
                                         <div class="col-xl-1 col-md-1">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px mar-t4">Reports :</label>
@@ -88,7 +88,7 @@
                                                     <div class="basket_list" id="pri1">
                                                         <input id="hdnflag" value="false" type="hidden" />
 
-                                                        <ul id="pr1">
+                                                        <ul id="pr1" class="height300px">
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -141,7 +141,9 @@
         //$(function () {
 
 
-Webreports.initialize();
+        Webreports.initialize();
+       // $('.scrollbar-inner').scrollbar();
+        $(".dataTables_paginate").hide();
     });
 </script>
 <style>
