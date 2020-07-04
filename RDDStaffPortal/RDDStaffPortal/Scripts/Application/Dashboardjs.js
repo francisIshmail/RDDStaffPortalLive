@@ -41,8 +41,8 @@
 			var lbl = $(this).find(".ds1").text().split(" ");
 
 			$(this).find(".ds2").text(lbl[0] + " Acheived");
-
-			if ($(this).find(".ds1").text() == "Revenue Target") {
+			debugger
+			if ($(this).find(".ds1").text() == "Rev Target") {
 				$(this).find(".A1").text("$" + Cards[0].RevTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevTrgetAcheivedPercent);
@@ -50,7 +50,7 @@
 				$(this).find(".progress-bar").removeClass("w-75").addClass('w-' + newClass+'')
 				
 
-			} else if ($(this).find(".ds1").text() == "Revenue Forecast") {
+			} else if ($(this).find(".ds1").text() == "Rev Forecast") {
 				$(this).find(".A1").text("$" + Cards[0].RevForecast.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".perv").text(Cards[0].RevForecastAcheivedPercent);
