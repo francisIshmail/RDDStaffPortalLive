@@ -292,7 +292,7 @@
             success: function (result) {
 
                 if (result == "JobGrade saved successfully." || result == "JobGrade updated successfully.") {
-                    RdotAlertSucesstxt(result);
+                    RedDotAlert_Success(result);
                     GetJobGradeList();
                     $("#JobGradeId").val('');
                     $("#JobGradeName").val('');
@@ -304,7 +304,7 @@
                 }
                 else {
                     result == "JobGrade already exists.."
-                    RdotAlerterrtxt1(result);
+                    RedDotAlert_Error(result);
                     GetJobGradeList();
                    // alert(result);
                     $("#JobGradeId").val('');

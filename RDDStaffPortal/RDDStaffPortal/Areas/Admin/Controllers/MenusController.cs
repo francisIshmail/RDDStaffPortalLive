@@ -53,6 +53,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                 rdd_menu.ModuleId = menu.ModuleId;
                 rdd_menu.ModuleName = menu.ModuleName;
                 rdd_menu.URL = menu.URL;
+                rdd_menu.ObjType = menu.ObjType;
                 rdd_menu.DisplaySeq = menu.DisplaySeq;
                 rdd_menu.IsDefault = menu.IsDefault;
                 rdd_menu.CreatedBy = User.Identity.Name;
@@ -106,6 +107,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                                         p.Levels.ToString().ToLower().Contains(search.ToLower()) ||
                                         p.URL.ToString().ToLower().Contains(search.ToLower()) ||
                                         p.DisplaySeq.ToString().ToLower().Contains(search.ToLower()) ||
+                                         p.ObjType.ToString().ToLower().Contains(search.ToLower()) ||
                                        p.IsDefault.ToString().ToLower().Contains(search.ToLower())
 
                                       ).ToList();
@@ -223,8 +225,13 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                         break;
                     case "7":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ModuleId).ToList()
-                                                                                                 : data.OrderBy(p => p.ModuleId).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ModuleName).ToList()
+                                                                                                 : data.OrderBy(p => p.ModuleName).ToList();
+                        break;
+                    case "8":
+                        // Setting.
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ObjType).ToList()
+                                                                                                 : data.OrderBy(p => p.ObjType).ToList();
                         break;
 
                     default:

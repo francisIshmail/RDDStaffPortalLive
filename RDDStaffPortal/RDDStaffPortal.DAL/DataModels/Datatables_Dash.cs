@@ -56,4 +56,28 @@ namespace RDDStaffPortal.DAL.DataModels
         public decimal Points5 { get; set; }
         public decimal Points6 { get; set; }
     }
+
+
+    public partial class SecondCard
+    {
+        public decimal TotalRece { get; set; }
+        public decimal TotalPay { get; set; }
+        public decimal BankBalance { get; set; }
+    }
+
+
+    public partial class RDD_Model_tbl
+    {
+
+      public string Country { get; set; }
+        public decimal days_0_30 { get; set; }
+        public decimal days_31_37 { get; set; }
+        public decimal days_38_45 { get; set; }
+        public decimal days_46_60 { get; set; }
+        public decimal days_61_90 { get; set; }
+        public decimal days_91_120 { get; set; }
+        public decimal days_121_150  { get; set; }
+        public decimal days_151_180 { get; set; }
+        public decimal days_181plus { get; set; }
+    }
 }

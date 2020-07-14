@@ -6,7 +6,8 @@
 		UserRole.Attachevent();
 	},
 	Attachevent: function () {
-
+        var pathname = window.location.pathname;
+        RedtDot_CheckAuthorization(pathname);
         var selectedObjs;
        // var draggableOptions = ;
 
@@ -18,7 +19,7 @@
             $(".loader1").show();
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0' && tf == true) {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
                 $(".loader1").hide();
                 return false
 
@@ -92,7 +93,7 @@
 
         ).click(function (e) {           
             if ($(this).find("input[id='hdnuse']").val() == "true") {
-                RdotAlerterrtxt('Alredy use');
+                RedDotAlert_Error('Alredy use');
                 return
             }
             $(this).toggleClass('selected')
@@ -165,7 +166,7 @@
 
                         } else {
 
-                            RdotAlerterrtxt('Alredy use');
+                            RedDotAlert_Error('Alredy use');
                         }
                         
                     });
@@ -270,7 +271,7 @@
                                     $('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                                     tr.remove();
                                 } else {
-                                    RdotAlerterrtxt(Role);
+                                    RedDotAlert_Error(Role);
                                 }
                                 return
 
@@ -357,19 +358,19 @@
 
             });
             if (UserName == '') {
-                RdotAlerterrtxt('Please Select User Name');
+                RedDotAlert_Error('Please Select User Name');
                 $(".loader1").hide();
                 return
             }
             if (WebRepLists.length == 0) {
-                RdotAlerterrtxt('Please Add Report');
+                RedDotAlert_Error('Please Add Report');
                 $(".loader1").hide();
                 return
             }
             $.post("/UserRoles/AddUserToRole", { Username: UserName, Role: WebRepLists }).done(function (response) {
                 debugger
                 if (response.Success == true) {
-                    RdotAlertSucesstxt(response.Message);
+                    RedDotAlert_Success(response.Message);
                     $("#btnclear").trigger("click");
                     tf = false;
 

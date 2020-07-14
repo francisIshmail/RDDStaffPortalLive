@@ -168,6 +168,7 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
+    <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -461,6 +462,7 @@
     <Content Include="Content\famfamfam_flags-master\zw.png" />
     <Content Include="Content\fonts.css" />
     <Content Include="Content\fonts.min.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\reddot.css" />
     <Content Include="Content\Site.css" />
     <Content Include="dragdrop\jquery-ui-1.9.0.custom.min.js" />
@@ -651,6 +653,7 @@
     <Content Include="Scripts\datatables\js\vfs_fonts.js" />
     <Content Include="Scripts\dragdrop\jquery-ui-1.9.0.custom.min.js" />
     <Content Include="Scripts\dragdrop\main.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
@@ -713,6 +716,8 @@
     <Content Include="Areas\Admin\Views\Departments\GetDepList.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\ExpenseSheet.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_PV\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -754,6 +759,7 @@
     <Content Include="Views\Account\ResetPwd.cshtml" />
     <Content Include="Views\Account\ErrorPage.cshtml" />
     <Content Include="Views\Account\SuccessPage.cshtml" />
+    <Content Include="Views\Dashboard\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -764,6 +770,7 @@
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
+    <Folder Include="excelFileUpload\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

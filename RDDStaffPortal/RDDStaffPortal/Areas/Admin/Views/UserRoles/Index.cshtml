@@ -28,7 +28,7 @@
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
                                         <div class="form-group">
-                                            <label for="email2" class="width100px mar-t4">User</label>
+                                            <label for="email2" class="width100px mar-t4">Employee</label>
 
 
                                         </div>
@@ -249,12 +249,12 @@
             success: function (result) {
                 debugger;
                 if (result.Success == true) {
-                    RdotAlertSucesstxt(result.Message);
+                    RedDotAlert_Success(result.Message);
                     $("#RoleName").val('');
                     GetRoles();
                 }
                 else {
-                    RdotAlerterrtxt(result.Message);
+                    RedDotAlert_Error(result.Message);
                     $("#RoleName").val('');
                 }
             }
@@ -283,12 +283,12 @@
             if (result.value) {
                 $.getJSON("/UserRoles/DeleteRole", { RoleName: Role }).done(function (data) {
                     if (data.Success == true) {
-                        RdotAlertSucesstxt(data.Message);
+                        RedDotAlert_Success(data.Message);
                         $("#RoleName").val('');
                         GetRoles();
                     }
                     else {
-                        RdotAlerterrtxt(data.Message);
+                        RedDotAlert_Error(data.Message);
                         $("#RoleName").val('');
                     }
 

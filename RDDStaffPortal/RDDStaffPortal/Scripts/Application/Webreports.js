@@ -6,6 +6,7 @@
 	},
 	Attachevent: function () {
 		var selectedObjs;
+		$(".loader1").show();
 		// drop down image fill with name 
 		RdotDropimg("Userid", "/GetUserList");
 		var colms = [
@@ -36,7 +37,7 @@
 
 			var Userid = $('#Userid Option:selected').val();
 			if (Userid == '0' && tf == true) {
-				RdotAlerterrtxt("Please select  User");
+				RedDotAlert_Error("Please select  User");
 				return false
 
 			}
@@ -73,7 +74,7 @@
 			).click(function (e) {
 				debugger
 				if ($(this).find("input[id='hdnuse']").val() == "true") {
-					RdotAlerterrtxt('Alredy use');
+					RedDotAlert_Error('Alredy use');
 					return
 				}
 				$(this).toggleClass('selected')
@@ -136,7 +137,7 @@
 		).click(function (e) {
 			debugger
 			if ($(this).find("input[id='hdnuse']").val() == "true") {
-				RdotAlerterrtxt('Alredy use');
+				RedDotAlert_Error('Alredy use');
 				return
 			}
 			$(this).toggleClass('selected')
@@ -220,7 +221,7 @@
 
 						} else {
 
-							RdotAlerterrtxt('Alredy use');
+							RedDotAlert_Error('Alredy use');
 						}
 
 
@@ -377,7 +378,7 @@
 									$('#tblReports tbody td li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
 									tr.remove();
 								} else {
-									RdotAlerterrtxt(Code);
+									RedDotAlert_Error(Code);
 								}
 								return
 
@@ -469,17 +470,17 @@
 
 			});
 			if (WURep.Username == '') {
-				RdotAlerterrtxt('Please Select User Name');
+				RedDotAlert_Error('Please Select User Name');
 				return
 			}
 			if (WURep.WebRepLists.length == 0) {
-				RdotAlerterrtxt('Please Add Report');
+				RedDotAlert_Error('Please Add Report');
 				return
 			}
 			$.post("/SaveWebRep", WURep).done(function (response) {
 				debugger
 				if (response.saveflag == true) {
-					RdotAlertSucesstxt(response.errormsg);
+					RedDotAlert_Success(response.errormsg);
 					$("#btnclear").trigger("click");
 					tf = false;
 					$('#Userid').val("0").trigger("change");
@@ -496,6 +497,6 @@
 
 		})
 
-
+		$(".loader1").hide();
 	}
 }
