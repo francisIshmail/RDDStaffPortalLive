@@ -7876,7 +7876,7 @@ body {
 }
 
     .panel .panel-heading {
-        background: #266091;
+        background: #e7483e !important; /*#ed1b24 !important;*/ /*#266091;*/        
         padding: 4px 10px;
         font-size: 16px;
         color: #fff;
@@ -8083,6 +8083,27 @@ table.table {
     color: #1d1f20 !important;
     font-size: 10px !important
 }
+
+.smform-section .form-check label {
+    margin-bottom: .1rem;
+    color: #1d1f20 !important;
+    font-size: 12px !important
+}
+
+.smform-section .form-check {
+    padding: 2px 0;
+}
+
+.smform-section .form-group {
+    padding: 2px 0;
+}
+
+
+    .smform-section .form-group label {
+        margin-bottom: .1rem;
+        color: #1d1f20 !important;
+        font-size: 10px !important
+    }
 
 .smform-section .form-check label {
     margin-bottom: .1rem;
@@ -8994,15 +9015,18 @@ li.sortable-placeholder {
 }
 
 .allwidgets .card-title {
-    font-size: 13px !important;
+    font-size: 15px !important; /*13px !important;*/
 }
-
+/*Nikhilesh*/
+.allwidgets .card-category {
+    font-size: 17px !important; /*13px !important;*/
+}
 .allwidgets .card-body {
     padding: 10px;
 }
 
 .allwidgets h5 {
-    font-size: 12px !important;
+    font-size: 15px !important; /*nikhilesh12px !important;*/
 }
 
 .allwidgets h3 {
@@ -9070,11 +9094,8 @@ li.sortable-placeholder {
 .quickmenu {
     position: absolute;
     right: 10px;
-    top: 10px;
-}
-
-.nav-collapse li {
-    position: relative
+    top: 1px;
+    /*top: 10px; nikhilesh*/ 
 }
 
 .flag {

@@ -3255,13 +3255,7 @@ label {
     border-radius: 0 !important; }
     .accordion .card > .card-header > .span-mode {
       margin-left: auto; }
-      .accordion .card > .card-header > .span-mode:before {
-        content: "\f068" !important;
-        font-family: 'Font Awesome 5 Solid';
-        font-weight: 900;
-        font-size: 16px; }
-    .accordion .card > .card-header.collapsed > .span-mode:before {
-      content: "\f067" !important; }
+
   .accordion .card .card-body {
     border-top: 1px solid #ebebeb;
     padding: 30px; }

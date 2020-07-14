@@ -131,6 +131,7 @@ function RdottableNDW(tblid, url1, colms) {
         //  "scrollX": true,
         "filter": true,
         "paging": true,
+        "pageLength": 20,
         "ordering": true,
         "info": true,
         "dataSrc": "",
@@ -167,9 +168,9 @@ function RdottableNDW(tblid, url1, colms) {
         },
 
         "aoColumns": colms
-        , "fnDrawCallback": function () {
-            $("input[id='chkIsDefault']").bootstrapToggle();
-        }
+        //, "fnDrawCallback": function () {
+        //    $("input[id='chkIsDefault']").bootstrapToggle();
+        //}
     });
 
     var delay = (function () {
@@ -182,7 +183,7 @@ function RdottableNDW(tblid, url1, colms) {
     $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
         debugger
 
-        RdotAlerterrtxt1(message);
+        RedDotAlert_Error(message);
 
         location.reload("/login/login");
     };
@@ -294,7 +295,7 @@ function RdottableDash(tblid, url1, colms) {
 
 
 
-function RdottableNDWPara1(tblid, url1, colms, Code) {
+function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
     var newrow = {
         Code: Code
     }
@@ -305,6 +306,7 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
         //  "scrollX": true,
         "filter": true,
        // "paging": true,
+        "pageLength": pageL,
         "ordering": true,
         "info": false,
         "rowReorder": {
@@ -434,7 +436,7 @@ function RdottableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
             else {
                 tr.css("background", "red");
                 tr.find(ide).focus();
-                RdotAlerterrtxt(errmsg);
+                RedDotAlert_Error(errmsg);
             }
         }
     });
@@ -461,7 +463,7 @@ function RdottableTabEveOne(tbl, ide, idf, errmsg, typ, vtyp, lent) {
                 tr.find(ide).val(ab.slice(0, 1 - ab.length));
                 tr.css("background", "red");
                 tr.find(ide).focus();
-                RdotAlerterrtxt(errmsg);
+                RedDotAlert_Error(errmsg);
             }
         }
     });
@@ -487,7 +489,7 @@ function RdottableLstEnt(tbl, ide, idf, errmsg, typ, vtyp) {
             else {
                 tr.css("background", "red");
                 tr.find(ide).focus();
-                RdotAlerterrtxt(errmsg);
+                RedDotAlert_Error(errmsg);
             }
             return false;
         }
@@ -516,7 +518,7 @@ function RdottableLstTabBlk(tbl, ide, idf, errmsg, typ, vtyp) {
             else {
                 tr.css("background", "red");
                 tr.find(ide).focus();
-                RdotAlerterrtxt(errmsg);
+                RedDotAlert_Error(errmsg);
             }
 
         }
@@ -547,7 +549,7 @@ function RdottableDateCondion(tbl, ide, idf) {
                 if ((t == false) && (new Date(Rdotsetdtpkdate(tr.find(ide).val())) >= new Date(Rdotsetdtpkdate(tr.find(idf).val())))) {//compare end <=, not >=
                     tr.find(ide).val(tr.find(idf).val());
                     t = true;
-                    RdotAlerterrDt();
+                    RedDotAlert_InvalidDate();
                 }
                 else {
                     t = false;
@@ -556,7 +558,7 @@ function RdottableDateCondion(tbl, ide, idf) {
                 if ((t == false) && (new Date(Rdotsetdtpkdate(tr.find(ide).val())) <= new Date(Rdotsetdtpkdate(tr.find(idf).val())))) {//compare end <=, not >=
                     tr.find(ide).val(tr.find(idf).val());
                     t = true;
-                    RdotAlerterrDt();
+                    RedDotAlert_InvalidDate();
                 }
                 else {
                     t = false;
@@ -593,6 +595,7 @@ function RdotTableRowDel(tbl, btndel) {
     });
 }
 function RdotDropimg(ids, url) {
+    
     $.getJSON(url).done(function (data) {
         $('#' + ids + '').empty();
         $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
@@ -730,4 +733,181 @@ function RedDotAlert_InvalidDate(message) {
 
     }])
 
+}
+
+function RedDot_NumberFormat(value) {
+    debugger
+    var values = 0;
+    var abr = "";
+    if (value < 0) {
+        value = -(value);
+        abr = '-';
+    } else if (value == 0) {
+        return '$ ' + value.toString();
+    }
+    if (value >= 1000000000) {
+        values = (value / 1000000000).toFixed(2) + ' B';
+    } else if (value >= 1000000) {
+        values = (value / 1000000).toFixed(2) + ' M';
+    } else if (value >= 1000) {
+        values = (value / 1000).toFixed(2) + ' K';
+    }
+    
+    return abr + '' + values.toString();
+}
+
+
+function RedtDot_CheckAuthorization(url) {
+    var t = false;
+    var data = JSON.stringify({
+        url: url,
+    });
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        data:data,
+        url: "/CheckAuthorization",
+        dataType: 'Json',
+        contentType: "Application/json",
+        dataType: 'JSON',
+        success: function (response) {
+            debugger
+            if (response.data > 0) {
+                t = true;
+            } else {
+                window.location.href = "/Dashboard/ErrorPage";
+            }
+        }
+    })
+    return t;
+}
+
+
+function RedDot_Button_Init_HideShow() {
+    $("#btnAdd").show();
+    $("#btnSave").hide();
+    $("#btnCancel").hide();
+    $("#btnSendMail").hide();
+    $("#tblid").show();
+    $("#tblid1").show();
+    
+}
+function RedDot_Button_New_HideShow() {
+    $("#btnAdd").hide();
+    $("#btnSave").show();
+    $("#btnCancel").show();
+    $("#btnSendMail").show();
+    $("#tblid").hide();
+    $("#tblid1").show();
+
+}
+
+
+function RedDot_Table_Attribute(tr,tblDt,count1,tblclass) {
+    var i = 0;    
+    $(tblclass).each(function () {
+        while (tblDt.length > i) {
+            tr.find('.Abcd input[id^="' + tblDt[i] + '"]').attr("id", '' + tblDt[i] + '' + count1);
+            tr.find('.Abcd input[id^="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + count1);
+            tr.find('.Abcd input[id^="' + tblDt[i] + '"]').val('');                   
+            i++;
+        }
+        tr.find('.Abcd input[id^="' + tblDt[0] + '"]').val(count1);
+       
+    });
+    $("#hdncount").val(count1);
+   
+
+    
+}
+
+function RedDot_Table_DeleteActivity(tr, tblDt, tblclass) {  
+    tr.remove();   
+    var i = 0;  
+    var k = 1;
+    $(tblclass).each(function () {     
+        while (tblDt.length > i) {
+            $(this).find('.Abcd input[id="' + tblDt[i]+ '"]').attr("id", '' + tblDt[i] + '' + k);
+            $(this).find('.Abcd input[id="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + k);
+            i++;
+        }
+        $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k);
+        k++;
+    });
+
+
+    $("#hdncount").val(k-1);
+    
+
+}
+
+/*tbl class date formate DD/MM/YYYY get input */
+function RedDot_tbldtpicker() {
+    $('.datepicker').datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY',
+        showClose: true,
+        showClear: true,
+        // minDate: new Date(),
+
+    });
+}
+
+
+
+/*Last Column Enter Event*/
+function RedDot_tableLstEnt(tbl, ide, idf, errmsg, typ, vtyp) {
+    $(tbl).on("keypress", ide, function (e) {
+        debugger
+        if (e.keyCode == 13) {
+            var tr = $(this).closest('#IIst');
+            var ab = '';
+            if (typ == "N") {
+                ab = parseInt(tr.find(ide).val()) || 0;
+            } else {
+                ab = tr.find(ide).val();
+            }
+            if (ab != vtyp) {
+                tr.find(idf).focus();
+                tr.css("background", "");
+                $(this).closest('#IIst').next('#IIst').find(idf).focus();
+            }
+            else {
+                tr.css("background", "red");
+                RedDotAlert_Error(errmsg);
+                tr.find(ide).focus();
+                
+               
+            }
+            return false;
+        }
+    });
+}
+
+//Table Number  N & Text T Tab Event
+function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
+    $(tbl).on("keydown", ide, function (e) {
+
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == 9) {
+            e.preventDefault();
+            var tr = $(this).closest('#IIst');
+            var ab = '';
+            if (typ == "N") {
+                ab = parseInt(tr.find(ide).val()) || 0;
+            } else {
+                ab = tr.find(ide).val();
+            }
+            if (ab != vtyp) {
+                tr.find(idf).focus();
+                tr.css("background", "");
+            }
+            else {
+                tr.css("background", "red");
+                tr.find(ide).focus();
+                RedDotAlert_Error(errmsg);
+            }
+        }
+    });
 }

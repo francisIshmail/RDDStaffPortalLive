@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace RDDStaffPortal.Controllers
 {
@@ -20,8 +21,18 @@ namespace RDDStaffPortal.Controllers
         {
             return View();
         }
+        [Route("CheckAuthorization")]
+        public ActionResult CheckAuthrization(string url)
+        {
+            return Json(new {data= _DashDbOp.CheckAuthorization(User.Identity.Name,url) }, JsonRequestBehavior.AllowGet);
+            
+        }
 
-        
+
+        public ActionResult ErrorPage()
+        {
+            return View();
+        }
 
 
         [Route("QuickLinkInsert")]
@@ -277,6 +288,48 @@ namespace RDDStaffPortal.Controllers
              result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
             return result;
         }
+
+        [Route("GetCard2")]
+        public ActionResult GetSecondCard()
+        {
+            JsonResult result = new JsonResult();
+            List<SecondCard> data = new List<SecondCard>();
+            data = _DashDbOp.GetSecondCard(User.Identity.Name);
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
+        [Route("GetRecModel")]
+        public ActionResult GetRecModSecondCard()
+        {
+            JsonResult result = new JsonResult();
+            List<RDD_Model_tbl> data = new List<RDD_Model_tbl>();
+            data = _DashDbOp.GetRecModel_tbl(User.Identity.Name);
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
+
+        [Route("GetPayModel")]
+        public ActionResult GetPayModCard()
+        {
+            JsonResult result = new JsonResult();
+            List<RDD_Model_tbl> data = new List<RDD_Model_tbl>();
+            data = _DashDbOp.GetPayModel_tbl(User.Identity.Name);
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
+        [Route("GetPiChartBank")]
+        public ActionResult GetPiChartBank()
+        {
+            JsonResult result = new JsonResult();
+            List<Pichart_Dash> data = new List<Pichart_Dash>();
+            data = _DashDbOp.GetBankBalPichart(User.Identity.Name);
+            result = this.Json(new { data = data }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
 
         [Route("GetBarchart1")]
         public ActionResult GetBarchart1()

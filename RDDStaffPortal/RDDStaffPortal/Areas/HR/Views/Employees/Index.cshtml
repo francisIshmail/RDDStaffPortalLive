@@ -1544,7 +1544,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 },
                 error: function (er) {
-                    RdotAlerterrtxt(er);
+                    RedDotAlert_Error(er);
                 }
             });
 
@@ -1580,7 +1580,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     //code after success
                     debugger
                     if (response == "InvalidError") {
-                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                        RedDotAlert_Error("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
                     }
                     else {
                         debugger;
@@ -1590,7 +1590,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 },
                 error: function (er) {
-                    RdotAlerterrtxt(er);
+                    RedDotAlert_Error(er);
                 }
             });
 
@@ -1746,7 +1746,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         $("#Contact_No").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter Number.');
+                RedDotAlert_Error('Please Enter Number.');
                 $("#Contact_No").val('');
                 $("#Contact_No").focus();
                 return false;
@@ -1755,7 +1755,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         $("#No_child").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter  only Number.');
+                RedDotAlert_Error('Please Enter  only Number.');
                 $("#No_child").val('');
                 $("#No_child").focus();
                 return false;
@@ -1764,7 +1764,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         $("#Ext_no").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Ext_no").val('');
                 $("#Ext_no").focus();
                 return false;
@@ -1772,7 +1772,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Emergency_Contact").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('please Enter only Number');
+                RedDotAlert_Error('please Enter only Number');
                 $("#Emergency_Contact").val('');
                 $("#Emergency_Contact").focus();
                 return false;
@@ -1780,7 +1780,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Salary").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Salary").val('');
                 $("#Salary").focus();
                 return false;
@@ -1788,7 +1788,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Account_No").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Account_No").val('');
                 $("#Account_No").focus();
                 return false;
@@ -1805,7 +1805,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
         if (!emailReg.test(emailaddressVal)) {
-            RdotAlerterrtxt('Enter a valid email address.');
+            RedDotAlert_Error('Enter a valid email address.');
 
             $("#Email").val('');
 
@@ -1826,7 +1826,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
             //alert(domainname);
             if (domainname != "reddotdistribution.com") {
-                RdotAlerterrtxt('Please Enter Valid Official DomainName');
+                RedDotAlert_Error('Please Enter Valid Official DomainName');
             
                 $("#Email").val('');
 
@@ -2017,7 +2017,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 {
                   
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    RdotAlertSucesstxt(result);
+                    RedDotAlert_Success(result);
                   // ClearControl();
                     $('.loader1').css('display', 'none');
                 }
@@ -2054,7 +2054,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 success: function (data) {
                     debugger
                       var mess = data.Message;
-                    RdotAlertSucesstxt(mess);
+                    RedDotAlert_Success(mess);
                     $('.loader1').css('display', 'none');
 
 
@@ -2137,7 +2137,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         var ValFlag = true;
 
         if ($("#FName").val() == "") {
-            RdotAlerterrtxt('please Enter First Name');
+            RedDotAlert_Error('please Enter First Name');
 
             // alert('please Enter First Name');
             $("#FName").focus();
@@ -2152,7 +2152,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         //}
 
         if ($("#LName").val() == "") {
-            RdotAlerterrtxt('please Enter Last Name');
+            RedDotAlert_Error('please Enter Last Name');
 
             $("#LName").focus();
             return ValFlag = false;
@@ -2160,106 +2160,106 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
         if ($("#Email").val() == "") {
-            RdotAlerterrtxt('please Enter Email');
+            RedDotAlert_Error('please Enter Email');
             $("#Email").focus();
             return ValFlag = false;
         }
 
         if ($("#Contact_No").val() == "") {
-            RdotAlerterrtxt('please Enter Contact No');
+            RedDotAlert_Error('please Enter Contact No');
             $("#Contact_No").focus();
             return ValFlag = false;
         }
 
         if ($("#DesigId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Designation');
+            RedDotAlert_Error('please select Designation');
             $("#DesigId").focus();
             return ValFlag = false;
         }
         if ($("#DeptId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Department');
+            RedDotAlert_Error('please select Department');
             $("#DeptId").focus();
             return ValFlag = false;
         }
         if ($("#ManagerId").val() == "") {
-            RdotAlerterrtxt('please Enter Manager');
+            RedDotAlert_Error('please Enter Manager');
             $("#ManagerId").focus();
             return false;
         }
 
         if ($("#CountryCodeName option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Country');
+            RedDotAlert_Error('please select Country');
             $("#CountryCodeName").focus();
             return ValFlag = false;
         }
 
 
         if ($("#StatusId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Employment Status');
+            RedDotAlert_Error('please select Employment Status');
             $("#StatusId").focus();
             return ValFlag = false;
         }
 
 
         if ($("#type_of_employement option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Employment Type');
+            RedDotAlert_Error('please select Employment Type');
             $("#type_of_employement").focus();
             return ValFlag = false;
         }
 
         if ($("#Joining_date").val() == "") {
-            RdotAlerterrtxt('please select Joining Date');
+            RedDotAlert_Error('please select Joining Date');
             $("#Joining_date").focus();
             return ValFlag = false;
         }
 
         if ($("#Current_Address").val() == "") {
-            RdotAlerterrtxt('please Enter Current Address');
+            RedDotAlert_Error('please Enter Current Address');
             $("#Current_Address").focus();
             return ValFlag = false;
         }
 
         if ($("#Permanent_Address").val() == "") {
-            RdotAlerterrtxt('please Enter Permanent Address');
+            RedDotAlert_Error('please Enter Permanent Address');
             $("#Permanent_Address").focus();
             return false;
         }
 
         if ($("#Gender option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Gender');
+            RedDotAlert_Error('please select Gender');
             $("#Gender").focus();
             return false;
         }
         if ($("#DOB").val() == "") {
-            RdotAlerterrtxt('please select Date Of Birth');
+            RedDotAlert_Error('please select Date Of Birth');
             $("#DOB").focus();
             return false;
         }
 
         if ($("#Marital_Status option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Marital Status');
+            RedDotAlert_Error('please select Marital Status');
             $("#Marital_Status").focus();
             return false;
         }
         if ($("#Citizenship").val() == "") {
-            RdotAlerterrtxt('please Enter Nationality');
+            RedDotAlert_Error('please Enter Nationality');
             $("#Citizenship").focus();
             return false;
         }
 
         if ($("#National_id").val() == "") {
-            RdotAlerterrtxt('please Enter National Id');
+            RedDotAlert_Error('please Enter National Id');
             $("#National_id").focus();
             return false;
         }
         if ($("#No_child").val() == "") {
-            RdotAlerterrtxt('please Enter No of Child');
+            RedDotAlert_Error('please Enter No of Child');
             $("#No_child").focus();
             return false;
         }
 
         if ($("#Contract_Start_Date").val() == "") {
-            RdotAlerterrtxt('please Select Contract StartDate');
+            RedDotAlert_Error('please Select Contract StartDate');
             $("#Contract_Start_Date").focus();
             return false;
         }
@@ -2267,18 +2267,18 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Account_No").val() != "") {
 
             if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
 
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2289,18 +2289,18 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Branch_Name").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2309,18 +2309,18 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Bank_Name").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2329,18 +2329,18 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Bank_Code").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
@@ -2350,20 +2350,20 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Currency option:selected").index() != 0) {
 
             if ($("#Salary").val() == "0") {
-                RdotAlerterrtxt('Should be Greater Than 0');
+                RedDotAlert_Error('Should be Greater Than 0');
                 $("#Salary").focus();
                 return false;
             }
 
             if ($("#Salary_Start_Date").val() == "") {
-                RdotAlerterrtxt('please Enter Salary Start Date');
+                RedDotAlert_Error('please Enter Salary Start Date');
                // $("#Salary_Start_Date").focus();
                 $("#Salary_Start_Date").val('');
                 return false;
             }
 
             if ($("#Salary").val() == "") {
-                RdotAlerterrtxt('Please Enter Salary');
+                RedDotAlert_Error('Please Enter Salary');
                 $("#Salary").focus();
                 return false;
             }
@@ -2379,13 +2379,13 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Salary").val() != ""){
 
             if ($("#Currency option:selected").index() <= 0) {
-                RdotAlerterrtxt('please select Currency ');
+                RedDotAlert_Error('please select Currency ');
                 $("#Currency").focus();
                 return false;
             }
 
             if ($("#Salary_Start_Date").val() == "") {
-                RdotAlerterrtxt('please Enter Salary Start Date');
+                RedDotAlert_Error('please Enter Salary Start Date');
                // $("#Salary_Start_Date").focus();
                 $("#Salary_Start_Date").val('');
                 return false;
@@ -2397,19 +2397,19 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Salary_Start_Date").val() != "") {
 
             if ($("#Currency option:selected").index() <= 0) {
-                RdotAlerterrtxt('please select Currency ');
+                RedDotAlert_Error('please select Currency ');
                 $("#Currency").focus();
                 return false;
             }
 
             if ($("#Salary").val() == "") {
-                RdotAlerterrtxt('please Enter Salary');
+                RedDotAlert_Error('please Enter Salary');
                 $("#Salary").focus();
                 return false;
             }
 
             if ($("#Salary").val() == 0) {
-                RdotAlerterrtxt('Salary Should be Greater than 0');
+                RedDotAlert_Error('Salary Should be Greater than 0');
                 $("#Salary").focus();
                 return false;
             }

@@ -95,6 +95,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                     new SqlParameter("@p_IsDefault",menus.IsDefault),
                     new SqlParameter("@p_CreatedBy",menus.CreatedBy),
                     new SqlParameter("@p_Levels",menus.Levels),
+                     new SqlParameter("@p_ObjType",menus.ObjType),
                     new SqlParameter("@p_response",response),
                 };
                     str = Com.ExecuteNonQueryList("RDD_Menus_InsertUpdate", Para);
@@ -215,6 +216,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             Levels = !string.IsNullOrWhiteSpace(dr["Levels"].ToString()) ? Convert.ToInt32(dr["Levels"].ToString()) : 0,
                             URL = !string.IsNullOrWhiteSpace(dr["URL"].ToString()) ? dr["URL"].ToString() : "",
                             ModuleName = !string.IsNullOrWhiteSpace(dr["ModuleName"].ToString()) ? dr["ModuleName"].ToString() : "",
+                            ObjType = !string.IsNullOrWhiteSpace(dr["ObjType"].ToString()) ? dr["ObjType"].ToString() : "",
                         });
                     }
 
@@ -223,7 +225,20 @@ namespace RDDStaffPortal.DAL.InitialSetup
             catch (Exception)
             {
 
-                throw;
+                _MenusList.Add(new RDD_Menus()
+                {
+                    //MenuId	MenuName	Levels	ModuleId		URL	DisplaySeq	
+                    MenuId = 0,
+                    ModuleId =  0,
+                    MenuName = "",
+                    MenuCssClass = "",
+                    IsDefault =  false,
+                    DisplaySeq = 0,
+                    Levels = 0,
+                    URL = "",
+                    ModuleName = "",
+                    ObjType =  "",
+                });
             }
 
             return _MenusList;

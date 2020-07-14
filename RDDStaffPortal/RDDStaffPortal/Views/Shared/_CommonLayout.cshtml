@@ -20,9 +20,9 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="~/Content/reddot.css">
     <link href="~/Content/reddot.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
-
-
+    
     <link href="~/Scripts/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Scripts/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/Scripts/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -187,14 +187,14 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
+                                    <img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
+                                            <div class="avatar-lg"><img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
                                             <div class="u-text">
                                                 <h6>
                                                     @if (User.Identity.IsAuthenticated)
@@ -672,9 +672,12 @@
     <!-- jQuery UI -->
     <script src="~/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="~/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+
+
     <!-- Moment JS -->
     <script src="~/js/plugin/moment/moment.min.js"></script>
-
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 
     <!-- Bootstrap Toggle -->
     <script src="~/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
@@ -729,6 +732,9 @@
         <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
         <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>*@
     @*--end voice-*@
+
+
+
 
     <script src="~/Scripts/RedDotUtility.js"></script>
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/dd.css" />
@@ -910,27 +916,27 @@
 
         $("#btnpass").on("click", function () {
             if (pass.length == 0) {
-                RdotAlerterrtxt1("Please Enter Password");
+                RedDotAlert_Error("Please Enter Password");
                 $("input[id='idnpass']").focus();
                 return
             }
             if (repass.length == 0) {
-                RdotAlerterrtxt1("Please Enter Confirm Password");
+                RedDotAlert_Error("Please Enter Confirm Password");
                 $("input[id='idcpass']").focus();
                 return
             }
             if (t == true) {
-                RdotAlerterrtxt1("Password does not match");
+                RedDotAlert_Error("Password does not match");
                 return
             }
             $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }, function (response) {
                 if (response.data.Success == true) {
                     $("#btncls").trigger("click");
                     $("input[type='password']").val('');
-                    RdotAlertSucesstxt(response.data.Message);
+                    RedDotAlert_Success(response.data.Message);
 
                 } else {
-                    RdotAlerterrtxt1(response.data.Message);
+                    RedDotAlert_Error(response.data.Message);
                 }
             })
         })
