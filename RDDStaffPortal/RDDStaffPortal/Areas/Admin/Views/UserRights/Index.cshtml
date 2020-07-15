@@ -148,7 +148,7 @@
 
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0' && tf==true) {
-                RdotAlerterrtxt("Please select  User");               
+                RedDotAlert_Error("Please select  User");               
                 return false
 
             }
@@ -180,7 +180,7 @@
         $('#Btnsearch').on("click", function () {
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0') {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
                 return false
 
             }
@@ -209,7 +209,7 @@
 
             };
             if (Users.UserId == '0') {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
                 $(".loader1").hide();
                 return false
 
@@ -245,12 +245,12 @@
            $.post("/SaveUserRights", Users).done(function (response) {
                if (response.SaveFlag == true) {
                    tf = false;
-                   RdotAlertSucesstxt('Save Succcesfully');
+                   RedDotAlert_Success('Save Succcesfully');
                    $("[id*='smallSelect']").val("N");
                    $('#Userid').val("0").trigger("change");
                    $('#btnSaveMenu').hide();
                } else {
-                   RdotAlerterrtxt('Error Occur');
+                   RedDotAlert_Error('Error Occur');
                }
                $(".loader1").hide();
 

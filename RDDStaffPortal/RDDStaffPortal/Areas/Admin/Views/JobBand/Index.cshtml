@@ -340,7 +340,7 @@
             success: function (result) {
 
                 if (result == "JobBand saved successfully." || result == "JobBand updated successfully.") {
-                    RdotAlertSucesstxt(result);
+                    RedDotAlert_Success(result);
                     GetJobBandList();
                     $("#JobBandId").val('');
                     $("#JobBandName").val('');
@@ -352,7 +352,7 @@
                 }
                 else {
                     result == "JobBand already exists.."
-                    RdotAlerterrtxt1(result);
+                    RedDotAlert_Error(result);
                    // alert(result);
                     $("#JobBandId").val('');
                     $("#JobBandName").val('');

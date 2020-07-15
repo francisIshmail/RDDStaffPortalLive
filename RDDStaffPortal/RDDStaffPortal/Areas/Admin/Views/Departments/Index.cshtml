@@ -271,7 +271,11 @@
     
    
     $(document).ready(function () {
-
+        debugger
+        var pathname = window.location.pathname;       
+        RedtDot_CheckAuthorization(pathname);
+       
+        debugger
         $("#txtSearchDep").on("keyup", function () {
            
             var value = $("#txtSearchDep").val().toLowerCase();
@@ -311,10 +315,10 @@
                         success: function (data) {
                             debugger
                             if (data == "Department Deleted Sucessfully.") {
-                                RdotAlerterrtxt1(data);
+                                RedDotAlert_Error(data);
                                 $("#Depid").load('@Url.Action("GetDepList", "Departments",new { area="Admin"})');
                             } else {
-                                RdotAlerterrtxt1(data);
+                                RedDotAlert_Error(data);
                             }
                         }
                     });
@@ -437,7 +441,7 @@
                 success: function (result) {
 
                     if (result == "Department saved successfully." || result == "Department updated successfully.") {
-                        RdotAlertSucesstxt(result);
+                        RedDotAlert_Success(result);
                         GetDeptList();
                         //alert(result);
                         //location.reload();
@@ -451,7 +455,7 @@
                     }
                     else {
                         result == "Department already exists.."
-                        RdotAlerterrtxt1(result);
+                        RedDotAlert_Error(result);
                         // alert(result);
                         $("#DeptId").val('');
 

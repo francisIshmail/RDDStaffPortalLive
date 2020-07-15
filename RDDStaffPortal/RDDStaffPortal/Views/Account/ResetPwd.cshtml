@@ -159,7 +159,7 @@
                 $(".loader1").show();
                 $("#btnsucccha").attr("disabled", true);
                 if (pass.length == 0) {
-                    RdotAlerterrtxt1("Please Enter Password");
+                    RedDotAlert_Error("Please Enter Password");
                     $("input[id='idnpass']").focus();
                     $(".loader1").hide();
                     $("#btnsucccha").attr("disabled", false);
@@ -167,14 +167,14 @@
                 }
                 if (repass.length == 0) {
 
-                    RdotAlerterrtxt1("Please Enter Confirm Password");
+                    RedDotAlert_Error("Please Enter Confirm Password");
                     $("input[id='idcpass']").focus();
                     $(".loader1").hide();
                     $("#btnsucccha").attr("disabled", false);
                     return
                 }
                 if (t == true) {
-                    RdotAlerterrtxt1("Password does not match");
+                    RedDotAlert_Error("Password does not match");
                     $(".loader1").hide();
                     $("#btnsucccha").attr("disabled", false);
                     return
@@ -184,12 +184,12 @@
                     debugger
                     if (response.Success == true) {
 
-                        RdotAlertSucesstxt(response.Message);
+                        RedDotAlert_Success(response.Message);
                          @*var newUrl= '@Url.Action("Login", "Account")';
                         window.location.href = newUrl;*@
 
                     } else {
-                        RdotAlerterrtxt1(response.Message);
+                        RedDotAlert_Error(response.Message);
 
                     }
                     $(".loader1").hide();

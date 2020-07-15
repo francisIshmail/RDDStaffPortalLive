@@ -112,6 +112,7 @@
     $(document).ready(function () {
 
         $(".loader1").show();
+        $(".allwidgets").hide();
 
    $("body").click(function (e) {
             $('.scrollbar-inner').scrollbar();
@@ -142,10 +143,21 @@
 
        
         DashBoard.initialize();
+        $(".allwidgets").show();
+
+        $("button[class='swal2-confirm']").on("click",function () {
+            debugger
+            //location.reload(); 
+            window.location = '/Dashboard/Index';
+        });
         $(".loader1").hide();
 
 
     });
 </script>
 
-
+<style>
+    .Abc {
+        display: none !important;
+    }
+</style>

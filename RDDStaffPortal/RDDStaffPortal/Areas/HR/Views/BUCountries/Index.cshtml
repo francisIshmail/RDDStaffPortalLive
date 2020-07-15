@@ -426,7 +426,7 @@
 
                     });
                     if (t2 == true) {
-                        RdotAlerterrtxt1(" Please Save  Records Of " + tmsg)
+                        RedDotAlert_Error(" Please Save  Records Of " + tmsg)
                         return
                     }
                     $(".basket_list  ul li").each(function () {
@@ -435,7 +435,7 @@
 
                     if (result == "saved successfully.") {
 
-                        RdotAlertSucesstxt(result);
+                        RedDotAlert_Success(result);
                         $('#EmployeeId').val("0").trigger("change");
 
                         $('#EmpName').val("0").trigger("change");
@@ -447,7 +447,7 @@
 
                     }
                     else if (result == "updated successfully.") {
-                        RdotAlertSucesstxt(result);
+                        RedDotAlert_Success(result);
                         // ClearControl();
                     }
 

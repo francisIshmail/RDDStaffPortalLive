@@ -86,13 +86,13 @@
 
 					if ($("#pri1").find("ul li ").length == 1 && basket.find(".basket_list").attr("id") == 'pri1') {
 						
-						RdotAlerterrtxt('You can add only one primary account');
+						RedDotAlert_Error('You can add only one primary account');
 						return
 					}
 					if (move.find("input[id='hdnCustyp']").val() == 'P') {
 						if (basket.find(".basket_list").attr("id") == 'sec1') {
 							
-							RdotAlerterrtxt('You can add only primary account');
+							RedDotAlert_Error('You can add only primary account');
 							return
                         }
 
@@ -146,7 +146,7 @@
 						
 					} else {
 						
-						RdotAlerterrtxt('Alredy use');
+						RedDotAlert_Error('Alredy use');
                     }
 					
 
@@ -239,7 +239,7 @@
 										$('#txtsearch').trigger("keyup");
 										tr.remove();
 									} else {
-										RdotAlerterrtxt(vt);
+										RedDotAlert_Error(vt);
 									}
 									return
 
@@ -347,19 +347,19 @@
 				
 			});
 			if (Cust.CustomerName == '') {
-				RdotAlerterrtxt('Please Add Primary Account');
+				RedDotAlert_Error('Please Add Primary Account');
 				$(".loader1").hide();
 				return
             }
 			if (Cust.ChildLists.length == 0) {
-				RdotAlerterrtxt('Please Add Secondary Account');
+				RedDotAlert_Error('Please Add Secondary Account');
 				$(".loader1").hide();
 				return
             }
 			$.post("/SaveCustMap", Cust).done(function (response) {
 				debugger
 				if (response.saveflag == true) {
-					RdotAlertSucesstxt(response.errormsg);
+					RedDotAlert_Success(response.errormsg);
 					$("#btnclear").trigger("click");
 					//$(".reloadcss").trigger("click");
 					$('#txtsearch').trigger("keyup");

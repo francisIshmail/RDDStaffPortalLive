@@ -21,6 +21,7 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
+                    <div class="loader1"></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive-lg">
@@ -28,7 +29,7 @@
                                     <div class="col-xl-1 col-md-1">
                                         <div class="form-group">
                                             <label for="email2" class="width100px mar-t4">Employee </label>
-                                           
+
 
                                         </div>
                                     </div>
@@ -38,86 +39,86 @@
                                             </select>
                                         </div>
                                     </div>
-                                    </div>
-                                    <div class="rowmin row mar-b10" style="display:none" >
-                                        <div class="col-xl-1 col-md-1">
-                                            <div class="form-group">
-                                                <label for="email2" class="width100px mar-t4">Reports :</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="txtsearch" placeholder="Search">
-                                            </div>
-                                        </div>
-
-                                        @*<div class="col-xl-1 col-md-1  padd-l0">
-                <div class="form-group">
-                    <button type="button" class="btn btn-success btn-sm" id="addrow">Search</button>
-                </div>
-            </div>*@
-                                    </div>
-                                    <div class="rowmin row">
-                                        <div class="col-md-4" id="product">
-                                            <div class="row">
-                                                <div class="col-md-12 padd-l5 padd-r5">
-                                                    <div class="panel">
-                                                        <div class="panel-heading text-center">Reports</div>
-                                                        <table id="tblReports" class="table-active table-responsive">
-                                                            <thead>
-                                                                <tr><td style="display:none">Reports</td></tr>
-                                                            </thead>
-                                                            <tbody class="clear"><tr></tr></tbody>
-                                                        </table>
-                                                    </div>
-
-                                                </div>
-
-
-
-
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-4" id="sidebar">
-                                            <div class="panel">
-                                                <div class="panel-heading text-center" id="hdntitle">Authorized  Reports</div>
-
-                                                <div class="basket">
-                                                    <div class="basket_list" id="pri1">
-                                                        <input id="hdnflag" value="false" type="hidden" />
-
-                                                        <ul id="pr1" class="height300px">
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="card-action">
-                                                    <button class="btn btn-info btn-sm" id="btnsave">Save</button>
-                                                    <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
-                                                </div>
-                                            </div>
-
+                                </div>
+                                <div class="rowmin row mar-b10" style="display:none">
+                                    <div class="col-xl-1 col-md-1">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px mar-t4">Reports :</label>
                                         </div>
                                     </div>
 
+                                    <div class="col-xl-4 col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" id="txtsearch" placeholder="Search">
+                                        </div>
+                                    </div>
+
+                                    @*<div class="col-xl-1 col-md-1  padd-l0">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success btn-sm" id="addrow">Search</button>
+                            </div>
+                        </div>*@
+                                </div>
+                                <div class="rowmin row">
+                                    <div class="col-md-4" id="product">
+                                        <div class="row">
+                                            <div class="col-md-12 padd-l5 padd-r5">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center">Reports</div>
+                                                    <table id="tblReports" class="table-active table-responsive">
+                                                        <thead>
+                                                            <tr><td style="display:none">Reports</td></tr>
+                                                        </thead>
+                                                        <tbody class="clear"><tr></tr></tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
 
 
 
 
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4" id="sidebar">
+                                        <div class="panel">
+                                            <div class="panel-heading text-center" id="hdntitle">Authorized  Reports</div>
+
+                                            <div class="basket">
+                                                <div class="basket_list" id="pri1">
+                                                    <input id="hdnflag" value="false" type="hidden" />
+
+                                                    <ul id="pr1" class="height300px">
+                                                    </ul>
+                                                </div>
+                                            </div>
 
 
 
+                                            <div class="card-action">
+                                                <button class="btn btn-info btn-sm" id="btnsave">Save</button>
+                                                <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
 
 
 
 
 
+
+
+
                             </div>
+
+
+
+
+
+                        </div>
 
                     </div>
 
@@ -139,11 +140,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
         //$(function () {
-
+       
 
         Webreports.initialize();
+       
        // $('.scrollbar-inner').scrollbar();
         $(".dataTables_paginate").hide();
+      
+
     });
 </script>
 <style>

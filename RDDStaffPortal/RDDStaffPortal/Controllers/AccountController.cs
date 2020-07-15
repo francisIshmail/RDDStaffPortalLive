@@ -52,7 +52,8 @@ namespace RDDStaffPortal.Controllers
                         }
                         ab = Convert.ToBase64String(file);
                     }
-                   Session["LoginName"] = ab;
+                     Session["LoginName"] = ab;
+                   
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
