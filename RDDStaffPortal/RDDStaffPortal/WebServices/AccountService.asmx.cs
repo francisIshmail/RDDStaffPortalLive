@@ -103,7 +103,6 @@ namespace RDDStaffPortal.WebServices
         public MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
-            SendMail sendmail = new SendMail();
 
             membershipResponse.Success = false;
 
