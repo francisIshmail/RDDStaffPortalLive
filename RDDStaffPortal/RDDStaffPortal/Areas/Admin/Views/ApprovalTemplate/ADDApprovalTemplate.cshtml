@@ -1,0 +1,344 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Admin.RDD_Approval_Templates
+@{
+    var count = 1;
+    var count1 = 1;
+
+}
+
+<div class="card full-height">
+
+    <div class="card-body">
+        @Html.HiddenFor(m => m.EditFlag, true)
+        @Html.HiddenFor(m => m.Template_Id)
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <div class="row rowmin">
+                    <div class="col-md-8 col-lg-8">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label width120px">Document :</label>
+                            <div class="col-md-8 p-0">
+                                @Html.DropDownListFor(m => m.DocumentName, Model.DocumentNameList, new { @class = "form-control form-control-sm" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label">Status :</label>
+                            
+                                <div class="col-md-5 p-0">
+                                    <div class="input-group">
+                                        <label class="switch">
+                                            <input type="checkbox"> <div></div>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row rowmin">
+                    <div class="col-md-8 col-lg-8">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label width120px">Description :</label>
+                            <div class="col-md-8 p-0">
+                                @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="panel padd-10 mar-t10 panel-red-border">
+                    <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-Originator-tab" data-toggle="pill" href="#pills-Originator" role="tab" aria-controls="pills-Originator" aria-selected="true">Originator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-Approver-tab" data-toggle="pill" href="#pills-Approver" role="tab" aria-controls="pills-Approver" aria-selected="false">Approver</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-Conditions-tab" data-toggle="pill" href="#pills-Conditions" role="tab" aria-controls="pills-Conditions" aria-selected="false">Conditions</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-Originator" role="tabpanel" aria-labelledby="pills-Originator-tab">
+                            <div class="row">
+                                <div class="col-xl-10 col-md-10 p-0">
+                                    <div class="table-responsive">
+                                        <div class="quick-scroll scrollbar-inner">
+                                            <div class="reddotTable sm-form m-0">
+                                                
+                                                    <div class="reddotTable sm-form mar-t0">
+                                                        <div class="loader1"></div>                                      
+                                                        <div id="IInd" class="reddotTableBody">
+                                                            <div class="reddotTableRow odd-even-row">
+                                                                <div class="reddotTableHead width10per"><div>Sr No </div></div>
+
+                                                                <div class="reddotTableHead width80per"><div>Originator </div></div>
+                                                                <div class="reddotTableHead width10per"><div>Action </div></div>
+
+
+                                                            </div>
+                                                        </div>                                      
+                                                        <div id="IIbody" class="reddotTableBody">
+                                                            @if (Model.RDD_Approval_OriginatorsList != null)
+                                                            {
+
+
+                                                                for (int i = 0; i < Model.RDD_Approval_OriginatorsList.Count(); i++)
+                                                                {
+
+                                                                    <div id="IIst" class="reddotTableRow odd-even-row">
+                                                                        <div class="reddotTableCell width10per Abcd"><div>@Html.TextBox(string.Concat("OriSrno", count), count, new { @readonly = "readonly" })</div></div>
+
+                                                                        <div class="reddotTableCell width80per Abcd"><div>@Html.TextBox(string.Concat("Originator", count), Model.RDD_Approval_OriginatorsList[count].OriginatorName, new { @class = "form-control form-control-sm" })</div></div>
+
+                                                                        <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                                                    </div>
+                                                                    count++;
+                                                                }
+                                                            }
+
+                                                            <div id="IIst" class="reddotTableRow odd-even-row">
+                                                                <div class="reddotTableCell width10per Abcd"><div>@Html.TextBox(string.Concat("OriSrno", count), count, new { @readonly = "readonly" })</div></div>
+
+                                                                <div class="reddotTableCell width80per Abcd"><div>@Html.TextBox(string.Concat("Originator", count), "", new { @class = "form-control form-control-sm" })</div></div>
+
+                                                                <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                  
+                                                
+                                               
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-Approver" role="tabpanel" aria-labelledby="pills-Approver-tab">
+                            <div class="row rowmin">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label">No. of Approval Req. :</label>
+                                        <div class="col-md-3 p-0">
+                                            @Html.TextBoxFor(m => m.no_of_approvals, new { @class = "form-control form-control-sm" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-10 col-md-10 p-0">
+                                    <div class="table-responsive">
+                                        <div class="quick-scroll scrollbar-inner">
+                                            <div class="reddotTable sm-form m-0">
+                                               
+                                                    <div class="reddotTable sm-form mar-t0">
+                                                        <div class="loader1"></div>                                      
+                                                        <div id="Ind" class="reddotTableBody">
+                                                            <div class="reddotTableRow odd-even-row">
+                                                                <div class="reddotTableHead"><div>Sequence </div></div>
+                                                                <div class="reddotTableHead"><div>Mandatory </div></div>
+                                                                <div class="reddotTableHead"><div>Approver </div></div>
+                                                                <div class="reddotTableHead"><div>Action </div></div>
+
+
+                                                            </div>
+                                                        </div>                                      
+                                                        <div id="Ibody" class="reddotTableBody">
+                                                            @if (Model.RDD_Approval_ApproversList != null)
+                                                            {
+
+
+                                                                for (int i = 0; i < Model.RDD_Approval_ApproversList.Count(); i++)
+                                                                {
+
+                                                            <div id="IIst" class="reddotTableRow odd-even-row">
+                                                                <div class="reddotTableCell Abcd"><div>@Html.TextBox(string.Concat("SeqSrno", count1), count1, new { @readonly = "readonly" })</div></div>
+                                                                <div class="reddotTableCell Abcd"><div><label class="colorinput"> <input name="color" type="checkbox" value="primary" class="colorinput-input"> <span class="colorinput-color bg-danger"></span> </label></div></div>
+                                                                <div class="reddotTableCell Abcd"><div>@Html.TextBox(string.Concat("Approver", count1), Model.RDD_Approval_ApproversList[count1].Approver, new { @class = "form-control form-control-sm" })</div></div>
+
+                                                                <div class='reddotTableCell'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                                            </div>
+                                                                    count++;
+                                                                }
+                                                            }
+                                                        <div id="Ist" class="reddotTableRow odd-even-row">
+
+                                                            <div class="reddotTableCell Abcd"><div>@Html.TextBox(string.Concat("SeqSrno", count1), count1, new { @readonly = "readonly" })</div></div>
+                                                            <div class="reddotTableCell Abcd"><div><label class="colorinput"> <input name="color" type="checkbox" value="primary" class="colorinput-input"> <span class="colorinput-color bg-danger"></span> </label></div></div>
+                                                            <div class="reddotTableCell Abcd"><div>@Html.TextBox(string.Concat("Approver", count1), "", new { @class = "form-control form-control-sm" })</div></div>
+                                                            <div class='reddotTableCell'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                                        </div>
+                                                        </div>
+                                                    </div>                                  
+                                               
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-Conditions" role="tabpanel" aria-labelledby="pills-Conditions-tab">
+                            <div class="row">
+                                <div class="col-xl-1 col-md-1 p-0">
+                                    <label class="form-radio-label">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios" value="" checked="">
+                                        <span class="form-radio-sign">Always</span>
+                                    </label>
+                                    <label class="form-radio-label">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios" value="" checked="">
+                                        <span class="form-radio-sign">When Below Apply</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group form-inline">
+                                        <div class="col-md-12 p-0">
+                                            @Html.TextBoxFor(m => m.Condition_Text, new { @class = "form-control form-control-sm" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        debugger
+
+        $("input[id^='Originator']").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/GetUserList",
+                    data: "{'pre' :'" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data.d, function (item) {
+
+                            return {
+                                CountryName: item.CodeName,
+                                Logo: item.imagepath,
+                                json: item
+                            }
+                        }))
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                    }
+                });
+            },
+            focus: function (event, ui) {
+                // this is for when focus of autocomplete item 
+                $("input[id^='Originator']").val(ui.item.CountryName);
+                return false;
+            },
+            select: function (event, ui) {
+                // this is for when select autocomplete item
+                $("input[id^='Originator']").val(ui.item.CountryName);
+                return false;
+            }
+        }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            // here return item for autocomplete text box, Here is the place 
+            // where we can modify data as we want to show as autocomplete item
+            return $("<li>")
+                .append("<a style='padding-left:40px; background-image:data:'image/jpeg;base64,'" + ary[i].imagepath + "';" +
+                "background-repeat:no-repeat;background-position:left center;' >" + item.CodeName + "</a>").appendTo(ul);
+        };
+ 
+
+
+        var counter = 0;
+
+        $("#AddOriginatorRow").on("click", function () {
+            var newRow = $("#OriginatorRow");
+            var cols = "";
+            cols += '<div class="reddotTableRow odd-even-row">';
+            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+            cols += ' <div class="reddotTableCell">';
+            cols += ' <div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
+        });
+
+
+
+        $("#OriginatorRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var counter = 0;
+
+        $("#AddApproverRow").on("click", function () {
+            var newRow = $("#ApproverRow");
+            var cols = "";
+            cols += '<div class="reddotTableRow odd-even-row">';
+            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+            cols += ' <div class="reddotTableCell"> <div> <label class="colorinput"> <input name="color" type="checkbox" value="primary" class="colorinput-input"> <span class="colorinput-color bg-danger"></span> </label> </div> </div>';
+            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+            cols += ' <div class="reddotTableCell">';
+            cols += ' <div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
+        });
+
+
+
+        $("#ApproverRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+
+
+    });
+</script>
+<style>
+    .quick-scroll {
+        max-height: 270px;
+    }
+</style>

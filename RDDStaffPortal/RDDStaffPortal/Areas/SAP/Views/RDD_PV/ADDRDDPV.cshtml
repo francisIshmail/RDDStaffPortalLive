@@ -35,12 +35,19 @@
                 </div>
             </div>
         </div>
-
+        @{var k = new SelectList(
+          new List<SelectListItem>
+          {
+            new SelectListItem {Text = "Internal", Value = "Internal"},
+            new SelectListItem {Text = "Vendor", Value = "Vendor"},
+          }, "Value", "Text"); 
+          
+          }
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Type :</label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.VType, Model.VTypeList, new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(m => m.VType, k, new { @class = "form-control form-control-sm" })
                 </div>
             </div>
         </div>
@@ -56,7 +63,8 @@
             <div class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Status :</label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.DocStatus, new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(m => m.DocStatus, Model.VTypeList, new { @class = "form-control form-control-sm" })
+                   
                 </div>
             </div>
         </div>
@@ -111,17 +119,24 @@
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Ref. Img. :</label>
-                <div class="col-md-8 p-0">
+                <div class="col-md-5 p-0">
                     <div class="file-upload">
                         <div class="file-select">
                             <div class="file-select-button" id="fileName"><i class="fas fa-paperclip"></i> File</div>
-                            <div class="file-select-name" id="noFile">No file chosen...</div>
-                            <input type="file" name="chooseFile" id="chooseFile">
+
+                            @Html.TextBoxFor(m => m.FilePath, new { @class = "file-select-name", type = "File", multiple = "multiple", @Title = "No file chosen...", @text = "No file chosen..." })
+                            @Html.HiddenFor(m => m.FilePath)
+
                         </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-1 p-0">
+                    <a id="FilePathview" class="fa fa-eye"></a>
                     </div>
                 </div>
             </div>
-        </div>
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved Amt. :</label>
@@ -142,10 +157,17 @@
             <div class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Ref. Date. :</label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBox(string.Concat("PayDate", 1), count, new { @class = "form-control form-control-sm datepickerH" })
-                    @Html.HiddenFor(m => m.PayDate)
+                    <div class="input-group">
+                        @Html.TextBox(string.Concat("PayDate", 1), count, new { @class = "form-control form-control-sm datepickerH" })
+                        @Html.HiddenFor(m => m.PayDate)
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="far fa-calendar-alt"></i>
+                            </span>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
         </div>
         <div class="col-md-6 col-lg-4">
 
@@ -252,21 +274,26 @@
                             <div id="IIst" class="reddotTableRow odd-even-row PVLines">
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("LineRefNo", count), count, new { @readonly = "readonly" })
                                        @Html.Hidden(string.Concat("PVLineId", count), Model.RDD_PVLinesDetails[count-1].PVLineId.ToString())</div> </div>
-                                <div class="reddotTableCell Abcd"> <div>  @Html.TextBox(string.Concat("Date1", count), Model.RDD_PVLinesDetails[count-1].Date.ToString(), new { @class = "form-control form-control-sm datepicker" })</div> </div>
+                                <div class="reddotTableCell Abcd"> <div>  @Html.TextBox(string.Concat("Date1", count), "", new { @class = "form-control form-control-sm datepicker" })
+                                       @Html.Hidden(string.Concat("hdnDate1", count), Model.RDD_PVLinesDetails[count - 1].Date.ToString())
+                                       </div> </div>
                                 <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("Description", count), Model.RDD_PVLinesDetails[count-1].Description.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), Model.RDD_PVLinesDetails[count-1].Amount.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Remarks", count), Model.RDD_PVLinesDetails[count-1].Remarks.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
-                                <div class="reddotTableCell Abcd"><div><i class="fas fa-eye"></i>  Document Name</div></div>
+                                <div class="reddotTableCell text-left Abcd"><div><a class="fas fa-eye" href="" target="_blank"></a> <label id="lblDocname">Document Name</label>@Html.Hidden(string.Concat("hdnFileURLInput", count), "")</div></div>
                                 <div class="reddotTableCell Abcd">
-                                    <div>
-                                        @Html.TextBox(string.Concat("FilePathInput", count), Model.RDD_PVLinesDetails[count-1].FilePath.ToString(), new { @class = "form - control form - control - sm - file", type = "File", multiple = "multiple", @Title = "" })
-                                        @Html.Hidden(string.Concat("hdnFilePathInput", count), Model.RDD_PVLinesDetails[count-1].FilePath.ToString())
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="rowfileName"><i class="fas fa-paperclip"></i>  File</div>
+                                            @Html.TextBox(string.Concat("FilePathInput", count), Model.RDD_PVLinesDetails[count - 1].FilePath.ToString(), new { @class = "file-select-name", type = "File", multiple = "multiple", @Title = "" })
+                                            @Html.Hidden(string.Concat("hdnFilePathInput", count), Model.RDD_PVLinesDetails[count - 1].FilePath.ToString())
+                                        </div>
                                     </div>
+                                    </div>
+
+                                    <div class='reddotTableCell'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id="btntblDel"> <i class='fas fa-trash'></i></button></div></div>
+
                                 </div>
-
-                                <div class='reddotTableCell'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id="btntblDel"> <i class='fas fa-trash'></i></button></div></div>
-
-                            </div>
                             count++;
                         }
 
@@ -282,7 +309,7 @@
                         <div class="reddotTableCell text-left Abcd">
                             <div>
 
-                                <a class="fas fa-eye"></a>
+                                <a class="fas fa-eye" ></a>
                                 <label id="lblDocname">Document Name</label>
                                 @Html.Hidden(string.Concat("hdnFileURLInput", count), "")
 
@@ -316,6 +343,7 @@
                 @Html.Hidden(string.Concat("hdncount"), count)
             </div>
 
+
         </div>
 
 
@@ -345,178 +373,13 @@
 
 
 
-<script type="text/javascript">
 
-    tblDetails = ['PVLineId', 'Date1', 'Description', 'Amount', 'Remarks', 'FilePathInput','hdnFilePathInput'];
-
-    var dateNow = new Date();
-    $(".datepickerH").datetimepicker({
-        //defaultDate: dateNow,
-        format: 'DD/MM/YYYY',
-        showClose: true,
-        showClear: true,
-
-    });
-    $(".datepicker").datetimepicker({
-      //  defaultDate: dateNow,
-        format: 'DD/MM/YYYY',
-        showClose: true,
-        showClear: true,
-
-    });
-   
-
-
-
-
-
-    $("#IIst").on("change", "input[id^='Remarks']", function () {
-        RedDot_tbldtpicker();
-        $(".datepicker").datetimepicker("destroy");
-        var tr = $("#IIst").clone(true);
-        var tr2 = $(this).closest("#IIst");
-        var count2 = parseInt($("#hdncount").val())
-        var m = tr2.find("input[id^='LineRefNo']").val();
-        if (m < count2) {
-            return;
-        }
-        var count1 = parseInt(count2) + 1;
-        RedDot_Table_Attribute(tr, tblDetails, count1,".PVLines");
-        tr.find(".fa-eye").removeAttr("href");
-        tr.find("#lblDocname").text('Document Name');
-        tr.find("input[id ^= 'FilePathInput']").attr("title", "No file chosen...");
-
-        $("#IIbody").append(tr);
-
-
-    })
-
-    $('body').on('focusin', '.datepicker', function () {
-        $('.datepicker').datetimepicker({
-            defaultDate: dateNow,
-            format: 'DD/MM/YYYY',
-            showClose: true,
-            showClear: true,
-
-        });
-
-    });
-
-
-</script>
-
-
+<script src="~/Scripts/Application/OperationPV.js"></script>
 
 <script>
-
-
     $(document).ready(function () {
-
-        if ($("#EditFlag").val() == "True") {
-
-        }
-
-        RedDot_tableLstEnt("#IIst", "input[id^='Remarks']", "input[id ^= 'Date1']", "Please Enter Remark", "T", "");
-        RedDot_tableTabEve("#IIst", "input[id^='Date1']", "input[id^='Description']", "", "T", "");
-        RedDot_tableTabEve("#IIst", "input[id^='Description']", "input[id^='Amount']", "Please Enter Description", "T", "");
-        RedDot_tableTabEve("#IIst", "input[id^='Amount']", "input[id^='Remarks']", "Please Enter Amount", "N", "");
-        RedDot_tableTabEve("#IIst", "input[id^='Remarks']", "input[id ^= 'rowchooseFile']", "Please Enter Remark", "T", "");
-
-
-        $('#Country').select2({
-           
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: '--Select--'
-        });
-        $('#DBName').select2({
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: '--Select--',
-           
-        });
-        $('#Currency').select2({
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: '--Select--',
-           
-        });
-        $('#PayMethod').select2({
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: '--Select --',
-           
-        });
-        $('#VType').select2({
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: '--Select --',
-
-        });
-
-
-        //$("#IIst").on("click", ".fa-eye", function () {
-        //    debugger
-        //    var tr = $(this).closest("#IIst");
-        //    $(".fa-eye").attr("href", tr.find("input[id ^= 'hdnFilePathInput']").val());
-
-        //   // $('#DocumentviewPopup').modal('show');
-        //})
-
-        $("#IIst").on("change", "input[id^='FilePathInput']", function (event) {
-            debugger
-            var tr = $(this).closest("#IIst");
-            var data = new FormData();
-            var files = tr.find("input[id ^= 'FilePathInput']").get(0).files;
-            if (files.length > 0) {
-                data.append("Files", files[0]);
-            }
-            $.ajax({
-                url: "/SAP/RDD_PV/UploadDoc",
-                type: "POST",
-                processData: false,
-                contentType: false,
-                data: data,
-                success: function (response) {
-                    //code after success
-                    debugger
-                    if (response == "InvalidError") {
-                        // RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
-                    }
-                    else {
-                        debugger;
-                        tr.find("input[id^='hdnFilePathInput']").val(response);
-
-                        tr.find(".fa-eye").attr("href", tr.find("input[id ^= 'hdnFilePathInput']").val());
-                        tr.find(".fa-eye").attr("target", "_blank");
-                        var k = tr.find("input[id ^= 'hdnFilePathInput']").val().split("/").length;
-                        tr.find("#lblDocname").text(tr.find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1]);
-
-                        tr.find("input[id ^= 'FilePathInput']").attr("title",tr.find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1]);
-
-
-                        // $('input[name="Photo_imghdn"]').val('/Images/' + response);
-                    }
-
-                },
-                error: function (er) {
-                    RedDotAlert_Error(er);
-                }
-            });
-
-        });
-
-
-        $(document).on("click", "#IIst button[id^='btntblDel']", function () {
-            debugger
-            var count2 = parseInt($("#hdncount").val())
-            var tr = $(this).closest("#IIst");
-            var m = tr.find("input[id^='LineRefNo']").val();
-            if (count2 == 1 || m==count2 ) {
-                return
-            }
-
-            RedDot_Table_DeleteActivity(tr, tblDetails,".PVLines");
-        })
+        $(".loader1").show();
+       OperationPV.initialize();      
+        $(".loader1").hide();
     });
 </script>

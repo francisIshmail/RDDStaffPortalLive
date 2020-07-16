@@ -80,8 +80,8 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
         public string psearch { get; set; }
 
         public int TotalCount { get; set; }
-       
 
+        public string Ptype { get; set; }
         public int RowNum { get; set; }
         public int id { get; set; }
 
@@ -104,12 +104,8 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
             public DateTime? LastUpdatedOn { get; set; }
             public string LastUpdatedBy { get; set; }
-             public string Ptype { get; set; }
+            
     }
 
-    public partial class City
-    {
-        public string CityName { get; set; }
-        public int Id { get; set; }
-    }
+  
 }

@@ -140,6 +140,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
@@ -560,8 +561,11 @@
     <Content Include="js\plugin\webfont\webfont.min.js" />
     <Content Include="js\setting-demo.js" />
     <Content Include="js\setting-demo2.js" />
+    <Content Include="Scripts\Application\ApprovalIndex.js" />
     <Content Include="Scripts\Application\CustomerMapping.js" />
     <Content Include="Scripts\Application\Dashboardjs.js" />
+    <Content Include="Scripts\Application\IndexPV.js" />
+    <Content Include="Scripts\Application\OperationPV.js" />
     <Content Include="Scripts\Application\Test.js" />
     <Content Include="Scripts\Application\UserRole.js" />
     <Content Include="Scripts\Application\Webreports.js" />
@@ -718,6 +722,8 @@
     <Content Include="Areas\Reports\Views\Reports\TrailBalance.cshtml" />
     <Content Include="Areas\SAP\Views\RDD_PV\Index.cshtml" />
     <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

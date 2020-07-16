@@ -415,6 +415,18 @@ function RdotdatefrmtRes1(dte) {
     return today;
 }
 
+function RedDot_setdtpkdate(date1) {
+    if (date1 !== undefined ) {
+        var d = new Date(date1.split("/").reverse().join("-"));
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        var newdate = yy + "/" + mm + "/" + dd;
+        return newdate;
+    }
+   
+}
+
 //Table Number  N & Text T Tab Event
 function RdottableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
     $(tbl).on("keydown", ide, function (e) {
@@ -799,7 +811,7 @@ function RedDot_Button_New_HideShow() {
     $("#btnCancel").show();
     $("#btnSendMail").show();
     $("#tblid").hide();
-    $("#tblid1").show();
+    $("#tblid1").hide();
 
 }
 
@@ -854,6 +866,30 @@ function RedDot_tbldtpicker() {
     });
 }
 
+/* date formate dd-MM-yyyy get input date */
+function RedDot_dateEdit(date1, dtval) {       
+    var now = new Date($(dtval).val());
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+    $(date1).val(today);
+}
+function RedDot_NewDate(dteclass) {
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+    $(dteclass).val(today);
+}
+/* date formate dd/MM/yyyy set Table*/
+function RedDot_DateTblEdit(dtval) {
+
+    var now = new Date(dtval);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+    return today;
+}
 
 
 /*Last Column Enter Event*/
@@ -910,4 +946,55 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
             }
         }
     });
+}
+
+
+function RedDot_DivTable_Fill(Ids,url, data, dateCond, tblhead1, tblhide, tblhead2) {
+    var arr = [];
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        url: url,
+        contentType: "application/json",
+        dataType: "json",
+        data: data,
+        success: function (data) {
+            $('#'+Ids+'st').show();
+            $('div#' + Ids +'st').not(':first').remove();
+            arr = data;
+            if (arr.data != null && arr.data.length != 0) {
+                var i = 0;
+                while (arr.data.length > i) {
+                    var tr = $('#' + Ids + 'st').clone();
+                    var tr1 = $('#' + Ids + 'nd').closest();
+                    var k = 0;
+                    var l1 = tr.find(".Abcd").length;
+                    while (l1 > k) {
+                        var t = tblhead1[k];
+                        if (jQuery.inArray(t, dateCond) !== -1) {
+                           
+                            tr.find(".Abcd")[k].children[0].textContent = RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
+                        } else {
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                        }                                              
+                        if (jQuery.inArray(t, tblhide) !== -1) {
+                            tr.find(".Abcd").eq(k).addClass("Abc")
+                            tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                        }
+                        k++;
+                    }
+                    $('#' + Ids + 'body').append(tr);
+                    i++;
+                }
+                $('#' + Ids + 'st')[0].remove();
+            } else {
+                $('#' + Ids + 'st').hide();
+                RedDotAlert_Error("No Record Found");
+            }
+        }, complete: function () {
+            $(".loader1").hide();            
+        }
+    });
+    return arr;    
 }

@@ -20,30 +20,9 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             return View();
         }
 
-        [Route("GETCity")]
-        [HttpPost]
+       
 
-        public JsonResult GETCity(string Prefix)
-        {
-            //Note : you can bind same list from database  
-            List<City> ObjList = new List<City>()
-            {
-
-                new City {Id=1,CityName="Latur" },
-                new City {Id=2,CityName="Mumbai" },
-                new City {Id=3,CityName="Pune" },
-                new City {Id=4,CityName="Delhi" },
-                new City {Id=5,CityName="Dehradun" },
-                new City {Id=6,CityName="Noida" },
-                new City {Id=7,CityName="New Delhi" }
-
-        };
-            //Searching records from list using LINQ query  
-            var CityList = (from N in ObjList
-                            where N.CityName.StartsWith(Prefix)
-                            select new { N.CityName });
-            return Json(CityList, JsonRequestBehavior.AllowGet);
-        }
+       
         [Route("ADDRDDPV")]
         public ActionResult ADDRDDPV(int PVId=-1)
         {
@@ -61,7 +40,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             return PartialView("~/Areas/SAP/Views/RDD_PV/ADDRDDPV.cshtml", PV);
         }
         [HttpPost]
-        public JsonResult UploadDoc(string typ)
+        public JsonResult UploadDoc(string type)
         {
             string fname = "";
             string strMappath = "";
@@ -70,7 +49,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             {
                 try
                 {
-                    strMappath = "~/excelFileUpload/" + "PV/" + User.Identity.Name + "/";
+                    strMappath = "~/excelFileUpload/" + "PV/" + User.Identity.Name + "/" + type + "/";
 
                     if (!Directory.Exists(strMappath))
                     {
