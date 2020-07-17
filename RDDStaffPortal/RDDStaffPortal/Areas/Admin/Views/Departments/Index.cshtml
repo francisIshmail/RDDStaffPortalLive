@@ -113,7 +113,7 @@
 
 <!--   Core JS Files   -->
 @*Create pop up for delete confirmation*@
-<div class="modal fade" id="ItemDeleteConfirmation">
+@*<div class="modal fade" id="ItemDeleteConfirmation">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -129,7 +129,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <span class="input-group-text" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></span>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -216,58 +216,123 @@
 
         }
     }
-
-
     $('#setDeptList').on('click', '#btn_DeleteDetails', function () {
-        var x = confirm("Are you sure you want to delete?");
-        if (x) {
-            var DeptID = $(this).closest("tr").find('td:eq(0)').text();
-           
-            $.ajax({
-                type: "Post",
-                url: "/Departments/DeleteItem?DeptId=" + DeptID,
-                success: function (result) {
-                    if (result == "Department Deleted Sucessfully.") {
+        debugger
+        var DeptID = $(this).closest("tr").find('td:eq(0)').text();
+        var tr = $(this).closest("tr");
+        {
 
-                        alert(result);
-                        GetDeptList();
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                 
+                    $.getJSON("/Departments/DeleteItem", { DeptID: DeptID }).done(function (data) {
+                        debugger
+                        if (data.DeleteFlag == "Department Deleted Sucessfully.") {
+                            GetDeptList();
+                            RdotAlertSucesstxt(data.DeleteFlag);
 
-                    }
-                    else {
+                           // tr.remove();
+                          //  $('#btn_DeleteDetails').attr('disabled', true);
+                        }
+                        else if (data.DeleteFlag == "Department already exists at other tables.Cannot Deleted."){
+                            RdotAlerterrtxt1(data.DeleteFlag);
+                           // GetJobGradeList();
+                           // result == "Department already exists at other table .Cannot Deleted.";
 
-                        alert(result);
-                    }
+                        }
+
+                    });
+                    //swalWithBootstrapButtons.fire(
+                    //    'Deleted!',
+                    //    'Your Record  has been deleted.',
+                    //    'success'
+
+                    //)
                 }
+                else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Record  is safe :)',
+                        'error'
+                    )
+                }
+                $("#DeptId").val('');
 
-            });
+                $("#DeptName").val('');
+                GetDeptList();
+            })
         }
+
     });
+
+    //$('#setDeptList').on('click', '#btn_DeleteDetails', function () {
+    //    var x = confirm("Are you sure you want to delete?");
+    //    if (x) {
+    //        var DeptID = $(this).closest("tr").find('td:eq(0)').text();
+           
+    //        $.ajax({
+    //            type: "Post",
+    //            url: "/Departments/DeleteItem?DeptID=" + DeptID,
+    //            success: function (result) {
+    //                if (result == "Department Deleted Sucessfully.") {
+
+    //                    alert(result);
+    //                    GetDeptList();
+
+    //                }
+    //                else {
+
+    //                    alert(result);
+    //                }
+    //            }
+
+    //        });
+    //    }
+    //});
     
 
 
 
-    function ConfirmDelete() {
-        //var DeptIdd = $(this).closest("tr").find('td:eq(0)').text();
-        //alert(DeptIdd);
-        debugger
-        var DeptIdd = $("#DeptId").val();
-        $.ajax({
-            type: "Post",
-            url: "/Departments/DeleteItem?DeptId=" + DeptIdd,
-            success: function (result) {
-                if (result == "Record Deleted successfully") {
-                   
-                    // $("#ItemDeleteConfirmation").modal("hide");
-                    alert(result);
+    //function ConfirmDelete() {
+    //    //var DeptIdd = $(this).closest("tr").find('td:eq(0)').text();
+    //    //alert(DeptIdd);
+    //    debugger
+    //    var DeptIdd = $("#DeptId").val();
+    //    $.ajax({
+    //        type: "Post",
+    //        url: "/Departments/DeleteItem?DeptId=" + DeptIdd,
+    //        success: function (result) {
+    //            if (result == "Record Deleted successfully") {
+    //                GetDeptList();
+    //                // $("#ItemDeleteConfirmation").modal("hide");
+    //                alert(result);
 
-                }
-                else {
-                    $("#ItemDeleteConfirmation").modal("hide");
-                    //   alert(result);
-                }
-            }
-        });
-    }
+    //            }
+    //            else {
+    //                GetDeptList();
+    //              //  $('#btn_DeleteDetails').attr('disabled', true);
+    //                $("#ItemDeleteConfirmation").modal("hide");
+    //                //   alert(result);
+    //            }
+    //        }
+    //    });
+    //}
 
 
 

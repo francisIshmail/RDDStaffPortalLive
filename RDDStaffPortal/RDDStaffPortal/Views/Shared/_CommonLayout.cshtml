@@ -14,7 +14,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/atlantis.min.css" rel="stylesheet" />
     <link href="~/Content/fonts.min.css" rel="stylesheet" />
-   
+
     @*<link href="~/Content/demo.css" rel="stylesheet" />*@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -30,6 +30,7 @@
     <link href="~/Scripts/datatables/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="~/Scripts/sweetalret/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
+    
     @*<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">*@
 </head>
 <body>
@@ -94,7 +95,7 @@
                                                     <span class="text">Reports</span>
                                                 </div>
                                             </a>
-                                           
+
                                             <a class="col-6 col-md-4 p-0" href="#">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-success rounded-circle">
@@ -277,9 +278,9 @@
                                     </ul>
                                 </div>
                             </li>*@
-                    
+
                         @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }|
-                    
+
                         @*<li class="nav-item">
                                 <a data-toggle="collapse" href="#Admin">
                                     <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
@@ -619,6 +620,7 @@
     <!--   Core JS Files   -->
 
 
+
     <script src="~/js/core/jquery.3.2.1.min.js"></script>
 
 
@@ -643,7 +645,7 @@
     <script src="~/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
     <!-- Chart Circle -->
     <script src="~/js/plugin/chart-circle/circles.min.js"></script>
-    @*<script src="js/canvasjs.min.js"></script>*@
+    @*<script src="~/js/canvasjs.min.js"></script>*@
     @*<script src="~/Scripts/jquery.canvasjs.min.js"></script>
         <script src="~/Scripts/canvasjs.min.js"></script>*@
     @*datatable*@
@@ -665,7 +667,7 @@
     <script src="~/js/demo.js"></script>
 
 
-    
+
 
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
     <script src="~/Scripts/datatables/js/buttons.flash.min.js"></script>
@@ -681,6 +683,20 @@
     @*<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
     <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
     <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>
+
+
+    <script src="~/Scripts/datapicker-separate/datepicker.all.js"></script>
+    <script src="~/Scripts/datapicker-separate/datepicker.en.js"></script>
+    <link rel="stylesheet" href="~/Scripts/datapicker-separate/datepicker.css">
+
+    <link rel="stylesheet" href="~/Scripts/multiselect/multiselect.css">
+    <script src="~/Scripts/multiselect/multiselect.js"></script>
+
+    <script>
+
+    </script>
+
+
     @*voice recogngition*@
     @*<script type="text/javascript" src="~/Scripts/VoiceRec/jquery.min.js"></script>
         <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
@@ -705,14 +721,14 @@
         function tempAlert(msg, duration) {
             var el = document.createElement("div");
             //el.setAttribute("class", "alert alert-success");
-            el.setAttribute("style","position:absolute;top:8%;left:20%;background-color:green;color:white;");
+            el.setAttribute("style", "position:absolute;top:8%;left:20%;background-color:green;color:white;");
             el.innerHTML = msg;
             setTimeout(function () {
                 el.parentNode.removeChild(el);
             }, duration);
             document.body.appendChild(el);
         }
-        
+
         $(".Quic").on("click", function (e) {
             debugger;
             var tr = $(this).closest(".Quic");
@@ -725,7 +741,7 @@
                     URL: lnk,
                     FormName: MenuName
                 }
-               // $.post("/QuickLinkInsert", Rdd_Q).done(function (response) {
+                // $.post("/QuickLinkInsert", Rdd_Q).done(function (response) {
                 $.ajax({
                     type: "POST",
                     url: "/QuickLinkInsert",
@@ -738,9 +754,9 @@
                         debugger
                         if (response.Saveflag == true) {
                             tr[0].title = 'Remove Quick Links';
-                            tr.removeClass("icon-star Quic");   
+                            tr.removeClass("icon-star Quic");
                             tr.addClass("fas fa-star Quic");
-                                                   
+
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
                             tempAlert('Add to Quick Links', 500);
                             $(".rights1").load("/Dashboard/GetRightSide");
@@ -767,9 +783,9 @@
 
             }
 
-           // $('#kbc').load("/Account/GetMenuTreeMenu");
+            // $('#kbc').load("/Account/GetMenuTreeMenu");
 
-           // e.preventDefault();
+            // e.preventDefault();
 
 
 
@@ -777,13 +793,13 @@
         })
 
 
-       
-        
 
 
-        
-                                                    //$('#ulid li').removeAttr('class','');
-                                                    //$('#ulid li a').removeAttr('data-toggle', '');
+
+
+
+                                                                                        //$('#ulid li').removeAttr('class','');
+                                                                                        //$('#ulid li a').removeAttr('data-toggle', '');
 
     </script>
 

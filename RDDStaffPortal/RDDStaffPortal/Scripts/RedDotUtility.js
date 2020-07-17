@@ -390,7 +390,17 @@ function RdottableNDWPara1(tblid, url1, colms, Code) {
 
     
 }
-
+var RdotMMNames1 = ["01", "02", "03", "04", "05", "06",
+    "07", "08", "09", "10", "11", "12"];
+/*json date format dd-MMM-yyyy*/
+function RdotdatefrmtRes2(dte) {
+    var now = new Date(parseInt(dte.substr(6)));
+    var now = new Date(now);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "-" + RdotMMNames1[month - 1] + "-" + now.getFullYear();
+    return today;
+}
 
 var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

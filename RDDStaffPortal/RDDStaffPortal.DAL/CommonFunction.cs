@@ -197,6 +197,25 @@ namespace RDDStaffPortal.DAL
             return ds;
         }
         #endregion
+
+        public string ExecuteScalar1(string sqlCommandText)
+        {
+            string numrows = "";
+            using (SqlConnection cn = new SqlConnection(Conn))
+            {
+                try
+                {
+                    cn.Open();
+                    SqlCmd = new SqlCommand(sqlCommandText, cn);
+                    numrows = (string)SqlCmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    errormsg = ex.Message;
+                }
+            }
+            return numrows;
+        }
         public int ExecuteScalar(string sqlCommandText)
         {
             int numrows = 0;
