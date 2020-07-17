@@ -9,12 +9,11 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Inventory Sheet Report</h4>
-            </div>
-            <div class="rowmin">
-                <div class="col-md-12">
-                    <button class="btn btn-info btn-sm mar-b10" id="FilterBtn">  Search <span class="btn-label"> </span> <i class="fas fa-angle-down"></i></button>
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Inventory Sheet</h4>
                 </div>
+                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+
             </div>
             <div class="rowmin" id="FilterSection" style="display:none">
 
@@ -71,7 +70,7 @@
                                 <div class="col-xl-1 col-md-1 ml-auto">
                                     <div class="form-group">
                                         <label for="email2" class="width100px"></label>
-                                        <button class="btn btn-success btn-sm" id="btnApply">Apply</button>
+                                        <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -97,9 +96,9 @@
 
                                 <div class="col-xl-2 col-md-2 ml-auto text-right">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Export to Excel"><a href="/Reports/Reports/DownloadToExcel2" class="fas fa-file-excel"></a></button>
-
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+                                        
+                                        <a href="/Reports/Reports/DownloadToExcel2" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
 
                                     </div>
                                 </div>
@@ -118,9 +117,9 @@
                                             <div class="reddotTableHead"><div> WhseStatus</div></div>
                                             <div class="reddotTableHead"><div> BU</div></div>
                                             <div class="reddotTableHead"><div> OrderType</div></div>
-                                           
+
                                             <div class="reddotTableHead"><div> Qty</div></div>
-                                           
+
                                             <div class="reddotTableHead"><div> WhseOwner</div></div>
                                             <div class="reddotTableHead"><div> ProdCategory</div></div>
                                             <div class="reddotTableHead"><div> ProdLine</div></div>
@@ -131,20 +130,20 @@
                                     <div id="Ibody" class="reddotTableBody">
                                         <div id="Ist" class="reddotTableRow odd-even-row">
 
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                            <div class="reddotTableCell"><div></div></div>
-                                           
-                                           
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+
+
 
                                         </div>
 
@@ -170,7 +169,7 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-70per" role="document">
+    <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Show/Hide Columns</h5>
@@ -179,14 +178,14 @@
                 </button>
             </div>
             <div class="modal-body selectwidget-section">
-                <div class="row rowmin">
-                    <div class="col-md-12 mar-b10">
+                <div class="row rowmin" id="idchk">
+                    @*<div class="col-md-12 mar-b10">
                         <div class="row" id="idchk"> </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btnsave" type="button" class="btn btn-success btn-sm">Save</button>
+                <button id="btnsave" type="button" class="btn btn-info btn-sm">Apply</button>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -196,17 +195,21 @@
 <script>
     var tblhead1 = ['Country', 'ItemCode', 'ItemDesc', 'WhseName', 'WhseStatus', 'BU', 'OrderType', 'Qty', 'WhseOwner', 'ProdCategory', 'ProdLine', 'ProdGroup'];
     var tblhide = ['ItemDesc', 'ProdCategory', 'ProdLine', 'ProdGroup'];
-    $(".loader1").hide();
+    var tblhead2 = ['Country', 'ItemCode', 'WhsName', 'BU', 'Qty', 'WhseOwner'];
+    $(".loader1").show();
     
     $(document).ready(function () {
         var k1 = 0;
         while (tblhead1.length > k1) {
             if (jQuery.inArray(tblhead1[k1], tblhide) !== -1) {
+                //$("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1]+"' type='checkbox' ></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
                 $('div#' + tblhead1[k1] + '1').addClass("Abc");
-                $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1]+"' type='checkbox' ></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] +"' type='checkbox' class='colorinput-input'><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
             } else {
-                $('div#' + tblhead1[k1] + '1').removeClass("Abc");
-                $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] +"' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                if (jQuery.inArray(tblhead1[k1], tblhead2) == -1) {
+                    $('div#' + tblhead1[k1] + '1').removeClass("Abc");
+                    $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] + "' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
+                }
             }
             k1++;
         }
@@ -278,13 +281,13 @@
                         var tr = $("#Ist").clone();
                         var tr1 = $("#Ind").closest();
                         var k = 0;
-                        var l1 = tr.find(".reddotTableCell").length;
+                        var l1 = tr.find(".Abcd").length;
                         while (l1 > k) {
-                            tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                             var t = tblhead1[k];
                             debugger
                             if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                tr.find(".Abcd").eq(k).addClass("Abc")
                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                             }
 
@@ -296,14 +299,17 @@
                     $("#Ist")[0].remove();
                 } else {
                     $("#Ist").hide();
-                    RdotAlerterrtxt1("No Record Found");
+                    RedDotAlert_Error("No Record Found");
                 }
+            }, complete: function () {
+                $(".loader1").hide();
             }
         });
 
 
         $("#btnsave").on("click", function () {
             debugger
+            $(".loader1").show();
             tblhide = [];
             $('input:checkbox').each(function () {
 
@@ -344,16 +350,16 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 if (jQuery.inArray(t, tblhide) !== -1) {
                                     debugger
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc");
+                                    tr.find(".Abcd").eq(k).addClass("Abc");
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc");
                                 } else {
-                                    tr.find(".reddotTableCell").eq(k).removeClass("Abc");
+                                    tr.find(".Abcd").eq(k).removeClass("Abc");
                                     tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc");
                                 }
 
@@ -368,14 +374,19 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
+                }, error: function () {
+                    $(".loader1").hide();
                 }
             });
 
         })
 
         $('.next').bind('click', function () {
+            $(".loader1").show();
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -406,13 +417,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -425,14 +436,16 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
 
-                }
+                }, complete: function () {
+                    $(".loader1").hide();}
             });
         });
 
         $('.prev').bind('click', function () {
+            $(".loader1").show();
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -462,13 +475,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -479,14 +492,70 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
                 }
             });
         });
 
-
+        $("#btnApply").on("click", function () {
+            $(".loader1").show();
+            $.ajax({
+                type: "POST",
+                url: "/Reports/Reports/StockSheetReport",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    pagesize: 50,
+                    pageno: curPage,
+                    psearch: value1,
+                    Country: $("#Country").val(),
+                    BUGroup: $("#BUGroup").val(),
+                    BU: $("#BU").val(),
+                    Whsename: $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val()
+                }),
+                success: function (data) {
+                    $("#Ist").show();
+                    $("div#Ist").not(':first').remove();
+                    arr = data;
+                    if (arr.data != null && arr.data.length != 0) {
+                        var i = 0;
+                        while (arr.data.length > i) {
+                            var tr = $("#Ist").clone();
+                            var tr1 = $("#Ind").closest();
+                            var k = 0;
+                            var l1 = tr.find(".Abcd").length;
+                            while (l1 > k) {
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                var t = tblhead1[k];
+                                debugger
+                                if (jQuery.inArray(t, tblhide) !== -1) {
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
+                                    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                }
+                                k++;
+                            }
+                            $("#Ibody").append(tr);
+                            i++;
+                        }
+                        $("#Ist")[0].remove();
+                    } else {
+                        $("#Ist").hide();
+                        RedDotAlert_Error("No Record Found");
+                    }
+                }, complete: function () {
+                    $(".loader1").hide();
+                }, error: function () {
+                    $(".loader1").hide();
+                }
+            });
+        })
         $("#Search-Forms-QuickLinks").on("keyup", function () {
+            $(".loader1").show();
             var value = $(this).val().toLowerCase();
             $.ajax({
                 type: "POST",
@@ -514,13 +583,13 @@
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
                             var k = 0;
-                            var l1 = tr.find(".reddotTableCell").length;
+                            var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".reddotTableCell")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                                 var t = tblhead1[k];
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
-                                    tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
                                     tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
                                 }
                                 k++;
@@ -531,8 +600,12 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
+                }, complete: function () {
+                    $(".loader1").hide();
+                }, error: function () {
+                    $(".loader1").hide();
                 }
             });
         });
@@ -546,6 +619,6 @@
 </script>
 <style>
     .Abc {
-        display: none;
+        display: none !important;
     }
 </style>

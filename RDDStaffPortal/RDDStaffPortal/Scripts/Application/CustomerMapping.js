@@ -6,7 +6,7 @@
 	},
 	Attachevent: function () {
 
-		
+		$('#product1,#product').hide();
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
@@ -21,14 +21,14 @@
 
 		];
 		//SAPAE   SAPKE	 SAPTZ	 SAPUG	SAPZM	SAPML	SAPTRI
-		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, "SAPAE");
-        RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, "SAPKE");
-        RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, "SAPTZ");
-        RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, "SAPUG");
-        RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM");
-        RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML");
-        RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI");
-		
+		RdottableNDWPara1("tblSAPAE", "/GetCustMapData", colms, "SAPAE",10);
+        RdottableNDWPara1("tblSAPKE", "/GetCustMapData", colms, "SAPKE",10);
+        RdottableNDWPara1("tblSAPTZ", "/GetCustMapData", colms, "SAPTZ",10);
+        RdottableNDWPara1("tblSAPUG", "/GetCustMapData", colms, "SAPUG",10);
+        RdottableNDWPara1("tblSAPZM", "/GetCustMapData", colms, "SAPZM",10);
+        RdottableNDWPara1("tblSAPML", "/GetCustMapData", colms, "SAPML",10);
+        RdottableNDWPara1("tblSAPTRI", "/GetCustMapData", colms, "SAPTRI",10);
+		$('#product1,#product').show();
 		debugger
 		// jQuery UI Draggable
 		$("#product  li").draggable({
@@ -86,13 +86,13 @@
 
 					if ($("#pri1").find("ul li ").length == 1 && basket.find(".basket_list").attr("id") == 'pri1') {
 						
-						RdotAlerterrtxt('You can add only one primary account');
+						RedDotAlert_Error('You can add only one primary account');
 						return
 					}
 					if (move.find("input[id='hdnCustyp']").val() == 'P') {
 						if (basket.find(".basket_list").attr("id") == 'sec1') {
 							
-							RdotAlerterrtxt('You can add only primary account');
+							RedDotAlert_Error('You can add only primary account');
 							return
                         }
 
@@ -146,7 +146,7 @@
 						
 					} else {
 						
-						RdotAlerterrtxt('Alredy use');
+						RedDotAlert_Error('Alredy use');
                     }
 					
 
@@ -239,7 +239,7 @@
 										$('#txtsearch').trigger("keyup");
 										tr.remove();
 									} else {
-										RdotAlerterrtxt(vt);
+										RedDotAlert_Error(vt);
 									}
 									return
 
@@ -307,6 +307,7 @@
 		//});
 
 		$("#btnmerge").on("click", function () {
+			$(".loader1").show();
 			debugger
 			var Parent_DBNametxt = '';
 			var Parent_CardCodetxt = '';
@@ -346,23 +347,26 @@
 				
 			});
 			if (Cust.CustomerName == '') {
-				RdotAlerterrtxt('Please Add Primary Account');
+				RedDotAlert_Error('Please Add Primary Account');
+				$(".loader1").hide();
 				return
             }
 			if (Cust.ChildLists.length == 0) {
-				RdotAlerterrtxt('Please Add Secondary Account');
+				RedDotAlert_Error('Please Add Secondary Account');
+				$(".loader1").hide();
 				return
             }
 			$.post("/SaveCustMap", Cust).done(function (response) {
 				debugger
 				if (response.saveflag == true) {
-					RdotAlertSucesstxt(response.errormsg);
+					RedDotAlert_Success(response.errormsg);
 					$("#btnclear").trigger("click");
 					//$(".reloadcss").trigger("click");
 					$('#txtsearch').trigger("keyup");
 				} else {
 					RdotAlerterr(response.errormsg);
-                }
+				}
+				$(".loader1").hide();
             })
 
 

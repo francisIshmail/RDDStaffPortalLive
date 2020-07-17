@@ -59,7 +59,7 @@
                     //code after success
                     debugger
                     if (response == "InvalidError") {
-                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                        RedDotAlert_Error("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
                     }
                     else {
                         debugger;
@@ -69,7 +69,7 @@
 
                 },
                 error: function (er) {
-                    RdotAlerterrtxt(er);
+                    RedDotAlert_Error(er);
                 }
             });
         });

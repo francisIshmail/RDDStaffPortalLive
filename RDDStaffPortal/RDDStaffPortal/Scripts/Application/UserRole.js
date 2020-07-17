@@ -6,7 +6,8 @@
 		UserRole.Attachevent();
 	},
 	Attachevent: function () {
-
+        var pathname = window.location.pathname;
+        RedtDot_CheckAuthorization(pathname);
         var selectedObjs;
        // var draggableOptions = ;
 
@@ -15,23 +16,25 @@
         
         var tf = true;
         $("#Userid").on("change", function () {
-
+            $(".loader1").show();
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0' && tf == true) {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
+                $(".loader1").hide();
                 return false
 
             }
             tf = true;
             // RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid);
             $(".basket_list  ul").empty();
-            $('#product ul li').css("background-color", "");
-            $('#product ul li a').css("color", "black");
-            $('#product ul li').removeClass("selected");
-
+           // $('#product ul li').css("background-color", "");
+           // $('#product ul li a').css("color", "black");
+          //  $('#product ul li').removeClass("selected");
+            $('#product ul li').removeClass("disabled");
             $('#product ul li').find("input[id='hdnuse']").val('false');
             debugger
             AddSecondary(Userid);
+            $(".loader1").hide();
         });
 
        
@@ -90,7 +93,7 @@
 
         ).click(function (e) {           
             if ($(this).find("input[id='hdnuse']").val() == "true") {
-                RdotAlerterrtxt('Alredy use');
+                RedDotAlert_Error('Alredy use');
                 return
             }
             $(this).toggleClass('selected')
@@ -151,7 +154,8 @@
                           // k.css("background-color", "orange");
                             $(".demo").find(selectedObjs[e]).removeClass('selected');
                             $(".demo").find(selectedObjs[e]).find("input[id='hdnuse']").val('true');
-                            $(".demo").find(selectedObjs[e]).css("background-color", "orange");
+                           // $(".demo").find(selectedObjs[e]).css("background-color", "orange");
+                            $(".demo").find(selectedObjs[e]).addClass("disabled");
                             //var k1 = 0;
 
                             addBasket(basket, k);
@@ -162,7 +166,7 @@
 
                         } else {
 
-                            RdotAlerterrtxt('Alredy use');
+                            RedDotAlert_Error('Alredy use');
                         }
                         
                     });
@@ -196,11 +200,11 @@
                             + '<button class="delete">&#10005;</button>');
 
 
-                        $('#product ul li:contains(' + response[i] + ')').css("background-color", "green");
-                        $('#product ul li a:contains(' + response[i] + ')').css("color", "white");
+                       // $('#product ul li:contains(' + response[i] + ')').css("background-color", "green");
+                       // $('#product ul li a:contains(' + response[i] + ')').css("color", "white");
 
                         $('#product ul li:contains(' + response[i] + ')').find("input[id='hdnuse']").val('true');
-
+                        $('#product ul li:contains(' + response[i] + ')').addClass("disabled");
                         i++;
                     }
 
@@ -262,12 +266,12 @@
                                 if (response.Success == true) {
                                     //$(".reloadcss").trigger("click");
                                     // $('#txtsearch').trigger("keyup");
-                                    $('#product ul li:contains(' + Role + ')').css("background-color", "");
-
+                                  //  $('#product ul li:contains(' + Role + ')').css("background-color", "");
+                                    $('#product ul li:contains(' + Role + ')').removeClass("disabled")
                                     $('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                                     tr.remove();
                                 } else {
-                                    RdotAlerterrtxt(Role);
+                                    RedDotAlert_Error(Role);
                                 }
                                 return
 
@@ -287,9 +291,9 @@
                     ) {
                         //$(".reloadcss").trigger("click");
                         // $('#txtsearch').trigger("keyup");
-                        $('#product ul li:contains(' + Role + ')').css("background-color", "");
+                        //$('#product ul li:contains(' + Role + ')').css("background-color", "");
 
-                        $('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
+                        //$('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                         swalWithBootstrapButtons.fire(
                             'Cancelled',
                             'Your Code is safe :)',
@@ -306,8 +310,10 @@
                 $("#product  li").each(function () {
                     var kl = $(this).attr("data-id");
                     if (kl == Role) {
-                        $(this).css("background-color", "");
+                       // $(this).css("background-color", "");
                         $(this).find("input[id='hdnuse']").val('false');
+                        $(this).removeClass("disabled")
+                        
                        
                     }
                 })
@@ -338,6 +344,7 @@
         //Save 
         $("#btnsave").on("click", function () {
             debugger
+            $(".loader1").show();
             var UserName = $('#Userid Option:selected').val();
             var WebRepLists = [];
             $("#pri1  ul li").each(function () {
@@ -351,17 +358,19 @@
 
             });
             if (UserName == '') {
-                RdotAlerterrtxt('Please Select User Name');
+                RedDotAlert_Error('Please Select User Name');
+                $(".loader1").hide();
                 return
             }
             if (WebRepLists.length == 0) {
-                RdotAlerterrtxt('Please Add Report');
+                RedDotAlert_Error('Please Add Report');
+                $(".loader1").hide();
                 return
             }
             $.post("/UserRoles/AddUserToRole", { Username: UserName, Role: WebRepLists }).done(function (response) {
                 debugger
                 if (response.Success == true) {
-                    RdotAlertSucesstxt(response.Message);
+                    RedDotAlert_Success(response.Message);
                     $("#btnclear").trigger("click");
                     tf = false;
 
@@ -381,6 +390,7 @@
                 } else {
                     RdotAlerterr(response.Message);
                 }
+                $(".loader1").hide();
             })
 
 

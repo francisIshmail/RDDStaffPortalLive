@@ -19,7 +19,21 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         // GET: Admin/Departments
         public ActionResult Index()
         {
+            List<RDD_Departments> modules = new List<RDD_Departments>();
+            modules = DepartDbOp.GetDeptList();
+            ViewBag.GetDepList = modules;
             return View();
+        }
+
+
+
+
+        public ActionResult GetDepList()
+        {
+            List<RDD_Departments> modules = new List<RDD_Departments>();
+            modules = DepartDbOp.GetDeptList();
+            //ViewBag.GetDepList = modules;
+            return PartialView(modules);
         }
 
 

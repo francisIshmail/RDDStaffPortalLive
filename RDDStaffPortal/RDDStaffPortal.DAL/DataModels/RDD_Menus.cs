@@ -13,6 +13,8 @@ namespace RDDStaffPortal.DAL.DataModels
         public int Levels { get; set; }
         public int MenuId { get; set; }
         public string MenuName { get; set; }
+
+        public string ObjType { get; set; }
         public int ModuleId { get; set; }
         public string ModuleName { get; set; }
         public string MenuCssClass { get; set; }

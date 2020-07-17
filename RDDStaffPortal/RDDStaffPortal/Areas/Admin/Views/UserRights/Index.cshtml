@@ -10,17 +10,17 @@
         <div class="container">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">User Rights</h4>
+                    <h4 class="page-title">Employee Access</h4>
                 </div>
                 <div class="rowmin">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
+                                <div class="table-responsive-lg">
                                     <div class="row">
                                         <div class="col-xl-2 col-md-3">
                                             <div class="form-group">
-                                                <label for="email2" class="width100px">Employee search :</label>
+                                                <label for="email2" class="width70px">Employee</label>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-3">
@@ -35,64 +35,64 @@
                                         </div>
 
                                         <div class="col-xl-3 col-md-3">
-                                            
-                                                
-                                                <div class="form-group"><button type="button" id="btnSaveMenu" class="btn btn-success btn-sm mar-t8">Save</button></div>
-                                           
+
+
+                                            <div class="form-group"><button type="button" id="btnSaveMenu" class="btn btn-info btn-sm mar-t2">Save</button></div>
+
 
 
                                         </div>
                                         @*<div class="col-md-1">
-            <div class="form-group padd-0">
-                <label for="email2" class="width100px"></label>
-                <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
-            </div>
+                <div class="form-group padd-0">
+                    <label for="email2" class="width100px"></label>
+                    <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
+                </div>
 
 
-        </div>*@
+            </div>*@
 
 
 
 
+                                    </div> <div class="loader1"></div>
+
+                                    <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link mar-0 active show" id="pills-Forms-tab" data-toggle="pill" href="#tab-Forms" role="tab" aria-controls="pills-Forms" aria-selected="false">Forms</a>
+                                        </li>
+
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0" id="pills-Dashboards-tab" data-toggle="pill" href="#tab-Dashboards" role="tab" aria-controls="pills-Dashboards" aria-selected="false">Dashboards</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+
+                                        <div class="tab-pane fade active show" id="tab-Forms" role="tabpanel" aria-labelledby="tab-Forms">
+                                            <div id="accordion-0">
+                                                @*<div class="card-header odd" id="heading-1">
+
+
+
+                    </div>*@
+                                                @{ Html.RenderAction("GetMenuTree", "UserRights", new { area = "Admin" }); }
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane fade" id="tab-Dashboards" role="tabpanel" aria-labelledby="tab-Dashboards">
+
+                                            @{ Html.RenderAction("GetWidget", "UserRights", new { area = "Admin" }); }
+                                        </div>
                                     </div>
 
-                                            <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link mar-0 active show" id="pills-Forms-tab" data-toggle="pill" href="#tab-Forms" role="tab" aria-controls="pills-Forms" aria-selected="false">Forms</a>
-                                                </li>
-
-                                                <li class="nav-item submenu">
-                                                    <a class="nav-link mar-0" id="pills-Dashboards-tab" data-toggle="pill" href="#tab-Dashboards" role="tab" aria-controls="pills-Dashboards" aria-selected="false">Dashboards</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content mt-2 mb-3" id="pills-tabContent">
-
-                                                <div class="tab-pane fade active show" id="tab-Forms" role="tabpanel" aria-labelledby="tab-Forms">
-                                                    <div id="accordion-0">
-                                                        @*<div class="card-header odd" id="heading-1">
-
-
-
-                        </div>*@
-                                                        @{ Html.RenderAction("GetMenuTree", "UserRights", new { area = "Admin" }); }
-
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="tab-pane fade" id="tab-Dashboards" role="tabpanel" aria-labelledby="tab-Dashboards">
-
-                                                    @{ Html.RenderAction("GetWidget", "UserRights", new { area = "Admin" }); }
-                                                </div>
-                                            </div>
 
 
 
 
 
 
-
-                                        </div>
+                                </div>
 
                                     </div>
 
@@ -140,7 +140,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-
+        $(".loader1").show();
         // drop down image fill with name 
         RdotDropimg("Userid", "/GetUserList");
         var tf = true;
@@ -148,7 +148,7 @@
 
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0' && tf==true) {
-                RdotAlerterrtxt("Please select  User");               
+                RedDotAlert_Error("Please select  User");               
                 return false
 
             }
@@ -180,7 +180,7 @@
         $('#Btnsearch').on("click", function () {
             var Userid = $('#Userid Option:selected').val();
             if (Userid == '0') {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
                 return false
 
             }
@@ -201,7 +201,7 @@
         });
 
         $('#btnSaveMenu').on("click", function () {
-
+            $(".loader1").show();
             var Users = {
                 UserId: $('#Userid Option:selected').val(),                
                 MenuDetails: [],
@@ -209,7 +209,8 @@
 
             };
             if (Users.UserId == '0') {
-                RdotAlerterrtxt("Please select  User");
+                RedDotAlert_Error("Please select  User");
+                $(".loader1").hide();
                 return false
 
             }
@@ -244,13 +245,14 @@
            $.post("/SaveUserRights", Users).done(function (response) {
                if (response.SaveFlag == true) {
                    tf = false;
-                   RdotAlertSucesstxt('Save Succcesfully');
+                   RedDotAlert_Success('Save Succcesfully');
                    $("[id*='smallSelect']").val("N");
                    $('#Userid').val("0").trigger("change");
                    $('#btnSaveMenu').hide();
                } else {
-                   RdotAlerterrtxt('Error Occur');
+                   RedDotAlert_Error('Error Occur');
                }
+               $(".loader1").hide();
 
            });
 
@@ -258,6 +260,7 @@
 
 
         })
+        $(".loader1").hide();
     });
 </script>
 <script>

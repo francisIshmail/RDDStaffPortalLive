@@ -1,0 +1,364 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Report.RDD_TrailBalance
+
+@{
+    ViewBag.Title = "TrailBalance";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Trail Balance Report</h4>
+                </div>
+                
+
+            </div>
+
+
+
+
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10">
+
+
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+
+                                        <a href="/Reports/Reports/DownloadToExcel5" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
+
+                                        @*onclick="exportToExcel()"*@
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive-lg">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div>
+                                        <div id="Ind" class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead"><div>AcctName</div></div>
+                                                <div class="reddotTableHead"><div>AcctCode</div></div>
+                                                <div class="reddotTableHead"><div>Postable</div></div>
+                                                <div class="reddotTableHead"><div>AcctLevel</div></div>
+                                                <div class="reddotTableHead"><div>FatherAcct</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditTRI</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitTRI</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditTRI</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitTRI</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditTZ</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitTZ</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditTZ</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitTZ</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditKE</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitKE</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditKE</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitKE</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditUG</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitUG</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditUG</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitUG</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditZM</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitZM</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditZM</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitZM</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditMA</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitMA</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditMA</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitMA</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditTRNGL</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitTRNGL</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditTRNGL</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitTRNGL</div></div>
+                                                <div class="reddotTableHead"><div>LocCreditTotal</div></div>
+                                                <div class="reddotTableHead"><div>SysCreditTotal</div></div>
+                                                <div class="reddotTableHead"><div>LocDebitTotal</div></div>
+                                                <div class="reddotTableHead"><div>SysDebitTotal</div></div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="demo-scrollbar-500 scrollbar-inner">
+                                        <div id="Ibody" class="reddotTableBody">
+                                            <div id="Ist" class="reddotTableRow odd-even-row Abcde">
+                                                <div class="reddotTableCellLeft  Abcd"><div>AcctName</div></div>
+                                                <div class="reddotTableCellLeft  Abcd"><div>AcctCode</div></div>
+                                                <div class="reddotTableCell  Abcd"><div>Postable</div></div>
+                                                <div class="reddotTableCellLeft  Abcd"><div>AcctLevel</div></div>
+                                                <div class="reddotTableCellLeft  Abcd"><div>FatherAcct</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditTRI</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitTRI</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditTRI</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitTRI</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditTZ</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitTZ</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditTZ</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitTZ</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditKE</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitKE</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditKE</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitKE</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditUG</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitUG</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditUG</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitUG</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditZM</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitZM</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditZM</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitZM</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditMA</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitMA</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditMA</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitMA</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditTRNGL</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitTRNGL</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditTRNGL</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitTRNGL</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocCreditTotal</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysCreditTotal</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>LocDebitTotal</div></div>
+                                                <div class="reddotTableCellRight  Abcd"><div>SysDebitTotal</div></div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                    @*<div class="row mar-t10">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mar-b0">
+                    <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+
+                    <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>*@
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Show/Hide Columns</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section">
+                <div class="row rowmin" id="idchk">
+                    @*<div class="col-md-12 mar-b10">
+                            <div class="row" id="idchk"> </div>
+                        </div>*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnsave" type="button" class="btn btn-info btn-sm">Apply</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    var tblhead1 = ['AcctName', 'AcctCode', 'Postable', 'AcctLevel', 'FatherAcct', 'LocCreditTRI', 'LocDebitTRI', 'SysCreditTRI', 'SysDebitTRI', 'LocCreditTZ', 'LocDebitTZ', 'SysCreditTZ', 'SysDebitTZ', 'LocCreditKE', 'LocDebitKE', 'SysCreditKE', 'SysDebitKE', 'LocCreditUG', 'LocDebitUG', 'SysCreditUG','SysDebitUG','LocCreditZM','LocDebitZM','SysCreditZM','SysDebitZM','LocCreditMA','LocDebitMA','SysCreditMA','SysDebitMA','LocCreditTRNGL','LocDebitTRNGL','SysCreditTRNGL','SysDebitTRNGL','LocCreditTotal','SysCreditTotal','LocDebitTotal','SysDebitTotal'];
+    var tblhide = [];
+    var tblhead2 = ['AcctName', 'AcctCode']
+    $(".loader1").hide();
+
+    
+    $(document).ready(function () {
+        $(".loader1").show();
+        var k1 = 0;
+       
+
+        $("#Search-Forms-QuickLinks").on("keyup", function () {
+
+            var value = $("#Search-Forms-QuickLinks").val().toLowerCase();
+            debugger
+            $(".Abcde").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+
+        $("#FilterBtn").click(function () {
+            $("#FilterSection").slideToggle("slow");
+
+        });
+       // var value1 = $("#Search-Forms-QuickLinks").val().toLowerCase();
+        var arr = [];
+      //  var curPage = 1;
+
+        $.ajax({
+            type: "POST",
+            url: "/Reports/Reports/GetTrailBalance",
+            contentType: "application/json",
+            dataType: "json",
+
+            success: function (data) {
+                debugger
+                tblhide = [];
+                $("#Ist").show();
+                arr = data;
+                if (arr.data != null && arr.data.length != 0) {
+                    var i = 0;
+                    while (arr.data.length > i) {
+                        var tr = $("#Ist").clone();
+                        var tr1 = $("#Ind").closest();
+                        var k = 0;
+                        var l1 = tr.find(".Abcd").length;
+                        while (l1 > k) {
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                            var t = tblhead1[k];
+
+                            if (jQuery.inArray(t, tblhide) !== -1 || arr.data[i][tblhead1[k]] == -404) {
+                                tr.find(".Abcd").eq(k).addClass("Abc");
+                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc");
+                                tblhide.push(t);
+                            } 
+
+                            k++;
+                        }
+                        $("#Ibody").append(tr);
+                        i++;
+                    }
+                    $("#Ist")[0].remove();
+                } else {
+                    $("#Ist").hide();
+                    RedDotAlert_Error("No Record Found");
+                }
+            }
+            , complete: function () {
+                while (tblhead1.length > k1) {                    
+                    if (jQuery.inArray(tblhead1[k1], tblhide) == -1 && jQuery.inArray(tblhead1[k1], tblhead2) == -1) {
+                        $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] + "' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
+
+                    }
+                    k1++;
+                }
+                $(document).ready(function () {
+                    $('.scrollbar-inner').scrollbar();
+                });
+                $(".loader1").hide();
+            }
+        });
+
+       // $(".loader1").hide();
+       
+        $("#btnsave").on("click", function () {
+            debugger
+            $(".loader1").show();
+            tblhide = [];
+            $('input:checkbox').each(function () {
+
+                var IsActiveTxt = $(this).is(":checked");
+                if (IsActiveTxt == false && $(this).attr("id") != undefined) {
+
+                    tblhide.push($(this).attr("id"));
+                    $('div#' + $(this).attr("id") + '1').addClass("Abc");
+                } else {
+                    $('div#' + $(this).attr("id") + '1').removeClass("Abc");
+                }
+                //$("select").val('').trigger('change');
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "/Reports/Reports/GetTrailBalance",
+                contentType: "application/json",
+                dataType: "json",
+               
+                success: function (data) {
+                    $("div#Ist").not(':first').remove();
+                    $("#Ist").show();
+                    arr = data;
+                    if (arr.data != null && arr.data.length != 0) {
+                        var i = 0;
+                        while (arr.data.length > i) {
+                            var tr = $("#Ist").clone();
+                            var tr1 = $("#Ind").closest();
+                            var k = 0;
+                            var l1 = tr.find(".Abcd").length;
+                            while (l1 > k) {
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                var t = tblhead1[k];
+                                if (jQuery.inArray(t, tblhide) !== -1 || arr.data[i][tblhead1[k]] == -404) {
+                                    debugger
+                                    tr.find(".Abcd").eq(k).addClass("Abc");
+                                    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc");
+                                } else {
+                                    tr.find(".Abcd").eq(k).removeClass("Abc");
+                                    tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc");
+                                  
+
+                                }
+
+                                k++;
+                            }
+                            $("#Ibody").append(tr);
+
+                            i++;
+                        }
+
+                        $("#Ist")[0].remove();
+                        $('.close').trigger("click");
+                    } else {
+                        $("#Ist").hide();
+                        RedDotAlert_Error("No Record Found");
+                    }
+                }, complete: function () {
+                    $(".loader1").hide();
+                    $(document).ready(function () {
+                        $('.scrollbar-inner').scrollbar();
+                    });
+                    
+                }
+            });
+
+        })
+
+
+        //$(".fa-file-excel").on("click", function () {
+        //    debugger
+        //    $(".loader1").show();
+        //    $.post("/DownloadExcelTes").done(function (response) {
+        //        $(".loader1").hide();
+        //    })
+        //})
+    });
+</script>
+<style>
+    .Abc {
+        display: none !important;
+    }
+    .NewTbl {
+        padding: 5px 0 5px 5px;
+    }
+</style>
+

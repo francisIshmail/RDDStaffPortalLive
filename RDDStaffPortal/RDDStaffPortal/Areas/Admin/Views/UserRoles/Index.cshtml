@@ -12,7 +12,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">User Roles</h4>
+                <h4 class="page-title">Employee Roles</h4>
             </div>
             <div class="row">
                    
@@ -24,75 +24,80 @@
                     <div class="card">
                        
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive-lg">
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
                                         <div class="form-group">
-                                            <label for="email2" class="width100px mar-t4">User search :</label>
+                                            <label for="email2" class="width100px mar-t4">Employee</label>
 
 
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-md-4">
-                                        <div class="select2-input">
+                                        <div class="select2-input mar-t1">
                                             <select class="form-control" id="Userid" name="basic">
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="rowmin row">
-                                    <div class="col-md-8" id="product">
-                                        <div class="row">
-                                            <div class="col-md-18 padd-l5 padd-r5">
-                                                <div class="panel">
-                                                    <div class="panel-heading text-center panelbg-1">Roles</div>
-                                                    <div class="demo">
-                                                        <ul class="clear">
-                                                            @foreach (var items in ViewBag.UserRoles)
-                                                            {
-                                                                <li data-id="@items" class="ui-draggable ui-draggable-handle">
-                                                                    <a href="#"> @items </a>
-                                                                    <input type='hidden' id='hdnuse' value='false' />
-                                                                </li>
-                                                            }
+                                    <div class="col-xl-3 col-md-3">
+                                        <div class="form-group">
+                                            <label for="email2" class="width30px"></label>
+                                            <button class="btn btn-primary btn-sm  mar-t2" onclick="CreateRole()">Manage Role</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="rowmin row">
+                                        <div class="col-md-4" id="product">
+                                            <div class="loader1"></div>
+                                            <div class="row">
+                                                <div class="col-md-18 padd-l5 padd-r5">
+                                                    <div class="panel">
+                                                        <div class="panel-heading text-center panelbg-1">Roles</div>
+                                                        <div class="demo">
+                                                            <ul class="clear">
+                                                                @foreach (var items in ViewBag.UserRoles)
+                                                                {
+                                                                    <li data-id="@items" class="ui-draggable ui-draggable-handle">
+                                                                        <a href="#"> @items </a>
+                                                                        <input type='hidden' id='hdnuse' value='false' />
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4" id="sidebar">
+
+                                            <div class="panel">
+                                                <div class="panel-heading text-center" id="hdntitle">Authorized  Roles</div>
+
+                                                <div class="basket">
+                                                    <div class="basket_list" id="pri1">
+
+
+                                                        <ul id="pr1" class="height300px">
                                                         </ul>
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4" id="sidebar">
-                                        <div class="form-group">
-                                            <button style="margin-right:10px" class="btn btn-primary" onclick="CreateRole()">Manage Role</button>
-                                        </div>
-                                        <div class="panel">
-                                            <div class="panel-heading text-center" id="hdntitle">Authorized  Roles</div>
-
-                                            <div class="basket">
-                                                <div class="basket_list" id="pri1">
 
 
-                                                    <ul id="pr1">
-                                                    </ul>
+                                                <div class="card-action">
+                                                    <button class="btn btn-info btn-sm" id="btnsave">Save</button>
+                                                    <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
                                                 </div>
                                             </div>
 
-
-
-                                            <div class="card-action">
-                                                <button class="btn btn-success btn-sm" id="btnsave">Save</button>
-                                                <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
-                                            </div>
                                         </div>
 
                                     </div>
 
+
                                 </div>
-
-
-                            </div>
 
                         </div>
                     </div>
@@ -130,7 +135,7 @@
 
                                     <div class="form-group">
                                         <label for="email2" class="width100px"></label>
-                                        <div class="mar-t7"><button type="button" data-target="#myModal" class="btn btn-success submitbtn add-new" id="SaveRole">Create Role</button></div>
+                                        <div class="mar-t7"><button type="button" data-target="#myModal" class="btn btn-info submitbtn add-new" id="SaveRole">Create Role</button></div>
 
                                     </div>
 
@@ -186,7 +191,10 @@
     $(document).ready(function () {
         // To bind Roles on PageLoad
         //GetRoles();
+        $(".loader1").show();
         UserRole.initialize();
+       // $('.scrollbar-inner').scrollbar();
+        $(".loader1").hide();
 
 
     });
@@ -241,12 +249,12 @@
             success: function (result) {
                 debugger;
                 if (result.Success == true) {
-                    RdotAlertSucesstxt(result.Message);
+                    RedDotAlert_Success(result.Message);
                     $("#RoleName").val('');
                     GetRoles();
                 }
                 else {
-                    RdotAlerterrtxt(result.Message);
+                    RedDotAlert_Error(result.Message);
                     $("#RoleName").val('');
                 }
             }
@@ -275,12 +283,12 @@
             if (result.value) {
                 $.getJSON("/UserRoles/DeleteRole", { RoleName: Role }).done(function (data) {
                     if (data.Success == true) {
-                        RdotAlertSucesstxt(data.Message);
+                        RedDotAlert_Success(data.Message);
                         $("#RoleName").val('');
                         GetRoles();
                     }
                     else {
-                        RdotAlerterrtxt(data.Message);
+                        RedDotAlert_Error(data.Message);
                         $("#RoleName").val('');
                     }
 

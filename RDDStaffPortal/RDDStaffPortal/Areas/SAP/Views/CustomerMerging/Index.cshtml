@@ -18,8 +18,9 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card"> 
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
@@ -40,6 +41,7 @@
                 </div>
             </div>*@
                                 </div>
+                                <div class="loader1"></div>
                                 <div class="rowmin row">
                                     <div class="col-md-8" id="product">
                                         <div class="row">
@@ -81,7 +83,7 @@
                                             </div>
 
 
-                                         
+
                                         </div>
 
                                     </div>
@@ -91,12 +93,12 @@
 
                                             <div class="basket">
                                                 <div class="basket_list" id="pri1">
-                                                    <input id="hdnflag" value="false" type="hidden"/>
-                                                    <div class="head">
+                                                    <input id="hdnflag" value="false" type="hidden" />
+                                                    <div class="head" >
                                                         <span class="name">Primary Account -  Single</span>
 
                                                     </div>
-                                                    <ul id="pr1">
+                                                    <ul id="pr1" class="demo-scrollbar-50">
                                                     </ul>
                                                 </div>
                                             </div>
@@ -107,22 +109,22 @@
                                                         <span class="name">Secondary Account -  Multiples</span>
 
                                                     </div>
-                                                    <ul id="se1">
+                                                    <ul id="se1"  class="demo-scrollbar-130 scrollbar-inner">
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> 
 
                                             <div class="card-action">
-                                                <button class="btn btn-success btn-sm" id="btnmerge">Merge</button>
+                                                <button class="btn btn-info btn-sm" id="btnmerge">Merge</button>
                                                 <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                               
+
                                 <div class="rowmin row">
-                                    
+
                                     <div class="col-md-8" id="product1">
                                         <div class="row">
                                             <div class="col-md-4 padd-l5 padd-r5">
@@ -211,8 +213,10 @@
     $(document).ready(function () {
         //$(function () {
 
-
+        $(".loader1").show();
+        $('.scrollbar-inner').scrollbar();
         CustomerMapping.initialize();
+        $(".loader1").hide();
     });
 </script>
 <style>

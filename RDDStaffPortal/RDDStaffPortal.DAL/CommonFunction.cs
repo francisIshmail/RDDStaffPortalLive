@@ -25,6 +25,13 @@ namespace RDDStaffPortal.DAL
             public bool Outtf { get; set; }
             public string Responsemsg { get; set; }
         }
+        public partial class Outcls1
+        {
+            public bool Outtf { get; set; }
+
+            public int Id { get; set; }
+            public string Responsemsg { get; set; }
+        }
 
         public int ExecuteNonQuery(string SqlCommondText)
         {
@@ -92,6 +99,67 @@ namespace RDDStaffPortal.DAL
                         str1.Add(new Outcls
                         {
                             Outtf = t,
+                            Responsemsg = errormsg
+                        });
+                    }
+                    finally
+                    {
+                        trans.Dispose();
+                    }
+                }
+
+            }
+            return str1;
+        }
+        #endregion
+
+        #region Sp_ForInsDelUpdDataOut
+        public List<Outcls1> ExecuteNonQueryListID(string SqlCommondText, SqlParameter[] p)
+        {
+            errormsg = "";
+            bool t = false;
+            List<Outcls1> str1 = new List<Outcls1>();
+            str1.Clear();
+            using (SqlConn = new SqlConnection(Conn))
+            {
+                SqlConn.Open();
+                trans = SqlConn.BeginTransaction();
+                using (SqlCmd = new SqlCommand(SqlCommondText, SqlConn, trans))
+                {
+                    SqlCmd.CommandType = CommandType.StoredProcedure;
+                    int k = p.Length;
+                    int j = 0;
+                    while (j < k - 2)
+                    {
+                        SqlCmd.Parameters.AddWithValue(p[j].ParameterName, p[j].Value);
+                        j = j + 1;
+                    }
+                    SqlCmd.Parameters.Add(p[k - 2].ParameterName, SqlDbType.Int).Direction = ParameterDirection.Output;
+                    SqlCmd.Parameters.Add(p[k - 1].ParameterName, SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+                    try
+                    {
+                        int i = SqlCmd.ExecuteNonQuery();
+                        if (i > 0)
+                        {
+                            trans.Commit();
+                            t = true;
+                            str1.Add(new Outcls1
+                            {
+                                Outtf = t,
+                                Id= Convert.ToInt32(SqlCmd.Parameters[p[k - 2].ParameterName].Value.ToString()),
+                                Responsemsg = SqlCmd.Parameters[p[k - 1].ParameterName].Value.ToString()
+                            });
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        errormsg = ex.Message;
+                        trans.Rollback();
+                        t = false;
+                        str1.Add(new Outcls1
+                        {
+                            Outtf = t,
+                            Id=-1,
                             Responsemsg = errormsg
                         });
                     }
@@ -234,7 +302,41 @@ namespace RDDStaffPortal.DAL
             }
             return numrows;
         }
-
+        #region Sp_RetriveSingleValueDecimal
+        public int ExecuteScalar(string sqlCommandText, SqlParameter[] p)
+        {
+           int numrows = 0;
+            using (SqlConn = new SqlConnection(Conn))
+            {
+                SqlConn.Open();
+                using (SqlCmd = new SqlCommand(sqlCommandText, SqlConn))
+                {
+                    SqlCmd.CommandType = CommandType.StoredProcedure;
+                    int k = p.Length;
+                    int j = 0;
+                    while (j < k)
+                    {
+                        SqlCmd.Parameters.AddWithValue(p[j].ParameterName, p[j].Value);
+                        j = j + 1;
+                    }
+                    try
+                    {
+                        object o = SqlCmd.ExecuteScalar();
+                        if (o != null)
+                        {
+                            numrows = Convert.ToInt32(o.ToString());
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        errormsg = ex.Message;
+                    }
+                }
+            }
+            return numrows;
+        }
+        #endregion
         #region Sp_RetriveSingleValueDecimal
         public decimal ExecuteScalarDec(string sqlCommandText, SqlParameter[] p)
         {

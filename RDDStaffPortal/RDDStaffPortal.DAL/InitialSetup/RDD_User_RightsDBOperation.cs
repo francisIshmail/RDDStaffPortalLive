@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using static RDDStaffPortal.DAL.CommonFunction;
@@ -33,43 +34,47 @@ namespace RDDStaffPortal.DAL.InitialSetup
             string response = string.Empty;
             try
             {
-                DataTable dte = new DataTable();
-                int k = UserRights.MenuDetails.Count;
-                int i = 0;
-                dte.Columns.Add(new DataColumn("MenuId", typeof(int)));
-                dte.Columns.Add(new DataColumn("UserId", typeof(string)));
-                dte.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
-                dte.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
-                dte.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
-                while (i < k)
+                using (TransactionScope scope = new TransactionScope())
                 {
+                    DataTable dte = new DataTable();
+                    int k = UserRights.MenuDetails.Count;
+                    int i = 0;
+                    dte.Columns.Add(new DataColumn("MenuId", typeof(int)));
+                    dte.Columns.Add(new DataColumn("UserId", typeof(string)));
+                    dte.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
+                    dte.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
+                    dte.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
+                    while (i < k)
+                    {
 
-                    dte.Rows.Add(UserRights.MenuDetails[i].MenuId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.MenuDetails[i].AuthoTyp);
-                    i++;
-                }
-                DataTable dte1 = new DataTable();
-                k = UserRights.DashDetails.Count;
-                i = 0;
-                dte1.Columns.Add(new DataColumn("DashId", typeof(string)));
-                dte1.Columns.Add(new DataColumn("UserId", typeof(string)));
-                dte1.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
-                dte1.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
-                dte1.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
-                dte1.Columns.Add(new DataColumn("IsActive", typeof(int)));
-                while (i < k)
-                {
+                        dte.Rows.Add(UserRights.MenuDetails[i].MenuId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.MenuDetails[i].AuthoTyp);
+                        i++;
+                    }
+                    DataTable dte1 = new DataTable();
+                    k = UserRights.DashDetails.Count;
+                    i = 0;
+                    dte1.Columns.Add(new DataColumn("DashId", typeof(string)));
+                    dte1.Columns.Add(new DataColumn("UserId", typeof(string)));
+                    dte1.Columns.Add(new DataColumn("CreatedBy", typeof(string)));
+                    dte1.Columns.Add(new DataColumn("CreatedOn", typeof(DateTime)));
+                    dte1.Columns.Add(new DataColumn("Auth_Type", typeof(string)));
+                    dte1.Columns.Add(new DataColumn("IsActive", typeof(int)));
+                    while (i < k)
+                    {
 
-                    dte1.Rows.Add(UserRights.DashDetails[i].DashId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.DashDetails[i].AuthoTyp, 0);
-                    i++;
-                }
-                SqlParameter[] Para = {
+                        dte1.Rows.Add(UserRights.DashDetails[i].DashId, UserRights.UserId, UserRights.CreatedBy, DateTime.Now, UserRights.DashDetails[i].AuthoTyp, 0);
+                        i++;
+                    }
+                    SqlParameter[] Para = {
                      new SqlParameter("@tbldash",dte1),
                     new SqlParameter("@tblRights",dte),
                     new SqlParameter("@UserId",UserRights.UserId)
 
 
                 };
-                t = Com.ExecuteNonQuery("RDD_User_Rights_InsertUpdate", Para);
+                    t = Com.ExecuteNonQuery("RDD_User_Rights_InsertUpdate", Para);
+                    scope.Complete();
+                }
 
             }
             catch (Exception ex)
@@ -123,25 +128,28 @@ namespace RDDStaffPortal.DAL.InitialSetup
             bool t = false;
             try
             {
-                int i = 0;
-                
-                while (i < UsersWidget.UserDashWidgets.Count)
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    int k = 0;
-                    if (UsersWidget.UserDashWidgets[i].IsActive == false)
+                    int i = 0;
+
+                    while (i < UsersWidget.UserDashWidgets.Count)
                     {
-                        k = 1;
-                    }
-                    SqlParameter[] Para = {
+                        int k = 0;
+                        if (UsersWidget.UserDashWidgets[i].IsActive == false)
+                        {
+                            k = 1;
+                        }
+                        SqlParameter[] Para = {
                      new SqlParameter("@Userid",UsersWidget.UserId),
                     new SqlParameter("@Dashid",UsersWidget.UserDashWidgets[i].DashId),
                     new SqlParameter("@IsActive",k) };
 
-                   t = Com.ExecuteNonQuery("Rdd_User_Widget_Insert", Para);
-                    i++;
-                }
-                
-                
+                        t = Com.ExecuteNonQuery("Rdd_User_Widget_Insert", Para);
+                        i++;
+                    }
+                    scope.Complete();
+
+                } 
               
             }
             catch (Exception)

@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Red Dot Distribution :: Technology with a Difference</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="~/img/reddot.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="~/js/plugin/webfont/webfont.min.js"></script>
+    <script src="~/js/jquery-1.2.6.min.js"></script>
+
+    <script type="text/javascript">
+
+        function slideSwitch() {
+            var $active = $('#slideshow IMG.active');
+
+            if ($active.length == 0) $active = $('#slideshow IMG:last');
+
+            // use this to pull the images in the order they appear in the markup
+            var $next = $active.next().length ? $active.next()
+                : $('#slideshow IMG:first');
+
+            // uncomment the 3 lines below to pull the images in random order
+
+            // var $sibs  = $active.siblings();
+            // var rndNum = Math.floor(Math.random() * $sibs.length );
+            // var $next  = $( $sibs[ rndNum ] );
+            $active.addClass('last-active');
+
+            $next.css({ opacity: 0.0 })
+                .addClass('active')
+                .animate({ opacity: 1.0 }, 1500, function () {
+                    $active.removeClass('active last-active');
+                });
+        }
+
+        $(function () {
+           // setInterval("slideSwitch()", 2000);
+        });
+
+    </script>
+
+    <!-- CSS Files -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/atlantis.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts.min.css" rel="stylesheet" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/Content/reddot.css" rel="stylesheet" />
+</head>
+
+<body>
+
+
+
+        <div class="container">
+
+            <!-- Outer Row -->
+            <div class="row justify-content-center login-section mar-t100" id="Loginbox">
+
+                <div class="col-xl-5 col-lg-6 col-md-9">
+                    <h1 class="h4 text-gray-900 padd-l30 padd-r30 padd-t30 padd-b10 text-center"><img src="~/img/reddot-logo.png" alt="#"></h1>
+
+                    <div class="card o-hidden border-0 shadow-lg my-3 login-bg">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="padd-20">
+                                    <div class="text-center">
+
+                                        <p class="mar-0">Technology with a Difference</p>
+                                        <p>Africa's No.1 IT Distribution Company</p>
+                                    </div>
+
+                                    <form class="user">
+                                        
+                                        <div class="form-group has-error">
+
+
+                                                    @Request.RequestContext.HttpContext.Session["Errormsg"]
+                                        </div>
+                                        <div class="row">
+                                           
+                                            <div class="col-xl-6 col-lg-6 col-md-12 mar-t20 text-right"> <a href="/account/login" class="link text-right" id="ForgetPassword">Login</a></div>
+                                        </div>
+                                        @*<div class="text-center padd-t30">
+                                                Don't have an account? <a class="small" href="register.html">Register</a>
+                                            </div>*@
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+
+        <div id="slideshow">
+            <img src="~/img/bg/background_01.jpg" alt="#" class="active" />
+            <img src="~/img/bg/background_02.jpg" alt="#" />
+            <img src="~/img/bg/background_03.jpg" alt="#" />
+
+        </div>
+
+</body>
+</html>

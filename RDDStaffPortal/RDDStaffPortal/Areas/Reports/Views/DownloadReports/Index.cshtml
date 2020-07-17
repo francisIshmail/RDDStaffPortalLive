@@ -63,7 +63,7 @@
         }
         var url2 = url1();
         if (url2.Date1 != undefined || url2.Date1 !=null ) {
-            RdotAlerterrtxt("Report does not exist for selected Date "+ url2.Date1+"");           
+            RedDotAlert_Error("Report does not exist for selected Date "+ url2.Date1+"");           
             window.history.replaceState(null, null, "/Reports/DownloadReports/Index");
         }
     });

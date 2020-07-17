@@ -56,10 +56,10 @@
                 $.post("/SaveUserDash", UsersWidget).done(function (response) {
                     if (response.SaveFlag == true) {
                         tf = false;
-                        RdotAlertSucesstxt('Save Succcesfully');
+                        RedDotAlert_Success('Save Succcesfully');
 
                     } else {
-                        RdotAlerterrtxt('Error Occur');
+                        RedDotAlert_Error('Error Occur');
                     }
 
                 });

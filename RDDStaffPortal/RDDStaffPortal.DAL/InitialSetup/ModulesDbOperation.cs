@@ -9,9 +9,7 @@ using RDDStaffPortal.DAL.DataModels;
 using System.Configuration;
 using static RDDStaffPortal.DAL.CommonFunction;
 using System.IO;
-
-
-
+using System.Transactions;
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
@@ -129,6 +127,48 @@ namespace RDDStaffPortal.DAL.InitialSetup
             }
             return response;
         }
+        public List<Outcls> Ret_Code_ForgetPass(string email)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response = string.Empty;
+            try
+            {
+                SqlParameter[] Para = {
+                new SqlParameter("@EmailId",email),              
+                new SqlParameter("@newpwd",response),
+                };
+                str = Com.ExecuteNonQueryList("Insert_RDD_ForgetPass", Para);
+               
+            }
+            catch (Exception ex)
+            {
+               str[0].Responsemsg = "Error occured : " + ex.Message;
+                str[0].Outtf = false;
+
+            }
+            return str;
+        }
+        public string Ret_Code(string email,string code)
+        {
+            List<Outcls> str = new List<Outcls>();
+            string response ="";
+            try
+            {
+                SqlParameter[] Para = {
+                new SqlParameter("@p_emailid",email),
+                new SqlParameter("@p_code",code),
+                 
+                };  
+               response = Com.ExecuteScalars("RDD_Ret_RDD_ForgetPass", Para);
+
+            }
+            catch (Exception ex)
+            {
+               response = "Error Occur";
+
+            }
+            return response;
+        }
 
        public  string save1(RDD_Modules modules)
         {
@@ -136,7 +176,9 @@ namespace RDDStaffPortal.DAL.InitialSetup
             string response = string.Empty;
             try
             {
-                SqlParameter[] Para = { 
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] Para = {
                 new SqlParameter("@p_ModuleId",modules.ModuleId),
                 new SqlParameter("@p_ModuleName",modules.ModuleName),
                 new SqlParameter("@p_cssClass",modules.cssClass),
@@ -144,8 +186,10 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 new SqlParameter("@p_CreatedBy",modules.CreatedBy),
                 new SqlParameter("@p_response",response),
                 };
-                str= Com.ExecuteNonQueryList("RDD_Modules_InsertUpdate", Para);              
-               response = str[0].Responsemsg;                               
+                    str = Com.ExecuteNonQueryList("RDD_Modules_InsertUpdate", Para);
+                    response = str[0].Responsemsg;
+                    scope.Complete();
+                }
             }
             catch (Exception ex)
             {

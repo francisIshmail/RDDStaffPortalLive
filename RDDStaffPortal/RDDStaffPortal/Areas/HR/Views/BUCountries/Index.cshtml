@@ -96,7 +96,7 @@
                                                         </div>
 
                                                         <div class="card-action">
-                                                            <button class="btn btn-success btn-sm" value="@items.CountryCode" id="SaveEmpBu_@items.CountryCode" onclick="SaveEmpBUCoutry('@items.CountryCode')">Save</button>
+                                                            <button class="btn btn-info btn-sm" value="@items.CountryCode" id="SaveEmpBu_@items.CountryCode" onclick="SaveEmpBUCoutry('@items.CountryCode')">Save</button>
 
                                                         </div>
                                                     </div>
@@ -426,7 +426,7 @@
 
                     });
                     if (t2 == true) {
-                        RdotAlerterrtxt1(" Please Save  Records Of " + tmsg)
+                        RedDotAlert_Error(" Please Save  Records Of " + tmsg)
                         return
                     }
                     $(".basket_list  ul li").each(function () {
@@ -435,7 +435,7 @@
 
                     if (result == "saved successfully.") {
 
-                        RdotAlertSucesstxt(result);
+                        RedDotAlert_Success(result);
                         $('#EmployeeId').val("0").trigger("change");
 
                         $('#EmpName').val("0").trigger("change");
@@ -447,7 +447,7 @@
 
                     }
                     else if (result == "updated successfully.") {
-                        RdotAlertSucesstxt(result);
+                        RedDotAlert_Success(result);
                         // ClearControl();
                     }
 

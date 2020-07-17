@@ -22,6 +22,7 @@ namespace RDDStaffPortal.WebServices
     // [System.Web.Script.Services.ScriptService]
     public class AccountService : System.Web.Services.WebService
     {
+        Common commonMethods = new Common();
 
         [WebMethod]
         public string HelloWorld()
@@ -102,7 +103,6 @@ namespace RDDStaffPortal.WebServices
         public MembershipResponse CreateUserAccount(string UserName, string UserEmail, string quest, string ans, string rol)
         {
             MembershipResponse membershipResponse = new MembershipResponse();
-            SendMail sendmail = new SendMail();
 
             membershipResponse.Success = false;
 
@@ -404,9 +404,162 @@ namespace RDDStaffPortal.WebServices
             }
         }
 
+        /// <summary>
+        /// This method is used to verify if entered email address is registered in portal or not. returns TRUE if registered email else return FALSE.
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public MembershipResponse ValidateEmail(string Email)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                string UserName = Membership.GetUserNameByEmail(Email);
+                if(string.IsNullOrEmpty(UserName) )
+                {
+                    membershipResponse.Success = false; membershipResponse.Message ="Invalid Email Address.";
+                }
+                else
+                {
+                    membershipResponse.Success = true; membershipResponse.Message = "Valid Email Address";
+                }
+                return membershipResponse;
 
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
 
-        public string GetErrorMessage(MembershipCreateStatus status)
+        /// <summary>
+        /// This method is used to chnage password from User Login.
+        /// </summary>
+        /// <param name="old_password"></param>
+        /// <param name="new_password"></param>
+        /// <param name="confirm_password"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public MembershipResponse ChangePassword(string old_password, string new_password, string confirm_password)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                if(string.IsNullOrEmpty(old_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter old password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(new_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter new password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(confirm_password))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Please enter confirm password.";
+                    return membershipResponse;
+                }
+                else if ( new_password!=confirm_password)
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "New Password and confirm password must be same.";
+                    return membershipResponse;
+                }
+                else
+                {
+                    MembershipUser membershipUser = Membership.Providers["AspNetSqlMembershipProvider"].GetUser(User.Identity.Name, false);
+                    if (membershipUser != null)
+                    {
+                        if (membershipUser.IsLockedOut) //if is locked then unlock
+                            membershipUser.UnlockUser();
+
+                        if(membershipUser.ChangePassword(old_password, new_password))
+                        {
+                            membershipResponse.Success = true; membershipResponse.Message = "Password changed successfully.";
+                            return membershipResponse;
+                        }
+                        else
+                        {
+                            membershipResponse.Success = false; membershipResponse.Message = "Failed to change password, Please try retry";
+                            return membershipResponse;
+                        }
+                    }
+                    else
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = "UserNotFound - Failed to change password, Please try retry";
+                        return membershipResponse;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
+
+        [WebMethod]
+        public MembershipResponse ResetPassword(string Email, string VerificationCode, string NewPassword)
+        {
+            MembershipResponse membershipResponse = new MembershipResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(Email))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Invalid email request to Reset Password.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(VerificationCode))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "Password reset verification code can not be empty.";
+                    return membershipResponse;
+                }
+                else if (string.IsNullOrEmpty(NewPassword))
+                {
+                    membershipResponse.Success = false; membershipResponse.Message = "New password can not be empty.";
+                    return membershipResponse;
+                }
+                else
+                {
+                    MembershipUser membershipUser = Membership.GetUser(Membership.GetUserNameByEmail(Email));
+                    if(membershipUser!=null)
+                    {
+                        if (membershipUser.IsLockedOut) //if is locked then unlock
+                            membershipUser.UnlockUser();
+
+                        commonMethods.ResetPassword(Email, "BeforeResetPassword", VerificationCode);
+                        if(membershipUser.ChangePassword("pass*123", NewPassword))
+                        {
+                            membershipResponse.Success = true; membershipResponse.Message = "Password changed successfully.";
+                            commonMethods.ResetPassword(Email, "AfterResetPassword", VerificationCode);
+                            return membershipResponse;
+                        }
+                        else
+                        {
+                            membershipResponse.Success = false; membershipResponse.Message = "Failed to change password, please retry";
+                            return membershipResponse;
+                        }
+                    }
+                    else
+                    {
+                        membershipResponse.Success = false; membershipResponse.Message = Email+" is not registered email in portal.";
+                        return membershipResponse;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                membershipResponse.Success = false; membershipResponse.Message = ex.Message;
+                return membershipResponse;
+            }
+        }
+
+            public string GetErrorMessage(MembershipCreateStatus status)
         {
             switch (status)
             {
