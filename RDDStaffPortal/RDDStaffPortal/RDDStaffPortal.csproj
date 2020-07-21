@@ -157,6 +157,9 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
+    <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
+    <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
@@ -600,6 +603,10 @@
     <Content Include="fonts\summernote\summernote.woff" />
     <Content Include="img\bg\Thumbs.db" />
     <Content Include="Scripts\canvasjs.min.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.all.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.all.min.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.css" />
+    <Content Include="Scripts\datapicker-separate\datepicker.en.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.min.js" />
@@ -665,6 +672,8 @@
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\multiselect\multiselect.css" />
+    <Content Include="Scripts\multiselect\multiselect.js" />
     <Content Include="Scripts\RedDotUtility.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.min.js" />
@@ -721,6 +730,8 @@
     <Content Include="Areas\Reports\Views\Reports\BackLogSheet.cshtml" />
     <Content Include="Areas\Admin\Views\JobGrade\Index.cshtml" />
     <Content Include="Areas\Admin\Views\JobBand\Index.cshtml" />
+    <Content Include="Areas\Funnel\Views\web.config" />
+    <Content Include="Areas\Funnel\Views\FunnelData\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Departments\GetDepList.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\ExpenseSheet.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\TrailBalance.cshtml" />
@@ -773,6 +784,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />

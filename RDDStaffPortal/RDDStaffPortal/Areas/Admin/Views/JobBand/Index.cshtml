@@ -218,23 +218,26 @@
                 if (result.value) {
                     $.getJSON("/JobBand/DeleteItem", { JobBandId: JobBandId }).done(function (data) {
                         debugger
-                        if (data.DeleteFlag == "Deleted Sucessfully.") {
+                        if (data.DeleteFlag == "JobBand Deleted Sucessfully.") {
 
-                            tr.remove();
+                            GetJobBandList();
+                            RdotAlertSucesstxt(data.DeleteFlag);
 
                         }
-                        else {
-
+                        else if (data.DeleteFlag == "JobBand already exists at other tables.Cannot Deleted.") {
+                            RdotAlerterrtxt1(data.DeleteFlag);
+                            // GetJobGradeList();
                             // return
                         }
 
-                    });
-                    swalWithBootstrapButtons.fire(
-                        'Deleted!',
-                        'Your Record  has been deleted.',
-                        'success'
 
-                    )
+                    });
+                    //swalWithBootstrapButtons.fire(
+                    //    'Deleted!',
+                    //    'Your Record  has been deleted.',
+                    //    'success'
+
+                    //)
                 }
                 else if (
                     // Read more about handling dismissals
