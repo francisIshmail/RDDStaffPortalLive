@@ -21,10 +21,10 @@ namespace RDDStaffPortal.DAL.DataModels.Admin
         public bool Condition { get; set; }
         public string Condition_Text { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime LastUpdatedOn { get; set; }
+        public DateTime? LastUpdatedOn { get; set; }
         public string LastUpdatedBy { get; set; }
         public string Erormsg { get; set; }
         public bool EditFlag { get; set; }
@@ -68,10 +68,10 @@ namespace RDDStaffPortal.DAL.DataModels.Admin
         public int Approval_Sequence { get; set; }
         public bool IsApproval_Mandatory { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
-        public DateTime LastUpdatedOn { get; set; }
+        public DateTime? LastUpdatedOn { get; set; }
         public string LastUpdatedBy { get; set; }
     }
         

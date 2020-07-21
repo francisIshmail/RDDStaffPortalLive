@@ -17,7 +17,7 @@ namespace RDDStaffPortal.DAL.Admin
         CommonFunction Com = new CommonFunction();
 
 
-        public RDD_Approval_Templates GetDropList(string username)
+        public RDD_Approval_Templates GetDropList(string username,string Eflag)
         {
             RDD_Approval_Templates RDD_Approval = new RDD_Approval_Templates();
             List<SelectListItem> DocumentList = new List<SelectListItem>();
@@ -28,7 +28,9 @@ namespace RDDStaffPortal.DAL.Admin
             });
             try
             {
-                SqlParameter[] parm = { new SqlParameter("@p_username", username) };
+                SqlParameter[] parm = { new SqlParameter("@p_username", username),
+                new SqlParameter("@p_flag", Eflag)};
+
                 DataSet dsModules = Com.ExecuteDataSet("GetRDD_Approve_DocumentName", CommandType.StoredProcedure, parm);
                 if (dsModules.Tables.Count > 0)
                 {
@@ -126,7 +128,7 @@ namespace RDDStaffPortal.DAL.Admin
                         {
                             SqlParameter[] ParaDet1 = {
                                             new SqlParameter("@p_Approver_Id",RDD_Approval.RDD_Approval_ApproversList[k].Approver_Id),
-                                            new SqlParameter("@p_Template_Id",RDD_Approval.RDD_Approval_ApproversList[k].Template_Id),
+                                            new SqlParameter("@p_Template_Id",str[0].Id),
                                             new SqlParameter("@p_Approver",RDD_Approval.RDD_Approval_ApproversList[k].Approver),
                                             new SqlParameter("@p_Approval_Sequence",RDD_Approval.RDD_Approval_ApproversList[k].Approval_Sequence),
                                             new SqlParameter("@p_IsApproval_Mandatory",RDD_Approval.RDD_Approval_ApproversList[k].IsApproval_Mandatory),
@@ -155,7 +157,7 @@ namespace RDDStaffPortal.DAL.Admin
                         {
                             SqlParameter[] ParaDet1 = {
                                                 new SqlParameter("@p_Originator_Id",RDD_Approval.RDD_Approval_OriginatorsList[m].Originator_Id),
-                                                new SqlParameter("@p_Template_Id",RDD_Approval.RDD_Approval_OriginatorsList[m].Template_Id),
+                                                new SqlParameter("@p_Template_Id",str[0].Id),
                                                 new SqlParameter("@p_Originator",RDD_Approval.RDD_Approval_OriginatorsList[m].Originator),
                                                 new SqlParameter("@p_OriginatorName",RDD_Approval.RDD_Approval_OriginatorsList[m].OriginatorName),
                                                 new SqlParameter("@p_CreatedOn",RDD_Approval.CreatedOn),
@@ -303,7 +305,7 @@ namespace RDDStaffPortal.DAL.Admin
                     {
                         RDDApprovers.Add(new RDD_Approval_Approvers
                         {
-                            Approver_Id = !string.IsNullOrWhiteSpace(dr["Approver_Id"].ToString()) ? Convert.ToInt32(dr["Approver_Id"].ToString()) : 0,
+                           Approver_Id = !string.IsNullOrWhiteSpace(dr["Approver_Id"].ToString()) ? Convert.ToInt32(dr["Approver_Id"].ToString()) : 0,
                         Template_Id = !string.IsNullOrWhiteSpace(dr["Template_Id"].ToString()) ? Convert.ToInt32(dr["Template_Id"].ToString()) : 0,
                         Approver = !string.IsNullOrWhiteSpace(dr["Approver"].ToString()) ? dr["Approver"].ToString() : "",
                         Approval_Sequence = !string.IsNullOrWhiteSpace(dr["Approval_Sequence"].ToString()) ? Convert.ToInt32(dr["Approval_Sequence"].ToString()) : 0,
@@ -319,7 +321,7 @@ namespace RDDStaffPortal.DAL.Admin
 
 
                     DataTable dtModule2 = dsModules.Tables[1];
-                    DataRowCollection drc2 = dtModule1.Rows;
+                    DataRowCollection drc2 = dtModule2.Rows;
                     List<RDD_Approval_Originators> RDDOriginators = new List<RDD_Approval_Originators>();
                     foreach (DataRow dr in drc2)
                     {

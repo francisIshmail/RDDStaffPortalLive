@@ -20,7 +20,7 @@
                 return;
             }
             var count1 = parseInt(count2) + 1;
-            RedDot_Table_Attribute(tr, tblDetails, count1, ".PVLines");
+            RedDot_Table_Attribute(tr, tblDetails, count1, ".PVLines", "hdncount");
             tr.find(".fa-eye").removeAttr("href");
             tr.find("#lblDocname").text('Document Name');
             tr.find("input[id ^= 'FilePathInput']").attr("title", "No file chosen...");
@@ -191,7 +191,7 @@
             if (count2 == 1 || m == count2) {
                 return
             }
-            RedDot_Table_DeleteActivity(tr, tblDetails, ".PVLines");
+            RedDot_Table_DeleteActivity(tr, tblDetails, ".PVLines","hdncount");
         })
         //#endregion
 	}

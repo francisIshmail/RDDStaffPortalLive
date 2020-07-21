@@ -816,7 +816,7 @@ function RedDot_Button_New_HideShow() {
 }
 
 
-function RedDot_Table_Attribute(tr,tblDt,count1,tblclass) {
+function RedDot_Table_Attribute(tr,tblDt,count1,tblclass,hdnid) {
     var i = 0;    
     $(tblclass).each(function () {
         while (tblDt.length > i) {
@@ -828,30 +828,101 @@ function RedDot_Table_Attribute(tr,tblDt,count1,tblclass) {
         tr.find('.Abcd input[id^="' + tblDt[0] + '"]').val(count1);
        
     });
-    $("#hdncount").val(count1);
+    $('#' + hdnid+'').val(count1);
    
 
     
 }
 
-function RedDot_Table_DeleteActivity(tr, tblDt, tblclass) {  
+function RedDot_Table_HiddenAttribute(tr, tblhidden, k, tblclass) {
+    debugger
+    var i = 0;   
+    $(tblclass).each(function () {
+        while (tblhidden.length > i) {
+            tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("id", '' + tblhidden[i] + '' + k);
+            tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("name", '' + tblhidden[i] + '' + k);
+            tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').val('');
+            tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').removeClass('ui-autocomplete-input');
+            i++;
+        }       
+    });
+}
+
+function applyAutoComplete2(ids, hdnid,url) {
+    $(ids).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                async: false,
+                cache: false,
+                url: url,
+                type: "POST",
+                dataType: "json",               
+                data: { Prefix: request.term },
+                success: function (data) {
+                    if (data.length > 0) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.CodeName,
+                                value: item.CodeName,
+                                val1: item.Code
+
+                            };
+                        }))
+                    } else {
+                        
+                        response([{ label: 'No results found.', value: 'No results found.' }]);
+                    }
+                }
+            });
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+            }
+        },
+        minLength: 1
+    })
+}
+function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {      
     tr.remove();   
-    var i = 0;  
     var k = 1;
-    $(tblclass).each(function () {     
-        while (tblDt.length > i) {
-            $(this).find('.Abcd input[id="' + tblDt[i]+ '"]').attr("id", '' + tblDt[i] + '' + k);
-            $(this).find('.Abcd input[id="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + k);
+    $(tblclass).each(function () {         
+        var i = 0;  
+        while (tblDt.length > i) {           
+            $(this).find('.Abcd input[id^="' + tblDt[i]+ '"]').attr("id", '' + tblDt[i] + '' + k);
+            $(this).find('.Abcd input[id^="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + k);                 
             i++;
         }
-        $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k);
+        $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k)             
         k++;
+       
     });
-
-
-    $("#hdncount").val(k-1);
+      
+   
+    $('#' + hdnid + '').val(k-1);
     
 
+}
+
+function RedDot_Table_DeleteHiddenActivity(tblhidden, tblclass) {       
+    var i = 0;
+    var k = 1;
+    $(tblclass).each(function () {
+        while (tblhidden.length > i) {
+            $(this).find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("id", '' + tblhidden[i] + '' + k);
+            $(this).find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("name", '' + tblhidden[i] + '' + k);
+            i++;
+        }      
+        k++;
+    });
 }
 
 /*tbl class date formate DD/MM/YYYY get input */
@@ -897,7 +968,7 @@ function RedDot_tableLstEnt(tbl, ide, idf, errmsg, typ, vtyp) {
     $(tbl).on("keypress", ide, function (e) {
         debugger
         if (e.keyCode == 13) {
-            var tr = $(this).closest('#IIst');
+            var tr = $(this).closest(tbl);
             var ab = '';
             if (typ == "N") {
                 ab = parseInt(tr.find(ide).val()) || 0;
@@ -907,7 +978,7 @@ function RedDot_tableLstEnt(tbl, ide, idf, errmsg, typ, vtyp) {
             if (ab != vtyp) {
                 tr.find(idf).focus();
                 tr.css("background", "");
-                $(this).closest('#IIst').next('#IIst').find(idf).focus();
+                $(this).closest(tbl).next(tbl).find(idf).focus();
             }
             else {
                 tr.css("background", "red");
@@ -928,7 +999,7 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
         var keyCode = e.keyCode || e.which;
         if (keyCode == 9) {
             e.preventDefault();
-            var tr = $(this).closest('#IIst');
+            var tr = $(this).closest(tbl);
             var ab = '';
             if (typ == "N") {
                 ab = parseInt(tr.find(ide).val()) || 0;
@@ -960,6 +1031,7 @@ function RedDot_DivTable_Fill(Ids,url, data, dateCond, tblhead1, tblhide, tblhea
         dataType: "json",
         data: data,
         success: function (data) {
+            debugger
             $('#'+Ids+'st').show();
             $('div#' + Ids +'st').not(':first').remove();
             arr = data;
@@ -997,4 +1069,55 @@ function RedDot_DivTable_Fill(Ids,url, data, dateCond, tblhead1, tblhide, tblhea
         }
     });
     return arr;    
+}
+
+function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
+   
+    $(document).on(EveNames, Ids+"[name^='" + inpid + "']", function () {
+        debugger
+        var tr = $(this).closest(Ids);
+        var inp1 = tr.find(txtsno).val();                   
+        $("#" + inpid + "" + inp1).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: urls,
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        if (data.length > 0) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.CodeName,
+                                    value: item.CodeName,
+                                    val1:item.Code
+                                  
+                                };
+                            }))
+                        } else {
+                            tr.find("#" + inpid + "" + inp1).val('');
+                            tr.find(inphid).val(-1);
+                            response([{ label: 'No results found.', value: 'No results found.' }]);
+                        }
+                    }
+                });
+            },
+            // autoFocus: true,
+            select: function (event, u) {
+                var v = u.item.val1;
+                if (u.item.val1 == -1 || u.item.val1 == '') {
+                    tr.find(inphid).val(-1);                    
+                    return false;
+                } else {
+                    tr.find(inphid).val(u.item.val1);
+                   
+                }                
+            },
+            minLength: 1
+        }).focus(function (e, u) {
+            tr.find(this).autocomplete("search", "");
+        });
+      
+    })
+
 }

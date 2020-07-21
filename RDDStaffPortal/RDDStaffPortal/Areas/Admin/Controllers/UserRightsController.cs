@@ -1,6 +1,7 @@
 ﻿using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
@@ -36,6 +37,12 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         public ActionResult GetUserList()
         {
             return Json(Rdduser.GetUserList(),JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("GetUserListAuto")]
+        public ActionResult GetUserListAuto(string Prefix)
+        { 
+            return Json(Rdduser.GetUserListAuto(Prefix), JsonRequestBehavior.AllowGet);
         }
 
         [Route("GetUserRightsList")]
