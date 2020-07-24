@@ -1,11 +1,12 @@
 ﻿var ApprovalOP = {
     initialize: function (e) {
-       debugger
+      
        // $.fn.dataTable.ext.errorMode = 'none';
         
-        
+       
 
-        ApprovalOP.Attachevent();
+            ApprovalOP.Attachevent();
+       
     },
     Attachevent: function () {
         var k1 = 1;
@@ -34,6 +35,7 @@
             });
 
         } else {
+            $("#TempStatus").trigger('click');
             applyAutoComplete2("#Originator1", "#hdnOriginator1", "/GetUserListAuto");
             applyAutoComplete2("#Approver1", "#hdnApprover1", "/GetUserListAuto");
         } 

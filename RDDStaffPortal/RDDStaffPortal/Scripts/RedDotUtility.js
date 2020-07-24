@@ -866,9 +866,10 @@ function applyAutoComplete2(ids, hdnid,url) {
                 cache: false,
                 url: url,
                 type: "POST",
-                dataType: "json",               
+                dataType: "json",
                 data: { Prefix: request.term },
                 success: function (data) {
+                    $(hdnid).val(-1);
                     if (data.length > 0) {
                         response($.map(data, function (item) {
                             return {
@@ -879,7 +880,7 @@ function applyAutoComplete2(ids, hdnid,url) {
                             };
                         }))
                     } else {
-                        
+
                         response([{ label: 'No results found.', value: 'No results found.' }]);
                     }
                 }
@@ -888,6 +889,7 @@ function applyAutoComplete2(ids, hdnid,url) {
         // autoFocus: true,
         select: function (event, u) {
             event.preventDefault();
+            debugger
             var v = u.item.val1;
             if (u.item.val1 == -1 || u.item.val1 == '') {
                 $(hdnid).val(-1);
@@ -899,8 +901,14 @@ function applyAutoComplete2(ids, hdnid,url) {
             }
         },
         minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
     })
 }
+
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {      
     tr.remove();   
     var k = 1;

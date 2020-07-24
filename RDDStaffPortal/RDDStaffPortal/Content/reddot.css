@@ -1479,6 +1479,13 @@ background: none;
     line-height: 30px;
 }*/
 
+.modal-dialog-20per {
+    max-width: 20% !important;
+    margin: 0 auto !important;
+}
+
+
+
 .span-mode {
     display: inline-block;
     content: "\f067" !important;

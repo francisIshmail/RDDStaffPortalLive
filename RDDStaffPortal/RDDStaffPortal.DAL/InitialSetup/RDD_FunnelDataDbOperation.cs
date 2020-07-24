@@ -3,14 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.WebPages.Html;
-using System.Xml.Linq;
-using static RDDStaffPortal.DAL.CommonFunction;
-using SelectListItem = System.Web.Mvc.SelectListItem;
+
 
 namespace RDDStaffPortal.DAL.InitialSetup
 {
@@ -20,21 +14,21 @@ namespace RDDStaffPortal.DAL.InitialSetup
         // string username = User.Identity.Name;
 
             
-        public List<Pichart_Funnel> GetPieChartData(string username)
+        public List<Pichart_Funnel> GetPieChartData(string username, DateTime p_FromDate, DateTime p_ToDate)
         {
             List<Pichart_Funnel> _DtFunnel = new List<Pichart_Funnel>();
             try
             {
                 SqlParameter[] parm = { };
-                SqlParameter[] sqlpar = { new SqlParameter("@p_LoggedInUserName", username) };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_LoggedInUserName", username),
+                 new SqlParameter("@p_FromDate", p_FromDate),
+                    new SqlParameter("@p_ToDate", p_ToDate)};
                 DataSet dsModules = Com.ExecuteDataSet("RDD_GetFunnelStatistics", CommandType.StoredProcedure, sqlpar);
                 if (dsModules.Tables.Count > 0)
                 {
                    DataTable dtModule = dsModules.Tables[0];
 
-                  // dtModule.Columns[1].ColumnName = "Status";
-                  // dtModule.Columns[0].ColumnName = "Percentage";
-                  //dtModule.Columns[2].ColumnName = "Color";
+                 
 
 
                     DataRowCollection drc = dtModule.Rows;
@@ -60,21 +54,85 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return _DtFunnel;
         }
 
-        public List<Linechart_Funnel> GetLineChartData(string username)
+
+        public RDD_Funnel_Chart GetChartDetails(string username, DateTime p_FromDate, DateTime p_ToDate)
+        {
+            RDD_Funnel_Chart _Funnel_Chart = new RDD_Funnel_Chart();
+            List<Linechart_Funnel> _Line_Funnel_Chart = new List<Linechart_Funnel>();
+            List<Pichart_Funnel> _Pi_Funnel_Char = new List<Pichart_Funnel>();
+            try
+            {
+                SqlParameter[] sqlpar = { new SqlParameter("@p_LoggedInUserName", username),
+                    new SqlParameter("@p_FromDate", p_FromDate),
+                    new SqlParameter("@p_ToDate", p_ToDate)
+                };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_GetFunnelStatistics", CommandType.StoredProcedure, sqlpar);
+               
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _Pi_Funnel_Char.Add(new Pichart_Funnel()
+                        {
+                            status = !string.IsNullOrWhiteSpace(dr["Status"].ToString()) ? dr["Status"].ToString() : "",
+                            percentage = !string.IsNullOrWhiteSpace(dr["Percentage"].ToString()) ? Convert.ToDecimal(dr["Percentage"].ToString()) : 0,
+                            color = !string.IsNullOrWhiteSpace(dr["Color"].ToString()) ? dr["Color"].ToString() : "",
+                            TotalAmt = !string.IsNullOrWhiteSpace(dr["TotalAmount"].ToString()) ? Convert.ToDecimal(dr["TotalAmount"].ToString()) : 0,
+                        });
+                    }
+                    dtModule = dsModules.Tables[1];
+                    drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _Line_Funnel_Chart.Add(new Linechart_Funnel()
+                        {
+                            status = !string.IsNullOrWhiteSpace(dr["Status"].ToString()) ? dr["Status"].ToString() : "",
+                            color = !string.IsNullOrWhiteSpace(dr["Color"].ToString()) ? dr["Color"].ToString() : "",
+                            Amount = !string.IsNullOrWhiteSpace(dr["TotalAmount"].ToString()) ? Convert.ToDecimal(dr["TotalAmount"].ToString()) : 0,
+                            weekno = !string.IsNullOrWhiteSpace(dr["WeekNo"].ToString()) ? Convert.ToInt32(dr["WeekNo"].ToString()) : 0
+                        });
+                    }                  
+                }
+            }
+            catch (Exception)
+            {
+                _Pi_Funnel_Char.Add(new Pichart_Funnel()
+                {
+                    status =  "",
+                    percentage =  0,
+                    color =  "",
+                    TotalAmt =  0,
+                });
+                _Line_Funnel_Chart.Add(new Linechart_Funnel()
+                {
+                    status = "",
+                    Amount = 0,
+                    color = "",
+                    weekno = 0,
+                });
+            }
+            _Funnel_Chart.GetLinecharts = _Line_Funnel_Chart;
+            _Funnel_Chart.Get_Funnels = _Pi_Funnel_Char;
+            return _Funnel_Chart;
+        }
+        public List<Linechart_Funnel> GetLineChartData(string username,DateTime p_FromDate,DateTime p_ToDate)
         {
             List<Linechart_Funnel> _DtFunnel = new List<Linechart_Funnel>();
             try
             {
                 SqlParameter[] parm = { };
-                SqlParameter[] sqlpar = { new SqlParameter("@p_LoggedInUserName", username) };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_LoggedInUserName", username),
+                    new SqlParameter("@p_FromDate", p_FromDate),
+                    new SqlParameter("@p_ToDate", p_ToDate)
+                };
                 DataSet dsModules = Com.ExecuteDataSet("RDD_GetFunnelStatistics", CommandType.StoredProcedure, sqlpar);
                 if (dsModules.Tables.Count > 0)
                 {
                     DataTable dtModule = dsModules.Tables[1];
 
-                    // dtModule.Columns[1].ColumnName = "Status";
-                    // dtModule.Columns[0].ColumnName = "Percentage";
-                    //dtModule.Columns[2].ColumnName = "Color";
+                  
 
 
                     DataRowCollection drc = dtModule.Rows;

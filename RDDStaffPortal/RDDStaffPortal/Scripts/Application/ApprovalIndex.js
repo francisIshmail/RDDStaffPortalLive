@@ -128,12 +128,17 @@
         //#endregion
         //#region New PV*/
         $("#btnAdd").on("click", function (e) {
-            e.preventDefault();
-            $.post("/ADDAPPROVAL", { TEMPId: -1 }, function (response) {
+            
+                e.preventDefault();
+                $.post("/ADDAPPROVAL", { TEMPId: -1 }, function (response) {
 
-                $("#idCard").html(response);
-                RedDot_Button_New_HideShow();
-            })
+                    $("#idCard").html(response);
+                    RedDot_Button_New_HideShow();
+                    
+                })
+
+           
+           
         })
         //#endregion
         //#region Cancel PV*/
@@ -145,15 +150,19 @@
         //#endregion
         //#region Edit PV*/
         $("#Ibody").on('dblclick', "#Ist", function (e) {
-            e.preventDefault();
-            var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
-            debugger
-            $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
+           
 
-                $("#idCard").html(response);
+                e.preventDefault();
+                var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
+              
+                $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
 
-                RedDot_Button_New_HideShow();
-            })
+                    $("#idCard").html(response);
+
+                    RedDot_Button_New_HideShow();
+                })
+           
+           
         });
         //#endregion
         //#region Save PV*/

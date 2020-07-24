@@ -11,7 +11,7 @@ namespace RDDStaffPortal.DAL.DataModels
     {
         public string status { get; set; }
         public string color { get; set; }
-      //  public decimal totalamt { get; set; }
+        //  public decimal totalamt { get; set; }
         public decimal percentage { get; set; }
 
         public decimal TotalAmt { get; set; }
@@ -19,13 +19,20 @@ namespace RDDStaffPortal.DAL.DataModels
 
     public partial class Linechart_Funnel
     {
-       
+
         public string status { get; set; }
         public string color { get; set; }
         public int weekno { get; set; }
         public decimal Amount { get; set; }
 
     }
+    public partial class RDD_Funnel_Chart{
+
+        public List<Pichart_Funnel> Get_Funnels { get; set; }
+        public List<Linechart_Funnel> GetLinecharts { get; set; }
+
+
+  }
     public class RDD_FunnelData
     {
        

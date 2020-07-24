@@ -47,7 +47,7 @@
                 <div class="form-group form-inline">
                     <label for="Database" class="col-md-1 col-form-label width120px">Description :</label>
                     <div class="col-md-8 p-0">
-                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-sm" })
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-sm",@maxlength = "510" })
                     </div>
                 </div>
             </div>
@@ -274,11 +274,18 @@
 
     $(document).ready(function () {
 
-        debugger
+        try {
 
         ApprovalOP.initialize();
 
-
+        } catch (e) {
+            debugger
+           
+                //RedDot_Button_Init_HideShow();
+            location.reload();
+            
+            
+        }
 
     });
 </script>

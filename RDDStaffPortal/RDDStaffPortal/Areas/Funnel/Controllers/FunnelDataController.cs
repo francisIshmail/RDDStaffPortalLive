@@ -13,39 +13,50 @@ using RDDStaffPortal.Areas.Funnel.Models;
 
 namespace RDDStaffPortal.Areas.Funnel.Controllers
 {
+    [Authorize]
     public class FunnelDataController : Controller
     {
         RDD_FunnelDataDbOperation RddFunnel = new RDD_FunnelDataDbOperation();
         // GET: Funnel/FunnelData
-        public ActionResult GetPieChart()
-        {
+        //public ActionResult GetPieChart()
+        //{
           
 
-            JsonResult result = new JsonResult();
-            List<Pichart_Funnel> data1 = new List<Pichart_Funnel>();
+        //    JsonResult result = new JsonResult();
+        //    List<Pichart_Funnel> data1 = new List<Pichart_Funnel>();
           
-            data1 = RddFunnel.GetPieChartData(User.Identity.Name);
+        //    data1 = RddFunnel.GetPieChartData(User.Identity.Name);
 
-            result = this.Json(new { data = data1 }, JsonRequestBehavior.AllowGet);
+        //    result = this.Json(new { data = data1 }, JsonRequestBehavior.AllowGet);
 
-            return result;
+        //    return result;
            
 
-        }
+        //}
 
-        public ActionResult GetLineChart()
+        //public ActionResult GetLineChart()
+        //{ 
+
+        //    JsonResult result = new JsonResult();
+        //    List<Linechart_Funnel> data1 = new List<Linechart_Funnel>();
+
+        //    data1 = RddFunnel.GetLineChartData(User.Identity.Name);
+
+        //    result = this.Json(new { data = data1 }, JsonRequestBehavior.AllowGet);
+
+        //    return result;
+
+
+       // }
+
+        public ActionResult GetCharts(DateTime fromdate,DateTime todate)
         { 
-
             JsonResult result = new JsonResult();
-            List<Linechart_Funnel> data1 = new List<Linechart_Funnel>();
-
-            data1 = RddFunnel.GetLineChartData(User.Identity.Name);
-
+            RDD_Funnel_Chart data1 = new RDD_Funnel_Chart();
+            data1 = RddFunnel.GetChartDetails(User.Identity.Name,fromdate,todate);
             result = this.Json(new { data = data1 }, JsonRequestBehavior.AllowGet);
-
             return result;
-
-
+            
         }
 
         //public ActionResult Getlinechart()
