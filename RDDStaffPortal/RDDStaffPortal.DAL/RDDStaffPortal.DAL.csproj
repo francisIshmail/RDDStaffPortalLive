@@ -66,8 +66,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
+    <Compile Include="DataModels\RDD_FunnelData.cs" />
     <Compile Include="DataModels\RDD_JobBand.cs" />
     <Compile Include="DataModels\RDD_JobGrade.cs" />
     <Compile Include="DataModels\RDD_QuickLinks.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="InitialSetup\MenusDbOperation.cs" />
     <Compile Include="InitialSetup\ModulesDbOperation.cs" />
     <Compile Include="InitialSetup\RDD_CustomerMergingDbOperation.cs" />
+    <Compile Include="InitialSetup\RDD_FunnelDataDbOperation.cs" />
     <Compile Include="InitialSetup\RDD_QuickLinksDBOperation.cs" />
     <Compile Include="InitialSetup\RDD_Reports_DBOperation.cs" />
     <Compile Include="InitialSetup\RDD_Log.cs" />

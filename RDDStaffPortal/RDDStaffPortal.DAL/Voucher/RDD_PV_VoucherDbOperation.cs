@@ -292,7 +292,23 @@ namespace RDDStaffPortal.DAL.Voucher
                         int k=0;
                         if (RPV.EditFlag == false)
                         {
-                            RPV.RDD_PVLinesDetails[k].Ptype = "I";
+                            RPV.Ptype = "I";
+                        }
+                        else
+                        {
+                            RPV.Ptype = "D";
+                            SqlParameter[] ParaDet2 = { new SqlParameter("@p_PVId", str[0].Id),
+                             new SqlParameter("@p_typ",RPV.Ptype)};
+                            var det1 = Com.ExecuteNonQuery("RDD_PVLinesInsert_Update_Delete", ParaDet2);
+                            if (det1 == true)
+                            {
+                                RPV.Ptype = "U";
+                            }
+                            else
+                            {
+                                RPV.Ptype = "";
+                            }
+                           
                         }
                         while (RPV.RDD_PVLinesDetails.Count > k)
                         {
@@ -309,7 +325,7 @@ namespace RDDStaffPortal.DAL.Voucher
                                             new SqlParameter("@p_CreatedBy",RPV.CreatedBy),
                                             new SqlParameter("@p_LastUpdatedOn",RPV.LastUpdatedOn),
                                             new SqlParameter("@p_LastUpdatedBy",RPV.LastUpdatedBy),
-                                            new SqlParameter("@p_typ",RPV.RDD_PVLinesDetails[k].Ptype)
+                                            new SqlParameter("@p_typ",RPV.Ptype)
                                             
                             };
                            
@@ -546,12 +562,8 @@ namespace RDDStaffPortal.DAL.Voucher
                         RPV.CreatedOn= !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now;
                     }
 
-                    SqlParameter[] Para1 = {
-                    new SqlParameter("@p_id",PVid),
                    
-                };
-                    DataSet dsModules1 = Com.ExecuteDataSet("GetPVLinesData", CommandType.StoredProcedure, Para1);
-                    DataTable dtModule1 = dsModules1.Tables[0];
+                    DataTable dtModule1 = dsModules.Tables[1];
                     DataRowCollection drc1 = dtModule1.Rows;
                     List<RDD_PVLines> RDDLines = new List<RDD_PVLines>();
                     foreach (DataRow dr in drc1)
@@ -565,8 +577,9 @@ namespace RDDStaffPortal.DAL.Voucher
                            Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
                            FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "",
                            PVLineId = !string.IsNullOrWhiteSpace(dr["PVLineId"].ToString()) ? Convert.ToInt32(dr["PVLineId"].ToString()) : 0,
+                            Date = !string.IsNullOrWhiteSpace(dr["Date"].ToString()) ? Convert.ToDateTime(dr["Date"].ToString()) :System.DateTime.Now,
 
-                       });
+                        });
                     }
                     RPV.RDD_PVLinesDetails = RDDLines;
 

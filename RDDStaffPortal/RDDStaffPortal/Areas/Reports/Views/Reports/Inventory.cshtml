@@ -10,7 +10,7 @@
         <div class="page-inner">
             <div class="page-header">
                 <div class="col-md-9 padd-0">
-                    <h4 class="page-title">Inventory Sheet Report</h4>
+                    <h4 class="page-title">Inventory Sheet</h4>
                 </div>
                 <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
 
@@ -387,6 +387,10 @@
 
         $('.next').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -446,6 +450,10 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);

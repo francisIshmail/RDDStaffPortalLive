@@ -401,7 +401,17 @@ function RdottableNDWPara1(tblid, url1, colms, Code, pageL) {
 
 
 }
-
+var RdotMMNames1 = ["01", "02", "03", "04", "05", "06",
+    "07", "08", "09", "10", "11", "12"];
+/*json date format dd-MMM-yyyy*/
+function RdotdatefrmtRes2(dte) {
+    var now = new Date(parseInt(dte.substr(6)));
+    var now = new Date(now);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "-" + RdotMMNames1[month - 1] + "-" + now.getFullYear();
+    return today;
+}
 
 var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -416,7 +426,7 @@ function RdotdatefrmtRes1(dte) {
 }
 
 function RedDot_setdtpkdate(date1) {
-    if (date1 !== undefined) {
+    if (date1 !== undefined ) {
         var d = new Date(date1.split("/").reverse().join("-"));
         var dd = d.getDate();
         var mm = d.getMonth() + 1;
@@ -424,7 +434,7 @@ function RedDot_setdtpkdate(date1) {
         var newdate = yy + "/" + mm + "/" + dd;
         return newdate;
     }
-
+   
 }
 
 //Table Number  N & Text T Tab Event
@@ -764,7 +774,7 @@ function RedDot_NumberFormat(value) {
     } else if (value >= 1000) {
         values = (value / 1000).toFixed(2) + ' K';
     }
-
+    
     return abr + '' + values.toString();
 }
 
@@ -803,7 +813,7 @@ function RedDot_Button_Init_HideShow() {
     $("#btnSendMail").hide();
     $("#tblid").show();
     $("#tblid1").show();
-
+    
 }
 function RedDot_Button_New_HideShow() {
     $("#btnAdd").hide();
@@ -816,8 +826,8 @@ function RedDot_Button_New_HideShow() {
 }
 
 
-function RedDot_Table_Attribute(tr, tblDt, count1, tblclass, hdnid) {
-    var i = 0;
+function RedDot_Table_Attribute(tr,tblDt,count1,tblclass) {
+    var i = 0;    
     $(tblclass).each(function () {
         while (tblDt.length > i) {
             tr.find('.Abcd input[id^="' + tblDt[i] + '"]').attr("id", '' + tblDt[i] + '' + count1);
@@ -826,17 +836,17 @@ function RedDot_Table_Attribute(tr, tblDt, count1, tblclass, hdnid) {
             i++;
         }
         tr.find('.Abcd input[id^="' + tblDt[0] + '"]').val(count1);
-
+       
     });
-    $('#' + hdnid + '').val(count1);
+    $('#' + hdnid+'').val(count1);
+   
 
-
-
+    
 }
 
 function RedDot_Table_HiddenAttribute(tr, tblhidden, k, tblclass) {
     debugger
-    var i = 0;
+    var i = 0;   
     $(tblclass).each(function () {
         while (tblhidden.length > i) {
             tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("id", '' + tblhidden[i] + '' + k);
@@ -844,8 +854,59 @@ function RedDot_Table_HiddenAttribute(tr, tblhidden, k, tblclass) {
             tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').val('');
             tr.find('.Abcd input[id^="' + tblhidden[i] + '"]').removeClass('ui-autocomplete-input');
             i++;
-        }
+        }       
     });
+}
+
+function applyAutoComplete2(ids, hdnid,url) {
+    $(ids).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                async: false,
+                cache: false,
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: { Prefix: request.term },
+                success: function (data) {
+                    $(hdnid).val(-1);
+                    if (data.length > 0) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.CodeName,
+                                value: item.CodeName,
+                                val1: item.Code
+
+                            };
+                        }))
+                    } else {
+
+                        response([{ label: 'No results found.', value: 'No results found.' }]);
+                    }
+                }
+            });
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+            }
+        },
+        minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
 }
 
 function applyAutoComplete2(ids, hdnid) {
@@ -894,25 +955,24 @@ function applyAutoComplete2(ids, hdnid) {
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
     var k = 1;
-    $(tblclass).each(function () {
-        var i = 0;
-        while (tblDt.length > i) {
-            $(this).find('.Abcd input[id^="' + tblDt[i] + '"]').attr("id", '' + tblDt[i] + '' + k);
-            $(this).find('.Abcd input[id^="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + k);
+    $(tblclass).each(function () {         
+        var i = 0;  
+        while (tblDt.length > i) {           
+            $(this).find('.Abcd input[id^="' + tblDt[i]+ '"]').attr("id", '' + tblDt[i] + '' + k);
+            $(this).find('.Abcd input[id^="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + k);                 
             i++;
         }
-        $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k)
+        $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k)             
         k++;
-
     });
-
-
-    $('#' + hdnid + '').val(k - 1);
-
+      
+   
+    $('#' + hdnid + '').val(k-1);
+    
 
 }
 
-function RedDot_Table_DeleteHiddenActivity(tblhidden, tblclass) {
+function RedDot_Table_DeleteHiddenActivity(tblhidden, tblclass) {       
     var i = 0;
     var k = 1;
     $(tblclass).each(function () {
@@ -920,7 +980,7 @@ function RedDot_Table_DeleteHiddenActivity(tblhidden, tblclass) {
             $(this).find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("id", '' + tblhidden[i] + '' + k);
             $(this).find('.Abcd input[id^="' + tblhidden[i] + '"]').attr("name", '' + tblhidden[i] + '' + k);
             i++;
-        }
+        }      
         k++;
     });
 }
@@ -938,7 +998,7 @@ function RedDot_tbldtpicker() {
 }
 
 /* date formate dd-MM-yyyy get input date */
-function RedDot_dateEdit(date1, dtval) {
+function RedDot_dateEdit(date1, dtval) {       
     var now = new Date($(dtval).val());
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -951,6 +1011,28 @@ function RedDot_NewDate(dteclass) {
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = (day) + "/" + (month) + "/" + now.getFullYear();
     $(dteclass).val(today);
+}
+/*New Date Range*/
+function RedDot_DateRange(id) {
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+
+    $('#'+ id +'').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+    
 }
 /* date formate dd/MM/yyyy set Table*/
 function RedDot_DateTblEdit(dtval) {
@@ -984,8 +1066,8 @@ function RedDot_tableLstEnt(tbl, ide, idf, errmsg, typ, vtyp) {
                 tr.css("background", "red");
                 RedDotAlert_Error(errmsg);
                 tr.find(ide).focus();
-
-
+                
+               
             }
             return false;
         }
@@ -1020,7 +1102,7 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
 }
 
 
-function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
+function RedDot_DivTable_Fill(Ids,url, data, dateCond, tblhead1, tblhide, tblhead2) {
     var arr = [];
     $.ajax({
         async: false,
@@ -1031,8 +1113,9 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
         dataType: "json",
         data: data,
         success: function (data) {
-            $('#' + Ids + 'st').show();
-            $('div#' + Ids + 'st').not(':first').remove();
+            debugger
+            $('#'+Ids+'st').show();
+            $('div#' + Ids +'st').not(':first').remove();
             arr = data;
             if (arr.data != null && arr.data.length != 0) {
                 var i = 0;
@@ -1044,11 +1127,11 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                     while (l1 > k) {
                         var t = tblhead1[k];
                         if (jQuery.inArray(t, dateCond) !== -1) {
-
+                           
                             tr.find(".Abcd")[k].children[0].textContent = RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
                         } else {
                             tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
-                        }
+                        }                                              
                         if (jQuery.inArray(t, tblhide) !== -1) {
                             tr.find(".Abcd").eq(k).addClass("Abc")
                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1064,18 +1147,18 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                 RedDotAlert_Error("No Record Found");
             }
         }, complete: function () {
-            $(".loader1").hide();
+            $(".loader1").hide();            
         }
     });
-    return arr;
+    return arr;    
 }
 
 function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
-
-    $(document).on(EveNames, Ids + "[name^='" + inpid + "']", function () {
+   
+    $(document).on(EveNames, Ids+"[name^='" + inpid + "']", function () {
         debugger
         var tr = $(this).closest(Ids);
-        var inp1 = tr.find(txtsno).val();
+        var inp1 = tr.find(txtsno).val();                   
         $("#" + inpid + "" + inp1).autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -1089,8 +1172,8 @@ function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
                                 return {
                                     label: item.CodeName,
                                     value: item.CodeName,
-                                    val1: item.Code
-
+                                    val1:item.Code
+                                  
                                 };
                             }))
                         } else {
@@ -1105,18 +1188,18 @@ function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
             select: function (event, u) {
                 var v = u.item.val1;
                 if (u.item.val1 == -1 || u.item.val1 == '') {
-                    tr.find(inphid).val(-1);
+                    tr.find(inphid).val(-1);                    
                     return false;
                 } else {
                     tr.find(inphid).val(u.item.val1);
-
-                }
+                   
+                }                
             },
             minLength: 1
         }).focus(function (e, u) {
             tr.find(this).autocomplete("search", "");
         });
-
+      
     })
 
 }
