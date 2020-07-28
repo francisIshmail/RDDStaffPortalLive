@@ -91,7 +91,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             status = !string.IsNullOrWhiteSpace(dr["Status"].ToString()) ? dr["Status"].ToString() : "",
                             color = !string.IsNullOrWhiteSpace(dr["Color"].ToString()) ? dr["Color"].ToString() : "",
                             Amount = !string.IsNullOrWhiteSpace(dr["TotalAmount"].ToString()) ? Convert.ToDecimal(dr["TotalAmount"].ToString()) : 0,
-                            weekno = !string.IsNullOrWhiteSpace(dr["WeekNo"].ToString()) ? Convert.ToInt32(dr["WeekNo"].ToString()) : 0
+                            weekno = !string.IsNullOrWhiteSpace(dr["WeekOfYr"].ToString()) ? Convert.ToInt32(dr["WeekOfYr"].ToString()) : 0
                         });
                     }                  
                 }
@@ -159,7 +159,25 @@ namespace RDDStaffPortal.DAL.InitialSetup
             }
             return _DtFunnel;
         }
-        public List<RDD_FunnelData> getFunnelData(int pagesize, int pageno,string username, string psearch)
+        public DataSet GetDrop1(string username)
+        {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
+                      new SqlParameter("@p_username",username),
+                };
+                dsModules = Com.ExecuteDataSet("RDD_Funnel_Drop", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+
+            return dsModules;
+        }
+        public List<RDD_FunnelData> getFunnelData(int pagesize, int pageno,string username, string psearch,string country,string Bu,string QMonth,string QYear,string ClosMonth,string ClosYear,string status)
         {
 
             List<RDD_FunnelData> _FunneldatList = new List<RDD_FunnelData>();
@@ -170,6 +188,14 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 new SqlParameter("@p_PageSize",pagesize),
                  new SqlParameter("@p_username",username),
                  new SqlParameter("@p_Search",psearch),
+                 new SqlParameter("@p_country",country),
+                  new SqlParameter("@p_Bu",Bu),
+                  new SqlParameter("@p_QMonth",QMonth),
+                   new SqlParameter("@p_QYear",QYear),
+                    new SqlParameter("@p_ClosMonth",ClosMonth),
+                   new SqlParameter("@p_ClosYear",ClosYear),
+                    new SqlParameter("@p_status",status),
+                 new SqlParameter("@p_flag","I")
                 };
 
                 //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
@@ -264,6 +290,28 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 _FunneldatList = null;
             }
             return _FunneldatList;
+        }
+
+        public DataTable Getdata1(string Username)
+        {
+            DataTable dt = null;
+            try
+            {
+                SqlParameter[] parm = {
+                new SqlParameter("@p_flag","II"),
+                new SqlParameter("@p_username",Username)
+                };
+
+                DataSet dsModules = Com.ExecuteDataSet("RDD_FunnelGetData", CommandType.StoredProcedure, parm);
+                dt = dsModules.Tables[0];
+            }
+            catch (Exception)
+            {
+
+                dt = null;
+            }
+
+            return dt;
         }
 
         public string Save(RDD_FunnelData FunnelDataa)

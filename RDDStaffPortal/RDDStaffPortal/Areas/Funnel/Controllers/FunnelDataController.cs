@@ -10,6 +10,10 @@ using System.Data;
 
 using RDDStaffPortal.DAL;
 using RDDStaffPortal.Areas.Funnel.Models;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Presentation;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace RDDStaffPortal.Areas.Funnel.Controllers
 {
@@ -112,6 +116,7 @@ namespace RDDStaffPortal.Areas.Funnel.Controllers
         //}
         public ActionResult Index()
         {
+
             string username = User.Identity.Name;
             //DataSet DS = Db.myGetDS("select dbo.GetQuoteID(Country) as QuoteID");
             //string QuoteID = DS.Tables[0].Rows[0]["QuoteID"].ToString();
@@ -145,6 +150,103 @@ namespace RDDStaffPortal.Areas.Funnel.Controllers
             ViewBag.Country = RddFunnel.GetCountryList(username).ToList();
             // ViewBag.BU = RddFunnel.GetBUList().ToList();
             ViewBag.DealStatus = RddFunnel.GetStatusList().ToList();
+
+            DataSet dsModules = RddFunnel.GetDrop1(username);
+
+            List<Rdd_comonDrop> MonthList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> YearList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> CountryList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> BUList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> StatusList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> ClosingMonthList = new List<Rdd_comonDrop>();
+            List<Rdd_comonDrop> ClosingYearList = new List<Rdd_comonDrop>();
+
+
+            if (dsModules.Tables.Count > 0)
+            {
+                DataTable dtModule;
+                DataRowCollection drc;
+                dtModule = dsModules.Tables[0];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    CountryList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["country"].ToString()) ? dr["country"].ToString() : "",
+                    });
+                }
+
+                dtModule = dsModules.Tables[1];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    BUList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["BU"].ToString()) ? dr["BU"].ToString() : "",
+                    });
+                }
+                dtModule = dsModules.Tables[2];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    StatusList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["dealStatus"].ToString()) ? dr["dealStatus"].ToString() : "",
+                    });
+                }
+
+
+                dtModule = dsModules.Tables[3];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    MonthList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["quoteMonthMMM"].ToString()) ? dr["quoteMonthMMM"].ToString() : "",
+                    });
+                }
+                dtModule = dsModules.Tables[4];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    YearList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["quoteYear"].ToString()) ? dr["quoteYear"].ToString() : "",
+                    });
+                }
+
+                dtModule = dsModules.Tables[5];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                   ClosingMonthList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["expclosingMonthMMM"].ToString()) ? dr["expclosingMonthMMM"].ToString() : "",
+                    });
+                }
+                dtModule = dsModules.Tables[6];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    ClosingYearList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["expclosingYear"].ToString()) ? dr["expclosingYear"].ToString() : "",
+                    });
+                }
+
+
+
+            }
+
+            ViewBag.CountryList = new SelectList(CountryList, "Code", "Code");
+            ViewBag.BUList = new SelectList(BUList, "Code", "Code");
+            ViewBag.StatusList = new SelectList(StatusList, "Code", "Code");
+            ViewBag.MonthList = new SelectList(MonthList, "Code", "Code");
+            ViewBag.YearList = new SelectList(YearList, "Code", "Code");
+            ViewBag.ClosingMonthList = new SelectList(ClosingMonthList, "Code", "Code");
+            ViewBag.ClosingYearList = new SelectList(ClosingYearList, "Code", "Code");
+
+
             return View();
         }
 
@@ -237,12 +339,26 @@ namespace RDDStaffPortal.Areas.Funnel.Controllers
 
         }
 
+        public ActionResult DownloadToExcel3()
+        {
+            DataTable dt = RddFunnel.Getdata1(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "FunnelSheet.xlsx");
+                }
+            }
 
-        public ActionResult getFunnelDataList(int pagesize, int pageno, string psearch)
+        }
+
+        public ActionResult getFunnelDataList(int pagesize, int pageno, string psearch,string pcountry,string pBU,string pQMonth,string pQYear,string pCloseMonth,string pcloseYear,string pstatus)
         {
             string username = User.Identity.Name;
 
-            var jsonResult = Json(RddFunnel.getFunnelData(pagesize, pageno, username, psearch), JsonRequestBehavior.AllowGet);
+            var jsonResult = Json(RddFunnel.getFunnelData(pagesize, pageno, username, psearch,pcountry,pBU, pQMonth,pQYear,pCloseMonth,pcloseYear,pstatus), JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
 

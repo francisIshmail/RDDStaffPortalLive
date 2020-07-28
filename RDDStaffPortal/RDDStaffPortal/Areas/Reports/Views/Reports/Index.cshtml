@@ -205,6 +205,9 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
+
+    
     var tblhead1 = ['Country', 'ItemCode', 'ItemDesc', 'WhseName', 'WhseStatus', 'BU', 'BUGroup', 'UnitCost', 'Qty', 'QtyOrdered', 'QtyCommitted','QtyBal', 'Value', 'WhseOwner', 'ProdCategory', 'ProdLine', 'ProdGroup'];
     var tblhide = ['ItemDesc', 'BUGroup', 'ProdGroup', 'ProdCategory', 'ProdLine', 'ProdGroup'];
     var tblhead2 = ['Country', 'ItemCode', 'WhseName', 'BU', 'UnitCost', 'Qty', 'Value', 'WhseOwner'];
@@ -222,7 +225,7 @@
         $.ajax({
             type: "GET",
             contentType: "application/json; charset=utf-8",
-            url: '@Url.Action("DownloadToExcel1", "Reports")',
+            url: '@Url.Action("DownloadToExcel3", "FunnelData")',
             beforeSend: function () {
                 $(".loader1").show();
             },
@@ -231,7 +234,7 @@
                 var downloadUrl = URL.createObjectURL(blob);
                 var a = document.createElement("a");
                 a.href = downloadUrl;
-                a.download = "ReportFile.xls";
+                a.download = "FunnelSheet.xls";
                 document.body.appendChild(a);
                 a.click();
             },

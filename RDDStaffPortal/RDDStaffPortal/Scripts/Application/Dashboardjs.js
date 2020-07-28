@@ -616,6 +616,7 @@
 			})
 			i = 0;
 			var ds = [];
+			debugger
 			while (i < lblarr2.length) {
 				ds.push({					
 						label: lblarr2[i],

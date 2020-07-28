@@ -63,7 +63,13 @@ namespace RDDStaffPortal.DAL.DataModels
 
         public decimal value { get; set; }
 
-
+        public string QutMonth { get; set; }
+        public string QutYears { get; set; }
+        public string CloseMonth { get; set; }
+        public string CloseYears { get; set; }
+        public string FCountry { get; set; }
+        public string FBU { get; set; }
+        public string FStatus { get; set; }
         public string CardCode { get; set; }
 
 

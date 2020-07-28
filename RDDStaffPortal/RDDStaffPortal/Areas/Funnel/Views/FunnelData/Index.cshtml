@@ -26,19 +26,17 @@
                         <div class="card-body">
                             <div class="row">
                                 <label for="email2" class="width60px col-md-1">Date :</label>
-                                <div class="col-md-4">
-                                    <div class="c-datepicker-date-editor J-datepicker-range mt10">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <input placeholder="" name="" id="fromDate" class="c-datepicker-data-input datepickerH" >
-                                        <span class="c-datepicker-range-separator">-</span>
-                                        <input placeholder="" name="" id="toDate"class="c-datepicker-data-input datepickerH">
+                                <div class="col-md-2">
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mar-t10">
                                 <div class="col-md-8">
                                     <div class="panel padd-10 height200px">
-                                        <div class="chart-container">
+                                        <div class="chart-container" id="chart-container1">
                                             <canvas id="multipleLineChartbbb"></canvas>
                                         </div>
                                     </div>
@@ -50,7 +48,7 @@
                                     {*@
                                 <div class="col-md-4">
                                     <div class="panel padd-10 height200px">
-                                        <div class="chart-container">
+                                        <div class="chart-container" id="chart-container2">
                                             @*<canvas id="@i.TotalCost"></canvas>*@
                                             <canvas id="CTStatusbbb"></canvas>
                                         </div>
@@ -80,69 +78,10 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Country :</label>
                                     <div class="col-md-7 p-0">
-                                        <select id="basic" name="basic" class="form-control form-control-sm">
-                                            <option value="">-- Select --</option>
-                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                <option value="AK">Alaska</option>
-                                                <option value="HI">Hawaii</option>
-                                            </optgroup>
-                                            <optgroup label="Pacific Time Zone">
-                                                <option value="CA">California</option>
-                                                <option value="NV">Nevada</option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="WA">Washington</option>
-                                            </optgroup>
-                                            <optgroup label="Mountain Time Zone">
-                                                <option value="AZ">Arizona</option>
-                                                <option value="CO">Colorado</option>
-                                                <option value="ID">Idaho</option>
-                                                <option value="MT">Montana</option>
-                                                <option value="NE">Nebraska</option>
-                                                <option value="NM">New Mexico</option>
-                                                <option value="ND">North Dakota</option>
-                                                <option value="UT">Utah</option>
-                                                <option value="WY">Wyoming</option>
-                                            </optgroup>
-                                            <optgroup label="Central Time Zone">
-                                                <option value="AL">Alabama</option>
-                                                <option value="AR">Arkansas</option>
-                                                <option value="IL">Illinois</option>
-                                                <option value="IA">Iowa</option>
-                                                <option value="KS">Kansas</option>
-                                                <option value="KY">Kentucky</option>
-                                                <option value="LA">Louisiana</option>
-                                                <option value="MN">Minnesota</option>
-                                                <option value="MS">Mississippi</option>
-                                                <option value="MO">Missouri</option>
-                                                <option value="OK">Oklahoma</option>
-                                                <option value="SD">South Dakota</option>
-                                                <option value="TX">Texas</option>
-                                                <option value="TN">Tennessee</option>
-                                                <option value="WI">Wisconsin</option>
-                                            </optgroup>
-                                            <optgroup label="Eastern Time Zone">
-                                                <option value="CT">Connecticut</option>
-                                                <option value="DE">Delaware</option>
-                                                <option value="FL">Florida</option>
-                                                <option value="GA">Georgia</option>
-                                                <option value="IN">Indiana</option>
-                                                <option value="ME">Maine</option>
-                                                <option value="MD">Maryland</option>
-                                                <option value="MA">Massachusetts</option>
-                                                <option value="MI">Michigan</option>
-                                                <option value="NH">New Hampshire</option>
-                                                <option value="NJ">New Jersey</option>
-                                                <option value="NY">New York</option>
-                                                <option value="NC">North Carolina</option>
-                                                <option value="OH">Ohio</option>
-                                                <option value="PA">Pennsylvania</option>
-                                                <option value="RI">Rhode Island</option>
-                                                <option value="SC">South Carolina</option>
-                                                <option value="VT">Vermont</option>
-                                                <option value="VA">Virginia</option>
-                                                <option value="WV">West Virginia</option>
-                                            </optgroup>
-                                        </select>
+
+                                        @Html.DropDownListFor(m =>m.FCountry, ViewBag.CountryList as SelectList, "-Select-", new { @class = "multiselect-ui form-control" , @multiple = "multiple" })
+
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -150,14 +89,7 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">BU :</label>
                                     <div class="col-md-7 p-0">
-                                        <select class="form-control form-control-sm" id="">
-                                            <option>-- Select --</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                        </select>
+                                        @Html.DropDownListFor(m => m.FBU, ViewBag.BUList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
@@ -165,11 +97,7 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
                                     <div class="col-md-7 p-0">
-                                        <div class="input-group">
-                                            <label class="switch">
-                                                <input type="checkbox"> <div></div>
-                                            </label>
-                                        </div>
+                                        @Html.DropDownListFor(m => m.DealStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
@@ -177,24 +105,10 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Quote M/Y :</label>
                                     <div class="col-md-3 padd-l0">
-                                        <select class="form-control form-control-sm" id="">
-                                            <option>-- Select --</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                        </select>
+                                        @Html.DropDownListFor(m =>m.QutMonth, ViewBag.MonthList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                     <div class="col-md-3 padd-l0">
-                                        <select class="form-control form-control-sm" id="">
-                                            <option>-- Select --</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                        </select>
+                                        @Html.DropDownListFor(m => m.QutYears, ViewBag.YearList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
@@ -202,32 +116,24 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Closing M/Y :</label>
                                     <div class="col-md-3 padd-l0">
-                                        <select class="form-control form-control-sm" id="">
-                                            <option>-- Select --</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                        </select>
+                                        @Html.DropDownListFor(m => m.CloseMonth, ViewBag.ClosingMonthList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                     <div class="col-md-3 padd-l0">
-                                        <select class="form-control form-control-sm" id="">
-                                            <option>-- Select --</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                            <option>Select</option>
-                                        </select>
+                                        @Html.DropDownListFor(m =>m.CloseYears, ViewBag.ClosingYearList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button class="btn btn btn-info btn-sm">Search</button>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Export to Excel"><i class="fas fa-file-excel"></i></button>
+                        <div class="row">
+
+
+                            <div class="col-xl-1 col-md-1 ml-auto">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px"></label>
+                                    <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -262,7 +168,7 @@
                                     <div class="form-group">
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
                                         <button class="btn btn btn-secondary btn-sm" data-toggle="modal" data-target="#NewDealPopUp" id="newDealPopUp"><i class="fas fa-plus"></i>New Deal</button>
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Export to Excel"><i class="fas fa-file-excel"></i></button>
+                                        <a href="/Funnel/FunnelData/DownloadToExcel3" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
                                     </div>
                                 </div>
 
@@ -414,14 +320,14 @@
                                             <option value="0">-Select-</option>
                                         </select>
                                         <i class="fas fa-plus-square small menu-icon-c" id="divhdnchk" title="New Reseller" data-toggle="modal" data-target="#SelectNewResellerpopup"></i>
-                                        
+
 
                                     </div>
 
-                                    </div>
+                                </div>
                             </div>
 
-                           
+
                             <div class="col-md-6 col-lg-6 flexinherit">
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-2 col-form-label p-0  width130px">BDM :</label>
@@ -541,7 +447,7 @@
                                     </div>
                                 </div>
                             </div>
-                          
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -583,7 +489,7 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Margin % :</label>
                                     <div class="col-md-7 p-0">
-                                        <input type="text" class="form-control form-control-sm" id="marginper"  onkeypress="javascript:return isNumberKey(event);" onkeyup="javascript:calculateMargin()" placeholder="Enter Margin %">
+                                        <input type="text" class="form-control form-control-sm" id="marginper" onkeypress="javascript:return isNumberKey(event);" onkeyup="javascript:calculateMargin()" placeholder="Enter Margin %">
 
                                     </div>
                                 </div>
@@ -665,7 +571,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-sm" id="btnSaveFunnel">Save</button>
-             
+
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
 
             </div>
@@ -679,22 +585,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">New Reseller</h5>
-                <button type="button" class="close newResCls"  aria-label="Close">
+                <button type="button" class="close newResCls" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body selectwidget-section">
-               
-                    <div class="col-md-12 mar-b10">
-                       
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter New Reseller Name" id="resellername">
-                        </div>
-                    
-                
+
+                <div class="col-md-12 mar-b10">
+
+                    <input type="text" class="form-control form-control-sm" placeholder="Enter New Reseller Name" id="resellername">
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-sm" id="btnsavereseller" onclick="SaveReseller()">Add</button>
-                <button type="button" class="btn btn-danger btn-sm newResCls" >Close</button>
+                <button type="button" class="btn btn-danger btn-sm newResCls">Close</button>
             </div>
         </div>
     </div>
@@ -727,13 +633,20 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-</script>
 
+</script>
+<script src="~/Scripts/RedDotUtility.js"></script>
 
 
 <script>
-        
-    </script>
+    $(function () {
+
+      
+
+
+       
+    });
+</script>
 <div>
     <div>
         <div>
@@ -742,6 +655,8 @@
                 var tblhide = ["bdm", "enduser"];
                 var dateCond = ["quoteDate", "expClosingDt"];
                 var curPage = 1;
+
+                 
                 $(document).ready(function () {
                     var arr = [];
                     (function ($) {
@@ -808,7 +723,7 @@
                     });
 
                     $("#newDealPopUp").click(function () {
-                       
+
                         // if ($("#fid").val() == "") {
                         //$("#quoteDate").datetimepicker({
                         //    defaultDate: new Date(),
@@ -828,7 +743,7 @@
                         }
 
                         //  today = yyyy + '/' + mm + '/' + dd;
-                        today = mm + '/' + dd + '/' + yyyy;
+                        today = dd + '/' + mm + '/' + yyyy;
                         $("#Createddte").val(today);
                         $("#quoteDate").val(today);
                         ////$("#Createddte").datetimepicker({
@@ -852,7 +767,7 @@
                     });
 
 
-                   
+
                     // related to chart data
 
                     $("#chartboxbtn").click(function () {
@@ -909,12 +824,6 @@
 
                     })
 
-                   
-
-
-
-
-
                     $("#Landed").keyup(function () {
                         $("#value").val($("#Landed").val());
                     })
@@ -922,11 +831,6 @@
                     $("#Cost").keyup(function () {
                         $("#value").val($("#Cost").val());
                     })
-
-                    // $("#value").val(($(this).val() * 10).toFixed(2));
-
-                    //Delete Functionality
-
 
                     $('#Country').on("change", function () {
 
@@ -955,14 +859,15 @@
                         }
                         $("#divhdnchk").show();
                         $.ajax({
-
+                            async: false,
+                            cache: false,
                             url: '/FunnelData/getQuoiteId',
                             type: "GET",
                             dataType: "JSON",
                             data: { Country: Country },
 
                             success: function (QuoteID) {
-                               
+
                                 $("#lblQuoteID").text(QuoteID);
 
                                 //lblQuoteID.text()
@@ -973,7 +878,8 @@
 
 
                         $.ajax({
-
+                            async: false,
+                            cache: false,
                             url: '/FunnelData/FillCustomer',
                             type: "GET",
                             dataType: "JSON",
@@ -1015,11 +921,13 @@
 
 
                                         }
-                                        if (size > 3) {
+
+                                        if (size > 2) {
                                             $('.fs-label').text(size - 1 + ' selected');
                                         }
-                                       
+
                                         $("#CardName").val(valarr);
+                                        $(".multiselect-ui").fSelect('reload');
 
                                     });
                                 })(jQuery);
@@ -1029,19 +937,18 @@
                             complete: function () {
                                 $(".multiselect-ui").hide();
                                 $(".multiselect-ui").fSelect('reload');
-                               
+
                             }
                         });
 
                         $.ajax({
-
                             url: '/FunnelData/FillBU',
                             type: "GET",
                             dataType: "JSON",
                             data: { Country: Country },
 
                             success: function (FunnelListBU) {
-                               
+
 
                                 $("#ItmsGrpNam").html("");
                                 $("#BUName").empty();
@@ -1072,13 +979,9 @@
 
 
 
-                    });
+                    })
 
-
-
-
-
-
+                    //#region Load Data & prev, Next, search
                     $('.loader1').hide();
                     var k1 = 0;
                     while (tblhead1.length > k1) {
@@ -1099,7 +1002,7 @@
 
                     var searchname = $("#searchcutomer").val();
 
-                   
+                    debugger
 
                     $.ajax({
 
@@ -1112,10 +1015,17 @@
                             pagesize: 50,
                             pageno: curPage,
                             psearch: searchname,
+                            pcountry: '',
+                            pBU:'',
+                            pQMonth: '',
+                            pQYear: '',
+                            pCloseMonth: '',
+                            pcloseYear:'',
+                            pstatus: ''
                         }),
 
                         success: function (data) {
-                           
+
                             $("#Ist").show();
                             arr = data;
                             if (arr != null && arr.length != 0) {
@@ -1142,7 +1052,7 @@
                                         }
 
 
-                                       
+
                                         if (jQuery.inArray(t, tblhide) !== -1) {
                                             tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1156,7 +1066,8 @@
                                 $("#Ist")[0].remove();
                             } else {
                                 $("#Ist").hide();
-                                RdotAlerterrtxt1("No Record Found");
+                               // $("#Ibody").append("No Record Found");
+                               // RdotAlerterrtxt1("No Record Found");
                             }
 
                         },
@@ -1170,6 +1081,35 @@
 
                     $("#searchcutomer").on("keyup", function () {
                         var searchname = $(this).val().toLowerCase();
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus +="'"+ $(this).text() + "',";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += "'" + $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += "'" + $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += "'" + $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += "'" +$(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += "'" + $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += "'" + $(this).text() + ",";
+                        });
+
                         $.ajax({
 
 
@@ -1181,6 +1121,13 @@
                                 pagesize: 50,
                                 pageno: curPage,
                                 psearch: searchname,
+                                pcountry: FCountry.replace(/,\s*$/, ""),
+                                pBU: FBU.replace(/,\s*$/, ""),
+                                pQMonth: QutMonth.replace(/,\s*$/, ""),
+                                pQYear: QutYears.replace(/,\s*$/, ""),
+                                pCloseMonth: CloseMonth.replace(/,\s*$/, ""),
+                                pcloseYear: CloseYears.replace(/,\s*$/, ""),
+                                pstatus: FStatus.replace(/,\s*$/, "")
                             }),
 
                             success: function (data) {
@@ -1209,7 +1156,7 @@
                                                     "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
                                                     "</div>")
                                             }
-                                           
+
                                             if (jQuery.inArray(t, tblhide) !== -1) {
                                                 tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1246,6 +1193,35 @@
                         curPage--;
                         if (curPage < 0)
                             curPage = (arr[0].TotalCount - 1);
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
                         $.ajax({
                             type: "POST",
                             url: "/FunnelData/getFunnelDataList",
@@ -1255,8 +1231,14 @@
                                 pagesize: 50,
                                 pageno: curPage,
                                 psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
                             }),
-
                             success: function (data) {
                                 $("#Ist").show();
                                 $("div#Ist").not(':first').remove();
@@ -1283,7 +1265,7 @@
                                                     "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
                                                     "</div>")
                                             }
-                                           
+
                                             if (jQuery.inArray(t, tblhide) !== -1) {
                                                 tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1312,7 +1294,7 @@
                     });
 
                     $('.next').bind('click', function () {
-                       
+
                         $(".loader1").show();
                         if (arr[0].TotalCount < 50) {
                             $(".loader1").hide();
@@ -1321,6 +1303,35 @@
                         curPage++;
                         if (curPage > arr[0].TotalCount)
                             curPage = 0;
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
                         $.ajax({
                             type: "POST",
                             url: "/FunnelData/getFunnelDataList",
@@ -1330,7 +1341,13 @@
                                 pagesize: 50,
                                 pageno: curPage,
                                 psearch: searchname,
-
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
                             }),
                             success: function (data) {
                                 $("#Ist").show();
@@ -1358,7 +1375,7 @@
                                                     "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
                                                     "</div>")
                                             }
-                                           
+
                                             if (jQuery.inArray(t, tblhide) !== -1) {
                                                 tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1389,7 +1406,7 @@
                     });
 
                     $("#btnsave").on("click", function () {
-                       
+
                         tblhide = [];
                         $('input:checkbox').each(function () {
 
@@ -1404,7 +1421,38 @@
 
                         });
 
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
                         $.ajax({
+
+
                             type: "POST",
                             url: "/FunnelData/getFunnelDataList",
                             contentType: "application/json",
@@ -1413,9 +1461,16 @@
                                 pagesize: 50,
                                 pageno: curPage,
                                 psearch: searchname,
-
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
                             }),
                             success: function (data) {
+
                                 $("#Ist").show();
                                 $("div#Ist").not(':first').remove();
                                 arr = data;
@@ -1441,7 +1496,7 @@
                                                     "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
                                                     "</div>")
                                             }
-                                           
+
                                             if (jQuery.inArray(t, tblhide) !== -1) {
                                                 tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                                 tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -1472,16 +1527,120 @@
                         });
                     });
 
+                    $("#btnApply").on("click", function () {
+                        $(".loader1").show();
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
+                            }),
+                            success: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            }, complete: function () {
+                                $(".loader1").hide();
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }
+
+
+                        });
+                    });
+
 
                     $('#Ibody').on('click', "[id^='btndel']", function (event) {
-                       
+
                         var fid = $(this).closest("div").find("#hdntbheadid").val();
                         var dealstatus = $(this).closest("div").find("#hdntbheadstatus").val();
 
                         var tr = $(this).closest(".odd-even-row");
 
                         //function DeleteItem(fid,dealstatus) {
-                       
+
                         const swalWithBootstrapButtons = Swal.mixin({
                             confirmButtonClass: 'btn btn-success',
                             cancelButtonClass: 'btn btn-danger',
@@ -1499,7 +1658,7 @@
                             if (result.value) {
 
                                 $.getJSON("/FunnelData/DeleteItemm", { fid: fid }).done(function (data) {
-                                   
+
                                     if (data.DeleteFlag == "Record Deleted.") {
                                         //  $("#Ist").remove();
 
@@ -1537,27 +1696,26 @@
                         })
                     });
 
-
+                    
+                    RedDot_DateRange("reportrange");
                    
+                    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {                                      
+                        GetChart(picker.startDate.format('YYYY-MM-DD'), picker.endDate.format('YYYY-MM-DD'))
+                    });
+                    
+                    debugger
+                    GetChart($('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD'));
 
-                    GetChart(RedDot_setdtpkdate($("#fromDate").val()), RedDot_setdtpkdate($("#toDate").val()));
-
-                    $("#fromDate").on('dp.change', function (e) {
-                        debugger
-                        if (e.oldDate !== null) {                     
-                            GetChart(RedDot_setdtpkdate($("#fromDate").val()), RedDot_setdtpkdate($("#toDate").val()));
-                    }
-                    })
-
-                    $("#toDate").on('dp.change', function (e) {
-                        debugger
-                        if (e.oldDate !== null) {
-                            GetChart(RedDot_setdtpkdate($("#fromDate").val()), RedDot_setdtpkdate($("#toDate").val()));
-                        }
-                    })
 
                     function GetChart(from_Date, to_Date) {
+                        $('#multipleLineChartbbb').remove(); // this is my <canvas> element
+                        $('#chart-container1').append('<canvas id="multipleLineChartbbb"><canvas>');
+
+                        $('#CTStatusbbb').remove(); // this is my <canvas> element
+                        $('#chart-container2').append('<canvas id="CTStatusbbb"><canvas>');
+
                         multipleLineChartbbb = document.getElementById('multipleLineChartbbb').getContext('2d');
+
                         CTStatusbbb = document.getElementById('CTStatusbbb').getContext('2d');
                         var pts = [];
                         var lbl = [];
@@ -1567,7 +1725,8 @@
                         var lineamt = [];
                         var status = [];
                         var bgg = [];
-                        var wkno = [];
+                        // var wkno = [];
+                        var array = [];
                         $.ajax({
                             async: false,
                             cache: false,
@@ -1582,7 +1741,7 @@
                             contentType: "Application/json",
                             dataType: 'JSON',
                             success: function (response) {
-                                debugger
+
                                 var i = 0;
                                 while (i < response.data.Get_Funnels.length) {
                                     pts.push(response.data.Get_Funnels[i].percentage);
@@ -1592,17 +1751,12 @@
                                     i++;
                                 }
                                 var i1 = 0;
+                                array = response.data.GetLinecharts;
 
-                                //Status	Color	WeekNo	TotalAmount
-                                while (i1 < response.data.GetLinecharts.length) {
-                                    lineamt.push(response.data.GetLinecharts[i1].Amount);
-                                    wkno.push(response.data.GetLinecharts[i1].weekno);
-                                    bgg.push(response.data.GetLinecharts[i1].color);
-                                    status.push(response.data.GetLinecharts[i1].status);
-                                    i1++;
-                                }
                             }
                         })
+
+
 
 
                         var myPieChart = new Chart(CTStatusbbb, {
@@ -1654,10 +1808,50 @@
                         })
 
 
+                        var dupes = {};
+                        var wkno = [];
+                        var wkno1 = [];
+                        var status = [];
+
+                        $.each(array, function (i, el) {
+                            if (!dupes[el.weekno]) {
+                                dupes[el.weekno] = true;
+                                wkno.push(el.weekno);
+                                wkno1.push(el.weekno + "Wk");
+                            }
+
+                        })
+
+                        $.each(array, function (i, el) {
+                            if (!dupes[el.color]) {
+                                dupes[el.color] = true;
+                                bgg.push(el.color)
+                            }
+                            if (!dupes[el.status]) {
+                                dupes[el.status] = true;
+                                status.push(el.status)
+                            }
+
+                        })
+
+                        var pts = [];
+                        var k = 0
+                        while (k < status.length) {
+                            var tempArray = [];
+                            $.each(array, function (i, el) {
+                                if (el.status == status[k]) {
+
+                                    tempArray.push(el.Amount);
+                                }
+                            })
+                            pts.push(tempArray);
+                            k++;
+                        }
+
 
                         var ds = [];
                         i = 0;
-                        while (i < status.length) {                            
+                        while (i < status.length) {
                             ds.push({
                                 label: status[i],
                                 borderColor: bgg[i],
@@ -1670,7 +1864,7 @@
                                 backgroundColor: 'transparent',
                                 fill: true,
                                 borderWidth: 2,
-                                data: lineamt
+                                data: pts[i]
                             });
                             i++;
                         }
@@ -1680,7 +1874,7 @@
                             type: 'line',
                             data: {
                                 // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                labels: ["wk1", "wk2", "wk3", "wk4", "wk5"],
+                                labels: wkno1,
                                 datasets: ds,
                             },
                             options: {
@@ -1704,33 +1898,9 @@
                             }
                         });
                     }
-                   
 
 
-                   
-
-
-
-
-
-
-                    //  myMultipleLineChart.render();
-
-                    // Chart with HTML Legends
-
-                    //var myLegendContainer = document.getElementById("myChartLegend");
-
-                    //// generate HTML legend
-                    //myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
-
-                    //// bind onClick event to all LI-tags of the legend
-                    //var legendItems = myLegendContainer.getElementsByTagName('li');
-                    //for (var i = 0; i < legendItems.length; i += 1) {
-                    //    legendItems[i].addEventListener("click", legendClickCallback, false);
-                    //}
-
-
-
+                    //#endregion date range with chart
 
                 });
 
@@ -1743,18 +1913,18 @@
                     //  .removeClass("selected");
                     //   $(".selected").removeAttr('checked');
                     //  $("#CardName").removeAttr('checked');
-                   
+
                     var url = "/FunnelData/GetDataById?fid=" + fid;
                     $("#NewDealPopUp").modal();
                     $.ajax({
                         type: "GET",
                         url: url,
                         success: function (data) {
-                           
+
 
 
                             $("#fid").val(data.fid);
-                           
+
                             $("#Country").val(data.Country).trigger('change');
 
                             //$("#Country").val(data.Country);
@@ -1771,7 +1941,7 @@
                             // var valarr = $("#hdnCardName").val();
 
 
-                            $("#lblQuoteID").val(data.QuoteID)
+
                             $("#enduser").val(data.enduser);
                             $("#goodsDescr").val(data.goodsDescr);
                             $("#remarks").val(data.remarks);
@@ -1797,7 +1967,7 @@
                             $("#Landed").val(data.Landed);
                             $("#MarginUSD").val(data.MarginUSD);
 
-                           
+
 
 
                             $("#value").val(data.value);
@@ -1826,7 +1996,7 @@
                                 //  $('#Remarks2').attr('enabled', 'enabled');
 
                             }
-                           
+
                             if ($('#Landed').val() > 0) {
                                 var MarginDollar = $('#MarginUSD').val();
                                 var totalsell = $('#value').val();
@@ -1837,18 +2007,19 @@
 
 
                             }
+                            $("#lblQuoteID").text(data.quoteID);
                         }
                     });
                 }
 
                 $('#btnSaveFunnel').on("click", function () {
 
-                   
+
                     var res = validate();
 
-                    //if (res == false) {
-                    //    return false;
-                    //};
+                    if (res == false) {
+                        return false;
+                    };
 
                     var FunnelDataa = {};
                     var CardName = "";
@@ -1920,6 +2091,7 @@
                                 RdotAlertSucesstxt(result);
                                 getdatalistaftersuccess();
                             }
+                            $("#NewDealPopUp").modal('hide');
 
                         },
                         error: function (result) {
@@ -1929,10 +2101,9 @@
                     });
 
                 });
-
-                // $("#btnSaveReseller").on("click", function () {
+                
                 function SaveReseller() {
-                   
+
 
                     var res = validateFunnel();
 
@@ -2004,10 +2175,17 @@
                             pagesize: 50,
                             pageno: curPage,
                             psearch: '',
+                            pcountry: '',
+                            pBU: '',
+                            pQMonth: '',
+                            pQYear: '',
+                            pCloseMonth: '',
+                            pcloseYear: '',
+                            pstatus: ''
                         }),
 
                         success: function (data) {
-                           
+
                             $("#Ist").show();
                             $("div#Ist").not(':first').remove();
                             arr = data;
@@ -2019,8 +2197,12 @@
                                     var k = 0;
                                     var l1 = tr.find(".reddotTableCell").length;
                                     while (l1 > k) {
-                                        if (tblhead1[k] !== 'Action') {
+                                        var t = tblhead1[k];
+                                        if (jQuery.inArray(t, dateCond) !== -1) {
+                                            tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                        } else if (tblhead1[k] !== 'Action') {
                                             tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
                                         } else {
                                             tr.find(".reddotTableCell").eq(k).html("<div>" +
                                                 "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
@@ -2029,9 +2211,6 @@
                                                 "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
                                                 "</div>")
                                         }
-
-                                        var t = tblhead1[k];
-                                       
                                         if (jQuery.inArray(t, tblhide) !== -1) {
                                             tr.find(".reddotTableCell").eq(k).addClass("Abc")
                                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
@@ -2059,7 +2238,7 @@
 
                     var ValFlag = true;
 
-                   
+
                     if ($("#Country option:selected").index() <= 0) {
                         RdotAlerterrtxt('Please select country');
                         $("#Country").focus();
@@ -2227,7 +2406,7 @@
                         return ValFlag = false;
                     }
 
-                   
+
 
 
 
@@ -2323,7 +2502,7 @@
 
                 }
                 function isNumberKey(evt) {
-                   ;
+                    ;
                     var charCode = (evt.which) ? evt.which : event.keyCode;
                     if ((charCode >= 48 && charCode <= 57) || charCode == 46) {
                         return true;
@@ -2334,9 +2513,8 @@
                     }
                 }
 
-
                 $(function () {
-                   
+
 
                     $('#Createddte').datetimepicker({
                         format: 'DD/MM/YYYY',
@@ -2364,428 +2542,7 @@
                         format: 'DD/MM/YYYY',
                     });
                 });
-
-                $(function () {
-                    $('.J-datepicker-time').datePicker({
-                        format: 'HH:mm:ss',
-                        min: '04:23:11',
-                        language: 'en'
-                    });
-                    $('.J-datepicker-time-range').datePicker({
-                        format: 'HH:mm:ss',
-                        isRange: true,
-                        min: '04:23:11',
-                        max: '20:59:59',
-                        language: 'en'
-                    });
-
-                    var DATAPICKERAPI = {
-                        activeMonthRange: function () {
-                            return {
-                                begin: moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format('YYYY-MM-DD HH:mm:ss'),
-                                end: moment().set({ 'hour': 23, 'minute': 59, 'second': 59 }).format('YYYY-MM-DD HH:mm:ss')
-                            }
-                        },
-                        shortcutMonth: function () {
-                            var nowDay = moment().get('date');
-                            var prevMonthFirstDay = moment().subtract(1, 'months').set({ 'date': 1 });
-                            var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
-                            return {
-                                now: '-' + nowDay + ',0',
-                                prev: '-' + prevMonthDay + ',-' + nowDay
-                            }
-                        },
-                        shortcutPrevHours: function (hour) {
-                            var nowDay = moment().get('date');
-                            var prevHours = moment().subtract(hour, 'hours');
-                            var prevDate = prevHours.get('date') - nowDay;
-                            var nowTime = moment().format('HH:mm:ss');
-                            var prevTime = prevHours.format('HH:mm:ss');
-                            return {
-                                day: prevDate + ',0',
-                                time: prevTime + ',' + nowTime,
-                                name: 'Nearly ' + hour + ' Hours'
-                            }
-                        },
-                        rangeMonthShortcutOption1: function () {
-                            var result = DATAPICKERAPI.shortcutMonth();
-                            var resultTime = DATAPICKERAPI.shortcutPrevHours(18);
-                            return [{
-                                name: 'Yesterday',
-                                day: '-1,-1',
-                                time: '00:00:00,23:59:59'
-                            }, {
-                                name: 'This Month',
-                                day: result.now,
-                                time: '00:00:00,'
-                            }, {
-                                name: 'Lasy Month',
-                                day: result.prev,
-                                time: '00:00:00,23:59:59'
-                            }, {
-                                name: resultTime.name,
-                                day: resultTime.day,
-                                time: resultTime.time
-                            }];
-                        },
-                        rangeShortcutOption1: [{
-                            name: 'Last week',
-                            day: '-7,0'
-                        }, {
-                            name: 'Last Month',
-                            day: '-30,0'
-                        }, {
-                            name: 'Last Three Months',
-                            day: '-90, 0'
-                        }],
-                        singleShortcutOptions1: [{
-                            name: 'Today',
-                            day: '0',
-                            time: '00:00:00'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1',
-                            time: '00:00:00'
-                        }, {
-                            name: 'One Week Ago',
-                            day: '-7'
-                        }]
-                    };
-                    $('.J-datepicker').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        min: '2018-01-01 04:00:00',
-                        max: '2029-10-29 20:59:59',
-                        shortcutOptions: [{
-                            name: 'Today',
-                            day: '0'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1',
-                            time: '00:00:00'
-                        }, {
-                            name: 'One Week Ago',
-                            day: '-7'
-                        }],
-                        hide: function () {
-                            console.info(this)
-                        }
-                    });
-
-
-                    $('.J-datepicker-day').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        shortcutOptions: [{
-                            name: 'Today',
-                            day: '0'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1'
-                        }, {
-                            name: 'One week ago',
-                            day: '-7'
-                        }]
-                    });
-
-
-                    $('.J-datepicker-range-day').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        format: 'YYYY-MM-DD',
-                        isRange: true,
-                        shortcutOptions: DATAPICKERAPI.rangeShortcutOption1
-                    });
-
-
-                    $('.J-datepickerTime-single').datePicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        language: 'en',
-                    });
-
-
-                    $('.J-datepickerTime-range').datePicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        isRange: true,
-                        language: 'en'
-                    });
-
-
-                    $('.J-datepicker-range').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        min: '2018-01-01 06:00:00',
-                        max: '2029-04-29 20:59:59',
-                        isRange: true,
-                        shortcutOptions: [{
-                            name: 'Yesterday',
-                            day: '-1,-1',
-                            time: '00:00:00,23:59:59'
-                        }, {
-                            name: 'Last Week',
-                            day: '-7,0',
-                            time: '00:00:00,'
-                        }, {
-                            name: 'Last Month',
-                            day: '-30,0',
-                            time: '00:00:00,'
-                        }, {
-                            name: 'Last Months',
-                            day: '-90, 0',
-                            time: '00:00:00,'
-                        }],
-                        hide: function (type) {
-                            console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
-                            console.info('Type:', type)
-                        }
-                    });
-                    $('.J-datepicker-range-betweenMonth').datePicker({
-                        isRange: true,
-                        between: 'month',
-                        language: 'en',
-                        hasShortcut: true,
-                        shortcutOptions: DATAPICKERAPI.rangeMonthShortcutOption1()
-                    });
-
-
-                    $('.J-datepicker-range-between30').datePicker({
-                        isRange: true,
-                        language: 'en',
-                        between: 30
-                    });
-
-                    $('.J-yearMonthPicker-single').datePicker({
-                        format: 'YYYY-MM',
-                        language: 'en',
-                        min: '2018-01',
-                        max: '2029-04',
-                        hide: function (type) {
-                            console.info(this.$input.eq(0).val());
-                        }
-                    });
-
-                    $('.J-yearPicker-single').datePicker({
-                        format: 'YYYY',
-                        language: 'en',
-                        min: '2018',
-                        max: '2029'
-                    });
-
-
-                });
-
-
-
-                $(function () {
-                    $('.J-datepicker-time').datePicker({
-                        format: 'HH:mm:ss',
-                        min: '04:23:11',
-                        language: 'en'
-                    });
-                    $('.J-datepicker-time-range').datePicker({
-                        format: 'HH:mm:ss',
-                        isRange: true,
-                        min: '04:23:11',
-                        max: '20:59:59',
-                        language: 'en'
-                    });
-
-                    var DATAPICKERAPI = {
-                        activeMonthRange: function () {
-                            return {
-                                begin: moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format('YYYY-MM-DD HH:mm:ss'),
-                                end: moment().set({ 'hour': 23, 'minute': 59, 'second': 59 }).format('YYYY-MM-DD HH:mm:ss')
-                            }
-                        },
-                        shortcutMonth: function () {
-                            var nowDay = moment().get('date');
-                            var prevMonthFirstDay = moment().subtract(1, 'months').set({ 'date': 1 });
-                            var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
-                            return {
-                                now: '-' + nowDay + ',0',
-                                prev: '-' + prevMonthDay + ',-' + nowDay
-                            }
-                        },
-                        shortcutPrevHours: function (hour) {
-                            var nowDay = moment().get('date');
-                            var prevHours = moment().subtract(hour, 'hours');
-                            var prevDate = prevHours.get('date') - nowDay;
-                            var nowTime = moment().format('HH:mm:ss');
-                            var prevTime = prevHours.format('HH:mm:ss');
-                            return {
-                                day: prevDate + ',0',
-                                time: prevTime + ',' + nowTime,
-                                name: 'Nearly ' + hour + ' Hours'
-                            }
-                        },
-                        rangeMonthShortcutOption1: function () {
-                            var result = DATAPICKERAPI.shortcutMonth();
-                            var resultTime = DATAPICKERAPI.shortcutPrevHours(18);
-                            return [{
-                                name: 'Yesterday',
-                                day: '-1,-1',
-                                time: '00:00:00,23:59:59'
-                            }, {
-                                name: 'This Month',
-                                day: result.now,
-                                time: '00:00:00,'
-                            }, {
-                                name: 'Lasy Month',
-                                day: result.prev,
-                                time: '00:00:00,23:59:59'
-                            }, {
-                                name: resultTime.name,
-                                day: resultTime.day,
-                                time: resultTime.time
-                            }];
-                        },
-                        rangeShortcutOption1: [{
-                            name: 'Last week',
-                            day: '-7,0'
-                        }, {
-                            name: 'Last Month',
-                            day: '-30,0'
-                        }, {
-                            name: 'Last Three Months',
-                            day: '-90, 0'
-                        }],
-                        singleShortcutOptions1: [{
-                            name: 'Today',
-                            day: '0',
-                            time: '00:00:00'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1',
-                            time: '00:00:00'
-                        }, {
-                            name: 'One Week Ago',
-                            day: '-7'
-                        }]
-                    };
-                    $('.J-datepicker').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        min: '2018-01-01 04:00:00',
-                        max: '2029-10-29 20:59:59',
-                        shortcutOptions: [{
-                            name: 'Today',
-                            day: '0'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1',
-                            time: '00:00:00'
-                        }, {
-                            name: 'One Week Ago',
-                            day: '-7'
-                        }],
-                        hide: function () {
-                            console.info(this)
-                        }
-                    });
-
-
-                    $('.J-datepicker-day').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        shortcutOptions: [{
-                            name: 'Today',
-                            day: '0'
-                        }, {
-                            name: 'Yesterday',
-                            day: '-1'
-                        }, {
-                            name: 'One week ago',
-                            day: '-7'
-                        }]
-                    });
-
-
-                    $('.J-datepicker-range-day').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        format: 'YYYY-MM-DD',
-                        isRange: true,
-                        shortcutOptions: DATAPICKERAPI.rangeShortcutOption1
-                    });
-
-
-                    $('.J-datepickerTime-single').datePicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        language: 'en',
-                    });
-
-
-                    $('.J-datepickerTime-range').datePicker({
-                        format: 'YYYY-MM-DD HH:mm',
-                        isRange: true,
-                        language: 'en'
-                    });
-
-
-                    $('.J-datepicker-range').datePicker({
-                        hasShortcut: true,
-                        language: 'en',
-                        min: '2018-01-01 06:00:00',
-                        max: '2029-04-29 20:59:59',
-                        isRange: true,
-                        shortcutOptions: [{
-                            name: 'Yesterday',
-                            day: '-1,-1',
-                            time: '00:00:00,23:59:59'
-                        }, {
-                            name: 'Last Week',
-                            day: '-7,0',
-                            time: '00:00:00,'
-                        }, {
-                            name: 'Last Month',
-                            day: '-30,0',
-                            time: '00:00:00,'
-                        }, {
-                            name: 'Last Months',
-                            day: '-90, 0',
-                            time: '00:00:00,'
-                        }],
-                        hide: function (type) {
-                            console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
-                            console.info('Type:', type)
-                        }
-                    });
-                    $('.J-datepicker-range-betweenMonth').datePicker({
-                        isRange: true,
-                        between: 'month',
-                        language: 'en',
-                        hasShortcut: true,
-                        shortcutOptions: DATAPICKERAPI.rangeMonthShortcutOption1()
-                    });
-
-
-                    $('.J-datepicker-range-between30').datePicker({
-                        isRange: true,
-                        language: 'en',
-                        between: 30
-                    });
-
-                    $('.J-yearMonthPicker-single').datePicker({
-                        format: 'YYYY-MM',
-                        language: 'en',
-                        min: '2018-01',
-                        max: '2029-04',
-                        hide: function (type) {
-                            console.info(this.$input.eq(0).val());
-                        }
-                    });
-
-                    $('.J-yearPicker-single').datePicker({
-                        format: 'YYYY',
-                        language: 'en',
-                        min: '2018',
-                        max: '2029'
-                    });
-
-
-                });
-
-
+            
                 function isNumberKey(evt) {
 
                     var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -2797,11 +2554,9 @@
                     }
                 }
 
-
-
                 // Function to calculate Margin $ if Margin % is entered
                 function calculateMargin() {
-                   
+
 
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
@@ -2815,10 +2570,9 @@
                     }
                 }
 
-
                 // Function to calculate Margin % if Margin $ is entered
                 function calculateMarginPercent() {
-                   
+
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2847,7 +2601,7 @@
 
                 // Function to calculate Margin % & Margin $ if Landed and Total Sell Amount is Entered
                 function calcMarginAndPercentBasedOnTotalSell() {
-                   
+
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2859,224 +2613,28 @@
                     }
                 }
 
-                //function calculateMargin() {
-
-
-
-                //    var edValue = document.getElementById("marginper");
-                //    var s = edValue.value;
-                //   
-
-                //    var lan = $("#Landed").val();
-                //    if (lan > 0) {
-                //        var newval = (s / 100) * lan
-
-                //        var secval = newval + lan;
-
-                //        var margin = (lan * (s / 100)).toFixed(2);
-                //        var totalsell = (Number(lan) + Number(lan * (s / 100))).toFixed(2)
-
-                //        $("#MarginUSD").val(margin)
-                //        $("#value").val(totalsell)
-                //    }
-                //    else {
-                //        var lan = $("#Cost").val();
-
-                //        var newval = (s / 100) * lan
-
-                //        var secval = newval + lan;
-
-                //        var margin = (lan * (s / 100)).toFixed(2);
-                //        var totalsell = (Number(lan) + Number(lan * (s / 100))).toFixed(2)
-
-                //        $("#MarginUSD").val(margin)
-                //        $("#value").val(totalsell)
-
-                //    }
-
-                //}
-
-                ////  calculate Margin % if Margin $ is entered  and total sell
-                //function calculateMarginPercent() {
-                //   
-
-                //    var landed = $("#Landed").val();
-                //    var margindollar = $("#MarginUSD").val();
-
-                //    if (landed != null && landed != NaN && margindollar != null && margindollar != NaN) {
-
-                //        var marginper = ((Number(margindollar) / Number(landed)) * 100).toFixed(2)
-                //        var totalsell = (Number(landed) + Number(margindollar)).toFixed(2)
-                //        $("#marginper").val(marginper)
-                //        $("#value").val(totalsell)
-
-
-                //    }
-                //}
-
-                ////calculate Margin % & Margin $ if Landed is changed once calcu is done
-                //function calculateMarginAndPercent() {
-
-
-                //    var landed = $("#Landed").val();
-                //    var margindollar = $("#MarginUSD").val();
-                //    var marginper = $("#marginper").val();
-
-                //    if (landed != null && landed != NaN && marginper != null && marginper != NaN) {
-                //        calculateMargin();
-                //    }
-                //    else if (landed != null && landed != NaN && margindollar != null && margindollar != NaN) {
-                //        calculateMarginPercent();
-                //    }
-                //}
-
-                //function calculateMarginAndPercent1() {
-
-
-                //    var landed = $("#Cost").val();
-                //    var margindollar = $("#MarginUSD").val();
-                //    var marginper = $("#marginper").val();
-
-                //    if (landed != null && landed != NaN && marginper != null && marginper != NaN) {
-                //        calculateMargin();
-                //    }
-                //    else if (landed != null && landed != NaN && margindollar != null && margindollar != NaN) {
-                //        calculateMarginPercent1();
-                //    }
-                //}
-
-                //// calculate Margin % & Margin $ if Landed and Total Sell amount is Entered
-                //function calMarginAndPercentBasedonTotalSell() {
-
-
-                //    var landed = $("#Landed").val();
-                //    var totalsell = $("#value").val();
-
-                //    if (landed != null && landed != NaN && totalsell != null && totalsell != NaN) {
-
-                //        var margindoller = Number(totalsell) - Number(landed)
-                //        $("#MarginUSD").val(margindoller)
-
-                //        var marginpe = ((Number(margindoller) / Number(landed)) * 100).toFixed(2)
-                //        $("#marginper").val(marginpe)
-                //    }
-
-                //}
-
+               
             </script>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $("#FilterBtn").click(function () {
-            $("#FilterSection").slideToggle("slow");
-        });
-    });
-</script>
+
 
 <script>
     $(document).ready(function () {
         $("#chartboxbtn").click(function () {
             $("#chartboxSection").slideToggle("slow");
         });
-
-
-
-
-
     });
 </script>
 
-@*<script>
-        (function ($) {
-            $(function () {
-                window.fs_test = $('.test').fSelect();
-            });
-        })(jQuery);
-    </script>*@
-@*<script>
-
-        $('#datetime').datetimepicker({
-            format: 'MM/DD/YYYY H:mm',
-        });
-        $('#datepicker').datetimepicker({
-            format: 'MM/DD/YYYY',
-        });
-        $('#timepicker').datetimepicker({
-            format: 'h:mm A',
-        });
-
-        $('#basic').select2({
-            theme: "bootstrap"
-        });
-        $('#basic1').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic2').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic3').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic4').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic5').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic6').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic7').select2({
-            theme: "bootstrap"
-        });
-
-        $('#basic8').select2({
-            theme: "bootstrap"
-        });
-
-        $('#multiple').select2({
-            theme: "bootstrap"
-        });
-
-        $('#multiple-states').select2({
-            theme: "bootstrap"
-        });
-
-        $('#tagsinput').tagsinput({
-            tagClass: 'badge-info'
-        });
-
-        $(function () {
-            $("#slider").slider({
-                range: "min",
-                max: 100,
-                value: 40,
-            });
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [75, 300]
-            });
-        });
-    </script>*@
 
 
 
 
 
 <script type="text/javascript">
-
-
     $(document).ready(function () {
         $('.scrollbar-inner').scrollbar();
     });

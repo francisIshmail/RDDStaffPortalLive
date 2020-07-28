@@ -607,6 +607,8 @@
     <Content Include="Scripts\datapicker-separate\datepicker.all.min.js" />
     <Content Include="Scripts\datapicker-separate\datepicker.css" />
     <Content Include="Scripts\datapicker-separate\datepicker.en.js" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.css" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.min.js" />
