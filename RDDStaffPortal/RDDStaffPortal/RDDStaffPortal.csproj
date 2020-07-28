@@ -170,7 +170,6 @@
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\SAP\Controllers\SalesOrderController.cs" />
-    <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -719,8 +718,7 @@
     <Content Include="Areas\Admin\Views\Departments\GetDepList.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\ExpenseSheet.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\TrailBalance.cshtml" />
-    <Content Include="Areas\SAP\Views\RDD_PV\Index.cshtml" />
-    <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
+    <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

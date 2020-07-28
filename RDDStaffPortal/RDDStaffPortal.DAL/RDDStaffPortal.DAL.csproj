@@ -44,7 +44,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -100,7 +99,6 @@
     <Compile Include="DataModels\Report\RDD_TrailBalance.cs" />
     <Compile Include="DataModels\SAP\RDD_OSOR.cs" />
     <Compile Include="DataModels\SAP\RDD_SOR1.cs" />
-    <Compile Include="DataModels\Voucher\RDD_PV.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HR\BUCountriesDbOperations.cs" />
@@ -126,12 +124,17 @@
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
     <Compile Include="SAP\SalesOrder_DBOperation.cs" />
     <Compile Include="SendMail.cs" />
-    <Compile Include="Voucher\RDD_PV_VoucherDbOperation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataModels\Voucher\" />
+    <Folder Include="Voucher\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

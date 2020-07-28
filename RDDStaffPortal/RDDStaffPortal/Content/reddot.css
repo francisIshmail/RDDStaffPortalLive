@@ -7876,8 +7876,8 @@ body {
 }
 
     .panel .panel-heading {
-        background: #ed1b24 !important; /*#266091;*/ 
-            padding: 4px 10px;
+        background: #266091;
+        padding: 4px 10px;
         font-size: 16px;
         color: #fff;
         width: 100%;
@@ -8097,6 +8097,7 @@ table.table {
 .smform-section .form-group {
     padding: 2px 0;
 }
+
 
 .icon-preview.userdetilsicon {
     position: absolute;
@@ -8993,14 +8994,15 @@ li.sortable-placeholder {
 }
 
 .allwidgets .card-title {
-    font-size: 15px !important; /*13px !important;*/
+    font-size: 13px !important;
 }
+
 .allwidgets .card-body {
     padding: 10px;
 }
 
 .allwidgets h5 {
-    font-size: 15px !important; /*nikhilesh12px !important;*/
+    font-size: 12px !important;
 }
 
 .allwidgets h3 {
@@ -9068,8 +9070,11 @@ li.sortable-placeholder {
 .quickmenu {
     position: absolute;
     right: 10px;
-    top: 1px;
-    /*top: 10px;*/
+    top: 10px;
+}
+
+.nav-collapse li {
+    position: relative
 }
 
 .flag {
@@ -10442,8 +10447,8 @@ img.fnone {
         border: 2px solid #dce4ec;
         color: #34495e;
         cursor: pointer;
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
+        line-height: 20px;
         text-align: left;
         background: #FFFFFF;
         overflow: hidden;
@@ -10545,6 +10550,20 @@ img.fnone {
                 display: inline-block;
                 padding: 0 10px;
             }
+
+.reddotTableCell .file-upload {
+    font-size: 10px !important;
+}
+
+.reddotTableCell .file-select {
+    height: 23px !important;
+    line-height: 22px !important;
+}
+
+.reddotTableCell .file-select-button {
+    line-height: 22px !important;
+}
+
 .font-11px .form-group label {
     font-size: 11px !important;
 }
@@ -10569,8 +10588,9 @@ img.fnone {
 
 @media (min-width: 768px) {
     .col-md-1 {
-        width: auto !important;
-    }}
+        width: auto;
+    }
+}
 
 .excel-btn {
     vertical-align: middle;
@@ -10613,4 +10633,42 @@ img.fnone {
     margin-bottom: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
+}
+
+.btn-sm {
+    padding: 5px 13px;
+}
+
+.form-radio-sign {
+    font-size: 13px !important;
+    margin-bottom: .2rem;
+    font-weight: 600;
+}
+
+.header-bg {
+    background: #f5f7f9;
+    border-bottom: 1px solid #ebecec !important;
+    padding: 5px 10px;
+}
+
+.smform-section .form-control-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-append > .btn, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-prepend > .input-group-text {
+    font-size: 0.700rem !important;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    z-index: 9999 !important;
+    overflow: visible !important;
+    position: absolute;
+}
+
+.mar-min3 {
+    margin-top: -3px;
+}
+
+.panel-red-border {
+    border: 1px solid #e7483e !important;
+}
+
+.nav-pills .nav-link {
+    padding: 1px 10px;
 }

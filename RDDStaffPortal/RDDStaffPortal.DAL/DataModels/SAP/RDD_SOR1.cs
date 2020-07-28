@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RDDStaffPortal.DAL.DataModels.SAP
 {
-    class RDD_SOR1
+    class RDD_SOR2
     {
 
         public Int64 SO_LineId { get; set; }
