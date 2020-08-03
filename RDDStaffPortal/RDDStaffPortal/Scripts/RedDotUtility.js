@@ -38,9 +38,9 @@ function RdotAlerterrDt() {
 }
 
 function RdotAlerterrtxt1(txt) {
-   // swal({
+    // swal({
 
-    swal("Warning",'<p style="font-size: 12px;text-align:center">' + txt + '</p>', "warning")
+    swal("Warning", '<p style="font-size: 12px;text-align:center">' + txt + '</p>', "warning")
 
     //    title: "Are you sure?",
     //    text: "Your will not be able to recover this imaginary file!",
@@ -53,7 +53,7 @@ function RdotAlerterrtxt1(txt) {
 }
 
 
-function  RdotAlerterrtxt(txt) {
+function RdotAlerterrtxt(txt) {
     Swal.queue([{
         type: 'error',
         title: 'Oops...',
@@ -212,14 +212,14 @@ function RdottableNDW(tblid, url1, colms) {
 
     $('#' + tblid + '_length').hide();
 
-   // $("div.dataTables_filter").append($("<button  id='capture' value='true' class='hb2Smf'><i style='font-size:20px;color:#4285F4' class='fa fa-microphone'></i></button>"));
+    // $("div.dataTables_filter").append($("<button  id='capture' value='true' class='hb2Smf'><i style='font-size:20px;color:#4285F4' class='fa fa-microphone'></i></button>"));
 }
 
 function RdottableNDW1(tblid, url1, colms) {
-   
+
     var table = $('#' + tblid + '').DataTable({
         "ColumnDefs": [{ "searchable": true, "orderable": true, "targets": [0] }],
-       
+
         "order": [[0, 'asc']],
         //"scrollY": true,
         //  "scrollX": true,
@@ -228,7 +228,7 @@ function RdottableNDW1(tblid, url1, colms) {
         "ordering": true,
         "info": true,
         "dataSrc": "",
-      
+
         "language":
         {
             "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
@@ -240,10 +240,10 @@ function RdottableNDW1(tblid, url1, colms) {
             // 'pdf',
             {
                 text: '<i class="fa fa-fa fa-recycle"></i>',
-               
+
                 attr: {
                     id: 'btnrelod'
-                    
+
                 },
                 action: function () {
                     table.ajax.reload();
@@ -269,18 +269,18 @@ function RdottableNDW1(tblid, url1, colms) {
         }
     });
 
-   
+
 
     $('div.dataTables_filter input').addClass('form-control input-sm');
 
     $('#' + tblid + '_length').hide();
 
     $("div.dataTables_filter").append($("<button  id='capture' value='true' class='hb2Smf'><i style='font-size:20px;color:#4285F4' class='fa fa-microphone'></i></button>"));
-    
+
 }
 
 function RdottableDash(tblid, url1, colms) {
-    $('#' + tblid+'').DataTable({
+    $('#' + tblid + '').DataTable({
         "searching": false,
         "processing": true,
         "serverSide": true,
@@ -295,7 +295,7 @@ function RdottableDash(tblid, url1, colms) {
 
 
 
-function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
+function RdottableNDWPara1(tblid, url1, colms, Code, pageL) {
     var newrow = {
         Code: Code
     }
@@ -305,7 +305,7 @@ function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
         //"scrollY": true,
         //  "scrollX": true,
         "filter": true,
-       // "paging": true,
+        // "paging": true,
         "pageLength": pageL,
         "ordering": true,
         "info": false,
@@ -322,18 +322,18 @@ function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
             //}
         },
         "dom": 'lBfrtip',
-       "pagingType":"simple",
-       // "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]], 
+        "pagingType": "simple",
+        // "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]], 
         "buttons": [
-           
+
             {
                 text: 'Reload Data',
                 attr: {
                     id: 'btnreload',
                     style: 'display:none;'
-                   
+
                 },
-                className:'reloadcss',
+                className: 'reloadcss',
                 action: function () {
                     table.ajax.reload();
                 },
@@ -355,9 +355,9 @@ function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
         "aoColumns": colms
     });
 
-    
+
     $('#txtsearch').keyup(function () {
-        table.search($(this).val()).draw(); 
+        table.search($(this).val()).draw();
         $("#product  li").draggable({
 
             // brings the item back to its place when dragging is over
@@ -377,13 +377,13 @@ function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
             stop: function (event, ui) {
                 //alert('stop: dropped=' + ui.helper.data('dropped'));
                 $(this).removeClass("active").closest("#product").removeClass("active");
-               
+
             }
         });
-        
-       
+
+
     })
-    
+
 
     var delay = (function () {
         var timer = 0;
@@ -393,13 +393,13 @@ function RdottableNDWPara1(tblid, url1, colms, Code,pageL) {
         };
     })();
 
-    
 
-   $(".dataTables_filter").hide();
+
+    $(".dataTables_filter").hide();
 
     $('#' + tblid + '_length').hide();
 
-    
+
 }
 var RdotMMNames1 = ["01", "02", "03", "04", "05", "06",
     "07", "08", "09", "10", "11", "12"];
@@ -617,7 +617,7 @@ function RdotTableRowDel(tbl, btndel) {
     });
 }
 function RdotDropimg(ids, url) {
-    
+
     $.getJSON(url).done(function (data) {
         $('#' + ids + '').empty();
         $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
@@ -651,7 +651,7 @@ function RdotDropimg(ids, url) {
 
 
 
-function RdotDropimg1(ids, url,path) {
+function RdotDropimg1(ids, url, path) {
     $.getJSON(url).done(function (data) {
         $('' + ids + '').empty();
         $('' + ids + '').append('<option value="0" selected="">-Select-</option>');
@@ -788,7 +788,7 @@ function RedtDot_CheckAuthorization(url) {
         async: false,
         cache: false,
         type: "POST",
-        data:data,
+        data: data,
         url: "/CheckAuthorization",
         dataType: 'Json',
         contentType: "Application/json",
@@ -826,13 +826,13 @@ function RedDot_Button_New_HideShow() {
 }
 
 
-function RedDot_Table_Attribute(tr,tblDt,count1,tblclass,hdnid) {
+function RedDot_Table_Attribute(tr,tblDt,count1,tblclass) {
     var i = 0;    
     $(tblclass).each(function () {
         while (tblDt.length > i) {
             tr.find('.Abcd input[id^="' + tblDt[i] + '"]').attr("id", '' + tblDt[i] + '' + count1);
             tr.find('.Abcd input[id^="' + tblDt[i] + '"]').attr("name", '' + tblDt[i] + '' + count1);
-            tr.find('.Abcd input[id^="' + tblDt[i] + '"]').val('');                   
+            tr.find('.Abcd input[id^="' + tblDt[i] + '"]').val('');
             i++;
         }
         tr.find('.Abcd input[id^="' + tblDt[0] + '"]').val(count1);
@@ -909,8 +909,51 @@ function applyAutoComplete2(ids, hdnid,url) {
     })
 }
 
-function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {      
-    tr.remove();   
+function applyAutoComplete2(ids, hdnid) {
+    $(ids).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                async: false,
+                cache: false,
+                url: "/GetUserListAuto",
+                type: "POST",
+                dataType: "json",
+                data: { Prefix: request.term },
+                success: function (data) {
+                    if (data.length > 0) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.CodeName,
+                                value: item.CodeName,
+                                val1: item.Code
+
+                            };
+                        }))
+                    } else {
+                        $(ids).val('');
+                        $(hdnid).val(-1);
+                        response([{ label: 'No results found.', value: 'No results found.' }]);
+                    }
+                }
+            });
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(hdnid).val(u.item.val1);
+
+            }
+        },
+        minLength: 1
+    })
+}
+function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
+    tr.remove();
     var k = 1;
     $(tblclass).each(function () {         
         var i = 0;  
@@ -921,7 +964,6 @@ function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
         }
         $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k)             
         k++;
-       
     });
       
    
@@ -985,9 +1027,6 @@ function RedDot_DateRange(id) {
     var start = moment().subtract(29, 'days');
     var end = moment();
 
-    function cb(start, end) {
-        $('#'+ id+' span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
 
     $('#'+ id +'').daterangepicker({
         startDate: start,
