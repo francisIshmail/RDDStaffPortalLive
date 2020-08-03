@@ -955,8 +955,18 @@ function RedDot_tbldtpicker() {
     });
 }
 
+/* Table date formate dd-MM-yyyy get input date */
+function RedDot_Table_dateEdit(tr,date1, dtval) {
+    debugger
+    var now = new Date(tr.find(dtval).val());
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+    tr.find(date1).val(today);
+}
 /* date formate dd-MM-yyyy get input date */
-function RedDot_dateEdit(date1, dtval) {       
+function RedDot_dateEdit(date1, dtval) { 
+   
     var now = new Date($(dtval).val());
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);

@@ -1,0 +1,212 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Employee_ConfigureList
+
+@{
+    ViewBag.Title = "EmployeeConfig";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Employee Configure</h4>
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive-lg">
+                                <div class="row">
+                                    <div class="col-xl-2 col-md-3">
+                                        <div class="form-group">
+                                            <label for="email2" class="width70px">User Role</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-3">
+                                        <div class="form-group">
+
+                                            <div class="select2-input">
+                                                <select class="form-control" id="Userid" name="basic">
+                                                    <option value="0">Select</option>
+                                                    <option value="self">Self</option>
+                                                    <option value="HR">HR</option>
+                                                    <option value="HeadOfFinance">Head Of Finance</option>
+
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-3 col-md-3">
+
+
+                                        <div class="form-group"><button type="button" id="btnSave" class="btn btn-info btn-sm mar-t2">Save</button></div>
+
+
+
+                                    </div>
+                                    @*<div class="col-md-1">
+                                            <div class="form-group padd-0">
+                                                <label for="email2" class="width100px"></label>
+                                                <div class="mar-t7"><button type="button" id="Btnsearch" class="btn btn-success btn-sm mar-t8">Search</button></div>
+                                            </div>
+
+
+                                        </div>*@
+
+
+
+
+                                </div> @*<div class="loader1"></div>*@
+
+                                
+                            <div id="EmpConfig">
+
+                                @{ Html.RenderAction("GetEmployeeConfig", "Employees", new { area = "HR" }); }
+
+                            </div>  
+                                   
+
+
+                                    
+                               
+
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#Userid').select2({
+            allowClear: true,
+            placeholder: '--Select--'
+
+        });
+
+
+        $(document).on("click", "input[type='checkbox']", function () {
+            debugger
+            if ($(this).val() == "true") {
+                $(this).val(false);
+                $(this).removeAttr('checked');
+            } else {
+                $(this).attr('checked', 'checked');
+                $(this).val(true)
+            }
+
+        })
+
+
+        $("#Userid").on("change", function () {
+            debugger
+           
+
+            $("#EmpConfig").load('@Url.Action("GetEmployeeConfig", "Employees", new { area = "HR" })');
+            UserRole = JSON.stringify({ 'UserRole': $('#Userid').val() });
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '/GetEmpConfigList',
+                data: UserRole,
+                success: function (response) {
+                    debugger
+                    var k = 0;
+                    var arr = [];
+                    while (k < response.Table.length) {
+                        arr.push(response.Table[k].ColumName);                       
+                        k++;
+                    }
+
+                    $(".mar-b10").each(function (index, item) {
+                        var ColumNameTxt = $(this).find("[id='Inphdn']").val()+'D';
+                        if (jQuery.inArray(ColumNameTxt, arr) !== -1) {
+                            $(this).find("[id='ChkDash']").val(false);
+                            $(this).find("[id='ChkDash']").removeAttr('checked');
+                        }
+  
+                    })
+
+                },
+                failure: function (response) {
+                    RedDotAlert_Error(response);
+                }
+            });
+        })
+
+
+        $("#btnSave").on("click", function () {
+            if ($('#Userid').val() == "0") {
+                RedDotAlert_Error("Select User Role");
+                return;
+            }
+            var EmpConfig = {
+                UserRole: $('#Userid').val() ,
+                Employee_Configs:[],
+            }
+           
+           
+            $(".mar-b10").each(function (index, item) {
+                debugger
+                var ColumNameTxt = $(this).find("[id='Inphdn']").val();
+                var IsActiveTxt = $(this).find("[id='ChkDash']").val();
+                var Employee_Config = {
+                    ColumnName: ColumNameTxt
+                };
+                if (ColumNameTxt != undefined && IsActiveTxt!="true")
+                    EmpConfig.Employee_Configs.push(Employee_Config);
+            });
+
+
+            EmpConfig = JSON.stringify({ 'EmpConfig': EmpConfig });
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '/SaveEmpConfig',
+                data: EmpConfig,
+                success: function (response) {
+                    if (response == true) {
+                        RedDotAlert_Success('Save Succcesfully');
+                    }
+                 else {
+                    RedDotAlert_Error('Error Occur');
+                }
+                },
+                failure: function (response) {
+                    RedDotAlert_Error(response);
+                }
+            });
+
+
+
+        })
+
+
+    })
+</script>
+

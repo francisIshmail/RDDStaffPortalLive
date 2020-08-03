@@ -743,6 +743,9 @@
     <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
+    <Content Include="App_Code\GetEmpConfig.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

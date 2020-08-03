@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Documents;
 using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
@@ -1086,6 +1088,123 @@ namespace RDDStaffPortal.DAL.HR
 
         }
 
+        public DataSet GetDrop1(string username)
+        {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
+                      new SqlParameter("@p_username",username),
+                };
+                dsModules = Com.ExecuteDataSet("Emp_Drop_Fill", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+
+            return dsModules;
+        }
+        public DataSet GetDrop2(string username,int? EMPID)
+        {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
+                    new SqlParameter("@p_EmployeeId",EMPID),
+                      new SqlParameter("@p_username",username),
+                };
+                dsModules = Com.ExecuteDataSet("Emp_Drop_Fill", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+
+            return dsModules;
+        }
+
+        public DataSet GetEmployeeConfigure(string UserRole,string type)
+        {
+           
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
+                     new SqlParameter("@p_flag",type),
+                      new SqlParameter("@p_username",UserRole),
+                };
+                dsModules = Com.ExecuteDataSet("RDD_EMPLOYEES_DISBALE", CommandType.StoredProcedure, parm);
+                
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+
+            return dsModules;
+        }
+
+        public bool EmployeeConfigure(Employee_Configure _Configure)
+        {
+            bool t = false;
+            var k = 0;
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] ParaDet2 = {
+                                                 new SqlParameter("@p_flag","II"),
+                                            new SqlParameter("@p_userrole",_Configure.UserRole),                                         
+                            };
+                   t= Com.ExecuteNonQuery("RDD_Employess_Insert_Delete", ParaDet2);
+                    if (_Configure.Employee_Configs != null)
+                    {
+                        t = true;
+                        while (_Configure.Employee_Configs.Count > k)
+                        {
+                            SqlParameter[] ParaDet1 = {
+                                                 new SqlParameter("@p_flag","I"),
+                                            new SqlParameter("@p_userrole",_Configure.UserRole),
+                                            new SqlParameter("@p_columname",_Configure.Employee_Configs[k].ColumnName),
+
+
+                            };
+
+                            var det1 = Com.ExecuteNonQuery("RDD_Employess_Insert_Delete", ParaDet1);
+                            if (det1 == false)
+                            {
+                                t = false;
+                            }
+                            k++;
+                        }
+                    }                                      
+                   
+                        scope.Complete();
+                    
+                    
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                t = false;
+                if (_Configure.Employee_Configs == null)
+                {
+                    t = true;
+                }
+            }
+           
+
+            return t;
+        }
         public bool Update(string useremail, string fname, string lname)
         {
           
@@ -1186,6 +1305,8 @@ namespace RDDStaffPortal.DAL.HR
             //return t;
 
         }
+
+
     }
 }
 

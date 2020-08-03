@@ -78,7 +78,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public string Ext_no { get; set; }
         public string IM_Id { get; set; }
         public string Marital_Status { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? DOB { get; set; }
         public string Citizenship { get; set; }
 
         //  public List<SelectListItem> Citizenshiplist { get; set; }
@@ -132,13 +132,13 @@ namespace RDDStaffPortal.DAL.DataModels
         public int Empstatus { get; set; }
         public string type_of_employement { get; set; }
 
-        public DateTime Joining_Date { get; set; }
+        public DateTime? Joining_Date { get; set; }
 
         public int No_child { get; set; }
 
         public string National_id { get; set; }
 
-        public DateTime Contract_Start_date { get; set; }
+        public DateTime? Contract_Start_date { get; set; }
         public string Note { get; set; }
 
 
@@ -157,9 +157,9 @@ namespace RDDStaffPortal.DAL.DataModels
         public int EId { get; set; }
         public string Type { get; set; }
         public string Institute { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string Description { get; set; }
         public int Score { get; set; }
         public List<EmpInfoProEdunew> EmpInfoProEdus { get; set; }
