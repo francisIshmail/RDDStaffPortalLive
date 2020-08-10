@@ -194,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
+    <Content Include="Content\timeout-dialog.css" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
@@ -685,6 +686,7 @@
     <Content Include="Scripts\sweetalret\sweetalert2.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.css" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.js" />
+    <Content Include="Scripts\timeout-dialog.js" />
     <Content Include="Scripts\VoiceRec\controller.js" />
     <Content Include="Scripts\VoiceRec\jquery.min.js" />
     <Content Include="Scripts\VoiceRec\speechRecognition.js" />

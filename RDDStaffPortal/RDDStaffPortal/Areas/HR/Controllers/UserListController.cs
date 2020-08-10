@@ -31,19 +31,31 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
             string loginuser = User.Identity.Name;
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-            DataSet ds = Db.myGetDS("EXEC RDD_GetUserType '"+loginuser+"'");
-            List<RDD_EmployeeRegistration> loginuserList = new List<RDD_EmployeeRegistration>();
+            //DataSet ds = Db.myGetDS("EXEC RDD_GetUserType '"+loginuser+"'");
+            //List<RDD_EmployeeRegistration> loginuserList = new List<RDD_EmployeeRegistration>();
+            //if (ds.Tables.Count > 0)
+            //{
+            //    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            //    {
+            //        RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
+            //        EmpLst.IsUserInRoleHeadOfFinance = ds.Tables[0].Rows[i]["IsFinanceUser"].ToString();
+            //        EmpLst.IsUserInRoleHR = ds.Tables[0].Rows[i]["IsHRUser"].ToString();                   
+            //        loginuserList.Add(EmpLst);
+            //    }
+            //}
+
+            DataSet ds = Db.myGetDS("EXEC RDD_EMPLOYEES_DISBALE 'III','" + User.Identity.Name+"'");
             if (ds.Tables.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
-                    EmpLst.IsUserInRoleHeadOfFinance = ds.Tables[0].Rows[i]["IsFinanceUser"].ToString();
-                    EmpLst.IsUserInRoleHR = ds.Tables[0].Rows[i]["IsHRUser"].ToString();                   
-                    loginuserList.Add(EmpLst);
+                    var columName = (ds.Tables[0].Rows[i]["ColumName"]).ToString();
+                    ViewData.Add(columName, true);
+
                 }
             }
-            ViewBag.loginuserList = loginuserList;
+
+            //ViewBag.loginuserList = loginuserList;
             
 
             string Temppath = Server.MapPath("/Images/TempLogo/defaultimg.jpg");

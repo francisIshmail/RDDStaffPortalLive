@@ -27,468 +27,472 @@ namespace RDDStaffPortal.DAL.HR
             string result = string.Empty;
             try
             {
-                using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    if (connection.State == ConnectionState.Closed)
+                    using (var connection = new SqlConnection(Global.getConnectionStringByName("tejSAP")))
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlTransaction transaction;
+                        using (transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                byte[] file;
+
+
+                                using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
+                                {
+                                    using (var reader = new BinaryReader(stream))
+                                    {
+                                        file = reader.ReadBytes((int)stream.Length);
+                                    }
+                                }
+
+
+
+                                Int32 Emp_ID = 0;
+
+                                SqlCommand cmd = new SqlCommand();
+
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                // cmd.CommandText = "RDD_Employees_InsertUpdate";
+                                cmd.CommandText = "RDD_Employees_InsertUpdate";
+                                cmd.Connection = connection;
+                                cmd.Transaction = transaction;
+
+                                cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.EmployeeId);
+
+                                //.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary,1000).Value = file;
+
+                                cmd.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary, file.Length).Value = file;
+
+                                cmd.Parameters.Add("@p_LogoType", SqlDbType.VarChar, 20).Value = EmpData.LogoType;
+
+                                //cmd.Parameters.Add("@p_ePath", SqlDbType.VarBinary, 1000).Value = EmpData.ImagePath;
+                                cmd.Parameters.Add("@p_FName", SqlDbType.VarChar, 150).Value = EmpData.FName;
+
+                                cmd.Parameters.Add("@p_LName", SqlDbType.VarChar, 150).Value = EmpData.LName;
+                                cmd.Parameters.Add("@p_Email", SqlDbType.VarChar, 100).Value = EmpData.Email;
+                                cmd.Parameters.Add("@p_Gender", SqlDbType.VarChar, 25).Value = EmpData.Gender;
+                                cmd.Parameters.Add("@p_Current_Address", SqlDbType.VarChar, 200).Value = EmpData.Current_Address;
+                                cmd.Parameters.Add("@p_Permanent_Address", SqlDbType.VarChar, 200).Value = EmpData.Permanent_Address;
+                                cmd.Parameters.Add("@p_Contact_No", SqlDbType.VarChar, 25).Value = EmpData.Contact_No;
+                                // cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 25).Value = Emp.Ext_no;
+                                cmd.Parameters.Add("@p_imgbool", SqlDbType.VarChar, 25).Value = EmpData.imgbool;
+
+                                if (EmpData.Ext_no == null)
+                                {
+                                    cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 252).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 25).Value = EmpData.Ext_no;
+                                }
+
+                                if (EmpData.IM_Id == null)
+                                {
+                                    cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = EmpData.IM_Id;
+                                }
+                                cmd.Parameters.Add("@p_ManagerId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerId);
+
+
+
+                                cmd.Parameters.Add("@p_ManagerL2Id", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerIdL2);
+                                cmd.Parameters.Add("@p_JobBandId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobBandId);
+                                cmd.Parameters.Add("@p_JobGradeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobGradeId);
+
+
+
+                                if (EmpData.About == null)
+                                {
+                                    cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = EmpData.About;
+                                }
+                                // cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = Emp.IM_Id;
+                                cmd.Parameters.Add("@p_Marital_Status", SqlDbType.VarChar, 25).Value = EmpData.Marital_Status;
+
+                                cmd.Parameters.Add("@p_DOB", SqlDbType.DateTime).Value = EmpData.DOB;
+
+
+                                cmd.Parameters.Add("@p_Citizenship", SqlDbType.VarChar, 25).Value = EmpData.Citizenship;
+                                cmd.Parameters.Add("@p_DesigId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.DesigId);
+                                cmd.Parameters.Add("@p_DeptId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.DeptId);
+                                ///cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = Emp.Emergency_Contact;
+                                if (EmpData.Emergency_Contact == null)
+                                {
+                                    cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = EmpData.Emergency_Contact;
+                                }
+                                //cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = Emp.passport_no;
+
+                                if (EmpData.passport_no == null)
+                                {
+                                    cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = EmpData.passport_no;
+                                }
+                                cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
+                                // cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 10).Value = Emp.ManagerName;
+
+                                //if (EmpData.ManagerName == null)
+                                //{
+                                //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = DBNull.Value;
+                                //}
+                                //else
+                                //{
+                                //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = EmpData.ManagerName;
+                                //}
+                                cmd.Parameters.Add("@p_CountryCode", SqlDbType.VarChar, 10).Value = EmpData.CountryCodeName;
+                                cmd.Parameters.Add("@p_EmployeeNo", SqlDbType.VarChar, 10).Value = EmpData.EmployeeNo;
+
+                                cmd.Parameters.Add("@p_Empstatus", SqlDbType.Int).Value = Convert.ToInt16(EmpData.StatusId);
+                                cmd.Parameters.Add("@p_EmpType", SqlDbType.VarChar, 150).Value = EmpData.type_of_employement;
+                                cmd.Parameters.Add("@p_Joining_Date", SqlDbType.DateTime).Value = EmpData.Joining_Date;
+                                cmd.Parameters.Add("@p_no_of_child", SqlDbType.Int).Value = Convert.ToInt16(EmpData.No_child);
+                                cmd.Parameters.Add("@p_NationalId", SqlDbType.VarChar, 25).Value = EmpData.National_id;
+                                cmd.Parameters.Add("@p_Contract_Start_date", SqlDbType.DateTime).Value = EmpData.Contract_Start_date;
+                                // cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = Emp.Note;
+
+                                if (EmpData.Note == null)
+                                {
+                                    cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = EmpData.Note;
+                                }
+
+                                cmd.Parameters.Add("@p_IsActive", SqlDbType.Bit).Value = EmpData.IsActive;
+                                cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+
+
+                                cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
+                                //result = cmd.Parameters["@p_Response"].Value.ToString();
+
+
+                                cmd.ExecuteNonQuery();
+                                Emp_ID = Convert.ToInt32(cmd.Parameters["@p_EmployeeIdOUT"].Value.ToString());
+
+                                response = cmd.Parameters["@p_Response"].Value.ToString();
+
+                                cmd.Dispose();
+
+                                cmd = new SqlCommand();
+
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.CommandText = "RDD_Employees_Fin_InsertUpdate";
+                                cmd.Connection = connection;
+                                cmd.Transaction = transaction;
+
+                                cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+                                cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = Convert.ToInt16(EmpData.FId);
+
+                                //cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = Emp.Currency;
+                                if (EmpData.Currency == null)
+                                {
+                                    cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = EmpData.Currency;
+                                }
+
+                                //if (Emp.Salary == null)
+                                //{
+                                //    cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = DBNull.Value;
+                                //}
+                                //else
+                                //{
+                                //    cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = Emp.Salary;
+                                //}
+
+
+                                cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = EmpData.Salary;
+
+
+                                if (EmpData.Salary_Start_Date.Year < (DateTime.Now.Year - 1))
+                                {
+                                    cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = DBNull.Value; ;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = EmpData.Salary_Start_Date;
+                                }
+
+
+                                if (EmpData.Remark == null)
+                                {
+                                    cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = EmpData.Remark;
+                                }
+
+                                // cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = Emp.Remark;
+                                // cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = Emp.Account_No;
+                                if (EmpData.Account_No == null)
+                                {
+                                    cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = EmpData.Account_No;
+                                }
+
+                                //cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = Emp.Bank_Name;
+                                if (EmpData.Bank_Name == null)
+                                {
+                                    cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = EmpData.Bank_Name;
+                                }
+                                //cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = Emp.Branch_Name;
+
+                                if (EmpData.Branch_Name == null)
+                                {
+                                    cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = EmpData.Branch_Name;
+                                }
+
+                                //cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = Emp.Bank_Code;
+                                if (EmpData.Bank_Code == null)
+                                {
+                                    cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = EmpData.Bank_Code;
+                                }
+                                //cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = Emp.Tax_no;
+                                if (EmpData.Tax_no == null)
+                                {
+                                    cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = EmpData.Tax_no;
+                                }
+                                // cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = Emp.Insurance_no;
+                                if (EmpData.Insurance_no == null)
+                                {
+                                    cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = EmpData.Insurance_no;
+                                }
+                                // cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = Emp.other_ref_no;
+                                if (EmpData.other_ref_no == null)
+                                {
+                                    cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = EmpData.other_ref_no;
+                                }
+
+                                cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
+
+
+                                cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+
+
+                                cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                cmd.ExecuteNonQuery();
+                                response = cmd.Parameters["@p_Response"].Value.ToString();
+
+                                cmd.Dispose();
+
+
+                                if (DocumentList != null)
+                                {
+                                    for (int i = 0; i < DocumentList.Count; i++)
+                                    {
+                                        cmd = new SqlCommand();
+                                        cmd.CommandType = CommandType.StoredProcedure;
+                                        cmd.CommandText = "RDD_Employees_Doc_InsertUpdate";
+                                        cmd.Connection = connection;
+                                        cmd.Transaction = transaction;
+
+                                        // EmpData.DocumentList[i].DcumenName,
+                                        //  EmpData.DocumentList[i].DocPath
+                                        cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+
+                                        cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = DocumentList[i].DId;
+
+                                        if (DocumentList[i].DcumenName == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 50).Value = DocumentList[i].DcumenName;
+                                        }
+                                        if (DocumentList[i].DocPath == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DocumentList[i].DocPath;
+                                        }
+                                        cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
+                                        cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+
+                                        cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+
+                                        cmd.ExecuteNonQuery();
+                                        response = cmd.Parameters["@p_Response"].Value.ToString();
+
+                                        cmd.Dispose();
+                                    }
+                                }
+
+
+                                if (EmpInfoProEdu != null)
+                                {
+                                    for (int i = 0; i < EmpInfoProEdu.Count; i++)
+                                    {
+
+                                        cmd = new SqlCommand();
+
+                                        cmd.CommandType = CommandType.StoredProcedure;
+                                        cmd.CommandText = "RDD_Employees_EduProf_InsertUpdate";
+                                        cmd.Connection = connection;
+                                        cmd.Transaction = transaction;
+
+                                        cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+
+                                        cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = EmpInfoProEdu[i].EId;
+
+                                        if (EmpInfoProEdu[i].Type == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Type", SqlDbType.VarChar, 150).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Type", SqlDbType.VarChar, 50).Value = EmpInfoProEdu[i].Type;
+                                        }
+                                        if (EmpInfoProEdu[i].Institute == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = EmpInfoProEdu[i].Institute;
+                                        }
+                                        // cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = EmpInfoProEdu[i].Institute;
+
+                                        cmd.Parameters.Add("@p_Start_date", SqlDbType.DateTime).Value = EmpInfoProEdu[i].StartDate;
+
+
+
+                                        cmd.Parameters.Add("@p_End_date", SqlDbType.DateTime).Value = EmpInfoProEdu[i].EndDate;
+
+
+                                        if (EmpInfoProEdu[i].Description == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = EmpInfoProEdu[i].Description;
+
+                                        }
+                                        if (EmpInfoProEdu[i].Score == null)
+                                        {
+                                            cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = EmpInfoProEdu[i].Score;
+
+                                        }
+
+                                        cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
+
+                                        // cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = EmpInfoProEdu[i].Description;
+                                        // cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = EmpInfoProEdu[i].Score;
+                                        cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
+
+                                        cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                        //cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = Emp.CreatedBy;
+
+                                        cmd.ExecuteNonQuery();
+
+
+                                        response = cmd.Parameters["@p_Response"].Value.ToString();
+                                        cmd.Dispose();
+                                    }
+                                }
+
+
+                                cmd = new SqlCommand();
+
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.CommandText = "RDD_SetEmployeeProfileCompletedPercentage";
+
+                                cmd.Connection = connection;
+                                cmd.Transaction = transaction;
+
+                                cmd.Parameters.Add("@EmployeeId", SqlDbType.Int).Value = Emp_ID;
+
+                                cmd.ExecuteNonQuery();
+                                cmd.Dispose();
+
+
+
+
+
+
+                                transaction.Commit();
+
+
+
+
+                            }
+
+                            catch (Exception ex)
+                            {
+                                response = "Error occured : " + ex.Message;
+                                transaction.Rollback();
+                            }
+                            finally
+                            {
+                                if (connection.State == ConnectionState.Open)
+                                {
+                                    connection.Close();
+                                }
+                            }
+                        }
                     }
-                    SqlTransaction transaction;
-                    using (transaction = connection.BeginTransaction())
-                    {
-                        try
-                        {
-                            byte[] file;
-
-
-                            using (var stream = new FileStream(EmpData.ImagePath1, FileMode.Open, FileAccess.Read))
-                            {
-                                using (var reader = new BinaryReader(stream))
-                                {
-                                    file = reader.ReadBytes((int)stream.Length);
-                                }
-                            }
-
-
-
-                            Int32 Emp_ID = 0;
-
-                            SqlCommand cmd = new SqlCommand();
-
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            // cmd.CommandText = "RDD_Employees_InsertUpdate";
-                            cmd.CommandText = "RDD_Employees_InsertUpdate";
-                            cmd.Connection = connection;
-                            cmd.Transaction = transaction;
-
-                            cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.EmployeeId);
-
-                            //.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary,1000).Value = file;
-
-                            cmd.Parameters.Add("@p_ImagePath", SqlDbType.VarBinary, file.Length).Value = file;
-
-                            cmd.Parameters.Add("@p_LogoType", SqlDbType.VarChar, 20).Value = EmpData.LogoType;
-
-                            //cmd.Parameters.Add("@p_ePath", SqlDbType.VarBinary, 1000).Value = EmpData.ImagePath;
-                            cmd.Parameters.Add("@p_FName", SqlDbType.VarChar, 150).Value = EmpData.FName;
-
-                            cmd.Parameters.Add("@p_LName", SqlDbType.VarChar, 150).Value = EmpData.LName;
-                            cmd.Parameters.Add("@p_Email", SqlDbType.VarChar, 100).Value = EmpData.Email;
-                            cmd.Parameters.Add("@p_Gender", SqlDbType.VarChar, 25).Value = EmpData.Gender;
-                            cmd.Parameters.Add("@p_Current_Address", SqlDbType.VarChar, 200).Value = EmpData.Current_Address;
-                            cmd.Parameters.Add("@p_Permanent_Address", SqlDbType.VarChar, 200).Value = EmpData.Permanent_Address;
-                            cmd.Parameters.Add("@p_Contact_No", SqlDbType.VarChar, 25).Value = EmpData.Contact_No;
-                            // cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 25).Value = Emp.Ext_no;
-                            cmd.Parameters.Add("@p_imgbool", SqlDbType.VarChar, 25).Value = EmpData.imgbool;
-
-                            if (EmpData.Ext_no == null)
-                            {
-                                cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 252).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Ext_no", SqlDbType.VarChar, 25).Value = EmpData.Ext_no;
-                            }
-
-                            if (EmpData.IM_Id == null)
-                            {
-                                cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = EmpData.IM_Id;
-                            }
-                            cmd.Parameters.Add("@p_ManagerId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerId);
-
-                            
-
-                            cmd.Parameters.Add("@p_ManagerL2Id", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerIdL2);
-                            cmd.Parameters.Add("@p_JobBandId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobBandId);
-                            cmd.Parameters.Add("@p_JobGradeId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.JobGradeId);
-
-
-
-                            if (EmpData.About == null)
-                            {
-                                cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_About", SqlDbType.VarChar, 1000).Value = EmpData.About;
-                            }
-                            // cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = Emp.IM_Id;
-                            cmd.Parameters.Add("@p_Marital_Status", SqlDbType.VarChar, 25).Value = EmpData.Marital_Status;
-
-                            cmd.Parameters.Add("@p_DOB", SqlDbType.DateTime).Value = EmpData.DOB;
-
-
-                            cmd.Parameters.Add("@p_Citizenship", SqlDbType.VarChar, 25).Value = EmpData.Citizenship;
-                            cmd.Parameters.Add("@p_DesigId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.DesigId);
-                            cmd.Parameters.Add("@p_DeptId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.DeptId);
-                            ///cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = Emp.Emergency_Contact;
-                            if (EmpData.Emergency_Contact == null)
-                            {
-                                cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Emergency_Contact", SqlDbType.VarChar, 25).Value = EmpData.Emergency_Contact;
-                            }
-                            //cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = Emp.passport_no;
-
-                            if (EmpData.passport_no == null)
-                            {
-                                cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_passport_no", SqlDbType.VarChar, 25).Value = EmpData.passport_no;
-                            }
-                            cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
-                            // cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 10).Value = Emp.ManagerName;
-
-                            //if (EmpData.ManagerName == null)
-                            //{
-                            //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = DBNull.Value;
-                            //}
-                            //else
-                            //{
-                            //    cmd.Parameters.Add("@p_ManagerName", SqlDbType.VarChar, 100).Value = EmpData.ManagerName;
-                            //}
-                            cmd.Parameters.Add("@p_CountryCode", SqlDbType.VarChar, 10).Value = EmpData.CountryCodeName;
-                            cmd.Parameters.Add("@p_EmployeeNo", SqlDbType.VarChar, 10).Value = EmpData.EmployeeNo;
-
-                            cmd.Parameters.Add("@p_Empstatus", SqlDbType.Int).Value = Convert.ToInt16(EmpData.StatusId);
-                            cmd.Parameters.Add("@p_EmpType", SqlDbType.VarChar, 150).Value = EmpData.type_of_employement;
-                            cmd.Parameters.Add("@p_Joining_Date", SqlDbType.DateTime).Value = EmpData.Joining_Date;
-                            cmd.Parameters.Add("@p_no_of_child", SqlDbType.Int).Value = Convert.ToInt16(EmpData.No_child);
-                            cmd.Parameters.Add("@p_NationalId", SqlDbType.VarChar, 25).Value = EmpData.National_id;
-                            cmd.Parameters.Add("@p_Contract_Start_date", SqlDbType.DateTime).Value = EmpData.Contract_Start_date;
-                            // cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = Emp.Note;
-
-                            if (EmpData.Note == null)
-                            {
-                                cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Note", SqlDbType.VarChar, 100).Value = EmpData.Note;
-                            }
-
-                            cmd.Parameters.Add("@p_IsActive", SqlDbType.Bit).Value = EmpData.IsActive;
-                            cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
-
-
-                            cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
-                            //result = cmd.Parameters["@p_Response"].Value.ToString();
-
-
-                            cmd.ExecuteNonQuery();
-                            Emp_ID = Convert.ToInt32(cmd.Parameters["@p_EmployeeIdOUT"].Value.ToString());
-
-                            response = cmd.Parameters["@p_Response"].Value.ToString();
-
-                            cmd.Dispose();
-
-                            cmd = new SqlCommand();
-
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.CommandText = "RDD_Employees_Fin_InsertUpdate";
-                            cmd.Connection = connection;
-                            cmd.Transaction = transaction;
-
-                            cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
-                            cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = Convert.ToInt16(EmpData.FId);
-
-                            //cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = Emp.Currency;
-                            if (EmpData.Currency == null)
-                            {
-                                cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Currency", SqlDbType.VarChar, 50).Value = EmpData.Currency;
-                            }
-
-                            //if (Emp.Salary == null)
-                            //{
-                            //    cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = DBNull.Value;
-                            //}
-                            //else
-                            //{
-                            //    cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = Emp.Salary;
-                            //}
-
-
-                            cmd.Parameters.Add("@p_Salary", SqlDbType.Int).Value = EmpData.Salary;
-
-
-                            if (EmpData.Salary_Start_Date.Year < (DateTime.Now.Year - 1))
-                            {
-                                cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = DBNull.Value; ;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Salary_Start_Date", SqlDbType.Date).Value = EmpData.Salary_Start_Date;
-                            }
-
-
-                            if (EmpData.Remark == null)
-                            {
-                                cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = EmpData.Remark;
-                            }
-
-                            // cmd.Parameters.Add("@p_Remark", SqlDbType.VarChar, 50).Value = Emp.Remark;
-                            // cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = Emp.Account_No;
-                            if (EmpData.Account_No == null)
-                            {
-                                cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Account_No", SqlDbType.VarChar, 50).Value = EmpData.Account_No;
-                            }
-
-                            //cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = Emp.Bank_Name;
-                            if (EmpData.Bank_Name == null)
-                            {
-                                cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Bank_Name", SqlDbType.VarChar, 50).Value = EmpData.Bank_Name;
-                            }
-                            //cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = Emp.Branch_Name;
-
-                            if (EmpData.Branch_Name == null)
-                            {
-                                cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Branch_Name", SqlDbType.VarChar, 50).Value = EmpData.Branch_Name;
-                            }
-
-                            //cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = Emp.Bank_Code;
-                            if (EmpData.Bank_Code == null)
-                            {
-                                cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Bank_Code", SqlDbType.VarChar, 50).Value = EmpData.Bank_Code;
-                            }
-                            //cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = Emp.Tax_no;
-                            if (EmpData.Tax_no == null)
-                            {
-                                cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Tax_no", SqlDbType.VarChar, 25).Value = EmpData.Tax_no;
-                            }
-                            // cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = Emp.Insurance_no;
-                            if (EmpData.Insurance_no == null)
-                            {
-                                cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_Insurance_no", SqlDbType.VarChar, 50).Value = EmpData.Insurance_no;
-                            }
-                            // cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = Emp.other_ref_no;
-                            if (EmpData.other_ref_no == null)
-                            {
-                                cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                            }
-                            else
-                            {
-                                cmd.Parameters.Add("@p_other_ref_no", SqlDbType.VarChar, 50).Value = EmpData.other_ref_no;
-                            }
-
-                            cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
-
-
-                            cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
-
-
-                            cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                            cmd.ExecuteNonQuery();
-                            response = cmd.Parameters["@p_Response"].Value.ToString();
-
-                            cmd.Dispose();
-
-
-                            if (DocumentList != null)
-                            {
-                                for (int i = 0; i < DocumentList.Count; i++)
-                                {
-                                    cmd = new SqlCommand();
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.CommandText = "RDD_Employees_Doc_InsertUpdate";
-                                    cmd.Connection = connection;
-                                    cmd.Transaction = transaction;
-
-                                    // EmpData.DocumentList[i].DcumenName,
-                                    //  EmpData.DocumentList[i].DocPath
-                                    cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
-
-
-                                    cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = DocumentList[i].DId;
-
-                                    if (DocumentList[i].DcumenName == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 150).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 50).Value = DocumentList[i].DcumenName;
-                                    }
-                                    if (DocumentList[i].DocPath == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Link", SqlDbType.VarChar, 150).Value = DocumentList[i].DocPath;
-                                    }
-                                    cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
-                                    cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
-
-                                    cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-
-                                    cmd.ExecuteNonQuery();
-                                    response = cmd.Parameters["@p_Response"].Value.ToString();
-
-                                    cmd.Dispose();
-                                }
-                            }
-
-
-                            if (EmpInfoProEdu != null)
-                            {
-                                for (int i = 0; i < EmpInfoProEdu.Count; i++)
-                                {
-
-                                    cmd = new SqlCommand();
-
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.CommandText = "RDD_Employees_EduProf_InsertUpdate";
-                                    cmd.Connection = connection;
-                                    cmd.Transaction = transaction;
-
-                                    cmd.Parameters.Add("@p_EmployeeId", SqlDbType.Int).Value = Emp_ID;
-
-
-                                    cmd.Parameters.Add("@p_Id", SqlDbType.Int).Value = EmpInfoProEdu[i].EId;
-
-                                    if (EmpInfoProEdu[i].Type == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Type", SqlDbType.VarChar, 150).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Type", SqlDbType.VarChar, 50).Value = EmpInfoProEdu[i].Type;
-                                    }
-                                    if (EmpInfoProEdu[i].Institute == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = EmpInfoProEdu[i].Institute;
-                                    }
-                                    // cmd.Parameters.Add("@p_Institute", SqlDbType.VarChar, 100).Value = EmpInfoProEdu[i].Institute;
-
-                                    cmd.Parameters.Add("@p_Start_date", SqlDbType.DateTime).Value = EmpInfoProEdu[i].StartDate;
-
-
-
-                                    cmd.Parameters.Add("@p_End_date", SqlDbType.DateTime).Value = EmpInfoProEdu[i].EndDate;
-
-
-                                    if (EmpInfoProEdu[i].Description == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = EmpInfoProEdu[i].Description;
-
-                                    }
-                                    if (EmpInfoProEdu[i].Score == null)
-                                    {
-                                        cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = EmpInfoProEdu[i].Score;
-
-                                    }
-
-                                    cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = EmpData.CreatedBy;
-
-                                    // cmd.Parameters.Add("@p_Description", SqlDbType.VarChar, 500).Value = EmpInfoProEdu[i].Description;
-                                    // cmd.Parameters.Add("@p_Score", SqlDbType.Int).Value = EmpInfoProEdu[i].Score;
-                                    cmd.Parameters.Add("@p_Response", SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
-
-                                    cmd.Parameters.Add("@p_EmployeeIdOUT", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                                    //cmd.Parameters.Add("@p_CreatedBy", SqlDbType.NVarChar, 20).Value = Emp.CreatedBy;
-
-                                    cmd.ExecuteNonQuery();
-
-
-                                    response = cmd.Parameters["@p_Response"].Value.ToString();
-                                    cmd.Dispose();
-                                }
-                            }
-
-
-                            cmd = new SqlCommand();
-
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.CommandText = "RDD_SetEmployeeProfileCompletedPercentage";
-
-                            cmd.Connection = connection;
-                            cmd.Transaction = transaction;
-
-                            cmd.Parameters.Add("@EmployeeId", SqlDbType.Int).Value = Emp_ID;
-
-                            cmd.ExecuteNonQuery();
-                            cmd.Dispose();
-
-
-
-
-
-
-                            transaction.Commit();
-
-
-
-
-                        }
-
-                        catch (Exception ex)
-                        {
-                            response = "Error occured : " + ex.Message;
-                            transaction.Rollback();
-                        }
-                        finally
-                        {
-                            if (connection.State == ConnectionState.Open)
-                            {
-                                connection.Close();
-                            }
-                        }
-                    }
+                    scope.Complete();
                 }
             }
             catch (Exception ex)
@@ -519,6 +523,11 @@ namespace RDDStaffPortal.DAL.HR
                 {
                     if (DS.Tables[0].Rows.Count > 0)
                     {
+
+                        if (DS.Tables[0].Rows[0]["LoginName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["LoginName"]))
+                        {
+                            emp.LoginName = DS.Tables[0].Rows[0]["LoginName"].ToString();
+                        }
                         if (DS.Tables[0].Rows[0]["CountryName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["CountryName"]))
                         {
                             emp.CountryName = DS.Tables[0].Rows[0]["CountryName"].ToString();
@@ -1126,6 +1135,26 @@ namespace RDDStaffPortal.DAL.HR
             return dsModules;
         }
 
+        public DataSet GetDropRole(string username)
+        {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {
+                    
+                      new SqlParameter("@p_username",username),
+                };
+                dsModules = Com.ExecuteDataSet("RDD_UserRole", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+                dsModules = null;
+                throw;
+            }
+
+            return dsModules;
+        }
+
         public DataSet GetEmployeeConfigure(string UserRole,string type)
         {
            
@@ -1169,6 +1198,8 @@ namespace RDDStaffPortal.DAL.HR
                             SqlParameter[] ParaDet1 = {
                                                  new SqlParameter("@p_flag","I"),
                                             new SqlParameter("@p_userrole",_Configure.UserRole),
+                                             new SqlParameter("@p_status",_Configure.Employee_Configs[k].status),
+
                                             new SqlParameter("@p_columname",_Configure.Employee_Configs[k].ColumnName),
 
 

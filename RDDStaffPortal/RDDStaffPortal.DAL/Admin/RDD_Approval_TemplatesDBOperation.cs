@@ -368,5 +368,27 @@ namespace RDDStaffPortal.DAL.Admin
 
         }
 
+
+        public DataSet GetApprovaldata(string Object_Type,string Originator)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] ParaDet1 = {
+                                                new SqlParameter("@Object_Type",Object_Type),
+                                                new SqlParameter("@Originator",Originator),
+
+                            };
+                 ds = Com.ExecuteDataSet("RDD_Check_DocumentApproval",CommandType.StoredProcedure, ParaDet1);
+               
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
+
+        }
     }
 }

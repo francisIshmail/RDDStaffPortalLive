@@ -15,7 +15,7 @@ namespace RDDStaffPortal.DAL.DataModels
     }
     public class RDD_EmployeeRegistration
     {
-      
+        public string LoginName { get; set; }
         public class Translations
         {
             public string de { get; set; }

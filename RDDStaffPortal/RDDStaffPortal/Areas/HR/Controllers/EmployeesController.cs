@@ -370,7 +370,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 ViewBag.EmployeeNo = objemp.EmployeeNo;
                 
                 objemp.Editflag = true;
-
+                var t = false;
                 ds = EmpDbOp.GetEmployeeConfigure(User.Identity.Name, "II");
                 if (ds.Tables.Count > 0)
                 {
@@ -378,8 +378,17 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     {
                         var columName = (ds.Tables[0].Rows[i]["ColumName"]).ToString();
                         ViewData.Add(columName, true);
+                        if(columName== "ConfigProfileD")
+                        {
+                            t = true;
+                        }
                     }
                 }
+                if ((t == false) && (User.Identity.Name.ToLower()!=objemp.LoginName.ToLower()))
+                {
+                    return RedirectToAction("Index", new RouteValueDictionary(new { controller = "Employees", action = "Index", EmployeeId = EmpDbOp.GetEmployeeIdByLoginName(User.Identity.Name) }));
+                }
+
                 return View(objemp);
             }
 
@@ -772,13 +781,33 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [Route("GetEmpConfigList")]
         public ActionResult GetEmpConfigList(string UserRole)
         {
-            DataSet ds = EmpDbOp.GetEmployeeConfigure(UserRole, "II");
+            DataSet ds = EmpDbOp.GetEmployeeConfigure(UserRole, "IV");
             return Content(JsonConvert.SerializeObject(ds), "application/json");
         }
 
 
         public ActionResult EmployeeConfig()
         {
+
+            List<Rdd_comonDrop> RoleList = new List<Rdd_comonDrop>();
+            DataSet ds;
+            ds = EmpDbOp.GetDropRole(User.Identity.Name);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dtModule;
+                DataRowCollection drc;
+                dtModule = ds.Tables[0];
+                drc = dtModule.Rows;
+                foreach (DataRow dr in drc)
+                {
+                    RoleList.Add(new Rdd_comonDrop()
+                    {
+                        Code = !string.IsNullOrWhiteSpace(dr["RoleName"].ToString()) ? dr["RoleName"].ToString() : "",
+                    });
+                }
+            }
+
+            ViewBag.RoleList = new SelectList(RoleList, "Code", "Code");
             return View();
         }
         [Route("SaveEmpConfig")]

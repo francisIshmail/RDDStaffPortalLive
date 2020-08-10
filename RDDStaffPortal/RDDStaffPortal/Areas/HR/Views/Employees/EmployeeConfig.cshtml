@@ -25,15 +25,7 @@
                                     <div class="col-xl-3 col-md-3">
                                         <div class="form-group">
 
-                                            <div class="select2-input">
-                                                <select class="form-control" id="Userid" name="basic">
-                                                    <option value="0">Select</option>
-                                                    <option value="self">Self</option>
-                                                    <option value="HR">HR</option>
-                                                    <option value="HeadOfFinance">Head Of Finance</option>
-
-                                                </select>
-                                            </div>
+                                            @Html.DropDownListFor(m => m.Types, ViewBag.RoleList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
 
                                         </div>
                                     </div>
@@ -100,7 +92,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#Userid').select2({
+        $('#Types').select2({
             allowClear: true,
             placeholder: '--Select--'
 
@@ -120,12 +112,12 @@
         })
 
 
-        $("#Userid").on("change", function () {
+        $(document).on("change","#Types", function () {
             debugger
            
 
             $("#EmpConfig").load('@Url.Action("GetEmployeeConfig", "Employees", new { area = "HR" })');
-            UserRole = JSON.stringify({ 'UserRole': $('#Userid').val() });
+            UserRole = JSON.stringify({ 'UserRole': $('#Types').val() });
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
@@ -142,7 +134,7 @@
                     }
 
                     $(".mar-b10").each(function (index, item) {
-                        var ColumNameTxt = $(this).find("[id='Inphdn']").val()+'D';
+                        var ColumNameTxt = $(this).find("[id='Inphdn']").val();
                         if (jQuery.inArray(ColumNameTxt, arr) !== -1) {
                             $(this).find("[id='ChkDash']").val(false);
                             $(this).find("[id='ChkDash']").removeAttr('checked');
@@ -159,12 +151,12 @@
 
 
         $("#btnSave").on("click", function () {
-            if ($('#Userid').val() == "0") {
+            if ($('#Types').val() == "0") {
                 RedDotAlert_Error("Select User Role");
                 return;
             }
             var EmpConfig = {
-                UserRole: $('#Userid').val() ,
+                UserRole: $('#Types').val() ,
                 Employee_Configs:[],
             }
            
@@ -173,10 +165,12 @@
                 debugger
                 var ColumNameTxt = $(this).find("[id='Inphdn']").val();
                 var IsActiveTxt = $(this).find("[id='ChkDash']").val();
+               
                 var Employee_Config = {
-                    ColumnName: ColumNameTxt
+                    ColumnName: ColumNameTxt,
+                    status: IsActiveTxt
                 };
-                if (ColumNameTxt != undefined && IsActiveTxt!="true")
+                if (ColumNameTxt != undefined)//&& IsActiveTxt!="true"
                     EmpConfig.Employee_Configs.push(Employee_Config);
             });
 

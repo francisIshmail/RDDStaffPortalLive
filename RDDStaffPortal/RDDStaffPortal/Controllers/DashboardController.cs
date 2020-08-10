@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
@@ -48,7 +49,7 @@ namespace RDDStaffPortal.Controllers
            
             return Json(_RDD_QuickOP.DeleteActivity(QuickLinkid) , JsonRequestBehavior.AllowGet);
         }
-
+        
         public  ActionResult GetRightSide()
         {
             return PartialView(_RDD_QuickOP.GetRightside(User.Identity.Name));
@@ -59,6 +60,7 @@ namespace RDDStaffPortal.Controllers
         //    return Json(_DashDbOp.GetProfilimg(User.Identity.Name));
         //}
         [Route("GetDatatable1")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable1()
         {
             JsonResult result = new JsonResult();
@@ -74,6 +76,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetDatatable2")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable2()
         {
             JsonResult result = new JsonResult();
@@ -89,6 +92,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetDatatable3")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable3()
         {
             JsonResult result = new JsonResult();
@@ -104,6 +108,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetDatatable4")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable4()
         {
             JsonResult result = new JsonResult();
@@ -119,6 +124,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetDatatable5")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable5()
         {
             JsonResult result = new JsonResult();
@@ -135,6 +141,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetDatatable6")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable6()
         {
             JsonResult result = new JsonResult();
@@ -149,6 +156,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetPichart1")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetPichart1()
         
         {
@@ -215,6 +223,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetPichart2")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetPichart2()
         {
             JsonResult result = new JsonResult();
@@ -280,6 +289,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetCard1")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetCard1()
         {
             JsonResult result = new JsonResult();
@@ -290,6 +300,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetCard2")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetSecondCard()
         {
             JsonResult result = new JsonResult();
@@ -300,6 +311,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetRecModel")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetRecModSecondCard()
         {
             JsonResult result = new JsonResult();
@@ -311,6 +323,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetPayModel")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetPayModCard()
         {
             JsonResult result = new JsonResult();
@@ -321,6 +334,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("GetPiChartBank")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetPiChartBank()
         {
             JsonResult result = new JsonResult();
@@ -332,6 +346,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetBarchart1")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetBarchart1()
         {
             JsonResult result = new JsonResult();
@@ -374,6 +389,7 @@ namespace RDDStaffPortal.Controllers
 
 
         [Route("GetBarchart2")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetBarchart2()
         {
             JsonResult result = new JsonResult();
@@ -412,6 +428,7 @@ namespace RDDStaffPortal.Controllers
 
         }
         [Route("Getlinechart1")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult Getlinechart1()
         {
             JsonResult result = new JsonResult();
@@ -465,6 +482,7 @@ namespace RDDStaffPortal.Controllers
         }
 
         [Route("Getlinechart2")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult Getlinechart2()
         {
             JsonResult result = new JsonResult();

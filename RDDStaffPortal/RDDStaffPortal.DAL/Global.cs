@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace RDDStaffPortal.DAL
 {
@@ -43,6 +44,29 @@ namespace RDDStaffPortal.DAL
         {
 
             return System.Configuration.ConfigurationManager.AppSettings[apkey];
+        }
+
+        public static int getAppSettingsDataForKeyInt(string apkey)
+        {
+
+            int techPageSize;
+            if (!int.TryParse(System.Configuration.ConfigurationManager.AppSettings[apkey], out techPageSize))
+            {
+                throw new InvalidOperationException("Invalid TechPageSize in web.config");
+            }
+            return techPageSize;
+        }
+
+        public static class CacheConfig
+        {
+            public static int Duration = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["Duration"].ToString());
+        }
+        public class MyOutputCacheAttribute : OutputCacheAttribute
+        {
+            public MyOutputCacheAttribute()
+            {
+                this.Duration = CacheConfig.Duration;
+            }
         }
 
     }
