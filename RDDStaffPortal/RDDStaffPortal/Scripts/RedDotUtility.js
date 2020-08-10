@@ -1,4 +1,138 @@
-﻿
+﻿function Red_Dot_Model_Popup(ids, Modalid, data) {
+    //#region Modal 
+    $(ids).html('<div class="modal fade" id="' + Modalid + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<button type="button" class="close" onclick="closeModal()">×</button>' +
+        '<h4 class="modal-title">Modal Header</h4>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<div class="row">' +
+        '<div class="col-md-12 col-lg-12">' +
+      
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">Template_Id :</label>' +
+        '<div class="col-md-5 p-0">' +
+        '<input type="text" class="form-control form-control-sm" id="MTemplate_Id" disabled="">' +
+        '</div>' +
+        '</div>' +
+       
+        '</div>' +
+        '</div>' +
+        
+        '<div class="row">' +
+        '<div class="col-md-12 col-lg-12">' +
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">ObjType :</label>' +
+        '<div class="col-md-5 p-0">' +
+        '<input type="text" class="form-control form-control-sm" id="MObjType" disabled="">' +
+        
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row">' +
+        '<div class="col-md-12 col-lg-12">' +
+       
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">DocumentName :</label>' +
+        '<div class="col-md-5 p-0">' +
+        '<input type="text" class="form-control form-control-sm" id="MDocumentName" disabled="">' +
+       
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        
+
+        '<div class="row">' +
+        
+        '<div class="col-md-12 col-lg-12">' +
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">Description :</label>' +
+        '<div class="col-md-5 p-0">' +
+        '<input type="text" class="form-control form-control-sm" id="MDescription" disabled="">' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        
+        '</div>' +
+
+        '<div class="row">' +
+       
+        '<div class="col-md-12 col-lg-12">' +
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">No of Approvals :</label>' +
+        '<div class="col-md-5 p-0">' +
+        '<input type="text" class="form-control form-control-sm" id="Mno_of_approvals" disabled="">' +
+        '</div>' +
+        
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row">' +
+      
+        '<div class="col-md-12 col-lg-12">' +
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">Originator :</label>' +
+        '<div class="col-md-5 p-0">' +
+        ' <input type="hidden" id="MOriginator_Id" />' +
+        '<input type="text" class="form-control form-control-sm" id="MOriginator" disabled="">' +
+        '</div>' +
+        
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row">' +
+       
+        '<div class="col-md-12 col-lg-12">' +
+        '<div class="form-inline">' +
+        '<label for="Database" class="col-md-1 col-form-label width150px">Remark :</label>' +
+        '<div class="col-md-8 p-0">' +
+
+        '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"/>' +
+        '</div>' +
+        '</div>' +
+       
+        '</div>' +
+        ' </div>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" id="btnApproval" class="btn btn-info btn-sm">send</button>' +
+        '<button type="button" class="btn btn-default btn-sm" onclick="closeModal()">cancel</button>' +
+       
+        '</div>' +
+
+        '</div > ' +
+        ' </div > ' +
+        '</div>')
+    //#endregion
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        data: data,
+        url: "/GetApprovalModal",
+        dataType: 'Json',
+        contentType: "Application/json",
+       
+        success: function (response) {
+            debugger
+
+            $("#MDescription").val(response.Table[0].Description)
+            $("#MDocumentName").val(response.Table[0].DocumentName)
+            $("#MObjType").val(response.Table[0].ObjType)
+            $("#MTemplate_Id").val(response.Table[0].Template_Id)
+            
+            $("#MOriginator").val(response.Table[0].Originator)
+            $("#MOriginator_Id").val(response.Table[0].Originator_Id)
+            $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+        }
+    });
+
+   
+}
 
 function RdotAlertdele(code) {
     Swal.queue([{
@@ -955,6 +1089,15 @@ function RedDot_tbldtpicker() {
     });
 }
 
+/* Table date formate dd-MM-yyyy get input date */
+function RedDot_Table_dateEdit(tr,date1, dtval) {
+    debugger
+    var now = new Date(tr.find(dtval).val());
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+    tr.find(date1).val(today);
+}
 /* date formate dd-MM-yyyy get input date */
 function RedDot_dateEdit(date1, dtval) {
     var now = new Date($(dtval).val());
@@ -972,11 +1115,12 @@ function RedDot_NewDate(dteclass) {
 }
 /*New Date Range*/
 function RedDot_DateRange(id) {
+    debugger
+
     var start = moment().subtract(29, 'days');
     var end = moment();
-
     function cb(start, end) {
-        $('#' + id + ' span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#' + id + ' span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
     }
 
     $('#' + id + '').daterangepicker({

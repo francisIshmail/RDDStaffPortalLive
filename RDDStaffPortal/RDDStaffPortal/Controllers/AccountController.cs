@@ -11,6 +11,7 @@ using RDDStaffPortal.DAL.InitialSetup;
 using RDDStaffPortal.Models;
 using RDDStaffPortal.WebServices;
 using static RDDStaffPortal.DAL.CommonFunction;
+using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
@@ -18,7 +19,7 @@ namespace RDDStaffPortal.Controllers
     {
         // GET: Account
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
-
+       
         public ActionResult Index()
         {
             return View();
@@ -53,7 +54,10 @@ namespace RDDStaffPortal.Controllers
                         ab = Convert.ToBase64String(file);
                     }
                      Session["LoginName"] = ab;
-                   
+
+                    var urlToRemove = Url.Action("Index", "Dashboard");
+                    HttpResponse.RemoveOutputCacheItem(urlToRemove);
+
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
@@ -64,7 +68,10 @@ namespace RDDStaffPortal.Controllers
             }
             return View();
         }
-
+        public ActionResult Keepalive()
+        {
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
         public ActionResult SignOut()
         {
             // Rename AcountLogin to LoginService in Live
@@ -211,9 +218,12 @@ namespace RDDStaffPortal.Controllers
             return View();
         }
 
-        // [ChildActionOnly]
+       
+        [ChildActionOnly]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetMenuTreeMenu()
         {
+          
             //if (User.Identity.Name == "")
             //{
             //    return RedirectToAction("/Login", "Account");
@@ -225,13 +235,17 @@ namespace RDDStaffPortal.Controllers
        
         [HttpGet]
         [ChildActionOnly]
+        
         public ActionResult GetFirtsDashBoard()
         {
            
             return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
         }
        
+       
+
         [ChildActionOnly]
+       
         public ActionResult GetDashBoardView()
         {
         //    if (User.Identity.Name == "")

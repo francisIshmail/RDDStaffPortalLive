@@ -29,5 +29,19 @@ namespace RDDStaffPortal
             Thread.CurrentThread.CurrentCulture = cInfo;
             Thread.CurrentThread.CurrentUICulture = cInfo;
         }
+
+        public override string GetVaryByCustomString(HttpContext context, string custom)
+        {
+            if (custom == "LoggedUserName")
+            {
+                if (context.Request.IsAuthenticated)
+                {
+                    return context.User.Identity.Name;
+                }
+                return null;
+            }
+            return base.GetVaryByCustomString(context, custom);
+        }
+       
     }
 }

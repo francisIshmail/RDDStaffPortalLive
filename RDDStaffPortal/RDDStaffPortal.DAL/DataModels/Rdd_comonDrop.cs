@@ -13,4 +13,22 @@ namespace RDDStaffPortal.DAL.DataModels
 
         public string imagepath { get; set; }
     }
+
+    public partial class Employee_Configure
+    {
+        public string UserRole { get; set; }
+       
+        public List<Employee_ConfigureList> Employee_Configs { get; set; }
+
+        public Employee_ConfigureList Employee_Config { get; set; }
+
+    }
+
+    public partial class Employee_ConfigureList
+    {          
+        public string ColumnName { get; set; }
+        public string Description { get; set; }
+        public string Types { get; set; }
+        public bool status { get; set; }
+    }
 }

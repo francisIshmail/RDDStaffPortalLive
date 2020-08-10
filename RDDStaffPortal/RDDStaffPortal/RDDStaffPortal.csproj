@@ -195,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
+    <Content Include="Content\timeout-dialog.css" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
@@ -686,6 +687,7 @@
     <Content Include="Scripts\sweetalret\sweetalert2.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.css" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.js" />
+    <Content Include="Scripts\timeout-dialog.js" />
     <Content Include="Scripts\VoiceRec\controller.js" />
     <Content Include="Scripts\VoiceRec\jquery.min.js" />
     <Content Include="Scripts\VoiceRec\speechRecognition.js" />
@@ -745,6 +747,9 @@
     <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
     <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
+    <Content Include="App_Code\GetEmpConfig.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

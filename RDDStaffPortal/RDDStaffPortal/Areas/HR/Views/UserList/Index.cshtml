@@ -19,21 +19,15 @@
                                 <div class="row">
                                     <div class="col-sm-6 col-md-3 padd-0"><input id="myInput" type="text" class="form-control " placeholder="Search.."></div>
                                     <div class="col-sm-2 col-md-2 padd-0 ml-auto text-right">
-                                      
-                                            @if   (ViewBag.loginuserList[0].IsUserInRoleHR== "True")
-                                          
-                                           {
-                                                <span class="btn-label"><a href='/HR/Employees' class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>Add Employee</a></span>
 
-                                            }
-                                            else
-                                            {
+                                        @if (ViewBag.AddProfileD != null)
+                                        {
+                                            <span class="btn-label"><a href='/HR/Employees' class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>Add Employee</a></span>
 
-                                                <span class="btn-label" hidden><a href='/HR/Employees' class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>Add Employee </a></span>
+                                        }
+                                       
 
-                                            }
-                                        
-                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -90,19 +84,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2 col-md-2 padd-r0 text-right">
-                                                            @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") || (ViewBag.loginuserList[0].IsUserInRoleHR == "True"))
-
+                                                            @if (ViewBag.ConfigProfileD != null)
                                                             {
                                                                 <a href='/HR/Employees?EmployeeId=@items.EmployeeId' class="btn btn-icon btn btn-secondary"><i class="fa fa-edit"></i> </a>
 
                                                             }
-                                                               else
-                                                        {
-                                                                <a href='/HR/Employees?EmployeeId=@items.EmployeeId' class="btn btn-icon btn btn-secondary" hidden> </a>
-
-                                                          }
-                                                                @*<button type="button" class="btn btn-icon btn-success"> <i class="fa fa-eye"></i> </button>*@
-                                                            </div>
+                                                            
+                                                            @*<button type="button" class="btn btn-icon btn-success"> <i class="fa fa-eye"></i> </button>*@
+                                                        </div>
                                                     </div>
 
                                                     <div class="row mar-t10">

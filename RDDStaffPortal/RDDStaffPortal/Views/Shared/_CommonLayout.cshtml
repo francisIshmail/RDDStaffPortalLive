@@ -738,7 +738,7 @@
     @*--end voice-*@
 
 
-<script src="~/Scripts/datapicker-separate/daterangepicker.js"></script>
+    <script src="~/Scripts/datapicker-separate/daterangepicker.js"></script>
 
     <script src="~/Scripts/RedDotUtility.js"></script>
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/dd.css" />
@@ -746,8 +746,9 @@
 
     @*</script>*@
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/flags.css" />*@
-    
+
     <script src="~/Scripts/multiselect/multiselect.js"></script>
+
     <script type="text/javascript">
 
     $(document).ready(function () {
@@ -948,7 +949,155 @@
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 
+
     </script>
+
+
+    @{
+        var conf = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+        var section = (System.Web.Configuration.SessionStateSection)conf.GetSection("system.web/sessionState");
+
+        string timeout = section.Timeout.TotalMinutes.ToString();
+    }
+
+
+    <script type="text/javascript">
+//code for expired session
+var sTimer = null;
+var eTimer = null;
+
+function InitializeTimer() {
+
+//30 minutes
+    var interval = @timeout * 1000 * 60;//1800000; //time in milliseconds 1000 ms = 1 second
+
+settimerFun(interval);
+
+$('body').ajaxStart(function () {
+// reset timer on ajax request
+settimerFun(interval);
+});
+}
+function settimerFun(interval) {
+if (sTimer)
+clearTimeout(sTimer);
+
+sTimer = setTimeout(function () { sExpired(); }, interval);
+}
+function sExpired() {
+
+//for yes or no dialog
+$('#div_sexpired').remove();
+var dialog = $('<div id="div_sexpired"></div>').text("Do you want to extend the session?");
+$('body').append(dialog);
+
+$('#div_sexpired').dialog({
+autoOpen: true,
+modal: true,
+title: 'Extend Session',
+buttons: {
+"Yes": function () {
+//write your logic here for yes button
+if (eTimer)
+clearTimeout(eTimer);
+settimerFun(5000);
+$(dialog).dialog('close');
+$('#div_sexpired').remove();
+},
+"No": function () {
+//write your logic here for no button
+redirtoLogin
+}
+}
+
+});
+
+
+
+//solution for your problem
+eTimer = setTimeout(function () {
+$(dialog).dialog('close'); //close the yer/no dialog
+
+//dialog for expired session
+var expiredialog = $('<div id="div_expired"></div>').text("Your session has timed out. Please login again.");
+$('body').append(expiredialog);
+$('#div_expired').dialog({
+autoOpen: true,
+modal: true,
+title: 'Expired Session',
+buttons: {
+"OK": function () {
+
+clearTimeout(eTimer);
+$(this).dialog('close');
+}
+
+},
+"close": redirtoLogin
+//on the close of this dialog redirect to login page
+});
+
+
+}, 1800000); //invoked after three seconds
+
+
+}
+
+function redirtoLogin() {
+//redirect to login page
+window.location.href = '@Url.Action("Login", "Account")';
+}
+
+//end of expired session
+
+$(function () {
+
+InitializeTimer(); //invoke the timer function
+});
+
+    </script>
+    @*<script>
+        $(document).ready(function () {
+            debugger
+                        var time = @timeout * 1000 * 60;
+                        var timeout;
+                        var isLogout = false;
+
+                        timeout = setTimeout(function() {
+                            //Things you need to do
+                                isLogout = true;
+
+                        }, time);
+
+                        $(document).on('click', function () {
+                            if (!isLogout) {
+                                clearTimeout(timeout);
+                                timeout = setTimeout(function() {
+                                    //Things you need to do
+                                     isLogout = true;
+                                }, time);
+                            }
+                        });
+                    });
+            </script>*@
+    @*<link href="~/Content/timeout-dialog.css" rel="stylesheet" />
+        <script src="~/Scripts/timeout-dialog.js"></script>
+
+        <script>
+
+            jQuery(function (e) {
+
+                var fnTimeOut = function () {
+                    jQuery.timeoutDialog.setupDialogTimer({
+                        timeout: 105,
+                        countdown: 100,
+                        logout_redirect_url: '@Url.Action("SignOut", "Account")',
+                        keep_alive_url: '@Url.Action("Keepalive", "Account")'
+                   });
+                };
+                fnTimeOut();
+            });
+        </script>*@
     <style>
         .demo-scrollbar {
             height: 300px;

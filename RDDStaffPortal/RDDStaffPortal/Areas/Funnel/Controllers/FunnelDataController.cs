@@ -147,9 +147,9 @@ namespace RDDStaffPortal.Areas.Funnel.Controllers
             ViewBag.CreatedBy = username;
             //ViewBag.QuoteID = QuoteID;
 
-            ViewBag.Country = RddFunnel.GetCountryList(username).ToList();
-            // ViewBag.BU = RddFunnel.GetBUList().ToList();
-            ViewBag.DealStatus = RddFunnel.GetStatusList().ToList();
+            //ViewBag.Country = RddFunnel.GetCountryList(username).ToList();
+            //// ViewBag.BU = RddFunnel.GetBUList().ToList();
+            //ViewBag.DealStatus = RddFunnel.GetStatusList().ToList();
 
             DataSet dsModules = RddFunnel.GetDrop1(username);
 

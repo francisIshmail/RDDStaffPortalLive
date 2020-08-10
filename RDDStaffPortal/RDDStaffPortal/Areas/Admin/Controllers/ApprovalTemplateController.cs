@@ -1,4 +1,5 @@
-﻿using RDDStaffPortal.DAL.Admin;
+﻿using Newtonsoft.Json;
+using RDDStaffPortal.DAL.Admin;
 using RDDStaffPortal.DAL.DataModels.Admin;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,13 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             RDD_Approval.CreatedOn = DateTime.Now;
             }
             return Json(rDD_Approval.Save1(RDD_Approval), JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("GetApprovalModal")]
+        public ActionResult GetApprovalData(string Object_Type, string Originator)
+        {
+
+            return Content(JsonConvert.SerializeObject(rDD_Approval.GetApprovaldata(Object_Type, Originator)), "application/json");
         }
     }
 }

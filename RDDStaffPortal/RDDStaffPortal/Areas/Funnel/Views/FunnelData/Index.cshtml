@@ -270,7 +270,7 @@
                                     <div class="col-md-6 p-0">
                                         <div class="select2-input">
 
-                                            @Html.DropDownListFor(m => m.Country, ViewBag.Country as SelectList, "-Select-", new { @class = "form-control" })
+                                            @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control" })
                                             @*<select id="basic1" name="basic" class="form-control">
 
                                                 </select>*@
@@ -514,9 +514,10 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.DropDownList("DealStatus", (List<SelectListItem>)ViewBag.DealStatus, new { @id = "DealStatus", @class = "form-control form-control-sm" })
-
-                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                        @Html.DropDownList("DealStatus", ViewBag.StatusList as SelectList, new { @id = "DealStatus", @class = "form-control form-control-sm" })
+                                        @*(List<SelectListItem>
+                                            )ViewBag.StatusList*@
+                                            @*<input type="text" class="form-control form-control-sm" id="">*@
                                     </div>
                                 </div>
                             </div>
@@ -1696,7 +1697,8 @@
                         })
                     });
 
-                    
+                    try {
+                        debugger
                     RedDot_DateRange("reportrange");
                    
                     $('#reportrange').on('apply.daterangepicker', function (ev, picker) {                                      
@@ -1706,198 +1708,203 @@
                     debugger
                     GetChart($('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD'));
 
+                  
 
-                    function GetChart(from_Date, to_Date) {
-                        $('#multipleLineChartbbb').remove(); // this is my <canvas> element
-                        $('#chart-container1').append('<canvas id="multipleLineChartbbb"><canvas>');
+                        function GetChart(from_Date, to_Date) {
+                            $('#multipleLineChartbbb').remove(); // this is my <canvas> element
+                            $('#chart-container1').append('<canvas id="multipleLineChartbbb"><canvas>');
 
-                        $('#CTStatusbbb').remove(); // this is my <canvas> element
-                        $('#chart-container2').append('<canvas id="CTStatusbbb"><canvas>');
+                            $('#CTStatusbbb').remove(); // this is my <canvas> element
+                            $('#chart-container2').append('<canvas id="CTStatusbbb"><canvas>');
 
-                        multipleLineChartbbb = document.getElementById('multipleLineChartbbb').getContext('2d');
+                            multipleLineChartbbb = document.getElementById('multipleLineChartbbb').getContext('2d');
 
-                        CTStatusbbb = document.getElementById('CTStatusbbb').getContext('2d');
-                        var pts = [];
-                        var lbl = [];
-                        var bg = [];
-                        var Amt = [];
+                            CTStatusbbb = document.getElementById('CTStatusbbb').getContext('2d');
+                            var pts = [];
+                            var lbl = [];
+                            var bg = [];
+                            var Amt = [];
 
-                        var lineamt = [];
-                        var status = [];
-                        var bgg = [];
-                        // var wkno = [];
-                        var array = [];
-                        $.ajax({
-                            async: false,
-                            cache: false,
-                            type: "POST",
-                            url: "/Funnel/FunnelData/GetCharts",
-                            dataType: 'Json',
-                            data: JSON.stringify({
-                                fromdate: from_Date,
-                                todate: to_Date,
+                            var lineamt = [];
+                            var status = [];
+                            var bgg = [];
+                            // var wkno = [];
+                            var array = [];
+                            $.ajax({
+                                async: false,
+                                cache: false,
+                                type: "POST",
+                                url: "/Funnel/FunnelData/GetCharts",
+                                dataType: 'Json',
+                                data: JSON.stringify({
+                                    fromdate: from_Date,
+                                    todate: to_Date,
 
-                            }),
-                            contentType: "Application/json",
-                            dataType: 'JSON',
-                            success: function (response) {
+                                }),
+                                contentType: "Application/json",
+                                dataType: 'JSON',
+                                success: function (response) {
 
-                                var i = 0;
-                                while (i < response.data.Get_Funnels.length) {
-                                    pts.push(response.data.Get_Funnels[i].percentage);
-                                    lbl.push(response.data.Get_Funnels[i].status + ',' + response.data.Get_Funnels[i].TotalAmt);
-                                    bg.push(response.data.Get_Funnels[i].color);
-                                    Amt.push(response.data.Get_Funnels[i].TotalAmt);
-                                    i++;
-                                }
-                                var i1 = 0;
-                                array = response.data.GetLinecharts;
-
-                            }
-                        })
-
-
-
-
-                        var myPieChart = new Chart(CTStatusbbb, {
-                            type: 'pie',
-                            data: {
-                                datasets: [{
-                                    data: pts,
-                                    backgroundColor: bg,
-                                    borderWidth: 0
-                                }],
-
-                                labels: lbl
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                legend: {
-                                    position: 'right',
-                                    labels: {
-                                        fontColor: 'rgb(154, 154, 154)',
-                                        fontSize: 12,
-                                        usePointStyle: false,
-                                        padding: 10
+                                    var i = 0;
+                                    while (i < response.data.Get_Funnels.length) {
+                                        pts.push(response.data.Get_Funnels[i].percentage);
+                                        lbl.push(response.data.Get_Funnels[i].status + ',' + response.data.Get_Funnels[i].TotalAmt);
+                                        bg.push(response.data.Get_Funnels[i].color);
+                                        Amt.push(response.data.Get_Funnels[i].TotalAmt);
+                                        i++;
                                     }
-                                },
-                                pieceLabel: {
-                                    render: 'percentage',
-                                    fontColor: 'white',
-                                    fontSize: 10,
-                                },
-                                tooltips: {
-                                    bodySpacing: 2,
-                                    mode: "nearest",
-                                    intersect: 0,
-                                    position: "nearest",
-                                    xPadding: 10,
-                                    yPadding: 10,
-                                    caretPadding: 5
-                                },
-                                layout: {
-                                    padding: {
-                                        left: 0,
-                                        right: 20,
-                                        top: 20,
-                                        bottom: 20
-                                    }
-                                }
-                            }
-                        })
+                                    var i1 = 0;
+                                    array = response.data.GetLinecharts;
 
-
-                        var dupes = {};
-                        var wkno = [];
-                        var wkno1 = [];
-                        var status = [];
-
-                        $.each(array, function (i, el) {
-                            if (!dupes[el.weekno]) {
-                                dupes[el.weekno] = true;
-                                wkno.push(el.weekno);
-                                wkno1.push(el.weekno + "Wk");
-                            }
-
-                        })
-
-                        $.each(array, function (i, el) {
-                            if (!dupes[el.color]) {
-                                dupes[el.color] = true;
-                                bgg.push(el.color)
-                            }
-                            if (!dupes[el.status]) {
-                                dupes[el.status] = true;
-                                status.push(el.status)
-                            }
-
-                        })
-
-                        var pts = [];
-                        var k = 0
-                        while (k < status.length) {
-                            var tempArray = [];
-                            $.each(array, function (i, el) {
-                                if (el.status == status[k]) {
-
-                                    tempArray.push(el.Amount);
                                 }
                             })
-                            pts.push(tempArray);
-                            k++;
-                        }
 
 
-                        var ds = [];
-                        i = 0;
-                        while (i < status.length) {
-                            ds.push({
-                                label: status[i],
-                                borderColor: bgg[i],
-                                pointBorderColor: "#FFF",
-                                pointBackgroundColor: bgg[i],
-                                pointBorderWidth: 2,
-                                pointHoverRadius: 4,
-                                pointHoverBorderWidth: 1,
-                                pointRadius: 4,
-                                backgroundColor: 'transparent',
-                                fill: true,
-                                borderWidth: 2,
-                                data: pts[i]
-                            });
-                            i++;
-                        }
 
 
-                        var myMultipleLineChart = new Chart(multipleLineChartbbb, {
-                            type: 'line',
-                            data: {
-                                // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                labels: wkno1,
-                                datasets: ds,
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                legend: {
-                                    position: 'bottom',
+                            var myPieChart = new Chart(CTStatusbbb, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: pts,
+                                        backgroundColor: bg,
+                                        borderWidth: 0
+                                    }],
+
+                                    labels: lbl
                                 },
-                                tooltips: {
-                                    bodySpacing: 4,
-                                    mode: "nearest",
-                                    intersect: 0,
-                                    position: "nearest",
-                                    xPadding: 10,
-                                    yPadding: 10,
-                                    caretPadding: 10
-                                },
-                                layout: {
-                                    padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                        position: 'right',
+                                        labels: {
+                                            fontColor: 'rgb(154, 154, 154)',
+                                            fontSize: 12,
+                                            usePointStyle: false,
+                                            padding: 10
+                                        }
+                                    },
+                                    pieceLabel: {
+                                        render: 'percentage',
+                                        fontColor: 'white',
+                                        fontSize: 10,
+                                    },
+                                    tooltips: {
+                                        bodySpacing: 2,
+                                        mode: "nearest",
+                                        intersect: 0,
+                                        position: "nearest",
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 5
+                                    },
+                                    layout: {
+                                        padding: {
+                                            left: 0,
+                                            right: 20,
+                                            top: 20,
+                                            bottom: 20
+                                        }
+                                    }
                                 }
+                            })
+
+
+                            var dupes = {};
+                            var wkno = [];
+                            var wkno1 = [];
+                            var status = [];
+
+                            $.each(array, function (i, el) {
+                                if (!dupes[el.weekno]) {
+                                    dupes[el.weekno] = true;
+                                    wkno.push(el.weekno);
+                                    wkno1.push(el.weekno + "Wk");
+                                }
+
+                            })
+
+                            $.each(array, function (i, el) {
+                                if (!dupes[el.color]) {
+                                    dupes[el.color] = true;
+                                    bgg.push(el.color)
+                                }
+                                if (!dupes[el.status]) {
+                                    dupes[el.status] = true;
+                                    status.push(el.status)
+                                }
+
+                            })
+
+                            var pts = [];
+                            var k = 0
+                            while (k < status.length) {
+                                var tempArray = [];
+                                $.each(array, function (i, el) {
+                                    if (el.status == status[k]) {
+
+                                        tempArray.push(el.Amount);
+                                    }
+                                })
+                                pts.push(tempArray);
+                                k++;
                             }
-                        });
+
+
+                            var ds = [];
+                            i = 0;
+                            while (i < status.length) {
+                                ds.push({
+                                    label: status[i],
+                                    borderColor: bgg[i],
+                                    pointBorderColor: "#FFF",
+                                    pointBackgroundColor: bgg[i],
+                                    pointBorderWidth: 2,
+                                    pointHoverRadius: 4,
+                                    pointHoverBorderWidth: 1,
+                                    pointRadius: 4,
+                                    backgroundColor: 'transparent',
+                                    fill: true,
+                                    borderWidth: 2,
+                                    data: pts[i]
+                                });
+                                i++;
+                            }
+
+
+                            var myMultipleLineChart = new Chart(multipleLineChartbbb, {
+                                type: 'line',
+                                data: {
+                                    // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    labels: wkno1,
+                                    datasets: ds,
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                    tooltips: {
+                                        bodySpacing: 4,
+                                        mode: "nearest",
+                                        intersect: 0,
+                                        position: "nearest",
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 10
+                                    },
+                                    layout: {
+                                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                                    }
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        RedDotAlert_Error("error occur")
                     }
+                   
 
 
                     //#endregion date range with chart
