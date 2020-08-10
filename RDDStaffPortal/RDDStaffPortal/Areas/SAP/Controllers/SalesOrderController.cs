@@ -256,7 +256,6 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
         }
 
-
         public ActionResult Save_SalesOrder(string model, string model1, string dbname)
         {
             ContentResult retVal = null;
@@ -363,12 +362,12 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             //else
                             //{
                             //    string Dt = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
-                            //    cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = Dt;// Header[0].LastUpdatedOn.ToString();
+                            //cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = Dt;// Header[0].LastUpdatedOn.ToString();
                             //}
 
-                            if (Header[0].LastUpdatedOn == null)
-                                cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = DBNull.Value;
-                            else
+                            //if (Header[0].LastUpdatedOn == null)
+                            //    cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = DBNull.Value;
+                            //else
                                 cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = Header[0].LastUpdatedBy.ToString();
 
                             cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -458,6 +457,55 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 }
             }
             return retVal;
+        }
+
+        [Route("Get_SalesOrder_List")]
+        public ActionResult Get_SalesOrder_List(string DBName, string UserName, int pagesize, int pageno, string psearch)
+        {
+            List<RDD_OSOR> _RDD_OSOR = new List<RDD_OSOR>();
+            _RDD_OSOR = SalesOrder_DBOperation.Get_SalesOrder_List(DBName,User.Identity.Name, pagesize, pageno, psearch);
+            return Json(new { data = _RDD_OSOR }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Get_Rec_SalesOrder(string dbname, string so_id)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.Get_Rec_SalesOrder(dbname, so_id);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult Post_SalesOrder_InTo_SAP(string dbname, string _so_id)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.Post_SalesOrder_InTo_SAP(dbname, _so_id);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
