@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -67,6 +68,9 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\RDD_CountryBU.cs" />
+    <Compile Include="DataModels\RDD_CountryTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
@@ -76,11 +80,16 @@
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
+    <Compile Include="DataModels\RDD_ForecastBU.cs" />
+    <Compile Include="DataModels\RDD_ForecastTarget.cs" />
     <Compile Include="DataModels\RDD_JobBand.cs" />
     <Compile Include="DataModels\RDD_JobGrade.cs" />
+    <Compile Include="DataModels\RDD_LoginName.cs" />
     <Compile Include="DataModels\RDD_QuickLinks.cs" />
     <Compile Include="DataModels\RDD_Reports.cs" />
     <Compile Include="DataModels\RDD_RightSide.cs" />
+    <Compile Include="DataModels\RDD_salesperson.cs" />
+    <Compile Include="DataModels\RDD_SalesPersonTarget.cs" />
     <Compile Include="DataModels\RDD_Test.cs" />
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
@@ -119,6 +128,9 @@
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
     <Compile Include="SendMail.cs" />
+    <Compile Include="Targets\CountryTargetDbOperations.cs" />
+    <Compile Include="Targets\ForecastDBOperation.cs" />
+    <Compile Include="Targets\SalesPersonDBOperation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
