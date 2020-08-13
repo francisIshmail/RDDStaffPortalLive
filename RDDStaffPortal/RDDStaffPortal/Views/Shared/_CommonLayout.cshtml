@@ -14,13 +14,16 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/atlantis.min.css" rel="stylesheet" />
     <link href="~/Content/fonts.min.css" rel="stylesheet" />
-   
+    <link rel="stylesheet" href="~/Scripts/multiselect/bootstrap-multiselect.css">
+
+    <link rel="stylesheet" href="~/Scripts/multiselect/multiselect.css" type="text/css">
+
     @*<link href="~/Content/demo.css" rel="stylesheet" />*@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="~/Content/reddot.css">
     <link href="~/Content/reddot.css" rel="stylesheet" />
-
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 
     <link href="~/Scripts/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -30,6 +33,7 @@
     <link href="~/Scripts/datatables/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="~/Scripts/sweetalret/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
+    <link href="~/Scripts/datapicker-separate/daterangepicker.css" rel="stylesheet" />
     @*<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">*@
 </head>
 <body>
@@ -187,14 +191,14 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
+                                    <img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="data:image;base64,@Request.RequestContext.HttpContext.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
+                                            <div class="avatar-lg"><img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
                                             <div class="u-text">
                                                 <h6>
                                                     @if (User.Identity.IsAuthenticated)
@@ -531,6 +535,7 @@
         <!-- End Sidebar -->
         <!--Start : Add page body here -->
         @RenderBody()
+
         <button id="btnrel"></button>
         <!--End : Add page body here -->
 
@@ -653,27 +658,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group form-inline">
-                        <label for="inlineinput" class="col-md-4 col-form-label">Old Password :</label>
+                        <label for="inlineinput" class="col-md-4 col-form-label">Old Password </label>
                         <div class="col-md-8">
                             <input type="password" class="form-control input-full" id="idopass" placeholder="Old Password">
                         </div>
                     </div>
                     <div class="form-group form-inline" id="dividnpass">
-                        <label for="inlineinput" class="col-md-4 col-form-label">New Password :</label>
+                        <label for="inlineinput" class="col-md-4 col-form-label">New Password </label>
                         <div class="col-md-8">
                             <input type="password" class="form-control input-full" id="idnpass" placeholder="New Password">
                         </div>
                     </div>
                     <small id="emailHelp" class="form-text text-danger"></small>
                     <div class="form-group form-inline" id="dividcpass">
-                        <label for="inlineinput" class="col-md-4 col-form-label">Conform Password :</label>
+                        <label for="inlineinput" class="col-md-4 col-form-label">Confirm Password </label>
                         <div class="col-md-8">
-                            <input type="password" class="form-control input-full" id="idcpass" placeholder="Conform Password">
+                            <input type="password" class="form-control input-full" id="idcpass" placeholder="Confirm Password">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnpass" class="btn btn-success btn-sm">Save</button>
+                    <button type="button" id="btnpass" class="btn btn-info btn-sm">CHANGE PASSWORD</button>
                     <button type="button" id="btncls" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
 
                 </div>
@@ -695,9 +700,12 @@
     <!-- jQuery UI -->
     <script src="~/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="~/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+
+
     <!-- Moment JS -->
     <script src="~/js/plugin/moment/moment.min.js"></script>
-
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 
     <!-- Bootstrap Toggle -->
     <script src="~/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
@@ -753,6 +761,9 @@
         <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>*@
     @*--end voice-*@
 
+
+    <script src="~/Scripts/datapicker-separate/daterangepicker.js"></script>
+
     <script src="~/Scripts/RedDotUtility.js"></script>
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/dd.css" />
         <script src="~/Scripts/js/msdropdown/jquery.dd.min.js">*@
@@ -760,8 +771,10 @@
     @*</script>*@
     @*<link rel="stylesheet" type="text/css" href="/Content/css/msdropdown/flags.css" />*@
 
-<script type="text/javascript">
-   
+    <script src="~/Scripts/multiselect/multiselect.js"></script>
+
+    <script type="text/javascript">
+
     $(document).ready(function () {
         $('a.collapsed das').on("click", function () {
             debugger;
@@ -780,10 +793,10 @@
             }, duration);
             document.body.appendChild(el);
         }
-   
 
 
-       
+
+
         $(".Quic").on("click", function (e) {
             debugger;
             var tr = $(this).closest(".Quic");
@@ -819,8 +832,8 @@
 
 
                             tr.offsetParent().find("#hdnQLink").val(response.QuickLinkId);
-                           
-                           
+
+
                         } else {
                             //  tempAlert(response.ErrorMsg, 500);
                             //  RdotAlerterrtxt(response.ErrorMsg);
@@ -853,7 +866,7 @@
                             tr.removeClass("fas fa-star Quic");
                             tr.addClass("icon-star Quic");
                             tr.offsetParent().find("#hdnQLink").val('0');
-                           
+
 
                             // tempAlert('Remove Quick Links', 500);
                         } else {
@@ -878,7 +891,7 @@
 
         })
 
-        
+
 
         $('#ChangePasswordPopup').on('hidden.bs.modal', function (e) {
             $(this)
@@ -897,8 +910,8 @@
         //    )
         //})
         //  })
-        
-        $("input[id='idnpass'],input[id='idcpass']").on("keypress", function (e) {                 
+
+        $("input[id='idnpass'],input[id='idcpass']").on("keypress", function (e) {
             $("#emailHelp").text('');
             if (e.charCode==95) {
                 $("#emailHelp").text('Underscore not allow.');
@@ -911,11 +924,11 @@
         var repass = '';
         var emailReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{8,}$/;
         $("input[id='idnpass'],input[id='idcpass']").blur(function (e) {
-            
+
             pass = $("input[id='idnpass']").val();
             repass = $('input[id=idcpass]').val();
             $("#emailHelp").text('');
-            if (!emailReg.test(pass)) {            
+            if (!emailReg.test(pass)) {
                 $("#emailHelp").text('Minimum Eight characters, at least one uppercase letter, one lowercase letter, one number and one special character & Underscore not allow.');
                 t = true;
             }
@@ -933,34 +946,182 @@
 
         $("#btnpass").on("click", function () {
             if (pass.length == 0) {
-                RdotAlerterrtxt1("Please Enter Password");
+                RedDotAlert_Error("Please Enter Password");
                 $("input[id='idnpass']").focus();
                 return
             }
             if (repass.length == 0) {
-                RdotAlerterrtxt1("Please Enter Confirm Password");
+                RedDotAlert_Error("Please Enter Confirm Password");
                 $("input[id='idcpass']").focus();
                 return
             }
             if (t == true) {
-                RdotAlerterrtxt1("Password does not match");
+                RedDotAlert_Error("Password does not match");
                 return
             }
             $.getJSON("/ChangePassword", { opass: $("#idopass").val(), npass: $("#idnpass").val(), cpass: $("#idcpass").val() }, function (response) {
                 if (response.data.Success == true) {
                     $("#btncls").trigger("click");
                     $("input[type='password']").val('');
-                    RdotAlertSucesstxt(response.data.Message);
+                    RedDotAlert_Success(response.data.Message);
 
                 } else {
-                    RdotAlerterrtxt1(response.data.Message);
+                    RedDotAlert_Error(response.data.Message);
                 }
             })
         })
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 
-</script>
+
+    </script>
+
+
+    @{
+        var conf = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+        var section = (System.Web.Configuration.SessionStateSection)conf.GetSection("system.web/sessionState");
+
+        string timeout = section.Timeout.TotalMinutes.ToString();
+    }
+
+
+    <script type="text/javascript">
+//code for expired session
+var sTimer = null;
+var eTimer = null;
+
+function InitializeTimer() {
+
+//30 minutes
+    var interval = @timeout * 1000 * 60;//1800000; //time in milliseconds 1000 ms = 1 second
+
+settimerFun(interval);
+
+$('body').ajaxStart(function () {
+// reset timer on ajax request
+settimerFun(interval);
+});
+}
+function settimerFun(interval) {
+if (sTimer)
+clearTimeout(sTimer);
+
+sTimer = setTimeout(function () { sExpired(); }, interval);
+}
+function sExpired() {
+
+//for yes or no dialog
+$('#div_sexpired').remove();
+var dialog = $('<div id="div_sexpired"></div>').text("Do you want to extend the session?");
+$('body').append(dialog);
+
+$('#div_sexpired').dialog({
+autoOpen: true,
+modal: true,
+title: 'Extend Session',
+buttons: {
+"Yes": function () {
+//write your logic here for yes button
+if (eTimer)
+clearTimeout(eTimer);
+settimerFun(5000);
+$(dialog).dialog('close');
+$('#div_sexpired').remove();
+},
+"No": function () {
+//write your logic here for no button
+redirtoLogin
+}
+}
+
+});
+
+
+
+//solution for your problem
+eTimer = setTimeout(function () {
+$(dialog).dialog('close'); //close the yer/no dialog
+
+//dialog for expired session
+var expiredialog = $('<div id="div_expired"></div>').text("Your session has timed out. Please login again.");
+$('body').append(expiredialog);
+$('#div_expired').dialog({
+autoOpen: true,
+modal: true,
+title: 'Expired Session',
+buttons: {
+"OK": function () {
+
+clearTimeout(eTimer);
+$(this).dialog('close');
+}
+
+},
+"close": redirtoLogin
+//on the close of this dialog redirect to login page
+});
+
+
+}, 1800000); //invoked after three seconds
+
+
+}
+
+function redirtoLogin() {
+//redirect to login page
+window.location.href = '@Url.Action("Login", "Account")';
+}
+
+//end of expired session
+
+$(function () {
+
+InitializeTimer(); //invoke the timer function
+});
+
+    </script>
+    @*<script>
+        $(document).ready(function () {
+            debugger
+                        var time = @timeout * 1000 * 60;
+                        var timeout;
+                        var isLogout = false;
+
+                        timeout = setTimeout(function() {
+                            //Things you need to do
+                                isLogout = true;
+
+                        }, time);
+
+                        $(document).on('click', function () {
+                            if (!isLogout) {
+                                clearTimeout(timeout);
+                                timeout = setTimeout(function() {
+                                    //Things you need to do
+                                     isLogout = true;
+                                }, time);
+                            }
+                        });
+                    });
+            </script>*@
+    @*<link href="~/Content/timeout-dialog.css" rel="stylesheet" />
+        <script src="~/Scripts/timeout-dialog.js"></script>
+
+        <script>
+
+            jQuery(function (e) {
+
+                var fnTimeOut = function () {
+                    jQuery.timeoutDialog.setupDialogTimer({
+                        timeout: 105,
+                        countdown: 100,
+                        logout_redirect_url: '@Url.Action("SignOut", "Account")',
+                        keep_alive_url: '@Url.Action("Keepalive", "Account")'
+                   });
+                };
+                fnTimeOut();
+            });
+        </script>*@
     <style>
         .demo-scrollbar {
             height: 300px;

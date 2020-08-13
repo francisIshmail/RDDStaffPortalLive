@@ -1,0 +1,2660 @@
+﻿@model RDDStaffPortal.DAL.DataModels.RDD_FunnelData
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Funnel List</h4>
+                </div>
+                <div class="col-md-1 ml-auto text-right padd-r0">
+                    <div id="headingOne" data-toggle="collapse" data-target="#chartboxSection" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="plus-minus"></div></div>
+                </div>
+
+            </div>
+            <div class="row rowmin" id="chartboxSection" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="col-md-12">
+                    <div class="card success-border">
+                        <div class="card-body">
+                            <div class="row">
+                                <label for="email2" class="width60px col-md-1">Date :</label>
+                                <div class="col-md-2">
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mar-t10">
+                                <div class="col-md-8">
+                                    <div class="panel padd-10 height200px">
+                                        <div class="chart-container" id="chart-container1">
+                                            <canvas id="multipleLineChartbbb"></canvas>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @*<div class="row" id="pis">*@
+                                @*@foreach (var i in ViewBag.loginuserList)
+                                    {*@
+                                <div class="col-md-4">
+                                    <div class="panel padd-10 height200px">
+                                        <div class="chart-container" id="chart-container2">
+                                            @*<canvas id="@i.TotalCost"></canvas>*@
+                                            <canvas id="CTStatusbbb"></canvas>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @*}*@
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="rowmin mar-b10">
+                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+            </div>
+
+            <div class="rowmin" id="FilterSection" style="display:none">
+                <div class="col-md-12">
+                    <div class="card success-border padd-t10	">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Country :</label>
+                                    <div class="col-md-7 p-0">
+
+                                        @Html.DropDownListFor(m =>m.FCountry, ViewBag.CountryList as SelectList, "-Select-", new { @class = "multiselect-ui form-control" , @multiple = "multiple" })
+
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">BU :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.DropDownListFor(m => m.FBU, ViewBag.BUList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.DropDownListFor(m => m.DealStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Quote M/Y :</label>
+                                    <div class="col-md-3 padd-l0">
+                                        @Html.DropDownListFor(m =>m.QutMonth, ViewBag.MonthList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                    <div class="col-md-3 padd-l0">
+                                        @Html.DropDownListFor(m => m.QutYears, ViewBag.YearList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Closing M/Y :</label>
+                                    <div class="col-md-3 padd-l0">
+                                        @Html.DropDownListFor(m => m.CloseMonth, ViewBag.ClosingMonthList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                    <div class="col-md-3 padd-l0">
+                                        @Html.DropDownListFor(m =>m.CloseYears, ViewBag.ClosingYearList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="col-xl-1 col-md-1 ml-auto">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px"></label>
+                                    <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10">
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px mar-t4">Customer :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" id="searchcutomer">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        @*<button type="button" class="btn btn-success btn-sm" id="addrow">Search</button>*@
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Hide Column"><i href="#" data-toggle="modal" data-target="#SelectWidgetspopup" class="fas fa-minus-circle"></i></button>
+                                        <button class="btn btn btn-secondary btn-sm" data-toggle="modal" data-target="#NewDealPopUp" id="newDealPopUp"><i class="fas fa-plus"></i>New Deal</button>
+                                        <a href="/Funnel/FunnelData/DownloadToExcel3" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="Ind" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+
+
+                                            <div class="reddotTableHead"><div>ID</div></div>
+                                            <div class="reddotTableHead"><div>BDM</div></div>
+                                            <div class="reddotTableHead"><div>Quote ID</div></div>
+                                            <div class="reddotTableHead"><div>End User</div></div>
+                                            <div class="reddotTableHead"><div>Reseller</div></div>
+                                            <div class="reddotTableHead"><div>Country</div></div>
+                                            <div class="reddotTableHead"><div>BU</div></div>
+                                            <div class="reddotTableHead"><div>Goods Desc</div></div>
+                                            <div class="reddotTableHead"><div>Quote Dt</div></div>
+                                            <div class="reddotTableHead"><div>Close Dt</div></div>
+                                            <div class="reddotTableHead"><div>Deal Status</div></div>
+
+                                            <div class="reddotTableHead"><div>Landed</div></div>
+                                            <div class="reddotTableHead"><div>Cost</div></div>
+                                            <div class="reddotTableHead"><div>Value</div></div>
+                                            <div class="reddotTableHead"><div>Action</div></div>
+
+                                        </div>
+                                    </div>
+                                    <div id="Ibody" class="reddotTableBody">
+                                        <div id="Ist" class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell"><div></div></div>
+                                            <div class="reddotTableCell">
+                                                <div>
+                                                    <button type="button" title="" data-toggle="tooltip" class="btn btn-success btn-sm btn-sm" data-original-title="Edit" onclick='EditItem(" + arr[i][tblhead1[0]]+")'> <i class="fas fa-edit"></i></button>
+                                                    <button type="button" title="" data-toggle="tooltip" class="btn btn-danger btn-sm" data-original-title="Delete" id="btndel"> <i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*</div>*@
+@*</div>*@
+<div class="modal fade" id="NewDealPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content width">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Funnel Deal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0  width130px">Country :</label>
+                                    <div class="col-md-6 p-0">
+                                        <div class="select2-input">
+
+                                            @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control" })
+                                            @*<select id="basic1" name="basic" class="form-control">
+
+                                                </select>*@
+                                            <input type="hidden" id="fid" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-1 col-form-label p-0  width90px">QuoteID :</label>
+                                    <div class="col-md-8">
+                                        <div class="select2-input">
+                                            <input type="hidden" id="hdnChangeCount" />
+
+                                            <label for="QuoteID" class="form-control form-control-sm" id="lblQuoteID"></label>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="ccol-md-2 col-form-label p-0  width130px">BU :</label>
+                                    <div class="col-md-6 p-0">
+                                        <div class="select2-input">
+                                            <input type="hidden" id="hdnBUName" />
+                                            <select id="BUName" name="BUName" class="form-control form-control-sm">
+                                                <option value="0">-Select-</option>
+                                            </select>
+                                            @*@Html.DropDownList("ItmsGrpNam", (List<SelectListItem>)ViewBag.BU, "-Select-", new { @id = "ItmsGrpNam", @class = "form-control" })*@
+                                            @*@Html.DropDownListFor(m => m.ItmsGrpNam, ViewBag.BU as SelectList, "-Select-", new { @class = "form-control" })*@
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-1 col-form-label p-0  width90px">Customer :</label>
+                                    <div class="col-md-8">
+                                        <input type="hidden" id="hdnCardName" />
+
+                                        <select class="multiselect-ui form-control" multiple="multiple" id="CardName" name="CardName">
+                                            <option value="0">-Select-</option>
+                                        </select>
+                                        <i class="fas fa-plus-square small menu-icon-c" id="divhdnchk" title="New Reseller" data-toggle="modal" data-target="#SelectNewResellerpopup"></i>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0  width130px">BDM :</label>
+                                    <div class="col-md-6 p-0">
+                                        @Html.TextBoxFor(m => m.bdm, new { @id = "bdm", @class = "form-control form-control-sm", maxlength = "155", placeholder = "Enter BDM" })
+                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-1 col-form-label p-0  width90px">Enter User :</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.enduser, new { @id = "enduser", @class = "form-control form-control-sm", maxlength = "155", placeholder = "Enter EndUser" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label width130px p-0"> Goods Description :</label>
+                                    <div class="col-md-9 p-0">
+                                        @Html.TextBoxFor(m => m.goodsDescr, new { @id = "goodsDescr", @class = "form-control form-control-sm", maxlength = "1024", placeholder = "Enter Goods Description" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label width130px p-0">Remark 1 :</label>
+                                    <div class="col-md-9 p-0">
+                                        @Html.TextBoxFor(m => m.remarks, new { @id = "remarks", @class = "form-control form-control-sm", maxlength = "225", placeholder = "Enter Remark" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label width130px p-0">Remark 2 :</label>
+                                    <div class="col-md-9 p-0 min-width519px">
+                                        @Html.TextBoxFor(m => m.Remarks2, new { @id = "Remarks2", @class = "form-control form-control-sm", maxlength = "225", @disabled = "disabled", placeholder = "Enter Remark" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label width130px p-0">Remark 3 :</label>
+                                    <div class="col-md-9 p-0">
+                                        @Html.TextBoxFor(m => m.Remarks3, new { @id = "Remarks3", @class = "form-control form-control-sm", maxlength = "225", @disabled = "disabled", placeholder = "Enter Remark" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0  width130px">Created By :</label>
+                                    <div class="col-md-6 p-0">
+                                        <label for="CreatedBy" class="form-control form-control-sm" id="lblCreatedBy">@ViewBag.CreatedBy</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0 width130px">Updated By :</label>
+                                    <div class="col-md-6 p-0">
+                                        <input type="text" class="form-control form-control-sm" id="lblUpdatedBy" disabled>
+                                        @*<label for="UpdatedBy" class="form-control form-control-sm" id="lblUpdatedBy" disbled></label>*@
+                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0 width130px">Created Date :</label>
+                                    <div class="col-md-6 p-0">
+                                        <div class="input-group">
+
+                                            @Html.TextBoxFor(m => m.Createddte, new { @id = "Createddte", @class = "form-control form-control-sm", @name = "DOB", @disabled = "disabled" })
+                                            @*<input type="text" class="form-control form-control-sm" id="Createddte" name="datepicker">*@
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0 width130px">Updated Date :</label>
+                                    <div class="col-md-6 p-0">
+                                        <div class="input-group">
+
+                                            <input type="text" class="form-control form-control-sm" id="Updateddte" name="datepicker" disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+
+                            </div>
+                            <div class="col-md-6 col-lg-6 flexinherit">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-2 col-form-label p-0 width130px">Next Reminder On :</label>
+                                    <div class="col-md-6 p-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm" id="NextReminderDt" name="datepicker">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Quote Date :</label>
+                                    <div class="col-md-7 p-0">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.quoteDate, new { @id = "quoteDate", @class = "form-control form-control-sm", @name = "quoteDate" })
+                                            @*<input type="text" class="form-control form-control-sm" id="quoteDate" name="datepicker">*@
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Cost :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.TextBoxFor(m => m.Cost, new { @id = "Cost", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Cost" })
+                                        @*<input type="text" class="form-control form-control-sm" id="">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Landed :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.TextBoxFor(m => m.Landed, new { @id = "Landed", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Landed" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Margin % :</label>
+                                    <div class="col-md-7 p-0">
+                                        <input type="text" class="form-control form-control-sm" id="marginper" onkeypress="javascript:return isNumberKey(event);" onkeyup="javascript:calculateMargin()" placeholder="Enter Margin %">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Margin $ :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.TextBoxFor(m => m.MarginUSD, new { @id = "MarginUSD", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calculateMarginPercent()", @placeholder = "Enter Margin $" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Sell Amount :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.TextBoxFor(m => m.value, new { @id = "value", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calcMarginAndPercentBasedOnTotalSell();", @placeholder = "Enter Sell Amount" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
+                                    <div class="col-md-7 p-0">
+                                        @Html.DropDownList("DealStatus", ViewBag.StatusList as SelectList, new { @id = "DealStatus", @class = "form-control form-control-sm" })
+                                        @*(List<SelectListItem>
+                                            )ViewBag.StatusList*@
+                                            @*<input type="text" class="form-control form-control-sm" id="">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Closing Date :</label>
+                                    <div class="col-md-7 p-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm" id="expClosingDt" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Order Date :</label>
+                                    <div class="col-md-7 p-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm" id="orderBookedDate" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-5 col-form-label p-0">Invoice Date :</label>
+                                    <div class="col-md-7 p-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm" id="InvoiceDt" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" id="btnSaveFunnel">Save</button>
+
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="SelectNewResellerpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-20per" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">New Reseller</h5>
+                <button type="button" class="close newResCls" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section">
+
+                <div class="col-md-12 mar-b10">
+
+                    <input type="text" class="form-control form-control-sm" placeholder="Enter New Reseller Name" id="resellername">
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" id="btnsavereseller" onclick="SaveReseller()">Add</button>
+                <button type="button" class="btn btn-danger btn-sm newResCls">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-70per" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Show/Hide Columns</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section">
+                <div class="row rowmin">
+                    <div class="col-md-12 mar-b10">
+                        <div class="row" id="idchk"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnsave" type="button" class="btn btn-success btn-sm">Save</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+
+</script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+
+<script>
+    $(function () {
+
+      
+
+
+       
+    });
+</script>
+<div>
+    <div>
+        <div>
+            <script type="text/javascript">
+                var tblhead1 = ["fid", "bdm", "quoteID", "enduser", "CardName", "Country", "BUName", "goodsDescr", "quoteDate", "expClosingDt", "DealStatus", "Landed", "Cost", "value", "Action"];
+                var tblhide = ["bdm", "enduser"];
+                var dateCond = ["quoteDate", "expClosingDt"];
+                var curPage = 1;
+
+                 
+                $(document).ready(function () {
+                    var arr = [];
+                    (function ($) {
+                        $(function () {
+                            window.fs_test = $('.multiselect-ui').fSelect();
+                            $(".multiselect-ui").hide();
+                        });
+                    })(jQuery);
+
+
+                    $('body').on('focusin', '.datepickerH', function () {
+                        $('.datepickerH').datetimepicker({
+                            format: 'DD/MM/YYYY',
+                            showClose: true,
+                            showClear: true,
+
+                        });
+                    });
+                    RedDot_NewDate(".datepickerH");
+                    var now = new Date();
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + now.getMonth()).slice(-2);
+                    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+
+                    $("#fromDate").val(today);
+
+
+                    //#region close reseller
+                    $(".newResCls").click(function () {
+                        $('.loader1').show();
+                        $('#SelectNewResellerpopup').modal('hide');
+                        var Country = $('#Country').val();
+                        $.ajax({
+                            url: '/FunnelData/FillCustomer',
+                            type: "GET",
+                            dataType: "JSON",
+                            data: { Country: Country },
+                            success: function (FunnelListCust) {
+                                $("#CardName").html("");
+
+                                $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+                                    $("#CardName").append(
+                                        $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
+
+
+                                });
+                                $('.loader1').hide();
+                            }, complete: function () {
+                                $("#CardName").val($("#hdnCardName").val());
+                                $(".multiselect-ui").fSelect('reload');
+
+                            }
+                        });
+
+                    })
+                    //#endregion
+                    $('#Country').select2({
+
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select--'
+                    });
+
+                    $("#newDealPopUp").click(function () {
+
+                        // if ($("#fid").val() == "") {
+                        //$("#quoteDate").datetimepicker({
+                        //    defaultDate: new Date(),
+                        //    format: 'DD/MM/YYYY',
+                        //});
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+
+                        //  today = yyyy + '/' + mm + '/' + dd;
+                        today = dd + '/' + mm + '/' + yyyy;
+                        $("#Createddte").val(today);
+                        $("#quoteDate").val(today);
+                        ////$("#Createddte").datetimepicker({
+                        ////    defaultDate: new Date(),
+                        ////    format: 'DD/MM/YYYY',
+                        ////});
+
+                        $("#Landed").val('');
+
+                        $("#DealStatus").val('OPEN');
+
+
+                        $("#divhdnchk").hide();
+                        $("#Remarks2").attr('disabled', 'disabled');
+                        $('#remarks').attr('disabled', false);
+                        $('#Remarks3').attr('disabled', 'disabled');
+
+
+                        // $('.multiselect-ui').fSelect('destroy');
+                        $(".multiselect-ui").fSelect('reload');
+                    });
+
+
+
+                    // related to chart data
+
+                    $("#chartboxbtn").click(function () {
+                        $("#chartboxSection").slideToggle("slow");
+                    });
+
+                    $("#FilterBtn").click(function () {
+                        $("#FilterSection").slideToggle("slow");
+                        $('#Country').trigger("change");
+                    });
+
+
+                    $('#NewDealPopUp').on('hidden.bs.modal', function (e) {
+                        //$('#lblchk').hide();
+                        $("#quoteDate").datetimepicker({
+                            defaultDate: new Date(),
+                            format: 'DD/MM/YYYY',
+                        });
+
+                        // $(".selected").removeAttr('checked');
+                        $(this)
+                            .find("input,textarea,select")
+                            .val('')
+                            .end()
+
+                            ////  .find("input[type=checkbox]")
+                            // .prop("checked", false)
+                            //.prop("visible", false)
+
+                            // .end()
+
+
+                            //.find([id='divhdnchk']).hide()
+                            //    .end
+                            //find("#divhdnchk").hide()
+                            //    .end()
+
+                            .find("#lblQuoteID").text('')
+                            .end()
+
+                        $('#Country').trigger('change');
+
+
+                        //.find("#lblchk").text('')
+                        //.end();
+
+                        //  $(this).find("[id*='customCheck1'] option:selected").val();
+
+
+                        //hidden value and chkbox
+                        //.find("#customCheck1 option:checkbox").remove()
+                        //.end()
+
+
+                    })
+
+                    $("#Landed").keyup(function () {
+                        $("#value").val($("#Landed").val());
+                    })
+
+                    $("#Cost").keyup(function () {
+                        $("#value").val($("#Cost").val());
+                    })
+
+                    $('#Country').on("change", function () {
+
+
+                        //$("#lblchk").show();
+
+                        var Country = $('#Country').val();
+                        if (Country == '') {
+                            $("#divhdnchk").hide();
+                            $("#lblQuoteID").text('');
+                            $('#CardName')
+                                .find('option')
+                                .remove()
+                                .end()
+
+                            $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                            $('.multiselect-ui').fSelect('reload');
+                            $("#ItmsGrpNam").html("");
+                            $("#BUName").empty();
+                            $("#hdnBUName").empty();
+
+
+                            $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
+                            return;
+                        }
+                        $("#divhdnchk").show();
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            url: '/FunnelData/getQuoiteId',
+                            type: "GET",
+                            dataType: "JSON",
+                            data: { Country: Country },
+
+                            success: function (QuoteID) {
+
+                                $("#lblQuoteID").text(QuoteID);
+
+                                //lblQuoteID.text()
+                                //   $('.multiselect-ui').fSelect('reload');
+                            }
+                        });
+
+
+
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            url: '/FunnelData/FillCustomer',
+                            type: "GET",
+                            dataType: "JSON",
+                            data: { Country: Country },
+                            success: function (FunnelListCust) {
+
+                                // $('.test').fSelect('destroy');
+                                //   $("#CardName").html("");
+                                $('#CardName')
+                                    .find('option')
+                                    .remove()
+                                    .end()
+
+                                $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+
+                                    $("#CardName").append(
+                                        $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
+
+                                });
+
+                                $("#CardName").val($("#hdnCardName").val());
+
+                                (function ($) {
+                                    $(function () {
+
+                                        window.fs_test = $('.multiselect-ui').fSelect();
+                                        //  $('.test').fSelect('create');
+                                        var test = $.trim($("#hdnCardName").val());
+                                        //var test = $.trim($("#CardName").val());
+                                        var valarr = test.split(',');
+                                        $('.fs-wrap').find('.fs-dropdown').find('.g0').removeClass('selected');
+                                        i = 0, size = valarr.length;
+                                        for (i; i < size; i++) {
+
+                                            $('.fs-wrap').find('.fs-dropdown').find("[data-value='" + valarr[i].trim() + "']").addClass('selected');
+                                            //$("#CardName").find("[value='" + valarr[i].trim() + "']").addClass('selected');
+
+
+                                        }
+
+                                        if (size > 2) {
+                                            $('.fs-label').text(size - 1 + ' selected');
+                                        }
+
+                                        $("#CardName").val(valarr);
+                                        $(".multiselect-ui").fSelect('reload');
+
+                                    });
+                                })(jQuery);
+
+                            },
+
+                            complete: function () {
+                                $(".multiselect-ui").hide();
+                                $(".multiselect-ui").fSelect('reload');
+
+                            }
+                        });
+
+                        $.ajax({
+                            url: '/FunnelData/FillBU',
+                            type: "GET",
+                            dataType: "JSON",
+                            data: { Country: Country },
+
+                            success: function (FunnelListBU) {
+
+
+                                $("#ItmsGrpNam").html("");
+                                $("#BUName").empty();
+                                $("#hdnBUName").empty();
+
+
+                                $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                                $.each(FunnelListBU, function (i, RDD_FunnelData) {
+                                    $("#BUName").append(
+                                        $('<option></option>').val(RDD_FunnelData.BUName).html(RDD_FunnelData.BUName));
+                                });
+                            },
+                            complete: function () {
+                                $("#BUName").val($("#hdnBUName").val())
+
+                                $('#BUName').select2({
+
+                                    theme: "bootstrap",
+                                    allowClear: true,
+                                    placeholder: '--Select--'
+                                });
+
+
+                            }
+                        });
+
+
+
+
+                    })
+
+                    //#region Load Data & prev, Next, search
+                    $('.loader1').hide();
+                    var k1 = 0;
+                    while (tblhead1.length > k1) {
+                        var ab = "<div class='col-sm-2 col-md-2 padd-0'><i class='fas fa-table'></i> <div class='widget-content'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-1 col-md-1 text-right'><div class='editable'><div class='switchbox'><label class='switch'><input id='ChkDash' type='checkbox'><div></div> </label></div> </div></div>";
+                        if (jQuery.inArray(tblhead1[k1], tblhide) !== -1) {
+                            $('div#' + tblhead1[k1] + '1').addClass("Abc");
+                            $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] + "' type='checkbox' ></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                            // $("#idchk").append(ab);
+                        } else {
+                            $('div#' + tblhead1[k1] + '1').removeClass("Abc");
+                            //$("#idchk").append(ab);
+                            $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] + "' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                        }
+                        k1++;
+                    }
+
+
+
+                    var searchname = $("#searchcutomer").val();
+
+                    debugger
+
+                    $.ajax({
+
+
+                        type: "POST",
+                        url: "/FunnelData/getFunnelDataList",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            pagesize: 50,
+                            pageno: curPage,
+                            psearch: searchname,
+                            pcountry: '',
+                            pBU:'',
+                            pQMonth: '',
+                            pQYear: '',
+                            pCloseMonth: '',
+                            pcloseYear:'',
+                            pstatus: ''
+                        }),
+
+                        success: function (data) {
+
+                            $("#Ist").show();
+                            arr = data;
+                            if (arr != null && arr.length != 0) {
+                                var i = 0;
+                                while (arr.length > i) {
+                                    var tr = $("#Ist").clone();
+                                    var tr1 = $("#Ind").closest();
+                                    var k = 0;
+                                    var l1 = tr.find(".reddotTableCell").length;
+                                    while (l1 > k) {
+                                        var t = tblhead1[k];
+                                        if (jQuery.inArray(t, dateCond) !== -1) {
+                                            tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                        } else if (tblhead1[k] !== 'Action') {
+                                            tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                        } else {
+                                            tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                "</div>")
+                                        }
+
+
+
+                                        if (jQuery.inArray(t, tblhide) !== -1) {
+                                            tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                            tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                        }
+
+                                        k++;
+                                    }
+                                    $("#Ibody").append(tr);
+                                    i++;
+                                }
+                                $("#Ist")[0].remove();
+                            } else {
+                                $("#Ist").hide();
+                               // $("#Ibody").append("No Record Found");
+                               // RdotAlerterrtxt1("No Record Found");
+                            }
+
+                        },
+                        error: function (data) {
+                            $("#setfunnellist").empty();
+                        }
+                    });
+                    //previ code
+
+
+
+                    $("#searchcutomer").on("keyup", function () {
+                        var searchname = $(this).val().toLowerCase();
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus +="'"+ $(this).text() + "',";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += "'" + $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += "'" + $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += "'" + $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += "'" +$(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += "'" + $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += "'" + $(this).text() + ",";
+                        });
+
+                        $.ajax({
+
+
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry.replace(/,\s*$/, ""),
+                                pBU: FBU.replace(/,\s*$/, ""),
+                                pQMonth: QutMonth.replace(/,\s*$/, ""),
+                                pQYear: QutYears.replace(/,\s*$/, ""),
+                                pCloseMonth: CloseMonth.replace(/,\s*$/, ""),
+                                pcloseYear: CloseYears.replace(/,\s*$/, ""),
+                                pstatus: FStatus.replace(/,\s*$/, "")
+                            }),
+
+                            success: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }
+                        });
+
+                    });
+
+                    $('.prev').bind('click', function () {
+                        $(".loader1").show();
+                        if (arr[0].TotalCount < 50) {
+                            $(".loader1").hide();
+
+                            return;
+                        }
+
+                        curPage--;
+                        if (curPage < 0)
+                            curPage = (arr[0].TotalCount - 1);
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
+                            }),
+                            success: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            },
+                            complete: function () {
+                                $(".loader1").hide();
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }
+                        });
+                    });
+
+                    $('.next').bind('click', function () {
+
+                        $(".loader1").show();
+                        if (arr[0].TotalCount < 50) {
+                            $(".loader1").hide();
+                            return;
+                        }
+                        curPage++;
+                        if (curPage > arr[0].TotalCount)
+                            curPage = 0;
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
+                            }),
+                            success: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            }, complete: function () {
+                                $(".loader1").hide();
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }
+
+
+                        });
+                    });
+
+                    $("#btnsave").on("click", function () {
+
+                        tblhide = [];
+                        $('input:checkbox').each(function () {
+
+                            var IsActiveTxt = $(this).is(":checked");
+                            if (IsActiveTxt == false && $(this).attr("id") != undefined) {
+
+                                tblhide.push($(this).attr("id"));
+                                //  $('div#' + $(this).attr("id") + '1').addClass("Abc");
+
+
+                            }
+
+                        });
+
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
+                        $.ajax({
+
+
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
+                            }),
+                            success: function (data) {
+
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }, complete: function () {
+                                $('.close').trigger("click");
+                            }
+
+
+
+                        });
+                    });
+
+                    $("#btnApply").on("click", function () {
+                        $(".loader1").show();
+                        var FStatus = '';
+                        var FCountry = '';
+                        var QutMonth = '';
+                        var QutYears = '';
+                        var CloseMonth = '';
+                        var CloseYears = '';
+                        var FBU = '';
+                        $("#FStatus option:selected").each(function () {
+                            FStatus += $(this).text() + ",";
+                        });
+                        $("#FCountry option:selected").each(function () {
+                            FCountry += $(this).text() + ",";
+                        });
+                        $("#FBU option:selected").each(function () {
+                            FBU += $(this).text() + ",";
+                        });
+                        $("#QutMonth option:selected").each(function () {
+                            QutMonth += $(this).text() + ",";
+                        });
+                        $("#QutYears option:selected").each(function () {
+                            QutYears += $(this).text() + ",";
+                        });
+                        $("#CloseMonth option:selected").each(function () {
+                            CloseMonth += $(this).text() + ",";
+                        });
+                        $("#CloseYears option:selected").each(function () {
+                            CloseYears += $(this).text() + ",";
+                        });
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/FunnelData/getFunnelDataList",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                pagesize: 50,
+                                pageno: curPage,
+                                psearch: searchname,
+                                pcountry: FCountry,
+                                pBU: FBU,
+                                pQMonth: QutMonth,
+                                pQYear: QutYears,
+                                pCloseMonth: CloseMonth,
+                                pcloseYear: CloseYears,
+                                pstatus: FStatus
+                            }),
+                            success: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                                arr = data;
+                                if (arr != null && arr.length != 0) {
+                                    var i = 0;
+                                    while (arr.length > i) {
+                                        var tr = $("#Ist").clone();
+                                        var tr1 = $("#Ind").closest();
+                                        var k = 0;
+                                        var l1 = tr.find(".reddotTableCell").length;
+                                        while (l1 > k) {
+                                            var t = tblhead1[k];
+                                            if (jQuery.inArray(t, dateCond) !== -1) {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                            } else if (tblhead1[k] !== 'Action') {
+                                                tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                            } else {
+                                                tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                    "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                    "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                    "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                    "</div>")
+                                            }
+
+                                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                                tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                            }
+
+                                            k++;
+                                        }
+                                        $("#Ibody").append(tr);
+                                        i++;
+                                    }
+                                    $("#Ist")[0].remove();
+
+                                } else {
+                                    $("#Ist").hide();
+                                    RdotAlerterrtxt1("No Record Found");
+                                }
+
+                            }, complete: function () {
+                                $(".loader1").hide();
+                            },
+                            error: function (data) {
+                                $("#Ist").show();
+                                $("div#Ist").not(':first').remove();
+                            }
+
+
+                        });
+                    });
+
+
+                    $('#Ibody').on('click', "[id^='btndel']", function (event) {
+
+                        var fid = $(this).closest("div").find("#hdntbheadid").val();
+                        var dealstatus = $(this).closest("div").find("#hdntbheadstatus").val();
+
+                        var tr = $(this).closest(".odd-even-row");
+
+                        //function DeleteItem(fid,dealstatus) {
+
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: false,
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
+
+                                $.getJSON("/FunnelData/DeleteItemm", { fid: fid }).done(function (data) {
+
+                                    if (data.DeleteFlag == "Record Deleted.") {
+                                        //  $("#Ist").remove();
+
+                                        RdotAlertSucesstxt(data.DeleteFlag);
+
+                                        tr.remove();
+                                        //  $('#btn_DeleteDetails').attr('disabled', true);
+                                    }
+                                    else if (data.DeleteFlag == "Only Open Record can be Deleted.") {
+                                        RdotAlerterrtxt1(data.DeleteFlag);
+                                        // GetJobGradeList();
+                                        // result == "Department already exists at other table .Cannot Deleted.";
+
+                                    }
+
+                                });
+                                //swalWithBootstrapButtons.fire(
+                                //    'Deleted!',
+                                //    'Your Record  has been deleted.',
+                                //    'success'
+
+                                //)
+                            }
+                            else if (
+                                // Read more about handling dismissals
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    'Your Record  is safe :)',
+                                    'error'
+                                )
+                            }
+
+                        })
+                    });
+
+                    try {
+                        debugger
+                    RedDot_DateRange("reportrange");
+                   
+                    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {                                      
+                        GetChart(picker.startDate.format('YYYY-MM-DD'), picker.endDate.format('YYYY-MM-DD'))
+                    });
+                    
+                    debugger
+                    GetChart($('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD'));
+
+                  
+
+                        function GetChart(from_Date, to_Date) {
+                            $('#multipleLineChartbbb').remove(); // this is my <canvas> element
+                            $('#chart-container1').append('<canvas id="multipleLineChartbbb"><canvas>');
+
+                            $('#CTStatusbbb').remove(); // this is my <canvas> element
+                            $('#chart-container2').append('<canvas id="CTStatusbbb"><canvas>');
+
+                            multipleLineChartbbb = document.getElementById('multipleLineChartbbb').getContext('2d');
+
+                            CTStatusbbb = document.getElementById('CTStatusbbb').getContext('2d');
+                            var pts = [];
+                            var lbl = [];
+                            var bg = [];
+                            var Amt = [];
+
+                            var lineamt = [];
+                            var status = [];
+                            var bgg = [];
+                            // var wkno = [];
+                            var array = [];
+                            $.ajax({
+                                async: false,
+                                cache: false,
+                                type: "POST",
+                                url: "/Funnel/FunnelData/GetCharts",
+                                dataType: 'Json',
+                                data: JSON.stringify({
+                                    fromdate: from_Date,
+                                    todate: to_Date,
+
+                                }),
+                                contentType: "Application/json",
+                                dataType: 'JSON',
+                                success: function (response) {
+
+                                    var i = 0;
+                                    while (i < response.data.Get_Funnels.length) {
+                                        pts.push(response.data.Get_Funnels[i].percentage);
+                                        lbl.push(response.data.Get_Funnels[i].status + ',' + response.data.Get_Funnels[i].TotalAmt);
+                                        bg.push(response.data.Get_Funnels[i].color);
+                                        Amt.push(response.data.Get_Funnels[i].TotalAmt);
+                                        i++;
+                                    }
+                                    var i1 = 0;
+                                    array = response.data.GetLinecharts;
+
+                                }
+                            })
+
+
+
+
+                            var myPieChart = new Chart(CTStatusbbb, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: pts,
+                                        backgroundColor: bg,
+                                        borderWidth: 0
+                                    }],
+
+                                    labels: lbl
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                        position: 'right',
+                                        labels: {
+                                            fontColor: 'rgb(154, 154, 154)',
+                                            fontSize: 12,
+                                            usePointStyle: false,
+                                            padding: 10
+                                        }
+                                    },
+                                    pieceLabel: {
+                                        render: 'percentage',
+                                        fontColor: 'white',
+                                        fontSize: 10,
+                                    },
+                                    tooltips: {
+                                        bodySpacing: 2,
+                                        mode: "nearest",
+                                        intersect: 0,
+                                        position: "nearest",
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 5
+                                    },
+                                    layout: {
+                                        padding: {
+                                            left: 0,
+                                            right: 20,
+                                            top: 20,
+                                            bottom: 20
+                                        }
+                                    }
+                                }
+                            })
+
+
+                            var dupes = {};
+                            var wkno = [];
+                            var wkno1 = [];
+                            var status = [];
+
+                            $.each(array, function (i, el) {
+                                if (!dupes[el.weekno]) {
+                                    dupes[el.weekno] = true;
+                                    wkno.push(el.weekno);
+                                    wkno1.push(el.weekno + "Wk");
+                                }
+
+                            })
+
+                            $.each(array, function (i, el) {
+                                if (!dupes[el.color]) {
+                                    dupes[el.color] = true;
+                                    bgg.push(el.color)
+                                }
+                                if (!dupes[el.status]) {
+                                    dupes[el.status] = true;
+                                    status.push(el.status)
+                                }
+
+                            })
+
+                            var pts = [];
+                            var k = 0
+                            while (k < status.length) {
+                                var tempArray = [];
+                                $.each(array, function (i, el) {
+                                    if (el.status == status[k]) {
+
+                                        tempArray.push(el.Amount);
+                                    }
+                                })
+                                pts.push(tempArray);
+                                k++;
+                            }
+
+
+                            var ds = [];
+                            i = 0;
+                            while (i < status.length) {
+                                ds.push({
+                                    label: status[i],
+                                    borderColor: bgg[i],
+                                    pointBorderColor: "#FFF",
+                                    pointBackgroundColor: bgg[i],
+                                    pointBorderWidth: 2,
+                                    pointHoverRadius: 4,
+                                    pointHoverBorderWidth: 1,
+                                    pointRadius: 4,
+                                    backgroundColor: 'transparent',
+                                    fill: true,
+                                    borderWidth: 2,
+                                    data: pts[i]
+                                });
+                                i++;
+                            }
+
+
+                            var myMultipleLineChart = new Chart(multipleLineChartbbb, {
+                                type: 'line',
+                                data: {
+                                    // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    labels: wkno1,
+                                    datasets: ds,
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                    tooltips: {
+                                        bodySpacing: 4,
+                                        mode: "nearest",
+                                        intersect: 0,
+                                        position: "nearest",
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 10
+                                    },
+                                    layout: {
+                                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                                    }
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        RedDotAlert_Error("error occur")
+                    }
+                   
+
+
+                    //#endregion date range with chart
+
+                });
+
+
+                function EditItem(fid) {
+
+                    $('#lblchk').show();
+                    //$('#hdnCardName').val('');
+                    // $('#CardName').("")
+                    //  .removeClass("selected");
+                    //   $(".selected").removeAttr('checked');
+                    //  $("#CardName").removeAttr('checked');
+
+                    var url = "/FunnelData/GetDataById?fid=" + fid;
+                    $("#NewDealPopUp").modal();
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data) {
+
+
+
+                            $("#fid").val(data.fid);
+
+                            $("#Country").val(data.Country).trigger('change');
+
+                            //$("#Country").val(data.Country);
+
+                            $("#hdnChangeCount").val(data.ChangeCount);
+
+                            $("#hdnBUName").val(data.BUName);
+
+                            $("#bdm").val(data.bdm);
+
+                            $("#hdnCardName").val(data.CardCode); //contain cradcode
+                            // $("#CardName").text(data.CardName); //contain cardname
+
+                            // var valarr = $("#hdnCardName").val();
+
+
+
+                            $("#enduser").val(data.enduser);
+                            $("#goodsDescr").val(data.goodsDescr);
+                            $("#remarks").val(data.remarks);
+                            $("#Remarks2").val(data.Remarks2);
+                            $("#Remarks3").val(data.Remarks3);
+                            $("#lblCreatedBy").val(data.lblCreatedBy);
+                            $("#Createddte").val(RdotdatefrmtRes1(data.Createddte));
+                            $("#lblUpdatedBy").val(data.UpdatedBy);
+                            $("#Updateddte").val(RdotdatefrmtRes1(data.Updateddte));
+                            $("#NextReminderDt").val(RdotdatefrmtRes1(data.NextReminderDt));
+
+                            if ($("#NextReminderDt").val() == "01-Jan-1") {
+
+                                $("#NextReminderDt").val('');
+                            }
+                            if ($("#Updateddte").val() == "01-Jan-1") {
+
+                                $("#Updateddte").val('');
+                            }
+
+                            $("#quoteDate").val(RdotdatefrmtRes1(data.quoteDate));
+                            $("#Cost").val(data.Cost);
+                            $("#Landed").val(data.Landed);
+                            $("#MarginUSD").val(data.MarginUSD);
+
+
+
+
+                            $("#value").val(data.value);
+                            $("#DealStatus").val(data.DealStatus);
+                            $("#expClosingDt").val(RdotdatefrmtRes1(data.expClosingDt));
+                            $("#orderBookedDate").val(RdotdatefrmtRes1(data.orderBookedDate));
+                            $("#InvoiceDt").val(RdotdatefrmtRes1(data.InvoiceDt));
+                            if ($("#hdnChangeCount").val() == '1') {
+                                $("#Remarks2").attr("disabled", false);
+                                $('#remarks').attr('disabled', 'disabled');
+                                $('#Remarks3').attr('disabled', 'disabled');
+                                //  $('#Remarks2').attr('enabled', 'enabled');
+
+                            }
+                            else if ($("#hdnChangeCount").val() == '2') {
+                                $("#Remarks2").attr("disabled", true);
+                                $('#remarks').attr('disabled', 'disabled');
+                                $('#Remarks3').attr('disabled', false);
+                                //  $('#Remarks2').attr('enabled', 'enabled');
+
+                            }
+                            else if ($("#hdnChangeCount").val() == '3') {
+                                $("#Remarks2").attr("disabled", true);
+                                $('#remarks').attr('disabled', 'disabled');
+                                $('#Remarks3').attr('disabled', false);
+                                //  $('#Remarks2').attr('enabled', 'enabled');
+
+                            }
+
+                            if ($('#Landed').val() > 0) {
+                                var MarginDollar = $('#MarginUSD').val();
+                                var totalsell = $('#value').val();
+                                var landed = $('#Landed').val();
+                                var mardol = totalsell - landed;
+                                var marper = (mardol / landed) * 100;
+                                $('#marginper').val(marper);
+
+
+                            }
+                            $("#lblQuoteID").text(data.quoteID);
+                        }
+                    });
+                }
+
+                $('#btnSaveFunnel').on("click", function () {
+
+
+                    var res = validate();
+
+                    if (res == false) {
+                        return false;
+                    };
+
+                    var FunnelDataa = {};
+                    var CardName = "";
+                    var CardCodeName = "";
+                    $("#CardName option:selected").each(function () {
+                        CardName += $(this).text() + ",";
+                    });
+                    $("#CardName option:selected").each(function () {
+                        CardCodeName += $(this).val() + ",";
+                    });
+
+
+                    // hdnChangeCount
+                    FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
+                    FunnelDataa["fid"] = $("#fid").val();
+                    FunnelDataa["Country"] = $("#Country").val();
+                    FunnelDataa["BUName"] = $("#BUName").val();
+                    FunnelDataa["bdm"] = $("#bdm").val();
+
+                    //FunnelDataa["CardCode"] = $("#CardName").val();
+                    //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
+                    FunnelDataa["CardCode"] = CardCodeName;
+                    FunnelDataa["CardName"] = CardName;
+                    FunnelDataa["quoteID"] = $("#lblQuoteID").text();
+
+                    FunnelDataa["enduser"] = $("#enduser").val();
+                    FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
+                    FunnelDataa["remarks"] = $("#remarks").val();
+                    FunnelDataa["Remarks2"] = $("#Remarks2").val();
+                    FunnelDataa["Remarks3"] = $("#Remarks3").val();
+                    FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
+                    FunnelDataa["Createddte"] = $("#Createddte").val();
+                    FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
+                    FunnelDataa["Updateddte"] = $("#Updateddte").val();
+                    FunnelDataa["NextReminderDt"] = $("#NextReminderDt").val();
+                    FunnelDataa["quoteDate"] = $("#quoteDate").val();
+                    FunnelDataa["Cost"] = $("#Cost").val();
+                    FunnelDataa["Landed"] = $("#Landed").val();
+                    FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
+
+                    FunnelDataa["value"] = $("#value").val();
+                    FunnelDataa["DealStatus"] = $("#DealStatus").val();
+                    FunnelDataa["expClosingDt"] = $("#expClosingDt").val();
+                    FunnelDataa["orderBookedDate"] = $("#orderBookedDate").val();
+                    FunnelDataa["InvoiceDt"] = $("#InvoiceDt").val();
+
+
+
+                    $.ajax({
+
+                        type: "POST",
+                        url: "/FunnelData/SaveFunlData",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+
+                        success: function (result) {
+
+
+                            if (result == "saved successfully") {
+
+                                RdotAlertSucesstxt(result);
+                                ClearControl();
+                                getdatalistaftersuccess();
+
+                            }
+
+                            else if (result == "updated successfully.") {
+                                RdotAlertSucesstxt(result);
+                                getdatalistaftersuccess();
+                            }
+                            $("#NewDealPopUp").modal('hide');
+
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+
+                    });
+
+                });
+                
+                function SaveReseller() {
+
+
+                    var res = validateFunnel();
+
+                    if (res == false) {
+                        return false;
+                    };
+
+
+                    var ResellerDataa = {};
+                    ResellerDataa["Country"] = $("#Country").val();
+                    ResellerDataa["resellername"] = $("#resellername").val();
+
+                    $.ajax({
+
+                        type: "POST",
+                        url: "/FunnelData/SaveResellerData",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({ ResellerDataa: ResellerDataa }),
+
+                        success: function (result) {
+
+
+                            if (result == "Reseller saved successfully") {
+
+
+                                // $('#Country').find('option:first').attr('selected', 'selected');
+                                $("#resellername").val('');
+
+                                var Country = $('#Country').val();
+
+
+                                // $("#lblQuoteID").text('');
+                                RdotAlertSucesstxt(result);
+                            }
+
+                        },
+
+                        error: function (result) {
+                            console.log(result);
+                        }
+
+                    });
+                    //});
+                }
+
+                function validateFunnel() {
+                    if ($("#Country option:selected").index() <= 0) {
+                        RdotAlerterrtxt('Please select country');
+                        $("#Country").focus();
+                        return ValFlag = false;
+                    }
+                    if ($("#resellername").val() == "") {
+                        RdotAlerterrtxt('Please Enter Resellername');
+                        $("#resellername").focus();
+                        return ValFlag = false;
+                    }
+                }
+                function getdatalistaftersuccess() {
+
+                    $.ajax({
+
+
+                        type: "POST",
+                        url: "/FunnelData/getFunnelDataList",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            pagesize: 50,
+                            pageno: curPage,
+                            psearch: '',
+                            pcountry: '',
+                            pBU: '',
+                            pQMonth: '',
+                            pQYear: '',
+                            pCloseMonth: '',
+                            pcloseYear: '',
+                            pstatus: ''
+                        }),
+
+                        success: function (data) {
+
+                            $("#Ist").show();
+                            $("div#Ist").not(':first').remove();
+                            arr = data;
+                            if (arr != null && arr.length != 0) {
+                                var i = 0;
+                                while (arr.length > i) {
+                                    var tr = $("#Ist").clone();
+                                    var tr1 = $("#Ind").closest();
+                                    var k = 0;
+                                    var l1 = tr.find(".reddotTableCell").length;
+                                    while (l1 > k) {
+                                        var t = tblhead1[k];
+                                        if (jQuery.inArray(t, dateCond) !== -1) {
+                                            tr.find(".reddotTableCell")[k].children[0].textContent = RdotdatefrmtRes1(arr[i][tblhead1[k]]);
+                                        } else if (tblhead1[k] !== 'Action') {
+                                            tr.find(".reddotTableCell")[k].children[0].textContent = arr[i][tblhead1[k]];
+
+                                        } else {
+                                            tr.find(".reddotTableCell").eq(k).html("<div>" +
+                                                "<button type='button' title='' data-toggle='tooltip' class='btn btn-success btn-sm btn-sm' data-original-title='Edit' onclick='EditItem(" + arr[i][tblhead1[0]] + ")'> <i class='fas fa-edit'></i></button>" +
+                                                "<button type='button' title='' data-toggle='tooltip' class='btn btn-danger btn-sm' data-original-title='Delete' id='btndel" + k + "'> <i class='fas fa-trash'></i></button>" +
+                                                "<input type='hidden' id ='hdntbheadid' value='" + arr[i][tblhead1[0]] + "'></input>" +
+                                                "<input type='hidden' id ='hdntbheadstatus' value='" + arr[i][tblhead1[10]] + "'></input>" +
+                                                "</div>")
+                                        }
+                                        if (jQuery.inArray(t, tblhide) !== -1) {
+                                            tr.find(".reddotTableCell").eq(k).addClass("Abc")
+                                            tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                        }
+
+                                        k++;
+                                    }
+                                    $("#Ibody").append(tr);
+                                    i++;
+                                }
+                                $("#Ist")[0].remove();
+                            } else {
+                                $("#Ist").hide();
+                                RdotAlerterrtxt1("No Record Found");
+                            }
+
+                        },
+                        error: function (data) {
+                            $("#setfunnellist").empty();
+                        }
+                    });
+
+                }
+                function validate() {
+
+                    var ValFlag = true;
+
+
+                    if ($("#Country option:selected").index() <= 0) {
+                        RdotAlerterrtxt('Please select country');
+                        $("#Country").focus();
+                        return ValFlag = false;
+                    }
+
+                    if ($("#BUName option:selected").index() < 0) {
+                        RdotAlerterrtxt('Please select BU');
+                        $("#BUName").focus();
+                        return ValFlag = false;
+                    }
+
+                    if ($("#CardName option:selected").index() <= 0) {
+                        RdotAlerterrtxt('Please select Customer');
+                        $("#CardName").focus();
+                        return ValFlag = false;
+                    }
+
+
+
+
+                    if ($("#bdm").val() == "") {
+                        RdotAlerterrtxt('please Enter BDM');
+
+                        $("#bdm").focus();
+
+
+                        return ValFlag = false;
+
+                    }
+
+                    if ($("#enduser").val() == "") {
+                        RdotAlerterrtxt('please Enter End User');
+                        $("#enduser").focus();
+
+                        return ValFlag = false;
+
+                    }
+                    if ($("#hdnChangeCount").val() == 1) {
+                        if ($("#Remarks2").val() == "") {
+                            RdotAlerterrtxt('Please  Enter Remark 2');
+                            $("#Remarks2").focus();
+                            return ValFlag = false;
+                        }
+                    }
+                    if ($("#hdnChangeCount").val() == 2) {
+                        if ($("#Remarks3").val() == "") {
+                            RdotAlerterrtxt('Please  Enter Remark 3');
+                            $("#Remarks3").focus();
+                            return ValFlag = false;
+                        }
+                    }
+                    if ($("#hdnChangeCount").val() == 3) {
+                        if ($("#Remarks3").val() == "") {
+                            RdotAlerterrtxt('Please  Enter Remark 3');
+                            $("#Remarks3").focus();
+                            return ValFlag = false;
+                        }
+                    }
+
+                    if ($("#goodsDescr").val() == "") {
+                        RdotAlerterrtxt('please Enter Goods Description');
+                        $("#goodsDescr").focus();
+
+                        return ValFlag = false;
+
+                    }
+
+                    if ($("#remarks").val() == "") {
+                        RdotAlerterrtxt('please Enter Remarks');
+                        $("#remarks").focus();
+
+                        return ValFlag = false;
+
+                    }
+
+                    if ($("#quoteDate").val() == "") {
+                        RdotAlerterrtxt('please Select Quote Date');
+                        $("#quoteDate").focus();
+
+                        return ValFlag = false;
+
+                    }
+
+                    if ($("#Cost").val() == "") {
+                        RdotAlerterrtxt('please Enter Cost');
+                        $("#Cost").focus();
+
+                        return ValFlag = false;
+
+                    }
+                    if (status != "LOST-CLOSED") {
+                        var closingDt = $("#expClosingDt").val();
+
+
+                        if ((closingDt) == "") {
+                            RdotAlerterrtxt('Please enter Closing Date');
+                            $("#expClosingDt").focus();
+                            return ValFlag = false;
+                        }
+                    }
+                    //if ($("#Landed").val() == "") {
+                    //    RdotAlerterrtxt('please Enter Landed');
+                    //    $("#Landed").focus();
+
+                    //    return ValFlag = false;
+
+                    //}
+
+                    var landed = $("#Landed").val();
+                    var cost = $("#Cost").val();
+                    var status = $("#DealStatus").val();
+
+
+                    if (landed != "") {
+                        if (Number(landed) < Number(cost)) {
+                            RdotAlerterrtxt('Landed must be greater than or equal to Cost');
+
+                            return ValFlag = false;
+                        }
+                    }
+
+                    if ($("#value").val() == "") {
+                        RdotAlerterrtxt('Please enter Total Sell Amount');
+                        $("#value").focus();
+                        return ValFlag = false;
+                    }
+
+
+                    var totalsell = $("#value").val();
+                    var landed = $("#Landed").val();
+                    if (Number(totalsell) < Number(landed)) {
+                        RdotAlerterrtxt('Total Sell Amount must be greater than or equal to Landed');
+                        return ValFlag = false;
+                    }
+
+                    if ($("#DealStatus").val() != "OPEN" || $("#DealStatus").val() != "LOST-CLOSED") {
+                        if ($("#expClosingDt").val() > $("#InvoiceDt").val()) {
+                            RdotAlerterrtxt('Invoice  Date must be greater than Closing Date');
+                            // $("#InvoiceDt").focus();
+                            $("#InvoiceDt").val('');
+                            return ValFlag = false;
+                        }
+
+
+                        if ($("#quoteDate").val() > $("#expClosingDt").val()) {
+                            RdotAlerterrtxt('Expected Closing Date must be greater than quote date');
+                            //  $("#expClosingDt").focus();
+                            $("#expClosingDt").val('');
+                            return ValFlag = false;
+                        }
+                        if ($("#expClosingDt").val() > $("#orderBookedDate").val()) {
+                            RdotAlerterrtxt('Order Date must be greater than Closing date');
+                            // $("#orderBookedDate").focus();
+                            $("#orderBookedDate").val('');
+                            return ValFlag = false;
+                        }
+
+                    }
+                    var marginperr = $("#marginper").val();
+                    var magindoll = $("#MarginUSD").val();
+
+                    if ($("#marginper").val() == "" || $("#marginper").val() == null || $("#MarginUSD").val() == "" || $("#MarginUSD").val() == null) {
+                        RdotAlerterrtxt('Please enter either margin $ or margin %');
+                        return ValFlag = false;
+                    }
+
+
+
+
+
+
+
+
+
+                    if ((status) == "WON-R OPG" || status == "WON OPG") {
+
+                        var closingDt = $("#expClosingDt").val();
+                        var ordedate = $("#orderBookedDate").val();
+
+                        if (closingDt.val() == "") {
+                            RdotAlerterrtxt('Please enter Closing Date');
+                            $("#expClosingDt").focus();
+                            return ValFlag = false;
+                        }
+                        if (ordedate.val() == "") {
+                            RdotAlerterrtxt('Please enter Order Date');
+                            $("#ordedate").focus();
+                            return ValFlag = false;
+                        }
+                        if (InvoiceDt.val() == "") {
+                            RdotAlerterrtxt('Please enter Invoice Date');
+                            $("#ordedate").focus();
+                            return ValFlag = false;
+                        }
+
+                        if (OrderDt > closingDt) {
+                            RdotAlerterrtxt('Order date must be greater than  Closing Date');
+                            $("#closingDt").focus();
+                            return ValFlag = false;
+                        }
+                    }
+
+                    else if ($("#status option:selected") == "LOST-CLOSED") {
+
+
+                        if ($("#orderBookedDate").val() != "") {
+                            RdotAlerterrtxt('You can not enter the Order Date for Lost deal.');
+                            $("#orderBookedDate").focus();
+                            return ValFlag = false;
+                        }
+
+
+                        if ($("#InvoiceDt").val()) {
+                            RdotAlerterrtxt('You can not enter the Invoice Date for Lost deal.');
+                            $("#InvoiceDt").focus();
+                            return ValFlag = false;
+                        }
+
+
+                    }
+
+                    if ($("#NextReminderDt") == "" && $("#status") == "OPEN") {
+                        return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                    }
+
+                }
+                function ClearControl() {
+                    $('#Country').find('option:first').attr('selected', 'selected');
+                    // $("#Country").val("0").trigger("change");
+                    $("#BUName").val("0").trigger("change");
+                    // $('#BUName').find('option:first').attr('selected', 'selected');
+                    $("#bdm").val('');
+                    $("#CardName").val("0").trigger("change");
+                    $("#marginper").val('');
+
+                    $("#lblQuoteID").text('');
+
+                    $("#enduser").val('');
+                    $("#goodsDescr").val('');
+                    $("#remarks").val('');
+                    $("#Remarks2").val('');
+                    $("#Remarks3").val('');
+                    $("#lblCreatedBy").val('');
+                    $("#Createddte").val('');
+                    $("#lblUpdatedBy").val('');
+                    $("#Updateddte").val('');
+                    $("#NextReminderDt").val('');
+                    $("#quoteDate").val('');
+                    $("#Cost").val('');
+                    $("#Landed").val('');
+                    $("#MarginUSD").val('');
+                    $("#value").val('');
+                    $("#DealStatus").val("0").trigger("change");
+                    $("#expClosingDt").val('');
+                    $("#orderBookedDate").val('');
+                    $("#InvoiceDt").val('');
+
+
+
+
+                }
+                function isNumberKey(evt) {
+                    ;
+                    var charCode = (evt.which) ? evt.which : event.keyCode;
+                    if ((charCode >= 48 && charCode <= 57) || charCode == 46) {
+                        return true;
+                    } else {
+
+                        RdotAlerterrtxt("Enter only numbers");
+                        return false;
+                    }
+                }
+
+                $(function () {
+
+
+                    $('#Createddte').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+
+                    $('#Updateddte').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+
+                    $('#NextReminderDt').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                    $('#expClosingDt').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                    $('#orderBookedDate').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+
+                    $('#InvoiceDt').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+
+                    $('#quoteDate').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                });
+            
+                function isNumberKey(evt) {
+
+                    var charCode = (evt.which) ? evt.which : event.keyCode;
+                    if ((charCode >= 48 && charCode <= 57) || charCode == 46) {
+                        return true;
+                    } else {
+                        alert("Enter only numbers");
+                        return false;
+                    }
+                }
+
+                // Function to calculate Margin $ if Margin % is entered
+                function calculateMargin() {
+
+
+                    var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
+                    var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
+                    Landed = Landed == 0 ? Cost : Landed;
+                    var Marginpercent = $("#marginper").val() == '' ? 0 : parseFloat($("#marginper").val());
+                    if (Landed != null && Landed != NaN && Marginpercent != null && Marginpercent != NaN) {
+
+                        $("#MarginUSD").val((Landed * (Marginpercent / 100)).toFixed(2));
+                        $("#value").val((Landed + Landed * (Marginpercent / 100)).toFixed(2));
+
+                    }
+                }
+
+                // Function to calculate Margin % if Margin $ is entered
+                function calculateMarginPercent() {
+
+                    var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
+                    var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
+                    Landed = Landed == 0 ? Cost : Landed;
+                    var Margindoller = $("#MarginUSD").val() == '' ? 0 : parseFloat($("#MarginUSD").val());
+                    if (Landed != null && Landed != NaN && Margindoller != null && Margindoller != NaN) {
+                        $("#marginper").val(((Margindoller / Landed) * 100).toFixed(2));
+                        $("#value").val((Landed + Margindoller).toFixed(2));
+                    }
+                }
+
+                // Function to calculate Margin % & Margin $ if Landed is changed after calculation
+                function calculateMarginAndPercent() {
+                    var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
+                    var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
+                    Landed = Landed == 0 ? Cost : Landed;
+                    var Margindoller = $("#MarginUSD").val() == '' ? 0 : parseFloat($("#MarginUSD").val());
+                    var Marginpercent = $("#marginper").val() == '' ? 0 : parseFloat($("#marginper").val());
+                    if (Landed != null && Landed != NaN && Marginpercent != null && Marginpercent != NaN) {
+                        calculateMargin();
+                    }
+                    else if (Landed != null && Landed != NaN && Margindoller != null && Margindoller != NaN) {
+                        calculateMarginPercent();
+                    }
+                }
+
+
+                // Function to calculate Margin % & Margin $ if Landed and Total Sell Amount is Entered
+                function calcMarginAndPercentBasedOnTotalSell() {
+
+                    var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
+                    var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
+                    Landed = Landed == 0 ? Cost : Landed;
+                    var TotalSell = $("#value").val() == '' ? 0 : parseFloat($("#value").val());
+                    if (Landed != null && Landed != NaN && TotalSell != null && TotalSell != NaN) {
+                        $("#MarginUSD").val((TotalSell - Landed).toFixed(2));
+                        var Margindoller = $("#MarginUSD").val();
+                        $("#marginper").val(((Margindoller / Landed) * 100).toFixed(2));
+                    }
+                }
+
+               
+            </script>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#chartboxbtn").click(function () {
+            $("#chartboxSection").slideToggle("slow");
+        });
+    });
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.scrollbar-inner').scrollbar();
+    });
+</script>
+
+
+<style>
+    .quick-scroll {
+        max-height: 300px;
+    }
+
+
+    .Abc {
+        display: none;
+    }
+</style>

@@ -170,33 +170,100 @@
         }
     }
 
-    $('#setDesigList').on('click', '#btn_DeleteDetails', function () {
-        var x = confirm("Are you sure you want to delete?");
-        if (x) {
-            var DesigID = $(this).closest("tr").find('td:eq(0)').text();
-            // alert(DeptID);
-            //var DeptId = $("#DeptId").val();
-            $.ajax({
-                type: "Post",
-                url: "/Designations/DeleteItem?DesigId=" + DesigID,
-                success: function (result) {
-                    if (result == "Designation Deleted Sucessfully.") {
+    //$('#setDesigList').on('click', '#btn_DeleteDetails', function () {
+    //    var x = confirm("Are you sure you want to delete?");
+    //    if (x) {
+    //        var DesigID = $(this).closest("tr").find('td:eq(0)').text();
+    //        // alert(DeptID);
+    //        //var DeptId = $("#DeptId").val();
+    //        $.ajax({
+    //            type: "Post",
+    //            url: "/Designations/DeleteItem?DesigId=" + DesigID,
+    //            success: function (result) {
+    //                if (result == "Designation Deleted Sucessfully.") {
 
-                        alert(result);
+    //                    alert(result);
                      
-                        GetDesigList();
+    //                    GetDesigList();
 
-                    }
-                    else {
+    //                }
+    //                else {
                         
-                        alert(result);
-                        GetDesigList();
-                    }
-                }
+    //                    alert(result);
+    //                    GetDesigList();
+    //                }
+    //            }
 
-            });
+    //        });
+    //    }
+    //});
+
+
+    $('#setDesigList').on('click', '#btn_DeleteDetails', function () {
+        debugger
+        var DesigID = $(this).closest("tr").find('td:eq(0)').text();
+        var tr = $(this).closest("tr");
+        {
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+
+                    $.getJSON("/Designations/DeleteItem", { DesigID: DesigID }).done(function (data) {
+                        debugger
+                        if (data.DeleteFlag == "Designation Deleted Sucessfully.") {
+                            GetDesigList();
+                            RdotAlertSucesstxt(data.DeleteFlag);
+
+                            // tr.remove();
+                            //  $('#btn_DeleteDetails').attr('disabled', true);
+                        }
+                        else if (data.DeleteFlag == "Designation already exists at other tables.Cannot Deleted.") {
+                            RdotAlerterrtxt1(data.DeleteFlag);
+                            // GetJobGradeList();
+                            // result == "Department already exists at other table .Cannot Deleted.";
+
+                        }
+
+                    });
+                    //swalWithBootstrapButtons.fire(
+                    //    'Deleted!',
+                    //    'Your Record  has been deleted.',
+                    //    'success'
+
+                    //)
+                }
+                else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Record  is safe :)',
+                        'error'
+                    )
+                }
+                $("#DeptId").val('');
+
+                $("#DeptName").val('');
+                GetDeptList();
+            })
         }
+
     });
+
 
     $('#SaveDesigChanges').click(function () {
         debugger
@@ -225,22 +292,19 @@
             success: function (result) {
 
                 if (result == "Designation saved successfully." || result == "Designation updated successfully.") {
+                    RdotAlertSucesstxt(result);
+                    GetDesigList();
+                  
+                    $("#DesigId").val('');
+                    $("#DesigName").val('');
 
-                    alert(result);
-                   // $("#DesigName").val('');
-                   
-                        //$('#chkIsDefaultMenu').val('on');
-                        //  debugger
-                    location.reload();
-                       //   $('#chkIsDefaultMenu').prop('checked', true);
-                    
-                  //  GetDesigList();
-                   
-                   
+                 
                 }
                 else {
                     result == "Designation already exists.."
-                    alert(result);
+                    RdotAlerterrtxt1(result);
+                   // alert(result);
+                    $("#DesigId").val('');
                     $("#DesigName").val('');
                 }
             }

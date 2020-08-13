@@ -35,13 +35,13 @@ namespace RDDStaffPortal.DAL.DataModels
         public decimal RevTarget{get;set;}
         public decimal RevForecast { get;set;}
         public decimal ActualRev { get;set;}
-        public decimal RevTrgetAcheivedPercent { get;set;}
-        public decimal RevForecastAcheivedPercent { get;set;}
+        public int RevTrgetAcheivedPercent { get;set;}
+        public int RevForecastAcheivedPercent { get;set;}
         public decimal GPTarget { get;set; }
         public decimal GPForecast { get;set;}
         public decimal ActualGP { get;set;}
-        public decimal GPTrgetAcheivedPercent { get;set;}
-       public decimal GPForecastAcheivedPercent { get; set; }
+        public int GPTrgetAcheivedPercent { get;set;}
+       public int GPForecastAcheivedPercent { get; set; }
     }
 
 
@@ -55,5 +55,29 @@ namespace RDDStaffPortal.DAL.DataModels
         public decimal Points4 { get; set; }
         public decimal Points5 { get; set; }
         public decimal Points6 { get; set; }
+    }
+
+
+    public partial class SecondCard
+    {
+        public decimal TotalRece { get; set; }
+        public decimal TotalPay { get; set; }
+        public decimal BankBalance { get; set; }
+    }
+
+
+    public partial class RDD_Model_tbl
+    {
+
+      public string Country { get; set; }
+        public decimal days_0_30 { get; set; }
+        public decimal days_31_37 { get; set; }
+        public decimal days_38_45 { get; set; }
+        public decimal days_46_60 { get; set; }
+        public decimal days_61_90 { get; set; }
+        public decimal days_91_120 { get; set; }
+        public decimal days_121_150  { get; set; }
+        public decimal days_151_180 { get; set; }
+        public decimal days_181plus { get; set; }
     }
 }

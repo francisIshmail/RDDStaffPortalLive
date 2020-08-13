@@ -11,6 +11,7 @@ using RDDStaffPortal.DAL.InitialSetup;
 using RDDStaffPortal.Models;
 using RDDStaffPortal.WebServices;
 using static RDDStaffPortal.DAL.CommonFunction;
+using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
@@ -18,7 +19,7 @@ namespace RDDStaffPortal.Controllers
     {
         // GET: Account
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
-
+       
         public ActionResult Index()
         {
             return View();
@@ -52,7 +53,11 @@ namespace RDDStaffPortal.Controllers
                         }
                         ab = Convert.ToBase64String(file);
                     }
-                   Session["LoginName"] = ab;
+                     Session["LoginName"] = ab;
+
+                    var urlToRemove = Url.Action("Index", "Dashboard");
+                    HttpResponse.RemoveOutputCacheItem(urlToRemove);
+
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
@@ -63,7 +68,10 @@ namespace RDDStaffPortal.Controllers
             }
             return View();
         }
-
+        public ActionResult Keepalive()
+        {
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
         public ActionResult SignOut()
         {
             // Rename AcountLogin to LoginService in Live
@@ -109,7 +117,7 @@ namespace RDDStaffPortal.Controllers
                                                         "<br>" +
                                                         "Best Regards,<br>" +
                                                         "Red Dot Distribution </p> ";
-                    var k = SendMail.Send(email, "", "Reset Password Link For Red Dot Distribution Portal", mailFormat, true);
+                    var k = SendMail.Send(email, "", "Reset your account password", mailFormat, true);
                     if (k != "Mail Sent Succcessfully")
                     {
                         response.Success = false;
@@ -167,14 +175,21 @@ namespace RDDStaffPortal.Controllers
                 string mailFormat = "<p class='MsoNormal'><br>" +
                                                         "Dear <a href = 'mailto:" + email + "' target = '_blank'>" + email + " </a> <br>" +
                                                         "<br>" +
-                                                        " You've successfully changed your Red Dot Distribution Partner password<br>" +
+                                                        " We are happy to inform you that your password has been changed successfully for <b><a href='mailto: " + email + "' target='_blank'>" + email + " </a> </b><br>" +
                                                         "<br>" +
-                                                        
-                                                      
+                                                        "Go ahead and login with your new password using below link <br>"+
+                                                        "<br>"+
+                                                        "URL Link: <a href ='https://app.reddotdistribution.com/Account/Login' target ='_blank'>https://app.reddotdistribution.com/Account/Login</a><br>" +
+                                                        "<br>"+
+                                                        "If you did this, you can safely disregard this email.<br>"+
+                                                        "<br>"+
+                                                        "If you didn't do this, please contact <span style='color:#2F5496'><a href='mailto:Helpdesk@reddotdistribution.com' target='_blank'>Helpdesk@reddotdistribution.com</a> </span><br>"+
+                                                        "<br>"+
+                                                       "<br>"+
                                                         "<br>" +
                                                         "Best Regards,<br>" +
                                                         "Red Dot Distribution </p> ";
-                var k1 = SendMail.Send(email, "", "your password was successfully reset", mailFormat, true);
+                var k1 = SendMail.Send(email, "", "Password Changed Successfully.", mailFormat, true);
                 if (k1 != "Mail Sent Succcessfully")
                 {
                     k.Success = false;
@@ -203,9 +218,12 @@ namespace RDDStaffPortal.Controllers
             return View();
         }
 
-        // [ChildActionOnly]
+       
+        [ChildActionOnly]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetMenuTreeMenu()
         {
+          
             //if (User.Identity.Name == "")
             //{
             //    return RedirectToAction("/Login", "Account");
@@ -217,13 +235,17 @@ namespace RDDStaffPortal.Controllers
        
         [HttpGet]
         [ChildActionOnly]
+        
         public ActionResult GetFirtsDashBoard()
         {
            
             return PartialView(moduleDbOp.GetFirstDashBoards(User.Identity.Name));
         }
        
+       
+
         [ChildActionOnly]
+       
         public ActionResult GetDashBoardView()
         {
         //    if (User.Identity.Name == "")

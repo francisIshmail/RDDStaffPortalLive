@@ -27,6 +27,18 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
 
         RDD_Stock_SheetDBOperation _ReptOp = new RDD_Stock_SheetDBOperation();
+
+
+
+        public ActionResult TrailBalance()
+        {
+            return View();
+        }
+        public ActionResult GetTrailBalance()
+        {
+            return Json(new { data = _ReptOp.GetTrailBalance(User.Identity.Name) });
+        }
+
         public ActionResult Index()
        {
             RDD_Stock_Sheet _RDD_Stock = new RDD_Stock_Sheet();
@@ -341,18 +353,21 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "BackLogSheet.xlsx");
                 }
             }
-            //var grdReport = new System.Web.UI.WebControls.GridView();
-            //DataTable dt = _ReptOp.Getdata3(User.Identity.Name);
-            //dt.Columns.Remove("RowNum");
-            //dt.Columns.Remove("TotalCount");
+           
+        }
+        public ActionResult DownloadToExcel5()
+        {
+            DataTable dt = _ReptOp.Getdata5(User.Identity.Name);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TrailBalanceSheet.xlsx");
+                }
+            }
 
-            //grdReport.DataSource = dt;
-            //grdReport.DataBind();
-            //System.IO.StringWriter sw = new System.IO.StringWriter();
-            //System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-            //grdReport.RenderControl(htw);
-            //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
-            //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
         public ActionResult DownloadToExcel4()
         {
@@ -518,6 +533,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
        
           
         }
+
        
 
     }

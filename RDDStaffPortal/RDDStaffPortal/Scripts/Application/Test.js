@@ -63,7 +63,7 @@
                         if (data.ErrorMessage == "" && data.SaveFlag == true) {
                             $('#btnrelod').trigger('click');
                         } else {
-                            RdotAlerterrtxt(CODE);
+                            RedDotAlert_Error(CODE);
                         }
                     });
                     swalWithBootstrapButtons.fire(
@@ -118,7 +118,7 @@
                 var dr = tr.find("[name *= 'txtCODE']").val();
                 tr.css("background", "red");
                 tr.find("[name *= 'txtCODE']").focus();
-                RdotAlerterrtxt("Already Exist Code '" + dr + "'");
+                RedDotAlert_Error("Already Exist Code '" + dr + "'");
                 tr.find("[name *= 'txtCODE']").val('');
             }
             else {
@@ -181,7 +181,7 @@
                         if (response.EditFlag == true) {
                             RdotAlertUpd("Succesfully");
                         } else {
-                            RdotAlertSucesstxt("Save Succcesfully");
+                            RedDotAlert_Success("Save Succcesfully");
 
                         }                        
                         $('#btnrelod').trigger('click');
@@ -202,7 +202,7 @@
                                 }
                                 else if (CODE != '') {
                                     $(this).closest('tr').css("background", "red");
-                                    RdotAlerterrtxt("Already Exists Code");
+                                    RedDotAlert_Error("Already Exists Code");
                                 }
                                 else {
                                     $(this).closest('tr').css("background", "");
@@ -214,7 +214,7 @@
                                 if (CODE != '' && DESCRIPTION != '') {                                  
                                     $('#btnrelod').trigger('click');                                  
                                 }                               
-                                RdotAlertSucesstxt("Save successfully");
+                                RedDotAlert_Success("Save successfully");
                                 $(".dataTables_empty").replaceWith("");
                             }
                         });
@@ -284,7 +284,7 @@
                 };               
                     $.post("/SaveTest", Rtest).done(function (response) {                        
                         if (response.ErrorMessage == "" && response.SaveFlag == true) { 
-                            RdotAlertSucesstxt("Update successfully");
+                            RedDotAlert_Success("Update successfully");
                             $('#btnrelod').trigger('click');                                                                                                                                  
                         }
                     });                                         

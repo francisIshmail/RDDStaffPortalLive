@@ -16,6 +16,9 @@
 @Html.HiddenFor(m => m.ImagePath1)
 @Html.HiddenFor(m => m.ImagePath)
 
+
+@*<input type="hidden" id="hdnConfigProfile" value="@ViewBag["ConfigProfile"]" />*@
+
 <div class="loader1" id="loader"></div>
 
 <div class="main-panel">
@@ -72,63 +75,56 @@
 
                             </div>
 
-                            <div class="row mar-t5"> <button type="button" class="btn btn-success btn-sm" id="SaveEmpChanges">Save Profile</button></div>
+                            <div class="row mar-t5"> <button type="button" class="btn btn-info btn-sm" id="SaveEmpChanges">Save Profile</button></div>
                             <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd mar-t10" id="v-pills-tab-without-border" role="tablist" aria-orientation="vertical">
 
-                                <a class="nav-link " id="v-pills-home-tab-nobd" data-toggle="pill" href="#v-pills-home-nobd" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true"><i class="fas fa-angle-double-right"></i> General</a>
-
-
-
-                                <a class="nav-link " id="v-pills-general-tab-nobd" data-toggle="pill" href="#v-pills-general-nobd" role="tab" aria-controls="v-pills-general-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Personal</a>
-
-
-                                @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                @if (ViewBag.GeneralD != null)
                                 {
-                                    <a class="nav-link " id="v-pills-educational-professional-info-tab-nobd" data-toggle="pill" href="#v-pills-educational-professional-info-nobd" role="tab" aria-controls="v-pills-educational-professional-info-nobd" aria-selected="false"><i class="fas fa-user-graduate"></i> Educational & Professional </a>
+                                    <a class="nav-link" id="v-pills-home-tab-nobd" data-toggle="pill" href="#v-pills-home-nobd" role="tab" aria-controls="v-pills-home-nobd" aria-selected="true"><i class="fas fa-angle-double-right"></i> General</a>
                                 }
-                                else
-                                {
-                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                    {
-                                        <a class="nav-link" hidden id="v-pills-educational-professional-info-tab-nobd" data-toggle="pill" href="#v-pills-educational-professional-info-nobd" role="tab" aria-controls="v-pills-educational-professional-info-nobd" aria-selected="false"><i class="fas fa-user-graduate"></i> Educational & Professional </a>
-                                    }
 
-                                    else
-                                    {<a class="nav-link" id="v-pills-educational-professional-info-tab-nobd" data-toggle="pill" href="#v-pills-educational-professional-info-nobd" role="tab" aria-controls="v-pills-educational-professional-info-nobd" aria-selected="false"><i class="fas fa-user-graduate"></i> Educational & Professional </a>}
+                                @if (ViewBag.PersonalD != null)
+                                {
+                                    <a class="nav-link " id="v-pills-general-tab-nobd" data-toggle="pill" href="#v-pills-general-nobd" role="tab" aria-controls="v-pills-general-nobd" aria-selected="false"><i class="fas fa-angle-double-right"></i> Personal</a>
                                 }
 
 
-                                @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+
+                                @if (ViewBag.EducationD != null)
+                                {
+                                    <a class="nav-link" id="v-pills-educational-professional-info-tab-nobd" data-toggle="pill" href="#v-pills-educational-professional-info-nobd" role="tab" aria-controls="v-pills-educational-professional-info-nobd" aria-selected="false"><i class="fas fa-user-graduate"></i> Educational & Professional </a>
+                                }
+
+                                @if (ViewBag.AttachmentsD != null)
                                 {
                                     <a class="nav-link" id="v-pills-attachments-tab-nobd" data-toggle="pill" href="#v-pills-attachments-nobd" role="tab" aria-controls="v-pills-attachments-nobd" aria-selected="false"><i class="fas fa-paperclip"></i> Attachments</a>
                                 }
-                                else
-                                {
-                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                    {
-                                        <a class="nav-link" hidden id="v-pills-attachments-tab-nobd" data-toggle="pill" href="#v-pills-attachments-nobd" role="tab" aria-controls="v-pills-attachments-nobd" aria-selected="false"><i class="fas fa-paperclip"></i> Attachments</a>
-                                    }
-                                    else
-                                    { <a class="nav-link" id="v-pills-attachments-tab-nobd" data-toggle="pill" href="#v-pills-attachments-nobd" role="tab" aria-controls="v-pills-attachments-nobd" aria-selected="false"><i class="fas fa-paperclip"></i> Attachments</a>}
-                                }
 
 
-                                @if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                @if (ViewBag.FinancialD != null)
                                 {
                                     <a class="nav-link" id="v-pills-financial-tab-nobd" data-toggle="pill" href="#v-pills-financial-nobd" role="tab" aria-controls="v-pills-financial-nobd" aria-selected="false"><i class="fas fa-dollar-sign"></i> Financial</a>
                                 }
-                                else
+
+                                @if (ViewBag.LeavesD != null)
                                 {
-                                    <a class="nav-link" hidden id="v-pills-financial-tab-nobd" data-toggle="pill" href="#v-pills-financial-nobd" role="tab" aria-controls="v-pills-financial-nobd" aria-selected="false"><i class="fas fa-dollar-sign"></i> Financial</a>
+                                    <a class="nav-link disabled" id="v-pills-leaves-tab-nobd" data-toggle="pill" href="#v-pills-leaves-nobd" role="tab" aria-controls="v-pills-leaves-nobd" aria-selected="false"><i class="fas fa-plane-departure"></i> Leaves</a>
+                                }
+                                @if (ViewBag.AssetsD != null)
+                                {
+                                    <a class="nav-link disabled" id="v-pills-assets-tab-nobd" data-toggle="pill" href="#v-pills-assets-nobd" role="tab" aria-controls="v-pills-assets-nobd" aria-selected="false"><i class="fas fa-boxes"></i> Assets</a>
+                                }
+                                @if (ViewBag.LoanD != null)
+                                {
+                                    <a class="nav-link disabled" id="v-pills-loan-tab-nobd" data-toggle="pill" href="#v-pills-loan-nobd" role="tab" aria-controls="v-pills-loan-nobd" aria-selected="false"><i class="fas fa-donate"></i> Loan</a>
+
                                 }
 
 
 
-                                <a class="nav-link disabled" id="v-pills-leaves-tab-nobd" data-toggle="pill" href="#v-pills-leaves-nobd" role="tab" aria-controls="v-pills-leaves-nobd" aria-selected="false"><i class="fas fa-plane-departure"></i> Leaves</a>
 
-                                <a class="nav-link disabled" id="v-pills-assets-tab-nobd" data-toggle="pill" href="#v-pills-assets-nobd" role="tab" aria-controls="v-pills-assets-nobd" aria-selected="false"><i class="fas fa-boxes"></i> Assets</a>
 
-                                <a class="nav-link disabled" id="v-pills-loan-tab-nobd" data-toggle="pill" href="#v-pills-loan-nobd" role="tab" aria-controls="v-pills-loan-nobd" aria-selected="false"><i class="fas fa-donate"></i> Loan</a>
+
                             </div>
 
                         </div>
@@ -141,7 +137,8 @@
                     <div class="card ">
                         <div class="card-body">
                             <div class="tab-content" id="v-pills-without-border-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
+
+                                <div class="@(ViewBag.GeneralD != null ?"tab-pane fade tabshow":"tab-pane")" style="@(ViewBag.GeneralD != null ? "display:" : "dispaly:none")" id="v-pills-home-nobd" role="tabpanel" aria-labelledby="v-pills-home-tab-nobd">
 
                                     <div class="card-header">
                                         <div class="card-head-row">
@@ -168,22 +165,26 @@
                                                         @Html.HiddenFor(m => m.EmployeeId, new { @id = "EmployeeId" })
                                                         @Html.HiddenFor(m => m.FId, new { @id = "FId" })
 
-                                                        @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                        {@Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" })}
-                                                    else
-                                                    { @Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })}
+                                                        @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {@Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" })}
+                                                            else
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.FName, ViewBag.FNameD != null ? (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
+                                                        @*}*@
 
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Last Name :</label>
-                                                        @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                        {
-                                                            @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" })
-                                                        }
-                                                        else
-                                                        { @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })}
+                                                        @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                            {
+                                                                @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" })
+                                                            }
+                                                            else
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.LName, ViewBag.LNameD != null ? (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
@@ -202,31 +203,32 @@
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Email :</label>
-                                                        @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control form-control-sm" })
-                                                        }
-                                                        else
-                                                        { @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                    }
+                                                        @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                            {
+                                                                @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control form-control-sm" })
+                                                            }
+                                                            else
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.Email, ViewBag.EmailD != null ? (object)new { @id = "Email", @class = "form-control form-control-sm" } : (object)new { @id = "Email", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Skype Id :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm" })}
-                                                    }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.IM_Id, ViewBag.IM_IdD != null ? (object)new { @id = "IM_Id", @class = "form-control form-control-sm" } : (object)new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @*}
+                                                                else
+                                                                {
+                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    { @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm" })}
+                                                            }*@
                                                         @*<input type="text" class="form-control form-control-sm" id="">*@
                                                     </div>
                                                 </div>
@@ -235,19 +237,19 @@
 
 
                                                         <label for="email2" class="width100px">Cisco Extn No :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20" })}
-                                                    }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.Ext_no, ViewBag.Ext_noD != null ? (object)new { @id = "Ext_no", @class = "form-control form-control-sm", @maxlength = "20" } : (object)new { @id = "Ext_no", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @*}
+                                                                else
+                                                                {
+                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    { @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20" })}
+                                                            }*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -256,18 +258,18 @@
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Telephone No :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.Contact_No, ViewBag.Contact_NoD != null ? (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @maxlength = "15" } : (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @*}
+                                                                    else
+                                                                    {
+                                                                        if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
 
-                                                            { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })}
-                                                        else
-                                                        { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10" })}
-                                                }
+                                                                        { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })}
+                                                                    else
+                                                                    { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10" })}
+                                                            }*@
                                                     </div>
                                                 </div>
 
@@ -275,12 +277,12 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Designation :</label>
                                                         <div class="input-group">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {*@
+                                                            @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", ViewBag.DesigIdD != null ? (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*}
+                                                                else
+                                                                { @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -289,12 +291,13 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Department :</label>
                                                         <div class="select2-input">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                            @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", ViewBag.DeptIdD != null ? (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist" })
+                                                                }
+                                                                else
+                                                                { @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -306,12 +309,13 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Manager L1:</label>
                                                         <div class="select2-input">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm", @onchange = "FillManagerL2()" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.managerD != null ? (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" } : (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
+                                                                }
+                                                                else
+                                                                { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
 
                                                         </div>
                                                     </div>
@@ -321,13 +325,16 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Manager L2:</label>
                                                         <div class="select2-input">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm" })
-                                                            }
-                                                            else
-                                                            {
-                                                                @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm", @disabled = "disabled" })}
+
+
+                                                            @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.managerL2D != null ? (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" } : (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
 
                                                         </div>
                                                     </div>
@@ -337,13 +344,15 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Country :</label>
                                                         <div class="select2-input">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm" })
-                                                            }
+                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", ViewBag.CountryD != null ? (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" } : (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
 
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                                    @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" })
+                                                                }
+
+                                                                else
+                                                                { @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -360,12 +369,13 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Employment Status :</label>
                                                         <div class="select2-input">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                            @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", ViewBag.EmpstatusD != null ? (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist" })
+                                                                }
+                                                                else
+                                                                { @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -374,20 +384,24 @@
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Employment Type :</label>
-                                                        @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                        {
-                                                            @Html.DropDownListFor(m => m.type_of_employement,
-                                                      new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                     new SelectListItem { Text = "PartTime", Value = "PartTime" },
-                                                     new SelectListItem { Text = "FullTime", Value = "FullTime" }
-                                                      }, new { @class = "form-control form-control-sm" })
-                                                        }
-                                                        else
-                                                        { @Html.DropDownListFor(m => m.type_of_employement,
-              new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-             new SelectListItem { Text = "PartTime", Value = "PartTime" },
-             new SelectListItem { Text = "FullTime", Value = "FullTime" }
-              }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}
+                                                        @Html.DropDownListFor(m => m.type_of_employement, new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                                                new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                                                 }, "-Select-", ViewBag.type_of_employmentD != null ? (object)new { @id = "type_of_employement", @class = "form-control form-control-sm" } : (object)new { @id = "type_of_employement", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                                                       {
+                                                                                                           @Html.DropDownListFor(m => m.type_of_employement,
+                                                                                                     new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                                                                    new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                                                                                                    new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                                                                                                     }, new { @class = "form-control form-control-sm combolist" })
+                                                                                                       }
+                                                                                                       else
+                                                                                                       { @Html.DropDownListFor(m => m.type_of_employement,
+                                                             new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                            new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                                                            new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                                                             }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}*@
                                                     </div>
                                                 </div>
 
@@ -395,13 +409,14 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Joining Date :</label>
                                                         <div class="input-group">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "Joining_date" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {*@
+                                                            @Html.HiddenFor(m => m.Joining_Date)
+                                                            @Html.TextBox(string.Concat("Joining_Date", "1"), "", ViewBag.joining_dateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
 
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "Joining_date", @disabled = "disabled" })}
+                                                            @*}
+                                                                else
+                                                                { @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "Joining_date", @disabled = "disabled" })}*@
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">
                                                                     <i class="far fa-calendar-alt"></i>
@@ -417,61 +432,61 @@
                                             <div class="row">
 
 
-                                                    <div class="col-xl-4 col-md-4 multipleselect">
-                                                        <div class="form-group">
-                                                            <label for="email2" class="width100px">Job Grade :</label>
-                                                            <div class="select2-input">
-                                                                @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm" })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-4 col-md-4 multipleselect">
-                                                        <div class="form-group">
-                                                            <label for="email2" class="width100px">Job Band :</label>
-                                                            <div class="select2-input">
-                                                                @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm" })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-xl-4 col-md-4 multipleselect">
                                                     <div class="form-group">
-                                                        <label for="email2" class="width100px">Status :</label>
-                                                        <div class="input-group">
-                                                            <label class="switch">
-                                                                @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                        <label for="email2" class="width100px">Job Grade :</label>
+                                                        <div class="select2-input">
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                                                                 {
-                                                                    <input type="checkbox" id="chkIsActive">}
+                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" })
+                                                                }
                                                                 else
-
-                                                                { <input type="checkbox" id="chkIsActive" disabled>}
-                                                                <div></div>
-                                                            </label>
+                                                                {*@
+                                                            @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", ViewBag.JobGradeD != null ? (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*}*@
                                                         </div>
-
                                                     </div>
-                                               
-                                            </div>
-                                                <div class="row">
-                                                    <div class="col-xl-4 col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="email2" class="width100px">About :</label>
-                                                            @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                </div>
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Job Band :</label>
+                                                        <div class="select2-input">
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm combolist" })
+                                                                }
+                                                                else
+                                                                {*@
+                                                            @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", ViewBag.JobBandD != null ? (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*}*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email2" class="width100px">Status :</label>
+                                                    <div class="input-group">
+                                                        <label class="switch">
+                                                            @if (ViewBag.IsActiveD != null)
                                                             {
-                                                                @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
-                                                            }
+                                                                <input type="checkbox" id="chkIsActive">}
+                                                            else
+
+                                                            { <input type="checkbox" id="chkIsActive" disabled>}
+                                                            <div></div>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">About :</label>
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextAreaFor(m => m.About, ViewBag.AboutUsD != null ? (object)new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" } : (object)new { @id = "About", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "1000", style = "width: 725px;" })
+                                                        @*}
 
                                                             else
                                                             {
@@ -484,17 +499,18 @@
                                                                 {
                                                                     @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
                                                                 }
-                                                            }
-                                                        </div>
+                                                            }*@
                                                     </div>
                                                 </div>
-
-
                                             </div>
 
+
                                         </div>
+
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-general-nobd" role="tabpanel" aria-labelledby="v-pills-general-tab-nobd">
+
+                                <div class="@(ViewBag.PersonalD != null ?"tab-pane fade tabshow":"tab-pane")" style="@(ViewBag.PersonalD != null ? "display:" : "dispaly:none")" id="v-pills-general-nobd" role="tabpanel" aria-labelledby="v-pills-general-tab-nobd">
                                     <div class="card-header">
                                         <div class="card-head-row">
                                             <div class="card-title">Personal</div>
@@ -512,68 +528,72 @@
                                                     <div class="form-group">
 
                                                         <label for="email2" class="width100px">Current Address :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {
-                                                                @Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                                @Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" })
                                                             }
                                                             else
-                                                            {@Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" })}
-                                                    }
+                                                            {
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.Current_Address, new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                                }
+                                                                else
+                                                                {*@
+
+                                                        @Html.TextBoxFor(m => m.Current_Address, ViewBag.Current_AddressD != null ? (object)new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "Current_Address", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "800" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Permanent Address :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {
-                                                                @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                                @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" })
                                                             }
                                                             else
-                                                            { @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" })}
-                                                    }
+                                                            {
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.Permanent_Address, new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                                }
+                                                                else
+                                                                {*@
+                                                        @Html.TextBoxFor(m => m.Permanent_Address, ViewBag.Permanent_AddressD != null ? (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "800" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Gender :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.DropDownListFor(m => m.Gender,
-          new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                  new SelectListItem { Text = "Male", Value = "Male" },
-                                                  new SelectListItem { Text = "Female", Value = "Female" }
-          }, new { @class = "form-control form-control-sm" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.Gender,
-                  new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                      new SelectListItem { Text = "Male", Value = "Male" },
-                                                      new SelectListItem { Text = "Female", Value = "Female" }
-                  }, new { @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.Gender,
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                                                                          {
+                                                                                                              @Html.DropDownListFor(m => m.Gender,
+                                                            new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                                                                    new SelectListItem { Text = "Male", Value = "Male" },
+                                                                                                    new SelectListItem { Text = "Female", Value = "Female" }
+                                                            }, new { @class = "form-control form-control-sm combolist" })
+                                                                                                          }
+                                                                                                          else
+                                                                                                          {
+                                                                                                              if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                                                              {
+                                                                                                                  @Html.DropDownListFor(m => m.Gender,
+                                                                    new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                                                                        new SelectListItem { Text = "Male", Value = "Male" },
+                                                                                                        new SelectListItem { Text = "Female", Value = "Female" }
+                                                                    }, new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                                                                              }
+                                                                                                              else
+                                                                                                              {*@
+                                                        @Html.DropDownListFor(m => m.Gender,
 new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                     new SelectListItem { Text = "Male", Value = "Male" },
-                     new SelectListItem { Text = "Female", Value = "Female" }
-}, new { @class = "form-control form-control-sm" })
-                                                        }
-                                                    }
+             new SelectListItem { Text = "Male", Value = "Male" },
+             new SelectListItem { Text = "Female", Value = "Female" }
+}, ViewBag.GenderD != null ? (object)new { @class = "form-control form-control-sm combolist" } : (object)new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                        @*}
+                                                            }*@
                                                     </div>
                                                 </div>
 
@@ -583,18 +603,20 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">DOB :</label>
                                                         <div class="input-group">
-                                                            @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                            {
-                                                                @Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "DOB" })
-                                                            }
-                                                            else
-                                                            {
-                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                                { @Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "DOB", @disabled = "disabled" })}
-                                                            else
-                                                            {@Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "DOB" })}
+                                                            @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "DOB" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                    { @Html.TextBoxFor(m => m.DOB, new { @id = "DOB", @class = "form-control form-control-sm", @name = "DOB", @disabled = "disabled" })}
+                                                                else
+                                                                {*@
+                                                            @Html.HiddenFor(m => m.DOB)
+                                                            @Html.TextBox(string.Concat("DOB", "1"), "", ViewBag.DOBD != null ? (object)new { @id = "DOB1", @class = "form-control form-control-sm" } : (object)new { @id = "DOB1", @class = "form-control form-control-sm", @disabled = "disabled" })
 
-                                                    }
+                                                            @*}*@
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">
                                                                     <i class="far fa-calendar-alt"></i>
@@ -606,53 +628,54 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Marital Status :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.DropDownListFor(m => m.Marital_Status,
-                                                             new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                       new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
-                                                       new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
-                                                        new SelectListItem { Text = "Divorced", Value = "Divorced" }
-                                                             }, new { @class = "form-control form-control-sm" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.DropDownListFor(m => m.Marital_Status,
-                                                                     new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                           new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
-                                                           new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
-                                                            new SelectListItem { Text = "Divorced", Value = "Divorced" }
-                                                                     }, new { @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.DropDownListFor(m => m.Marital_Status,
-                           new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                     new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
-                     new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
-                      new SelectListItem { Text = "Divorced", Value = "Divorced" }
-                           }, new { @class = "form-control form-control-sm" })}
-                                                    }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                             {
+                                                                 @Html.DropDownListFor(m => m.Marital_Status,
+                                                                  new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                            new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+                                                            new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
+                                                             new SelectListItem { Text = "Divorced", Value = "Divorced" }
+                                                                  }, new { @class = "form-control form-control-sm combolist" })
+                                                             }
+                                                             else
+                                                             {
+                                                                 if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                 {
+                                                                     @Html.DropDownListFor(m => m.Marital_Status,
+                                                                          new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                                new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+                                                                new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
+                                                                 new SelectListItem { Text = "Divorced", Value = "Divorced" }
+                                                                          }, new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                                 }
+                                                                 else
+                                                                 {*@
+                                                        @Html.DropDownListFor(m => m.Marital_Status,
+new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+             new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+             new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
+              new SelectListItem { Text = "Divorced", Value = "Divorced" }
+}, ViewBag.Marital_StatusD != null ? (object)new { @class = "form-control form-control-sm combolist" } : (object)new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">No of Children :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" })}
-                                                    }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.No_child, ViewBag.No_childD != null ? (object)new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                        @*}
+                                                                else
+                                                                {
+                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    { @Html.TextBoxFor(m => m.No_child, new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" })}
+                                                            }*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -665,62 +688,57 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                         @*<select class="form-control" id="Citizenship" name="basic">*@
 
                                                         @Html.HiddenFor(m => m.Citizenship)
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {<select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm">
+                                                        @if (ViewBag.CitizenshipD != null)
+                                                        {<select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm combolist">
                                                             </select>
 
                                                             // @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
                                                         }
                                                         else
                                                         {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                <select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm" disabled>
-                                                                </select>
-                                                                // @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            {
-                                                                <select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm">
-                                                                </select>
-                                                                //@Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })}
-                                                            }
+
+                                                            <select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm" disabled>
+                                                            </select>
+                                                            // @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm", @disabled = "disabled" })
+
+
                                                         }
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Passport No :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20" })}
-                                                    }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.passport_no, ViewBag.passport_noD != null ? (object)new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                        @*}
+                                                                else
+                                                                {
+                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    { @Html.TextBoxFor(m => m.passport_no, new { @id = "passport_no", @class = "form-control form-control-sm", maxlength = "20" })}
+                                                            }*@
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">National ID :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            {@Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })}
-                                                        else
-                                                        {@Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20" })}
-                                                }
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {
+                                                                @Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20" })
+                                                            }
+                                                            else
+                                                            {
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                {@Html.TextBoxFor(m => m.National_id, new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })}
+                                                            else
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.National_id, ViewBag.National_idD != null ? (object)new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "National_id", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -728,31 +746,35 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Emergency Contact :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20" })
-                                                        }
-                                                        else
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
+                                                            {
+                                                                @Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20" })
+                                                            }
+                                                            else
 
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                            { @Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })}
-                                                        else
-                                                        {@Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20" })}
-                                                }
+                                                            {
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                { @Html.TextBoxFor(m => m.Emergency_Contact, new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })}
+                                                            else
+                                                            {*@
+                                                        @Html.TextBoxFor(m => m.Emergency_Contact, ViewBag.Emergency_ContactD != null ? (object)new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Emergency_Contact", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Contract Start Date :</label>
                                                         <div class="input-group">
-                                                            @if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.Contract_Start_date, new { @id = "Contract_Start_Date", @class = "form-control form-control-sm", @name = "Contract_Start_Date" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.Contract_Start_date, new { @id = "Contract_Start_Date", @class = "form-control form-control-sm", @name = "Contract_Start_Date" })
 
-                                                            }
-                                                            else
-                                                            { @Html.TextBoxFor(m => m.Contract_Start_date, new { @id = "Contract_Start_Date", @class = "form-control form-control-sm", @name = "Contract_Start_Date", @disabled = "disabled" })}
+                                                                }
+                                                                else
+                                                                {*@
+                                                            @Html.HiddenFor(m => m.Contract_Start_date)
+                                                            @Html.TextBox(string.Concat("Contract_Start_date", "1"), "", ViewBag.Contract_Start_dateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                            @*}*@
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">
                                                                     <i class="far fa-calendar-alt"></i>
@@ -765,20 +787,21 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Note :</label>
-                                                        @if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                        {
-                                                            @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250" })
-                                                        }
-                                                        else
-                                                        {
-                                                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                        @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {
-                                                                @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250", @disabled = "disabled" })
+                                                                @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250" })
                                                             }
                                                             else
-                                                            { @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250" })}
+                                                            {
+                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.Note, new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250", @disabled = "disabled" })
+                                                                }
+                                                                else
+                                                                {*@
+                                                        @Html.TextBoxFor(m => m.Note, ViewBag.NoteD != null ? (object)new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250" } : (object)new { @id = "NOTE", @class = "form-control form-control-sm", maxlength = "250", @disabled = "disabled" })
 
-                                                    }
+                                                        @*}*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -786,166 +809,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-educational-professional-info-nobd" role="tabpanel" aria-labelledby="v-pills-educational-professional-info-tab-nobd">
-                                    <div class="card-header">
-                                        <div class="card-head-row">
-                                            <div class="card-title">Education and Professional</div>
-                                            <div class="card-tools">
-                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" onclick="gethistoryLog('RDD_Employees_Edu')" id="RDD_Employees_Edu" title="View All" data-toggle="modal" data-target="#HistoryLogPopup">
-                                                    <i class="fas fa-history" data-toggle="tooltip" title="View Change Log"></i>
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-right padd-r0">
-                                            <button type="button" class="btn btn-success btn-sm mar-t8" id="addrow"><i class="fas fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="reddotTable sm-form">
-                                            <div class="reddotTableBody">
-                                                <div class="reddotTableRow odd-even-row">
-                                                    <div class="reddotTableHead width15per text-left"><div>Type</div></div>
-                                                    <div class="reddotTableHead width15per text-left"><div>Institute / Company</div></div>
-                                                    @*<div class="reddotTableHead width25per text-left"><div>Description</div></div>*@
-                                                    <div class="reddotTableHead width20per text-left"><div>Start Date</div></div>
-                                                    <div class="reddotTableHead width20per text-left"><div>End Date</div></div>
-                                                    <div class="reddotTableHead width15per text-right"><div>Score / Salary</div></div>
-                                                    <div class="reddotTableHead width5per"><div>Action</div></div>
-                                                </div>
-                                            </div>
-                                            <div class="reddotTableBody" id="AddCMRow">
 
 
-                                                @if (Model.EmpInfoProEdus != null)
-                                                {
-                                                    foreach (RDDStaffPortal.DAL.DataModels.EmpInfoProEdunew EmpPrEdu in Model.EmpInfoProEdus)
-                                                    {
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            @Html.HiddenFor(u => EmpPrEdu.EId, new { @class = "form-control" })
-                                                            @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
-                                                            <div class="reddotTableCell width15per text-left">
-                                                                <div>
-                                                                    @Html.DropDownListFor(u => EmpPrEdu.Type, new List<SelectListItem> {
-                     new SelectListItem { Text = "Professional", Value = "Professional" },
-                new SelectListItem { Text = "Educational", Value = "Educational" } }, EmpPrEdu.Type, new { @class = "form-control" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="reddotTableCell text-left">
-                                                                <div>
-                                                                    @Html.TextBoxFor(u => EmpPrEdu.Institute,
-                          new { @class = "form-control" })
-                                                                </div>
-                                                            </div>
-                                                            @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
-                                                            <div class="reddotTableCell text-left"><div>@Html.TextBoxFor(u => EmpPrEdu.StartDate, new { @class = "form-control", @name = "EmpPrEdu_StartDate" }) </div></div>
-
-                                                            <div class="reddotTableCell text-left"><div>@Html.TextBoxFor(u => EmpPrEdu.EndDate, new { @class = "form-control", @name = "datepicker" }) </div></div>
-                                                            <div class="reddotTableCell text-left">
-                                                                <div> @Html.TextBoxFor(u => EmpPrEdu.Score, new { @class = "form-control" }) </div>
-                                                            </div>
-                                                            <div class="reddotTableCell width15per">
-                                                                <div>
-                                                                    <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-attachments-nobd" role="tabpanel" aria-labelledby="v-pills-attachments-tab-nobd">
-                                    <div class="card-header">
-                                        <div class="card-head-row">
-                                            <div class="card-title">Attachement</div>
-                                            <div class="card-tools">
-                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" onclick="gethistoryLog('RDD_Employees_Doc')" id="RDD_Employees_Doc" title="View All" data-toggle="modal" data-target="#HistoryLogPopup">
-                                                    <i class="fas fa-history" data-toggle="tooltip" title="View Change Log"></i>
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 text-right padd-r0"><button type="button" class="btn btn-success btn-sm mar-t8" id="addAttachments"><i class="fas fa-plus"></i></button></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="reddotTable">
-                                            <div class="reddotTableBody">
-                                                <div class="reddotTableRow odd-even-row">
-                                                    @*<div class="reddotTableHead width5per text-left"><div>Id</div></div>*@
-                                                    <div class="reddotTableHead width45per text-left"><div>Description</div></div>
-                                                    <div class="reddotTableHead width45per text-left"><div>Browse</div></div>
-                                                    @*<div class="reddotTableHead width5per text-left"><div></div></div>*@
-                                                    <div class="reddotTableHead width10per"><div>Action</div></div>
-                                                </div>
-                                            </div>
-                                            <div class="reddotTableBody" id="AddAttachmentsRow">
-
-                                                @*@if (Model.EmpInfoProEdu != null)*@
-                                                @if (Model.DocumentList != null)
-                                                {
-                                                    foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
-                                                    {
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            @Html.Hidden(string.Concat("DId"), Doc.DId)
-
-                                                            @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
-                                                            <div class="reddotTableCell width15per text-left">
-                                                                <div>
-                                                                    @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName, new { @class = "form-control form-control-sm" })
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="reddotTableCell text-left">
-                                                                <div>
-                                                                    @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "form - control form - control - sm - file", type = "File", multiple = "multiple", @Title = Doc.DocPath })
-                                                                    @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
-                                                                </div>
-                                                            </div>
-                                                            @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
-
-
-
-                                                            <div class="reddotTableCell width15per">
-                                                                <div>
-                                                                    @*<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm" data-original-title="Download File"> <i class="fas fa-download"></i></button>*@
-                                                                    <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="reddotTableCell text-left">
-                                                                <div>
-                                                                    @*@Html.ActionLink("Download","Uploads", new { ImageName = Doc.DocPath })*@
-
-                                                                    @Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })
-
-
-
-                                                                    @*@Html.ActionLink(string.Concat("Uploads"), new { filename = Doc.DocPath })*@
-
-                                                                </div>
-                                                            </div>
-
-
-
-
-                                                        </div>
-                                                        counter1++;
-                                                    }
-                                                }
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-pane fade" id="v-pills-financial-nobd" role="tabpanel" aria-labelledby="v-pills-financial-tab-nobd">
+                                <div class="@(ViewBag.FinancialD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.FinancialD != null ? "display:" : "dispaly:none")" id="v-pills-financial-nobd" role="tabpanel" aria-labelledby="v-pills-financial-tab-nobd">
                                     <div class="card-header">
                                         <div class="card-head-row">
                                             <div class="card-title">Financial</div>
@@ -960,7 +826,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Currency :</label>
-                                                @Html.DropDownListFor(m => m.Currency, ViewBag.CurrencyList as SelectList, new { @id = "Currency", @class = "form-control form-control-sm" })
+                                                @Html.DropDownListFor(m => m.Currency, ViewBag.CurrencyList as SelectList, ViewBag.CurrencyD != null ? (object)new { @id = "Currency", @class = "form-control form-control-sm" } : (object)new { @id = "Currency", @class = "form-control form-control-sm", @disabled = "disabled" })
 
                                             </div>
                                         </div>
@@ -968,14 +834,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Account No :</label>
-                                                @Html.TextBoxFor(m => m.Account_No, new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.Account_No, ViewBag.Account_NoD != null ? (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Insurance No. :</label>
-                                                @Html.TextBoxFor(m => m.Insurance_no, new { @id = "Insurance_no", @class = "form-control form-control-sm", maxlength = "100" })
+                                                @Html.TextBoxFor(m => m.Insurance_no, ViewBag.Insurance_noD != null ? (object)new { @id = "Insurance_no", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "Insurance_no", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
                                             </div>
                                         </div>
                                     </div>
@@ -984,20 +850,28 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Salary :</label>
-                                                @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" })
+                                                @if (ViewBag.FinancialD != null)
+                                                {
+                                                    @Html.TextBoxFor(m => m.Salary, ViewBag.SalaryD != null ? (object)new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" } : (object)new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @Type = "password", @Value = "1", @class = "form-control form-control-sm", maxlength = "10" })
+                                                }
+
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Bank Name :</label>
-                                                @Html.TextBoxFor(m => m.Bank_Name, new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.Bank_Name, ViewBag.Bank_NameD != null ? (object)new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Other ref No. :</label>
-                                                @Html.TextBoxFor(m => m.other_ref_no, new { @id = "other_ref_no", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.other_ref_no, ViewBag.other_ref_noD != null ? (object)new { @id = "other_ref_no", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "other_ref_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
                                     </div>
@@ -1008,8 +882,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 <label for="email2" class="width100px">Salary Start Date :</label>
 
                                                 <div class="input-group">
-                                                    @*@Html.HiddenFor(m => m.Salary_Start_Date)*@
-                                                    @Html.TextBoxFor(m => m.Salary_Start_Date, new { @id = "Salary_Start_Date", @class = "form-control form-control-sm", @name = "Salary_Start_Date" })
+                                                    @Html.HiddenFor(m => m.Salary_Start_Date)
+                                                    @Html.TextBox(string.Concat("Salary_Start_Date", "1"), "", ViewBag.Salary_Start_DateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">
                                                             <i class="far fa-calendar-alt"></i>
@@ -1022,14 +896,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Branch Name :</label>
-                                                @Html.TextBoxFor(m => m.Branch_Name, new { @id = "Branch_Name", @class = "form-control form-control-sm", maxlength = "15" })
+                                                @Html.TextBoxFor(m => m.Branch_Name, ViewBag.Branch_NameD != null ? (object)new { @id = "Branch_Name", @class = "form-control form-control-sm", maxlength = "15" } : (object)new { @class = "form-control form-control-sm", maxlength = "15", @disabled = "disabled" })
 
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Tax No. :</label>
-                                                @Html.TextBoxFor(m => m.Tax_no, new { @id = "Tax_no", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.Tax_no, ViewBag.Tax_noD != null ? (object)new { @id = "Tax_no", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Tax_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
                                     </div>
@@ -1038,14 +912,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Remark :</label>
-                                                @Html.TextBoxFor(m => m.Remark, new { @id = "Remark", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.Remark, ViewBag.RemarkD != null ? (object)new { @id = "Remark", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Remark", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
                                             <div class="form-group">
                                                 <label for="email2" class="width100px">Bank Code :</label>
-                                                @Html.TextBoxFor(m => m.Bank_Code, new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20" })
+                                                @Html.TextBoxFor(m => m.Bank_Code, ViewBag.Bank_CodeD != null ? (object)new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
@@ -1053,7 +927,108 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-leaves-nobd" role="tabpanel" aria-labelledby="v-pills-leaves-tab-nobd">
+
+                                <div class="@(ViewBag.EducationD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.EducationD != null ? "display:" : "dispaly:none")" id="v-pills-educational-professional-info-nobd" role="tabpanel" aria-labelledby="v-pills-educational-professional-info-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Education and Professional</div>
+                                            <div class="card-tools">
+                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" onclick="gethistoryLog('RDD_Employees_Edu')" id="RDD_Employees_Edu" title="View All" data-toggle="modal" data-target="#HistoryLogPopup">
+                                                    <i class="fas fa-history" data-toggle="tooltip" title="View Change Log"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-right padd-r0">
+                                            @if (ViewBag.AddEducationD != null)
+                                            {
+
+                                                <button type="button" class="btn btn-info btn-sm mar-t8" id="addrow"><i class="fas fa-plus"></i></button>
+
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="reddotTable sm-form">
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+                                                    <div class="reddotTableHead width15per text-left"><div>Type</div></div>
+                                                    <div class="reddotTableHead width15per text-left"><div>Institute / Company</div></div>
+                                                    @*<div class="reddotTableHead width25per text-left"><div>Description</div></div>*@
+                                                    <div class="reddotTableHead width20per text-left"><div>Start Date</div></div>
+                                                    <div class="reddotTableHead width20per text-left"><div>End Date</div></div>
+                                                    <div class="reddotTableHead width15per text-right"><div>Score / Salary</div></div>
+                                                    @if (ViewBag.DeletEducationD != null)
+                                                    {
+                                                        <div class="reddotTableHead width5per"><div>Action</div></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableBody" id="AddCMRow">
+
+
+                                                @if (Model.EmpInfoProEdus != null)
+                                                {
+                                                    var k = 1;
+                                                    foreach (RDDStaffPortal.DAL.DataModels.EmpInfoProEdunew EmpPrEdu in Model.EmpInfoProEdus)
+                                                    {
+                                                        <div class="reddotTableRow odd-even-row">
+                                                            @Html.HiddenFor(u => EmpPrEdu.EId, new { @class = "form-control" })
+                                                            @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
+                                                            <div class="reddotTableCell width15per text-left">
+                                                                <div>
+                                                                    @Html.HiddenFor(u => EmpPrEdu.Type)
+                                                                    @Html.DropDownList(string.Concat("NEmpPrEdu_Type", k), new List<SelectListItem> {
+                     new SelectListItem { Text = "Professional", Value = "Professional" },
+                new SelectListItem { Text = "Educational", Value = "Educational" } }, new { @class = "form-control form-control-sm combolist2" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="reddotTableCell text-left">
+                                                                <div>
+                                                                    @Html.TextBoxFor(u => EmpPrEdu.Institute,
+                          new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
+                                                            <div class="reddotTableCell text-left">
+                                                                <div class="input-group">
+                                                                    @Html.HiddenFor(u => EmpPrEdu.StartDate)
+                                                                    @Html.TextBox(string.Concat("NEmpPrEdu_StartDate", k), "", new { @class = "form -control tbldate", @name = "EmpPrEdu_StartDate" })
+                                                                    <div class="input-group-append">  <span class="input-group-text">  <i class="far fa-calendar-alt"></i>  </span>  </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="reddotTableCell text-left">
+                                                                <div class="input-group">
+                                                                    @Html.HiddenFor(u => EmpPrEdu.EndDate)
+                                                                    @Html.TextBox(string.Concat("NEmpPrEdu_EndDate", k), "", new { @class = "form-control tbldate", @name = "datepicker" })
+                                                                    <div class="input-group-append">  <span class="input-group-text">  <i class="far fa-calendar-alt"></i>  </span>  </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="reddotTableCell text-left">
+                                                                <div> @Html.TextBoxFor(u => EmpPrEdu.Score, new { @class = "form-control" }) </div>
+                                                            </div>
+                                                            @if (ViewBag.DeletEducationD != null)
+                                                            {
+                                                                <div class="reddotTableCell width15per">
+                                                                    <div>
+                                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        k++;
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="@(ViewBag.LeavesD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.LeavesD != null ? "display:" : "dispaly:none")" id="v-pills-leaves-nobd" role="tabpanel" aria-labelledby="v-pills-leaves-tab-nobd">
                                     <div class="card-header">
                                         <div class="card-head-row">
                                             <div class="card-title">Leaves</div>
@@ -1151,7 +1126,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-assets-nobd" role="tabpanel" aria-labelledby="v-pills-assets-tab-nobd">
+
+                                <div class="@(ViewBag.AssetsD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.AssetsD != null ? "display:" : "dispaly:none")" id="v-pills-assets-nobd" role="tabpanel" aria-labelledby="v-pills-assets-tab-nobd">
                                     <div class="card-header">
                                         <div class="card-head-row">
                                             <div class="card-title">Assets</div>
@@ -1184,7 +1160,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-loan-nobd" role="tabpanel" aria-labelledby="v-pills-loan-tab-nobd">
+
+                                <div class="@(ViewBag.LoanD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.LoanD != null ? "display:" : "dispaly:none")" id="v-pills-loan-nobd" role="tabpanel" aria-labelledby="v-pills-loan-tab-nobd">
                                     <div class="card-header">
                                         <div class="card-head-row">
                                             <div class="card-title">Loan</div>
@@ -1241,6 +1218,119 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="@(ViewBag.AttachmentsD != null ?"tab-pane fade tabshow":"tab-pane fade")" style="@(ViewBag.AttachmentsD != null ? "display:" : "dispaly:none")" id="v-pills-attachments-nobd" role="tabpanel" aria-labelledby="v-pills-attachments-tab-nobd">
+                                    <div class="card-header">
+                                        <div class="card-head-row">
+                                            <div class="card-title">Attachement</div>
+                                            <div class="card-tools">
+                                                <button class="btn btn-primary btn-border btn-round widview-btn" type="button" onclick="gethistoryLog('RDD_Employees_Doc')" id="RDD_Employees_Doc" title="View All" data-toggle="modal" data-target="#HistoryLogPopup">
+                                                    <i class="fas fa-history" data-toggle="tooltip" title="View Change Log"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @if (ViewBag.AddAttachmentsD != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12 text-right padd-r0"><button type="button" class="btn btn-info btn-sm mar-t8" id="addAttachments"><i class="fas fa-plus"></i></button></div>
+                                        </div>
+                                    }
+
+                                    <div class="row">
+                                        <div class="reddotTable sm-form">
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+                                                    @*<div class="reddotTableHead width5per text-left"><div>Id</div></div>*@
+                                                    <div class="reddotTableHead width45per text-left"><div>Description</div></div>
+                                                    <div class="reddotTableHead width45per text-left"><div>Browse</div></div>
+                                                    @*<div class="reddotTableHead width5per text-left"><div></div></div>*@
+                                                    @if (ViewBag.DeletAttachmentsD != null)
+                                                    {
+                                                        <div class="reddotTableHead width10per"><div>Action</div></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableBody" id="AddAttachmentsRow">
+
+                                                @*@if (Model.EmpInfoProEdu != null)*@
+                                                @if (Model.DocumentList != null)
+                                                {
+                                                    foreach (RDDStaffPortal.DAL.DataModels.DocumentList Doc in Model.DocumentList)
+                                                    {
+                                                        <div class="reddotTableRow odd-even-row">
+                                                            @Html.Hidden(string.Concat("DId"), Doc.DId)
+
+                                                            @*<div class="reddotTableCell text-left" style="display:none"> </div>*@
+                                                            <div class="reddotTableCell width15per text-left">
+                                                                <div>
+                                                                    @Html.TextBox(string.Concat("docdescription", counter1), Doc.DcumenName, new { @class = "form-control form-control-sm" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="reddotTableCell text-left">
+                                                                <div>
+                                                                    @Html.TextBox(string.Concat("fileInput", counter1), Doc.DocPath, new { @class = "form - control form - control - sm - file", type = "File", multiple = "multiple", @Title = Doc.DocPath })
+                                                                    @Html.Hidden(string.Concat("hdnfileInput", counter1), Doc.DocPath)
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="reddotTableCell width15per text-left"> @Html.TextBoxFor(u => EmpPrEdu.Description, new { @class = "form-control" })  </div>*@
+
+
+                                                            @if (ViewBag.DeletAttachmentsD != null)
+                                                            {
+                                                                <div class="reddotTableCell width15per">
+
+                                                                    <div>
+                                                                        @*<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm" data-original-title="Download File"> <i class="fas fa-download"></i></button>*@
+                                                                        <button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button>
+                                                                    </div>
+
+                                                                </div>
+                                                            }
+                                                            @if (ViewBag.ViewAttachmentsD != null)
+                                                            {
+                                                                <div class="reddotTableCell text-left">
+                                                                    <div>
+                                                                        @*@Html.ActionLink("Download","Uploads", new { ImageName = Doc.DocPath })*@
+
+                                                                        @Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })
+
+
+
+                                                                        @*@Html.ActionLink(string.Concat("Uploads"), new { filename = Doc.DocPath })*@
+
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+
+
+
+                                                        </div>
+                                                        counter1++;
+                                                    }
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -1251,7 +1341,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     </div>
 </div>
 <div class="modal fade" id="HistoryLogPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered width70per" role="document">
+    <div class="modal-dialog modal-dialog-centered width100per" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Change Log</h5>
@@ -1325,7 +1415,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     $("#ManagerIdL2").append(
                         $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
 
-                    
+
+                });
+                $('#ManagerIdL2').select2({
+                    theme: "bootstrap",
+                    allowClear: true,
+                    placeholder: '--Select--'
                 });
             }
         });
@@ -1403,6 +1498,15 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
     $(document).ready(function () {
+
+        $("[data-toggle='pill']:first").trigger('click')
+        //  $("[data-toggle='pill']:first").addClass("show active");
+        // $(".tabshow:first").addClass("active show");
+        $('select:not(.combolist2)').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select--'
+        });
         debugger
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -1512,8 +1616,43 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     $(document).ready(function () {
         debugger
 
+        var k1 = 1;
+
+        $('#Joining_date1').datetimepicker({
+            format: 'DD/MM/YYYY',
+        });
+        var Month = parseInt(new Date().getMonth()) + 1;
+        var year = new Date().getFullYear() - 18
+        t = year + '/' + Month + '/' + new Date().getDate()
+        $('#DOB1').datetimepicker({
+            format: 'DD/MM/YYYY',
+            defaultDate: new Date(t),
+            maxDate: new Date(t)
+        });
 
 
+
+        $('#Contract_Start_date1').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+        $('#Salary_Start_Date1').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+        $('#NEmpPrEdu_StartDate').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+        $('#NEmpPrEdu_EndDate').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+        });
+
+        $('#ManagerId').select2({
+            theme: "bootstrap"
+        });
 
         $("#AddAttachmentsRow").on("change", "input[id^='fileInput']", function (event) {
             debugger
@@ -1544,7 +1683,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 },
                 error: function (er) {
-                    RdotAlerterrtxt(er);
+                    RedDotAlert_Error(er);
                 }
             });
 
@@ -1580,7 +1719,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     //code after success
                     debugger
                     if (response == "InvalidError") {
-                        RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                        RedDotAlert_Error("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
                     }
                     else {
                         debugger;
@@ -1590,7 +1729,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 },
                 error: function (er) {
-                    RdotAlerterrtxt(er);
+                    RedDotAlert_Error(er);
                 }
             });
 
@@ -1641,11 +1780,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
             $('#Salary').val('');
-
-            $('#Joining_date').val('');
-            $('#DOB').val('');
-            $('#Salary_Start_Date').val('');
-            $('#Contract_Start_Date').val('');
+            debugger
+            $('#Joining_date1').val('');
+            $('#DOB1').val('');
+            $('#Salary_Start_Date1').val('');
+            $('#Contract_Start_date1').val('');
             //$('#EmpPrEdu_StartDate').val('');
             //$('#EmpPrEdu_End_date').val('');
 
@@ -1653,28 +1792,36 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         }
         else {
-            debugger
-           // var l1Id = $('#ManagerId').val();
-
-        //    $("#ManagerIdL2 option[value='ManagerId']").remove();
-
-           // $("#ManagerIdL2 option[value='4']").remove();
-
-          //  $("select[name='hdnCitizenship']").val($("input[id='Citizenship']:hidden").val()).trigger('change');
 
 
 
-            debugger
+            $("#AddCMRow .reddotTableRow").each(function () {
+
+                var now = new Date($(this).find("#EmpPrEdu_StartDate[type='hidden']").val());
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = (day) + "/" + (month) + "/" + now.getFullYear();
+                $(this).find("#NEmpPrEdu_StartDate" + k1).val(today);
+
+                var now = new Date($(this).find("#EmpPrEdu_EndDate[type='hidden']").val());
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = (day) + "/" + (month) + "/" + now.getFullYear();
+                $(this).find("#NEmpPrEdu_EndDate" + k1).val(today);
+
+                var eduType = $(this).find("#EmpPrEdu_Type").val();
 
 
-            //$('#Citizenship').select2({
-            //    matcher: function (term, text, option) {
-            //        return text.toUpperCase().indexOf(term.toUpperCase()) >= 0 || option.val().toUpperCase().indexOf(term.toUpperCase()) >= 0;
-            //    }
-            //});
-           // $("#Citizenship").select2("destroy");
-       //    // $("#Citizenship").select2().val("in").trigger('change');
-        //   RdotDropimg1("Citizenship", "/GetCountrywthFlag", "/Content/famfamfam_flags-master/");
+                //$(this).find('#NEmpPrEdu_Type' + k1).select2({
+                //    theme: "bootstrap",
+                //    allowClear: true,
+                //    placeholder: '--Select--'
+                //});
+                $(this).find('#NEmpPrEdu_Type' + k1).val(eduType).trigger("change");
+                k1++;
+
+            })
+
 
             if ($('#Salary_Start_Date').val() == "01/01/0001 12:00:00 AM") {
               // $("#Salary_Start_Date").datetimepicker().val('')
@@ -1697,12 +1844,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
 
-            $("#EmpPrEdu_StartDate").datetimepicker({
+            $("#NEmpPrEdu_StartDate").datetimepicker({
                 defaultDate: new Date(),
                 format: 'DD/MM/YYYY',
             });
             //$("#EmpPrEdu_EndDate").val('');
-            $("#EmpPrEdu_EndDate").datetimepicker({
+            $("#NEmpPrEdu_EndDate").datetimepicker({
                 defaultDate: new Date(),
                 format: 'DD/MM/YYYY',
             });
@@ -1710,24 +1857,13 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
 
-            //if ($('#Salary_Start_Date').val() == null
-            //    {
-
-            //    $('#Salary_Start_Date').datepicker({
-            //        clearBtn: true
-            //    });
-            //  }
 
 
-           // $('#Salary_Start_Date').val('');
-            // var IsDefault = $(this).closest('tr').find('input[type="checkbox"]').val();
 
-            //alert(IsDefault);
-            //if (IsDefault == "true")
-            //    $('#chkIsActive').prop("checked", true);
-            //else
-            //    $('#chkIsActive').prop("checked", false);
-            //}
+            RedDot_dateEdit("#Salary_Start_Date1", "#Salary_Start_Date[type='hidden']");
+            RedDot_dateEdit("#DOB1", "#DOB[type='hidden']");
+            RedDot_dateEdit("#Joining_Date1", "#Joining_Date[type='hidden']");
+            RedDot_dateEdit("#Contract_Start_Date1", "#Contract_Start_Date[type='hidden']");
         }
     });
 
@@ -1745,8 +1881,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
         $("#Contact_No").keypress(function (e) {
+            debugger
+
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter Number.');
+                RedDotAlert_Error('Please Enter Number.');
                 $("#Contact_No").val('');
                 $("#Contact_No").focus();
                 return false;
@@ -1755,7 +1893,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         $("#No_child").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter  only Number.');
+                RedDotAlert_Error('Please Enter  only Number.');
                 $("#No_child").val('');
                 $("#No_child").focus();
                 return false;
@@ -1764,7 +1902,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         $("#Ext_no").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Ext_no").val('');
                 $("#Ext_no").focus();
                 return false;
@@ -1772,7 +1910,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Emergency_Contact").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('please Enter only Number');
+                RedDotAlert_Error('please Enter only Number');
                 $("#Emergency_Contact").val('');
                 $("#Emergency_Contact").focus();
                 return false;
@@ -1780,7 +1918,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Salary").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Salary").val('');
                 $("#Salary").focus();
                 return false;
@@ -1788,7 +1926,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
         $("#Account_No").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                RdotAlerterrtxt('Please Enter only Number.');
+                RedDotAlert_Error('Please Enter only Number.');
                 $("#Account_No").val('');
                 $("#Account_No").focus();
                 return false;
@@ -1796,48 +1934,34 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
     }
 
-
-    $("#Email").change(function () {
-        debugger
+    emailArr = ['reddotdistribution.com', 'reddot.co.tz', 'cctz.co.tz'];
+    $("#Email").on("change",function () {
         var email_add = $('#Email').val();
-
         var emailaddressVal = $("#Email").val();
-
         var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
         if (!emailReg.test(emailaddressVal)) {
-            RdotAlerterrtxt('Enter a valid email address.');
-
+            RedDotAlert_Error('Enter a valid email address.');
             $("#Email").val('');
-
             $("#Email").focus();
-
             return false;
-
         }
         else {
             var email_add = $('#Email').val();
             var Email = email_add.split("@@");
-            var domainname = Email[1];
-
-
-            //var value = domainname.split("co.");
-            //var domain1 = value[0];
-            //var domain1 = value[1];
-
-            //alert(domainname);
-            if (domainname != "reddotdistribution.com") {
-                RdotAlerterrtxt('Please Enter Valid Official DomainName');
-            
+            var domainname = Email[1].toLowerCase();
+            //if (domainname != "reddotdistribution.com") {
+            if (jQuery.inArray(domainname, emailArr) == -1) {
+                RedDotAlert_Error('Please Enter Valid Official DomainName');
                 $("#Email").val('');
-
                 $("#Email").focus();
-
                 return false;
             }
 
 
         }
     });
+
+
 
     $('#btncancel').click(function () {
         location.reload();
@@ -1885,7 +2009,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         debugger
 
         var EmpData = {};
-       
+
         EmpData["ManagerIdL2"] = $("#ManagerIdL2").val();
         EmpData["JobBandId"] = $("#JobBandId").val();
         EmpData["JobGradeId"] = $("#JobGradeId").val();
@@ -1914,7 +2038,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         EmpData["Ext_no"] = $("#Ext_no").val();
         EmpData["IM_Id"] = $("#IM_Id").val();
         EmpData["Marital_Status"] = $("#Marital_Status").val();
-        EmpData["DOB"] = $("#DOB").val();
+        EmpData["DOB"] = RedDot_setdtpkdate($("#DOB1[type='text']").val());
 
         EmpData["DesigId"] = $("#DesigId").val();
         EmpData["DeptId"] = $("#DeptId").val();
@@ -1923,7 +2047,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         EmpData["Currency"] = $("#Currency").val();
         EmpData["Salary"] = $("#Salary").val();
-        EmpData["Salary_Start_Date"] = $("#Salary_Start_Date").val();
+        EmpData["Salary_Start_Date"] = RedDot_setdtpkdate($("#Salary_Start_Date1[type='text']").val());
         EmpData["Remark"] = $("#Remark").val();
         EmpData["Account_No"] = $("#Account_No").val();
         EmpData["Bank_Name"] = $("#Bank_Name").val();
@@ -1938,10 +2062,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         //EmpData["ManagerName"] = ManagersName;
         EmpData["StatusId"] = $("#StatusId").val();
         EmpData["type_of_employement"] = $("#type_of_employement").val();
-        EmpData["Joining_date"] = $("#Joining_date").val();
+        EmpData["Joining_date"] = RedDot_setdtpkdate($("#Joining_Date1[type='text']").val());
         EmpData["No_child"] = $("#No_child").val();
         EmpData["National_id"] = $("#National_id").val();
-        EmpData["Contract_Start_Date"] = $("#Contract_Start_Date").val();
+        EmpData["Contract_Start_Date"] = RedDot_setdtpkdate($("#Contract_Start_date1[type='text']").val());
         EmpData["NOTE"] = $("#NOTE").val();
         EmpData["ImagePath1"] = $("input[type='image']").val();
         EmpData["ImagePath"] = $("input[id='ImagePath']").val();
@@ -1961,9 +2085,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 DocPath: $(this).find("input[id^='hdnfileInput']").val(),
 
             }
-
-            EmpDatas.push(obj1);
-            i++;
+            if (obj1.DcumenName != '' && obj1.DocPath != '') {
+                EmpDatas.push(obj1);
+            }
+           
+           // i++;
 
         });
 
@@ -1978,17 +2104,20 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             var obj = {
 
                 EId: $(this).find('#EmpPrEdu_EId').val(),
-                Type: $(this).find('#EmpPrEdu_Type option:selected').text(),
+                Type: $(this).find('[id^="NEmpPrEdu_Type"] option:selected').text(),
                 Institute: $(this).find('#EmpPrEdu_Institute').val(),
                 //StartDate: $(this).find('#EmpPrEdu_StartDate').val(),
-                StartDate: $(this).find("input[id^='EmpPrEdu_StartDate']").val(),
-                EndDate: $(this).find("input[id^='EmpPrEdu_EndDate']").val(),
+                StartDate: RedDot_setdtpkdate($(this).find("input[id^='NEmpPrEdu_StartDate']").val()),
+                EndDate: RedDot_setdtpkdate($(this).find("input[id^='NEmpPrEdu_EndDate']").val()),
                 //EndDate: $(this).find('#EmpPrEdu_EndDate').val(),
                 //Description: $(this).find('#EmpPrEdu_Description').val(),
                 Score: $(this).find('#EmpPrEdu_Score').val(),
             }
-            EmpInfoProEdu.push(obj);
-            i++;
+            if (obj.Institute != '') {
+                EmpInfoProEdu.push(obj);
+            }
+           
+            
 
         });
        // $(".loader1").show();
@@ -2012,12 +2141,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     ClearControl();
 
                 }
-               
+
                 else if (result == "Registration updated successfully.")
                 {
-                  
+
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    RdotAlertSucesstxt(result);
+                    RedDotAlert_Success(result);
                   // ClearControl();
                     $('.loader1').css('display', 'none');
                 }
@@ -2033,9 +2162,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
     function GetCreateUserAcc() {
         debugger
-        var fname = $("#FName").val(); 
+        var fname = $("#FName").val();
         var lname = $("#LName").val();
-        
+
         var useremail = $("#Email").val();
         var username = useremail.substring(0, useremail.lastIndexOf("@@"));
         var ques = "What is your favorite website ?";
@@ -2054,7 +2183,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 success: function (data) {
                     debugger
                       var mess = data.Message;
-                    RdotAlertSucesstxt(mess);
+                    RedDotAlert_Success(mess);
                     $('.loader1').css('display', 'none');
 
 
@@ -2066,7 +2195,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         }
 
 
-  
+
     function ClearControl() {
 
         GetEmpNo();
@@ -2089,7 +2218,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $("#Ext_no").val('');
         $("#IM_Id").val('');
         // $("#Marital_Status").val('');
-        $("#DOB").val('');
+        $("#DOB1").val('');
        // $("#Citizenship").val('');
         // $("#DesigId").val('');
         // $("#DeptId").val('');
@@ -2110,10 +2239,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
        // $('#ManagerId').find('option:first').attr('selected', 'selected');
         $('#CountryCodeName').find('option:first').attr('selected', 'selected');
         $('#type_of_employement').val(0).trigger('change');
-        $("#Joining_date").val('');
-        $("#Contract_Start_Date").val('');
+        $("#Joining_date1").val('');
+        $("#Contract_Start_date1").val('');
         $('#Marital_Status').val(0).trigger('change');
-        $("#Contract_Start_Date").val('');
+        $("#Contract_Start_date1").val('');
 
         $('#Gender').val(0).trigger('change');
         $("#National_id").val('');
@@ -2129,20 +2258,24 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $("#Tax_no").val('');
         $("#Remark").val('');
         $("#Bank_Code").val('');
-        $("#Salary_Start_Date").val('');
+        $("#Salary_Start_Date1").val('');
     }
 
+    function Tab_Activity_Hide_Show(tabid,ids) {
+        $("[data-toggle='pill'].show").removeClass('show active');
+        $(".tab-pane.show").removeClass('show active');
+        $(tabid).addClass('show active');
+        $(ids).addClass('active show');
+    }
     function validate() {
 
         var ValFlag = true;
 
         if ($("#FName").val() == "") {
-            RdotAlerterrtxt('please Enter First Name');
-
-            // alert('please Enter First Name');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd","#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter First Name');
             $("#FName").focus();
-           // $("#FName").addClass('errorClass');
-
+            //$("#FName").addClass('errorClass');
             return ValFlag = false;
 
         }
@@ -2152,7 +2285,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         //}
 
         if ($("#LName").val() == "") {
-            RdotAlerterrtxt('please Enter Last Name');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter Last Name');
 
             $("#LName").focus();
             return ValFlag = false;
@@ -2160,125 +2294,146 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
         if ($("#Email").val() == "") {
-            RdotAlerterrtxt('please Enter Email');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter Email');
             $("#Email").focus();
             return ValFlag = false;
         }
 
         if ($("#Contact_No").val() == "") {
-            RdotAlerterrtxt('please Enter Contact No');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter Contact No');
             $("#Contact_No").focus();
             return ValFlag = false;
         }
 
         if ($("#DesigId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Designation');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Designation');
             $("#DesigId").focus();
             return ValFlag = false;
         }
         if ($("#DeptId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Department');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Department');
             $("#DeptId").focus();
             return ValFlag = false;
         }
         if ($("#ManagerId").val() == "") {
-            RdotAlerterrtxt('please Enter Manager');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter Manager');
             $("#ManagerId").focus();
             return false;
         }
 
         if ($("#CountryCodeName option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Country');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Country');
             $("#CountryCodeName").focus();
             return ValFlag = false;
         }
 
 
         if ($("#StatusId option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Employment Status');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Employment Status');
             $("#StatusId").focus();
             return ValFlag = false;
         }
 
 
         if ($("#type_of_employement option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Employment Type');
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Employment Type');
             $("#type_of_employement").focus();
             return ValFlag = false;
         }
 
-        if ($("#Joining_date").val() == "") {
-            RdotAlerterrtxt('please select Joining Date');
-            $("#Joining_date").focus();
+        if ($("#Joining_date1").val() == "") {
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please select Joining Date');
+            $("#Joining_date1").focus();
             return ValFlag = false;
         }
 
         if ($("#Current_Address").val() == "") {
-            RdotAlerterrtxt('please Enter Current Address');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Enter Current Address');
             $("#Current_Address").focus();
             return ValFlag = false;
         }
 
         if ($("#Permanent_Address").val() == "") {
-            RdotAlerterrtxt('please Enter Permanent Address');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Enter Permanent Address');
             $("#Permanent_Address").focus();
             return false;
         }
 
         if ($("#Gender option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Gender');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please select Gender');
             $("#Gender").focus();
             return false;
         }
-        if ($("#DOB").val() == "") {
-            RdotAlerterrtxt('please select Date Of Birth');
-            $("#DOB").focus();
+        if ($("#DOB1").val() == "") {
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please select Date Of Birth');
+            $("#DOB1").focus();
             return false;
         }
 
         if ($("#Marital_Status option:selected").index() <= 0) {
-            RdotAlerterrtxt('please select Marital Status');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please select Marital Status');
             $("#Marital_Status").focus();
             return false;
         }
         if ($("#Citizenship").val() == "") {
-            RdotAlerterrtxt('please Enter Nationality');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Enter Nationality');
             $("#Citizenship").focus();
             return false;
         }
 
         if ($("#National_id").val() == "") {
-            RdotAlerterrtxt('please Enter National Id');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Enter National Id');
             $("#National_id").focus();
             return false;
         }
         if ($("#No_child").val() == "") {
-            RdotAlerterrtxt('please Enter No of Child');
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Enter No of Child');
             $("#No_child").focus();
             return false;
         }
 
-        if ($("#Contract_Start_Date").val() == "") {
-            RdotAlerterrtxt('please Select Contract StartDate');
-            $("#Contract_Start_Date").focus();
+        if ($("#Contract_Start_date1").val() == "") {
+            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+            RedDotAlert_Error('please Select Contract StartDate');
+            $("#Contract_Start_date1").focus();
             return false;
         }
 
         if ($("#Account_No").val() != "") {
 
             if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
 
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2289,18 +2444,21 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Branch_Name").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2309,18 +2467,21 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Bank_Name").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
             else if ($("#Bank_Code").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Code');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Code');
                 $("#Bank_Code").focus();
                 return false;
             }
@@ -2329,18 +2490,21 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Bank_Code").val() != "") {
 
             if ($("#Account_No").val() == "") {
-                RdotAlerterrtxt('please Enter Account No');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Account No');
                 $("#Account_No").focus();
                 return false;
             }
 
             else if ($("#Branch_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Branch Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Branch Name');
                 $("#Branch_Name").focus();
                 return false;
             }
             else if ($("#Bank_Name").val() == "") {
-                RdotAlerterrtxt('please Enter Bank Name');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Name');
                 $("#Bank_Name").focus();
                 return false;
             }
@@ -2350,20 +2514,23 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Currency option:selected").index() != 0) {
 
             if ($("#Salary").val() == "0") {
-                RdotAlerterrtxt('Should be Greater Than 0');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('Should be Greater Than 0');
                 $("#Salary").focus();
                 return false;
             }
 
-            if ($("#Salary_Start_Date").val() == "") {
-                RdotAlerterrtxt('please Enter Salary Start Date');
+            if ($("#Salary_Start_Date1").val() == "") {
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Salary Start Date');
                // $("#Salary_Start_Date").focus();
-                $("#Salary_Start_Date").val('');
+                $("#Salary_Start_Date1").val('');
                 return false;
             }
 
             if ($("#Salary").val() == "") {
-                RdotAlerterrtxt('Please Enter Salary');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('Please Enter Salary');
                 $("#Salary").focus();
                 return false;
             }
@@ -2379,13 +2546,15 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Salary").val() != ""){
 
             if ($("#Currency option:selected").index() <= 0) {
-                RdotAlerterrtxt('please select Currency ');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please select Currency ');
                 $("#Currency").focus();
                 return false;
             }
 
             if ($("#Salary_Start_Date").val() == "") {
-                RdotAlerterrtxt('please Enter Salary Start Date');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Salary Start Date');
                // $("#Salary_Start_Date").focus();
                 $("#Salary_Start_Date").val('');
                 return false;
@@ -2397,19 +2566,22 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         if ($("#Salary_Start_Date").val() != "") {
 
             if ($("#Currency option:selected").index() <= 0) {
-                RdotAlerterrtxt('please select Currency ');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please select Currency ');
                 $("#Currency").focus();
                 return false;
             }
 
             if ($("#Salary").val() == "") {
-                RdotAlerterrtxt('please Enter Salary');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Salary');
                 $("#Salary").focus();
                 return false;
             }
 
             if ($("#Salary").val() == 0) {
-                RdotAlerterrtxt('Salary Should be Greater than 0');
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('Salary Should be Greater than 0');
                 $("#Salary").focus();
                 return false;
             }
@@ -2421,59 +2593,15 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
     $(function () {
         debugger
-        //$('#Joining_date').datetimepicker({
-        //    defaultDate: new Date(),
-        //    format: 'DD/MM/YYYY',
-        //});
-        $('#Joining_date').datetimepicker({
-            format: 'DD/MM/YYYY',
-        });
-        $('#DOB').datetimepicker({
-            format: 'DD/MM/YYYY',
-        });
-        //$('#DOB').datetimepicker({
-        //    defaultDate: new Date(),
-        //    format: 'DD/MM/YYYY',
-        //});
 
 
-        $('#Contract_Start_Date').datetimepicker({
-           // defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
 
-        $('#Salary_Start_Date').datetimepicker({
-            //defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
-        $('#EmpPrEdu_StartDate').datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
-        $('#EmpPrEdu_EndDate').datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
 
-        $('#ManagerId').select2({
-            theme: "bootstrap"
-        });
-        
-        $('#ManagerIdL2').select2({
-            theme: "bootstrap"
-        });
-        //$('#Citizenship').select2({
-        //    theme: "bootstrap"
-        //});
 
-        //$('#Empdate').datetimepicker({
-        //    defaultDate: new Date(),
-        //    format: 'DD/MM/YYYY',
-        //});
 
     });
 
-    counter = 1;
+    counter =parseInt($("#AddCMRow").length)+1;
 
     $("#addrow").on("click", function () {
 
@@ -2485,7 +2613,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         @*cols += '<div> @Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" })</div>';*@
         cols += ' <div class="reddotTableCell text-left"><div>';
 
-        cols += '<select class="form-control" id="EmpPrEdu_Type" name="EmpPrEdu.Type"><option value="Professional">Professional</option>';
+        cols += '<select class="form-control combolist2" id="EmpPrEdu_Type" name="EmpPrEdu.Type"><option value="Professional">Professional</option>';
         cols += '  <option value="Educational">Educational</option>';
         cols += ' </select >@Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" }) ';
 
@@ -2501,8 +2629,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         cols += ' <div class="input-group"> ';
         debugger;
         var k = counter;
-        cols += ' <input type="text" class="form-control" id="EmpPrEdu_StartDate' + counter + '" class = "form-control"> ';
-       // cols += ' @Html.TextBoxFor(m => m.StartDate, new { @id = "EmpPrEdu_StartDate"+counter, @class = "form-control",@name= "EmpPrEdu_StartDate" })';
+        cols += ' <input type="text" class="form-control tbldate" id="NEmpPrEdu_StartDate' + counter + '" class = "form-control"> ';
+
 
         cols += ' <div class="input-group-append"> ';
         cols += ' <span class="input-group-text"> ';
@@ -2513,8 +2641,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         cols += ' </div > </div > ';
         cols += ' <div class="reddotTableCell text-left"><div> ';
         cols += ' <div class="input-group"> ';
-        cols += ' <input type="text" class="form-control" id="EmpPrEdu_EndDate' + counter +'" class = "form-control"> ';
-        // cols += ' @Html.TextBoxFor(m => m.EndDate, new { @id = "EmpPrEdu_EndDate"+counter, @class = "form-control" })';
+        cols += ' <input type="text" class="form-control tbldate" id="NEmpPrEdu_EndDate' + counter +'" class = "form-control"> ';
+
         cols += ' <div class="input-group-append"> ';
         cols += ' <span class="input-group-text"> ';
         cols += ' <i class="far fa-calendar-alt"></i> ';
@@ -2539,20 +2667,36 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $("table.order-list").append(newRow);
         debugger;
 
-        $("#EmpPrEdu_StartDate" + counter).val('');
+        $("#NEmpPrEdu_StartDate" + counter).val('');
 
-        $("#EmpPrEdu_StartDate" + counter).datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
+        //$("#NEmpPrEdu_StartDate" + counter).datetimepicker({
+        //    defaultDate: new Date(),
+        //    format: 'DD/MM/YYYY',
+        //});
 
 
-        $("#EmpPrEdu_EndDate" + counter).val('');
-        $("#EmpPrEdu_EndDate" + counter).datetimepicker({
-             defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-        });
+        //$("#NEmpPrEdu_EndDate" + counter).val('');
+        //$("#NEmpPrEdu_EndDate" + counter).datetimepicker({
+        //     defaultDate: new Date(),
+        //    format: 'DD/MM/YYYY',
+        //});
         counter++;
+    });
+
+    $('body').on('focusin', '.tbldate', function () {
+        debugger;
+        // var myDate = new Date(2012, 2, 11);
+
+        // $('#startdate').datetimepicker("setDate", myDate);
+        $('.tbldate').datetimepicker({
+
+            // defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+            showClose: true,
+            showClear: true,
+
+        });
+
     });
 
 

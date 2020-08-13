@@ -1,0 +1,7 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.Employee_ConfigureList>
+@if (Model != null && Model.Count() > 0)
+{
+    @GetEmpConfig.GetEmpConfigList(Model);
+}
+
+

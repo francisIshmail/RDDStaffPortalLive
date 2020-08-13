@@ -118,7 +118,7 @@
                                             <div class="reddotTableHead"><div>Refrence</div></div>
 
                                             <div class="reddotTableHead"><div> TxDate</div></div>
-                                            <div class="reddotTableHead"><div> Yeart</div></div>
+                                            <div class="reddotTableHead"><div> Year</div></div>
                                             <div class="reddotTableHead"><div> Qtr</div></div>
                                             <div class="reddotTableHead"><div> month</div></div>
                                             <div class="reddotTableHead"><div> weekNo</div></div>
@@ -142,10 +142,10 @@
                                             <div class="reddotTableCell Abcd"><div></div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
                                             <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
                                             <div class="reddotTableCellRight Abcd"><div></div></div>
                                             <div class="reddotTableCellRight Abcd"><div></div></div>
                                             <div class="reddotTableCellRight Abcd"><div></div></div>
@@ -213,7 +213,9 @@
                                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                                                     <script>
     var tblhead1 = ['SourceDb', 'SourceDbCode', 'AcctCode', 'Acct', 'TransId', 'TransType', 'Refrence', 'TxDate', 'Year', 'Qtr', 'month', 'weekNo', 'Project', 'Country', 'Rate', 'DebitLC', 'DebitFC', 'DebitSC', 'CreditLC', 'CreditFC', 'TotalLC', 'TotalFC', 'TotalSC', 'Remarks'];
-    var tblhide = [];
+                                                        var tblhide = [];
+                                                        var tblhead2 = ['AcctCode', 'Acct', 'TransId', 'TransType', 'TxDate', 'WeekNo', 'Project'];
+
     $(".loader1").hide();
 
     //function startLoader() {
@@ -261,9 +263,10 @@
                 $('div#' + tblhead1[k1] + '1').addClass("Abc");
                 $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] +"' type='checkbox' class='colorinput-input'><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
             } else {
-                $('div#' + tblhead1[k1] + '1').removeClass("Abc");
-                $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] +"' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
-              // $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] +"' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                if (jQuery.inArray(tblhead1[k1], tblhead2) == -1) {
+                    $('div#' + tblhead1[k1] + '1').removeClass("Abc");
+                    $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] + "' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
+                }
             }
             k1++;
         }
@@ -353,7 +356,7 @@
                     $("#Ist")[0].remove();
                 } else {
                     $("#Ist").hide();
-                    RdotAlerterrtxt1("No Record Found");
+                    RedDotAlert_Error("No Record Found");
                 }
             }
             , complete: function () {
@@ -405,7 +408,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -483,7 +486,7 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -493,7 +496,10 @@
         })
 
         $('.next').bind('click', function () {
-
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
 
             curPage++;
             if (curPage > arr.data[0].TotalCount)
@@ -547,7 +553,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
 
                 }
@@ -560,6 +566,10 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -609,7 +619,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }
                 , complete: function () {
@@ -669,7 +679,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 },
                 complete: function () {

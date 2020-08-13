@@ -6,14 +6,20 @@
 	},
 	Attachevent: function () {
 		var selectedObjs;
+		$(".loader1").show();
 		// drop down image fill with name 
 		RdotDropimg("Userid", "/GetUserList");
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
 				"mDataProp": "reportTitle", render: function (data, type, full) {
-
-					return "<li data-id='" + full.repTypeId + "' class='ui-draggable ui-draggable-handle' style='background-color:" + full.bgcolor + "'><a href = '#' style=''> " + full.reportTitle + " </a><input type='hidden' id='hdnuse' value='" + full.IsAlreadyMapped + "'/></li>";
+					if (full.IsAlreadyMapped == true) {
+						//style='background-color:" + full.bgcolor + "
+						return "<li data-id='" + full.repTypeId + "' class='ui-draggable ui-draggable-handle disabled' '><a href = '#' style=''> " + full.reportTitle + " </a><input type='hidden' id='hdnuse' value='" + full.IsAlreadyMapped + "'/></li>";
+					} else {
+						return "<li data-id='" + full.repTypeId + "' class='ui-draggable ui-draggable-handle''><a href = '#' style=''> " + full.reportTitle + " </a><input type='hidden' id='hdnuse' value='" + full.IsAlreadyMapped + "'/></li>";
+                    }
+					
 
 				}
 			}
@@ -23,7 +29,7 @@
 
 		];
 		//SAPAE   SAPKE	 SAPTZ	 SAPUG	SAPZM	SAPML	SAPTRI""
-		RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms,"");
+		RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms,"",15);
 
 
 		var tf = true;
@@ -31,12 +37,12 @@
 
 			var Userid = $('#Userid Option:selected').val();
 			if (Userid == '0' && tf == true) {
-				RdotAlerterrtxt("Please select  User");
+				RedDotAlert_Error("Please select  User");
 				return false
 
 			}
 			tf = true;
-			RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid);
+			RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid,15);
 			$(".basket_list  ul").empty();
 			$('#product  li').draggable({
 				revert: true,
@@ -68,7 +74,7 @@
 			).click(function (e) {
 				debugger
 				if ($(this).find("input[id='hdnuse']").val() == "true") {
-					RdotAlerterrtxt('Alredy use');
+					RedDotAlert_Error('Alredy use');
 					return
 				}
 				$(this).toggleClass('selected')
@@ -131,7 +137,7 @@
 		).click(function (e) {
 			debugger
 			if ($(this).find("input[id='hdnuse']").val() == "true") {
-				RdotAlerterrtxt('Alredy use');
+				RedDotAlert_Error('Alredy use');
 				return
 			}
 			$(this).toggleClass('selected')
@@ -204,7 +210,8 @@
 
 							$("#product").find(selectedObjs[e]).removeClass('selected');
 							$("#product").find(selectedObjs[e]).find("input[id='hdnuse']").val('true');
-							$("#product").find(selectedObjs[e]).css("background-color", "orange");
+							//$("#product").find(selectedObjs[e]).css("background-color", "orange");
+							$("#product").find(selectedObjs[e]).addClass("disabled");
 							//move.css("background-color", "orange");
 
 							addBasket(basket, k);
@@ -214,7 +221,7 @@
 
 						} else {
 
-							RdotAlerterrtxt('Alredy use');
+							RedDotAlert_Error('Alredy use');
 						}
 
 
@@ -329,6 +336,7 @@
 			debugger
 			var tr = $(this).closest("li");
 			var Code = tr.attr("data-id");
+			var Role = tr.find(".name").text();
 			var Username = $('#Userid Option:selected').val();
 			var typ1 = tr.find("input[id='hdntyp']").val();
 			var k = $(this).closest("ul").attr("id");
@@ -364,10 +372,13 @@
 								debugger
 								if (response.data == true) {
 									//$(".reloadcss").trigger("click");
-									$('#txtsearch').trigger("keyup");
+									//$('#txtsearch').trigger("keyup");
+									//$('#tblReports tbody td li:contains(' + Role + ')').css("background-color", "");
+									$('#tblReports tbody td li:contains(' + Role + ')').removeClass("disabled");
+									$('#tblReports tbody td li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
 									tr.remove();
 								} else {
-									RdotAlerterrtxt(Code);
+									RedDotAlert_Error(Code);
 								}
 								return
 
@@ -386,7 +397,10 @@
 						result.dismiss === Swal.DismissReason.cancel
 					) {
 						//$(".reloadcss").trigger("click");
-						$('#txtsearch').trigger("keyup");
+						//$('#txtsearch').trigger("keyup");
+						//$('#tblReports td li:contains(' + Code + ')').css("background-color", "");
+
+						//$('#tblReports td li:contains(' + Code + ')').find("input[id='hdnuse']").val('false');
 						swalWithBootstrapButtons.fire(
 							'Cancelled',
 							'Your Code is safe :)',
@@ -403,7 +417,9 @@
 				$("#product  li").each(function () {
 					var kl = $(this).attr("data-id");
 					if (kl == Code) {
-						$(this).css("background-color", "");
+						//$(this).css("background-color", "");
+						$(this).removeClass("disabled");
+						$(this).find("input[id='hdnuse']").val('false');
 					}
 				})
 				$(this).closest("li").remove();
@@ -454,17 +470,17 @@
 
 			});
 			if (WURep.Username == '') {
-				RdotAlerterrtxt('Please Select User Name');
+				RedDotAlert_Error('Please Select User Name');
 				return
 			}
 			if (WURep.WebRepLists.length == 0) {
-				RdotAlerterrtxt('Please Add Report');
+				RedDotAlert_Error('Please Add Report');
 				return
 			}
 			$.post("/SaveWebRep", WURep).done(function (response) {
 				debugger
 				if (response.saveflag == true) {
-					RdotAlertSucesstxt(response.errormsg);
+					RedDotAlert_Success(response.errormsg);
 					$("#btnclear").trigger("click");
 					tf = false;
 					$('#Userid').val("0").trigger("change");
@@ -481,6 +497,6 @@
 
 		})
 
-
+		$(".loader1").hide();
 	}
 }

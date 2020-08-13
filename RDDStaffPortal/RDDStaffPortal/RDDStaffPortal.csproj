@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +142,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmploymentStatusController.cs" />
@@ -156,6 +158,9 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
+    <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
+    <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
@@ -171,6 +176,8 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
+    <Compile Include="Areas\SAP\Controllers\SalesOrderController.cs" />
+    <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Areas\Targets\Controllers\CountryTargetController.cs" />
@@ -199,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
+    <Content Include="Content\timeout-dialog.css" />
+    <Content Include="Scripts\Application\ApprovalOP.js" />
+    <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
     <Content Include="Content\bootstrap-treeview.css" />
@@ -473,6 +483,7 @@
     <Content Include="Content\famfamfam_flags-master\zw.png" />
     <Content Include="Content\fonts.css" />
     <Content Include="Content\fonts.min.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\reddot.css" />
     <Content Include="Content\Site.css" />
     <Content Include="dragdrop\jquery-ui-1.9.0.custom.min.js" />
@@ -570,8 +581,11 @@
     <Content Include="js\plugin\webfont\webfont.min.js" />
     <Content Include="js\setting-demo.js" />
     <Content Include="js\setting-demo2.js" />
+    <Content Include="Scripts\Application\ApprovalIndex.js" />
     <Content Include="Scripts\Application\CustomerMapping.js" />
     <Content Include="Scripts\Application\Dashboardjs.js" />
+    <Content Include="Scripts\Application\IndexPV.js" />
+    <Content Include="Scripts\Application\OperationPV.js" />
     <Content Include="Scripts\Application\Test.js" />
     <Content Include="Scripts\Application\UserRole.js" />
     <Content Include="Scripts\Application\Webreports.js" />
@@ -602,6 +616,12 @@
     <Content Include="fonts\summernote\summernote.woff" />
     <Content Include="img\bg\Thumbs.db" />
     <Content Include="Scripts\canvasjs.min.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.all.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.all.min.js" />
+    <Content Include="Scripts\datapicker-separate\datepicker.css" />
+    <Content Include="Scripts\datapicker-separate\datepicker.en.js" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.css" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.min.js" />
@@ -663,9 +683,14 @@
     <Content Include="Scripts\datatables\js\vfs_fonts.js" />
     <Content Include="Scripts\dragdrop\jquery-ui-1.9.0.custom.min.js" />
     <Content Include="Scripts\dragdrop\main.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
+    <Content Include="Scripts\multiselect\bootstrap-multiselect.js" />
+    <Content Include="Scripts\multiselect\multiselect.css" />
+    <Content Include="Scripts\multiselect\multiselect.js" />
     <Content Include="Scripts\RedDotUtility.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.min.js" />
@@ -673,6 +698,7 @@
     <Content Include="Scripts\sweetalret\sweetalert2.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.css" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.js" />
+    <Content Include="Scripts\timeout-dialog.js" />
     <Content Include="Scripts\VoiceRec\controller.js" />
     <Content Include="Scripts\VoiceRec\jquery.min.js" />
     <Content Include="Scripts\VoiceRec\speechRecognition.js" />
@@ -722,8 +748,19 @@
     <Content Include="Areas\Reports\Views\Reports\BackLogSheet.cshtml" />
     <Content Include="Areas\Admin\Views\JobGrade\Index.cshtml" />
     <Content Include="Areas\Admin\Views\JobBand\Index.cshtml" />
+    <Content Include="Areas\Funnel\Views\web.config" />
+    <Content Include="Areas\Funnel\Views\FunnelData\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Departments\GetDepList.cshtml" />
     <Content Include="Areas\Reports\Views\Reports\ExpenseSheet.cshtml" />
+    <Content Include="Areas\Reports\Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_PV\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
+    <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
+    <Content Include="App_Code\GetEmpConfig.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
     <Content Include="Areas\Targets\Views\web.config" />
     <Content Include="Areas\Targets\Views\CountryTarget\Index.cshtml" />
     <Content Include="Areas\Targets\Views\SalesPersonTarget\Index.cshtml" />
@@ -771,9 +808,11 @@
     <Content Include="Views\Account\ResetPwd.cshtml" />
     <Content Include="Views\Account\ErrorPage.cshtml" />
     <Content Include="Views\Account\SuccessPage.cshtml" />
+    <Content Include="Views\Dashboard\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Marketing\Data\" />
@@ -785,6 +824,7 @@
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
+    <Folder Include="excelFileUpload\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -800,6 +840,27 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

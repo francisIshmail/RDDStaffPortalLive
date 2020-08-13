@@ -10,7 +10,7 @@
         <div class="page-inner">
             <div class="page-header">
                 <div class="col-md-9 padd-0">
-                    <h4 class="page-title">Back Log Sheet Report</h4>
+                    <h4 class="page-title">BackLog Report</h4>
                 </div>
                 <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
 
@@ -196,6 +196,7 @@
 <script>
     var tblhead1 = ['db','ProjectCode','mapped_Project','ItemGroup','mapped_BU','BUGroup','OrderNum','Code','UnitPriceExcl','OrderQty','LineTotalExcl','QtyOutStanding','QtyConfirmed','LineTotalExclConfirmed','OrderType','supplierId','supplierAcct','supplier','ShipDate','DeliveryDate','ActualShipDate','ActualDeliveryDate','ShipTo','CustomerName','OrderStatus' ];
     var tblhide = ["ProjectCode", "ItemGroup", "BUGroup", "UnitPriceExcl", "LineTotalExcl", "QtyOutStanding", "QtyConfirmed", "LineTotalExclConfirmed", "supplierId", "supplierAcct", "ShipDate", "DeliveryDate", "ShipTo", "CustomerName"];
+    var tblhead2 = ['db', 'mapped_Project', 'mapped_BU', 'OrderNum','Code', 'OrderQty', 'OrderType','Suppler'];
     $(".loader1").hide();
 
    
@@ -212,9 +213,10 @@
                 $('div#' + tblhead1[k1] + '1').addClass("Abc");
                 $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='"+tblhead1[k1]+"' type='checkbox' class='colorinput-input'><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
             } else {
-                $('div#' + tblhead1[k1] + '1').removeClass("Abc");
-                $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] +"' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
-              // $("#idchk").append(" <div class='col-sm-1 col-md-1 text-right'><input id='" + tblhead1[k1] +"' type='checkbox' checked></div><div class='col-sm-2 col-md-2'>" + tblhead1[k1] + "</div> ");
+                if (jQuery.inArray(tblhead1[k1], tblhead2) == -1) {
+                    $('div#' + tblhead1[k1] + '1').removeClass("Abc");
+                    $("#idchk").append("<div class='col-md-3 mar-b10'><div class='panel'><div class='row'><div class='col-sm-10 col-md-10'><div class='widget-content padd-0'><span class='widget-name'> " + tblhead1[k1] + "</span></div></div><div class='col-sm-2 col-md-2 ml-auto'><label class='colorinput mar-t6 mar-b0'><input id='" + tblhead1[k1] + "' type='checkbox' class='colorinput-input' checked><span class='colorinput-color bg-secondary'></span><div> </label></div></div></div></div></div>");
+                }
             }
             k1++;
         }
@@ -286,7 +288,7 @@
                     $("#Ist")[0].remove();
                 } else {
                     $("#Ist").hide();
-                    RdotAlerterrtxt1("No Record Found");
+                    RedDotAlert_Error("No Record Found");
                 }
             }, complete: function () {
                 $(".loader1").hide();
@@ -359,7 +361,7 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -370,6 +372,10 @@
 
         $('.next').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -416,7 +422,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
 
                 }, complete: function () {
@@ -427,6 +433,10 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
@@ -470,7 +480,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -520,7 +530,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -570,7 +580,7 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RdotAlerterrtxt1("No Record Found");
+                        RedDotAlert_Error("No Record Found");
                     }
                 }, complete: function () {
                     $(".loader1").hide();

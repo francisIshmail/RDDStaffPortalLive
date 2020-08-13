@@ -85,6 +85,39 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return t;
         }
 
+
+        public List<Rdd_comonDrop> GetUserListAuto(string psearch)
+        {
+            List<Rdd_comonDrop> _UserList = new List<Rdd_comonDrop>();
+            try
+            {
+                SqlParameter[] parm = { new SqlParameter("@p_search", psearch) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_View_User_Autocomplete", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _UserList.Add(new Rdd_comonDrop()
+                        {
+
+                            Code = !string.IsNullOrWhiteSpace(dr["Code"].ToString()) ? dr["Code"].ToString() : "",
+                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",                           
+
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _UserList = null;
+            }
+
+            return _UserList;
+        }
+
         public List<Rdd_comonDrop> GetUserList()
         {
             List<Rdd_comonDrop> _UserList = new List<Rdd_comonDrop>();

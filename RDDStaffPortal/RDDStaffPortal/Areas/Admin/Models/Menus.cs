@@ -8,6 +8,7 @@ namespace RDDStaffPortal.Areas.Admin.Models
     public class Menus
     {
         public int MenuId { get; set; }
+        public string ObjType { get; set; }
         public string MenuName { get; set; }
         public int ModuleId { get; set; }
         public int Levels { get; set; }
