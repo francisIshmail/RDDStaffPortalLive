@@ -22,160 +22,163 @@
             <div class="rowmin" id="FilterSection" style="display:none">
 
                 <div class="col-md-12">
-                    <div class="card full-height padd-10">
-                        <div class="row">
-
-                            <div class="col-xl-3 col-md-3" id="Country1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">Country :</label>
-                                    @Html.DropDownListFor(m => m.Country, ViewBag.countryList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-3" id="BUGroup1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">BU  Group :</label>
-                                    @Html.DropDownListFor(m => m.BUGroup, ViewBag.BUGroupList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-3" id="BU1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">BU :</label>
-                                    @Html.DropDownListFor(m => m.BU, ViewBag.BUList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-
-                            <div class="col-xl-3 col-md-3" id="WhseOwner1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">Warehouse Owner :</label>
-                                    @Html.DropDownListFor(m => m.WhseOwner, ViewBag.WhseOwnerList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-3" id="WhseName1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">Warehouse Name :</label>
-                                    @Html.DropDownListFor(m => m.WhseName, ViewBag.warehousenameList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-3" id="WhseStatus1">
-                                <div class="form-group">
-                                    <label for="email2" class="width100px">Warehouse Status :</label>
-                                    @Html.DropDownListFor(m => m.WhseStatus, ViewBag.WhseStatusList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
-                                </div>
-
-
-                            </div>
+                    
+                        <div class="card danger-border full-height padd-10">
                             <div class="row">
 
-
-                                <div class="col-xl-1 col-md-1 ml-auto">
+                                <div class="col-xl-3 col-md-3" id="Country1">
                                     <div class="form-group">
-                                        <label for="email2" class="width100px"></label>
-                                        <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
+                                        <label for="email2" class="width100px">Country :</label>
+                                        @Html.DropDownListFor(m => m.Country, ViewBag.countryList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3" id="BUGroup1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">BU  Group :</label>
+                                        @Html.DropDownListFor(m => m.BUGroup, ViewBag.BUGroupList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3" id="BU1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">BU :</label>
+                                        @Html.DropDownListFor(m => m.BU, ViewBag.BUList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-xl-3 col-md-3" id="WhseOwner1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Warehouse Owner :</label>
+                                        @Html.DropDownListFor(m => m.WhseOwner, ViewBag.WhseOwnerList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3" id="WhseName1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Warehouse Name :</label>
+                                        @Html.DropDownListFor(m => m.WhseName, ViewBag.warehousenameList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3" id="WhseStatus1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Warehouse Status :</label>
+                                        @Html.DropDownListFor(m => m.WhseStatus, ViewBag.WhseStatusList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col-xl-1 col-md-1 ml-auto">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px"></label>
+                                            <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                     
+
                     </div>
-
-
                 </div>
-            </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-body">
-                            <div class="rowmin row mar-b10">
+                    
+                        <div class="card danger-border full-height">
+                            <div class="card-body">
+                                <div class="rowmin row mar-b10">
 
 
-                                <div class="col-xl-4 col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                    <div class="col-xl-4 col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="col-xl-2 col-md-2 ml-auto text-right">
-                                    <div class="form-group">
-                                       
+                                    <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                        <div class="form-group">
+
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
 
                                             <a href="/Reports/Reports/DownloadToExcel1" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
-                                       
-                                        @*onclick="exportToExcel()"*@
 
-                                    </div>
-                                    </div>
-                            </div>
-                            <div class="table-responsive">
-                                <div class="reddotTable sm-form mar-t0">
-                                    <div class="loader1"></div>
-                                    <div id="Ind" class="reddotTableBody">
-                                        <div class="reddotTableRow odd-even-row">
-
-
-                                            <div class="reddotTableHead"><div> Country</div></div>
-                                            <div class="reddotTableHead"><div> ItemCode</div></div>
-                                            <div class="reddotTableHead"><div> ItemDesc</div></div>
-                                            <div class="reddotTableHead"><div> WhseName</div></div>
-                                            <div class="reddotTableHead"><div> WhseStatus</div></div>
-                                            <div class="reddotTableHead"><div> BU</div></div>
-                                            <div class="reddotTableHead"><div> BUGroup</div></div>
-                                            <div class="reddotTableHead"><div> UnitCost</div></div>
-                                            <div class="reddotTableHead"><div> Qty</div></div>
-                                            <div class="reddotTableHead"><div> QtyOrdered</div></div>
-                                            <div class="reddotTableHead"><div> QtyCommitted</div></div>
-                                            <div class="reddotTableHead"><div> QtyBal</div></div>
-                                            <div class="reddotTableHead"><div> Value</div></div>
-                                            <div class="reddotTableHead"><div> WhseOwner</div></div>
-                                            <div class="reddotTableHead"><div> ProdCategory</div></div>
-                                            <div class="reddotTableHead"><div> ProdLine</div></div>
-                                            <div class="reddotTableHead"><div> ProdGroup</div></div>
+                                            @*onclick="exportToExcel()"*@
 
                                         </div>
                                     </div>
-                                    <div id="Ibody" class="reddotTableBody">
-                                        <div id="Ist" class="reddotTableRow odd-even-row">
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellRight Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                </div>
+                                <div class="table-responsive">
+                                    <div class="reddotTable sm-form mar-t0">
+                                        <div class="loader1"></div>
+                                        <div id="Ind" class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+
+
+                                                <div class="reddotTableHead"><div> Country</div></div>
+                                                <div class="reddotTableHead"><div> ItemCode</div></div>
+                                                <div class="reddotTableHead"><div> ItemDesc</div></div>
+                                                <div class="reddotTableHead"><div> WhseName</div></div>
+                                                <div class="reddotTableHead"><div> WhseStatus</div></div>
+                                                <div class="reddotTableHead"><div> BU</div></div>
+                                                <div class="reddotTableHead"><div> BUGroup</div></div>
+                                                <div class="reddotTableHead"><div> UnitCost</div></div>
+                                                <div class="reddotTableHead"><div> Qty</div></div>
+                                                <div class="reddotTableHead"><div> QtyOrdered</div></div>
+                                                <div class="reddotTableHead"><div> QtyCommitted</div></div>
+                                                <div class="reddotTableHead"><div> QtyBal</div></div>
+                                                <div class="reddotTableHead"><div> Value</div></div>
+                                                <div class="reddotTableHead"><div> WhseOwner</div></div>
+                                                <div class="reddotTableHead"><div> ProdCategory</div></div>
+                                                <div class="reddotTableHead"><div> ProdLine</div></div>
+                                                <div class="reddotTableHead"><div> ProdGroup</div></div>
+
+                                            </div>
+                                        </div>
+                                        <div id="Ibody" class="reddotTableBody">
+                                            <div id="Ist" class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCell Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+
+                                            </div>
 
                                         </div>
+                                    </div>
+                                    <div class="row mar-t10">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination mar-b0">
+                                                <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
 
+                                                <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
-                                <div class="row mar-t10">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination mar-b0">
-                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
 
-                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
                             </div>
-
                         </div>
+                    
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
@@ -267,12 +270,12 @@
         $('#WhseOwner').select2({
             theme: "bootstrap",
             allowClear: true,
-            placeholder: '--Select WareHouse Owner--'
+            placeholder: '--Select Warehouse Owner--'
         });
         $('#WhseStatus').select2({
             theme: "bootstrap",
             allowClear: true,
-            placeholder: '--Select WareHouse Status--'
+            placeholder: '--Select Warehouse Status--'
         });
 
         $('#BUGroup').select2({
@@ -284,7 +287,7 @@
         $('#WhseName').select2({
             theme: "bootstrap",
             allowClear: true,
-            placeholder: '--Select WareHouse Name--'
+            placeholder: '--Select Warehouse Name--'
         });
         $('#BU').select2({
             theme: "bootstrap",

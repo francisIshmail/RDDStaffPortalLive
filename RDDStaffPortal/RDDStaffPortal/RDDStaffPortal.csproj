@@ -141,6 +141,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalStatusReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
@@ -738,6 +739,8 @@
     <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
+    <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

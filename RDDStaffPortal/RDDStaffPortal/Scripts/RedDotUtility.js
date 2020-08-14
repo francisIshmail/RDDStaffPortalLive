@@ -991,6 +991,9 @@ function RedDot_DivTable_Fill(Ids,url, data, dateCond, tblhead1, tblhide, tblhea
                         if (jQuery.inArray(t, tblhide) !== -1) {
                             tr.find(".Abcd").eq(k).addClass("Abc")
                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                        } else {
+                            tr.find(".Abcd").eq(k).removeClass("Abc")
+                            tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc")
                         }
                         k++;
                     }
