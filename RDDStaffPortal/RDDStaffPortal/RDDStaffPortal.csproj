@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -161,6 +162,8 @@
     <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
+    <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
+    <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
@@ -178,6 +181,15 @@
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\Targets\Controllers\CountryTargetController.cs" />
+    <Compile Include="Areas\Targets\Controllers\ForecastController.cs" />
+    <Compile Include="Areas\Targets\Controllers\SalesPersonTargetController.cs" />
+    <Compile Include="Areas\Targets\Models\CopyfromSalesperson.cs" />
+    <Compile Include="Areas\Targets\Models\CountryList.cs" />
+    <Compile Include="Areas\Targets\Models\CountrySubmitdata.cs" />
+    <Compile Include="Areas\Targets\Models\ForecastBU.cs" />
+    <Compile Include="Areas\Targets\Models\Salespersonsubmitdata.cs" />
+    <Compile Include="Areas\Targets\TargetsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -195,6 +207,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
+    <Content Include="Content\timeout-dialog.css" />
+    <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -607,6 +621,8 @@
     <Content Include="Scripts\datapicker-separate\datepicker.all.min.js" />
     <Content Include="Scripts\datapicker-separate\datepicker.css" />
     <Content Include="Scripts\datapicker-separate\datepicker.en.js" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.css" />
+    <Content Include="Scripts\datapicker-separate\daterangepicker.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables-plugins\dataTables.bootstrap.min.js" />
@@ -672,6 +688,8 @@
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
+    <Content Include="Scripts\multiselect\bootstrap-multiselect.js" />
     <Content Include="Scripts\multiselect\multiselect.css" />
     <Content Include="Scripts\multiselect\multiselect.js" />
     <Content Include="Scripts\RedDotUtility.js" />
@@ -681,6 +699,7 @@
     <Content Include="Scripts\sweetalret\sweetalert2.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.css" />
     <Content Include="Scripts\sweetalret\sweetalert2.min.js" />
+    <Content Include="Scripts\timeout-dialog.js" />
     <Content Include="Scripts\VoiceRec\controller.js" />
     <Content Include="Scripts\VoiceRec\jquery.min.js" />
     <Content Include="Scripts\VoiceRec\speechRecognition.js" />
@@ -740,6 +759,16 @@
     <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
     <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
+    <Content Include="App_Code\GetEmpConfig.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
+    <Content Include="Areas\Targets\Views\web.config" />
+    <Content Include="Areas\Targets\Views\CountryTarget\Index.cshtml" />
+    <Content Include="Areas\Targets\Views\SalesPersonTarget\Index.cshtml" />
+    <Content Include="Areas\Targets\Views\Forecast\Index.cshtml" />
+    <Content Include="Areas\Marketing\Views\web.config" />
+    <Content Include="Areas\Marketing\Views\MarketingPlan\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -789,10 +818,14 @@
     <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Marketing\Data\" />
+    <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
+    <Folder Include="Areas\Targets\Data\" />
+    <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
     <Folder Include="excelFileUpload\" />
   </ItemGroup>
@@ -810,6 +843,27 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

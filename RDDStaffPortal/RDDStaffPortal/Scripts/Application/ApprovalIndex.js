@@ -1,7 +1,7 @@
 ﻿var ApprovalIndex = {
-    initialize: function () {
-
-        $.fn.dataTable.ext.errorMode = 'none';
+    initialize: function (e) {
+        debugger
+        //$.fn.dataTable.ext.errorMode = 'none';
 
         ApprovalIndex.Attachevent();
     },
@@ -46,10 +46,16 @@
         }
         //#endregion
         //#region Next Button*/
-        $('.next').bind('click', function () {
+        $('.next').bind('click', function (e) {
+            e.preventDefault();
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage++;
             var value1 = $("#Search-Forms").val().toLowerCase();
+           
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
             var data = JSON.stringify({
@@ -61,10 +67,16 @@
         });
         //#endregion
         //#region Prev Button*/
-        $('.prev').bind('click', function () {
+        $('.prev').bind('click', function (e) {
+            e.preventDefault();
             $(".loader1").show();
             var value1 = $("#Search-Forms").val().toLowerCase();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
+            
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);
             var data = JSON.stringify({
@@ -76,7 +88,8 @@
         });
         //#endregion
         //#region Apply Button*/
-        $("#btnApply").on("click", function () {
+        $("#btnApply").on("click", function (e) {
+            e.preventDefault();
             $(".loader1").show();
             tblhide = [];
             $('input:checkbox').each(function () {
@@ -101,7 +114,8 @@
         })
         //#endregion
         //#region Search Textbox*/
-        $("#Search-Forms").on("keyup", function () {
+        $("#Search-Forms").on("keyup", function (e) {
+            e.preventDefault();
             $(".loader1").show();
             var value1 = $(this).val().toLowerCase();
             var data = JSON.stringify({
@@ -113,97 +127,100 @@
         });
         //#endregion
         //#region New PV*/
-        $("#btnAdd").on("click", function () {
-            $.post("/ADDAPPROVAL", { TEMPId: -1 }, function (response) {
+        $("#btnAdd").on("click", function (e) {
+            
+                e.preventDefault();
+                $.post("/ADDAPPROVAL", { TEMPId: -1 }, function (response) {
 
-                $("#idCard").html(response);
-                RedDot_Button_New_HideShow();
-            })
+                    $("#idCard").html(response);
+                    RedDot_Button_New_HideShow();
+                    
+                })
+
+           
+           
         })
         //#endregion
         //#region Cancel PV*/
-        $("#btnCancel").on("click", function () {
+        $("#btnCancel").on("click", function (e) {
+            e.preventDefault();
             RedDot_Button_Init_HideShow();
             $("#idCard").html("");
         })
         //#endregion
         //#region Edit PV*/
-        $("#Ibody").on('dblclick', "#Ist", function (event) {
-            var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
-            $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
+        $("#Ibody").on('dblclick', "#Ist", function (e) {
+           
 
-                $("#idCard").html(response);
-                RedDot_Button_New_HideShow();
-            })
+                e.preventDefault();
+                var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
+              
+                $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
+
+                    $("#idCard").html(response);
+
+                    RedDot_Button_New_HideShow();
+                })
+           
+           
         });
         //#endregion
         //#region Save PV*/
-        $("#btnSave").on("click", function () {
-            var RDDPV = {
-                PVId: $("#PVId").val(),
-                Country: $("#Country").val(),
-                RefNo: $("#RefNo").val(),
-                DocStatus: $("#DocStatus").val(),
-                VType: $("#VType").val(),
-                DBName: $("#DBName").val(),
-                Currency: $("#Currency").val(),
-                VendorCode: $("#VendorCode[type='text']").val(),
-                VendorEmployee: $("#VendorEmployee[type='text']").val(),
-                Benificiary: $("#Benificiary[type='text']").val(),
-                RequestedAmt: $("#RequestedAmt[type='number']").val(),
-                ApprovedAmt: $("#ApprovedAmt[type='number']").val(),
-                BeingPayOf: $("#BeingPayOf[type='text']").val(),
-                PayRequestDate: RedDot_setdtpkdate($("#PayRequestDate1").val()),
-                BankCode: $("#BankCode[type='text']").val(),
-                BankName: $("#BankName[type='text']").val(),
-                PayMethod: $("#PayMethod").val(),
-                PayRefNo: $("#PayRefNo[type='text']").val(),
-                PayDate: RedDot_setdtpkdate($("#PayDate1").val()),
-                FilePath: $("#FilePath[type='hidden']").val(),
-                ClosedDate: RedDot_setdtpkdate($("#ClosedDate1").val()),
-                CAappStatus: $("#CAappStatus[type='text']").val(),
-                CAappRemarks: $("#CAappRemarks[type='text']").val(),
-                CAapprovedBy: $("#CAapprovedBy[type='text']").val(),
-                CAapprovedOn: RedDot_setdtpkdate($("#CAapprovedOn1").val()),
-                CMappStatus: $("#CMappStatus[type='text']").val(),
-                CMappRemarks: $("#CMappRemarks[type='text']").val(),
-                CMapprovedBy: $("#CMapprovedBy[type='text']").val(),
-                CMapprovedOn: RedDot_setdtpkdate($("#CMapprovedOn1").val()),
-                CFOappStatus: $("#CFOappStatus[type='text']").val(),
-                CFOappRemarks: $("#CFOappRemarks[type='text']").val(),
-                CFOapprovedBy: $("#CFOapprovedBy[type='text']").val(),
-                CFOapprovedOn: RedDot_setdtpkdate($("#CFOapprovedOn1").val()),
+        $("#btnSave").on("click", function (e) {
+            e.preventDefault();
+            var t = false;
+            if ($("input[name='optionsRadios']:checked").attr("id") == "IIndCondition") {
+                t = true;
+            }
+            var RDD_Approval = {
+                Template_Id: $("#Template_Id").val(),
+                ObjType: $("#ObjType").val(),
+                DocumentName: $("#ObjType option:selected").text(),
+                Description: $("#Description").val(),
+                Status: $("#TempStatus").is(":checked"),
+                no_of_approvals: $("#no_of_approvals").val(),
+                Condition: t,
+                Condition_Text: $("#Condition_Text").val(),               
                 EditFlag: $("#EditFlag").val(),
-                RDD_PVLinesDetails: [],
+                CreatedBy: $("#CreatedBy").val(),
+                CreatedOn: $("#CreatedOn").val(),
+                RDD_Approval_ApproversList: [],
+                RDD_Approval_OriginatorsList:[]
 
             };
-            $(".PVLines").each(function () {
-                var Date = RedDot_setdtpkdate($(this).find("[name^='Date1']").val());
-                var Description = $(this).find("[name^='Description']").val();
-                var Amount = $(this).find("[name^='Amount']").val();
-                var Remarks = $(this).find("[name^='Remarks']").val();
-                var FilePath = $(this).find("[name^='hdnFilePathInput']").val();
-                var LineRefNo = $(this).find("[name^='LineRefNo']").val();
-                if (Description != '' && parseInt(Amount) != 0 && Remarks != '') {
-                    var RDD_PVLines = {
-                        Date: Date,
-                        Description: Description,
-                        Amount: Amount,
-                        Remarks: Remarks,
-                        FilePath: FilePath,
-                        LineRefNo: LineRefNo
+            $(".ApproverDet").each(function () {                          
+                var IsApproval_Mandatory = $(this).find(".colorinput-input").is(":checked"); 
+                var Approval_Sequence = $(this).find("[name^='SeqSrno']").val(); 
+                var Approver = $(this).find("[name^='hdnApprover']").val();               
+                if (Approver != '' && Approver!='-1') {
+                    var RDD_Approval_Approvers = {
+                        Approval_Sequence: Approval_Sequence,
+                        IsApproval_Mandatory: IsApproval_Mandatory,
+                        Approver: Approver                       
                     };
-                    RDDPV.RDD_PVLinesDetails.push(RDD_PVLines);
+                    RDD_Approval.RDD_Approval_ApproversList.push(RDD_Approval_Approvers);
+                }
+            });
+            $(".OriginatorDet").each(function () {
+                var OriginatorName = $(this).find("[name^='Originator']").val();
+                var Originator = $(this).find("[name^='hdnOriginator']").val();
+                if (Originator != '' && Originator != '-1') {
+                    var RDD_Approval_Originators = {
+                        OriginatorName: OriginatorName,
+                        Originator: Originator
+                    };
+                    RDD_Approval.RDD_Approval_OriginatorsList.push(RDD_Approval_Originators);
                 }
 
             });
 
-            var ValidateFormCheck = ValidateForm(RDDPV);
+
+            var ValidateFormCheck = ValidateForm(RDD_Approval);
             if (ValidateFormCheck.formValid == false) {
                 RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
                 return;
             }
-            $.post("/SAVERDDPV", { RDDPV: RDDPV }, function (response) {
+            $.post("/SAVEAPPROVAL", { RDD_Approval: RDD_Approval }, function (response) {
 
                 if (response[0].Outtf == true) {
                     RedDotAlert_Success(response[0].Responsemsg);
@@ -220,26 +237,43 @@
         })
         //#endregion
         //#region Validation PV*/
-        function ValidateForm(RDD_PV) {
+        function ValidateForm(RDD_Approval) {
             var response = {
                 ErrorMessage: "",
                 formValid: false
             };
-            if (RDD_PV.EditFlag == "False") {
-                if (RDD_PV.Country == "0" || RDD_PV.Country == "-1") {
-                    response.ErrorMessage += "Country code,";
+            if (RDD_Approval.EditFlag == "False") {
+                if (RDD_Approval.DocumentName == "0" || RDD_Approval.DocumentName == "-1") {
+                    response.ErrorMessage += "DocumentName,";
                 }
-            } else if (RDD_PV.EditFlag == "True") {
-                if (RDD_PV.Country == "0" || RDD_PV.Country == "-1") {
-                    response.ErrorMessage += "Country code,";
+            } else if (RDD_Approval.EditFlag == "True") {
+                if (RDD_Approval.DocumentName == "0" || RDD_Approval.DocumentName == "-1") {
+                    response.ErrorMessage += "DocumentName,";
                 }
             }
 
-            if (RDD_PV.RDD_PVLinesDetails.length == 0) {
-                response.ErrorMessage += "Plase Enter Details Data";
+            if (RDD_Approval.RDD_Approval_OriginatorsList.length == 0) {
+                response.ErrorMessage += "Plase Enter Originator Data";
+            }
+            if (RDD_Approval.RDD_Approval_ApproversList.length == 0) {
+                response.ErrorMessage += "Plase Enter Approve Data";
+            }
+            if (RDD_Approval.no_of_approvals > RDD_Approval.RDD_Approval_ApproversList.length) {
+                response.ErrorMessage += "Plase Enter Approve Data";
             }
 
+            if (RDD_Approval.Condition_Text.indexOf('truncat') >= 0) {
+                response.ErrorMessage += "Plase Do not Write Truncat";
+                
+            }
+            if (RDD_Approval.Condition_Text.indexOf('delete') >= 0) {
+                response.ErrorMessage += "Plase Do not Write delete";
 
+            }
+            if (RDD_Approval.Condition_Text.indexOf('insert') >= 0) {
+                response.ErrorMessage += "Plase Do not Write insert";
+
+            }
             if (response.ErrorMessage.length == 0) {
                 response.formValid = true;
             }

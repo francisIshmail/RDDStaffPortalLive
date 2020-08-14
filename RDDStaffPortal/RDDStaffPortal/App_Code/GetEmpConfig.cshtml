@@ -1,0 +1,147 @@
+﻿@helper GetEmpConfigList(List<RDDStaffPortal.DAL.DataModels.Employee_ConfigureList> Empview)
+{
+    <div class="table-responsive-lg">
+
+
+
+        @{var i1 = 1;}
+        <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+            @foreach (var submenu in Empview.Select(m => m.Types).Distinct())
+            {
+
+                var k = "";
+                if (i1 == 1)
+                {
+                    k = "active show";
+                }
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link mar-0 @k" id="pills-@submenu-tab" data-toggle="pill" href="#tab-@submenu" role="tab" aria-controls="pills-@submenu" aria-selected="false">@submenu</a>
+                </li>
+                i1++;
+            }
+        </ul>
+        <div class="selectwidget-section">
+            <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                @{i1 = 1;}
+
+                @foreach (var submenu in Empview.Select(m => m.Types).Distinct())
+                {
+                    var k = "";
+                    if (i1 == 1)
+                    {
+                        k = "active show";
+                    }
+                <div class="tab-pane fade @k" id="tab-@submenu" role="tabpanel" aria-labelledby="tab-@submenu">
+
+                    @foreach (var i in Empview.Where(a => a.Types == submenu))
+                    {
+                    <div class="col-md-4 mar-b10">
+                        <div class="panel">
+                            <div class="row">
+                                <div class="col-sm-10 col-md-10 padd-0">
+                                    <div class="widget-icon"> <i class="fas fa-table"></i> </div>
+                                    <div class="widget-content">
+                                        <span class="widget-name">
+                                            @i.Description
+                                            <input type="hidden" id="Inphdn" value="@i.ColumnName">
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 col-md-1 text-right">
+                                    <div class="editable">
+                                        <div class="switchbox">
+                                            <label class="switch">
+
+                                                <input id="ChkDash" type="checkbox" checked="checked" value="true">
+                                                <div></div>
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                            }
+                       
+                    </div>
+                    i1++;
+                }
+            </div>
+        </div>
+        @*<div class="col-md-4 mar-b10">
+                @foreach (var i in Empview.Where(a => a.Types == "Personal"))
+                {
+
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-10 padd-0">
+                                <div class="widget-icon"> <i class="fas fa-table"></i> </div>
+                                <div class="widget-content">
+                                    <span class="widget-name">
+                                        @i.Description
+                                        <input type="hidden" id="Inphdn" value="@i.ColumnName">
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-md-1 text-right">
+                                <div class="editable">
+                                    <div class="switchbox">
+                                        <label class="switch">
+
+                                            <input id="ChkDash" type="checkbox">
+                                            <div></div>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="col-md-4 mar-b10">
+                @foreach (var i in Empview.Where(a => a.Types == "Financial"))
+                {
+
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-10 padd-0">
+                                <div class="widget-icon"> <i class="fas fa-table"></i> </div>
+                                <div class="widget-content">
+                                    <span class="widget-name">
+                                        @i.Description
+                                        <input type="hidden" id="Inphdn" value="@i.ColumnName">
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-md-1 text-right">
+                                <div class="editable">
+                                    <div class="switchbox">
+                                        <label class="switch">
+
+                                            <input id="ChkDash" type="checkbox">
+                                            <div></div>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>*@
+    </div>
+}

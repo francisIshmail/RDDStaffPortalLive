@@ -1,4 +1,5 @@
-﻿using RDDStaffPortal.DAL.Admin;
+﻿using Newtonsoft.Json;
+using RDDStaffPortal.DAL.Admin;
 using RDDStaffPortal.DAL.DataModels.Admin;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ApprovalTemplateController : Controller
     {
         // GET: Admin/ApprovalTemplate
@@ -23,15 +25,20 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         {
             RDD_Approval_Templates RDD_Approval = new RDD_Approval_Templates();
 
-            RDD_Approval.EditFlag = false;
+           
             RDD_Approval.SaveFlag = false;
             RDD_Approval.CreatedOn = DateTime.Now;
             RDD_Approval.CreatedBy = User.Identity.Name;
-            RDD_Approval = rDD_Approval.GetDropList(User.Identity.Name);
+           
             if (TEMPId != -1)
             {
-                RDD_Approval = rDD_Approval.GetData(User.Identity.Name, TEMPId, rDD_Approval.GetDropList(User.Identity.Name));
+                RDD_Approval = rDD_Approval.GetData(User.Identity.Name, TEMPId, rDD_Approval.GetDropList(User.Identity.Name,"E"));
                 RDD_Approval.EditFlag = true;
+            }
+            else
+            {
+                RDD_Approval.EditFlag = false;
+                RDD_Approval = rDD_Approval.GetDropList(User.Identity.Name, "N");
             }
             return PartialView("~/Areas/Admin/Views/ApprovalTemplate/ADDApprovalTemplate.cshtml", RDD_Approval);
         }
@@ -45,14 +52,25 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         [Route ("SAVEAPPROVAL")]
         public ActionResult SaveApproval(RDD_Approval_Templates RDD_Approval)
         {            
-            RDD_Approval.CreatedBy = User.Identity.Name;
-            RDD_Approval.CreatedOn = DateTime.Now;
+          
             if (RDD_Approval.EditFlag == true)
             {
                 RDD_Approval.LastUpdatedBy = User.Identity.Name;
                 RDD_Approval.LastUpdatedOn = DateTime.Now;
             }
+            else
+            {
+                  RDD_Approval.CreatedBy = User.Identity.Name;
+            RDD_Approval.CreatedOn = DateTime.Now;
+            }
             return Json(rDD_Approval.Save1(RDD_Approval), JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("GetApprovalModal")]
+        public ActionResult GetApprovalData(string Object_Type, string Originator)
+        {
+
+            return Content(JsonConvert.SerializeObject(rDD_Approval.GetApprovaldata(Object_Type, Originator)), "application/json");
         }
     }
 }

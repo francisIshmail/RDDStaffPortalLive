@@ -50,6 +50,10 @@
         //#region Next Button*/
         $('.next').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage++;
             var value1 = $("#Search-Forms").val().toLowerCase();
             if (curPage > arr.data[0].TotalCount)
@@ -66,6 +70,10 @@
         $('.prev').bind('click', function () {
             $(".loader1").show();
             var value1 = $("#Search-Forms").val().toLowerCase();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);

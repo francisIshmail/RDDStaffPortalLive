@@ -372,6 +372,10 @@
 
         $('.next').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage++;
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
@@ -429,6 +433,10 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
             curPage--;
             if (curPage < 0)
                 curPage = (arr.data[0].TotalCount - 1);

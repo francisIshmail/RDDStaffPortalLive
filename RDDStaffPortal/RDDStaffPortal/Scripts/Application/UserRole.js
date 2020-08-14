@@ -223,6 +223,7 @@
                 + '<span class="name">' + move.innerText + '</span>'
                 + '<input  type="hidden" id="hdntyp" value="N"/>'
                 + '<button class="delete">&#10005;</button>');
+            $('.basket_list').scrollbar();
         }
 
         // The function that is triggered once delete button is pressed
