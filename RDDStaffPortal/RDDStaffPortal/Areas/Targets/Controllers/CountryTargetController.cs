@@ -10,6 +10,7 @@ using RDDStaffPortal.DAL.Targets;
 
 namespace RDDStaffPortal.Areas.Targets.Controllers
 {
+    [Authorize]
     public class CountryTargetController : Controller
     {
         CountryTargetDbOperations CountryDbOp = new CountryTargetDbOperations();
