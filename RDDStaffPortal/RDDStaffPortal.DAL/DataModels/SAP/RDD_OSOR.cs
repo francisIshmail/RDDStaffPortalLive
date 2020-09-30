@@ -17,7 +17,8 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public string DBName { get; set; }
         public List<DBList> DBList { get; set; }
         public DBList DBNme { get; set; }
-        public DateTime PostingDate { get; set; }
+
+        public DateTime? PostingDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string DocStatus { get; set; }
         public string AprovedBy { get; set; }

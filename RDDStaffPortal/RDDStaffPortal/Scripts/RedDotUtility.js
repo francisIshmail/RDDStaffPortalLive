@@ -1061,49 +1061,6 @@ function applyAutoComplete2(ids, hdnid, url) {
     })
 }
 
-function applyAutoComplete2(ids, hdnid) {
-    $(ids).autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                async: false,
-                cache: false,
-                url: "/GetUserListAuto",
-                type: "POST",
-                dataType: "json",
-                data: { Prefix: request.term },
-                success: function (data) {
-                    if (data.length > 0) {
-                        response($.map(data, function (item) {
-                            return {
-                                label: item.CodeName,
-                                value: item.CodeName,
-                                val1: item.Code
-
-                            };
-                        }))
-                    } else {
-                        $(ids).val('');
-                        $(hdnid).val(-1);
-                        response([{ label: 'No results found.', value: 'No results found.' }]);
-                    }
-                }
-            });
-        },
-        // autoFocus: true,
-        select: function (event, u) {
-            debugger
-            var v = u.item.val1;
-            if (u.item.val1 == -1 || u.item.val1 == '') {
-                $(hdnid).val(-1);
-                return false;
-            } else {
-                $(hdnid).val(u.item.val1);
-
-            }
-        },
-        minLength: 1
-    })
-}
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
     var k = 1;
@@ -1116,6 +1073,7 @@ function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
         }
         $(this).find('.Abcd input[id^="' + tblDt[0] + '"]').val(k)
         k++;
+
     });
 
 
@@ -1432,6 +1390,9 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                         if (jQuery.inArray(t, tblhide) !== -1) {
                             tr.find(".Abcd").eq(k).addClass("Abc")
                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                        } else {
+                            tr.find(".Abcd").eq(k).removeClass("Abc")
+                            tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc")
                         }
                         k++;
                     }

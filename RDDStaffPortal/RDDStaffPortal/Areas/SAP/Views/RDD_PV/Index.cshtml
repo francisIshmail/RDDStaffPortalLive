@@ -16,7 +16,7 @@
                     <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
 
 
-                    <button class="btn btn-warning btn-sm" id="btnSendMail">Send Mail to Signatories</button>
+                    @*<button class="btn btn-warning btn-sm" id="btnSendMail">Send Mail to Signatories</button>*@
                 </div>
 
                 @*<input id="CityName" type="text">*@
@@ -24,126 +24,128 @@
             <div class="rowmin">
                 <div class="col-md-12">
 
-                    <div class="card" id="idCard">
+                    <div  id="idCard">
 
                     </div>
-                    <div class="rowmin row mar-b10" id="tblid1">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10" id="tblid1">
 
 
-                        <div class="col-xl-4 col-md-4">
-                            <div class="form-group">
-                                <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
-                            </div>
-                        </div>
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                    </div>
+                                </div>
 
 
-                        <div class="col-xl-2 col-md-2 ml-auto text-right">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
 
 
-
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="table-responsive" id="tblid">
-                        <div class="loader1"></div>
-                        <div>
-                            <div class="reddotTable sm-form mar-t0">
-
-                                <div id="Ind" class="reddotTableBody">
-                                    <div class="reddotTableRow odd-even-row">
-                                        <div class="reddotTableHead"><div>PVId </div></div>
-                                        <div class="reddotTableHead"><div>Country </div></div>
-                                        <div class="reddotTableHead"><div>RefNo </div></div>
-                                        <div class="reddotTableHead"><div>DocStatus </div></div>
-                                        <div class="reddotTableHead"><div>VType </div></div>
-                                        <div class="reddotTableHead"><div>DBName </div></div>
-                                        <div class="reddotTableHead"><div>Currency </div></div>
-                                        <div class="reddotTableHead"><div>VendorCode </div></div>
-                                        <div class="reddotTableHead"><div>VendorEmployee </div></div>
-                                        <div class="reddotTableHead"><div>Benificiary </div></div>
-                                        <div class="reddotTableHead"><div>RequestedAmt </div></div>
-                                        <div class="reddotTableHead"><div>ApprovedAmt </div></div>
-                                        <div class="reddotTableHead"><div>BeingPayOf </div></div>
-                                        <div class="reddotTableHead"><div>PayRequestDate </div></div>
-                                        <div class="reddotTableHead"><div>BankCode </div></div>
-                                        <div class="reddotTableHead"><div>BankName </div></div>
-                                        <div class="reddotTableHead"><div>PayMethod </div></div>
-                                        <div class="reddotTableHead"><div>PayRefNo </div></div>
-                                        <div class="reddotTableHead"><div>PayDate </div></div>
-                                        <div class="reddotTableHead"><div>FilePath </div></div>
-                                        <div class="reddotTableHead"><div>ClosedDate </div></div>
-                                        <div class="reddotTableHead"><div>CAappStatus </div></div>
-                                        <div class="reddotTableHead"><div>CAappRemarks </div></div>
-                                        <div class="reddotTableHead"><div>CAapprovedBy </div></div>
-                                        <div class="reddotTableHead"><div>CAapprovedOn </div></div>
-                                        <div class="reddotTableHead"><div>CMappStatus </div></div>
-                                        <div class="reddotTableHead"><div>CMappRemarks </div></div>
-                                        <div class="reddotTableHead"><div>CMapprovedBy </div></div>
-                                        <div class="reddotTableHead"><div>CMapprovedOn </div></div>
-                                        <div class="reddotTableHead"><div>CFOappStatus </div></div>
-                                        <div class="reddotTableHead"><div>CFOappRemarks </div></div>
-                                        <div class="reddotTableHead"><div>CFOapprovedBy </div></div>
-                                        <div class="reddotTableHead"><div>CFOapprovedOn </div></div>
 
                                     </div>
                                 </div>
-                                <div id="Ibody" class="reddotTableBody">
+                            </div>
 
-                                    <div id="Ist" class="reddotTableRow odd-even-row">
-                                        <div class="reddotTableCell Abcd"><div>PVId</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>Country</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>RefNo</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>DocStatus</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>VType</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>DBName</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>Currency</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>VendorCode</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>VendorEmployee</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>Benificiary</div></div>
-                                        <div class="reddotTableCellRight Abcd"><div>RequestedAmt</div></div>
-                                        <div class="reddotTableCellRight Abcd"><div>ApprovedAmt</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>BeingPayOf</div></div>
-                                        <div class="reddotTableCell Abcd"><div>PayRequestDate</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>BankCode</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>BankName</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>PayMethod</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>PayRefNo</div></div>
-                                        <div class="reddotTableCell Abcd"><div>PayDate</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>FilePath</div></div>
-                                        <div class="reddotTableCell Abcd"><div>ClosedDate</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CAappStatus</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CAappRemarks</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CAapprovedBy</div></div>
-                                        <div class="reddotTableCell Abcd"><div>CAapprovedOn</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CMappStatus</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CMappRemarks</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CMapprovedBy</div></div>
-                                        <div class="reddotTableCell Abcd"><div>CMapprovedOn</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CFOappStatus</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CFOappRemarks</div></div>
-                                        <div class="reddotTableCellLeft Abcd"><div>CFOapprovedBy</div></div>
-                                        <div class="reddotTableCell Abcd"><div>CFOapprovedOn</div></div>
+                            <div class="table-responsive" id="tblid">
+                                <div class="loader1"></div>
+                                <div>
+                                    <div class="reddotTable sm-form mar-t0">
 
+                                        <div id="Ind" class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead"><div>PVId </div></div>
+                                                <div class="reddotTableHead"><div>Country </div></div>
+                                                <div class="reddotTableHead"><div>RefNo </div></div>
+                                                <div class="reddotTableHead"><div>DocStatus </div></div>
+                                                <div class="reddotTableHead"><div>VType </div></div>
+                                                <div class="reddotTableHead"><div>DBName </div></div>
+                                                <div class="reddotTableHead"><div>Currency </div></div>
+                                                <div class="reddotTableHead"><div>VendorCode </div></div>
+                                                <div class="reddotTableHead"><div>VendorEmployee </div></div>
+                                                <div class="reddotTableHead"><div>Benificiary </div></div>
+                                                <div class="reddotTableHead"><div>RequestedAmt </div></div>
+                                                <div class="reddotTableHead"><div>ApprovedAmt </div></div>
+                                                <div class="reddotTableHead"><div>BeingPayOf </div></div>
+                                                <div class="reddotTableHead"><div>PayRequestDate </div></div>
+                                                <div class="reddotTableHead"><div>BankCode </div></div>
+                                                <div class="reddotTableHead"><div>BankName </div></div>
+                                                <div class="reddotTableHead"><div>PayMethod </div></div>
+                                                <div class="reddotTableHead"><div>PayRefNo </div></div>
+                                                <div class="reddotTableHead"><div>PayDate </div></div>
+                                                <div class="reddotTableHead"><div>FilePath </div></div>
+                                                <div class="reddotTableHead"><div>ClosedDate </div></div>
+                                                <div class="reddotTableHead"><div>CAappStatus </div></div>
+                                                <div class="reddotTableHead"><div>CAappRemarks </div></div>
+                                                <div class="reddotTableHead"><div>CAapprovedBy </div></div>
+                                                <div class="reddotTableHead"><div>CAapprovedOn </div></div>
+                                                <div class="reddotTableHead"><div>CMappStatus </div></div>
+                                                <div class="reddotTableHead"><div>CMappRemarks </div></div>
+                                                <div class="reddotTableHead"><div>CMapprovedBy </div></div>
+                                                <div class="reddotTableHead"><div>CMapprovedOn </div></div>
+                                                <div class="reddotTableHead"><div>CFOappStatus </div></div>
+                                                <div class="reddotTableHead"><div>CFOappRemarks </div></div>
+                                                <div class="reddotTableHead"><div>CFOapprovedBy </div></div>
+                                                <div class="reddotTableHead"><div>CFOapprovedOn </div></div>
+
+                                            </div>
+                                        </div>
+                                        <div id="Ibody" class="reddotTableBody">
+
+                                            <div id="Ist" class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell Abcd"><div>PVId</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>Country</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>RefNo</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>DocStatus</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>VType</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>DBName</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>Currency</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>VendorCode</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>VendorEmployee</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>Benificiary</div></div>
+                                                <div class="reddotTableCellRight Abcd"><div>RequestedAmt</div></div>
+                                                <div class="reddotTableCellRight Abcd"><div>ApprovedAmt</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>BeingPayOf</div></div>
+                                                <div class="reddotTableCell Abcd"><div>PayRequestDate</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>BankCode</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>BankName</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>PayMethod</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>PayRefNo</div></div>
+                                                <div class="reddotTableCell Abcd"><div>PayDate</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>FilePath</div></div>
+                                                <div class="reddotTableCell Abcd"><div>ClosedDate</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CAappStatus</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CAappRemarks</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CAapprovedBy</div></div>
+                                                <div class="reddotTableCell Abcd"><div>CAapprovedOn</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CMappStatus</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CMappRemarks</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CMapprovedBy</div></div>
+                                                <div class="reddotTableCell Abcd"><div>CMapprovedOn</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CFOappStatus</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CFOappRemarks</div></div>
+                                                <div class="reddotTableCellLeft Abcd"><div>CFOapprovedBy</div></div>
+                                                <div class="reddotTableCell Abcd"><div>CFOapprovedOn</div></div>
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
-
-
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mar-t10">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination mar-b0">
-                                    <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
-                                    <li class="page-item next"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
-                        </div>
                     </div>
-
-
                 </div>
             </div>
 

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +31,32 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.SAPbobsCOM">
+      <HintPath>..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -81,6 +107,9 @@
     <Compile Include="DataModels\DailyReports\RDD_DSR_ModeOfCall.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
+    <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\RDD_CountryBU.cs" />
+    <Compile Include="DataModels\RDD_CountryTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
@@ -90,12 +119,17 @@
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
+    <Compile Include="DataModels\RDD_ForecastBU.cs" />
+    <Compile Include="DataModels\RDD_ForecastTarget.cs" />
     <Compile Include="DataModels\RDD_FunnelData.cs" />
     <Compile Include="DataModels\RDD_JobBand.cs" />
     <Compile Include="DataModels\RDD_JobGrade.cs" />
+    <Compile Include="DataModels\RDD_LoginName.cs" />
     <Compile Include="DataModels\RDD_QuickLinks.cs" />
     <Compile Include="DataModels\RDD_Reports.cs" />
     <Compile Include="DataModels\RDD_RightSide.cs" />
+    <Compile Include="DataModels\RDD_salesperson.cs" />
+    <Compile Include="DataModels\RDD_SalesPersonTarget.cs" />
     <Compile Include="DataModels\RDD_Test.cs" />
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
@@ -139,7 +173,11 @@
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
     <Compile Include="SAP\SalesOrder_DBOperation.cs" />
+    <Compile Include="SAP\SAP_ConnectToCompany.cs" />
     <Compile Include="SendMail.cs" />
+    <Compile Include="Targets\CountryTargetDbOperations.cs" />
+    <Compile Include="Targets\ForecastDBOperation.cs" />
+    <Compile Include="Targets\SalesPersonDBOperation.cs" />
     <Compile Include="Voucher\RDD_PV_VoucherDbOperation.cs" />
   </ItemGroup>
   <ItemGroup>

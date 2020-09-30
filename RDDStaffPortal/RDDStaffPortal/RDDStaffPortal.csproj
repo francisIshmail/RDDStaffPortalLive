@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +142,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalStatusReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
@@ -166,6 +168,8 @@
     <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
+    <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
+    <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
@@ -183,6 +187,15 @@
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\Targets\Controllers\CountryTargetController.cs" />
+    <Compile Include="Areas\Targets\Controllers\ForecastController.cs" />
+    <Compile Include="Areas\Targets\Controllers\SalesPersonTargetController.cs" />
+    <Compile Include="Areas\Targets\Models\CopyfromSalesperson.cs" />
+    <Compile Include="Areas\Targets\Models\CountryList.cs" />
+    <Compile Include="Areas\Targets\Models\CountrySubmitdata.cs" />
+    <Compile Include="Areas\Targets\Models\ForecastBU.cs" />
+    <Compile Include="Areas\Targets\Models\Salespersonsubmitdata.cs" />
+    <Compile Include="Areas\Targets\TargetsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -201,6 +214,8 @@
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\timeout-dialog.css" />
+    <Content Include="img\bg\Background-001.JPG" />
+    <Content Include="img\bg\Background-002.JPG" />
     <Content Include="Images\timeout-icon.png" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
@@ -752,6 +767,7 @@
     <Content Include="Areas\SAP\Views\RDD_PV\ADDRDDPV.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalTemplate\ADDApprovalTemplate.cshtml" />
+    <Content Include="Areas\SAP\Views\SalesOrder\Index.cshtml" />
     <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
     <Content Include="App_Code\GetEmpConfig.cshtml" />
     <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
@@ -819,10 +835,14 @@
     <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Marketing\Data\" />
+    <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
+    <Folder Include="Areas\Targets\Data\" />
+    <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
     <Folder Include="excelFileUpload\" />
   </ItemGroup>
