@@ -6,8 +6,8 @@
 		UserRole.Attachevent();
 	},
 	Attachevent: function () {
-        var pathname = window.location.pathname;
-        RedtDot_CheckAuthorization(pathname);
+        //var pathname = window.location.pathname;
+        //RedtDot_CheckAuthorization(pathname);
         var selectedObjs;
        // var draggableOptions = ;
 

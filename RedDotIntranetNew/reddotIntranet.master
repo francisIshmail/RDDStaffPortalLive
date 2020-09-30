@@ -1,0 +1,135 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="reddotIntranet.master.cs" Inherits="reddotIntranet" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Welcome to Red Dot Intranet</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/menu.css" rel="stylesheet" type="text/css" />
+    <script src="js/menu.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-23215203-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+        
+    </script>
+
+
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+
+	<!-- jQuery (required) -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" ></script>
+	<script type="text/javascript"> window.jQuery || document.write('<script src="js/jquery.min.js" ><\/script>')</script>
+
+	<!-- Anything Slider -->
+	<link rel="stylesheet" href="css/anythingslider.css" />
+	<script type="text/javascript" src="js/jquery.anythingslider.js"></script>
+
+	<!-- Define slider dimensions here -->
+	<style type="text/css">
+	  #slider { width: 900px; height: 390px; }
+	</style>
+
+	<!-- AnythingSlider initialization -->
+	<script type="text/javascript">
+	    // DOM Ready
+	    $(function () {
+	        $('#slider').anythingSlider();
+	    });
+	</script>
+
+
+</head>
+<%--<body onload="javascript:setPage();">--%>
+<body  id="simple" >
+
+    <div class="main">
+        <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <div class="outer-div">
+            <div class="main-content-div">
+                <div class="main-div">
+                    <div class="top-header-bg">
+                        <div class="main-area">
+                            <table width="100%">
+                                <tr>
+                                    <td align="left">
+                                        <a href="/Intranet/Home.aspx">
+                                            <img src="/images/logos/logo.jpg" usemap="" border="0" alt="" height="50px" /></a>
+                                    </td>
+                                    <td align="right">
+                                        <asp:LoginView ID="LoginView" runat="server">
+                                            <AnonymousTemplate>
+                                                You are not logged in&nbsp;|&nbsp;
+                                                <asp:LoginStatus ID="LoginLink" runat="server" />
+                                                &nbsp;|&nbsp; <a href="/forgot-password.aspx">Forgot Password</a>&nbsp;|&nbsp;
+                                                <%--<a href="/dealer-registration.aspx">Register</a></li>--%>
+                                            </AnonymousTemplate>
+                                            <LoggedInTemplate>
+                                                Welcome,
+                                                <asp:LoginName ID="LoginName" runat="server" />
+                                                |
+                                                <asp:LoginStatus ID="LogoutLink" runat="server" />
+                                                | <a href="/change-password.aspx">Change Password</a>
+                                            </LoggedInTemplate>
+                                        </asp:LoginView>
+                                        <a visible="false" runat="server" id="hrefAdmHome" href="/admin/default.aspx">
+                                            <img src="/images/adminhome.jpg" usemap="" border="0" alt="Admin Home" />
+                                        </a>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                  </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div id="menu">
+                                            <ul class="menu">
+                                                <li><a href="/default.aspx"><span> Home </span></a></li>
+                                                <li><a href="/Intranet/Home.aspx"" class="last"><span>Intranet</span></a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="main-content-bg" style="background-image: url('../images/bgimg.png');margin-top: 0px;">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-content-bg">
+            <div class="copyright-area">
+                <div class="copyright-left-area">
+                    <div id="copyright">
+                        <a href="http://apycom.com/"></a>
+                    </div>
+                    <span style="width: ">Copyright © 2011 Red Dot Distribution</span>
+                </div>
+                <div class="copyright-right-area">
+                    <a href="/disclaimer.aspx">Disclaimer</a>&nbsp;|&nbsp;<a href="/privacy-policy.aspx">Privacy
+                        Policy</a>&nbsp;|&nbsp;<a href="/terms-of-use.aspx">Terms Of Use</a>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

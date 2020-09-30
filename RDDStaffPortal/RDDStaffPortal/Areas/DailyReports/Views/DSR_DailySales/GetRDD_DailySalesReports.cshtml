@@ -1,0 +1,251 @@
+﻿
+
+
+@model List<RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DailySalesReports>
+
+@if (Model != null && Model.Count() > 0)
+{
+    @*@GetDailySalesDet.GetDSR_CallStatusList(Model);*@
+    foreach (var i in Model)
+    {
+        <div class="rowmin">
+            
+
+            <div class="card">
+                <div class="card-header" id="headingOne-@i.VisitId" data-toggle="collapse" data-target="#collapse-@i.VisitId" aria-expanded="true" aria-controls="collapseOne" role="button">
+                    <div class="span-title">
+                        @i.Company.ToUpper()  :  @i.VisitDate.ToString("dd/MM/yyyy"):
+                        @i.Country @if (i.IsDraft == true)
+                        {<label class="error" title="Draft">Draft</label>}
+                    </div>
+                    @*@if (i.IsDraft == true)
+        {
+            <div class="modal-footer">
+
+
+                <button type="button" id="btnsave-@i.VisitId" class="btn btn-success btn-sm" data-dismiss="modal">Save</button>
+                <button type="button" id="btn1Draft-@i.VisitId" class="btn btn-warning btn-sm">Draft</button>
+
+
+
+            </div>
+        }*@
+                    @if (i.IsDraft == true)
+                    {
+                        <div class=" ml-auto">
+                            <div class="action-btn">
+                                <button type="button" title="" id="btn1Draft-@i.VisitId" data-toggle="tooltip" class="btn btn-info btn-sm" data-original-title="Save as Draft" disabled><i class="fas fa-edit"></i></button>
+                                <button type="button" title="" id="btn1Delete-@i.VisitId" data-toggle="tooltip" class="btn btn-danger btn-sm" data-original-title="Delete" disabled><i class="fas fa-trash-alt"></i></button>
+
+                            </div>
+
+                        </div>
+
+                    }
+                        @*<div class="plus-minus"></div>*@
+
+
+
+                    </div>
+
+                <div id="collapse-@i.VisitId" class="collapse" aria-labelledby="headingOne-@i.VisitId" data-parent="#accordion">
+                    <div class="card-body DailyDet">
+                        <div class="row">
+                            @Html.Hidden(string.Concat("ActionType-", @i.VisitId), @i.VisitType)
+                            @Html.Hidden(string.Concat("FromDate-", @i.VisitId), @i.FromDate)
+                            @Html.Hidden(string.Concat("ToDate-", @i.VisitId), @i.ToDate)
+                            @Html.Hidden(string.Concat("IsDraft-", @i.VisitId), @i.IsDraft)
+                            <div class="col-md-3">
+                                <div  id="div-Country-@i.VisitId"class="form-group has-success1">
+                                    <label>Country :</label>
+                                    @Html.Hidden(string.Concat("hdnCountry-", @i.VisitId), @i.Country)
+                                    @Html.DropDownList(string.Concat("Country-", @i.VisitId), i.CountryList, new { @class = "form-control dropcheck", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Date :</label>
+                                    <div class="input-group">
+                                        @Html.TextBox(string.Concat("ActualVisitDate1-", @i.VisitId), "", new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.Hidden(string.Concat("ActualVisitDate-", @i.VisitId), i.ActualVisitDate, new { @class = "form-control" })
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div id="div-ModeOfCall-@i.VisitId"  class="form-group has-success1">
+                                    <label>Call Mode :</label>
+                                    @Html.Hidden(string.Concat("hdnModeOfCall-", @i.VisitId), i.ModeOfCall)
+                                    @Html.DropDownList(string.Concat("ModeOfCall-", @i.VisitId), i.ModeOfCallList, new { @class = "form-control dropcheck", @value = @i.ModeOfCall })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div id="div-CallStatus-@i.VisitId" class="form-group has-success1">
+                                    <label>Call Type :</label>
+                                    @Html.Hidden(string.Concat("hdnCallStatus-", @i.VisitId), @i.CallStatus)
+                                    @Html.DropDownList(string.Concat("CallStatus-", @i.VisitId), i.CallStatusList, new { @class = "form-control dropcheck", @value = @i.CallStatus })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div id="div-Company-@i.VisitId" class="form-group has-success1">
+                                    <label>Company :</label>
+                                    @Html.Hidden(string.Concat("CardCode-", @i.VisitId), i.CardCode)
+                                    @Html.TextBox(string.Concat("Company-", @i.VisitId), i.Company, new { @class = "form-control txtcheck txtmax", @readonly = "readonly" })
+                                    @Html.ValidationMessage(string.Concat("Company-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Contact Person :</label>
+                                    @Html.TextBox(string.Concat("PersonMet-", @i.VisitId), i.PersonMet, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Contact Person cannot be longer than 200 characters.", @data_val_length_max = "200" })
+                                    @Html.ValidationMessage(string.Concat("PersonMet-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Designation :</label>
+                                    @Html.TextBox(string.Concat("Designation-", @i.VisitId), i.Designation, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.ValidationMessage(string.Concat("Designation-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group" id="div-Email-@i.VisitId">
+                                    <label>Email :</label>
+                                    @Html.TextBox(string.Concat("Email-", @i.VisitId), i.Email, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.ValidationMessage(string.Concat("Email-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Phone :</label>
+                                    @Html.TextBox(string.Concat("ContactNo-", @i.VisitId), i.ContactNo, new { @class = "form-control txtmax", @data_val= "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
+                                    @Html.ValidationMessage(string.Concat("ContactNo-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>BU :</label>
+                                    @Html.TextBox(string.Concat("BU-", @i.VisitId), i.BU, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.ValidationMessage(string.Concat("BU-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Business Amount($) :</label>
+                                    @Html.TextBox(string.Concat("ExpectedBusinessAmt-", @i.VisitId), i.ExpectedBusinessAmt, new { @class = "form-control txtdecimalmax", @data_val = "true", @data_val_number = "The field ExpectedBusinessAmt must be a number.", @data_val_range = "Amount cannot be longer than 9 characters.", @data_val_range_max = "999999999.99", @data_val_range_min = "0", @data_val_required = "The ExpectedBusinessAmt field is required.",@type="number" })
+                                    @Html.ValidationMessage(string.Concat("ExpectedBusinessAmt-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div id="div-NextAction-@i.VisitId" class="form-group has-success1">
+                                    <label>Next Action :</label>
+                                    @Html.Hidden(string.Concat("hdnNextAction-", @i.VisitId), i.NextAction)
+                                    @Html.DropDownList(string.Concat("NextAction-", @i.VisitId), i.NextActionList, new { @class = "form-control dropcheck" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div id="div-Discussion-@i.VisitId" class="form-group  has-success1">
+                                    <label>Discussion :</label>
+                                    @Html.TextArea(string.Concat("Discussion-", @i.VisitId), i.Discussion, new { @class = "form-control txtcheck txtmax", @rows = "3", @data_val = "true", @data_val_length = "Discusion cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                    @Html.ValidationMessage(string.Concat("Discussion-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div id="div-Feedback-@i.VisitId" class="form-group has-success1">
+                                    <label>Feedback :</label>
+                                    @Html.TextArea(string.Concat("Feedback-", @i.VisitId), i.Feedback, new { @class = "form-control txtcheck txtmax", @rows = "3", @data_val = "true", @data_val_length = "FeedBack cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                    @Html.ValidationMessage(string.Concat("Feedback-", @i.VisitId), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion-@i.VisitId">
+
+                            <div class="modal-footer">
+                                @*<button type="button" class="btn btn-secondary btn-sm"  id="Forwardbtn-@i.VisitId" data-toggle="tooltip" title="Forward"><i class="fas fa-reply"></i></button>*@
+
+
+                                <div id="headingOne" title="Forward" data-toggle="collapse" class="btn btn-secondary btn-sm" data-target="#Forwardbtn-@i.VisitId" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="fas fa-reply"></div></div>
+                                <div id="headingtwo" title="Reminder" data-toggle="collapse" class="btn btn-info btn-sm" data-target="#Remindorbtn-@i.VisitId" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="fas fa-bell"></div></div>
+
+                                @*<button type="button" class="btn btn-info btn-sm" id="Remindorbtn-@i.VisitId" data-toggle="tooltip" title="Remindor"><i class="fas fa-bell"></i></button>*@
+                            </div>
+                            <div class="row mar-t10 collapse" id="Remindorbtn-@i.VisitId" data-parent="#accordion-@i.VisitId">
+                                <div class="col-md-6 ml-auto">
+                                    <div class="cardnew border1 padd-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inlineinput" class="col-form-label">Date :</label>
+                                                    <div class="input-group">
+                                                        @Html.TextBox(string.Concat("ReminderDate1-", @i.VisitId), "", new { @class = "DatepickerHR" })
+                                                        @Html.Hidden(string.Concat("ReminderDate-", @i.VisitId), i.ReminderDate, new { @class = "" })
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="inlineinput" class=" col-form-label">Remarks :</label>
+                                                    @Html.TextArea(string.Concat("ReminderDesc-", @i.VisitId), @i.ReminderDesc, new { @class = "form-control txtmax", @rows = "3", @data_val = "true", @data_val_length = "Description cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                    @Html.ValidationMessage(string.Concat("ReminderDesc-", @i.VisitId), "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mar-t10 collapse" id="Forwardbtn-@i.VisitId" data-parent="#accordion-@i.VisitId">
+                                <div class="col-md-6 ml-auto">
+                                    <div class="cardnew border2 padd-10">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="div-ForwardCallToEmail-@i.VisitId" class="form-group">
+                                                    <label for="inlineinput" class="col-form-label">Email :</label>
+                                                    @Html.TextBox(string.Concat("ForwardCallToEmail-", @i.VisitId), i.ForwardCallToEmail, new { @class = "form-control txtmax", @rows = "3", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.ValidationMessage(string.Concat("ForwardCallToEmail-", @i.VisitId), "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="inlineinput" class=" col-form-label">Instruction :</label>
+                                                    @Html.TextArea(string.Concat("ForwardRemark-", @i.VisitId), i.ForwardRemark, new { @class = "form-control txtmax", @rows = "3", @data_val = "true", @data_val_length = "Remark cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                    @Html.ValidationMessage(string.Concat("ForwardRemark-", @i.VisitId), "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+}
+
+

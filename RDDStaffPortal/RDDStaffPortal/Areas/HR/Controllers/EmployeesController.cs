@@ -479,6 +479,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.IM_Id = EmpData.IM_Id;
                 rdd_empreg.Marital_Status = EmpData.Marital_Status;
                 rdd_empreg.DOB = EmpData.DOB;
+                rdd_empreg.HOD_HR = EmpData.HOD_HR;
+                rdd_empreg.Local_HR = EmpData.Local_HR;
 
                 rdd_empreg.Citizenship = EmpData.Citizenship;
                 rdd_empreg.DesigId = EmpData.DesigId;

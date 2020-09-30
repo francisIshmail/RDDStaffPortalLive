@@ -159,9 +159,17 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\DailyReports\Controllers\DSR_DailySalesController.cs" />
+    <Compile Include="Areas\DailyReports\Controllers\DSR_CallStatusController.cs" />
+    <Compile Include="Areas\DailyReports\Controllers\DSR_NextActionController.cs" />
+    <Compile Include="Areas\DailyReports\Controllers\DSR_ModeOfCallController.cs" />
+    <Compile Include="Areas\DailyReports\Controllers\DSR_ReportingFreqTargetController.cs" />
+    <Compile Include="Areas\DailyReports\DailyReportsAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
+    <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
+    <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
@@ -179,6 +187,15 @@
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\Targets\Controllers\CountryTargetController.cs" />
+    <Compile Include="Areas\Targets\Controllers\ForecastController.cs" />
+    <Compile Include="Areas\Targets\Controllers\SalesPersonTargetController.cs" />
+    <Compile Include="Areas\Targets\Models\CopyfromSalesperson.cs" />
+    <Compile Include="Areas\Targets\Models\CountryList.cs" />
+    <Compile Include="Areas\Targets\Models\CountrySubmitdata.cs" />
+    <Compile Include="Areas\Targets\Models\ForecastBU.cs" />
+    <Compile Include="Areas\Targets\Models\Salespersonsubmitdata.cs" />
+    <Compile Include="Areas\Targets\TargetsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -197,6 +214,9 @@
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\timeout-dialog.css" />
+    <Content Include="img\bg\Background-001.JPG" />
+    <Content Include="img\bg\Background-002.JPG" />
+    <Content Include="Images\timeout-icon.png" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
@@ -752,7 +772,19 @@
     <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
     <Content Include="App_Code\GetEmpConfig.cshtml" />
     <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
-    <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
+    <Content Include="Areas\DailyReports\Views\web.config" />
+    <Content Include="Areas\DailyReports\Views\DSR_NextAction\Index.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_NextAction\GetDSR_NextList.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_ModeOfCall\Index.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_ModeOfCall\GetDSR_ModeOfCallList.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_CallStatus\Index.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_CallStatus\GetDSR_CallStatusList.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_ReportingFreqTarget\Index.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_DailySales\Index.cshtml" />
+    <Content Include="App_Code\GetDailySalesDet.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_DailySales\GetRDD_DailySalesReports.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_DailySales\DailySalesComments.cshtml" />
+    <Content Include="Areas\DailyReports\Views\DSR_ReportingFreqTarget\DSR_Report.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -795,16 +827,23 @@
     <Content Include="Views\Account\ErrorPage.cshtml" />
     <Content Include="Views\Account\SuccessPage.cshtml" />
     <Content Include="Views\Dashboard\ErrorPage.cshtml" />
+    <Content Include="Uploads\Sample\SampleExcel.xls" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\DailyReports\Data\" />
+    <Folder Include="Areas\DailyReports\Views\Shared\" />
     <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Marketing\Data\" />
+    <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
+    <Folder Include="Areas\Targets\Data\" />
+    <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
     <Folder Include="excelFileUpload\" />
   </ItemGroup>

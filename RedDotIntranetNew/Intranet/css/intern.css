@@ -1,0 +1,216 @@
+﻿body
+{
+	background-color: #CBCBB1;
+}
+
+.main-body
+{
+    width: 98%;
+	margin-left: 1%;
+	margin-right: auto;
+	margin-top: 15px;
+}
+
+.main-body-wms
+{
+    width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+}
+.main-div-intern
+{
+	float: left;
+	margin: auto;
+	padding: 7px 7px 7px 7px;
+	width: 99%;
+	border: 2px solid bebebe;
+	background-color: white;
+	-moz-border-radius: 8px 8px 8px 8px;
+	
+}
+.main-div-intern-wms
+{
+	float: left;
+	margin: auto;
+	padding: 10px 11px;
+	width: 1000px;
+	border: 2px solid bebebe;
+	background-color: white;
+	-moz-border-radius: 8px 8px 8px 8px;
+	
+}
+.top-header
+{
+	margin-top: 0px;
+	width: 100%;
+	height: 60px;
+	float: left;
+	background-color:White;
+}
+.menu-top 
+{
+	margin-top: 2px;
+    float: left;
+    height: 36px;
+    width: 80%;
+    border:0px #ccc solid;
+    /*margin-left:125px;*/
+}
+.menu-top-wms 
+{
+	margin-top: 2px;
+   float: center;
+    height: 36px;
+    width: 1000px;
+    border:0px #ccc solid;
+}
+.div-logo
+{
+	width:300px;
+	float: left;
+	height: 60px;
+	padding-left: 3px;
+}
+
+.content
+{
+	margin-top: 10px;
+	width:100%;
+	float:left;
+	background-color: white;
+	border: 1px solid #d0d0d0;
+	
+}
+.content-wms
+{
+	margin-top: 0px;
+	width:1000px;
+	float:left;
+	background-color: white;
+	border: 1px solid #d0d0d0;
+	
+}
+.text-content
+{
+	width: 900px;
+	float: left;
+	padding: 10px;
+	text-align: justify;
+	font-size:12px;
+	color:#666666;
+	height:auto;
+}
+.primaryStaticMenu
+{
+   background-color: transparent;
+   float: left;
+}
+.primaryStaticMenuItem
+{
+	width: 100px;
+	border-width: 1px;
+	border-color: #efefef #aaab9c #ccc #efefef;
+	border-style: solid;
+	color: Black;
+	padding: 0.5em 0 0.5em 5px;
+	background: transparent url('../../images/menu-bg-repeat.jpg') repeat scroll 0 0px;
+}
+.primaryStaticSelectedMenuItem
+{
+	background-color:white;
+	color:black;
+	background:none;
+}
+.primaryStaticHover
+{
+   color: black;
+   background: white;
+}
+.primaryDynamicMenu
+{   
+   background-color: gray;               
+   border-bottom: solid 1px #ccc;    
+}  
+.primaryDynamicMenuItem
+{
+   width: 11em;
+   background-color: #F2F2F2; 
+   color: black;
+   padding: 0.3em 0 0.3em 3px;        
+}    
+.primaryDynamicHover
+{
+   color: black;
+   background: silver;
+}            
+
+.secondaryLevelOne
+{
+   background-color: transparent;
+   background-repeat: repeat-x;
+   margin: 1.5em 0 0 0;
+   padding: 5px 0 0 5px;
+   width: 12em; 
+   height: 35px;
+}
+.secondaryLevelTwo
+{
+   background: #FAFBFB;
+   padding: 5px 0 5px 5px;         
+}
+.secondaryStaticHover
+{
+   color: #800000;
+}
+
+
+
+.GridviewStylePO  td{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStylePO  th{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStylePO tr{background-color: #D8E9E9;height:25px;}
+
+
+.GridviewStyleRO  td{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStyleRO  th{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStyleRO tr{background-color: #f4f4f4;height:25px;}
+
+
+.ButtonOrders
+        {
+        border-style: outset;
+        border-color: #D8E9E9;
+        background-color: #D8E9E9;
+        text-decoration: none;   
+        text-align: center;
+       }
+       
+.POPanel1
+{
+	background-color:#DFEFFF;
+}
+.POPanel2
+{
+	background-color:#E1E1FF;
+}
+.POPanel3
+{
+	background-color:#ffe6ff;
+}
+.POPanel4
+{
+	background-color:#CCCCCC;
+}
+.PlansPanel
+{
+	background-color:#DFEFFF;
+}
+.PlansTaskPanel
+{
+	background-color:#D5E3E3;
+}
+
+
+
+
+

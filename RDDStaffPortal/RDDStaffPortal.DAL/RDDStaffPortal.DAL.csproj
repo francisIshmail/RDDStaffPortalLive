@@ -52,6 +52,11 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.SAPbobsCOM">
+      <HintPath>..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -65,9 +70,7 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\RDDStaffPortal\bin\System.Web.Mvc.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -93,8 +96,21 @@
     <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DailyReports\RDD_DailySalesReports_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_CallStatus_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ModeOfCall_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_NextAction_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ReportingFreqTarget_Db_Operation.cs" />
     <Compile Include="DataModels\Admin\RDD_APPROVAL_DOC.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DailySalesReports.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_CallStatus.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ModeOfCall.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
+    <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\RDD_CountryBU.cs" />
+    <Compile Include="DataModels\RDD_CountryTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
@@ -104,12 +120,17 @@
     <Compile Include="DataModels\RDD_DashBoard.cs" />
     <Compile Include="DataModels\RDD_DashBoard_Main.cs" />
     <Compile Include="DataModels\RDD_Departments.cs" />
+    <Compile Include="DataModels\RDD_ForecastBU.cs" />
+    <Compile Include="DataModels\RDD_ForecastTarget.cs" />
     <Compile Include="DataModels\RDD_FunnelData.cs" />
     <Compile Include="DataModels\RDD_JobBand.cs" />
     <Compile Include="DataModels\RDD_JobGrade.cs" />
+    <Compile Include="DataModels\RDD_LoginName.cs" />
     <Compile Include="DataModels\RDD_QuickLinks.cs" />
     <Compile Include="DataModels\RDD_Reports.cs" />
     <Compile Include="DataModels\RDD_RightSide.cs" />
+    <Compile Include="DataModels\RDD_salesperson.cs" />
+    <Compile Include="DataModels\RDD_SalesPersonTarget.cs" />
     <Compile Include="DataModels\RDD_Test.cs" />
     <Compile Include="DataModels\RDD_Designation.cs" />
     <Compile Include="DataModels\RDD_EmployeeRegistration.cs" />
@@ -155,6 +176,9 @@
     <Compile Include="SAP\SalesOrder_DBOperation.cs" />
     <Compile Include="SAP\SAP_ConnectToCompany.cs" />
     <Compile Include="SendMail.cs" />
+    <Compile Include="Targets\CountryTargetDbOperations.cs" />
+    <Compile Include="Targets\ForecastDBOperation.cs" />
+    <Compile Include="Targets\SalesPersonDBOperation.cs" />
     <Compile Include="Voucher\RDD_PV_VoucherDbOperation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,17 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="SAPbobsCOM">
-      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30090}</Guid>
-      <VersionMajor>9</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

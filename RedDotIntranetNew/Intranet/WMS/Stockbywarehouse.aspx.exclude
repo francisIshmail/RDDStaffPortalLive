@@ -1,0 +1,135 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Intranet/MasterWMS.master" AutoEventWireup="true"
+    CodeFile="Stockbywarehouse.aspx.cs" Inherits="Intranet_WMS_Stockbywarehouse" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <table align="center" class="style1" style="background-image: url('../images/bgimg.png');">
+        <tr>
+            <td align="center">
+                <h4>
+                    Stock By Warehouse</h4>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table align="center">
+                    <tr>
+                        <td style="margin-left: 40px">
+                            <asp:Button ID="btnStoakcsheet" runat="server" Text="Stock Sheet " OnClick="btnStoakcsheet_Click" />
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td align="center">
+                                        <asp:Label ID="Label1" runat="server" Text="Please entrer the email" ForeColor="#0066FF"
+                                            Font-Size="Small"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:TextBox ID="Txtemail" runat="server" Width="254px"></asp:TextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="RegularExpressionValidator"
+                                ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="Txtemail"> <img src="../images/ErrorMessage.png" alt ="*" /><span style="color: #FF0000">Wrong Email ID </span></asp:RegularExpressionValidator>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <asp:GridView ID="GvStokcbyWarehouse" runat="server" AutoGenerateColumns="False"
+                    BackColor="White" BorderColor="#3366CC" BorderStyle="Solid" BorderWidth="1px"
+                    Width="100%" CellPadding="4" AllowPaging="True" OnPageIndexChanging="GvStokcbyWarehouse_PageIndexChanging"
+                    OnRowCommand="GvStokcbyWarehouse_RowCommand">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Warehouse">
+                            <ItemTemplate>
+                                <asp:Label ID="lbWarehouse" runat="server" Text='<%# Bind("description_warehouse") %>'></asp:Label>
+                                <asp:HiddenField ID="hdWarehouse" runat="server" Value='<%# Bind("warehouse_id") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Part#">
+                            <ItemTemplate>
+                                <asp:Button ID="btnpart" runat="server" Text='<%# Bind("part_number") %>' BackColor="Transparent"
+                                    BorderColor="Transparent" ForeColor="Blue" CommandName="partnumber" CommandArgument="<%# Container.DataItemIndex %>" />
+                                <asp:HiddenField ID="hdStockID" runat="server" Value='<%# Bind("stock_id") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Description">
+                            <ItemTemplate>
+                                <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="TotQty">
+                            <ItemTemplate>
+                                <asp:Label ID="Label4" runat="server" Text='<%# Bind("quantity") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Alloc">
+                            <ItemTemplate>
+                                <asp:Label ID="Label5" runat="server" Text='<%# Bind("draftonly") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Avail">
+                            <ItemTemplate>
+                                <asp:Label ID="Label6" runat="server" Text='<%# Bind("Avail") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Price">
+                            <ItemTemplate>
+                                <asp:Label ID="Label7" runat="server" Text='<%# Bind("price") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Stock Id">
+                            <ItemTemplate>
+                                <asp:Label ID="Label8" runat="server" Text='<%# Bind("stock_id") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="CBM">
+                            <ItemTemplate>
+                                <asp:Label ID="Label9" runat="server" Text='<%# Bind("CBM") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="GrossWT">
+                            <ItemTemplate>
+                                <asp:Label ID="Label10" runat="server" Text='<%# Bind("totweight") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" ForeColor="Red" CommandArgument="<%# Container.DataItemIndex %>"  CommandName="partnumber" runat="server"> <img src="../images/edit.png" title="Edit"/></asp:LinkButton>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                    <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="center" />
+                    <RowStyle BackColor="White" ForeColor="#003399" />
+                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                    <SortedAscendingCellStyle BackColor="#EDF6F6" />
+                    <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+                    <SortedDescendingCellStyle BackColor="#D6DFDF" />
+                    <SortedDescendingHeaderStyle BackColor="#002876" />
+                </asp:GridView>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    </table>
+</asp:Content>

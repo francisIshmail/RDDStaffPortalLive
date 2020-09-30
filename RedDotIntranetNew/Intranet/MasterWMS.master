@@ -1,0 +1,83 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterWMS.master.cs" Inherits="Intranet_MasterWMS" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="css/intern.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../css/menu.css" rel="stylesheet" type="text/css" />
+    <script src="../js/jquery.js" type="text/javascript"></script>
+    <script src="../js/menu.js" type="text/javascript"></script>
+</head>
+
+
+<body  onload="initialize()" onunload="GUnload()">
+    <form id="form1" runat="server">
+    <div class="main-body-wms">
+
+     <div class="main-div-intern-wms">
+        <table width="100%">
+                    <tr>
+                        <td align="left">
+                            <a href="/Intranet/Home.aspx">
+                                <img src="/images/logos/logo.jpg" usemap="" border="0" alt="" height="50px" /></a>
+                        </td>
+                        <td align="right">
+                            <asp:LoginView ID="LoginView" runat="server">
+                                <AnonymousTemplate>
+                                    You are not logged in&nbsp;|&nbsp;
+                                    <asp:LoginStatus ID="LoginLink" runat="server" />
+                                    &nbsp;|&nbsp; <a href="/forgot-password.aspx">Forgot Password</a>&nbsp;|&nbsp;
+                                    <%--<a href="/dealer-registration.aspx">Register</a></li>--%>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    Welcome,
+                                    <asp:LoginName ID="LoginName" runat="server" />
+                                    |
+                                    <asp:LoginStatus ID="LogoutLink" runat="server" />
+                                    | <a href="/change-password.aspx">Change Password</a>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </td>
+                    </tr>
+                </table>
+<br />
+         
+         <div id="menu">
+                     <ul class="menu">
+                        <%--<li> <asp:LinkButton ID="lbhome" runat="server"  onclick="lbhome_Click" ><span>Home</span></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="lbprealert" runat="server"  onclick="lbprealert_Click" ><span>Prealert</span></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="lbBOE" runat="server"  onclick="lbBOE_Click" ><span>BOE</span></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="LBDO" runat="server"  onclick="LBDO_Click" ><span>DO</span></asp:LinkButton></li>
+                        <li> <asp:LinkButton ID="lbRDO" runat="server" onclick="lbRDO_Click" ><span>RO</span></asp:LinkButton></li>
+                        <li> <asp:LinkButton ID="lbStock" runat="server" onclick="lbStock_Click"  ><span>Stock</span></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="lbStockHistory" runat="server" onclick="lbStockHistory_Click"  ><span>Stock History</span></asp:LinkButton></li>
+                         <li><asp:LinkButton ID="lbStockSheet" runat="server" onclick="lbStockSheet_Click" ><span>Stock Sheet</span></asp:LinkButton></li>
+                        <li class="last parent"><asp:LinkButton ID="lbadmin" runat="server" onclick="lbadmin_Click"  ><span>Admin</span></asp:LinkButton></li>--%>
+                        
+
+                        <li><a href="/Intranet/home.aspx" ><span>Home</span></a></li>
+                        <li><a href="/Intranet/WMS/List_Prealert.aspx" ><span>Prealert</span></a></li>
+                        <li><a href="/Intranet/WMS/BOelist.aspx" ><span>BOE</span></a></li>
+                        <li><a href="/Intranet/WMS/ListDo.aspx" ><span>DO</span></a></li>
+                        <li><a href="/Intranet/WMS/ListReserveOrder.aspx" ><span>RO</span></a></li>
+                        <li><a href="/Intranet/WMS/Stockbywarehouse.aspx" ><span>Stock</span></a></li>
+                        <li><a href="/Intranet/WMS/StockMoveHistory.aspx" ><span>Stock History</span></a></li>
+                        <li><a href="/Intranet/WMS/StockSheet.aspx" ><span>Stock Sheet</span></a></li>
+                        <li class="last parent"><a href="/Intranet/WMS/customer.aspx" ><span>Admin</span></a></li>
+
+                    </ul>
+                </div>
+            <div class="content-wms">
+                 <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                 </asp:ContentPlaceHolder>
+            </div>
+      </div>
+     </div>
+    </form>
+</body>
+</html>

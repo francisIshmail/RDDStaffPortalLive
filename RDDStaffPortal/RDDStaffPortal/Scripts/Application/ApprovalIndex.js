@@ -149,21 +149,26 @@
         })
         //#endregion
         //#region Edit PV*/
-        $("#Ibody").on('dblclick', "#Ist", function (e) {
+        //$("#Ibody").on('dblclick', "#Ist", function (e) {
            
 
-                e.preventDefault();
-                var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
+        //        e.preventDefault();
+        //        var TEMPId = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
               
-                $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
+        //        $.post("/ADDAPPROVAL", { TEMPId: TEMPId }, function (response) {
 
-                    $("#idCard").html(response);
+        //            $("#idCard").html(response);
 
-                    RedDot_Button_New_HideShow();
-                })
+        //            RedDot_Button_New_HideShow();
+        //        })
            
            
-        });
+        //});
+        $("#Ibody").on('click', "#Ist", function (e) {
+
+            $("#ApprovalDecisionPopup").modal("show");
+
+        })
         //#endregion
         //#region Save PV*/
         $("#btnSave").on("click", function (e) {

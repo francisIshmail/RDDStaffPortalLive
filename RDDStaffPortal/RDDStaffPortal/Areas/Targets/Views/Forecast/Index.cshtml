@@ -1,0 +1,1261 @@
+﻿
+@model RDDStaffPortal.DAL.DataModels.RDD_CountryTarget
+@*@model RDDStaffPortal.DAL.DataModels.RDD_CountryBU*@
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    var userval = ViewData["userid"] ?? string.Empty;
+}
+}
+
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Forecast</h4>
+                </div>
+            </div>
+
+
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+
+
+                            <div class="row">
+
+                                <div class="col-xl-1 col-md-1">
+
+                                    <div class="form-group"><label for="email2" class=" mar-t4">Year :</label></div>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="ddlyr">
+                                        <option value="0">-- Select --</option>
+                                    </select>
+                                </div>
+                                <div class="icon-preview"><i class="fas fa-arrow-alt-circle-left" onclick="changemonthprv()"></i></div>
+                                <div class="col-xl-1 col-md-1" id="divmonth">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px mar-t4"> Month :</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="divmonthval">
+                                    <select class="width140px form-control" id="ddlfrommonth">
+                                        <option selected value='0'>--Select --</option>
+                                        <option value='1'>Janaury</option>
+                                        <option value='2'>February</option>
+                                        <option value='3'>March</option>
+                                        <option value='4'>April</option>
+                                        <option value='5'>May</option>
+                                        <option value='6'>June</option>
+                                        <option value='7'>July</option>
+                                        <option value='8'>August</option>
+                                        <option value='9'>September</option>
+                                        <option value='10'>October</option>
+                                        <option value='11'>November</option>
+                                        <option value='12'>December</option>
+                                    </select>
+                                </div>
+                                <div class="icon-preview"><i class="fas fa-arrow-alt-circle-right" onclick="changemonth()"></i></div>
+
+                                <div class="col-xl-2 col-md-2">
+                                    <div class="form-group">
+                                        <label for="email2" class="mar-t4"> Sales Person:</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="ddlsaleperson" onchange="BindCountry()">
+                                        <option selected value='0'>--Select --</option>
+
+
+
+                                    </select>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+                            <div class=" row mar-b10">
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px mar-t4">Country :</label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-9 col-md-9 mar-t10" id="countrylist">
+
+
+
+                                </div>
+
+                                @*<div class="col-xl-9 col-md-9 mar-t10">
+
+                                        @foreach (var item in (List<RDDStaffPortal.DAL.DataModels.RDD_CountryTarget>)ViewBag.List)
+                                        {
+                                            <label class="form-radio-label">
+                                                @Html.RadioButtonFor(model => model.CountryCode, item.CountryCode, new { @onchange = "ViewBU(this);", @class = "form-radio-input" })
+
+                                                <span class="form-radio-sign">@item.CountryName</span>
+                                            </label>
+                                        }
+
+
+                                    </div>*@
+                                <div class="col-xl-2 col-md-1 ml-auto text-right">
+                                    <button type="button" class="btn btn-info btn-sm" id="btnSave">Save</button>
+                                    <button type="button" class="btn btn-info btn-sm" id="btnclear" onclick="window.location.href='@Url.Action("Index", "Forecast")'">Clear</button>
+
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <div class="quick-scroll scrollbar-inner">
+                                    <div class="reddotTable sm-form" id="BUGrid">
+                                        <div class="reddotTableBody">
+
+
+                                            <div class="reddotTableHead width1per"><div>Sr</div></div>
+                                            <div class="reddotTableHead width15per"><div>BU</div></div>
+                                            <div class="reddotTableHead width8per"><div>Rev Targets</div></div>
+                                            <div class="reddotTableHead width8per"><div>Rev Forcast RR</div></div>
+                                            <div class="reddotTableHead width8per"><div>Rev forcast BTB</div></div>
+                                            <div class="reddotTableHead width8per"><div>GP Targets</div></div>
+                                            <div class="reddotTableHead width8per"><div>GP Forcast RR</div></div>
+                                            <div class="reddotTableHead width8per"><div>GP forcast BTB</div></div>
+                                            <div class="reddotTableHead width8per"><div>RF Vs RT %</div></div>
+                                            <div class="reddotTableHead width8per"><div>GPF Vs GPT %</div></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<div class="reddotTableBody">
+                                    <div class="reddotTableRow odd-even-row">
+                                        <div class="reddotTableCell "><div>ss</div></div>
+                                        <div class="reddotTableCell " ><div>Total</div></div>
+                                        <div class="reddotTableCell "><div id="totalrevenue"></div></div>
+                                        <div class="reddotTableCell "><div id="totrevenuerr"></div></div>
+                                        <div class="reddotTableCell "><div id="totrevenuebtb"></div></div>
+                                        <div class="reddotTableCell"><div id="totgp"></div></div>
+                                        <div class="reddotTableCell "><div id="totgprr"></div></div>
+                                        <div class="reddotTableCell "><div id="totgpbtb"></div></div>
+                                        <div class="reddotTableCell "><div></div></div>
+                                        <div class="reddotTableCell "><div></div></div>
+
+                                    </div>
+                                    </div>*@
+                                <input type="hidden" id="txntype" />
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div tabindex="-1" class="modal fade" id="CopyFromPopUp" role="dialog" aria-hidden="true" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Copy From</h5>
+                <button class="close" aria-label="Close" type="button" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="popupmonthly" style="display:none">
+
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">Year :</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" id="popupMyr">
+                                <option value="0">-- Select --</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">For Month :</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class=" form-control" id="popupM">
+                                <option value="0" selected="">--Select --</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="popupquarter" style="display:none">
+
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">Year :</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" id="popupQyr">
+                                <option value="0">-- Select --</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">Quarter :</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class=" form-control" id="popupQ">
+                                <option value="" selected="">--Select --</option>
+                                @*<option value="Q1">Q1</option>
+                                    <option value="Q2">Q2</option>
+                                    <option value="Q3">Q3</option>
+                                    <option value="Q4">Q4</option>*@
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="popupsalesperson">
+
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">Sales Person</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" id="popupddlsalesperson">
+                                <option value="0">-- Select --</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info btn-sm" type="button" id="btnapply">Apply</button>
+                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal" id="btnclose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script>
+
+    var totalbuidx = "";
+                $(document).ready(function () {
+                    $('.scrollbar-inner').scrollbar();
+
+
+                    document.getElementById('ddlyr').innerHTML = "";
+
+                    var months = ['-- Select --'];
+                    var curyr = new Date;
+                    var yr = curyr.getFullYear();
+                    var preyr = yr - 1;
+                    var selectMonth = $("#ddlyr");
+                    var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select --';
+                            selectMonth.append(monthElem);
+
+                    var monthElem = document.createElement("option");
+                    monthElem.value = preyr;
+                    monthElem.textContent = preyr;
+                    selectMonth.append(monthElem);
+                    var monthElem = document.createElement("option");
+                    monthElem.value = yr;
+                    monthElem.textContent = yr;
+                    selectMonth.append(monthElem);
+
+                    var dt = new Date();
+                    var year = dt.getFullYear();
+                    var mon = dt.getMonth() + 1;
+                    $('#ddlyr').val(year);
+                    $("#ddlfrommonth").val(mon);
+
+                    $("#ddlyr").on("change", function () {
+                        var curyr =new  Date();
+                        var yr = curyr.getFullYear();
+                        var mnt = curyr.getMonth()+1;
+                        debugger;
+                        var selyr = $('#ddlyr').val();
+                        var selmn = $('#ddlfrommonth').val();
+                        var countval = $("[name='CountryCode']:checked").val();
+                        var rst = "undefined";
+                        //var result = countval.compare(rst);
+                        if (typeof countval != "undefined" && selmn != "0") {
+                            ViewBU(countval);
+                        }
+
+                    });
+                    $("#ddlfrommonth").on("change", function () {
+                        debugger;
+                        var curyr = new Date();
+                        var yr = curyr.getFullYear();
+                        var mnt = curyr.getMonth()+1;
+                        debugger
+                        var selyr = $('#ddlyr').val();
+                        var selmn = $('#ddlfrommonth').val();
+                        var countval = $("[name='CountryCode']:checked").val();
+                        var rst = "undefined";
+                        var salesper = ddlsaleperson.value;
+                        //var result = countval.compare(rst);
+                        if (typeof countval != "undefined" && selyr != "0" && salesper!="0") {
+                            ViewBU(countval);
+                        }
+                    });
+
+
+
+                    debugger;
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json ;charset=utf-8;",
+                        async: true,
+                        url: '@Url.Action("GetSalesPerson", "SalesPersonTarget")',
+                        data: JSON.stringify({ "ftype": "F" }),
+                        cache: false,
+
+                        processData: false,
+                        success: function (BU) {
+                            debugger;
+                            document.getElementById('ddlsaleperson').innerHTML = "";
+                            var selectMonth = $("#ddlsaleperson");
+                             var trn = '@userval';
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select--';
+                            selectMonth.append(monthElem);
+                            $.each(BU, function (i, value) {
+                                debugger;
+                                var monthElem = document.createElement("option");
+                                monthElem.value = value.Id;
+                                monthElem.textContent = value.Name;
+                                if (value.LName == trn) {
+                                    monthElem.setAttribute('Selected','selected');
+                                }
+                                selectMonth.append(monthElem);
+
+                            });
+                            BindCountry();
+
+                        }
+
+                    });
+
+
+                });
+
+</script>
+<script>
+    function changemonthprv() {
+        var selmn = $('#ddlfrommonth').val();
+        if (selmn < 2) {
+            $("#ddlfrommonth").val('1');
+        } else {
+            $("#ddlfrommonth").val(parseInt(selmn) - 1);
+        }
+
+
+    }
+
+    function changemonth() {
+        debugger;
+
+            var selmn = $('#ddlfrommonth').val();
+            if (selmn < 12) {
+                $("#ddlfrommonth").val(parseInt(selmn) + 1);
+            } else {
+                $("#ddlfrommonth").val('1');
+            }
+
+
+    }
+      function BindCountry() {
+        debugger;
+       // var selectMonth = $("#ddlsaleperson");
+        var slval = ddlsaleperson.value;
+        var slperval = slval;
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async:false,
+            url: '@Url.Action("GetSalesPersonCountry", "SalesPersonTarget")',
+            data: JSON.stringify({ "id": slval }),
+            cache: false,
+
+            processData: false,
+            success: function (Country) {
+                debugger;
+                document.getElementById('countrylist').innerHTML = "";
+                var cnt = document.getElementById('countrylist');
+                //var selectMonth = $("#ddlsaleperson");
+                // var monthElem = document.createElement("option");
+                // monthElem.value = '0';
+                // monthElem.textContent ='-- Select--';
+                //selectMonth.append(monthElem);
+                var countryrbt = "";
+
+                $.each(Country, function (i, value) {
+                    debugger;
+                    countryrbt +=' <label class="form-radio-label">'
+                    countryrbt += '<input type="radio" name="CountryCode" class= "form - radio - input" onchange ="ViewBU(this)"'
+                    countryrbt += 'value="' + value.CountryCode + '"/>'
+                    countryrbt += '<span class="form-radio-sign">' + value.CountryName +'</span></label>'
+
+
+
+
+
+                    //var selecttag2 = document.createElement("label");
+
+
+
+
+
+                });
+                document.getElementById('countrylist').innerHTML = countryrbt;
+            }
+        });
+
+    }
+
+                function viewpopup() {
+                    debugger;
+                    var countval = $("[name='CountryCode']:checked").val();
+                    var rst = "undefined";
+                    //var result = countval.compare(rst);
+                    if (typeof countval=="undefined") {
+                        RdotAlerterrtxt("Please select country");
+                        document.getElementById(' CopyFromPopUp').hidden;
+
+
+                    } else {
+                        var selval = document.getElementById("txntype").value;
+                        if (selval == "Y") {
+                            document.getElementById('popupmonthly').style.display = '';
+
+                            document.getElementById('popupquarter').style.display = 'none';
+                            var dt = new Date();
+                            var year = dt.getFullYear();
+                            var mon = dt.getMonth() + 1
+                            var curyr = new Date;
+                            var yr = curyr.getFullYear();
+                            var preyr = yr - 1;
+                            document.getElementById('popupMyr').innerHTML = '';
+                            var selectMonth = $("#popupMyr");
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select --';
+                            selectMonth.append(monthElem);
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = preyr;
+                            monthElem.textContent = preyr;
+                            selectMonth.append(monthElem);
+                            var monthElem = document.createElement("option");
+                            monthElem.value = yr;
+                            monthElem.textContent = yr;
+                            selectMonth.append(monthElem);
+                           // $('#popupMyr').val(year);
+                           // $("#popupM").val(mon);
+                        } else if (selval == "Q") {
+
+                            document.getElementById('popupquarter').style.display = '';
+
+                            document.getElementById('popupmonthly').style.display = 'none';
+                            var dt = new Date();
+                            var year = dt.getFullYear();
+                            var mon = dt.getMonth() + 1;
+                            var quarterval;
+                            if (mon >= 1 && mon <= 3) {
+                                quarterval = "Q1";
+                            } else if (mon >= 4 && mon <= 6) {
+                                quarterval = "Q2";
+                            } else if (mon >= 7 && mon <= 9) {
+                                quarterval = "Q3";
+                            } else if (mon >= 10 && mon <= 12) {
+                                quarterval = "Q4";
+                            }
+                            var curyr = new Date;
+                            var yr = curyr.getFullYear();
+                            var preyr = yr - 1;
+                            document.getElementById('popupQyr').innerHTML = '';
+                            var selectMonth = $("#popupQyr");
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select --';
+                            selectMonth.append(monthElem);
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = preyr;
+                            monthElem.textContent = preyr;
+                            selectMonth.append(monthElem);
+                            var monthElem = document.createElement("option");
+                            monthElem.value = yr;
+                            monthElem.textContent = yr;
+                            selectMonth.append(monthElem);
+                           // $("#popupQyr").val(year);
+                           //$("#popupQ").val(quarterval);
+
+
+                        }
+                        $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json ;charset=utf-8;",
+                        async: true,
+                        url: '@Url.Action("GetSalesPerson", "SalesPersonTarget")',
+                        //data: JSON.stringify({ "fdata": rjdata }),
+                        cache: false,
+
+                        processData: false,
+                        success: function (BU) {
+                            debugger;
+                            document.getElementById('popupddlsalesperson').innerHTML = "";
+                            var selectMonth = $("#popupddlsalesperson");
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select--';
+                            selectMonth.append(monthElem);
+                            $.each(BU, function (i, value) {
+                                var monthElem = document.createElement("option");
+                                monthElem.value = value.Id;
+                                monthElem.textContent = value.Name;
+                                selectMonth.append(monthElem);
+
+                            });
+                        }
+                    });
+                    }
+                    document.getElementById("btnapply").disabled = true;
+                }
+
+                function clearall() {
+                    document.getElementById("copyfrom").disabled = true;
+                    var x = document.getElementById("ddlyr");
+                    if (x.value != "") { x.selectedIndex = 0; }
+
+                    var y = document.getElementById("ddlfrommonth");
+                    if (y.value != "") { y.selectedIndex = 0; }
+
+                    var ele = document.getElementsByName("CountryCode");
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i].checked = false;
+                    }
+
+                    $('input[name=CountryCode]').attr('checked', false);
+                    //var a= document.getElementById("ddlQyr");
+                    //if (a.value != "") { a.selectedIndex = 0; }
+                    document.getElementById('BUGrid').innerHTML = "";
+                   // document.getElementById('BUGrid').innerHTML = '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row"><div class="reddotTableHead width40per"><div>BU</div></div><div class="reddotTableHead width10per"><div>Revenue Targets</div></div><div class="reddotTableHead width10per"><div>GP Targets</div></div></div> </div>';
+                    document.getElementById('BUGrid').innerHTML = '<div class="reddotTableRow odd-even-row"> <div class="reddotTableHead width1per"><div>Sr</div></div><div class="reddotTableHead width15per"><div>BU</div></div><div class="reddotTableHead width8per"><div>Rev Targets</div></div><div class="reddotTableHead width8per"><div>Rev Forcast RR</div></div><div class="reddotTableHead width8per"><div>Rev forcast BTB</div></div><div class="reddotTableHead width8per"><div>GP Targets</div></div><div class="reddotTableHead width8per"><div>GP Forcast RR</div></div><div class="reddotTableHead width8per"><div>GP forcast BTB</div></div><div class="reddotTableHead width8per"><div>RF Vs RT %</div></div><div class="reddotTableHead width8per"><div>GPF Vs GPT %</div></div></div>';
+
+                    var b= document.getElementById("ddlquater");
+                    if (b.value != "") { b.selectedIndex = 0; }
+                }
+                function ViewBU(countrycode) {
+                    debugger;
+
+                    document.getElementById('BUGrid').innerHTML = "";
+                    document.getElementById('BUGrid').innerHTML = '<div class="reddotTableRow odd-even-row"> <div class="reddotTableHead width1per"><div>Sr</div></div><div class="reddotTableHead width15per"><div>BU</div></div><div class="reddotTableHead width8per"><div>Rev Targets</div></div><div class="reddotTableHead width8per"><div>Rev Forcast RR</div></div><div class="reddotTableHead width8per"><div>Rev forcast BTB</div></div><div class="reddotTableHead width8per"><div>GP Targets</div></div><div class="reddotTableHead width8per"><div>GP Forcast RR</div></div><div class="reddotTableHead width8per"><div>GP forcast BTB</div></div><div class="reddotTableHead width8per"><div>RF Vs RT %</div></div><div class="reddotTableHead width8per"><div>GPF Vs GPT %</div></div></div>';
+                    var yrval = ddlyr.value;
+                    var trnyval = yrval;
+                    var frmnt = ddlfrommonth.value;
+                    var fmonth = frmnt;
+
+
+                    var countval = $("[name='CountryCode']:checked").val();
+                    var curyr = new Date();
+                    var yr = curyr.getFullYear();
+                    var mnt = curyr.getMonth() + 1;
+                    debugger;
+                    var selyr = $('#ddlyr').val();
+                    var selmn = $('#ddlfrommonth').val();
+                    var salesper = ddlsaleperson.value;
+                    var rjdata = JSON.stringify({ "year": trnyval, "Month": fmonth, "salesperson": salesper, "country": countval, });
+                    var revtotal=0;
+                    var revrrtotal=0;
+                    var revbtbtotal;
+                    var gptotal;
+                    var gprrtotal;
+                    var gpbtbtotal;
+                $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetForecastBU", "Forecast")',
+            data: JSON.stringify({ "fdata": rjdata }),
+            cache: false,
+
+            processData: false,
+                    success: function (BU) {
+                        debugger;
+                        if (BU.length > 0) {
+                            var p = document.getElementById('BUGrid');
+                            $.each(BU, function (i, value) {
+                                var idx = i;
+                                debugger;
+                                if (value.BU == "Total") {
+                                    totalbuidx = idx;
+                                    var d = document.createElement('div');
+                                    d.className = "reddotTableBody";
+                                    d.id = "row" + idx;
+                                    var e = document.createElement('div');
+                                    e.className = "reddotTableRow odd-even-row";
+                                    e.id = "Subrow" + idx;
+
+                                    var srf = document.createElement('div');
+                                    srf.className = "reddotTableHead";
+                                    srf.id = "cell11";
+                                    var srg = document.createElement('div');
+                                    srg.id = "cellsr";
+                                    srg.innerHTML = i + 1;
+                                    srf.appendChild(srg);
+
+
+                                    var f = document.createElement('div');
+                                    f.className = "reddotTableHead";
+                                    f.id = "cell1";
+                                    var g = document.createElement('div');
+                                    g.id = "cellBU";
+                                    g.innerHTML = value.BU;
+                                    f.appendChild(g);
+
+                                    //Salerevenue
+                                    var l = document.createElement('div');
+                                    l.className = "reddotTableHead";
+                                    l.id = "cell12";
+                                    var m = document.createElement('div');
+                                    m.id = "salerevenuetot";
+
+                                    m.innerHTML = value.Revenue;
+                                    l.appendChild(m);
+
+
+                                    ////
+                                    var h = document.createElement('div');
+                                    h.className = "reddotTableHead";
+                                    h.id = "cell2";
+                                    var i = document.createElement('div');
+                                    i.id = "revenuerrtot";
+                                    i.innerHTML = value.RevenueRR;
+                                    // i.appendChild(inputrevenue);
+                                    h.appendChild(i);
+                                    ///// Revenue BTB
+
+                                    var n = document.createElement('div');
+                                    n.className = "reddotTableHead";
+                                    n.id = "cell22";
+                                    var o = document.createElement('div');
+                                    o.id = "revenuebtbtot";
+                                    o.innerHTML = value.RevenueBTB;
+                                    // o.appendChild(inputrevenueBTB);
+                                    n.appendChild(o);
+
+                                    //// //Salegp
+                                    var q = document.createElement('div');
+                                    q.className = "reddotTableHead";
+                                    q.id = "cell13";
+                                    var r = document.createElement('div');
+                                    r.id = "salegptot";
+
+                                    r.innerHTML = value.gp;
+                                    q.appendChild(r);
+
+
+                                    ////
+
+                                    var j = document.createElement('div');
+                                    j.className = "reddotTableHead";
+                                    j.id = "cell3";
+                                    var k = document.createElement('div');
+                                    k.id = "gprrtot";
+                                    k.innerHTML = value.GPRR
+                                    //k.appendChild(inputgp);
+                                    j.appendChild(k);
+                                    ////gpBTB
+                                    var s = document.createElement('div');
+                                    s.className = "reddotTableHead";
+                                    s.id = "cell33";
+                                    var t = document.createElement('div');
+                                    t.id = "gpbtbtot";
+                                    t.innerHTML = value.GPBTB
+
+                                    // t.appendChild(inputgpbtb);
+                                    s.appendChild(t);
+
+
+                                    ////revenue %
+
+
+                                    var u = document.createElement('div');
+                                    u.className = "reddotTableHead";
+                                    u.id = "cell14";
+                                    var v = document.createElement('div');
+                                    v.id = "salerevenueper_" + idx;
+                                    v.innerHTML = "";
+                                    u.appendChild(v);
+
+                                    /////gpper
+                                    var w = document.createElement('div');
+                                    w.className = "reddotTableHead";
+                                    w.id = "cell15";
+                                    var x = document.createElement('div');
+                                    x.id = "salegpper_" + idx;
+                                    x.innerHTML = "";
+                                    w.appendChild(x);
+
+                                    ///
+                                    e.appendChild(srf);
+                                    e.appendChild(f);
+                                    e.appendChild(l);
+                                    e.appendChild(h);
+                                    e.appendChild(n);
+                                    e.appendChild(q);
+                                    e.appendChild(j);
+
+                                    e.appendChild(s);
+                                    e.appendChild(u);
+                                    e.appendChild(w);
+                                    d.appendChild(e);
+                                    p.appendChild(d);
+                                } else {
+                                    var d = document.createElement('div');
+                                    d.className = "reddotTableBody";
+                                    d.id = "row" + idx;
+                                    var e = document.createElement('div');
+                                    e.className = "reddotTableRow odd-even-row";
+                                    e.id = "Subrow" + idx;
+
+                                    var srf = document.createElement('div');
+                                    srf.className = "reddotTableCell";
+                                    srf.id = "cell11";
+                                    var srg = document.createElement('div');
+                                    srg.id = "cellsr";
+                                    srg.innerHTML = i + 1;
+                                    srf.appendChild(srg);
+
+
+                                    var f = document.createElement('div');
+                                    f.className = "reddotTableCell";
+                                    f.id = "cell1";
+                                    var g = document.createElement('div');
+                                    g.id = "cellBU_" + idx;
+                                    g.innerHTML = value.BU;
+                                    f.appendChild(g);
+
+                                    //Salerevenue
+                                    var l = document.createElement('div');
+                                    l.className = "reddotTableCell";
+                                    l.id = "cell12";
+                                    var m = document.createElement('div');
+                                    m.id = "salerevenue_" + idx;
+
+                                    m.innerHTML = value.Revenue;
+                                    l.appendChild(m);
+
+
+                                    ////
+                                    var h = document.createElement('div');
+                                    h.className = "reddotTableCell";
+                                    h.id = "cell2";
+                                    var i = document.createElement('div');
+                                    i.id = "revenuerr";
+
+                                    var inputrevenue = document.createElement("INPUT");
+                                    inputrevenue.setAttribute("type", "text");
+                                    // alert(value.revenue);
+                                    inputrevenue.style.textAlign = "right";
+                                    inputrevenue.setAttribute("onkeypress", 'return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)');
+
+                                    inputrevenue.id = "txtrevenueRR_" + idx;
+                                    inputrevenue.name = i;
+                                    inputrevenue.setAttribute("onkeyup", 'calculate(this)');
+
+
+                                    inputrevenue.style.width = "100px";
+                                    inputrevenue.setAttribute('value', value.RevenueRR);
+                                    if (value.EnableProperty == "Disable") {
+                                        inputrevenue.setAttribute('disabled', 'true');
+                                    } else {
+                                        inputrevenue.setAttribute('enabled', 'true');
+                                    }
+                                    i.appendChild(inputrevenue);
+                                    h.appendChild(i);
+                                    ///// Revenue BTB
+
+                                    var n = document.createElement('div');
+                                    n.className = "reddotTableCell";
+                                    n.id = "cell22";
+                                    var o = document.createElement('div');
+                                    o.id = "revenuebtb";
+                                    o.name = "revenuebtb[]";
+                                    var inputrevenueBTB = document.createElement("INPUT");
+                                    inputrevenueBTB.setAttribute("type", "text");
+                                    // alert(value.revenue);
+                                    inputrevenueBTB.style.textAlign = "right";
+                                    inputrevenueBTB.setAttribute("onkeypress", 'return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)');
+                                    inputrevenueBTB.style.width = "100px";
+                                    inputrevenueBTB.id = "txtrevenueBTB_" + idx;
+                                    inputrevenueBTB.setAttribute('value', value.RevenueBTB);
+                                    inputrevenueBTB.setAttribute("onkeyup", 'calculate(this)');
+
+                                    if (value.EnableProperty == "Disable") {
+                                        inputrevenueBTB.setAttribute('disabled', 'true');
+                                    } else {
+                                        inputrevenueBTB.setAttribute('enabled', 'true');
+                                    }
+                                    o.appendChild(inputrevenueBTB);
+                                    n.appendChild(o);
+
+                                    //// //Salegp
+                                    var q = document.createElement('div');
+                                    q.className = "reddotTableCell";
+                                    q.id = "cell13";
+                                    var r = document.createElement('div');
+                                    r.id = "salegp_" + idx;
+
+                                    r.innerHTML = value.gp;
+                                    q.appendChild(r);
+
+
+                                    ////
+
+                                    var j = document.createElement('div');
+                                    j.className = "reddotTableCell";
+                                    j.id = "cell3";
+                                    var k = document.createElement('div');
+                                    k.id = "cellval3";
+                                    var inputgp = document.createElement("INPUT");
+                                    inputgp.setAttribute("type", "text");
+                                    inputgp.id = "txtgprr_" + idx;
+                                    inputgp.value = value.GPRR;
+                                    inputgp.style.textAlign = "right";
+                                    inputgp.style.width = "100px";
+                                    inputgp.setAttribute("onkeypress", 'return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)');
+                                    inputgp.setAttribute("onkeyup", 'calculategp(this)');
+                                    inputgp.setAttribute("onblur", 'checkval(this)');
+                                    if (value.EnableProperty == "Disable") {
+                                        inputgp.setAttribute('disabled', 'true');
+                                    } else {
+                                        inputgp.setAttribute('enabled', 'true');
+                                    }
+                                    k.appendChild(inputgp);
+                                    j.appendChild(k);
+                                    ////gpBTB
+                                    var s = document.createElement('div');
+                                    s.className = "reddotTableCell";
+                                    s.id = "cell33";
+                                    var t = document.createElement('div');
+                                    t.id = "cellval33";
+
+                                    var inputgpbtb = document.createElement("INPUT");
+                                    inputgpbtb.setAttribute("type", "text");
+                                    inputgpbtb.id = "txtgpbtb_" + idx;
+                                    inputgpbtb.value = value.GPBTB;
+                                    inputgpbtb.style.textAlign = "right";
+                                    inputgpbtb.style.width = "100px";
+                                    inputgpbtb.setAttribute("onkeypress", 'return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)');
+                                    inputgpbtb.setAttribute("onkeyup", 'calculategp(this)');
+                                    inputgpbtb.setAttribute("onblur", 'checkvalbtb(this)');
+                                    if (value.EnableProperty == "Disable") {
+                                        inputgpbtb.setAttribute('disabled', 'true');
+                                    } else {
+                                        inputgpbtb.setAttribute('enabled', 'true');
+                                    }
+                                    t.appendChild(inputgpbtb);
+                                    s.appendChild(t);
+
+
+                                    ////revenue %
+
+
+                                    var u = document.createElement('div');
+                                    u.className = "reddotTableCell";
+                                    u.id = "cell14";
+                                    var v = document.createElement('div');
+                                    v.id = "salerevenueper_" + idx;
+                                    v.innerHTML = value.revenuepercent;
+                                    u.appendChild(v);
+
+                                    /////gpper
+                                    var w = document.createElement('div');
+                                    w.className = "reddotTableCell";
+                                    w.id = "cell15";
+                                    var x = document.createElement('div');
+                                    x.id = "salegpper_" + idx;
+                                    x.innerHTML = value.gppercent;
+                                    w.appendChild(x);
+
+                                    ///
+                                    e.appendChild(srf);
+                                    e.appendChild(f);
+                                    e.appendChild(l);
+                                    e.appendChild(h);
+                                    e.appendChild(n);
+                                    e.appendChild(q);
+                                    e.appendChild(j);
+
+                                    e.appendChild(s);
+                                    e.appendChild(u);
+                                    e.appendChild(w);
+                                    d.appendChild(e);
+                                    p.appendChild(d);
+                                }
+
+
+
+                            });
+                        } else {
+                            RdotAlerterrtxt("Data doesn't exist for selected criteria");
+                        }
+                        }
+                    });
+
+    }
+    function checkval(idx) {
+        var str = idx.id;
+        var index = str.indexOf("_") + 1;
+        debugger;
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        var rev = parseFloat($("#txtrevenueRR_" + result).val());
+        var gprev = parseFloat($("#txtgprr_" + result).val());
+        var buval = document.getElementById("cellBU_" + result).textContent;
+        if (rev > 0 && gprev == 0) {
+            RdotAlerterrtxt("Enter GP Forecast RR for BU " + buval);
+        } else if (rev == 0 && gprev > 0) {
+            RdotAlerterrtxt("Enter Revenue Forecast RR for BU " + buval);
+        }
+    }
+    function checkvalbtb(idx) {
+        var str = idx.id;
+        var index = str.indexOf("_") + 1;
+
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        var rev = parseFloat($("#txtrevenueBTB_" + result).val());
+        var gprev = parseFloat($("#txtgpbtb_" + result).val());
+        var buval = document.getElementById("cellBU_" + result).textContent;
+        if (rev > 0 && gprev == 0) {
+            RdotAlerterrtxt("Enter GP Forecast BTB for BU " + buval);
+        } else if (rev == 0 && gprev > 0) {
+            RdotAlerterrtxt("Enter Revenue Forecast BTB for BU " + buval);
+        }
+    }
+    function calculate(idx) {
+        debugger;
+        var str = idx.id;
+        var index = str.indexOf("_")+1;
+
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        var rev = parseFloat( $("#txtrevenueRR_" + result).val());
+        var saletar = document.getElementById("salerevenue_" + result);
+        var s = parseFloat(saletar.innerText);
+        var btbval = parseFloat( $("#txtrevenueBTB_" + result).val());
+        var rslt = "";
+        if (s == "0.00" || s == "0") {
+            rslt = "0.00";
+        } else {
+            if ($("#txtrevenueRR_" + result).val() == "") {
+                rev = 0.00;
+            } else if ($("#txtrevenueBTB_" + result).val() == "") {
+                btbval = 0.00;
+            }
+                var t = rev + btbval
+                rslt = (t * 100 / s).toFixed(2);
+
+        }
+       var saletar = document.getElementById('salerevenueper_' + result);
+
+        saletar.innerHTML = rslt;
+       var ival= totalbuidx ;
+        var totalrevrr = 0;
+        var totalrevbtb = 0;
+        for (i = 0; i < ival; i++) {
+            var val = $("#txtrevenueRR_" + i).val();
+            if (val == "") {
+                $("#txtrevenueRR_" + i).val("0.00");
+            }
+            var val1 = $("#txtrevenueBTB_" + i).val();
+            if (val1 == "") {
+                $("#txtrevenueBTB_" + i).val("0.00");
+            }
+            totalrevrr += parseFloat( $("#txtrevenueRR_" + i).val());
+            totalrevbtb += parseFloat($("#txtrevenueBTB_" + i).val());
+        }
+
+        var totr = document.getElementById('revenuerrtot');
+
+        totr.innerHTML = totalrevrr.toFixed(2);
+
+        var totbtb = document.getElementById('revenuebtbtot');
+
+        totbtb.innerHTML = totalrevbtb.toFixed(2);
+
+    }
+
+    function calculategp(idx) {
+        debugger;
+        var str = idx.id;
+        var index = str.indexOf("_") + 1;
+
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        var rev = parseFloat( $("#txtgprr_" + result).val());
+        var revbtb =parseFloat ($("#txtgpbtb_" + result).val());
+        var saletar = document.getElementById("salegp_" + result);
+        var s = parseFloat(   saletar.innerText);
+        var rslt = "";
+        if (s == "0.00" || s == "0") {
+            rslt = "0.00";
+        } else {
+            if ($("#txtgprr_" + result).val() == "") {
+                rev = 0.00;
+            } else if ($("#txtgpbtb_" + result).val() == "") {
+                btbval = 0.00;
+            }
+            var t = rev + revbtb
+            rslt = (t * 100 / s).toFixed(2);
+        }
+        var saletar = document.getElementById('salegpper_' + result);
+
+        saletar.innerHTML = rslt;
+
+        var ival = totalbuidx;
+        var totalgprr = 0;
+        var totalgpbtb = 0;
+        for (i = 0; i < ival; i++) {
+            var val = $("#txtgprr_" + i).val();
+            if (val == "") {
+                $("#txtgprr_" + i).val("0.00");
+            }
+            var val1 = $("#txtgpbtb_" + i).val();
+            if (val1 == "") {
+                $("#txtgpbtb_" + i).val("0.00");
+            }
+            totalgprr += parseFloat($("#txtgprr_" + i).val());
+            totalgpbtb += parseFloat($("#txtgpbtb_" + i).val());
+        }
+
+        var totr = document.getElementById('gprrtot');
+
+        totr.innerHTML = totalgprr.toFixed(2);
+
+        var totbtb = document.getElementById('gpbtbtot');
+
+        totbtb.innerHTML = totalgpbtb.toFixed(2);
+    }
+
+    function upd_art() {
+        var qty = $('#quantity').val();
+        var price = $('#price').val();
+
+        var total = (qty * price).toFixed(2);
+        $('#total').val(total);
+    }
+
+
+                $('#btnSave').on("click", function () {
+                    $(".loader1").show();
+                    var CountryBU = {
+
+                        BUDetails: [],
+
+
+                    };
+
+                    debugger;
+
+                    var yrval = ddlyr.value;
+                    var trnyval = yrval;
+                    var frmnt = ddlfrommonth.value;
+                    var fmonth = frmnt;
+                    // var tomnt = ddltomonth.value;
+                    var tmnt = "";
+                    //  alert(cardno);
+                    var typeval = document.getElementById("txntype");
+                    var txnval = typeval.value;
+                    ///alert(txnval);
+                    var qyr = ddlyr.value;
+                    var quYr = qyr;
+                    var countval = $("[name='CountryCode']:checked").val();
+                    //  alert($("[name='CountryCode']:checked").val());
+
+
+
+                    var salesper = ddlsaleperson.value;
+                    var elt = document.getElementById("ddlsaleperson");
+
+
+                    sfulnm = elt.options[elt.selectedIndex].text;
+                  //  var rjdata = JSON.stringify({ "Ccode": countval, "year": trnyval, "type": txnval, "frommonth": fmonth, "tomonth": tmnt, "Qvalue": Qval, "QYear": quYr });
+                    var flag = "False";
+                    if (trnyval == "0") {
+                        RdotAlerterrtxt("Please select Year");
+                    } else if (fmonth == "0") {
+                        RdotAlerterrtxt("Please select Month");
+                    } else if (typeof countval == "undefined") {
+                        RdotAlerterrtxt("Please select country");
+                    } else if (salesper == "0") {
+                        RdotAlerterrtxt("Please select sales person");
+                    } else {
+                        flag = "True";
+                    }
+                    var gprevenueflg = 0;
+                    var gprevmsg = "";
+                    if (flag == "True") {
+                        var searchEles = document.getElementById("BUGrid");
+                        var CountryBU = [];
+                        var elements = {};
+                        //  for (var i =0; i < searchEles.childElementCount; i++) {
+                        var children = searchEles.childNodes;
+
+                        for (var j = 0; j < children.length - 1; j++) {
+                            var child = children[j].childNodes;
+                            if (child.length == 1) {
+                                var subchild = child[0].childNodes;
+                                if (subchild.length == 10) {
+                                    var srval = subchild[0].textContent;
+                                    var buval = subchild[1].textContent;
+                                    var retar = subchild[2].textContent;
+
+                                    var cellsub = subchild[3].childNodes[0];
+                                    var revenue = cellsub.childNodes[0];
+                                    var revenueval = revenue.value;
+                                    var cellsubbtb = subchild[4].childNodes[0];
+                                    var revenuebtb = cellsubbtb.childNodes[0];
+                                    var revenuebtbval = revenuebtb.value;
+                                    var gptar = subchild[5].textContent;
+                                    // revenue = subchild[1].lastChild.nodeValue;
+                                    var cellgp = subchild[6].childNodes[0];
+                                    var gp = cellgp.childNodes[0];
+                                    var gpval = gp.value;
+
+                                    var cellgpbtb = subchild[7].childNodes[0];
+                                    var gpbtb = cellgpbtb.childNodes[0];
+                                    var gpbtbval = gpbtb.value;
+
+                                    var revpercent = subchild[8].textContent;
+                                    var gppercent = subchild[9].textContent;
+                                    debugger;
+                                    if (parseFloat(revenueval) > 0 && parseFloat(gpval) <= 0) {
+                                        gprevenueflg += 1;
+                                        gprevmsg = gprevmsg + ","+ buval ;
+                                    } else if (parseFloat(revenueval) <= 0 && parseFloat(gpval) > 0) {
+                                        gprevenueflg += 1;
+                                        gprevmsg = gprevmsg + "," + buval ;
+                                    } else if (parseFloat(revenuebtbval) <= 0 && parseFloat(gpbtbval)> 0) {
+                                        gprevenueflg += 1;
+                                        gprevmsg = gprevmsg + "," +buval ;
+                                    } else if (parseFloat(revenuebtbval) > 0 && parseFloat(gpbtbval) <= 0) {
+                                        gprevenueflg += 1;
+                                        gprevmsg = gprevmsg + "," +buval ;
+                                    }
+                                    elements = {
+                                        year: trnyval,
+                                        month: fmonth,
+                                        country: countval,
+                                        salesperson: salesper,
+                                        BU: buval,
+                                        revtar: retar,
+                                        revenurrr: revenueval,
+                                        revenuebtb: revenuebtbval,
+                                        gptarget: gptar,
+                                        gprr: gpval,
+                                        gpbtb: gpbtbval,
+                                        revper: revpercent,
+                                        gpper: gppercent,
+                                        sfullname:sfulnm
+                                    }
+
+                                    CountryBU.push(elements);
+                                }
+                            }
+                        }
+                        // }
+                        if (gprevenueflg == 0) {
+                            $.ajax({
+                                type: "Post",
+                                url: "/Forecast/SaveCountryBU",
+                                data: JSON.stringify({ "rjdata": CountryBU }),
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (result) {
+                                    //alert("Record Saved Successfully");
+                                    RdotAlertSucesstxt("Record Saved Successfully");
+                                    // location.reload();
+                                    // clearall();
+                                    var radioButtonArray = document.getElementsByName('CountryCode');
+
+                                    for (var i = 0; i < radioButtonArray.length; i++) {
+                                        var radioButton = radioButtonArray[i];
+                                        radioButton.checked = false;
+                                    }
+                                    document.getElementById('BUGrid').innerHTML = "";
+                                    document.getElementById('BUGrid').innerHTML = '<div class="reddotTableRow odd-even-row"> <div class="reddotTableHead width1per"><div>Sr</div></div><div class="reddotTableHead width15per"><div>BU</div></div><div class="reddotTableHead width8per"><div>Rev Targets</div></div><div class="reddotTableHead width8per"><div>Rev Forcast RR</div></div><div class="reddotTableHead width8per"><div>Rev forcast BTB</div></div><div class="reddotTableHead width8per"><div>GP Targets</div></div><div class="reddotTableHead width8per"><div>GP Forcast RR</div></div><div class="reddotTableHead width8per"><div>GP forcast BTB</div></div><div class="reddotTableHead width8per"><div>RF Vs RT %</div></div><div class="reddotTableHead width8per"><div>GPF Vs GPT %</div></div></div>';
+
+                                }
+
+                            });
+                        } else {
+                            RdotAlerterrtxt("Please Enter RevenueRR or RevenueBTB or GPRR or GPBTB for BU "+gprevmsg);
+                        }
+                        //  location.href = '@Url.Content("~/Targets/CountryTarget/Index/")';
+                    } else {
+
+                            RdotAlerterrtxt("Please Enter Compulsary fields.");
+
+                    }
+                });
+</script>
+<style>
+    .quick-scroll {
+        max-height: 300px;
+    }
+</style>
+

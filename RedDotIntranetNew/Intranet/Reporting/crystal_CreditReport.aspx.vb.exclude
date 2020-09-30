@@ -1,0 +1,338 @@
+﻿Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Shared
+Imports System.Reflection
+Imports System.Data
+Partial Class crystal_facilityDetails
+    Inherits System.Web.UI.Page
+    Dim myReport As New ReportDocument
+    Dim mySubReport1, mySubReport2 As New ReportDocument
+
+
+    Private evoCon As ADODB.Connection
+    Private conTRI As ADODB.Connection
+    Private conTZ As ADODB.Connection
+    Private conEPZ As ADODB.Connection
+    Private conKE As ADODB.Connection
+
+    Private rsSalesTRI As ADODB.Recordset
+    Private rsSalesTZ As ADODB.Recordset
+    Private rsSalesEPZ As ADODB.Recordset
+    Private rsSalesKE As ADODB.Recordset
+
+    Private Alloc As String
+    Private InvDate As String
+    Private InvDate2 As String
+    Private sSaveAsFileName, savePth As String
+
+    Protected Sub lbBack_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lbBack.Click
+        Response.Redirect("creditReportBase.aspx")
+    End Sub
+
+    Public Function RecordSetToDataTable(ByVal objRS As ADODB.Recordset) As DataTable
+        Dim objDA As New OleDb.OleDbDataAdapter()
+        Dim objDT As New DataTable()
+        objDA.Fill(objDT, objRS)
+        Return objDT
+    End Function
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        '''''just additions to existing code'''''''''replace variables in place of myglobal calls for dealer case''''''only three changes marked as 1* 2* 3* '''''''''
+        Try
+            Dim pDb, pCountryCode, pDCLink As String
+            pDb = ""
+            pCountryCode = ""
+            pDCLink = ""
+
+            If Request.QueryString("pDB") IsNot Nothing Then
+                pDb = Request.QueryString("pDB").ToString()
+            End If
+            If Request.QueryString("pCountryCode") IsNot Nothing Then
+                pCountryCode = Request.QueryString("pCountryCode").ToString()
+            End If
+            If Request.QueryString("pDCLink") IsNot Nothing Then
+                pDCLink = Request.QueryString("pDCLink").ToString()
+            End If
+
+            ''''addition ends''''''''''''''''''''
+
+            Dim rsSales As ADODB.Recordset = New ADODB.Recordset
+            Dim rsInv As ADODB.Recordset = New ADODB.Recordset
+            Dim rsTerms As ADODB.Recordset = New ADODB.Recordset
+            evoCon = New ADODB.Connection
+
+            Dim BaseSqlServer As String = myGlobal.BaseSqlServer()
+
+            Dim db1, db2, db As String
+            'db1 = myGlobal.loggedInUserDb()
+            db1 = pDb        ''''''''''''''''''''''''''change 1*
+
+            db2 = db1.Replace("[", "")
+            db = db2.Replace("]", "")
+
+            Dim ServerPrefix As String = myGlobal.getDBServerPrefix(db)
+
+            'Dim connect As String = "Provider=SQLOLEDB.1;" & myGlobal.getConnectionStringForDB(myGlobal.loggedInUserCountryCode())
+            Dim connect As String = "Provider=SQLOLEDB.1;" & myGlobal.getConnectionStringForDB(pCountryCode)       ''''''''''''''''''''''''''change 2*
+
+            evoCon.Open(connect)
+            Dim fromDate, toDate As String
+            fromDate = Date.Now.Year.ToString() & "-01-01"
+
+
+            toDate = Date.Now.ToString("yyyy-MM-dd")
+
+            '''''''''For testing over write dates
+            'fromDate = "2010-01-01"
+            'toDate = "2012-08-08"
+
+            'Dim dealerCode As String = myGlobal.loggedInUserEvoLink().ToString()       ''''''''''''''''''''''''''change 3*
+            Dim dealerCode As String = pDCLink
+
+            Dim dt, dt1 As DataTable
+            Dim sql1 As String
+
+            If pCountryCode = "KE" Or pCountryCode = "UG" Or pCountryCode = "EPZ" Then '''' field names are different in KE,UG,EPZ (Audit_NO) and in TZ,DU (cAuditNumber)
+                sql1 = "SELECT 0 as diff, 0 as OD30,0 as OD40,0 as OD45,0 as OD50,  TxDate, '0000-00-00' as indate, TrCodeID, fForeignDebit, fForeignCredit, Description, cAllocs, fForeignOutstanding, Reference, cReference2, ExtOrderNum, Description, idNotes, Debit, Credit, fForeignDebit, fForeignCredit " & _
+                            "FROM [" & db & "].dbo._bvARTransactionsFull left join [" & db & "].dbo._btblNotes as btb on ((btb.cNOTETBLTableName = 'POSTING') or (btb.cNOTETBLTableName = 'posting')) and (btb.fNOTETBLTableID = Audit_No) " & _
+                            "WHERE (AccountLink=" & dealerCode & ") and TxDate >= '" & fromDate & "' and TxDate <= '" & toDate & "' and id <> 'OInv' order by Txdate"
+            Else
+                sql1 = "SELECT 0 as diff, 0 as OD30,0 as OD40,0 as OD45,0 as OD50,  TxDate, '0000-00-00' as indate, TrCodeID, fForeignDebit, fForeignCredit, Description, cAllocs, fForeignOutstanding, Reference, cReference2, ExtOrderNum, Description, idNotes, Debit, Credit, fForeignDebit, fForeignCredit " & _
+                            "FROM [" & db & "].dbo._bvARTransactionsFull left join [" & db & "].dbo._btblNotes as btb on ((btb.cNOTETBLTableName = 'POSTING') or (btb.cNOTETBLTableName = 'posting')) and (btb.fNOTETBLTableID = cAuditNumber) " & _
+                            "WHERE (AccountLink=" & dealerCode & ") and TxDate >= '" & fromDate & "' and TxDate <= '" & toDate & "' and id <> 'OInv' order by Txdate"
+
+            End If
+
+            Dim cmd As ADODB.Command
+            cmd = New ADODB.Command
+
+            '--just added--------------
+            cmd.CommandTimeout = 600
+            cmd.ActiveConnection = evoCon
+            cmd.CommandType = ADODB.CommandTypeEnum.adCmdText
+            cmd.CommandText = sql1
+            rsInv = cmd.Execute()
+
+
+            Dim AgeLine As Integer = 2
+            Dim Dtinv, dttrans As Date
+            Dim dif As Integer
+
+            dt1 = RecordSetToDataTable(rsInv)
+            dt1.AcceptChanges()
+            Dim count As Integer = dt1.Rows.Count
+            For Each rows As DataRow In dt1.Rows
+                Alloc = rows("cAllocs")
+                Call cAlloc(Alloc)
+                'On Error Resume Next
+                rows("indate") = InvDate
+
+                dttrans = CDate(rows("TxDate"))
+                Dtinv = CDate(InvDate)
+                dif = DateDiff(DateInterval.Day, dttrans, Dtinv)
+
+                rows("diff") = dif
+                If dif <= 0 Then
+                    dif = "0"
+                Else
+                    dif = dif
+                End If
+
+                If dif > 30 Then
+                    rows("OD30") = 1
+                Else
+
+                    rows("OD30") = 0
+                End If
+
+                If dif > 40 Then
+                    rows("OD40") = 1
+                Else
+
+                    rows("OD40") = 0
+                End If
+
+                If dif > 45 Then
+
+                    rows("OD45") = 1
+                Else
+
+                    rows("OD45") = 0
+                End If
+                If dif > 50 Then
+
+                    rows("OD50") = 1
+                Else
+                    rows("OD50") = 0
+                End If
+
+
+
+
+                dt1.AcceptChanges()
+            Next
+
+            dt1.AcceptChanges()
+
+            Dim TOT30 As Integer = 0
+            Dim TOT40 As Integer = 0
+            Dim TOT45 As Integer = 0
+            Dim TOT50 As Integer = 0
+            Dim totdif As Integer = 0
+            For Each rows In dt1.Rows
+                TOT30 = TOT30 + rows("OD30")
+                TOT40 = TOT40 + rows("OD40")
+                TOT45 = TOT45 + rows("OD45")
+                TOT50 = TOT50 + rows("OD50")
+                totdif = totdif + rows("diff")
+            Next
+            Dim avg As Integer = 0
+            If count <> 0 Then
+                avg = totdif / count
+            End If
+            Dim max As Integer = 0
+            For Each row As DataRow In dt1.Rows
+                If row("diff") > max Then
+                    max = row("diff")
+                End If
+
+            Next
+
+            If evoCon.State Then
+                evoCon.Close()
+            End If
+
+
+            'Dim connectBase As String = "Provider=SQLOLEDB.1;" & myGlobal.ConnectionString
+            Dim connectBase As String = connect
+            evoCon.Open(connectBase)
+
+            '--just added--------------
+            cmd.CommandTimeout = 600
+            cmd.ActiveConnection = evoCon
+            cmd.CommandType = ADODB.CommandTypeEnum.adCmdStoredProc
+            'cmd.CommandText = "[dbo].[rptcreditcal]"
+            cmd.CommandText = "tej.[dbo].[rptcreditcalNew]"
+            cmd.Parameters.Append(cmd.CreateParameter("@db", ADODB.DataTypeEnum.adVarChar, ADODB.ParameterDirectionEnum.adParamInput, 200, db))
+            cmd.Parameters.Append(cmd.CreateParameter("@srv", ADODB.DataTypeEnum.adVarChar, ADODB.ParameterDirectionEnum.adParamInput, 100, ServerPrefix))
+            cmd.Parameters.Append(cmd.CreateParameter("@dealerCode", ADODB.DataTypeEnum.adInteger, ADODB.ParameterDirectionEnum.adParamInput, 5, dealerCode))
+            cmd.Parameters.Append(cmd.CreateParameter("@fromDate", ADODB.DataTypeEnum.adVarChar, ADODB.ParameterDirectionEnum.adParamInput, 10, fromDate))
+            cmd.Parameters.Append(cmd.CreateParameter("@toDate", ADODB.DataTypeEnum.adVarChar, ADODB.ParameterDirectionEnum.adParamInput, 10, toDate))
+            rsSales = cmd.Execute()
+
+            dt = RecordSetToDataTable(rsSales)
+
+            'evoCon.Close()
+
+            If dt.Rows.Count > 0 Then
+                dt.AcceptChanges()
+                Dim Crdlimit As Long
+                For Each row As DataRow In dt.Rows
+                    Crdlimit = row("Credit_Limit")
+                Next
+
+                Dim AVGRATING As String = ""
+                If avg <= 30 Then
+                    AVGRATING = "A"
+                ElseIf avg <= 45 Then
+                    AVGRATING = "B"
+                ElseIf avg <= 60 Then
+                    AVGRATING = "C"
+                ElseIf avg <= 90 Then
+                    AVGRATING = "D"
+                ElseIf avg <= 120 Then
+                    AVGRATING = "E"
+                ElseIf avg > 121 Then
+                    AVGRATING = "F"
+                End If
+
+
+                'CREDIT RATING base on credit limit
+                Dim CrdRate As Integer = 0
+                If Crdlimit >= 1000000 Then
+                    CrdRate = 1
+                ElseIf Crdlimit >= 500000 Then
+                    CrdRate = 2
+                ElseIf Crdlimit >= 100000 Then
+                    CrdRate = 3
+                ElseIf Crdlimit >= 50000 Then
+                    CrdRate = 4
+                ElseIf Crdlimit >= 10000 Then
+                    CrdRate = 5
+                ElseIf Crdlimit >= 5000 Then
+                    CrdRate = 6
+                End If
+
+
+
+                For Each row As DataRow In dt.Rows
+                    row("fromdate") = fromDate
+                    row("dateto") = toDate
+
+                    row("OD30") = TOT30
+                    row("OD40") = TOT40
+                    row("OD45") = TOT45
+                    row("OD50") = TOT50
+                    row("Avgtime") = avg
+                    row("MaxTime") = max
+                    row("AVGRAT") = AVGRATING
+                    row("CrdRating") = CrdRate
+                Next
+
+                dt.AcceptChanges()
+            End If
+
+
+            Try
+                myReport.Load(Server.MapPath("~/CrystalReport/subCdtRptDiagram.rpt"))
+                myReport.Database.Tables(0).SetDataSource(dt)
+
+                mySubReport2 = myReport.OpenSubreport("subcreditreport.rpt")
+                mySubReport2.Database.Tables(0).SetDataSource(dt)
+
+
+                myReport.Refresh()
+                Me.CrystalReportViewer1.ReportSource = myReport
+
+
+
+
+                If evoCon.State Then
+                    evoCon.Close()
+                End If
+
+                ' Message.Show(Me, "success rpts credit")
+            Catch ex As Exception
+                Message.Show(Me, ex.Message)
+            End Try
+
+        Catch ex As Exception
+            Message.Show(Me, ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub cAlloc(ByVal Alloc As String)
+        For i = Len(Alloc) - 1 To 1 Step -1
+            If Mid(Alloc, i, 2) = "D=" Then
+                InvDate = Mid(Alloc, i + 6, 2) & "/" & Mid(Alloc, i + 8, 2) & "/" & Mid(Alloc, i + 2, 4)
+                InvDate2 = Mid(Alloc, i + 6, 2) & "/" & Mid(Alloc, i + 8, 2) & "/" & Mid(Alloc, i + 2, 4)
+                Exit Sub
+            End If
+        Next i
+
+    End Sub
+
+
+    Private Sub SetDBLogonForReport(ByVal myConnectionInfo As ConnectionInfo)
+        Dim myTableLogOnInfos As TableLogOnInfos = CrystalReportViewer1.LogOnInfo
+        For Each myTableLogOnInfo As TableLogOnInfo In myTableLogOnInfos
+            myTableLogOnInfo.ConnectionInfo = myConnectionInfo
+        Next
+    End Sub
+
+    Protected Sub Page_Unload(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Unload
+        myReport.Close()
+        myReport.Dispose()
+    End Sub
+End Class

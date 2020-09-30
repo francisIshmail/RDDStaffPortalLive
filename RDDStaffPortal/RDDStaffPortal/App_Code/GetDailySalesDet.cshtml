@@ -1,0 +1,210 @@
+﻿@helper GetDSR_CallStatusList(List<RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DailySalesReports> dailySalesReports)
+{
+
+    <div>
+        @foreach (var i in dailySalesReports)
+        {
+
+        <div class="rowmin">
+            @*@Html.Hidden(string.Concat("ActionType-@i.VisitId"), new { @value= @i.VisitType })
+            @Html.Hidden(string.Concat("FromDate-@i.VisitId"), new { @value = @i.FromDate })*@
+            @*@Html.Hidden(string.Concat("ToDate-@i.VisitId"), new { @value = @i.ToDate })*@
+
+
+            <div class="card">
+                <div class="card-header" id="headingOne-@i.VisitId" data-toggle="collapse" data-target="#collapse-@i.VisitId" aria-expanded="true" aria-controls="collapseOne" role="button">
+                    <div class="span-title">
+                        Entry @i.VisitId
+                    </div>
+
+                    <div class=" ml-auto">
+                        <div class="action-btn">
+                            <button type="button" title="" data-toggle="tooltip" class="btn btn-info btn-sm" data-original-title="Edit"><i class="fas fa-edit"></i></button>
+                            <button type="button" title="" data-toggle="tooltip" class="btn btn-danger btn-sm" data-original-title="Delete"><i class="fas fa-trash-alt"></i></button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="plus-minus"></div>
+
+
+
+                </div>
+
+                <div id="collapse-@i.VisitId" class="collapse show" aria-labelledby="headingOne-@i.VisitId" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Country :</label>
+
+                                    @Html.DropDownList(string.Concat("Country", @i.VisitId), i.Country, Model.CountryList, new { @class = "form -control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Date :</label>
+                                    <div class="input-group">
+                                        @Html.TextBox(string.Concat("ActualVisitDate1", @i.VisitId), "", new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.Hidden(string.Concat("ActualVisitDate", @i.VisitId), new { @class = "form -control" })
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Call Mode :</label>
+                                    @Html.DropDownList(string.Concat("ModeOfCall", @i.VisitId), i.ModeOfCall, Model.ModeOfCallList, new { @class = "form -control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Call Type :</label>
+                                    @Html.DropDownList(string.Concat("CallStatus", @i.VisitId), i.CallStatus, Model.CallStatusList, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Company :</label>
+                                    @Html.Hidden(string.Concat("CardCode", @i.VisitId), i.CardCode)
+                                    @Html.TextBox(string.Concat("Company", @i.VisitId), i.Company, new { @class = "form -control" })
+                                    <i class="fas fa-plus-square small menu-icon-c" id="divhdnchk" title="New Reseller" data-toggle="modal" data-target="#SelectNewResellerpopup"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Contact Person :</label>
+                                    @Html.TextBox(string.Concat("PersonMet", @i.VisitId), i.PersonMet, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Designation :</label>
+                                    @Html.TextBox(string.Concat("Designation", @i.VisitId), i.Designation, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Email :</label>
+                                    @Html.TextBox(string.Concat("Email", @i.VisitId), i.Email, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Phone :</label>
+                                    @Html.TextBox(string.Concat("ContactNo", @i.VisitId), i.ContactNo, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>BU :</label>
+                                    @Html.TextBox(string.Concat("BU", @i.VisitId), i.BU, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Biz :</label>
+                                    @Html.TextBox(string.Concat("ExpectedBusinessAmt", @i.VisitId), i.ExpectedBusinessAmt, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Next Action :</label>
+                                    @Html.DropDownList(string.Concat("NextAction", @i.VisitId), i.NextAction, Model.NextActionList, new { @class = "form -control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Discussion :</label>
+                                    @Html.TextArea(string.Concat("Discussion", @i.VisitId), i.Discussion, new { @class = "form -control", @rows = "3" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Feedback :</label>
+                                    @Html.TextArea(string.Concat("Feedback", @i.VisitId), i.Feedback, new { @class = "form -control", @rows = "3" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" id="Forwardbtn-@i.VisitId" data-toggle="tooltip" title="Forward"><i class="fas fa-reply"></i></button>
+                            <button type="button" class="btn btn-info btn-sm" id="Remindorbtn-@i.VisitId" data-toggle="tooltip" title="Remindor"><i class="fas fa-bell"></i></button>
+                        </div>
+                        <div class="row mar-t10" id="RemindorSection-@i.VisitId" style="display:none">
+                            <div class="col-md-6 ml-auto">
+                                <div class="cardnew border1 padd-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inlineinput" class="col-form-label">Date :</label>
+                                                <div class="input-group">
+                                                    @Html.TextBox("ReminderDate1", "", new { @class = "form-control DatepickerH", @readonly = "readonly" })
+                                                    @Html.Hidden(string.Concat("ReminderDate", @i.VisitId), i.ReminderDate, new { @class = "form -control" })
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="inlineinput" class=" col-form-label">Remarks :</label>
+                                                @Html.TextArea(string.Concat("ReminderDesc", @i.VisitId), new { @class = "form -control", @rows = "3" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mar-t10" id="ForwardSection-@i.VisitId" style="display:none">
+                            <div class="col-md-6 ml-auto">
+                                <div class="cardnew border2 padd-10">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="inlineinput" class="col-form-label">Email :</label>
+                                                @Html.TextBox(string.Concat("ForwardCallToEmail", @i.VisitId), i.ForwardCallToEmail, new { @class = "form -control", @rows = "3" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="inlineinput" class=" col-form-label">Instruction :</label>
+                                                @Html.TextArea(string.Concat("ForwardRemark", @i.VisitId), i.ForwardRemark, new { @class = "form -control", @rows = "3" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" id="Forwardbtn-@i.VisitId" data-toggle="tooltip" title="Forward"><i class="fas fa-reply"></i></button>
+                            <button type="button" class="btn btn-info btn-sm" id="Remindorbtn-@i.VisitId" data-toggle="tooltip" title="Remindor"><i class="fas fa-bell"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    }
+
+                </div>
+                }
