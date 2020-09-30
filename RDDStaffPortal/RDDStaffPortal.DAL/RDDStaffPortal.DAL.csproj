@@ -93,6 +93,7 @@
     <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DataModels\Admin\RDD_APPROVAL_DOC.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />

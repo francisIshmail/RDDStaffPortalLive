@@ -9,7 +9,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Sales Order</h4></div>
+                <div id="pgHeader" class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Sales Order List</h4></div>
                 <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
                     <button id="btn_MainSave" class="btn btn-success btn-sm">New</button>
                     <button id="btn_MainClear" class="btn btn-info btn-sm" disabled>Clear</button>
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group form-inline">
-                                            <label for="Database" class="col-md-5 col-form-label p-0">RDO Project :</label>
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Project :</label>
                                             <div class="col-md-7 p-0">
                                                 <select class="form-control form-control-sm" id="cbSerRDDProject">
                                                     <option>Select RDD Project</option>
@@ -95,16 +95,16 @@
                                         <div class="form-group form-inline">
                                             <label for="Database" class="col-md-5 col-form-label p-0">Customer Name</label>
                                             <div class="col-md-7 p-0">
-                                                <input type="text" class="form-control form-control-sm" id="txtSerCardName" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="txtSerCardName" >
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group form-inline">
-                                            <label for="Database" class="col-md-5 col-form-label p-0">Document Status</label>
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Business Type</label>
                                             <div class="col-md-7 p-0">
-                                                <select class="form-control form-control-sm" id="cbSerDocStatus">
-                                                    <option>--Select--</option>
+                                                <select class="form-control form-control-sm" id="cbSerBusinessType">
+                                                    <option>Select Business Type</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@
                                         <div class="form-group form-inline">
                                             <label for="Database" class="col-md-5 col-form-label p-0">Ref. No</label>
                                             <div class="col-md-7 p-0">
-                                                <input type="text" class="form-control form-control-sm" id="txtSerRefNum" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="txtSerRefNum" >
                                             </div>
                                         </div>
                                     </div>
@@ -133,6 +133,12 @@
                                             <div class="col-md-7 p-0">
                                                 <select class="form-control form-control-sm" id="cbSerApprStatus">
                                                     <option>--Select--</option>
+                                                    <option value="Draft">Draft</option>
+                                                    <option value="Open">Open</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Rejected-Open">Rejected-Open</option>
+                                                    <option value="Rejected-Closed">Rejected-Closed</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -146,20 +152,19 @@
                                     <div id="IInd" class="reddotTableBody">
                                         <div class="reddotTableRow odd-even-row">
                                             <div class="reddotTableHead"><div>DBName </div></div>
-                                            <div class="reddotTableHead"><div>SO_ID </div></div>
+                                            <div class="reddotTableHead"><div>ID </div></div>
                                             <div class="reddotTableHead"><div>RefNo </div></div>
-                                            <div class="reddotTableHead"><div>SAP_DocNum </div></div>
+                                            <div class="reddotTableHead"><div>SAP_ID </div></div>
                                             <div class="reddotTableHead"><div>PostingDate </div></div>
-                                            <div class="reddotTableHead"><div>CardCode </div></div>
-                                            <div class="reddotTableHead"><div>CardName </div></div>
-                                            <div class="reddotTableHead"><div>RDD_Project </div></div>
-                                            <div class="reddotTableHead"><div>BusinesType </div></div>
-                                            <div class="reddotTableHead"><div>Total_Tx </div></div>
+                                            <div class="reddotTableHead"><div>Customer </div></div>
+                                            <div class="reddotTableHead"><div>Sales Person </div></div>
+                                            <div class="reddotTableHead"><div>Project </div></div>
+                                            <div class="reddotTableHead"><div>Type </div></div>
                                             <div class="reddotTableHead"><div>DocTotal </div></div>
-                                            <div class="reddotTableHead"><div>DocStatus </div></div>
                                             <div class="reddotTableHead"><div>GP </div></div>
-                                            <div class="reddotTableHead"><div>GP_Per </div></div>
-                                            <div class="reddotTableHead"><div>AprovedBy </div></div>
+                                            <div class="reddotTableHead"><div>GP(%)</div></div>
+                                            <div class="reddotTableHead"><div>Status </div></div>
+                                            @*<div class="reddotTableHead"><div>AprovedBy </div></div>*@
                                             <div class="reddotTableHead"><div>Remarks </div></div>
 
                                         </div>
@@ -171,16 +176,15 @@
                                             <div class="reddotTableCellLeft Abcd"><div>RefNo</div></div>
                                             <div class="reddotTableCellLeft Abcd"><div>SAP_DocNum</div></div>
                                             <div class="reddotTableCell Abcd"><div>PostingDate</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>CardCode</div></div>
                                             <div class="reddotTableCellLeft Abcd"><div>CardName</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>SlpName</div></div>
                                             <div class="reddotTableCellLeft Abcd"><div>RDD_Project</div></div>
                                             <div class="reddotTableCellLeft Abcd"><div>BusinesType</div></div>
-                                            <div class="reddotTableCellRight Abcd"><div>Total_Tx</div></div>
                                             <div class="reddotTableCellRight Abcd"><div>DocTotal</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>DocStatus</div></div>
                                             <div class="reddotTableCellRight Abcd"><div>GP</div></div>
                                             <div class="reddotTableCellRight Abcd"><div>GP_Per</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>AprovedBy</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>DocStatus</div></div>
+                                            @*<div class="reddotTableCellLeft Abcd"><div>AprovedBy</div></div>*@
                                             <div class="reddotTableCellLeft Abcd"><div>Remarks</div></div>
 
                                         </div>
@@ -847,7 +851,9 @@
         </div>
     </div>
 </div>
+<div id="Divid">
 
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>

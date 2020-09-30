@@ -32,6 +32,8 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public string CustPayTerms { get; set; }
         public string Forwarder { get; set; }
         public string SalesEmp { get; set; }
+
+        public string SlpName { get; set; }
         public string Pay_Method_1 { get; set; }
         public string Rcpt_check_No_1 { get; set; }
         public DateTime Rcpt_check_Date_1 { get; set; }

@@ -4,7 +4,7 @@ var ItemDetails = new Array();
 var update_Row_Flag = false;
 var _Post_To_SAP = 'N';
 var _SO_ID = 0;
-var tblhead1 = ['DBName', 'SO_ID', 'RefNo', 'SAP_DocNum', 'PostingDate', 'CardCode', 'CardName', 'RDD_Project', 'BusinesType', 'Total_Tx', 'DocTotal', 'GP', 'GP_Per', 'AprovedBy', 'Remarks'];
+var tblhead1 = ['DBName', 'SO_ID', 'RefNo', 'SAP_DocNum', 'PostingDate', 'CardName', 'SlpName', 'RDD_Project', 'BusinesType', 'DocTotal', 'GP', 'GP_Per', 'DocStatus', 'Remarks'];
 var tblhide = [];
 var tblhead2 = [];
 var dateCond = ['PostingDate'];
@@ -22,7 +22,7 @@ SalesOrder.prototype = {
     },
 
     ControlInit: function () {
-
+        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order List</h4>');
         $('.loader1').hide();
         Get_SOR_List();
 
@@ -36,6 +36,8 @@ SalesOrder.prototype = {
 
             format: 'DD/MM/YYYY'
         });
+
+        
 
         RedDot_NewDate("#txtPostingDate");
 
@@ -205,7 +207,7 @@ SalesOrder.prototype = {
                 cache: false,
                 type: "POST",
                 url: "/SAP/SalesOrder/Get_ActiveOPGSelloutList",
-                data: JSON.stringify({ basedb: 'SAPAE', rebatedb: $("[id$=DBName]").val(), itemcode: tr.find(".Abcd").eq(2).text() }),
+                data: JSON.stringify({ basedb: 'SAPAE', rebatedb: $("#DBName").val(), itemcode: tr.find(".Abcd").eq(2).text() }),
                 dataType: 'Json',
                 contentType: "Application/json",
                 success: function (value) {
@@ -269,7 +271,7 @@ SalesOrder.prototype = {
         $("#DBName").change(function () {
             try {
                 debugger;
-                if (($("[id$=DBName]").val() != "Select DB") && ($("[id$=DBName]").val() != "") && ($("[id$=DBName]").val() != "0")) {
+                if (($("#DBName").val() != "Select DB") && ($("#DBName").val() != "") && ($("#DBName").val() != "0")) {
                     $.ajax({
 
 
@@ -381,9 +383,9 @@ SalesOrder.prototype = {
 
             source: function (request, response) {
 
-                //debugger;
+                debugger;
 
-                if ($("[id$=DBName]").val() == "Select DB" || $("[id$=DBName]").val() == "" || $("[id$=DBName]").val() == "0") {
+                if ($("#DBName").val() == "--Select DB--" || $("#DBName").val() == "" || $("#DBName").val() == "0") {
                     alert('Please Select Company DataBase ');
                     $("[id$=txtCardName]").val('');
                     $("[id$=txtCardCode]").val('');
@@ -434,7 +436,7 @@ SalesOrder.prototype = {
 
                 debugger;
 
-                if (($("[id$=DBName]").val() == "Select DB") || ($("[id$=DBName]").val() == "") || ($("[id$=DBName]").val() == "0")) {
+                if (($("#DBName").val() == "--Select DB--") || ($("#DBName").val() == "") || ($("#DBName").val() == "0")) {
                     alert('Please Select Company DataBase ');
                     $("[id$=txtItem]").val('');
                     $("[id$=txtDescr]").val('');
@@ -495,7 +497,7 @@ SalesOrder.prototype = {
                     cache: false,
                     type: "POST",
                     url: "/SAP/SalesOrder/Get_ActiveOPGSelloutList",
-                    data: JSON.stringify({ basedb: 'SAPAE', rebatedb: $("[id$=DBName]").val(), itemcode: $("[id$=txtItem]").val() }),
+                    data: JSON.stringify({ basedb: 'SAPAE', rebatedb: $("#DBName").val(), itemcode: $("[id$=txtItem]").val() }),
                     dataType: 'Json',
                     contentType: "Application/json",
                     success: function (value) {
@@ -527,14 +529,14 @@ SalesOrder.prototype = {
         $("[id$=cbWhs]").change(function () {
             debugger;
             try {
-                if ($("[id$=cbWhs]").val() != '' && $("[id$=DBName]").val() != "Select DB" && $("[id$=DBName]").val() != "0") {
+                if ($("[id$=cbWhs]").val() != '' && $("#DBName").val() != "Select DB" && $("#DBName").val() != "0") {
                     debugger;
                     $.ajax({
                         async: false,
                         cache: false,
                         type: "POST",
                         url: "/SAP/SalesOrder/Get_WarehouseQty",
-                        data: JSON.stringify({ itemcode: $("[id$=txtItem]").val(), whscode: $("[id$=cbWhs]").val(), dbname: $("[id$=DBName]").val() }),
+                        data: JSON.stringify({ itemcode: $("[id$=txtItem]").val(), whscode: $("[id$=cbWhs]").val(), dbname: $("#DBName").val() }),
                         dataType: 'Json',
                         contentType: "Application/json",
                         success: function (value) {
@@ -566,13 +568,13 @@ SalesOrder.prototype = {
 
         $("[id$=cbTax]").change(function () {
             try {
-                if ($("[id$=cbTax]").val() != '' && $("[id$=DBName]").val() != "Select DB" && $("[id$=DBName]").val() != "0") {
+                if ($("[id$=cbTax]").val() != '' && $("#DBName").val() != "Select DB" && $("#DBName").val() != "0") {
                     $.ajax({
                         async: false,
                         cache: false,
                         type: "POST",
                         url: "/SAP/SalesOrder/Get_TaxCodeRate",
-                        data: JSON.stringify({ taxcode: $("[id$=cbTax]").val(), dbname: $("[id$=DBName]").val() }),
+                        data: JSON.stringify({ taxcode: $("[id$=cbTax]").val(), dbname: $("#DBName").val() }),
                         dataType: 'Json',
                         contentType: "Application/json",
 
@@ -601,7 +603,7 @@ SalesOrder.prototype = {
         $("[id$=txtUnitPrice],[id$=txtQt],[id$=txtDisc]").change(function () {
             debugger;
             try {
-                if ($("[id$=txtQt]").val() != '' && $("[id$=txtUnitPrice]").val() != '' && $("[id$=DBName]").val() != "Select DB" && $("[id$=DBName]").val() != "0") {
+                if ($("[id$=txtQt]").val() != '' && $("[id$=txtUnitPrice]").val() != '' && $("#DBName").val() != "Select DB" && $("#DBName").val() != "0") {
 
                     var Qty = parseFloat($("[id$=txtQt]").val());
                     var UnitPrice = parseFloat($("[id$=txtUnitPrice]").val());
@@ -749,7 +751,7 @@ SalesOrder.prototype = {
                             Doc_Object: 17,
                             Base_Obj: 0,
                             Base_ID: 0,
-                            DBName: $("[id$=DBName]").val(),
+                            DBName: $("#DBName").val(),
                             PostingDate: GetSqlDateformat($("[id$=txtPostingDate]").val()),
                             DeliveryDate: GetSqlDateformat($("[id$=txtDelDate]").val()),
                             DocStatus: $("[id$=txtDocStatus]").val(),
@@ -799,6 +801,8 @@ SalesOrder.prototype = {
         $("[id$=btn_MainSave]").click(function () {
             try {
                 debugger
+               
+
                 if ($("#btn_MainSave").text() == 'New') {
                     $("#FilterSection1").hide();
                     $("#FilterSection").hide();
@@ -806,12 +810,14 @@ SalesOrder.prototype = {
                     $("#SalesOrderForm").show();
                     $("#btn_MainSave").text("Save");
 
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order</h4>');
+
                     $('#btn_MainClear').removeAttr('disabled');
                     $('#btn_MainSearch').removeAttr('disabled');
-
+                  
                     ////$('#btn_MainCancel').removeAttr('disabled');
-                    //$('#btn_MainClear').prop('disabled', true);
-                    //$('#btn_MainSearch').prop('disabled', true);
+                    $('#btn_MainPost').prop('disabled', true);
+                    $('#btn_MainCancel').prop('disabled', true);
                     //$('#btn_MainCancel').prop('disabled', true);
 
                 }
@@ -826,7 +832,7 @@ SalesOrder.prototype = {
                             SalesOrder_Obj['Doc_Object'] = 17;
                             SalesOrder_Obj['Base_Obj'] = 0;
                             SalesOrder_Obj['Base_ID'] = 0;
-                            SalesOrder_Obj['DBName'] = $("[id$=DBName]").val();
+                            SalesOrder_Obj['DBName'] = $("#DBName").val();
                             SalesOrder_Obj['PostingDate'] = GetSqlDateformat($("[id$=txtPostingDate]").val());
                             SalesOrder_Obj['DeliveryDate'] = GetSqlDateformat($("[id$=txtDelDate]").val());
                             SalesOrder_Obj['DocStatus'] = $("[id$=txtDocStatus]").val();
@@ -846,6 +852,7 @@ SalesOrder.prototype = {
                             SalesOrder_Obj['CustPayTerms'] = $("[id$=cbCustPayTerm]").val();
                             SalesOrder_Obj['Forwarder'] = $("[id$=txt_ForworderDet]").val();
                             SalesOrder_Obj['SalesEmp'] = $("[id$=cbSalesEmp]").val();
+                            SalesOrder_Obj['SlpName'] = $("#cbSalesEmp option:selected").text(); 
 
                             SalesOrder_Obj['Pay_Method_1'] = $("[id$=cbPayMth1]").val();
                             SalesOrder_Obj['Rcpt_check_No_1'] = $("[id$=txtCheck1]").val();
@@ -902,7 +909,7 @@ SalesOrder.prototype = {
                             var k = 1;
                             $(".SalesDetail").each(function () {
                                 //if (!this.rowIndex) return; // skip first row
-                                debugger;
+                               
                                 var SalesOrderDetail_Obj = new Object();
                                 SalesOrderDetail_Obj['ItemCode'] = $(this).find(".Abcd").eq(2).text();
                                 SalesOrderDetail_Obj['Description'] = $(this).find(".Abcd").eq(3).text();
@@ -941,7 +948,7 @@ SalesOrder.prototype = {
                                 cache: false,
                                 type: "POST",
                                 url: "/SAP/SalesOrder/Save_SalesOrder",
-                                data: JSON.stringify({ model: JSON.stringify(SalesOrder), model1: JSON.stringify(SalesOrderDetail), dbname: $("[id$=cbDataBase]").val() }),
+                                data: JSON.stringify({ model: JSON.stringify(SalesOrder), model1: JSON.stringify(SalesOrderDetail), dbname: $("#DBName").val() }),
                                 dataType: 'Json',
                                 contentType: "Application/json",
 
@@ -951,9 +958,61 @@ SalesOrder.prototype = {
 
                                     if (jData.table[0].Result == 'True') {
 
-                                        RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message);
-                                        ClearControls();
+                                        if ($("#btn_MainSave").text() == 'Save' || $("[id$=txtDocStatus]").val() == 'Draft' || $("[id$=txtDocStatus]").val() == 'Rejected-Open' ) {
+                                            debugger
+                                            _SO_ID = jData.table[1].Message;
 
+                                            var data = JSON.stringify({
+                                                Object_Type: '17',
+                                                Originator: $("[id$=txtCreatedBy]").val(),
+                                                DocKey: jData.table[1].Message,
+
+                                            });
+                                          var CheckApproval=  Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
+                                          
+                                            if (CheckApproval == true) {
+                                                var a = ConfirmYesNo("ApprovalModal");
+
+                                                a.then(function (b) {
+                                                    //debugger
+                                                    if (b == 1) {
+
+                                                        $.ajax({
+                                                            async: false,
+                                                            cache: false,
+                                                            type: "POST",
+                                                            data: JSON.stringify({ Object_Type: '17', Originator: $("[id$=txtCreatedBy]").val(), DocKey: _SO_ID, OriginatorRemark: $("[id$=MRemark]").val()}),
+                                                            url: "/RDD_Approver_Insert_Records",
+                                                            dataType: 'Json',
+                                                            contentType: "Application/json",
+
+                                                            success: function (response) {
+                                                                debugger
+                                                                if (response.Table.length != 0) {
+
+                                                                    if (response.Table[0].Result == 'True') {
+                                                                        RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message + ' And Document send for Approval');
+                                                                        ClearControls();
+                                                                    }
+                                                                   
+                                                                }
+
+                                                            }
+                                                        });
+                                                        
+                                                    }
+                                                    else {
+                                                        RedDotAlert_Success(jData.table[0].Message + ' As Draft. '+ " Trans ID-" + jData.table[1].Message);
+                                                        ClearControls();
+                                                    }
+                                                })
+                                            }
+                                            else {
+                                                RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message);
+                                                ClearControls();
+                                            }
+
+                                        }
 
                                     }
                                     else {
@@ -979,7 +1038,27 @@ SalesOrder.prototype = {
                 alert(Error);
             }
         });
+        
 
+        function ConfirmYesNo(ModelId) {
+            var dfd = jQuery.Deferred();
+            var $confirm = $('#' + ModelId+'');
+            $confirm.modal('show');
+
+            $('#btnApproval').off('click').click(function () {
+
+                $confirm.modal('hide');
+                dfd.resolve(1);
+                return 1;
+            });
+            $('#btnAppCancel').off('click').click(function () {
+                $confirm.modal('hide');
+                dfd.resolve(0);
+                return 0;
+            });
+            return dfd.promise();
+        }
+       
         $("[id$=btn_MainClear]").click(function () {
             ClearControls();
 
@@ -1067,6 +1146,133 @@ SalesOrder.prototype = {
             $('#btn_MainSearch').removeAttr('disabled');
             $('#btn_MainCancel').removeAttr('disabled');
 
+        });
+
+
+        //--This is for Serch Parameter
+        $("#SerDBName").change(function () {
+            debugger;
+            try {
+                debugger;
+                if (($("#SerDBName").val() != "Select DB") && ($("#SerDBName").val() != "") && ($("#SerDBName").val() != "0")) {
+                    $.ajax({
+
+
+                        async: false,
+                        cache: false,
+                        type: "POST",
+                        url: "/SAP/SalesOrder/Get_BindDDLList",
+                        data: JSON.stringify({ dbname: $("#SerDBName").val() }),
+                        dataType: 'Json',
+                        contentType: "Application/json",
+
+                        success: function (value) {
+                            //debugger;
+                            var jData = value
+
+                            var ddlRDDProject = jData.Table;
+                            var ddlBusinesType = jData.Table1;
+                            var ddlInvPayTerm = jData.Table2;
+                            var ddlCustPayTerm = jData.Table3;
+                            var ddlSalesEmp = jData.Table4;
+                            var ddlPayMethod = jData.Table5;
+                            var ddlCurrency = jData.Table6;
+                            var ddlWhsCode = jData.Table7;
+                            var ddlTaxCode = jData.Table8;
+                            var ddlDocStatus = jData.Table9;
+                            var ddlAprStatus = jData.Table10;
+
+                            $("[id$=cbSerRDDProject]").empty();
+                            for (var i = 0; i < ddlRDDProject.length; i++) {
+
+                                $("[id$=cbSerRDDProject]").append($("<option></option>").val(ddlRDDProject[i].Code).html(ddlRDDProject[i].Descr));
+                            }
+
+                            $("[id$=cbSerBusinessType]").empty();
+                            for (var i = 0; i < ddlBusinesType.length; i++) {
+
+                                $("[id$=cbSerBusinessType]").append($("<option></option>").val(ddlBusinesType[i].Code).html(ddlBusinesType[i].Descr));
+                            }
+
+                           
+                            $("[id$=cbSerSalesEmp]").empty();
+                            for (var i = 0; i < ddlSalesEmp.length; i++) {
+
+                                $("[id$=cbSerSalesEmp]").append($("<option></option>").val(ddlSalesEmp[i].Code).html(ddlSalesEmp[i].Descr));
+                            }
+                            
+                           
+                           
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                }
+            }
+            catch (Error) {
+                alert(Error);
+            }
+
+            Get_SOR_List();
+        });
+
+        $("[id$=txtSerCardName]").autocomplete({
+
+            source: function (request, response) {
+
+                //debugger;
+
+                if ($("#SerDBName").val() == "Select DB" || $("#SerDBName").val() == "" || $("#SerDBName").val() == "0") {
+                    alert('Please Select Company DataBase ');
+                    $("[id$=txtSerCardName]").val('');
+                    $("[id$=txtSerCardCode]").val('');
+                    return;
+                }
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/SAP/SalesOrder/GetCustomers",
+                    data: JSON.stringify({ prefix: request.term, dbname: $("#SerDBName").val(), field: 'cardname' }),
+                    dataType: 'Json',
+                    contentType: "Application/json",
+                    success: function (data) {
+                        //debugger;
+
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.split('#')[0],
+                                val: item.split('#')[1]
+                            }
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                //debugger;
+                $("[id$=txtSerCardName]").val(i.item.label);
+                $("[id$=txtSerCardCode]").val(i.item.val);
+
+              
+
+
+            },
+            minLength: 1
+        });
+
+        $("#btnApply").click(function () {
+            Get_SOR_List();
         });
     },
 }
@@ -1208,8 +1414,8 @@ function Get_GP_And_GPPer() {
             success: function (value) {
                 debugger;
                 var jData = value.Table;
-                var GP = jData[0].gpvalrowusd;
-                var GPPer = jData[0].gppercrowusd;
+                var GP = jData[0].GPValRowUSD;
+                var GPPer = jData[0].GPPercRowUSD;
 
                 $("[id$=txt_GP]").val(GP);
                 $("[id$=txt_GPPer]").val(GPPer);
@@ -1233,7 +1439,7 @@ function Validate() {
     debugger;
     try {
 
-        if ($("[id$=DBName]").val() == '0' || $("[id$=DBName]").val() == '' || $("[id$=DBName]").val() == '--Select DB--') {
+        if ($("#DBName").val() == '0' || $("#DBName").val() == '' || $("#DBName").val() == '--Select DB--') {
             RedDotAlert_Error("Select SAP Database...");
             return false;
         }
@@ -1313,7 +1519,7 @@ function Validate() {
 
         //---This is for payment method 2
 
-        if ($("[id$=cbPayMth2]").val() != '0' && $("[id$=cbPayMth2]").val() != '' && $("[id$=cbPayMth2]").val() != '--Select--') {
+        if ($("[id$=cbPayMth2]").val() != null && $("[id$=cbPayMth2]").val() != '0' && $("[id$=cbPayMth2]").val() != '' && $("[id$=cbPayMth2]").val() != '--Select--') {
 
             if ($("[id$=txtCheck2]").val() == '') {
                 RedDotAlert_Error("Enter Check/Rceipt No 2...");
@@ -1449,8 +1655,9 @@ function ClearControls() {
     _SO_ID = 0;
     _Post_To_SAP = 'N';
     $("#btn_MainSave").text("Save");
+    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order</h4>');
     //$("[id$=pgHeader]").html('<span>Sales Order</span>');
-    $("[id$=DBName]").val('0').trigger('change');
+    $("#DBName").val('0').trigger('change');
 
     var Dt = new Date();
 
@@ -1609,12 +1816,39 @@ function GetSqlDateformat(obj) {
 
 function Get_SOR_List() {
     debugger;
+    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order List</h4>');
     var value1 = '';//$("#Search-Forms").val().toLowerCase();
     var DBName = 'All';
     var UserName = $('#txtCreatedBy').val();
 
     if (($("#SerDBName").val() != "Select DB") && ($("#SerDBName").val() != "") && ($("#SerDBName").val() != "0")) {
         DBName = $("#SerDBName").val();
+
+        if ($("#txtSerFrmDate").val() != '' && $("#txtSerToDate").val() != '')
+            value1 = " And T0.PostingDate BetWeen $" + GetSqlDateformat($("[id$=txtSerFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtSerToDate]").val()) + "$"
+        else {
+            var ToDate = new Date();
+            var FromDate = ToDate.setDate(ToDate.getDate() - 30);
+            value1 = " And T0.PostingDate BetWeen $" + GetSqlDateformat(FromDate) + "$ And $" + GetSqlDateformat(ToDate) + "$"
+        }
+
+        if ($("#txtSerCardCode").val() != '')
+            value1 = value1 + " And T0.CardCode=$" + $("#txtSerCardCode").val() + "$";
+
+        if ($("[id$=cbSerRDDProject]").val() != '0' && $("[id$=cbSerRDDProject]").val()!= '' && $("[id$=cbSerRDDProject]").val() != 'Select RDD Project') 
+            value1 = value1 + " And T0.RDD_Project=$" + $("[id$=cbSerRDDProject]").val() + "$";
+
+        if ($("[id$=cbSerBusinessType]").val() != '0' && $("[id$=cbSerBusinessType]").val() != '' && $("[id$=cbSerBusinessType]").val() != 'Select Business Type')
+            value1 = value1 + " And T0.BusinesType=$" + $("[id$=cbSerBusinessType]").val() + "$";
+
+        if ($("#txtSerRefNum").val() != '')
+            value1 = value1 + " And T0.RefNo=$" + $("#txtSerRefNum").val() + "$";
+
+        if ($("[id$=cbSerSalesEmp]").val() != '-1' && $("[id$=cbSerSalesEmp]").val() != '' && $("[id$=cbSerSalesEmp]").val() != '-No Sales Employee-') 
+            value1 = value1 + " And T0.SalesEmp=$" + $("#cbSerSalesEmp").val() + "$";
+
+        if ($("#cbSerApprStatus").val() != '' && $("#cbSerApprStatus").val() != '--Select--')
+            value1 = value1 + " And DocStatus=$" + $("#cbSerApprStatus").val() + "$";
     }
     $('.loader1').show();
     var data = JSON.stringify({
@@ -1625,6 +1859,8 @@ function Get_SOR_List() {
         UserName: UserName
     });
     arr = RedDot_DivTable_Fill("II", "/Get_SalesOrder_List", data, dateCond, tblhead1, tblhide, tblhead2);
+
+    
 }
 
 function getId(dbName, e) {
@@ -1660,7 +1896,7 @@ function getId(dbName, e) {
                 //else
                 //    $("[id$=pgHeader]").html('<span>Sales Order</span>');
 
-                $("[id$=DBName]").val(SO_Header[0].dbname).trigger('change');
+                $("#DBName").val(SO_Header[0].dbname).trigger('change');
                 $("[id$=txtCardCode]").val(SO_Header[0].cardcode);
                 $("[id$=txtCardName]").val(SO_Header[0].cardname);
                 $("[id$=txtRefNum]").val(SO_Header[0].refno);
@@ -1716,7 +1952,43 @@ function getId(dbName, e) {
                 $("#FilterSection").hide();
                 $("#tblid").hide();
                 $("#SalesOrderForm").show();
-                $("#btn_MainSave").text("Update");
+                if ($("[id$=txtDocStatus]").val() == 'Draft') {
+                    $('#btn_MainSave').removeAttr('disabled');
+                    $("#btn_MainSave").text("Save");
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Draft</h4>');
+                }
+                else if ($("[id$=txtDocStatus]").val() == 'Pending') {
+                    $("#btn_MainSave").text("Save");
+
+                    $('#btn_MainSave').prop('disabled', true);
+                    $('#btn_MainCancel').prop('disabled', true);
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Pending for Approval</h4>');
+                }
+                else if ($("[id$=txtDocStatus]").val() == 'Approved') {
+                    $("#btn_MainSave").text("Save");
+                    $('#btn_MainCancel').removeAttr('disabled');
+                    $('#btn_MainCancel').prop('disabled', true);
+                    $('#btn_MainSave').prop('disabled', true);
+                   
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Approved</h4>');
+                }
+                else if ($("[id$=txtDocStatus]").val() == 'Rejected-Open') {
+                    $("#btn_MainSave").text("Save");
+                    $('#btn_MainSave').removeAttr('disabled');
+                    $('#btn_MainCancel').removeAttr('disabled');
+
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Rejected-Open</h4>');
+                }
+                else if ($("[id$=txtDocStatus]").val() == 'Rejected-Closed') {
+                    $("#btn_MainSave").text("Save");
+                    $('#btn_MainSave').prop('disabled', true);
+                    $('#btn_MainCancel').prop('disabled', true);
+
+                    $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Rejected-Closed</h4>');
+                }
+                else
+                    $("#btn_MainSave").text("Update");
+
                 EditMode = false;
             },
             error: function (response) {

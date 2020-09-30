@@ -1,0 +1,482 @@
+﻿
+@model RDDStaffPortal.DAL.DataModels.Admin.RDD_APPROVAL_DOC
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Approval Status Report</h4>
+                </div>
+                <div class="col-md-1 ml-auto text-right">
+                    <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+                </div>
+
+            </div>
+
+            <div class="rowmin" id="FilterSection" style="display:none">
+                <div class="col-md-12">
+                    <div class="card success-border full-height padd-10 smform-section">
+                        <div class="row">
+                            <div class="col-xl-4 col-md-4">
+                                <div class="row">
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="SalesOrder" name="ApprovalStatus" class="custom-control-input" checked>
+                                                <label class="custom-control-label" for="SalesOrder">Sales Order</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="PurchaseOrder" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="PurchaseOrder">Purchase Order</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Quotation" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="Quotation">Quotation</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="PurchaseRequest" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="PurchaseRequest">Purchase Request</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ccol-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="SalesInvoice" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="SalesInvoice">Sales Invoice</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="PurchaseInvoice" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="PurchaseInvoice">Purchase Invoice</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Funnal" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="Funnal">Funnal</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ccol-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="LPO" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="LPO">LPO</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-md-8">
+                                <div class="row">
+                                    <div class="col-xl-5 col-md-5">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-1 col-form-label p-0 width80px">From Date :</label>
+                                            <div class="col-md-6 col-xl-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm datepicker" id="txtFrmDate" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-5 col-md-5">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-1 p-0  col-form-label">To Date :</label>
+                                            <div class="col-md-6 col-xl-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm datepicker" id="txtToDate" name="datepicker">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-5 col-md-5">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-1 col-form-label p-0 width80px">Originator :</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    @Html.DropDownListFor(m => m.ORIGINATOR, ViewBag.ddlOriginatorList as SelectList, new { @id = "cbOriginator", @class = "form-control form-control-sm" })
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-5 col-md-5">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-1 col-form-label p-0 width80px">Approver :</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="txtApprover" value="@User.Identity.Name" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-5 col-md-5">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-1 col-form-label p-0 width80px">Status :</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="cbStatus">
+                                                    <option>-- Select --</option>
+                                                    <option value="P">Pending</option>
+                                                    <option value="A">Approved</option>
+                                                    <option value="RO">Rejected-Open</option>
+                                                    <option value="RC">Rejected-Closed</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xl-1 col-md-1 ml-auto text-right">
+                                        <button type="button" class="btn btn-info btn-sm" id="btnApply">Apply</button>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div id="IInd" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead"><div>SRNO</div></div>
+                                            <div class="reddotTableHead"><div>OBJTYPE</div></div>
+                                            <div class="reddotTableHead"><div>DocumentName</div></div>
+                                            <div class="reddotTableHead"><div>Doc Number</div></div>
+                                            <div class="reddotTableHead"><div>DOC_DATE</div></div>
+                                            <div class="reddotTableHead"><div>Customer</div></div>
+                                            <div class="reddotTableHead"><div>Document total</div></div>
+                                            <div class="reddotTableHead"><div>Originator</div></div>
+                                            <div class="reddotTableHead"><div>Remark</div></div>
+                                            <div class="reddotTableHead"><div>Approver</div></div>
+                                            <div class="reddotTableHead"><div>Status</div></div>
+                                            <div class="reddotTableHead"><div>Approved On</div></div>
+                                            <div class="reddotTableHead"><div>Action</div></div>
+
+                                        </div>
+                                    </div>
+                                    <div id="IIbody" class="reddotTableBody">
+                                        <div id="IIst" class="reddotTableRow odd-even-row approvallist">
+                                            <div class="reddotTableCell Abcd"><div>SRNO</div></div>
+                                            <div class="reddotTableCell Abcd"><div>OBJTYPE</div></div>
+                                            <div class="reddotTableCell Abcd"><div>DocumentName</div></div>
+                                            <div class="reddotTableCell Abcd"><div>DOC_ID</div></div>
+                                            <div class="reddotTableCell Abcd"><div>DOC_DATE</div></div>
+                                            <div class="reddotTableCell Abcd"><div>CARDNAME</div></div>
+                                            <div class="reddotTableCell Abcd"><div>DocTotal</div></div>
+                                            <div class="reddotTableCell Abcd"><div>ORIGINATOR</div></div>
+                                            <div class="reddotTableCell Abcd"><div>ORG_Remark</div></div>
+                                            <div class="reddotTableCell Abcd"><div>APPROVER</div></div>
+                                            <div class="reddotTableCell Abcd"><div>APPROVAL_DECISION</div></div>
+                                            <div class="reddotTableCell Abcd"><div>APPROVAL_DATE</div></div>
+                                            <div class="reddotTableCell Abcd1">
+                                                <div>
+                                                    <button id="btnView" type="button" title="" data-toggle="tooltip" class="btn btn-info btn-sm btn-sm" data-original-title="View"> <i class="far fa-eye"></i></button>
+                                                    <button type="button" title="" class="btn btn-success btn-sm" data-original-title="Decision" data-toggle="modal" id="btnAction1"> <i class="fas fa-balance-scale"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mar-t10">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination mar-b0">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content width">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Catogary</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Country :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Date :</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="datepicker" name="datepicker">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Call Mode :</label>
+                            <select class="form-control form-control" id="defaultSelect">
+                                <option>-- Select --</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Call Type :</label>
+                            <select class="form-control form-control" id="defaultSelect">
+                                <option>-- Select --</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Company :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Contact Person :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Designation :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Email :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Phone :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>BU :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Biz :</label>
+                            <input name="firstname" type="text" class="form-control" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Next Action :</label>
+                            <select class="form-control form-control" id="defaultSelect">
+                                <option>-- Select --</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                                <option>sd</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Discussion :</label>
+                            <textarea class="form-control" id="comment" rows="3"> </textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ApprovalDecisionPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Approval Decision</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body padd-b0">
+                <div class="reddotTable sm-form mar-t0">
+                    <div id="IIInd" class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead colHide"><div>ID</div></div>
+                            <div class="reddotTableHead colHide"><div>Template_ID</div></div>
+                            <div class="reddotTableHead colHide"><div>ObjType</div></div>
+                            <div class="reddotTableHead"><div>Approver Name</div></div>
+                            <div class="reddotTableHead width12per"><div>Action</div></div>
+                            <div class="reddotTableHead"><div>Approver Remarks</div></div>
+                            <div class="reddotTableHead width12per"><div>Date</div></div>
+                        </div>
+                    </div>
+                    <div id="IIIBody" class="reddotTableBody">
+                        <div id="IIIst" class="reddotTableRow odd-even-row ApproverAction">
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtID"></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtTemplate_ID"></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtObjType"></div></div>
+                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprover"></div></div>
+                            <div class="reddotTableCell Abcd">
+                                <div>
+                                    <select class="form-control form-control-sm" id="cbAction">
+                                        <option value="P">Pending</option>
+                                        <option value="A">Approved</option>
+                                        <option value="RO">Rejected-Open</option>
+                                        <option value="RC">Rejected-Closed</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprRemark"></div></div>
+                            <div class="reddotTableCell Abcd">
+                                <div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm datepicker" id="txtApprovedDate" name="datepicker">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnActionSave" class="btn btn-info btn-sm">Save</button>
+                <button id="btnActionCancel" class="btn btn-danger btn-sm">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="Divid">
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script src="~/Scripts/Application/ApproverStatusReport.js" type="text/javascript"></script>
+
+<style>
+    .colHide{display:none;}
+</style>
+
+@*<script>
+        $(document).ready(function () {
+            $("#FilterBtn").click(function () {
+                $("#FilterSection").slideToggle("slow");
+            });
+
+            $(".datepicker").datetimepicker({
+
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>*@
+

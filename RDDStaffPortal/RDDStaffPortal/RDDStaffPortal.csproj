@@ -142,6 +142,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalStatusReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationsController.cs" />
@@ -197,6 +198,7 @@
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\timeout-dialog.css" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
+    <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -750,6 +752,7 @@
     <Content Include="Areas\HR\Views\Employees\GetEmployeeConfig.cshtml" />
     <Content Include="App_Code\GetEmpConfig.cshtml" />
     <Content Include="Areas\HR\Views\Employees\EmployeeConfig.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
