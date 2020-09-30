@@ -1,0 +1,134 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using System.Data.SqlClient;
+using System.Text;
+
+
+public partial class LoginNew : System.Web.UI.Page
+{
+    //Captcha.CaptchaControl captch = new Captcha.CaptchaControl();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        if (!IsPostBack)
+        {
+            Image ImgCaptcha = (Image)Login1.FindControl("imgCaptcha");
+            ImgCaptcha.ImageUrl = "CreateCaptcha.aspx?New=1";
+        }
+
+        ImageButton BtnRefresh = (ImageButton)Login1.FindControl("btnReset");
+        BtnRefresh.Click += new ImageClickEventHandler(BtnRefresh_Click);
+    }
+
+    void BtnRefresh_Click(object sender, ImageClickEventArgs e)
+    {
+        Image ImgCaptcha = (Image)Login1.FindControl("imgCaptcha");
+        ImgCaptcha.ImageUrl = "CreateCaptcha.aspx?New=1";
+    }
+
+    protected void onAuthenticate(object sender, AuthenticateEventArgs e)
+    {
+
+    }
+    protected void onLoggedIn(object sender, EventArgs e)
+    {
+        Response.Redirect(Request.Url.ToString());
+    }
+
+    protected void onLoggingIn(object sender, EventArgs e)
+    {
+        FormsAuthentication.RedirectFromLoginPage("admin", false);
+    }
+
+    private void Clear()
+    {
+    }
+
+    protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
+    {
+        try
+        {
+            TextBox txtCaptcha = (TextBox)Login1.FindControl("txtCaptchInput");
+
+            if (Session["RDDCaptchaCode"] != null && txtCaptcha.Text == Session["RDDCaptchaCode"].ToString())
+            {
+                if (Membership.ValidateUser(Login1.UserName, Login1.Password))
+                {
+                    e.Authenticated = true; //this is critical !!
+
+                    string strRedirect = Request["ReturnUrl"];
+                    string rls = myGlobal.loggedInRoleUserBased(Login1.UserName);
+
+                    FormsAuthentication.SetAuthCookie(Login1.UserName, true);
+
+                    if (rls.ToLower() == "wms" || rls.ToLower() == "sales" || rls.ToLower() == "reddot" || rls.ToLower() == "globallogistics" || rls.ToLower() == "countrylogistics" || rls.ToLower() == "globalfinance" || rls.ToLower() == "countryfinance" || rls.ToLower() == "countryFinanceController" || rls.ToLower() == "productmanagement" || rls.ToLower() == "selloutreporting" || rls.ToLower() == "creditlimitupdate" || rls.ToLower() == "tallyinvoiceexporter" || rls.ToLower() == "marketingexecutive" || rls.ToLower() == "marketingadmin" || rls.ToLower() == "productspecialist" || rls.ToLower() == "countrymanager")
+                    {
+                        // Added by Samuel --- Need UserId For WMS
+                        Session[RunningCache.UserID] = Login1.UserName;
+
+                        int idx = -1;
+                        idx = strRedirect.IndexOf("/Intranet/orders/");
+
+                        if (idx >= 0 && strRedirect.IndexOf("aspx?oId") >= 0)
+                        {
+                            strRedirect = strRedirect.Substring(idx);
+                            Response.Redirect("~" + strRedirect, true);
+                        }
+
+                        idx = strRedirect.IndexOf("/Intranet/Marketing/");
+                        if (idx >= 0 && strRedirect.IndexOf("aspx?oId") >= 0)
+                        {
+                            strRedirect = strRedirect.Substring(idx);
+                            Response.Redirect("~" + strRedirect, true);
+                        }
+
+                        Response.Redirect("~/Intranet/Home.aspx", true);
+                    }
+                    else if (rls.ToLower() == "admin")
+                        Response.Redirect("~/Admin/default.aspx", true);
+
+                    else
+                    {
+                        //it wil automatically redirect as per return url
+                        //Response.Redirect("~/default.aspx", true);
+                    }
+                }
+                else
+                {
+                    //return;
+                }
+            }
+            else
+            {
+                Login1.FailureText = "Captcha code is wrong!!";
+            }
+
+        }
+        catch (Exception Ex)
+        {
+            Message.Show(Page, Ex.Message);
+        }
+
+    }
+
+   
+ 
+    protected void Login1_LoggingIn(object sender, LoginCancelEventArgs e)
+    {
+        if (Membership.ValidateUser(Login1.UserName, Login1.Password))
+            FormsAuthentication.RedirectFromLoginPage(Login1.UserName, true);
+
+    }
+  
+ 
+}

@@ -1,0 +1,194 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using CrystalDecisions.Web;
+using CrystalDecisions.Shared;
+using CrystalDecisions.Enterprise;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Data;
+using System.Net.Mail;
+using System.IO;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Configuration;
+
+public partial class Intranet_WMS_Stockbywarehouse : System.Web.UI.Page
+{
+    WMSClsStock wmsDel = new WMSClsStock();
+    ReportDocument myReport = new ReportDocument();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            Page.Title = "Stock by Warehouse";
+            bindgrid();
+        }
+    }
+
+    protected void bindgrid()
+    {
+        WMSClsStock sd1 = new WMSClsStock();
+        DataTable dt1 = new DataTable();
+
+        dt1 = sd1.gvStockbyWerahouse(); 
+
+        GvStokcbyWarehouse.DataSource = dt1;
+        GvStokcbyWarehouse.DataBind();
+    }
+    protected void GvStokcbyWarehouse_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        bindgrid();
+        GvStokcbyWarehouse.PageIndex = e.NewPageIndex;
+        GvStokcbyWarehouse.DataBind();
+    }
+    protected void btnStoakcsheet_Click(object sender, EventArgs e)
+    {
+        if (String.IsNullOrEmpty(Txtemail.Text) == false)
+        {
+            myReport.Load(Server.MapPath("~/CrystalReport/StockSheet.rpt"));
+            myReport.SetDataSource(wmsDel.stocksheetrpt());
+
+          
+            string pdfFile = Server.MapPath("~/Intranet/WMS/Exportfiles/StockSheet.pdf");
+            string exelFile = Server.MapPath("~/Intranet/WMS/Exportfiles/StockSheet.xls");
+            
+            ExportOptions CrExportOptions;
+            DiskFileDestinationOptions CrDiskFileDestinationOptions = new DiskFileDestinationOptions();
+           
+            ExcelFormatOptions CrFormatTypeOptions = new ExcelFormatOptions();
+            CrDiskFileDestinationOptions.DiskFileName = exelFile;
+            CrExportOptions = myReport.ExportOptions;
+            CrExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+            CrExportOptions.ExportFormatType = ExportFormatType.ExcelRecord ;
+            CrExportOptions.DestinationOptions = CrDiskFileDestinationOptions;
+            CrExportOptions.FormatOptions = CrFormatTypeOptions;
+            myReport.Export();
+
+            ExportOptions CrExportOptionsPdf;
+            DiskFileDestinationOptions CrDiskFileDestinationOptionsPdf = new DiskFileDestinationOptions();
+            PdfRtfWordFormatOptions CrFormatTypeOptionspdf = new PdfRtfWordFormatOptions();
+            CrDiskFileDestinationOptionsPdf.DiskFileName = pdfFile;
+            CrExportOptionsPdf = myReport.ExportOptions;
+            CrExportOptionsPdf.ExportDestinationType = ExportDestinationType.DiskFile;
+            CrExportOptionsPdf.ExportFormatType = ExportFormatType.PortableDocFormat;
+            CrExportOptionsPdf.DestinationOptions = CrDiskFileDestinationOptionsPdf;
+            CrExportOptionsPdf.FormatOptions = CrFormatTypeOptionspdf;
+            myReport.Export();
+
+            myReport.Close();
+
+
+
+            SmtpClient smtp = new SmtpClient();
+            
+          string MailTemplate = ConfigurationManager.AppSettings["MailTemplate"].ToString();
+            string emailAddress = Txtemail.Text;
+            string username = emailAddress.Substring(0, emailAddress.Length - emailAddress.IndexOf('@')-1);
+            string template = string.Empty;
+            if (File.Exists(MailTemplate))
+            {
+                template = File.ReadAllText(MailTemplate);
+            }
+
+            template = template.Replace("<%UserName%>", username);
+       
+
+
+            
+            MailMessage msg = new MailMessage();
+            msg.Subject = "Stock Sheet";
+            MessageConf(emailAddress, template,  msg,exelFile, pdfFile);
+
+
+
+            Response.Redirect("Crystal_StockSheet.aspx");
+        }
+        Response.Redirect("Crystal_StockSheet.aspx");
+    }
+
+
+
+    private static void MessageConf(string emailAddress, string template, MailMessage msg, String excelfile, String pdfFile)
+    {
+        msg.IsBodyHtml = true;
+
+        System.Net.Mail.AlternateView htmlView = null;
+        string headerBanner = ConfigurationManager.AppSettings["HeaderBanner"].ToString();
+        if (File.Exists(headerBanner))
+        {
+            Attachment dataExcel = new Attachment(excelfile, MediaTypeNames.Application.Octet);
+            Attachment dataPdf = new Attachment(pdfFile, MediaTypeNames.Application.Octet);
+            htmlView = System.Net.Mail.AlternateView.CreateAlternateViewFromString(template, null, "text/html");
+            LinkedResource pic1 = new LinkedResource(headerBanner, MediaTypeNames.Image.Jpeg);
+            pic1.ContentId = "HeaderBanner";
+            htmlView.LinkedResources.Add(pic1);
+            msg.AlternateViews.Add(htmlView);
+            msg.Attachments.Add(dataExcel);
+            msg.Attachments.Add(dataPdf);
+        }
+        else
+        {
+            msg.Body = template;
+        }
+        msg.To.Add(emailAddress);
+        //smtpClient.Host = "smtp.gmail.com";
+        //smtpClient.Credentials = new System.Net.NetworkCredential("samthia07", "fog465farm524");
+        //smtpClient.EnableSsl = true;
+        //smtpClient.Send(msg);
+
+
+
+
+
+        string strHostName = myGlobal.getSystemConfigValue("smtpHost");//"smtp.gmail.com";
+        string strPort = myGlobal.getSystemConfigValue("smtpPort");//"587";
+
+        string strUserName = myGlobal.getSystemConfigValue("smtpUserId");//"minhases@gmail.com";
+        string strPassword = myGlobal.getSystemConfigValue("smtpPassword");//"tejgrace";
+
+
+        SmtpClient objSMTPClient;
+        System.Net.NetworkCredential objNetworkCredential;
+        objSMTPClient = new SmtpClient(strHostName, Convert.ToInt32(strPort));
+
+        objSMTPClient.EnableSsl = false;
+        objSMTPClient.UseDefaultCredentials = false;
+        objNetworkCredential = new System.Net.NetworkCredential(strUserName, strPassword);
+        objSMTPClient.Credentials = objNetworkCredential;
+        objSMTPClient.Send(msg);
+    }
+        
+
+   
+
+
+
+
+
+
+
+
+
+
+
+    protected void GvStokcbyWarehouse_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int index = Convert.ToInt32(e.CommandArgument) % GvStokcbyWarehouse.PageSize;
+
+        if (e.CommandName == "partnumber")
+        {
+
+            Session["Stockwarehouseid"] = ((HiddenField)GvStokcbyWarehouse.Rows[index].FindControl("hdWarehouse")).Value;
+            Session["StockIDnew"] = ((HiddenField)GvStokcbyWarehouse.Rows[0].FindControl("hdStockID")).Value;
+
+
+            Response.Redirect("StockbyBoe.aspx");
+
+
+        }
+    }
+}

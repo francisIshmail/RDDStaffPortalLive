@@ -1,0 +1,599 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Drawing;
+using System.Data;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Data.SqlClient;
+
+
+public partial class IntranetNew_MarketingPlan_MarketingPlan : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        if (!IsPostBack)
+        {
+            int count = Convert.ToInt32(Request.QueryString["GVid"]);
+            if (count > 0)  //// UPDATE MODE
+            {
+                BtnSave.Text = "Update";
+                ddlCountry.Enabled = false;
+                ddlsourcefd.Enabled = false;
+                ddlBU.Enabled = false;
+                txtrefno.Enabled = false;
+                ddlappstatus.Enabled = false;
+                txtapprmk.Enabled = false;
+                txtrefno.Enabled = false;
+                BindDDL();
+
+                /// myGlobal.loggedInUser();  - to get the username of loggeedd in user
+                //string LoggedInUserName = myGlobal.loggedInUser();
+
+
+                Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+                DataSet ds = Db.myGetDS("select * from MarketingPlan where PlanId=" + Request.QueryString["GVid"]);
+
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ddlsourcefd.Text = ds.Tables[0].Rows[0]["SourceOfFund"].ToString();
+                    txtrefno.Text = ds.Tables[0].Rows[0]["RefNo"].ToString();
+
+                    //// PLan status -- ddl bind values
+
+                    if (ds.Tables[0].Rows[0]["planStatus"].ToString() == "Draft")
+                    {
+                        ddlplanstatus.Text = ds.Tables[0].Rows[0]["planStatus"].ToString();
+                    }
+                    else
+                    {
+                        if (ds.Tables[0].Rows[0]["planStatus"].ToString() != "Draft")
+                        {
+                            var draftname = ddlplanstatus.Items[0];
+                            draftname.Enabled = false;
+
+                        }
+                    }
+
+
+                    ddlBU.SelectedItem.Text = ds.Tables[0].Rows[0]["Vendor"].ToString();
+
+                    ddlappstatus.Text = ds.Tables[0].Rows[0]["ApprovalStatus"].ToString();
+                    txtappamount.Text = ds.Tables[0].Rows[0]["VendorApprovedAmt"].ToString();
+                    txtstartdate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["StartDate"]).ToString("MM/dd/yyyy");
+                    txtrddappamt.Text = ds.Tables[0].Rows[0]["RDDApprovedAmt"].ToString();
+
+                    ddlCountry.SelectedItem.Value = ds.Tables[0].Rows[0]["Country"].ToString();
+                    ddlCountry.SelectedItem.Text = ds.Tables[0].Rows[0]["CountryName"].ToString();
+
+                    txtEndDate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["EndDate"]).ToString("MM/dd/yyyy");
+                    txtrddBalAmt.Text = ds.Tables[0].Rows[0]["BalanceAmount"].ToString();
+                    lbltodaydate.Text = Convert.ToDateTime(ds.Tables[0].Rows[0]["CreatedOn"]).ToString("MM/dd/yyyy");
+                    txtbalfromapp.Text = ds.Tables[0].Rows[0]["BalanceFromApp"].ToString();
+                    txtdesc.Text = ds.Tables[0].Rows[0]["Description"].ToString();
+                    txtapprmk.Text = ds.Tables[0].Rows[0]["ApproverRemark"].ToString();
+                }
+
+                Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+
+                DataSet DSMPanLines = Db.myGetDS("select L.PlanLineId,L.VenderPoNo,L.LineRefNo,L.SAPPONo,L.ActivityDate,L.Description,L.Vendor,L.Amount,L.CountryName,L.Country  from MarketingPlanLines L,MarketingPlan P where L.PlanId=P.PlanId and ISNULL(L.Flag, 0) = 0 and P.PlanId=" + Request.QueryString["GVid"]);
+                if (DSMPanLines.Tables.Count > 0)
+                {
+
+                    GvPlan.DataSource = DSMPanLines.Tables[0];
+                    GvPlan.DataBind();
+
+
+                    ViewState["CurrentTable"] = DSMPanLines.Tables[0];
+                }
+
+            } //ADD
+            else
+            {
+                lbltodaydate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                txtapprmk.Enabled = false;
+                ddlappstatus.Enabled = false;
+                txtrddBalAmt.Enabled = false;
+                txtbalfromapp.Enabled = false;
+                txtapprmk.Enabled = false;
+                txtrefno.Enabled = false;
+
+                // Plan status - Bind ddl values ( OPEN /DRAFT /....)
+
+                Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+                DataSet DS = Db.myGetDS("select * From TempMarketingPlanLines");
+                if (DS.Tables.Count > 0)
+                {
+                    GvPlan.DataSource = DS.Tables[0];
+                    GvPlan.DataBind();
+                }
+                BindDDL();
+
+            }
+        }
+    }
+
+    protected void ButtonAdd_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            //if (txtrddappamt.Text == string.Empty)
+            //{
+            //   // lblMsg.Text = "RDD Approved Amount Should be greater than 0";
+            //    lblMsg.Visible = true;
+            //}
+            if (txtrefno.Text == string.Empty)
+            {
+                lblMsg.Text = "Please Select Country";
+            }
+
+            else
+            {
+                //AddNewRowToGrid();
+            }
+        }
+
+        catch
+        {
+
+        }
+
+    }
+
+    protected void txtgvamt_TextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtrddappamt.Text == string.Empty)
+            {
+                lblMsg.Text = "Please Enter RDD Approved Amount";
+            }
+
+            else
+            {
+                double total = 0;
+                foreach (GridViewRow gvr in GvPlan.Rows)
+                {
+                    TextBox tb = (TextBox)gvr.Cells[1].FindControl("txtgvamt");
+                    double sum;
+                    if (double.TryParse(tb.Text.Trim(), out sum))
+                    {
+                        total += sum;
+                    }
+                }
+                //Display  the Totals in the Footer row  
+                GvPlan.FooterRow.Cells[1].Text = total.ToString();
+                string s = GvPlan.FooterRow.Cells[1].Text;
+
+
+                string RDDAPPAMT = txtrddappamt.Text;
+                string APPAMT = txtappamount.Text;
+                txtrddBalAmt.Text = (Convert.ToDecimal(RDDAPPAMT) - Convert.ToDecimal(s)).ToString();
+                txtbalfromapp.Text = (Convert.ToDecimal(APPAMT) - Convert.ToDecimal(s)).ToString();
+
+            }
+        }
+        catch { }
+
+    }
+
+    protected void GvPlan_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+
+
+
+        //    Button btn = (e.Row.FindControl("btnDel") as Button);
+        //    if (BtnSave.Text == "Update")
+        //    {
+        //        btn.Enabled = true;
+        //    }
+        //    else
+        //    {
+        //        btn.Visible = false;
+        //    }
+
+        //    SqlConnection conn;
+        //    SqlDataAdapter adp = new SqlDataAdapter();
+        //    SqlCommand cmd;
+        //    DataSet DsForms = new DataSet();
+        //    conn = new SqlConnection(myGlobal.getAppSettingsDataForKey("tejSAP"));
+        //    // DataSet ds = Db.myGetDS("select *  from rddCountriesList");
+        //    DropDownList DropDownList1 = (e.Row.FindControl("ddlgvcountry") as DropDownList);
+
+        //    // Db.constr= myGlobal.getMembershipDBConnectionString();
+
+        //    //string  DropDownList1.SelectedItem.Text
+
+        //    cmd = new SqlCommand("select *  from rddCountriesList", conn);
+        //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+        //    DataTable dt = new DataTable();
+        //    sda.Fill(dt);
+
+        //    DropDownList1.DataSource = dt;
+
+        //    DropDownList1.DataTextField = "Country";
+        //    DropDownList1.DataValueField = "CountryCode";
+        //    DropDownList1.DataBind();
+        //    //  DropDownList1.Items.Insert(0, new ListItem("--Select country--", "0")); 
+
+        //    DataRowView data = (DataRowView)e.Row.DataItem;
+        //    TextBox txtgvType = (TextBox)e.Row.FindControl("txtAppremark");
+        //    DropDownList ddlgvstatus = (DropDownList)e.Row.FindControl("ddlstatus");
+        //    //for login user
+        //    int status = 1;
+        //    if (status == 1)
+        //    {
+        //        txtgvType.Enabled = false;
+        //        ddlgvstatus.Enabled = false;
+        //    }
+        //}
+    }
+
+    protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlCountry.SelectedItem.Text == "--select--")
+        {
+            GvPlan.Visible = false;
+        }
+        else
+        {
+            Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+            txtrefno.Text = Db.myExecuteScalar2("Select dbo.GetMarketingRefNo('" + ddlCountry.SelectedItem.Value + "')");
+        }
+    }
+
+    private void BindDDL()
+    {
+        try
+        {
+
+            Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+
+            DataSet ds = Db.myGetDS("select *  from rddCountriesList");
+            ddlCountry.DataSource = ds.Tables[0];
+            ddlCountry.DataTextField = "Country";
+            ddlCountry.DataValueField = "CountryCode";
+
+            ddlCountry.DataBind();
+            ddlCountry.Items.Insert(0, "--SELECT--");
+
+            //string query = "select BUName from [dbo].[GetMarketingRefNo] where  country like '"+ddlCountry.SelectedItem.Text+"'";
+
+            Db.constr = myGlobal.getIntranetDBConnectionString();
+            DataSet DsForms = Db.myGetDS("select BUName from [dbo].[VendorBUDef]");
+
+            if (DsForms.Tables.Count > 0)
+            {
+                ddlBU.DataSource = DsForms.Tables[0];
+                ddlBU.DataTextField = "BUName";
+                ddlBU.DataValueField = "BUName";
+
+
+                ddlBU.DataBind();
+                ddlBU.Items.Insert(0, "--SELECT--");
+            }
+
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = "Error BindDDL : " + ex.Message;
+            lblMsg.ForeColor = Color.Red;
+        }
+
+    }
+
+    protected void BtnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (BtnSave.Text == "Update")
+            {
+
+                Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+                int PLID = Convert.ToInt32(Request.QueryString["GVid"]);
+                string LoggedInUserName = myGlobal.loggedInUser();
+                string createdon = DateTime.Now.ToString("MM/dd/yyyy");
+
+                double TotalGvamt = 0;
+                foreach (GridViewRow g1 in GvPlan.Rows)
+                {
+                    TextBox tb = (TextBox)g1.Cells[1].FindControl("txtgvamt");
+                    double sum;
+                    if (double.TryParse(tb.Text.Trim(), out sum))
+                    {
+                        TotalGvamt += sum;
+                    }
+                }
+                GvPlan.FooterRow.Cells[1].Text = TotalGvamt.ToString();
+
+                string usegvAmt = GvPlan.FooterRow.Cells[1].Text;
+
+                foreach (GridViewRow g1 in GvPlan.Rows)
+                {
+                    string VendorPO = (g1.FindControl("txtpono") as TextBox).Text;
+                    string sappo = (g1.FindControl("txtsappono") as TextBox).Text;
+                    string actDate = (g1.FindControl("txtgvdate") as TextBox).Text;
+                    string desc = (g1.FindControl("txtgvdesc") as TextBox).Text;
+                    string vendor = (g1.FindControl("txtgvvendor") as TextBox).Text;
+                    string Amt = (g1.FindControl("txtgvamt") as TextBox).Text;
+                    string country = (g1.FindControl("ddlgvcountry") as DropDownList).Text;
+                    string countryname = (g1.FindControl("ddlgvcountry") as DropDownList).SelectedItem.Text;
+                    string status = (g1.FindControl("ddlstatus") as DropDownList).Text;
+                    string apprem = (g1.FindControl("txtAppremark") as TextBox).Text;
+                    string gvKey = (g1.FindControl("lblKey") as Label).Text;
+
+                    string planLineiId = (g1.FindControl("lblplanlineid") as Label).Text;
+
+                    if (!string.IsNullOrEmpty(planLineiId) && planLineiId != "0")
+                    {
+                        string sql = "Update MarketingPlan set planStatus='" + ddlplanstatus.SelectedItem.Text + "',VendorApprovedAmt='" + txtappamount.Text + "',RDDApprovedAmt='" + txtrddappamt.Text + "',BalanceAmount='" + txtrddBalAmt.Text + "',BalanceFromApp='" + txtbalfromapp.Text + "',StartDate='" + txtstartdate.Text + "',EndDate='" + txtEndDate.Text + "',Description='" + txtdesc.Text + "',UsedAmount='" + usegvAmt + "' where PlanId='" + PLID + "'";
+                        Db.myExecuteSQL(sql);
+
+
+                        Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+                        sql = "Update MarketingPlanLines set VenderPONo='" + VendorPO + "',SAPPONo='" + sappo + "',ActivityDate='" + actDate + "',Description='" + desc + "',Vendor='" + vendor + "',Amount='" + Amt + "',Country='" + country + "'  where PlanId='" + PLID + "' and LineRefNo='" + gvKey + "'";
+                        Db.myExecuteSQL(sql);
+
+
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(Amt) > 0 && desc != "")
+                        {
+                            string sql = "insert into MarketingPlanLines(PlanId,LineRefNo,VenderPONo,SAPPONo,ActivityDate,Description,Vendor,Amount,Country,CountryName,Status,ApproverRemark,CreatedOn,CreatedBy,Flag)values('" + PLID + "','" + gvKey + "','" + VendorPO + "','" + sappo + "','" + actDate + "','" + desc + "','" + vendor + "','" + Amt + "','" + country + "','" + countryname + "','" + status + "','" + apprem + "','" + createdon + "','" + myGlobal.loggedInUser() + "',0)";
+                            // string sql = "insert into MarketingPlanLines(PlanId,LineRefNo,VenderPONo,SAPPONo,ActivityDate,Description,Vendor,Amount,Country,Status)values('" + PLID + "','" + gvKey + "','" + VendorPO + "','" + sappo + "','" + actDate + "','" + desc + "','" + vendor + "','" + Amt + "','" + country + "','" + status + "' )";
+                            Db.myExecuteSQL(sql);
+                            lblMsg.Text = "Marketing Plan Updated successfully.";
+
+                            BtnSave.Text = "Save";
+                        }
+
+                        ClearControl();
+                    }
+
+                }
+
+                // ClearControl();
+
+            }
+            else
+            {
+
+
+                DateTime EndDate = Convert.ToDateTime(txtEndDate.Text);
+                DateTime StartDate = Convert.ToDateTime(txtstartdate.Text);
+                int appAmt = Convert.ToInt32(txtappamount.Text);
+                int RddAppAmt = Convert.ToInt32(txtrddappamt.Text);
+                if (StartDate > EndDate)
+                {
+                    lblMsg.Text = "EndDate Should be Greater Than Startdate";
+                    return;
+                }
+                if (RddAppAmt > appAmt)
+                {
+                    lblMsg.Text = "RDD Approved Amt Should be Less than Approved Amount";
+                    return;
+                }
+                string a = GvPlan.Rows[0].Cells[2].Text;
+
+                string LoggedInUserName = myGlobal.loggedInUser();
+                string createdon = DateTime.Now.ToString("MM/dd/yyyy");
+                double total = 0;
+                foreach (GridViewRow gvr in GvPlan.Rows)
+                {
+                    TextBox tb = (TextBox)gvr.Cells[1].FindControl("txtgvamt");
+                    TextBox desc = (TextBox)gvr.Cells[6].FindControl("txtgvdesc");
+                    double sum;
+                    if (double.TryParse(tb.Text.Trim(), out sum))
+                    {
+                        total += sum;
+                    }
+                }
+                //Display  the Totals in the Footer row  
+                GvPlan.FooterRow.Cells[1].Text = total.ToString();
+                string usedAmt = GvPlan.FooterRow.Cells[1].Text;
+
+                string description = GvPlan.FooterRow.Cells[6].Text; //&nbsp;
+
+
+
+                int RDDAPP = Convert.ToInt32(txtrddappamt.Text);
+
+                //if (RddAppAmt == 0)
+                //{
+                //    if (Convert.ToInt32(usedAmt) > Convert.ToInt32(appAmt))
+                //    {
+                //        lblMsg.Text = "used Amount should be less than App Amount";
+                //        return;
+                //    }
+
+                //    else
+                //    {
+
+                //        if (RddAppAmt > 0)
+                //        {
+                //            if (Convert.ToInt32(usedAmt) > Convert.ToInt32(RDDAPP))
+                //            {
+
+                //                lblMsg.Text = "used Amount should be less than RDDApp Amount";
+                //                return;
+                //            }
+
+                //        }
+                //    }
+                //}
+
+                //if (Convert.ToInt32(usedAmt) == 0 || usedAmt == "")
+                //{
+                //    lblMsg.Text = "Used Amount And Description Should Not Be Empty";
+                //    return;
+                //}
+
+
+                Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
+
+
+                /*insert record in marketingplan*/
+                string sqlquery = "insert into MarketingPlan(SourceOfFund,RefNo,Country,CountryName,Vendor,VendorApprovedAmt,RDDApprovedAmt,BalanceAmount,BalanceFromApp,UsedAmount,Description,planStatus,ApprovalStatus,ApprovedBy,ApprovedOn,ApproverRemark,StartDate,EndDate,IsDraft,CreatedOn,CreatedBy,LastUpdatedOn,LastUpdateBy)values('" + ddlsourcefd.SelectedItem.Text + "', dbo.GetMarketingRefNo('" + ddlCountry.SelectedValue + "'),'" + ddlCountry.SelectedValue + "','" + ddlCountry.SelectedItem.Text + "','" + ddlBU.SelectedItem.Text + "','" + txtappamount.Text + "','" + txtrddappamt.Text + "','" + txtrddBalAmt.Text + "','" + txtbalfromapp.Text + "','" + usedAmt + "','" + txtdesc.Text + "','" + ddlplanstatus.SelectedItem.Text + "','" + ddlappstatus.SelectedItem.Text + "','',0,'','" + txtstartdate.Text + "','" + txtEndDate.Text + "',0,'" + createdon + "','" + myGlobal.loggedInUser() + "',0,'')";
+                Db.myExecuteSQL(sqlquery);
+
+               
+
+                /*to key primary key from marketingplan to store at  marketinglist*/
+                SqlConnection conn;
+                conn = new SqlConnection(myGlobal.getAppSettingsDataForKey("tejSAP"));
+                sqlquery = "select MAX(PlanId) from MarketingPlan";
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlquery, conn);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    string val = dr[0].ToString();
+                    hdnplanid.Value = val;
+                }
+                /*End*/
+
+                string Pid = hdnplanid.Value;
+                foreach (GridViewRow g1 in GvPlan.Rows)
+                {
+
+                    string VendorPO = (g1.FindControl("txtpono") as TextBox).Text;
+                    string sappo = (g1.FindControl("txtsappono") as TextBox).Text;
+                    string actDate = (g1.FindControl("txtgvdate") as TextBox).Text;
+                    string desc = (g1.FindControl("txtgvdesc") as TextBox).Text;
+                    string vendor = (g1.FindControl("txtgvvendor") as TextBox).Text;
+                    string Amt = (g1.FindControl("txtgvamt") as TextBox).Text;
+                    string country = (g1.FindControl("ddlgvcountry") as DropDownList).SelectedValue;
+                    string countryname = (g1.FindControl("ddlgvcountry") as DropDownList).SelectedItem.Text;
+                    string status = (g1.FindControl("ddlstatus") as DropDownList).Text;
+                    string apprem = (g1.FindControl("txtAppremark") as TextBox).Text;
+                    string gvKey = (g1.FindControl("lblKey") as Label).Text;
+
+                    if (Convert.ToInt32(Amt) > 0 && desc != "")
+                    {
+
+                        sqlquery = "insert into MarketingPlanLines(PlanId,LineRefNo,VenderPONo,SAPPONo,ActivityDate,Description,Vendor,Amount,Country,CountryName,Status,ApproverRemark,CreatedOn,CreatedBy,Flag)values('" + Pid + "','" + gvKey + "','" + VendorPO + "','" + sappo + "','" + actDate + "','" + desc + "','" + vendor + "','" + Amt + "','" + country + "','" + countryname + "','" + status + "','" + apprem + "','" + createdon + "','" + myGlobal.loggedInUser() + "',0)";
+                        Db.myExecuteSQL(sqlquery);
+                    }
+                }
+
+                myGlobal.SendMarketingPLanForApprover("pramod@reddotdistribution.com", "pramod@reddotdistribution.com", "pramod", Convert.ToInt32(Pid));
+
+                lblMsg.Text = "Marketing Plan saved successfully.";
+                ClearControl();
+                
+            }
+
+        }
+        catch (Exception ex)
+        {
+            lblMsg.Text = "Marketing Plan saved successfully.";
+            //lblMsg.Text = "Error occured in btnSave_Click : " + ex.Message;
+            lblMsg.ForeColor = Color.Red;
+            //ClearControl();
+        }
+    }
+
+    public void ClearControl()
+    {
+        txtappamount.Text = "";
+        txtapprmk.Text = "";
+        txtbalfromapp.Text = "";
+        lbltodaydate.Text = "";
+        txtdesc.Text = "";
+        txtrddappamt.Text = "0";
+        txtrddBalAmt.Text = "";
+        txtrefno.Text = "";
+        txtstartdate.Text = "";
+        // ddlappstatus.Text = "";
+        // ddlCountry.Text = "";
+        //ddlplanstatus.Text = "";
+        // ddlsourcefd.Text = "";
+        txtEndDate.Text = "";
+        lblMsg.Text = string.Empty;
+
+        // GvPlan.Rows.Clear();
+        GvPlan.DataSource = null;
+        GvPlan.DataBind();
+
+        try
+        {
+            ddlCountry.SelectedIndex = -1;
+            ddlCountry.SelectedItem.Text = "--SELECT--";
+        }
+        catch { }
+        //try
+        //{
+        //    ddlplanstatus.SelectedIndex = -1;
+        //    ddlplanstatus.SelectedItem.Text = "--SELECT--";
+        //}
+        //catch { }
+        try
+        {
+            ddlsourcefd.SelectedIndex = -1;
+            ddlsourcefd.SelectedItem.Text = "--SELECT--";
+        }
+        catch { }
+        try
+        {
+            ddlBU.SelectedIndex = -1;
+            ddlBU.SelectedItem.Text = "--SELECT--";
+        }
+        catch { }
+    }
+
+    protected void BtnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("MarketingListData.aspx");
+    }
+
+    protected void btnDel_Click(object sender, EventArgs e)
+    {
+
+        string PlanLineId = (((Label)(((Button)sender).NamingContainer as GridViewRow).FindControl("lblplanlineid")).Text);
+        if (!string.IsNullOrEmpty(PlanLineId) && PlanLineId != "0")
+        {
+            string query = "update MarketingPlanLines set Flag=1 where PlanId='" + ID + "' and PlanLineId='" + PlanLineId + "'";
+            Db.myExecuteSQL(query);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "<script> alert('Record Deleted successfully.'); </script>");
+
+
+            DataSet DSMPanLines = Db.myGetDS("select L.PlanLineId,L.VenderPoNo,L.LineRefNo,L.SAPPONo,L.CreatedOn,L.Description,L.Vendor,L.Amount,L.Country  from MarketingPlanLines L,MarketingPlan P where L.PlanId=P.PlanId and  ISNULL(L.Flag, 0) = 0 and P.PlanId=" + Request.QueryString["GVid"]);
+            if (DSMPanLines.Tables.Count > 0)
+            {
+                GvPlan.DataSource = DSMPanLines.Tables[0];
+                GvPlan.DataBind();
+            }
+        }
+        else
+        {
+
+            //For Empty Row Delete
+
+
+            DataSet DSMPanLines = Db.myGetDS("select L.PlanLineId,L.VenderPoNo,L.LineRefNo,L.SAPPONo,L.ActivityDate,L.Description,L.Vendor,L.Amount,L.Country  from MarketingPlanLines L,MarketingPlan P where L.PlanId=P.PlanId and  ISNULL(L.Flag, 0) = 0 and P.PlanId=" + Request.QueryString["GVid"]);
+            if (DSMPanLines.Tables.Count > 0)
+            {
+                GvPlan.DataSource = DSMPanLines.Tables[0];
+                GvPlan.DataBind();
+            }
+            GvPlan.FooterRow.Visible = false;
+
+        }
+    }
+
+
+    protected void GvPlan_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GvPlan.PageIndex = e.NewPageIndex;
+
+    }
+}

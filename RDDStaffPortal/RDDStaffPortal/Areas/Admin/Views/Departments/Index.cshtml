@@ -272,8 +272,8 @@
    
     $(document).ready(function () {
         debugger
-        var pathname = window.location.pathname;       
-        RedtDot_CheckAuthorization(pathname);
+        //var pathname = window.location.pathname;       
+        //RedtDot_CheckAuthorization(pathname);
        
         debugger
         $("#txtSearchDep").on("keyup", function () {
@@ -412,7 +412,7 @@
 
         $('#btnsave').on("click",function () {
            
-            if ($("#xtDepName").val() == "") {
+            if ($("#txtDepName").val() == "") {
                 alert('please enter Department');
                 $("#txtDepName").focus();
                 return false;
@@ -439,10 +439,10 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-
+                    debugger
                     if (result == "Department saved successfully." || result == "Department updated successfully.") {
                         RedDotAlert_Success(result);
-                        GetDeptList();
+                       // GetDeptList();
                         //alert(result);
                         //location.reload();
                        // $("#DeptId").val('');

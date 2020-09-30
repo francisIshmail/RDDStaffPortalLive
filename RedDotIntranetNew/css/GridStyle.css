@@ -1,0 +1,100 @@
+﻿.innerTable 
+        {	
+	        
+        }
+.overallGrid
+        {
+	        border: solid 1px white;
+	        padding: 0px 0px 0px 0px;
+	        font-size: 11px;
+        }        
+ .footerGrid
+        {
+	        background-color: #EBEBEB;
+	        font-size: 11px;
+	        text-align: center;
+	        color: #303030;
+	        padding: 2px 15px 2px 15px;
+        }
+.DataCellGrid
+        {
+	        background-color: #f2f2f2;
+	        padding: 1px 2px 1px 2px;
+        }
+.DataCellGrid1
+       {
+      	        padding: 1px 2px 1px 2px;
+       }
+        
+.pagerGrid
+        {
+	        background-color: #EBEBEB;
+        }        
+ .RowStyleGrid
+		{
+			background-color: ThreeDLighShadow;
+		}
+.GrdHdr
+        {
+	        background-color: #EBEBEB;
+	        font-size: 11px;
+	        color: #303030;
+	        text-align: left;
+	        padding-left: 3px;
+	        padding-bottom: 2px;
+	        padding-right: 3px;
+	        padding-top: 2px;
+	        font-weight: bold;
+	        height:30px;
+        }      
+        
+      .DataCellGridEdit
+       {
+	        background-color: yellow;
+	        padding: 1px 2px 1px 2px;
+       }
+     
+        .lighterData
+        {
+	        white-space: normal;
+	        
+        } 
+        .lighterData1
+        {
+	        color: #606060;
+	        white-space: normal;
+	        
+        }   
+        .titleTable
+        {
+	        background-color: #EBEBEB;
+	        padding-left: 3px;
+	        padding-right: 3px;
+	        padding-bottom: 3px;
+        }
+        .contentTable
+        {
+	        padding-left: 5px;
+	        padding-right: 3px;
+	        padding-bottom: 3px;
+	        text-align: left;
+        }
+        
+        
+        .DataCellGridAlt
+        {
+	        background-color: #FFFFE0;
+	        padding: 1px 2px 1px 2px;
+        }
+        .DataCellGridAlt1
+        {
+	        
+	        padding: 1px 2px 1px 2px;
+        }
+        
+        
+        
+.GridviewStyle  td{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStyle  th{border-bottom-color:#f0f2da;border-right-color:#f0f2da;border-left-color:#f0f2da;border-top-color:#f0f2da;padding:0.0em 0.1em 0.0em 0.1em;}
+.GridviewStyle tr{background-color: #f4f4f4;height:25px;}
+

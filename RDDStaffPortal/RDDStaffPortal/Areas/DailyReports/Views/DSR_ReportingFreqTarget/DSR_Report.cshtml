@@ -1,0 +1,397 @@
+﻿@model RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DSR_ReportingFreqTarget
+
+@{
+    ViewBag.Title = "DSR_Report";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">View Score Card</h4>
+                </div>
+
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10">
+                                <div class="col-md-4 col-lg-2">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label p-0 width100px">Month & Year :</label>
+                                        <div class="col-md-8 p-0">
+                                            <input id="txtdate" class="datepicker form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-2">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label p-0 width100px">Country :</label>
+                                        <div class="col-md-8 p-0">
+                                            @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "multiselect-ui form-control form-control-sm", @multiple = "multiple" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-2">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label p-0 width100px">Person :</label>
+                                        <div class="col-md-8 p-0">
+                                            @Html.DropDownList("Person", new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" } }, new { @class = "multiselect-ui form-control form-control-sm", @multiple = "multiple" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group form-inline">
+
+                                        <button id="btngetscore" class="btn btn-info btn-sm">Get Score</button>
+
+                                    </div>
+
+
+
+
+                                </div>
+                                <div id="tblid" class="table-responsive">
+                                    <div class="reddotTable sm-form mar-t0">
+                                        <div class="loader1"></div>
+                                        <div id="Ind" class="reddotTableBody">
+                                           
+                                                
+                                                   
+                                               
+                                            
+                                                <div class="reddotTableRow odd-even-row">
+                <div class="reddotTableHead"><div> </div></div>
+                <div class="reddotTableHead "><div>PERFORMANCE </div></div>
+                <div class="reddotTableHead "><div> </div></div>
+                <div class="reddotTableHead "><div> </div></div>
+                <div class="reddotTableHead "><div>CUSTOMER </div></div>
+                <div class="reddotTableHead "><div> </div></div>
+                <div class="reddotTableHead"><div>ITEM STATUS </div></div>
+                <div class="reddotTableHead"><div> </div></div>
+                <div class="reddotTableHead"><div>PROSPECT </div></div>
+                <div class="reddotTableHead"><div> </div></div>
+                <div class="reddotTableHead"><div>FWDS</div></div>
+                <div class="reddotTableHead Abcd Abc"><div>TRGT(%)</div></div>
+                <div class="reddotTableHead Abcd Abc" style="background-color:black !important"><div>ACHIEVED</div></div>
+                <div class="reddotTableHead Abcd Abc" style="background-color:black !important"><div>BONUS ON NEW CUSOMER</div></div>
+                <div class="reddotTableHead Abcd Abc" style="background-color:black !important"><div>TOTAL</div></div>
+
+            </div>
+            <div class="reddotTableRow odd-even-row">
+
+                <div class="reddotTableHead width10per Abcd"><div>EMPLOYEE </div></div>
+                <div class="reddotTableHead width10per Abcd"><div>TARGET</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>VISIT</div></div>
+
+                <div class="reddotTableHead width10per Abcd"><div>DISTINCT</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>REPEAT</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>NEW</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>OPEN</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>CLOSED</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>NOOFDEALS</div></div>
+                <div class="reddotTableHead width10per Abcd"><div>USD($)</div></div>
+                <div class="reddotTableHead"><div> </div></div>
+                <div class="reddotTableHead"><div> </div></div>
+                <div class="reddotTableHead" style="background-color:black !important"><div> </div></div>
+                <div class="reddotTableHead" style="background-color:black !important"><div> </div></div>
+                <div class="reddotTableHead" style="background-color:black !important"><div> </div></div>
+            </div>
+                                            </div>
+
+                                            <div id="Ibody" class="reddotTableBody">
+                                                <div id="Ist" class="reddotTableRow odd-even-row FreqTarget">
+                                                    <div class="reddotTableCell Abcd"><div>TargetId</div></div>
+                                                    <div class="reddotTableCell Abcd"><div>EmpId</div></div>
+                                                    <div class="reddotTableCell Abcd"><div>DesigId</div></div>
+                                                    <div class="reddotTableCell Abcd width10per"><div></div></div>
+                                                    <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                    <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                    <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                                    <div class="reddotTableCell Abcd Abc"><div>EmpId</div></div>
+                                                    <div class="reddotTableCell Abcd Abc"><div>DesigId</div></div>
+                                                    <div class="reddotTableCell Abcd Abc"><div>Manager</div></div>
+                                                    <div class="reddotTableCell Abcd Abc"><div>Manager L2</div></div>
+                                                    <div class="reddotTableHead Abcd Abc"><div>Manager</div></div>
+                                                    <div class="reddotTableHead Abcd Abc"><div>Manager L2</div></div>
+                                                    <div class="reddotTableHead Abcd Abc"><div>Manager</div></div>
+                                                    <div class="reddotTableHead Abcd Abc"><div>Manager L2</div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+                            <br />
+                            <div class="rowmin row mar-b10">
+                                <div class="col-md-12">
+
+
+                                    <div class="card">
+
+
+
+                                        <div class="card-body">
+                                            <div class="chart-container" id="chart-container1">
+                                                <canvas id="EmpScore"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<style>
+    div.colspan > div > div {
+        position: relative;
+        width: 99px;
+        overflow: hidden;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    
+   
+    //$('#chart-container1').append('<canvas id="EmpScore"></canvas>');
+    
+    
+    $(document).ready(function () {
+
+        //RedtDot_CheckAuthorization("/DailyReports/DSR_Reportingfreqtarget/DSR_Report");
+        var tblhead1 = ['Employee', 'TotalTarget', 'TotalVisit', 'DistinctVisit', 'RepeatVisit', 'NewVisit', 'OpenItem', 'Closed', 'NO#', 'USD', 'ForwardEmail', 'Targetpoint', 'TargetAchieve', 'NewCustomers', 'TotalPoint'];
+        var tblred = ['TargetAchieve', 'NewCustomers', 'TotalPoint'];
+        var tblblack = ['Targetpoint'];
+        var tbllbl = ['Targetpoint', 'TargetAchieve'];
+       // $('#EmpScore').remove();
+
+        var lblarr1 = ['Target', 'Achive'];
+        var bgcolor = ['#fc643b', '#26d41d']
+       
+        
+        $(".loader1").hide();
+      //  RedDot_DateRange_Month_Year("reportrange");
+        RedDot_dtpickerMonth_Year();
+        $("#Ist").hide();
+        function findWithAttr(RdotMMNames, value) {
+            for (var i = 0; i < RdotMMNames.length; i += 1) {
+                if (RdotMMNames[i] === value) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        $("#btngetscore").on("click", function () {
+            try {            
+            var t = $("#txtdate").val().split(' ');                      
+            var Ipts = [];
+            var pts = [];
+            var lblarr = [];
+            var pts1 = [];
+            var ds = [];
+            var Person = "";
+            $("#Person option:selected").each(function () {
+                Person += $(this).val() + ",";
+            });
+            $.ajax({
+                type: "POST",
+                url: "/GetRDD_PersonData",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    Person: Person,
+                    month: findWithAttr(RdotMMNames, t[0])+1,
+                    year:t[1]
+                }),
+                success: function (data) {                    
+                    $("#Ist").show();
+                    $("div#Ist").not(':first').remove();                   
+                    if (data.Table != null && data.Table.length != 0) {                        
+                        var i = 0;
+                        while (data.Table.length > i) {
+                            var tr = $("#Ist").clone();
+                            var k = 0;
+                            var l1 = parseInt(tblhead1.length);
+                            while (l1 > k) {
+                                var t = tblhead1[k];
+                                tr.find(".Abcd")[k].children[0].textContent = data.Table[i][tblhead1[k]];
+                                if (jQuery.inArray(t, tblblack) !== -1) {
+                                    tr.find(".Abcd").eq(k).attr("style", "background-color:black !important");
+                                } else if (jQuery.inArray(t, tblred) !== -1) {
+                                    if (parseInt(data.Table[i]['TotalPoint'].replace('%', '')) > 75) {
+                                        tr.find(".Abcd").eq(k).attr("style", "background-color:black !important");
+                                    } else {
+                                        tr.find(".Abcd").eq(k).attr("style", "background-color:red !important");
+                                    }
+                                }
+                                k++;
+                            }
+                            pts.push(parseInt(data.Table[i][tblblack[0]].replace('%', '')));
+                            pts1.push(parseInt(data.Table[i][tblred[0]].replace('%', '')))
+                            lblarr.push(data.Table[i][tblhead1[0]]);
+                            i++;
+                            $("#Ibody").append(tr);
+                        }  
+                        Ipts.push(pts);
+                        Ipts.push(pts1);
+                        $(".loader1").hide();
+                        $("#Ist")[0].remove();
+                        $('#EmpScore').remove(); // this is my <canvas> element
+                        $('#chart-container1').append('<canvas id="EmpScore"><canvas>');
+                        var i1 = 0;
+                        while (i1 < lblarr1.length) {
+                            ds.push({
+                                label: lblarr1[i1],
+                                backgroundColor: bgcolor[i1],
+                                fill: true,
+                                data: Ipts[i1]
+                            });
+                            i1++;
+                        }
+                        var EmpScore = document.getElementById('EmpScore').getContext('2d');
+                        var EmpScore = new Chart(EmpScore,
+                            {
+                                type: 'bar',
+                                data: {
+                                    labels: lblarr,
+                                    datasets: ds
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                    tooltips: {
+                                        bodySpacing: 4,
+                                        mode: "nearest",
+                                        intersect: 0,
+                                        position: "nearest",
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 10
+                                    },
+                                    layout: {
+                                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                                    }
+                                }
+
+                            });
+                    } else {
+                        $('#EmpScore').remove();
+                        $("#Ist").hide();
+                        $(".loader1").hide();
+                        RedDotAlert_Error("No Record Found");
+                    }
+                }                                
+            });
+            } catch (e) {
+                RedDotAlert_Error("Error Occur");
+            }            
+        })
+
+        $("#txtdate").on('dp.change', function () {
+            debugger
+            $('#EmpScore').remove();
+            $("div#Ist").not(':first').remove();
+            $("#Ist").hide();
+            $('#Person')
+                .find('option')
+                .remove()
+                .end()
+            $("#Person").append($('<option/>', { value: 0, text: '--Select--' }));
+            $('#Person').fSelect('reload');
+            $('#Country').val('');
+            $('#Country').fSelect('reload');
+            $(".fs-label").eq(0).text('Select Country');
+            $(".fs-label").eq(1).text('Select Person');
+        })
+        $("#Country").on('change', function () {
+            try {
+                debugger
+            
+            var t = $(this).val();
+            var Country = "";
+            $("#Country option:selected").each(function () {
+                Country += $(this).val() + ",";
+            });
+                $('#EmpScore').remove();
+                $("div#Ist").not(':first').remove();
+                $("#Ist").hide();
+                $('#Person')
+                    .find('option')
+                    .remove()
+                    .end()
+                $("#Person").append($('<option/>', { value: 0, text: '--Select--' }));
+                $('#Person').fSelect('reload');
+                if (Country != '0,' && Country !='') {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/GetRDD_Person",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            Country: Country
+                        }),
+                        success: function (data) {
+                            $('#Person')
+                                .find('option')
+                                .remove()
+                                .end()
+                            $("#Person").append($('<option/>', { value: 0, text: '--Select--' }));
+                            $.each(data.Table, function (i, RDD) {
+                                $("#Person").append(
+                                    $('<option></option>').val(RDD.LoginName).html(RDD.FName));
+                            });
+                        }, complete: function () {
+                            $(document).ready(function () {
+                                (function ($) {
+                                    $(function () {
+                                        window.fs_test = $('#Person').fSelect();
+                                        $("#Person").fSelect('reload');
+                                        $("#Person").hide();
+                                        $(".fs-label").eq(1).text('Select Person');
+                                    });
+                                })(jQuery);
+
+                                
+                            });
+                        }
+                    });
+                } 
+            } catch (e) {
+                RedDotAlert_Error("Error Occur");
+            }
+
+        })
+
+        $(document).ready(function () {
+            (function ($) {
+                $(function () {
+                    window.fs_test = $('.multiselect-ui').fSelect();
+                    $(".multiselect-ui").fSelect('reload');
+                    $(".multiselect-ui").hide();
+                    $(".fs-label").eq(0).text('Select Country');
+                    $(".fs-label").eq(1).text('Select Person');
+                });
+            })(jQuery);
+            
+        });
+    })
+    </script>
+

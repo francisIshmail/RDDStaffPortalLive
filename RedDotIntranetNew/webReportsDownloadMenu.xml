@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<reps>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=weekly</lnk>
+		<txt>WeeklyGp</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=automatedStockSheet</lnk>
+		<txt>Stock Sheet</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=stockAge</lnk>
+		<txt>Stock Age</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=dashboard</lnk>
+		<txt>Dashboard</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=pmDashboardNew</lnk>
+		<txt>PM Dashboard New</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=cmDashboard</lnk>
+		<txt>CM Dashboard</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=mdDashboard</lnk>
+		<txt>MD Dashboard</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=stockTrend</lnk>
+		<txt>Stock Trend</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=InventorySheet</lnk>
+		<txt>Inventory Sheet</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=InventoryTAT</lnk>
+		<txt>Inventory TAT</txt>
+	</rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=ConsolidatedDebtors</lnk>
+		<txt>Consolidated Debtors</txt>
+	</rep>
+	<rep>
+    <lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=ConsolidatedDebtorsExpanded</lnk>
+    <txt>Consolidated Debtors Expanded</txt>
+  </rep>
+  <rep>
+    <lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=ConsolidatedDebtorsByBu</lnk>
+    <txt>Consolidated Debtors By BU</txt>
+  </rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=PaymentsAllocation</lnk>
+		<txt>Payments Allocation</txt>
+	</rep>
+	<rep>
+	<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=ConsolidatedTrialBalance</lnk>
+	<txt>Consolidated Trial Balance</txt>
+   </rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=HR-Forms</lnk>
+		<txt>HR-Forms</txt>
+	</rep>
+   <rep>
+	<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=Sell-In</lnk>
+	<txt>Sell-In</txt>
+   </rep>
+<rep>
+	<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=HPSalesNSerialNo</lnk>
+	<txt>HP Sales SerialNo</txt>
+   </rep>
+   <rep>
+	<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=Expenses</lnk>
+	<txt>Expenses Report</txt>
+   </rep>
+	<rep>
+		<lnk>/Intranet/webReporting/DownloadRepsNew.aspx?repType=Flags</lnk>
+		<txt>Country Flags</txt>
+	</rep>
+</reps>
+
+
+

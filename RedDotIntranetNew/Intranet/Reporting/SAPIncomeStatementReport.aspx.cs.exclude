@@ -1,0 +1,152 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.IO;
+using System.Net.Mime;
+
+//using System.Configuration;
+//using System.Reflection;
+
+public partial class Intranet_Reporting_SAPIncomeStatementReport : System.Web.UI.Page
+{
+    ReportDocument myReport = new ReportDocument();
+    //Sap objSap = new Sap();
+    String pPeriod, pDb, pFromDt, pToDt, pType;
+
+    static public DataSet getDataSet_SP(string storedProcName, SqlParameter[] param)
+    {
+
+        DataSet ds = new DataSet();
+        string thisConnectionString = myGlobal.getConnectionStringForSapDBs("SAPReportDB");
+
+        SqlConnection oConn = new SqlConnection(thisConnectionString);
+        SqlCommand oCmd;
+
+        try
+        {
+            oConn.Open();                                                       // Tempory until DAAB implementation
+        }
+        catch(Exception excp) 
+        { 
+        }
+
+        oCmd = new SqlCommand(storedProcName, oConn);
+        oCmd.CommandType = CommandType.StoredProcedure;
+
+        for (int i = 0; i < param.Length; i++)
+        {
+            oCmd.Parameters.Add(param[i]);
+        }
+
+        SqlDataAdapter adp = new SqlDataAdapter(oCmd);
+
+        adp.Fill(ds);
+        oCmd.Parameters.Clear();
+        ds.Dispose();
+        oConn.Close();
+
+        return ds;
+
+    }
+
+    public DataTable PLReportNew(String Period, String DB, string strfrom, string strto)
+    {
+        SqlParameter[] param = new SqlParameter[4];
+        param[0] = new SqlParameter("@Period", Period);
+        param[1] = new SqlParameter("@DB", DB);
+        param[2] = new SqlParameter("@from", strfrom);
+        param[3] = new SqlParameter("@to", strto);
+        
+        if (DB == "UG")
+            return getDataSet_SP("Proc_SAP_PL_UG", param).Tables[0];
+        else if (DB == "KE")
+            return getDataSet_SP("Proc_SAP_PL_KE", param).Tables[0];
+        else if (DB == "DU")
+            return getDataSet_SP("Proc_SAP_PL_DU", param).Tables[0];
+        else if (DB == "TZ")
+            return getDataSet_SP("Proc_SAP_PL_TZ", param).Tables[0];
+        else
+            return getDataSet_SP("Proc_SAP_PL_EPZ", param).Tables[0];
+
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+            pPeriod = Request.QueryString["qPeriod"];
+            pDb = Request.QueryString["qDb"];
+            pFromDt = Request.QueryString["qFromDt"];
+            pToDt = Request.QueryString["qToDt"];
+            pType = Request.QueryString["qType"];
+
+            //pPeriod = "";
+            //pDb = "UG";     //SAPUG
+            //pFromDt = "01-01-2014";
+            //pToDt = "05-29-2014";
+            //pType = "pdf";
+
+            DataTable dt = PLReportNew(pPeriod, pDb, pFromDt, pToDt);
+
+
+            if (dt.Rows.Count > 0)
+            {
+                myReport.Load(Server.MapPath("~/CrystalReport/sapIncomeStatementV1.rpt"));
+                //myReport.Load(Server.MapPath("~/CrystalReport/crystalReportTest.rpt"));
+
+                myReport.SetDataSource(dt);
+
+                // string pdfFile = Server.MapPath("~/Reports/Debtors.pdf");
+                myReport.Refresh();
+                CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+                CrystalReportViewer1.ReportSource = myReport;
+
+                // myReport.Close();
+                myReport.Refresh();
+
+                //string type = Request.QueryString["type"];
+
+                if (pType == "pdf")
+                {
+
+                    MemoryStream oStream;
+                    oStream = (MemoryStream)myReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf";
+                    Response.BinaryWrite(oStream.ToArray());
+                    Response.End();
+                }
+                else
+                {
+                    ExportOptions exportOptions;
+
+                    DiskFileDestinationOptions diskFileDestinationOptions = new DiskFileDestinationOptions();
+                    ExcelFormatOptions formatTypeOptions = new ExcelFormatOptions();
+                    formatTypeOptions.ExcelUseConstantColumnWidth = false;  //this resloves the issue of columns 
+
+                    //destination folder...
+                    diskFileDestinationOptions.DiskFileName = Server.MapPath("~/DownloadsUploads/saveTempFiles/sapIncomeStatementV1.xls");
+                    exportOptions = myReport.ExportOptions;
+                    exportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                    exportOptions.ExportFormatType = ExportFormatType.Excel;
+                    exportOptions.DestinationOptions = diskFileDestinationOptions;
+                    exportOptions.FormatOptions = formatTypeOptions;
+                    myReport.Export();
+                    myReport.Close();
+                    myReport.Dispose();
+                    //myReport.Refresh();
+                    Response.Redirect("~/DownloadsUploads/saveTempFiles/sapIncomeStatementV1.xls");
+                }
+            }
+        }
+    }
+}

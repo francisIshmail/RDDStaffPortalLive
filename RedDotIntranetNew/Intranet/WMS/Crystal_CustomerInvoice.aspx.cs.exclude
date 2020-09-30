@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using CrystalDecisions.Web;
+using CrystalDecisions.Shared;
+using CrystalDecisions.Enterprise;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Data;
+using System.IO;
+public partial class Intranet_WMS_Crystal_CustomerInvoice : System.Web.UI.Page
+{
+    ReportDocument myReport = new ReportDocument();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Page.Title = "Customer Invoice";
+        WMSClsDeleveryorders wmsDel = new WMSClsDeleveryorders();
+        DataTable dt = wmsDel.bindCustomerInvoiceReport(int.Parse(Request.QueryString["doid"]));
+        Session["doid"] = Request.QueryString["doid"];
+
+        myReport.Load(Server.MapPath("~/CrystalReport/CustomerInvoice.rpt"));
+        myReport.SetDataSource(dt);
+        myReport.Refresh();
+        //CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+        CrystalReportViewer1.ReportSource = myReport;
+
+        MemoryStream oStream;
+        oStream = (MemoryStream)myReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+        Response.Clear();
+        Response.Buffer = true;
+        Response.ContentType = "application/pdf";
+        Response.BinaryWrite(oStream.ToArray());
+        Response.End();
+
+    }
+    protected void lbBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("DeliverOder.aspx?doid=" + Session["doid"]);
+    }
+}

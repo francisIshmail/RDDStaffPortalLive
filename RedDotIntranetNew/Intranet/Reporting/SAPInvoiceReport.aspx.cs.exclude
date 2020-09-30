@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.IO;
+using System.Net.Mime;
+
+//using System.Configuration;
+//using System.Reflection;
+
+public partial class Intranet_Reporting_SAPInvoiceReport : System.Web.UI.Page
+{
+    ReportDocument myReport;
+    SqlConnection con;
+    String pType, pDb, qInvID, qdocTypeID, qExtParam;
+
+    protected void Page_LoadNew(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            myReport = new ReportDocument();
+            
+            //using these three
+            pDb = Request.QueryString["qDb"];
+            qInvID = Request.QueryString["qInvID"];
+            pType = Request.QueryString["qType"];
+            
+            qdocTypeID = Request.QueryString["qdocTypeID"];
+            qExtParam = Request.QueryString["qExtParam"];
+
+            con = new SqlConnection(myGlobal.getConnectionStringForSapDBs("SAPReportDB"));
+            string qry="Exec getSapInvoice '" + pDb + "', " + qInvID.ToString() ;
+            try
+            {
+                SqlCommand cmd = new SqlCommand(qry, con);
+                cmd.CommandType = CommandType.Text;
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds);
+                ReportDocument rpt = new ReportDocument();
+                rpt.Load(Server.MapPath("~/CrystalReport/sapInvoiceV1.rpt"));
+                rpt.SetDataSource(ds.Tables["report"]);
+                CrystalReportViewer1.ReportSource = rpt;
+                CrystalReportViewer1.DataBind();
+            }
+            catch (Exception ex)
+            {
+            }
+        
+        }//end of postback
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+            //using these three
+            pDb = Request.QueryString["qDb"];
+            qInvID = Request.QueryString["qInvID"];
+            pType = Request.QueryString["qType"];
+
+            qdocTypeID = Request.QueryString["qdocTypeID"];
+            qExtParam = Request.QueryString["qExtParam"];
+
+            TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+            TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+            ConnectionInfo crConnectionInfo = new ConnectionInfo();
+            Tables CrTables ;
+
+            myReport = new ReportDocument();
+
+            myReport.Load(Server.MapPath("~/CrystalReport/sapInvoiceV1.rpt"));
+
+
+            string[] conCreds = myGlobal.getConnectionStringForSapDBs("SAPSRVCrystalLogCreds").Split(';');  //special connection creds to connect SAP server
+
+            crConnectionInfo.ServerName = conCreds[0];
+            crConnectionInfo.UserID = conCreds[1]; 
+            crConnectionInfo.Password = conCreds[2]; 
+
+            crConnectionInfo.DatabaseName = conCreds[3];  //gets procedure from sapReport db
+
+            //return;
+
+            CrTables = myReport.Database.Tables;
+
+            foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+
+            {
+
+                crtableLogoninfo = CrTable.LogOnInfo;
+
+                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+
+                CrTable.ApplyLogOnInfo(crtableLogoninfo);
+
+            }
+
+            // param 1
+
+            ParameterFieldDefinitions crParameterFieldDefinitions1;
+            ParameterFieldDefinition crParameterFieldDefinition1;
+            ParameterValues crParameterValues1 = new ParameterValues();
+            ParameterDiscreteValue crParameterDiscreteValue1 = new ParameterDiscreteValue();
+
+            crParameterDiscreteValue1.Value = pDb;   //extParam   -- Pass   'Y' , not sure of what it means
+            crParameterFieldDefinitions1 = myReport.DataDefinition.ParameterFields;
+            crParameterFieldDefinition1 = crParameterFieldDefinitions1[0];
+            crParameterValues1 = crParameterFieldDefinition1.CurrentValues;
+
+            crParameterValues1.Clear();
+            crParameterValues1.Add(crParameterDiscreteValue1);
+            crParameterFieldDefinition1.ApplyCurrentValues(crParameterValues1);
+
+
+            // param 2
+
+            ParameterFieldDefinitions crParameterFieldDefinitions2;
+            ParameterFieldDefinition crParameterFieldDefinition2;
+            ParameterValues crParameterValues2 = new ParameterValues();
+            ParameterDiscreteValue crParameterDiscreteValue2 = new ParameterDiscreteValue();
+
+            crParameterDiscreteValue2.Value = Convert.ToInt32(qInvID);  //Invoice Id  -- docEntry of OINV
+            crParameterFieldDefinitions2 = myReport.DataDefinition.ParameterFields;
+            crParameterFieldDefinition2 = crParameterFieldDefinitions2[1];
+            crParameterValues2 = crParameterFieldDefinition2.CurrentValues;
+
+            crParameterValues2.Clear();
+            crParameterValues2.Add(crParameterDiscreteValue2);
+            crParameterFieldDefinition2.ApplyCurrentValues(crParameterValues2);
+            
+
+            CrystalReportViewer1.ReportSource = myReport;
+
+            CrystalReportViewer1.RefreshReport(); 
+
+        
+                if (pType == "pdf")
+                {
+
+                    MemoryStream oStream;
+                    oStream = (MemoryStream)myReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf";
+                    Response.BinaryWrite(oStream.ToArray());
+                    Response.End();
+                }
+                else
+                {
+                    ExportOptions exportOptions;
+
+                    DiskFileDestinationOptions diskFileDestinationOptions = new DiskFileDestinationOptions();
+                    ExcelFormatOptions formatTypeOptions = new ExcelFormatOptions();
+                    formatTypeOptions.ExcelUseConstantColumnWidth = false;  //this resloves the issue of columns 
+
+                    //destination folder...
+                    diskFileDestinationOptions.DiskFileName = Server.MapPath("~/DownloadsUploads/saveTempFiles/sapInvoiceV1.xls");
+                    exportOptions = myReport.ExportOptions;
+                    exportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                    exportOptions.ExportFormatType = ExportFormatType.Excel;
+                    exportOptions.DestinationOptions = diskFileDestinationOptions;
+                    exportOptions.FormatOptions = formatTypeOptions;
+                    myReport.Export();
+                    myReport.Close();
+                    myReport.Dispose();
+                    //myReport.Refresh();
+                    Response.Redirect("~/DownloadsUploads/saveTempFiles/sapInvoiceV1.xls");
+                }
+            //}
+        }
+    }
+
+    
+    
+}

@@ -1,0 +1,17 @@
+Order Type :,BTB,,,,,System PO NO :,50169
+Vendor [BU] :,APC DISTRIBUTION LTD [APC],,,,,EVO PO NO :,UNASSIGNED
+Customer Reference :,A & T COMPUTERS [ATC001],,,,,PO Date :,06-21-2013
+FPO Reference :,FFF,,,,,	REQ Delivery Date :,06-21-2013
+,,,,,,OPG Code :,UNASSIGNED
+,,,,,,Ship To :,UNASSIGNED
+Comments :,fg
+
+Line No,Region,Part No,Description,Qty,Curr Price,Amount Total,Rebate Per Unit,Cost Aftr Rebate,Total Cost After Rebate,Selling Price,Total Selling,Margin%
+
+1,TZ,0035-2M-E/HARDWARE/APC/APC-ACCES/APC-NETWORK,APC CABLE STRAIGHT THROUGH DB25 MALE TO DB25 MALE-,10,10.00,100.00,1.00,9.00,90.00,10.00,100.00,11.11
+
+,,,,,,Amount $,,,Cost After Rebate $,,Selling $,Margin %
+,,,,,Totals $,100.00,,,90.00,,100.00,11.11%
+
+,Product Manager,,,Head Of Finance
+,UNASSIGNED,,,UNASSIGNED

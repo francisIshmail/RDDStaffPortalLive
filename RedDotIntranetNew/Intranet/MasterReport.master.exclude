@@ -1,0 +1,62 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterReport.master.cs" Inherits="Intranet_MasterReport" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+     <link href="css/intern.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="main-body">
+     <div class="main-div-intern">
+        <div class="top-header">
+           <div class="div-logo">
+            <a href="/Intranet/Home.aspx">
+            <img src="/images/logos/logo.jpg" usemap="" border="0" alt="" height="50px" /></a>
+           </div>
+
+            <div class="logo-right-area">
+                <asp:LoginView ID="LoginView" runat="server" >
+                <AnonymousTemplate>
+                    You are not logged in&nbsp;|&nbsp; <asp:LoginStatus ID="LoginLink" runat="server" />&nbsp;|&nbsp; 
+                    <a href="/forgot-password.aspx">Forgot Password</a>&nbsp;|&nbsp; 
+
+                    <a href="/dealer-registration.aspx">Register</a></li>
+                </AnonymousTemplate>  
+                <LoggedInTemplate>
+                    Welcome, <asp:LoginName ID="LoginName" runat="server" />  | <asp:LoginStatus ID="LogoutLink" runat="server" />  | 
+                    <a href="/change-password.aspx">Change Password</a>
+                </LoggedInTemplate>  
+            </asp:LoginView>
+            </div>
+
+         </div>
+         <div class="menu-top">
+         <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" StaticDisplayLevels="1" StaticEnableDefaultPopOutImage="false">
+             <Items>
+                <asp:MenuItem Text="Home" Value="Home" NavigateUrl="~/Intranet/Home.aspx"></asp:MenuItem>
+             </Items>
+            <StaticMenuStyle CssClass="primaryStaticMenu"/>
+            <StaticMenuItemStyle CssClass="primaryStaticMenuItem"/>
+            <StaticSelectedStyle CssClass="primaryStaticSelectedMenuItem" />
+            <StaticHoverStyle CssClass="primaryStaticHover"/>   
+            <DynamicMenuStyle CssClass="primaryDynamicMenu" />     
+            <DynamicMenuItemStyle CssClass="primaryDynamicMenuItem"/>
+            <DynamicHoverStyle CssClass="primaryDynamicHover"/>
+            
+         </asp:Menu>
+         </div>
+            <div class="content">
+                 <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                 </asp:ContentPlaceHolder>
+            </div>
+     </div>
+     </div>
+    </form>
+</body>
+</html>

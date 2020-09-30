@@ -1,0 +1,35 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Crystal_ReserveOrder.aspx.cs"
+    Inherits="Intranet_WMS_Crystal_ReserveOrder" %>
+
+<%@ Register Assembly="CrystalDecisions.Web,    Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"
+    Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+<!DOCTYPE html PUBLIC "-//W1C//DTD XHTML 1.0 Transitional//EN" "http://www.w1.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <table>
+        <tr>
+            <td>
+                <asp:LinkButton ID="lbBack" runat="server" CausesValidation="False" CommandName="Back"
+                    Text="Back" OnClick="lbBack_Click1"></asp:LinkButton>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="True"
+                    Height="1281px" ReportSourceID="CrystalReportSource1" Width="1125px" EnableParameterPrompt="False"   EnableDatabaseLogonPrompt="False"
+    GroupTreeImagesFolderUrl="~/images/tree"
+    ToolbarImagesFolderUrl="~/images/toolbar"/>
+                <CR:CrystalReportSource ID="CrystalReportSource1" runat="server">
+                    <Report FileName="CrystalReport/ReserverStok.rpt">
+                    </Report>
+                </CR:CrystalReportSource>
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>

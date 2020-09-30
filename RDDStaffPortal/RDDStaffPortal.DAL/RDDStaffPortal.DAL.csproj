@@ -70,7 +70,17 @@
     <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DailyReports\RDD_DailySalesReports_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_CallStatus_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ModeOfCall_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_NextAction_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ReportingFreqTarget_Db_Operation.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DailySalesReports.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_CallStatus.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ModeOfCall.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
     <Compile Include="DataModels\RDD_BackLog_Sheet.cs" />
     <Compile Include="DataModels\RDD_BUCountries.cs" />
@@ -139,6 +149,5 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

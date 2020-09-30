@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Intranet/MasterIntern.master" AutoEventWireup="true" CodeFile="MasterOrders.master.cs" Inherits="Intranet_MasterOrders" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    
+    <div id="menuOrders">
+    <table width="100%">
+        <tr style="height:40px">
+            <td align="center" style="background-color:#DFEFFF">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Intranet/viewPurchaseOrders.aspx" Font-Bold="True" Font-Size="18px" ForeColor="#3F3F3F">Purchase Orders</asp:HyperLink>
+            </td>
+            <td align="center"  style="background-color:#FFE6D9">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Intranet/viewReleaseOrders.aspx" Font-Bold="True" Font-Size="18px" ForeColor="#3F3F3F">Release Orders</asp:HyperLink>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+
+</asp:Content>
+

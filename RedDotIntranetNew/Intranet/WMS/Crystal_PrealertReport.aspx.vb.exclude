@@ -1,0 +1,41 @@
+﻿Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Shared
+Imports System.Reflection
+'Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Data
+Partial Class Intranet_WMS_Crystal_PrealertReport
+    Inherits System.Web.UI.Page
+    Dim myReport As New ReportDocument
+    Protected Sub Page_Init(sender As Object, e As System.EventArgs) Handles Me.Init
+
+        Page.Title = "Prealert Report"
+
+    
+        Dim dt As New DataTable
+        Dim Wp As New WMSclsPrealert
+
+        dt = Wp.Prealert_Unstuffing(Request.QueryString("PrealertId"))
+        myReport.Load(Server.MapPath("~/CrystalReport/PrealertUsntuffing.rpt"))
+
+        myReport.Database.Tables(0).SetDataSource(dt)
+
+       
+
+        myReport.Refresh()
+        'CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None
+        Me.CrystalReportViewer1.ReportSource = myReport
+        '   MemoryStream oStream;
+        'oStream = (MemoryStream)myReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+        'Response.Clear();
+        'Response.Buffer = true;
+        'Response.ContentType = "application/pdf";
+        'Response.BinaryWrite(oStream.ToArray());
+        'Response.End();
+
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+       
+    End Sub
+End Class

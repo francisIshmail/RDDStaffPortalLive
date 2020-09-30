@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Diagnostics;
+using XL = Microsoft.Office.Interop.Excel;
+
+public partial class Intranet_ExcelTesting : System.Web.UI.Page
+{
+    string TemplatePath;
+    string TemplateName;
+    
+    //XL.Workbook glbwrkBook;
+    XL.Application xlApp;
+    XL.Workbook xlWB;
+    XL.Worksheet xlWS;
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Label1.Text = "Not Processed ";
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Label1.Text = " , Process Started at @ " + DateTime.Now.ToString() + "..........";
+
+        String Ext = ".xlsx";
+        String saveFilePath = Server.MapPath(@"~\Intranet\ReportSaver\");
+        String saveFileAsName = TextBox1.Text + "-" + DateTime.Now.ToString("MM-dd-yyyy hh-mm-ss")  + Ext;
+        
+        TemplatePath = Server.MapPath(@"~\Intranet\ReportTemplates\");
+        TemplateName= "TestingTemplate";
+
+        FileInfo fln = new FileInfo(TemplatePath + TemplateName + Ext);
+        if (IsFileLocked(fln))
+        {
+            xlApp.Quit();
+            killExcelProcess(TemplateName);
+            //pop up message to try again
+        }
+
+        xlApp = new XL.Application();
+        xlWB = xlApp.Workbooks.Open(TemplatePath + TemplateName);
+        xlApp.Visible = true;
+        xlWB.SaveAs(saveFilePath + saveFileAsName + Ext);
+        xlApp.ScreenUpdating = false;
+        xlApp.Calculation = XL.XlCalculation.xlCalculationManual;
+
+        xlWS = (XL.Worksheet)xlWB.Sheets.get_Item("Sheet1");
+
+        xlWS.Cells[3, 3] = "Session : " + Session.SessionID.ToString() + " updated at " + DateTime.Now.ToString();
+
+        xlWB.Save(); //we save just this value to template
+        killExcelProcess(TemplateName);
+        killExcelProcess(saveFileAsName);
+        Label1.Text += " Completed at @ " + DateTime.Now.ToString();
+    }
+    protected virtual bool IsFileLocked(FileInfo file)
+    {
+        FileStream stream = null;
+
+        try
+        {
+            stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+        }
+        catch (IOException)
+        {
+            //the file is unavailable because it is:
+            //still being written to
+            //or being processed by another thread
+            //or does not exist (has already been processed)
+            return true;
+        }
+        finally
+        {
+            if (stream != null)
+                stream.Close();
+        }
+
+        //file is not locked
+        return false;
+    }
+
+    private void killExcelProcess(string ifFindsThisStrInFileName)
+    {
+        Process[] Processes;
+        Processes = System.Diagnostics.Process.GetProcessesByName("EXCEL");
+
+        foreach (System.Diagnostics.Process p in Processes)
+        {
+            if (p.MainWindowTitle.Trim().ToLower().IndexOf(ifFindsThisStrInFileName.ToLower()) > 0 || p.MainWindowTitle.Trim() == "")
+                p.Kill();
+               
+        }
+    }
+
+    private void deleteExcel()
+    {
+        string strFileName = String.Empty, strFilePath = String.Empty;
+        strFilePath = Server.MapPath(@"~\Intranet\") + "test" + ".xlsx";
+        if (File.Exists(strFilePath))
+        {
+            File.Delete(strFilePath);
+        }
+    }
+}
+
+
+            
