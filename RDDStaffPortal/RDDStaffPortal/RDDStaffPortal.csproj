@@ -207,6 +207,14 @@
   <ItemGroup>
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\timeout-dialog.css" />
+    <Content Include="js\datapicker-separate\datepicker.all.js" />
+    <Content Include="js\datapicker-separate\datepicker.all.min.js" />
+    <Content Include="js\datapicker-separate\datepicker.css" />
+    <Content Include="js\datapicker-separate\datepicker.en.js" />
+    <Content Include="js\new-daterangepicker\daterangepicker.css" />
+    <Content Include="js\new-daterangepicker\daterangepicker.js" />
+    <Content Include="js\new-daterangepicker\moment.min.js" />
+    <Content Include="js\new-daterangepicker\package.js" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
@@ -824,7 +832,7 @@
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
-    <Folder Include="excelFileUpload\" />
+    <Folder Include="excelFileUpload\MarketingPlan\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
