@@ -1209,7 +1209,7 @@ function RedDot_DateRange_Min_Max(id,min1,max1) {
         startDate: startMin,
         endDate: nowMax,
         maxDate: nowMax,
-        minDate: nowMin,        
+       // minDate: nowMin,        
         singleDatePicker: true,
         //isInvalidDate: function (date) {
         //    //return true if date is sunday or saturday
@@ -1220,6 +1220,16 @@ function RedDot_DateRange_Min_Max(id,min1,max1) {
 
     cb(start, end);
 
+}
+set_picker_start_end = (picker, when) => {
+
+    let m = (when == 'now') ? moment() : moment(when) //moment
+
+    let week_start = m.startOf('isoweek')
+    let week_end = m.clone().endOf('isoweek')
+
+    picker.setStartDate(week_start);
+    picker.setEndDate(week_end);
 }
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
@@ -1245,6 +1255,7 @@ function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     }
 
     $('#' + id + '').daterangepicker({
+        autoApply: true,
         startDate: startMin,
         endDate: nowMax,
         maxDate: nowMax,

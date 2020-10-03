@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -172,7 +173,7 @@ namespace RDDStaffPortal.DAL
         /// <param name="IsHtmlBody"></param>
         /// <param name="AttachmentFilePath">Seperate by ? (Question mark) in case of multiple file paths</param>
         /// <returns></returns>
-        public static string SendMailWithAttachment(string To, string cc, string Subject, string Body, bool IsHtmlBody, string AttachmentFilePath)
+        public static string SendMailWithAttachment(string To, string cc, string Subject, string Body, bool IsHtmlBody, Attachment at)
         {
             try
             {
@@ -229,19 +230,23 @@ namespace RDDStaffPortal.DAL
 
                 objMailMessage.Subject = Subject;
                 objMailMessage.Body = Body;
+                //objMailMessage.Attachments.Add(AttachmentFilePath);
 
-                if (AttachmentFilePath.Trim() != "")
-                {
-                    string[] sfslattachmnt = AttachmentFilePath.Split('?');
-                    for (int i = 0; i < sfslattachmnt.Length; i++)
-                    {
-                        if (sfslattachmnt[i].Trim() != "")
-                        {
-                            Attachment attachFile = new Attachment(sfslattachmnt[i]);
-                            objMailMessage.Attachments.Add(attachFile);
-                        }
-                    }
-                }
+                
+                objMailMessage.Attachments.Add(at);
+
+                //if (AttachmentFilePath.Trim() != "")
+                //{
+                //    string[] sfslattachmnt = AttachmentFilePath.Split('?');
+                //    for (int i = 0; i < sfslattachmnt.Length; i++)
+                //    {
+                //        if (sfslattachmnt[i].Trim() != "")
+                //        {
+                //            Attachment attachFile = new Attachment(sfslattachmnt[i]);
+                //            objMailMessage.Attachments.Add(attachFile);
+                //        }
+                //    }
+                //}
                 //Attachment atchFile = new Attachment(AttachmentFilePath);
                 //objMailMessage.Attachments.Add(atchFile);
 
