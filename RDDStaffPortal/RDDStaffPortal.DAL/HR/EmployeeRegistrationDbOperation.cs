@@ -1,17 +1,10 @@
-﻿using System;
+﻿using RDDStaffPortal.DAL.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
-using System.Windows.Documents;
-using RDDStaffPortal.DAL.DataModels;
-using RDDStaffPortal.DAL.InitialSetup;
-using static RDDStaffPortal.DAL.CommonFunction;
 
 
 namespace RDDStaffPortal.DAL.HR
@@ -101,6 +94,9 @@ namespace RDDStaffPortal.DAL.HR
                                     cmd.Parameters.Add("@p_IM_Id", SqlDbType.VarChar, 150).Value = EmpData.IM_Id;
                                 }
                                 cmd.Parameters.Add("@p_ManagerId", SqlDbType.Int).Value = Convert.ToInt16(EmpData.ManagerId);
+
+                                cmd.Parameters.Add("@p_HOD_HR", SqlDbType.Int).Value = Convert.ToInt16(EmpData.HOD_HR);
+                                cmd.Parameters.Add("@p_Local_HR", SqlDbType.Int).Value = Convert.ToInt16(EmpData.Local_HR);
 
 
 
@@ -662,7 +658,7 @@ namespace RDDStaffPortal.DAL.HR
 
                         if (DS.Tables[0].Rows[0]["JobGrade"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobGrade"]))
                         {
-                            emp.JobGradeId= Convert.ToInt32(DS.Tables[0].Rows[0]["JobGrade"]);
+                            emp.JobGradeId = Convert.ToInt32(DS.Tables[0].Rows[0]["JobGrade"]);
                         }
                         if (DS.Tables[0].Rows[0]["JobGradeName"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["JobGradeName"]))
                         {
@@ -792,8 +788,8 @@ namespace RDDStaffPortal.DAL.HR
                         }
 
 
-
-
+                        emp.HOD_HR = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[0]["HOD_HR"].ToString()) ? Convert.ToInt32(DS.Tables[0].Rows[0]["HOD_HR"].ToString()) : 0;
+                        emp.Local_HR = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[0]["Local_HR"].ToString()) ? Convert.ToInt32(DS.Tables[0].Rows[0]["Local_HR"].ToString()) : 0;
                         //emp.ImagePath = (byte[])DS.Tables[0].Rows[0]["ImagePath"];
                         string base64String = Convert.ToBase64String(emp.ImagePath);
                         emp.ImagePath1 = base64String;
@@ -1115,7 +1111,7 @@ namespace RDDStaffPortal.DAL.HR
 
             return dsModules;
         }
-        public DataSet GetDrop2(string username,int? EMPID)
+        public DataSet GetDrop2(string username, int? EMPID)
         {
             DataSet dsModules;
             try
@@ -1141,7 +1137,7 @@ namespace RDDStaffPortal.DAL.HR
             try
             {
                 SqlParameter[] parm = {
-                    
+
                       new SqlParameter("@p_username",username),
                 };
                 dsModules = Com.ExecuteDataSet("RDD_UserRole", CommandType.StoredProcedure, parm);
@@ -1155,9 +1151,10 @@ namespace RDDStaffPortal.DAL.HR
             return dsModules;
         }
 
-        public DataSet GetEmployeeConfigure(string UserRole,string type)
+        public DataSet GetEmployeeConfigure(string UserRole, string type)
+        
         {
-           
+
             DataSet dsModules;
             try
             {
@@ -1166,7 +1163,7 @@ namespace RDDStaffPortal.DAL.HR
                       new SqlParameter("@p_username",UserRole),
                 };
                 dsModules = Com.ExecuteDataSet("RDD_EMPLOYEES_DISBALE", CommandType.StoredProcedure, parm);
-                
+
             }
             catch (Exception)
             {
@@ -1187,9 +1184,9 @@ namespace RDDStaffPortal.DAL.HR
                 {
                     SqlParameter[] ParaDet2 = {
                                                  new SqlParameter("@p_flag","II"),
-                                            new SqlParameter("@p_userrole",_Configure.UserRole),                                         
+                                            new SqlParameter("@p_userrole",_Configure.UserRole),
                             };
-                   t= Com.ExecuteNonQuery("RDD_Employess_Insert_Delete", ParaDet2);
+                    t = Com.ExecuteNonQuery("RDD_Employess_Insert_Delete", ParaDet2);
                     if (_Configure.Employee_Configs != null)
                     {
                         t = true;
@@ -1212,11 +1209,11 @@ namespace RDDStaffPortal.DAL.HR
                             }
                             k++;
                         }
-                    }                                      
-                   
-                        scope.Complete();
-                    
-                    
+                    }
+
+                    scope.Complete();
+
+
 
 
                 }
@@ -1232,13 +1229,13 @@ namespace RDDStaffPortal.DAL.HR
                     t = true;
                 }
             }
-           
+
 
             return t;
         }
         public bool Update(string useremail, string fname, string lname)
         {
-          
+
             bool t = true;
             try
             {
@@ -1293,7 +1290,7 @@ namespace RDDStaffPortal.DAL.HR
 
             catch (Exception ex)
             {
-               // response = "Error occured : " + ex.Message;
+                // response = "Error occured : " + ex.Message;
             }
             return t;
             //bool t = true;

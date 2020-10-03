@@ -461,6 +461,7 @@
 				contentType: "Application/json",
 				dataType: 'JSON',
 				success: function (response) {	
+					debugger
 					
 					i = 0;
 					while (i < response.data.length) {
@@ -592,6 +593,8 @@
 				bgarr.push(bgs[i])
 				i++;
 			}
+			debugger
+			var ConTf = true;
 			$.ajax({
 				async: false,
 				cache: false,
@@ -600,6 +603,11 @@
 				contentType: "Application/json",
 				dataType: 'JSON',
 				success: function (response) {
+					debugger
+					if (response.data[0].points.length == 0) {
+						ConTf = false;
+						return;
+                    }
 					i = 0;
 					while (i < response.data.length) {
 						var k = 0

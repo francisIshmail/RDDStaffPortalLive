@@ -1,4 +1,9 @@
 ﻿function Red_Dot_Model_Popup(ids, Modalid, data) {
+
+    function callback(value) {
+        //do something
+        return value;
+    }
     //#region Modal 
     $(ids).html('<div class="modal fade" id="' + Modalid + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static">' +
         '<div class="modal-dialog">' +
@@ -10,44 +15,44 @@
         '<div class="modal-body">' +
         '<div class="row">' +
         '<div class="col-md-12 col-lg-12">' +
-      
+
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">Template_Id :</label>' +
         '<div class="col-md-5 p-0">' +
         '<input type="text" class="form-control form-control-sm" id="MTemplate_Id" disabled="">' +
         '</div>' +
         '</div>' +
-       
+
         '</div>' +
         '</div>' +
-        
+
         '<div class="row">' +
         '<div class="col-md-12 col-lg-12">' +
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">ObjType :</label>' +
         '<div class="col-md-5 p-0">' +
         '<input type="text" class="form-control form-control-sm" id="MObjType" disabled="">' +
-        
+
         '</div>' +
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row">' +
         '<div class="col-md-12 col-lg-12">' +
-       
+
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">DocumentName :</label>' +
         '<div class="col-md-5 p-0">' +
         '<input type="text" class="form-control form-control-sm" id="MDocumentName" disabled="">' +
-       
+
         '</div>' +
         '</div>' +
         '</div>' +
         '</div>' +
-        
+
 
         '<div class="row">' +
-        
+
         '<div class="col-md-12 col-lg-12">' +
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">Description :</label>' +
@@ -56,23 +61,23 @@
         '</div>' +
         '</div>' +
         '</div>' +
-        
+
         '</div>' +
 
         '<div class="row">' +
-       
+
         '<div class="col-md-12 col-lg-12">' +
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">No of Approvals :</label>' +
         '<div class="col-md-5 p-0">' +
         '<input type="text" class="form-control form-control-sm" id="Mno_of_approvals" disabled="">' +
         '</div>' +
-        
+
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row">' +
-      
+
         '<div class="col-md-12 col-lg-12">' +
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">Originator :</label>' +
@@ -80,12 +85,12 @@
         ' <input type="hidden" id="MOriginator_Id" />' +
         '<input type="text" class="form-control form-control-sm" id="MOriginator" disabled="">' +
         '</div>' +
-        
+
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row">' +
-       
+
         '<div class="col-md-12 col-lg-12">' +
         '<div class="form-inline">' +
         '<label for="Database" class="col-md-1 col-form-label width150px">Remark :</label>' +
@@ -94,13 +99,13 @@
         '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"/>' +
         '</div>' +
         '</div>' +
-       
+
         '</div>' +
         ' </div>' +
         '</div>' +
         '<div class="modal-footer">' +
         '<button type="button" id="btnApproval" class="btn btn-info btn-sm">send</button>' +
-        '<button type="button" class="btn btn-default btn-sm" onclick="closeModal()">cancel</button>' +
+        '<button type="button" id="btnAppCancel" class="btn btn-default btn-sm" >cancel</button>' +
        
         '</div>' +
 
@@ -108,6 +113,9 @@
         ' </div > ' +
         '</div>')
     //#endregion
+
+    var CheckApproval = false;
+
     $.ajax({
         async: false,
         cache: false,
@@ -116,21 +124,24 @@
         url: "/GetApprovalModal",
         dataType: 'Json',
         contentType: "Application/json",
-       
+
         success: function (response) {
             debugger
+            if (response.Table.length != 0) {
+                CheckApproval = true;
+                $("#MDescription").val(response.Table[0].Description)
+                $("#MDocumentName").val(response.Table[0].DocumentName)
+                $("#MObjType").val(response.Table[0].ObjType)
+                $("#MTemplate_Id").val(response.Table[0].Template_Id)
 
-            $("#MDescription").val(response.Table[0].Description)
-            $("#MDocumentName").val(response.Table[0].DocumentName)
-            $("#MObjType").val(response.Table[0].ObjType)
-            $("#MTemplate_Id").val(response.Table[0].Template_Id)
-            
-            $("#MOriginator").val(response.Table[0].Originator)
-            $("#MOriginator_Id").val(response.Table[0].Originator_Id)
-            $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+                $("#MOriginator").val(response.Table[0].Originator)
+                $("#MOriginator_Id").val(response.Table[0].Originator_Id)
+                $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+            }
+           
         }
     });
-
+    return CheckApproval;
    
 }
 
@@ -156,7 +167,7 @@ function RdotAlertUpd(code) {
     Swal.queue([{
         type: 'success',
         title: 'Success..',
-        text: 'Updated ' + code + ' code!',
+        text: 'Updated ' + code + ' code!',      
         allowOutsideClick: false,
         showLoaderOnConfirm: true,
     }])
@@ -551,17 +562,30 @@ var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 /*json date format dd-MMM-yyyy*/
 function RdotdatefrmtRes1(dte) {
-    var now = new Date(parseInt(dte.substr(6)));
-    var now = new Date(now);
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = (day) + "-" + RdotMMNames[month - 1] + "-" + now.getFullYear();
-    return today;
+    if (dte !== undefined && dte !== null) {
+        var now = new Date(parseInt(dte.substr(6)));
+        var now = new Date(now);
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (day) + "-" + RdotMMNames[month - 1] + "-" + now.getFullYear();
+        return today;
+    }
 }
 
 function RedDot_setdtpkdate(date1) {
     if (date1 !== undefined) {
         var d = new Date(date1.split("/").reverse().join("-"));
+        var dd = d.getDate();
+        var mm = d.getMonth() + 1;
+        var yy = d.getFullYear();
+        var newdate = yy + "/" + mm + "/" + dd;
+        return newdate;
+    }
+
+}
+function RedDot_setdtpkdateFind(date1) {
+    if (date1 !== undefined) {
+        var d = new Date(date1);
         var dd = d.getDate();
         var mm = d.getMonth() + 1;
         var yy = d.getFullYear();
@@ -960,7 +984,7 @@ function RedDot_Button_New_HideShow() {
 }
 
 
-function RedDot_Table_Attribute(tr, tblDt, count1, tblclass, hdnid) {
+function RedDot_Table_Attribute(tr, tblDt, count1, tblclass) {
     var i = 0;
     $(tblclass).each(function () {
         while (tblDt.length > i) {
@@ -1088,9 +1112,21 @@ function RedDot_tbldtpicker() {
 
     });
 }
+function RedDot_dtpickerMonth_Year() {
+    $('.datepicker').datetimepicker({
+        defaultDate: new Date(),  
+        maxDate:new Date(),
+        format: 'MMM YYYY',
+        showClose: true,
+        showClear: true,
+        // minDate: new Date(),
+
+    });
+}
+
 
 /* Table date formate dd-MM-yyyy get input date */
-function RedDot_Table_dateEdit(tr,date1, dtval) {
+function RedDot_Table_dateEdit(tr, date1, dtval) {
     debugger
     var now = new Date(tr.find(dtval).val());
     var day = ("0" + now.getDate()).slice(-2);
@@ -1100,11 +1136,22 @@ function RedDot_Table_dateEdit(tr,date1, dtval) {
 }
 /* date formate dd-MM-yyyy get input date */
 function RedDot_dateEdit(date1, dtval) {
+
     var now = new Date($(dtval).val());
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = (day) + "/" + (month) + "/" + now.getFullYear();
     $(date1).val(today);
+}
+function RedDot_dateEditFormat(dtval) {
+    if (dtval != null || dtval == '') {
+        var now = new Date(dtval);
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (day) + "/" + (month) + "/" + now.getFullYear();
+        return today;
+    }
+    
 }
 function RedDot_NewDate(dteclass) {
     var now = new Date();
@@ -1137,6 +1184,115 @@ function RedDot_DateRange(id) {
     }, cb);
 
     cb(start, end);
+
+}
+
+/*New Date Range*/
+function RedDot_DateRange_Min_Max(id,min1,max1) {
+    debugger
+    var nowMin = new Date(min1);
+    nowMin.setDate(nowMin.getDate() - 7);
+    var dayMin = ("0" + nowMin.getDate()).slice(-2);
+    var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
+    var startMin = new Date(min1);
+    
+    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+
+
+    var nowMax = new Date(max1);
+    nowMax.setDate(nowMax.getDate() +1);
+    var dayMax = ("0" + nowMax.getDate()).slice(-2);
+    var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+    }
+
+    $('#' + id + '').daterangepicker({
+        startDate: startMin,
+        endDate: nowMax,
+        maxDate: nowMax,
+        minDate: nowMin,        
+        singleDatePicker: true,
+        //isInvalidDate: function (date) {
+        //    //return true if date is sunday or saturday
+        //    return (date.day() == 0 );
+        //}
+        
+    }, cb);
+
+    cb(start, end);
+
+}
+function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
+    debugger
+    var nowMin = new Date(min1);
+    nowMin.setDate(nowMin.getDate() - 1);
+    var dayMin = ("0" + nowMin.getDate()).slice(-2);
+    var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
+    var startMin = new Date(min1);
+
+    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+
+
+    var nowMax = new Date(max1);
+    //nowMax.setDate(nowMax.getDate()+1 );
+    var dayMax = ("0" + nowMax.getDate()).slice(-2);
+    var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+    }
+
+    $('#' + id + '').daterangepicker({
+        startDate: startMin,
+        endDate: nowMax,
+        maxDate: nowMax,
+        minDate: nowMin,
+        singleDatePicker: true,
+        //isInvalidDate: function (date) {
+        //    //return true if date is sunday or saturday
+        //    return (date.day() == 0 );
+        //}
+
+    }, cb);
+
+    cb(start, end);
+
+}
+function RedDot_DateRange_Month_Year(id) {
+    debugger
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(start.format('MMM-YYYY') + ' - ' + end.format('MMM-YYYY'));
+    }
+    var nowMax = new Date();
+    nowMax.setDate(nowMax.getDate() + 1);
+    
+    $('#' + id + '').daterangepicker({
+        showDropdowns:true,
+        maxDate: nowMax,
+        format: "MMM-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        singleDatePicker: false,
+        //isInvalidDate: function (date) {
+        //    //return true if date is sunday or saturday
+        //    return (date.day() == 0 );
+        //}
+
+    }, cb);
+
+    cb(start, end);
+
+    
 
 }
 /* date formate dd/MM/yyyy set Table*/
@@ -1208,6 +1364,7 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
 
 
 function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
+    debugger;
     var arr = [];
     $.ajax({
         async: false,
@@ -1240,6 +1397,9 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                         if (jQuery.inArray(t, tblhide) !== -1) {
                             tr.find(".Abcd").eq(k).addClass("Abc")
                             tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                        } else {
+                            tr.find(".Abcd").eq(k).removeClass("Abc")
+                            tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc")
                         }
                         k++;
                     }

@@ -1,0 +1,157 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterIntern.master.cs" Inherits="Intranet_MasterIntern" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="css/intern.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../css/menu.css" rel="stylesheet" type="text/css" />
+    <script src="../js/jquery.js" type="text/javascript"></script>
+    <script src="../js/menu.js" type="text/javascript"></script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+
+	<!-- jQuery (required) -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" ></script>
+	<script type="text/javascript">	    window.jQuery || document.write('<script src="js/jquery.min.js" ><\/script>')</script>
+
+	<!-- Anything Slider -->
+	<link rel="stylesheet" href="../css/anythingslider.css" />
+	<script type="text/javascript" src="../js/jquery.anythingslider.js"></script>
+
+	<!-- Define slider dimensions here -->
+	<style type="text/css">
+	  #slider { width: 900px; height: 390px; }
+	</style>
+
+
+    <script language="javascript" type="text/javascript">
+
+
+        // DOM Ready
+        $(function () {
+            $('#slider').anythingSlider();
+        });
+
+             function OpenOrderImportPage(pType, pId) //param is the name of the recipient textbox
+             {
+                 TheNewWin = window.open("orderImportPage.aspx?importOrderType=" + pType + "&importOrderID=" + pId.toString(), "Order Import Popup", "width=600,height=230,status=0,titlebar=0,toolbar=0,resizable=no,scrollbars=0", true);
+                 TheNewWin.moveTo(100, 100);
+             }
+
+             function AddNewRow() {
+             
+                 var rownum = 1;
+                 var div = document.createElement("div");
+                 var divid = "dv" + rownum;
+                 div.setAttribute("ID", divid);
+                 rownum++;
+
+                 //var lbl = document.createElement("label");
+                 //lbl.setAttribute("ID", "lbl" + rownum);
+                 //lbl.setAttribute("class", "label1");
+                 //lbl.innerHTML = "Images";
+                 //rownum++;
+
+                 var _upload = document.createElement("input");
+                 _upload.setAttribute("type", "file");
+                 _upload.setAttribute("ID", "upload" + rownum);
+                 _upload.setAttribute("runat", "server");
+                 _upload.setAttribute("name", "uploads" + rownum);
+                 rownum++;
+
+                 var hyp = document.createElement("a");
+                 hyp.setAttribute("style", "cursor:Pointer");
+                 hyp.setAttribute("onclick", "return RemoveDv('" + divid + "');");
+                 hyp.innerHTML = " Remove";
+                 rownum++;
+
+                 //var br=document.createElement("br");
+
+                 var _pdiv = document.getElementById("divFileUploads");
+
+                 //div.appendChild(br);
+                 //div.appendChild(lbl);
+                 div.appendChild(_upload);
+                 div.appendChild(hyp);
+                 _pdiv.appendChild(div);
+             }
+
+             function RemoveDv(obj) {
+                 var p = document.getElementById("divFileUploads");
+                 var chld = document.getElementById(obj);
+                 p.removeChild(chld);
+
+             }
+ </script>
+
+ 
+</head>
+
+        <body id="simple">
+    <div class="Body">
+        <form id="form1" runat="server">
+        <div class="main-body">
+            <div class="main-div-intern">
+                <table width="100%">
+                    <tr>
+                        <td align="left">
+                            <a href="/Intranet/Home.aspx">
+                                <img src="/images/logos/logo.jpg" usemap="" border="0" alt="" height="50px" /></a>
+                        </td>
+                        <td align="right">
+                            <asp:LoginView ID="LoginView" runat="server">
+                                <AnonymousTemplate>
+                                    You are not logged in&nbsp;|&nbsp;
+                                    <asp:LoginStatus ID="LoginLink" runat="server" />
+                                    &nbsp;|&nbsp; <a href="/forgot-password.aspx">Forgot Password</a>&nbsp;|&nbsp;
+                                    <%--<a href="/dealer-registration.aspx">Register</a></li>--%>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    Welcome,
+                                    <asp:LoginName ID="LoginName" runat="server" />
+                                    |
+                                    <asp:LoginStatus ID="LogoutLink" runat="server" />
+                                    | <a href="/change-password.aspx">Change Password</a>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </td>
+                    </tr>
+                </table>
+                <div id="menu">
+                    <ul class="menu">
+                        <li> <asp:LinkButton ID="lbhome" runat="server"  onclick="lbhome_Click" ><span>Home</span></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="lbManage" runat="server"><span>Manage</span></asp:LinkButton>
+                            
+                        </li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+        <center>
+            <div style="width: 88%">
+                <div style="width: 50%; text-align: left; float: left">
+                    <div id="copyright">
+                        <a href="http://apycom.com/"></a>
+                    </div>
+                    Copyright © 2011 Red Dot Distribution
+                </div>
+                <div style="width: 50%; float: left; text-align: right">
+                    <a href="/disclaimer.aspx">Disclaimer</a>&nbsp;|&nbsp;<a href="/privacy-policy.aspx">Privacy
+                        Policy</a>&nbsp;|&nbsp;<a href="/terms-of-use.aspx">Terms Of Use</a>
+                </div>
+            </div>
+        </center>
+        </form>
+    </div>
+</body>
+</html>

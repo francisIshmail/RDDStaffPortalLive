@@ -1,0 +1,222 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterIntern_1.master.cs" Inherits="Intranet_MasterIntern_1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="css/intern.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../css/menu.css" rel="stylesheet" type="text/css" />
+    <script src="../js/jquery.js" type="text/javascript"></script>
+    <script src="../js/menu.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        function getConfirmation() {
+            return confirm('Are you sure you want to perfom this action ?');
+        }
+        function waitMsg() {
+            return confirm('Connect Sap ?????  Click Yes and wait while it connects to sap companies');
+        }
+        function myMessage(msg1) {
+            return alert(msg1);
+        }
+
+        function UpdateLabeltext(lbl,txt) {
+
+            document.getElementById(lbl).value = txt;
+
+        }
+        function getConfirmationOnDelete() {
+            return confirm('Are you sure you want to delete this item ?');
+        }
+    </script>
+
+    
+   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+
+	<!-- jQuery (required) -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" ></script>
+	<script type="text/javascript">	    window.jQuery || document.write('<script src="js/jquery.min.js" ><\/script>')</script>
+
+	
+	<!-- Anything Slider -->
+	<link rel="stylesheet" href="../css/anythingslider.css" />
+	<script type="text/javascript" src="../js/jquery.anythingslider.js"></script>
+
+	<!-- Define slider dimensions here -->
+	<style type="text/css">
+	  #slider { width: 900px; height: 390px; }
+	</style>
+
+	<!-- AnythingSlider initialization -->
+	<script type="text/javascript">
+	    // DOM Ready
+	    $(function () {
+	        $('#slider').anythingSlider();
+	    });
+	</script>
+
+</head>
+<body id="simple">
+    <div class="Body">
+        <form id="form1" runat="server">
+        <div class="main-body">
+            <div class="main-div-intern">
+                <table width="100%">
+                    <tr>
+                        <td align="left">
+                            <a href="/Intranet/Home.aspx">
+                                <img src="/images/logos/logo.jpg" usemap="" border="0" alt="" height="50px" /></a>
+                        </td>
+                        <td align="right">
+                            <asp:LoginView ID="LoginView" runat="server">
+                                <AnonymousTemplate>
+                                    You are not logged in&nbsp;|&nbsp;
+                                    <asp:LoginStatus ID="LoginLink" runat="server" />
+                                    &nbsp;|&nbsp; <a href="/forgot-password.aspx">Forgot Password</a>&nbsp;|&nbsp;
+                                    <%--<a href="/dealer-registration.aspx">Register</a></li>--%>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    Welcome,
+                                    <asp:LoginName ID="LoginName" runat="server" />
+                                    |
+                                    <asp:LoginStatus ID="LogoutLink" runat="server" />
+                                    | <a href="/change-password.aspx">Change Password</a>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <div id="menu">
+                     <ul class="menu">
+                        <li><a href="/Intranet/home.aspx"><span>Home</span></a></li>
+                        <li><a href="#"><span>WorkFlow</span></a>
+                            <div>
+                                <ul>
+                                    <li><a href="/Intranet/orders/SapViewOrdersPO.aspx?wfTypeId=10011"><span>SAP Purchase Orders</span></a></li>
+                                    <li><a href="/Intranet/orders/viewOrdersMKT.aspx?wfTypeId=10031"><span>Marketing Plans</span></a></li>
+                                    <li><a href="/Intranet/orders/grantRevokeMyRole.aspx"><span>Grant Revoke Rights</span></a></li>
+
+                                     <li><a href="#">Reports</a>
+                                     <ul>
+                                       <li><a href="/Intranet/orders/OrderStatusReport.aspx"><span>Order Status Report</span></a></li>   
+                                       <li><a href="/Intranet/orders/ClosedOrderReport.aspx"><span>Closed Orders Report</span></a></li>   
+                                     </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <%--<li><a href="#"><span>WMS</span></a></li>--%>
+                        <li><a href="#"><span>Reports</span></a>
+                            <div>
+                                <ul>
+                                    <li><a href="#">EVO Reports</a>
+                                     <ul>
+                                        <li><a href="/Intranet/Reporting/WorkFlowReportFPONew.aspx"><span>Workflow Report FPO</span></a></li>
+                                        <li><a href="/Intranet/Reporting/creditReportBase.aspx"><span>Credit Report</span></a></li>
+                                        <li><a href="/Intranet/Reporting/statementBase.aspx"><span>Customer Statement</span></a></li>
+                                        <li><a href="/Intranet/Reporting/sellOut.aspx"><span>Sell out Report</span></a></li>
+                                        <li><a href="/Intranet/Reporting/ReportTrackingDownloads.aspx"><span>Download Tracking</span></a></li>
+                                        <li><a href="/Intranet/Reporting/ReportTrackingUploads.aspx"><span>Upload Tracking</span></a></li>
+                                        <li><a href="/Intranet/Reporting/SubmitReports.aspx"><span>Submit Reports</span></a></li>
+                                     </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li><a href="#" class="parent"><span>EVO-SAP</span></a>
+                            <div>
+                                <ul>
+                                    <%--<li><a href="/Intranet/EVO/CreditLimitUpdater.aspx"><span>Credit Limit Updater</span></a></li>
+                                    <li><a href="/Intranet/EVO/AddOnce.aspx"><span>Add Once Stock</span></a></li>
+                                    <li><a href="/Intranet/EVO/EditStockItemCSharp.aspx"><span>Edit Stock Item</span></a></li>
+                                    <li><a href="/Intranet/EVO/ProjectCodeChanger.aspx"><span>Project Code Changer</span></a></li>--%>
+                                    <li><a href="#">SAP Functions</a>
+                                     <ul>
+                                        <li><a href="/Intranet/sapBase/SapTallyExportInvoicesLocal.aspx"><span>Exp. AR-INV Local</span></a></li>
+                                        <li><a href="/Intranet/sapBase/SapTallyExportInvoicesCreditNotesLocal.aspx"><span>Exp. AR-CRN Local</span></a></li>
+                                        <%--<li><a href="/Intranet/sapBase/SapTallyExportInvoicesCreditNotesLocal.aspx"><span>Export AR-Credit NotesLocal</span></a></li>--%>
+                                        <li><a href="/Intranet/sapBase/SapTallyExportJLPayments.aspx"><span>Export JE Payments</span></a></li>
+                                        <li><a href="/Intranet/sapBase/SapTallyExportPurchases.aspx"><span>Export AP-Invoices</span></a></li>
+                                        <li><a href="/Intranet/sapBase/SapTallyExportPurchasesCreditNotes.aspx"><span>Export AP-Credit Notes</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceGroup.aspx"><span>Sap Add BU-Groups</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceItems.aspx"><span>Sap Add Items</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceUDFs.aspx"><span>Sap Add UDF's</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceProjects.aspx"><span>Sap Add Project</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceWarehouses.aspx"><span>Sap Add Warehouse</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapAddOnceGLAccounts.aspx"><span>Sap Add GLAccounts</span></a></li>
+                                        <li><a href="/Intranet/sapBase/sapItemUpdation.aspx"><span>Sap Item Updation</span></a></li>
+                                     </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#" class="parent"><span>Marketing</span></a>
+                            <div>
+                                <ul>
+                                    <%--<li><a href="/Intranet/Marketing/Home.aspx"><span>Mail Shot</span></a></li>
+                                    <li><a href="/Intranet/Marketing/Sendmail.aspx"><span>New Mail Shot</span></a></li>--%>
+                                    <%--<li><a href="/Intranet/Marketing/LoadFunnelData.aspx"><span>Load Funnel Data</span></a></li>--%>
+                                    <li><a href="/Intranet/Marketing/DealerManagement.aspx"><span>Dealer Management</span></a></li>
+                                    <li><a href="/Intranet/Marketing/PriceListManagement.aspx"><span>PriceList Management</span></a></li>
+                                    <li><a href="/Intranet/Marketing/MailShotManagement.aspx"><span>MailShot Management</span></a></li>
+
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="parent"><a href="#"><span>Tally</span></a>
+                            <div>
+                                <ul>
+                                    <li><a href="/Intranet/tallyExport.aspx"><span>Tally Export Invoice</span></a>
+                                    </li>
+                                    <%--<li><a href="../IntranetNew/Default.aspx"><span>Intranet Home</span></a>
+                                    </li>--%>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li><a href="/Intranet/subAdmin/ReportAdmin.aspx"><span>Report Admin</span></a></li>
+
+                        <li class="parent"><a href=""><span>New UI</span></a>
+                            <div>
+                                <ul runat="server" id="ulDownloadList">
+                                    <li> <a href="../IntranetNew/Default.aspx" runat="server" id="ancDownloadRpt" > <span>  Go To New UI  </span> </a> </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+
+                    </ul>
+                </div> <%--ok menu--%>
+                <div class="content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div><%--ok main body intern--%>
+        </div><%--ok main body--%>
+        <center>
+            <div style="width: 88%">
+                <div style="width: 50%; text-align: left; float: left">
+                    <div id="copyright">
+                        <a href="http://apycom.com/"></a>
+                    </div>
+                    Copyright © 2011 Red Dot Distribution
+                </div>
+                <div style="width: 50%; float: left; text-align: right">
+                    <a href="#">Disclaimer</a>&nbsp;|&nbsp;<a href="#">Privacy
+                        Policy</a>&nbsp;|&nbsp;<a href="#">Terms Of Use</a>
+                </div>
+            </div>
+        </center><%--ok--%>
+        </form> <%--ok--%>
+    </div><%--ok body--%>
+</body><%--ok--%>
+</html>

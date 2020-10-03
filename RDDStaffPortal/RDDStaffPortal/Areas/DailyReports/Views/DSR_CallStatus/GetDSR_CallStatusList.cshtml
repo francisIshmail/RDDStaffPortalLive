@@ -1,0 +1,29 @@
+﻿@model List<RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DSR_CallStatus>
+
+@foreach (var items in Model)
+{
+
+    <div class="col-12 col-sm-6 col-md-2">
+        <div class="card danger-border">
+            <div class="card-body">
+                <div class="CallStatusedit">
+                    <div class="quickmenu">
+                        <button class="btn btn-toggle ml-auto" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item announce" href="#" data-toggle="modal"><i class="fas fa-pencil-alt"></i> Edit</a>
+                            <a class="dropdown-item announcedel" href="#" data-toggle="modal"><i class="fas fa-trash-alt"></i>Delete</a>
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdnCallStatusid-@items.ID" value="@items.ID" />
+                    <input type="hidden" id="hdnCallStatusname-@items.ID" value="@items.CallStatus" />
+                    <div class="text-center mar-t10 min-height50px">
+                        <h6>@items.CallStatus</h6>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

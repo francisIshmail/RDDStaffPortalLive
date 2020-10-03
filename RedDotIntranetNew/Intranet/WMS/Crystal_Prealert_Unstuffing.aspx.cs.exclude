@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportSource;
+using CrystalDecisions.Shared;
+using System.IO;
+
+using System.Data;
+
+public partial class Intranet_WMS_Crystal_Prealert_Unstuffing : System.Web.UI.Page
+{
+    ReportDocument myReport = new ReportDocument();
+     
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Page.Title = "Prealert Unstuffing";
+
+        DataTable dt= new DataTable ();
+        WMSclsPrealert Wp = new WMSclsPrealert();
+
+        dt = Wp.Prealert_Unstuffing(int.Parse(Request.QueryString["PrealertId"].ToString()));
+        myReport.Load(Server.MapPath("~/CrystalReport/PrealertUsntuffing.rpt"));
+        myReport.SetDataSource(dt);
+        myReport.Refresh();
+       // CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+        CrystalReportViewer1.ReportSource = myReport;
+        MemoryStream oStream;
+        oStream = (MemoryStream)myReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+        Response.Clear();
+        Response.Buffer = true;
+        Response.ContentType = "application/pdf";
+        Response.BinaryWrite(oStream.ToArray());
+        Response.End();
+
+
+
+    }
+    protected void lbBack_Click(object sender, EventArgs e)
+    {
+        if (int.Parse(Request.QueryString["from"].ToString()) == 1)
+            Response.Redirect("BoeDetails.aspx?PrealertId=" + Request.QueryString["PrealertId"]);
+        else if (int.Parse(Request.QueryString["from"].ToString()) == 2)
+            Response.Redirect("ReceivedGoods.aspx?PrealertId=" + Request.QueryString["PrealertId"] + "&boeid=" + Request.QueryString["boeid"]);
+        else
+         Response.Redirect("Prealert.aspx?PrealertId=" + Request.QueryString["PrealertId"]);
+      
+    }
+}

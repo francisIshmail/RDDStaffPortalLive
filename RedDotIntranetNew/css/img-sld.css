@@ -1,0 +1,83 @@
+﻿
+*
+{
+	outline: none;
+}
+img
+{
+	border: 0;
+}
+.container
+{
+	width: 790px;
+	padding: 0;
+	margin: 0 auto;
+}
+.folio_block
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -140px 0 0 -395px;
+}
+/*--Main Container--*/
+.main_view
+{
+	/*-- float: left; --*/
+	position: relative;
+	
+}
+/*--Window/Masking Styles--*/
+.window
+{
+	height:400px;
+	width: 928px;
+	overflow: hidden; /*--Hides anything outside of the set width/height--*/
+	position: relative;
+	
+}
+
+.image_reel
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index:1;
+}
+.image_reel img
+{
+	float: left;
+}
+/*--Paging Styles--*/
+.paging
+{
+	position: absolute;
+	top: 20px;
+	right: 50px;
+	width: 178px;
+	height: 47px;
+	z-index: 1; /*--Assures the paging stays on the top layer--*/
+	text-align: center;
+	line-height: 40px;
+	
+	display: none; /*--Hidden by default, will be later shown with jQuery--*/
+}
+.paging a
+{
+	padding: 5px;
+	text-decoration: none;
+	color: #fff;
+}
+.paging a.active
+{
+	font-weight: bold;
+	background: #920000;
+	border: 1px solid #610000;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.paging a:hover
+{
+	font-weight: bold;
+}

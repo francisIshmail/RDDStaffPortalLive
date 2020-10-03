@@ -34,6 +34,8 @@
     <link href="~/Scripts/sweetalret/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/Scripts/dragdrop/main.css" rel="stylesheet" />
     <link href="~/Scripts/datapicker-separate/daterangepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
     @*<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">*@
 </head>
 <body>
@@ -74,48 +76,24 @@
                                 <div class="quick-actions-scroll scrollbar-outer">
                                     <div class="quick-actions-items">
                                         <div class="row m-0" id="widgetlist">
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-danger rounded-circle">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </div>
-                                                    <span class="text">Report</span>
-                                                </div>
-                                            </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-warning rounded-circle">
-                                                        <i class="fas fa-map"></i>
-                                                    </div>
-                                                    <span class="text">Maps</span>
-                                                </div>
-                                            </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-info rounded-circle">
-                                                        <i class="fas fa-file-excel"></i>
-                                                    </div>
-                                                    <span class="text">Reports</span>
-                                                </div>
-                                            </a>
 
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="~/Funnel/FunnelData/Index">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-success rounded-circle">
-                                                        <i class="fas fa-envelope"></i>
+                                                        <i class="fas fa-filter"></i>
                                                     </div>
-                                                    <span class="text">Emails</span>
+                                                    <span class="text">Funnel</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="~/SAP/SalesOrder/Index">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-primary rounded-circle">
                                                         <i class="fas fa-file-invoice-dollar"></i>
                                                     </div>
-                                                    <span class="text">Invoice</span>
+                                                    <span class="text">Sales Order</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="~/SAP/RDD_PV/INdex">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-secondary rounded-circle">
                                                         <i class="fas fa-credit-card"></i>
@@ -123,6 +101,33 @@
                                                     <span class="text">Payments</span>
                                                 </div>
                                             </a>
+
+                                            <a class="col-6 col-md-4 p-0" href="~/HR/UserList/Index">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-danger rounded-circle">
+                                                        <i class="fas fa-user-tie"></i>
+                                                    </div>
+                                                    <span class="text">Employees</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-warning rounded-circle">
+                                                        <i class="fas fa-plane"></i>
+                                                    </div>
+                                                    <span class="text">Apply Leave</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="~/Reports/DownloadReports/Index">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-info rounded-circle">
+                                                        <i class="fas fa-chart-bar "></i>
+                                                    </div>
+                                                    <span class="text">Reports</span>
+                                                </div>
+                                            </a>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -213,7 +218,7 @@
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/HR/Employees/ViewProfile">My Profile</a>
+                                        @*<a class="dropdown-item" href="/HR/Employees/ViewProfile">My Profile</a>*@
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ChangePasswordPopup">Change Password</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
@@ -685,14 +690,15 @@
             </div>
         </div>
     </div>
-
+    @*<div id="dialogID">
+        Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
+        Do you want to stay signed in?
+    </div>*@
 
     <!--   Core JS Files   -->
 
 
     <script src="~/js/core/jquery.3.2.1.min.js"></script>
-
-
 
     <script src="~/js/core/popper.min.js"></script>
     <script src="~/js/core/bootstrap.min.js"></script>
@@ -735,10 +741,8 @@
 
     <!-- Atlantis JS -->
     <script src="~/js/atlantis.min.js"></script>
-    <script src="~/js/setting-demo.js"></script>
-    <script src="~/js/demo.js"></script>
-
-
+    @*<script src="~/js/setting-demo.js"></script>*@
+    @*<script src="~/js/demo.js"></script>*@
 
 
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
@@ -753,8 +757,8 @@
     <script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
 
     @*<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
-    <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
-    <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
+    <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>*@
     @*voice recogngition*@
     @*<script type="text/javascript" src="~/Scripts/VoiceRec/jquery.min.js"></script>
         <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
@@ -775,7 +779,13 @@
 
     <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
+            debugger
+            
+           
+               
+            
+
         $('a.collapsed das').on("click", function () {
             debugger;
 
@@ -839,6 +849,7 @@
                             //  RdotAlerterrtxt(response.ErrorMsg);
                         }
                     }, complete: function () {
+                        
                         $(document).ready(function () {
                             $('.scrollbar-inner').scrollbar();
                         });
@@ -873,6 +884,7 @@
                             // tempAlert('Error Occur', 500);
                         }
                     }, complete: function () {
+                       // $('.scrollbar-inner').scrollbar();
                         $(document).ready(function () {
                             $('.scrollbar-inner').scrollbar();
                         });
@@ -970,6 +982,12 @@
                 }
             })
         })
+
+            var pathname = window.location.pathname;
+            if (pathname !== '/Dashboard/ErrorPage') {
+                
+                RedtDot_CheckAuthorization(pathname);
+            }
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 
@@ -984,144 +1002,36 @@
         string timeout = section.Timeout.TotalMinutes.ToString();
     }
 
-
-    <script type="text/javascript">
-//code for expired session
-var sTimer = null;
-var eTimer = null;
-
-function InitializeTimer() {
-
-//30 minutes
-    var interval = @timeout * 1000 * 60;//1800000; //time in milliseconds 1000 ms = 1 second
-
-settimerFun(interval);
-
-$('body').ajaxStart(function () {
-// reset timer on ajax request
-settimerFun(interval);
-});
-}
-function settimerFun(interval) {
-if (sTimer)
-clearTimeout(sTimer);
-
-sTimer = setTimeout(function () { sExpired(); }, interval);
-}
-function sExpired() {
-
-//for yes or no dialog
-$('#div_sexpired').remove();
-var dialog = $('<div id="div_sexpired"></div>').text("Do you want to extend the session?");
-$('body').append(dialog);
-
-$('#div_sexpired').dialog({
-autoOpen: true,
-modal: true,
-title: 'Extend Session',
-buttons: {
-"Yes": function () {
-//write your logic here for yes button
-if (eTimer)
-clearTimeout(eTimer);
-settimerFun(5000);
-$(dialog).dialog('close');
-$('#div_sexpired').remove();
-},
-"No": function () {
-//write your logic here for no button
-redirtoLogin
-}
-}
-
-});
-
-
-
-//solution for your problem
-eTimer = setTimeout(function () {
-$(dialog).dialog('close'); //close the yer/no dialog
-
-//dialog for expired session
-var expiredialog = $('<div id="div_expired"></div>').text("Your session has timed out. Please login again.");
-$('body').append(expiredialog);
-$('#div_expired').dialog({
-autoOpen: true,
-modal: true,
-title: 'Expired Session',
-buttons: {
-"OK": function () {
-
-clearTimeout(eTimer);
-$(this).dialog('close');
-}
-
-},
-"close": redirtoLogin
-//on the close of this dialog redirect to login page
-});
-
-
-}, 1800000); //invoked after three seconds
-
-
-}
-
-function redirtoLogin() {
-//redirect to login page
-window.location.href = '@Url.Action("Login", "Account")';
-}
-
-//end of expired session
-
-$(function () {
-
-InitializeTimer(); //invoke the timer function
-});
-
-    </script>
-    @*<script>
-        $(document).ready(function () {
-            debugger
-                        var time = @timeout * 1000 * 60;
-                        var timeout;
-                        var isLogout = false;
-
-                        timeout = setTimeout(function() {
-                            //Things you need to do
-                                isLogout = true;
-
-                        }, time);
-
-                        $(document).on('click', function () {
-                            if (!isLogout) {
-                                clearTimeout(timeout);
-                                timeout = setTimeout(function() {
-                                    //Things you need to do
-                                     isLogout = true;
-                                }, time);
-                            }
-                        });
-                    });
-            </script>*@
-    @*<link href="~/Content/timeout-dialog.css" rel="stylesheet" />
+    <link href="~/Content/timeout-dialog.css" rel="stylesheet" />
         <script src="~/Scripts/timeout-dialog.js"></script>
 
         <script>
-
-            jQuery(function (e) {
-
-                var fnTimeOut = function () {
-                    jQuery.timeoutDialog.setupDialogTimer({
-                        timeout: 105,
-                        countdown: 100,
-                        logout_redirect_url: '@Url.Action("SignOut", "Account")',
-                        keep_alive_url: '@Url.Action("Keepalive", "Account")'
-                   });
-                };
-                fnTimeOut();
+             $(function () {
+            Timer();
             });
-        </script>*@
+        function Timer() {
+            //console.log("Set Timeout");
+            setTimeout(TimeOut, 10000);
+        }
+        function TimeOut() {
+            $.timeoutDialog({
+                timeout: @timeout*60,
+                countdown: 20,
+                keep_alive_url: '@Url.Action("Keepalive", "Account", new { area = "" })',
+                logout_redirect_url: '@Url.Action("SignOut", "Account", new { area = "" })',
+                logout_url: '@Url.Action("SignOut", "Account", new { area = "" })',
+                restart_on_yes: true
+            });
+
+
+            //$(document).on('mousemove keypress :not(#timeout-dialog)', function () {
+            //    clearTimeout();
+            //    Timer(); 
+                
+            //});
+
+        }
+        </script>
     <style>
         .demo-scrollbar {
             height: 300px;

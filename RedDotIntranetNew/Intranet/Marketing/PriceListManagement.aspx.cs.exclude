@@ -1,0 +1,248 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Collections;
+
+public partial class Intranet_EVO_PriceListManagement : System.Web.UI.Page
+{
+    string query;
+    int mailSentCounter;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        lblError.Text = "";
+
+        if (!Page.IsPostBack)
+        {
+            Loaddefaults();
+            bindDDLCountry();
+            BindGrid();
+        }
+    }
+    
+    private void Loaddefaults()
+    {
+        txtMsg.Text = "";
+        txtSubject.Text = "";
+        lblFilePth.Text = "";
+
+        if (ddlCountry.Items.Count > 0)
+            ddlCountry.SelectedIndex = 0;
+    }
+
+    private void bindDDLCountry()
+    {
+        Db.LoadDDLsWithCon(ddlCountry, "select CountryID,Country from dbo.tblCountry order by country", "Country", "CountryID", myGlobal.getRDDMarketingMailsDBConnectionString());
+        lblCntryCnt.Text = ddlCountry.Items.Count.ToString();
+        
+    }
+
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+
+        long aid = 0;
+
+        lblFilePth.Text = "";
+
+        if (ddlCountry.SelectedIndex < 0)
+        {
+            lblError.Text = "Error ! No country selected for the dealer.";
+            return;
+        }
+
+        if (txtSubject.Text.Trim() == "")
+        {
+            lblError.Text = "Error ! Subject filed can not be empty, Please supply a value and then save (Max 250 Chars).";
+            return;
+        }
+
+        txtSubject.Text = txtSubject.Text.Trim().Replace("'", "''");
+
+        if (txtMsg.Text.Trim() == "")
+        {
+            lblError.Text = "Error ! Message filed can not be empty, Please supply a value and then save (Max 4000 Chars).";
+            return;
+        }
+
+        txtMsg.Text = txtMsg.Text.Trim().Replace("'", "''");
+
+        if (!FileUpload1.HasFile && lblFilePth.Text.Trim() == "")
+        {
+            lblError.Text = "It's Mandatory to upload a valid PriceList file (excel format).  ";
+            return;
+        }
+
+        String pth, dirPhyPth, flsavePth="";
+        pth = "/DownloadsUploads/priceLists/";
+
+        dirPhyPth = Server.MapPath("~" + pth);
+
+        try
+        {
+
+            if (FileUpload1.HasFile)
+            {
+                flsavePth = dirPhyPth + DateTime.Now.ToString("MM-dd-yyyy hh-mm-ss") + "-" + FileUpload1.FileName;
+                lblFilePth.Text = pth + DateTime.Now.ToString("MM-dd-yyyy hh-mm-ss") + "-" + FileUpload1.FileName;
+                FileUpload1.SaveAs(flsavePth);
+            }
+        
+            query = string.Format("insert into dbo.tblpricelist(fk_CountryID,Subject,Msg,filePath,byUserName)  values({0},'{1}','{2}','{3}','{4}')", ddlCountry.SelectedItem.Value.ToString(), txtSubject.Text, txtMsg.Text, lblFilePth.Text, myGlobal.loggedInUser());
+            Db.constr = myGlobal.getRDDMarketingMailsDBConnectionString();
+            aid=  Db.myExecuteSQLReturnLatestAutoID(query);    
+            lblError.Text = "PriceList Successfully added to database ";
+
+            if (sendPriceListMails(txtMsg.Text, txtSubject.Text, flsavePth,"Price List : "))  //finally send mails 
+            {
+                // update mail sending status in database
+
+                query = string.Format("update dbo.tblpricelist set mailSentStatus='{0}',mailingDate='{1}' where pricelistID=" + aid.ToString(), "Sent", DateTime.Now.ToString());
+                Db.constr = myGlobal.getRDDMarketingMailsDBConnectionString();
+                Db.myExecuteSQL(query);
+
+                lblError.Text += ", mails sent to (" + mailSentCounter.ToString() + ") dealers.";
+            }
+            else
+            {
+                lblError.Text += " but mails could not be sent to dealers as of now , contact administrator for further query";
+            }
+            
+                Loaddefaults();
+                BindGrid();
+        }
+        catch (Exception exp)
+        {
+            lblError.Text = "Error Saving PriceList ! " + exp.Message;
+        }
+    }
+
+    private Boolean sendPriceListMails(string pmsg,string psub,string ppth,string pTitleType)
+    {
+        Boolean sts = true;
+
+        string htm = getHtmlContentPriceList();
+        
+        //send for all dealers in loop 
+        string msg = "",nmail="";
+
+        try
+        {
+
+            for (mailSentCounter = 0; mailSentCounter < lstEmails.Items.Count; mailSentCounter++)
+            {
+                nmail = lstEmails.Items[mailSentCounter].Text;
+                msg = Mail.SendSingleAttachMarketing("marketing@reddotdistribution.com", nmail,"vishav@eternatec.com", (pTitleType + psub), htm, true, ppth);
+            }
+        }
+        catch (Exception exp)
+        {
+            sts = false;
+        }
+        
+        return sts;
+    }
+
+    private string getHtmlContentPriceList()
+    {
+        string strMsg;
+        strMsg = "<br/><br/><b>Dear Resellers,</b>";
+        strMsg += "<br/><br/>" + "Greetings for the Day!! <br/><br/>";
+
+        strMsg += txtMsg.Text + " <br/><br/>";
+
+        strMsg += "<b>Please find the" + " PriceList file attached..<b>" + "<br/><br/>";
+
+        strMsg += "For more details, please contact saleske@reddotdistribution.com or marketing@reddotdistribution.com <br/><br/>";
+        //strMsg += "<br/><br/>Best Regards,<br/>Red Dot Distribution<br/>";
+        strMsg+="<img src='"+ Server.MapPath("~/DownloadsUploads/MarketingEmailTemplates/signature.png") +"' alt='RedDotIntranet'/>";
+        
+        return strMsg;
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Loaddefaults();
+        BindGrid();
+    }
+
+
+    protected void BindGrid()
+    {
+        String summarySQL;
+        String sortExp = (String)ViewState["sortExpression"];
+        String sortDir = (String)ViewState["sortDirection"];
+
+        if (sortExp == null || sortExp == "")
+        {
+            summarySQL = "select C.Country,P.pricelistID,P.fk_CountryID,P.Subject,P.Msg,P.filepath,P.byUserName,P.ModifiedDate,P.mailSentStatus,P.mailingDate from dbo.tblpricelist P left join dbo.tblCountry C on P.fk_CountryID=C.CountryID where P.fk_CountryID=" + ddlCountry.SelectedValue.ToString() + " order by C.Country,P.ModifiedDate";  //colums are : DeptId,DeptName,LastUpdated
+        }
+        else
+        {
+            summarySQL = "select C.Country,P.pricelistID,P.fk_CountryID,P.Subject,P.Msg,P.filepath,P.byUserName,P.ModifiedDate,P.mailSentStatus,P.mailingDate from dbo.tblpricelist P left join dbo.tblCountry C on P.fk_CountryID=C.CountryID where P.fk_CountryID=" + ddlCountry.SelectedValue.ToString() + " order by " + sortExp + " " + sortDir;
+        }
+        Db.constr = myGlobal.getRDDMarketingMailsDBConnectionString();
+        Grid1.DataSource = Db.myGetDS(summarySQL);
+        Grid1.DataBind();
+
+        lblListCnt.Text = Grid1.Rows.Count.ToString();
+
+        getDealerCountforSelectedCountry();
+    }
+
+    protected void getDealerCountforSelectedCountry()
+    {
+        lblSelectedCntry.Text = ddlCountry.SelectedItem.Text;
+        lblSelectedCntry1.Text = ddlCountry.SelectedItem.Text;
+
+        Db.constr = myGlobal.getRDDMarketingMailsDBConnectionString();
+        lstEmails.DataSource = Db.myGetDS("select DealerID,(Email1 + case Email2 when 'NA' then '' else ';'+ Email2 end) as mailIDs from dbo.tblDealer where fk_CountryID=" + ddlCountry.SelectedValue.ToString());
+        lstEmails.DataTextField = "mailIDs";
+        lstEmails.DataValueField = "DealerID";
+        lstEmails.DataBind();
+        lblDealerCnt.Text =  lstEmails.Items.Count.ToString();
+        //int Dcnt = 0;
+        //Dcnt = Db.myExecuteScalar("select COUNT(*) from dbo.tblDealer where fk_CountryID="+ddlCountry.SelectedValue.ToString());
+        //lblDealerCnt.Text = Dcnt.ToString();
+    }
+
+    protected void Grid1_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        String sortExp = e.SortExpression.ToString();
+        String sortDir = e.SortDirection.ToString();
+
+        String sortExpV = (String)ViewState["sortExpression"];
+        String sortDirV = (String)ViewState["sortDirection"];
+
+        if (sortExpV != null && sortExp == sortExpV)
+        {
+            if (sortDirV == "Asc")
+                ViewState["sortDirection"] = "Desc";
+            else
+                ViewState["sortDirection"] = "Asc";
+        }
+        else
+        {
+            ViewState["sortExpression"] = sortExp;
+            ViewState["sortDirection"] = "Asc";
+        }
+
+        BindGrid();
+    }
+
+    protected void Grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid();
+    }
+
+    protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindGrid();
+    }
+}

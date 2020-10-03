@@ -52,6 +52,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.SAPbobsCOM">
+      <HintPath>..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -66,9 +70,7 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\..\..\..\Jagdish\ReddotStaffLive\RDDStaffPortalLive\RDDStaffPortal\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -94,7 +96,18 @@
     <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DailyReports\RDD_DailySalesReports_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_CallStatus_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ModeOfCall_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_NextAction_Db_Operation.cs" />
+    <Compile Include="DailyReports\RDD_DSR_ReportingFreqTarget_Db_Operation.cs" />
+    <Compile Include="DataModels\Admin\RDD_APPROVAL_DOC.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DailySalesReports.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_CallStatus.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ModeOfCall.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
+    <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
     <Compile Include="DataModels\CountryTarget.cs" />
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />

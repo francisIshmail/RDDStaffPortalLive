@@ -1,0 +1,263 @@
+﻿Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Shared
+Imports System.Reflection
+'Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Data
+Imports System.IO
+
+
+Partial Class crystal_facilityDetails
+    Inherits System.Web.UI.Page
+    Dim myReport As New ReportDocument
+    Dim mySubReport1, mySubReport2, mySubReport3 As New ReportDocument
+
+    Dim filePath As String
+    Dim conn As New ADODB.Connection
+    Dim rsDel As New ADODB.Recordset
+    Dim rsIns As New ADODB.Recordset
+    Dim rsSetPostARAge As New ADODB.Recordset
+    Dim rsSetPostARAge2 As New ADODB.Recordset
+    Dim rsInsInto As New ADODB.Recordset
+    Dim rsAllData As New ADODB.Recordset
+    Dim rsAge As New ADODB.Recordset
+    Dim rsClient As New ADODB.Recordset
+    Dim rsPlacedOrders As New ADODB.Recordset
+    Dim rsSalesRep As New ADODB.Recordset
+
+    'Dim ExlObj As Excel.Application
+    Dim nx, SalesEmailLink As Integer
+    Dim AccEmail, UD As String
+    Dim db1, db, db2 As String
+
+    Dim CustName As String
+    Dim Due As Single
+    Dim Acc As String
+    Dim creditLimit As Single
+
+    Dim SalesRepEmail, Status, post1, post2, post3 As String
+
+    'Dim MySheet As Excel.Worksheet
+    Dim lc, NxtLine, k, AgeLine, OrderLine As Integer
+    Dim creditAvail As Single
+    Dim Age1, Age2, Age3, Age4, Age5, Age6, Age7, OrderTotal As Single
+    Dim sSaveAsFileName As String
+
+    Dim pth1, pth2 As String
+
+    Protected Sub lbBack_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lbBack.Click
+        Response.Redirect("statementBase.aspx")
+    End Sub
+
+    Public Function RecordSetToDataTable(ByVal objRS As ADODB.Recordset) As DataTable
+        Dim objDA As New OleDb.OleDbDataAdapter()
+        Dim objDT As New DataTable()
+        objDA.Fill(objDT, objRS)
+        Return objDT
+  
+    End Function
+
+    Protected Sub Page_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        '''''just additions to existing code'''''''''replace variables in place of myglobal calls for dealer case''''''only three changes marked as 1* 2* 3* '''''''''
+        Page.Title = "Statement"
+        Dim pDb, pCountryCode, pDCLink As String
+        pDb = ""
+        pCountryCode = ""
+        pDCLink = ""
+
+        If Request.QueryString("pDB") IsNot Nothing Then
+            pDb = Request.QueryString("pDB").ToString()
+        End If
+        If Request.QueryString("pCountryCode") IsNot Nothing Then
+            pCountryCode = Request.QueryString("pCountryCode").ToString()
+        End If
+        If Request.QueryString("pDCLink") IsNot Nothing Then
+            pDCLink = Request.QueryString("pDCLink").ToString()
+        End If
+
+        ''''addition ends''''''''''''''''''''
+
+        'db1 = myGlobal.loggedInUserDb()
+        db1 = pDb        ''''''''''''''''''''''''''change 1*
+
+        db2 = db1.Replace("[", "")
+        db = db2.Replace("]", "")
+
+        'Dim dclink As String = myGlobal.loggedInUserEvoLink().ToString()       ''''''''''''''''''''''''''change 3*
+        Dim dclink As String = pDCLink
+
+        'Dim conStr As String = "Provider=SQLOLEDB.1;" & myGlobal.getConnectionStringForDB(myGlobal.loggedInUserCountryCode())
+        Dim conStr As String = "Provider=SQLOLEDB.1;" & myGlobal.getConnectionStringForDB(pCountryCode)       ''''''''''''''''''''''''''change 2*
+
+        conn = New ADODB.Connection
+        conn.Open(conStr)
+
+        Dim sqlDel As String = "DELETE FROM [" & db & "].dbo._etblAllocsDCLinkRangeTemp WHERE DCLink >=0"
+
+        Dim cmd As ADODB.Command
+        cmd = New ADODB.Command
+
+        '--just added--------------
+        cmd.CommandTimeout = 600
+        cmd.ActiveConnection = conn
+        cmd.CommandType = ADODB.CommandTypeEnum.adCmdText
+        cmd.CommandText = sqlDel
+        rsDel = cmd.Execute()
+        '--just added--------------
+
+        Dim sqlrs As String = "INSERT INTO [" & db & "].dbo._etblAllocsDCLinkRangeTemp(DCLink) SELECT DCLink  FROM [" & db & "].dbo.Client WHERE DCLink >= '0' and DCLink <= '1999' and iCurrencyID = '1'"
+
+        '--just added--------------
+        cmd.CommandText = sqlrs
+        rsIns = cmd.Execute()
+        '--just added--------------
+
+        'rsIns.Open(sqlrs, connection, ADODB.CursorTypeEnum.adOpenStatic)
+
+        Dim sql1 As String = "SELECT * FROM [" & db & "].dbo.Client WHERE DCLink =" & dclink
+
+        '--just added--------------
+        cmd.CommandText = sql1
+        rsInsInto = cmd.Execute()
+        '--just added--------------
+
+        'rsInsInto.Open(sql1, connection, ADODB.CursorTypeEnum.adOpenStatic)
+
+        'On Error GoTo emailAdmin:
+
+        With rsInsInto
+            nx = .Fields("DCLink").Value
+            SalesEmailLink = .Fields("iAgentID").Value
+            AccEmail = .Fields("email").Value
+            UD = .Fields("ulARAutoStatements").Value
+        End With
+
+       
+       
+        Dim dt, dt2, dt3 As DataTable
+        Dim sqldata = "SELECT AccountLink  as AccountID,isnull((FCAge1),0) as [Current], isnull((FCAge2),0) as [fAge30], isnull((FCAge3),0) as [fAge60], " & _
+                       " isnull((FCAge4),0) as [fAge90], isnull((FCAge5),0) as [fAge120],isnull((FCAge6),0) as [fAge150], isnull((FCAge7),0) as [fAge180], " & _
+                       " CONVERT(VARCHAR(10), TxDate, 110) as TxDate  ,CONVERT(VARCHAR(10), dateadd(Day, case iPostSettlementTermsID  " & _
+                       " When '0' then '30' when '1' then 30 When '2' then 45 when '3' then 60 when '4' then 90 When '5' then 5 when '6' then 15 else 0 end,TxDate), 110) " & _
+                       " AS DueDate, PAR.Reference, datediff (day, TxDate, getdate()) as  DueDate, Reference, datediff (day, TxDate, getdate()) as 'DueDays', " & _
+                       " fForeignDebit, fForeignCredit, fForeignOutstanding AS [$Outstanding],    Account,   Name,   Contact_Person, Physical1,   Physical2,Physical3," & _
+                       " Physical4,    Physical5,    PhysicalPC, Addressee, Post1,   Post2,   Post3,   Post4,  Post5,  PostPC,   Credit_Limit, EMail,   DCBalance, " & _
+                       " iAgentID,   fForeignBalance , case On_Hold When '0' then 'Active' when '1' then 'On Hold' else '' end as [Status]  " & _
+                       " from [" & db & "].dbo._efnAgedPostARBalances('" & Session("strdate") & "', null) as PAR left join  [" & db & "].dbo.TrCodes as trcode " & _
+                       " on idTrCodes = TrCodeID  INNER JOIN [" & db & "].dbo.Client  as  clt ON  PAR.AccountLink = clt.DCLink   where (Round(CalculatedOutstandingForeign,7)<>0) " & _
+                       " AND fForeignOutstanding <> 0 and AccountLink = '" & nx & "' order by TxDate, PAR.Reference"
+
+        ' sqldata = "EXECUTE [tej].[dbo].[cr1] @DCLINK='2',@SOMEDATE='09/13/2011',@DB='RedDotTanzania'"
+
+        '--just added--------------
+        cmd.CommandText = sqldata
+        rsAllData = cmd.Execute()
+        '--just added--------------
+
+        'rsAllData.Open(sqldata, connection, ADODB.CursorTypeEnum.adOpenStatic)
+
+        dt = RecordSetToDataTable(rsAllData)
+        'Fetch age/clientDet/PlacedOrders
+        'rsAge.Open("SELECT (FCAge1) as [Current], (FCAge2) as [fAge30], (FCAge3) as [fAge60], (FCAge4) as [fAge90], (FCAge5) as [fAge120],(FCAge6) as [fAge150], (FCAge7) as [fAge180] from [" & db & "].dbo._efnAgedPostARBalances('" & Session("strdate") & "', null) left join " & ServerPrefix & ".[" & db & "].dbo.TrCodes on idTrCodes = TrCodeID  INNER " & ServerPrefix & ".[" & db & "].dbo.Client as clt ON  _efnAgedPostARBalances.AccountLink = clt.DCLink where (Round(CalculatedOutstanding,7)<>0) and AccountLink = '" & nx & "' and fForeignOutstanding <> 0.00", connection, ADODB.CursorTypeEnum.adOpenStatic)
+        'dt1 = RecordSetToDataTable(rsAge)
+        Dim qry As String
+
+        qry = "SELECT *, case On_Hold When '0' then 'Active' when '1' then 'On Hold' else '' end as [Status] FROM [" & db & "].dbo.Client WHERE DCLink = '" & nx & "'"
+
+        '--just added--------------
+        cmd.CommandText = qry
+        rsClient = cmd.Execute()
+        '--just added--------------
+
+        'rsClient.Open(qry, connection, ADODB.CursorTypeEnum.adOpenStatic)
+
+        dt2 = RecordSetToDataTable(rsClient)
+
+        qry = "SELECT AccountID , OrderDate, DueDate, OrderNum, DeliveryDate, fOrdTotInclForeign FROM [" & db & "].dbo.InvNum WHERE AccountID = '" & nx & "' and DocState =1"
+
+        '--just added--------------
+        cmd.CommandText = qry
+        rsPlacedOrders = cmd.Execute()
+        '--just added--------------
+
+        'rsPlacedOrders.Open(qry, connection, ADODB.CursorTypeEnum.adOpenStatic)
+
+        ' rsPlacedOrders.Open("SELECT inv.OrderDate, inv.DueDate, inv.OrderNum, inv.DeliveryDate, inv.fOrdTotInclForeign FROM join [" & db & "].dbo.InvNum inv on inv.AccountID = AccountLink   WHERE inv.AccountID = '" & nx & "' and DocState =1", connection, ADODB.CursorTypeEnum.adOpenStatic)
+        dt3 = RecordSetToDataTable(rsPlacedOrders)
+        Dim tot As Integer
+        Dim order As Integer = 0
+
+        For Each row As DataRow In dt3.Rows
+            order = order + row("fOrdTotInclForeign")
+        Next
+
+
+
+        tot = order
+        Dim TotalOrder As DataColumn = dt.Columns.Add("TotalOrder", Type.GetType("System.Int32"))
+        Dim OrderDate As DataColumn = dt.Columns.Add("OrderDate", Type.GetType("System.DateTime"))
+        Dim OrderNum As DataColumn = dt.Columns.Add("OrderNum", Type.GetType("System.String"))
+        Dim DeliveryDate As DataColumn = dt.Columns.Add("DeliveryDate", Type.GetType("System.DateTime"))
+        Dim fOrdTotInclForeign As DataColumn = dt.Columns.Add("fOrdTotInclForeign", Type.GetType("System.Int64"))
+
+        dt.AcceptChanges()
+        For Each row As DataRow In dt.Rows
+            row("TotalOrder") = tot
+        Next
+        dt.AcceptChanges()
+
+
+
+        For Each dr As DataRow In dt3.Rows
+            dt.ImportRow(dr)
+        Next
+
+
+        myReport.Load(Server.MapPath("~/CrystalReport/Statement.rpt"))
+
+        myReport.Database.Tables(0).SetDataSource(dt)
+
+
+
+        mySubReport2 = myReport.OpenSubreport("SubStatement1.rpt")
+        mySubReport2.Database.Tables(0).SetDataSource(dt)
+
+        mySubReport1 = myReport.OpenSubreport("SubStatement.rpt")
+        mySubReport1.Database.Tables(0).SetDataSource(dt)
+
+        mySubReport3 = myReport.OpenSubreport("SubStatementOrder.rpt")
+        mySubReport3.Database.Tables(0).SetDataSource(dt)
+
+
+        '  myReport.SetDatabaseLogon("sa", "n3Wp455W0rD")
+        myReport.Refresh()
+        'CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None
+        Me.CrystalReportViewer1.ReportSource = myReport
+
+        Dim oStream As MemoryStream
+        oStream = DirectCast(myReport.ExportToStream(CrystalDecisions.[Shared].ExportFormatType.PortableDocFormat), MemoryStream)
+        Response.Clear()
+        Response.Buffer = True
+        Response.ContentType = "application/pdf"
+        Response.BinaryWrite(oStream.ToArray())
+        Response.End()
+
+
+       
+    End Sub
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+    Private Sub SetDBLogonForReport(ByVal myConnectionInfo As ConnectionInfo)
+        Dim myTableLogOnInfos As TableLogOnInfos = CrystalReportViewer1.LogOnInfo
+        For Each myTableLogOnInfo As TableLogOnInfo In myTableLogOnInfos
+            myTableLogOnInfo.ConnectionInfo = myConnectionInfo
+        Next
+    End Sub
+
+    Protected Sub Page_Unload(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Unload
+        myReport.Close()
+        myReport.Dispose()
+    End Sub
+End Class
