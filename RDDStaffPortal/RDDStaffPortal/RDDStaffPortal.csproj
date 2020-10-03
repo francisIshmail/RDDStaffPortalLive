@@ -217,7 +217,16 @@
     <Content Include="img\bg\Background-001.JPG" />
     <Content Include="img\bg\Background-002.JPG" />
     <Content Include="Images\timeout-icon.png" />
+    <Content Include="js\datapicker-separate\datepicker.all.js" />
+    <Content Include="js\datapicker-separate\datepicker.all.min.js" />
+    <Content Include="js\datapicker-separate\datepicker.css" />
+    <Content Include="js\datapicker-separate\datepicker.en.js" />
+    <Content Include="js\new-daterangepicker\daterangepicker.css" />
+    <Content Include="js\new-daterangepicker\daterangepicker.js" />
+    <Content Include="js\new-daterangepicker\moment.min.js" />
+    <Content Include="js\new-daterangepicker\package.js" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
+    <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -844,7 +853,7 @@
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
-    <Folder Include="excelFileUpload\" />
+    <Folder Include="excelFileUpload\MarketingPlan\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -896,9 +905,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28981/</IISUrl>
+          <IISUrl>http://localhost:28983/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28981/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28983/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

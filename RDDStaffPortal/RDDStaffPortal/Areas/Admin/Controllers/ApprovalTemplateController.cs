@@ -67,10 +67,17 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         }
 
         [Route("GetApprovalModal")]
-        public ActionResult GetApprovalData(string Object_Type, string Originator)
+        public ActionResult GetApprovalData(string Object_Type, string Originator,string DocKey)
         {
 
-            return Content(JsonConvert.SerializeObject(rDD_Approval.GetApprovaldata(Object_Type, Originator)), "application/json");
+            return Content(JsonConvert.SerializeObject(rDD_Approval.GetApprovaldata(Object_Type, Originator,DocKey)), "application/json");
+        }
+
+        [Route("RDD_Approver_Insert_Records")]
+        public ActionResult RDD_Approver_Insert_Records(string Object_Type, string Originator, string DocKey, string OriginatorRemark)
+        {
+
+            return Content(JsonConvert.SerializeObject(rDD_Approval.RDD_Approver_Insert_Records(Object_Type, Originator, DocKey, OriginatorRemark)), "application/json");
         }
     }
 }

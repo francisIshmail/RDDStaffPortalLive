@@ -101,6 +101,7 @@
     <Compile Include="DailyReports\RDD_DSR_ModeOfCall_Db_Operation.cs" />
     <Compile Include="DailyReports\RDD_DSR_NextAction_Db_Operation.cs" />
     <Compile Include="DailyReports\RDD_DSR_ReportingFreqTarget_Db_Operation.cs" />
+    <Compile Include="DataModels\Admin\RDD_APPROVAL_DOC.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DailySalesReports.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_CallStatus.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
     <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
+    <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
+    <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
     <Compile Include="DataModels\RDD_CountryBU.cs" />
     <Compile Include="DataModels\RDD_CountryTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
@@ -170,6 +174,8 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="obj\Debug\DataModels\DailyReports\UserControl1.g.i.cs" />
+    <Compile Include="MarketingPlan\MarketingPlanDbOperation.cs" />
+    <Compile Include="MarketingPlan\MarketingPlanLines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
@@ -194,7 +200,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <COMReference Include="SAPbobsCOM">
+      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30090}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />

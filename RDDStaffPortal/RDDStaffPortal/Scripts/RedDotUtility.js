@@ -104,15 +104,18 @@
         ' </div>' +
         '</div>' +
         '<div class="modal-footer">' +
-        '<button type="button" id="btnApproval" class="btn btn-info btn-sm" >send</button>' +
+        '<button type="button" id="btnApproval" class="btn btn-info btn-sm">send</button>' +
         '<button type="button" id="btnAppCancel" class="btn btn-default btn-sm" >cancel</button>' +
-
+       
         '</div>' +
 
         '</div > ' +
         ' </div > ' +
         '</div>')
     //#endregion
+
+    var CheckApproval = false;
+
     $.ajax({
         async: false,
         cache: false,
@@ -124,21 +127,22 @@
 
         success: function (response) {
             debugger
+            if (response.Table.length != 0) {
+                CheckApproval = true;
+                $("#MDescription").val(response.Table[0].Description)
+                $("#MDocumentName").val(response.Table[0].DocumentName)
+                $("#MObjType").val(response.Table[0].ObjType)
+                $("#MTemplate_Id").val(response.Table[0].Template_Id)
 
-            $("#MDescription").val(response.Table[0].Description)
-            $("#MDocumentName").val(response.Table[0].DocumentName)
-            $("#MObjType").val(response.Table[0].ObjType)
-            $("#MTemplate_Id").val(response.Table[0].Template_Id)
-
-            $("#MOriginator").val(response.Table[0].Originator)
-            $("#MOriginator_Id").val(response.Table[0].Originator_Id)
-            $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+                $("#MOriginator").val(response.Table[0].Originator)
+                $("#MOriginator_Id").val(response.Table[0].Originator_Id)
+                $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+            }
+           
         }
     });
-
-    
-
-
+    return CheckApproval;
+   
 }
 
 function RdotAlertdele(code) {
@@ -558,12 +562,14 @@ var RdotMMNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 /*json date format dd-MMM-yyyy*/
 function RdotdatefrmtRes1(dte) {
-    var now = new Date(parseInt(dte.substr(6)));
-    var now = new Date(now);
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = (day) + "-" + RdotMMNames[month - 1] + "-" + now.getFullYear();
-    return today;
+    if (dte !== undefined && dte !== null) {
+        var now = new Date(parseInt(dte.substr(6)));
+        var now = new Date(now);
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (day) + "-" + RdotMMNames[month - 1] + "-" + now.getFullYear();
+        return today;
+    }
 }
 
 function RedDot_setdtpkdate(date1) {
@@ -1369,6 +1375,7 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
 
 
 function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
+    debugger;
     var arr = [];
     $.ajax({
         async: false,

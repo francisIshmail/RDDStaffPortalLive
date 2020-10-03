@@ -2,175 +2,1845 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    var message = TempData["Msg"] ?? string.Empty;
 }
 
 <h2>Index</h2>
 
-<div class="main-panel">
-    <div class="container">
-        <div class="page-inner">
-            <div class="page-header">
-                <div class="col-md-9 padd-0">
-                    <h4 class="page-title">Marketing Plan</h4>
+    <div class="main-panel">
+        <div class="container">
+            <div class="page-inner">
+                <div class="page-header">
+                    <div class="col-md-9 padd-0">
+                        <h4 class="page-title">Marketing Plan</h4>
+                    </div>
+                    <div class="col-md-1 ml-auto text-right">
+                        <div class="row">
+                            <div class="col-md-1 col-2"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+                            <div class="col-md-1 mar-t3 p-0 col-3 ml-auto"><div id="headingOne" data-toggle="collapse" data-target="#ContantsPayment" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="plus-minus"></div></div></div>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
+                @using (Html.BeginForm("SavePlan", "MarketingPlan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="rowmin collapse" id="ContantsPayment" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="col-md-12">
+                            <div class="card success-border full-height smform-section">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Source of fund :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <select class="form-control form-control-sm" id="ddlfund">
+                                                        <option value="0">-- Select --</option>
+                                                        <option value="V">Vendor</option>
+                                                        <option value="I">Internal</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Vender BU :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <select class="form-control form-control-sm" id="VenderBu">
+                                                        <option>-- Select --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Country :</label>
+                                                <div class="col-md-7 p-0">
+
+                                                    <select class="form-control form-control-sm" id="CountryList" onchange="BindRefNo()">
+                                                        <option>-- Select --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Approved Amount :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm text-right" id="txtappamt" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Balance from Approved :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm text-right" id="txtbalapproved" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Ref No. :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm text-right" id="txtrefno" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">RDD Approved Amount :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm text-right" id="txtrddapp_amt" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Bal amt. from RDD Apped :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm text-right" id="txtbalamtrddapp" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Plan Status :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <select class="form-control form-control-sm" id="ddlplanstatus">
+                                                        <option value="0">-- Select --</option>
+                                                        <option value="D" selected="selected">Draft</option>
+                                                        <option value="O">Open</option>
+                                                        <option value="H">On-Hold</option>
+                                                        <option value="P">Paid-Closed</option>
+                                                        <option value="C">Unpaid-Closed</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-8">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-2 col-form-label p-0" style="margin-right:17px;">Description :</label>
+                                                <div class="col-md-9 p-1">
+                                                    <textarea class="form-control" id="comment" rows="3"> </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Start Date :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm" id="startdate" name="startdate">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">End Date :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm" id="enddate" name="enddate">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
-            <div class="rowmin">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-body">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Approval Status :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="txtapprovalstatus" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Approver Remark :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="txtapprovalremk" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Create Date :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm" id="createdate" name="createdate">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-xl-1 col-md-1 ml-auto">
+                                            <button type="button" class="btn btn-success btn-sm" id="fromtoemail">Add</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="rowmin">
+                                        <div class="col-md-12">
+                                            <div class="card full-height">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <div class="reddotTable sm-form" id="AddfromtoemailRow">
+                                                            <div class="reddotTableBody">
+                                                                <div class="reddotTableRow odd-even-row">
+                                                                    <div class="reddotTableHead width1per"><div>#</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Date</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Country</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Vendor</div></div>
+                                                                    <div class="reddotTableHead width20per"><div>Description</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Amount</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Vendor PO No.</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>SAP PO No.</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Status</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Appr Status</div></div>
+                                                                    <div class="reddotTableHead width20per"><div>Approver Remark</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Key</div></div>
+                                                                    <div class="reddotTableHead width10per"><div>Action</div></div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="attachmentdiv">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="file-upload">
+                                                        @*<div class="file-select">*@
+                                                        <div class="file-select-button" id="fileName"></div>
 
 
-                            <div class="row" id="divyr">
+                                                        <input type="file"
+                                                               id="avatar" name="avatar" />
+                                                        @*</div>*@
+                                                    </div>
+                                                </div>
 
-                                <div class="col-xl-1 col-md-1">
+                                            </div>
+                                            <div class="col-xl-1 col-md-1">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button>
+                                                </div>
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Source Of Fund:</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
-                                <div class="col-xl-1 col-md-1">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-info btn-sm" id="btnsave" onclick="savedata()">Save</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Vender BU:</label></div>
                                 </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Country:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
-
                             </div>
 
-                            <div class="row"  id="divyr">
 
-                                <div class="col-xl-1 col-md-1">
+                        </div>
+                    </div>
+                    <input type="hidden" id="maintab" name="maintab" />
+                    <input type="hidden" id="mainrowtab" name="mainrowtab" />
+                    <input type="hidden" id="attchcnt" />
+                }
+                <div class="rowmin" id="FilterSection" style="display:none">
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Approved Amount:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
+                    <div class="col-md-12">
+                        <div class="card success-border full-height padd-10">
+                            <div class="row">
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Balanced For Approved:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
+                                <div class="col-xl-3 col-md-3">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Source Of Fund :</label>
+                                        <div class="select2-input">
+                                            <select id="fil_Source" name="basic" class="form-control">
+                                                <option value="0">-- Select --</option>
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Ref No:</label></div>
+                                                <option value="V">Vendor</option>
+                                                <option value="I">Inventor</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
+                                <div class="col-xl-3 col-md-3">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Vendor BU:</label>
+                                        <select class="form-control" id="fil_BU">
+                                            <option value="0">-- Select --</option>
+
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="col-xl-3 col-md-3">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Country :</label>
+                                        <select class="form-control" id="fil_Country">
+                                            <option value="0">-- Select --</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Plan Status :</label>
+                                        <select class="form-control" id="fil_Status">
+                                            <option value="0">-- Select --</option>
+                                            <option value="D">Draft</option>
+                                            <option value="O">Open</option>
+                                            <option value="H">On-Hold</option>
+                                            <option value="P">Paid-Closed</option>
+                                            <option value="C">Unpaid-Closed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Date :</label>
+                                        <div class="col-md-1">
+                                            <input type="text" id="filfdate" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-1 col-md-1 ml-auto text-right">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px"></label>
+                                        <button class="btn btn-success btn-sm" id="btnapply" onclick="applyfilter()">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="rowmin">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="reddotTable sm-form " id="searchgrid"></div>
+                                </div>
+
 
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="row"  id="divyr">
 
-                                <div class="col-xl-1 col-md-1">
+                <div class="table-responsive">
+                    <div class="reddotTable sm-form mar-t0">
+                        <div class="loader1"></div>
+                        <div id="Ind" class="reddotTableBody">
+                            <div class="reddotTableRow odd-even-row">
+                                <div class="reddotTableHead"><div>PlanId</div></div>
+                                <div class="reddotTableHead"><div>SourceOfFund</div></div>
+                                <div class="reddotTableHead"><div>CountryName</div></div>
+                                <div class="reddotTableHead"><div>StartDate</div></div>
+                                <div class="reddotTableHead"><div>EndDate</div></div>
+                                <div class="reddotTableHead"><div>Vendor</div></div>
+                                <div class="reddotTableHead"><div>VendorApprovedAmt</div></div>
+                                <div class="reddotTableHead"><div>RDDApprovedAmt</div></div>
+                                <div class="reddotTableHead"><div>UsedAmount</div></div>
+                                <div class="reddotTableHead"><div>BalanceAmount</div></div>
+                                <div class="reddotTableHead"><div>BalanceFromApp</div></div>
+                                <div class="reddotTableHead"><div>Description</div></div>
+                                <div class="reddotTableHead"><div>ApprovedBy</div></div>
+                                <div class="reddotTableHead"><div>planStatus</div></div>
+                                <div class="reddotTableHead"><div>ApprovalStatus</div></div>
+                                <div class="reddotTableHead"><div>CreatedOn</div></div>
+                                <div class="reddotTableHead"><div>Actions</div></div>
+                                <div></div>
 
-                                    <div class="form-group"><label for="email2" class=" mar-t4">RDD Approved Amount:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Bal amt. from Approved:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Plan Status:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="row"  id="divyr">
-
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Description:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Start Date:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">End Date:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
 
                             </div>
+                        </div>
+                        <div id="Ibody" class="reddotTableBody">
+                            <div id="Ist" class="reddotTableRow odd-even-row">
 
-                            <div class="row"  id="divyr">
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCellRight Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                <div class="reddotTableCellLeft Abcd"><div></div></div>
 
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Approval Status:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Approver Remark:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" />
-                                </div>
-                                <div class="col-xl-1 col-md-1">
-
-                                    <div class="form-group"><label for="email2" class=" mar-t4">Create Date:</label></div>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="ddlyr">
-                                        <option value="0">-- Select --</option>
-                                    </select>
-                                </div>
 
                             </div>
 
                         </div>
+                    </div>
+                    <div class="row mar-t10">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mar-b0">
+                                <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
 
+                                <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-            </div>
+           
+                              
+                               
+                    </div>
+                            </div>
         </div>
-    </div>
-</div>
+                            <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+                            <!--   Core JS Files   -->
+                            <script src="~/js/core/jquery.3.2.1.min.js"></script>
+                            <script src="~/js/core/popper.min.js"></script>
+                            <script src="~/js/core/bootstrap.min.js"></script>
+                            <!-- jQuery UI -->
+                            <script src="~/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+                            <script src="~/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+                            <!-- Chart JS -->
+                            <script src="~/js/plugin/chart.js/chart.min.js"></script>
+                            <!-- jQuery Scrollbar -->
+                            <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+                            <script src="~/js/plugin/select2/select2.full.min.js"></script>
+
+                            <!-- Atlantis JS -->
+                            <script src="~js/atlantis.min.js"></script>
+
+                            <script src="~/js/setting-demo2.js"></script>
+                            <!-- jQuery Sparkline -->
+                            <script src="~/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+                            <!-- Chart Circle -->
+                            <script src="~/js/plugin/chart-circle/circles.min.js"></script>
+
+                            <script src="~/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+                            <!-- jQuery UI -->
+                            <!-- Moment JS -->
+                            <!-- Bootstrap Toggle -->
+                            <!-- jQuery Scrollbar -->
+                            <!-- DateTimePicker -->
+                            <!-- Select2 -->
+
+                            <link href="~/Content/datapicker-separate/datepicker.css" rel="stylesheet" />
+                            <script src="~/Content/datapicker-separate/datepicker.all.js"></script>
+                            <script src="~/Content/datapicker-separate/datepicker.en.js"></script>
+
+                            @*<link rel="stylesheet" href="js/multiselect/multiselect.css" type="text/css">*@
+                            <script src="~/js/multiselect/multiselect.js"></script>
+                            <link href="~/js/multiselect/multiselect.css" rel="stylesheet" />
+                            <script>
+                                m = jQuery.noConflict();
+                            </script>
+                            <script>
+                                (function ($) {
+                                    $(function () {
+                                        window.fs_test = $('.test').fSelect();
+                                    });
+                                })(jQuery);
+                            </script>
+
+                            <script>
+                                var totalcnt = 0;
+                                m('#startdate').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+                                m('#enddate').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+
+                                m('#createdate').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+                                $('#datepickernew').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+
+                                $('#datepickerFromDate').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+
+                                $('#datepickerToDate').datetimepicker({
+                                    format: 'MM/DD/YYYY',
+                                });
+                                $('#timepicker').datetimepicker({
+                                    format: 'h:mm A',
+                                });
+
+                                $('#basic').select2({
+                                    theme: "bootstrap"
+                                });
+                                $('#basic1').select2({
+                                    theme: "bootstrap"
+                                });
+
+                                $('#multiple').select2({
+                                    theme: "bootstrap"
+                                });
+
+                                $('#multiplenew').select2({
+                                    theme: "bootstrap"
+                                });
+
+                                $('#multiple-states').select2({
+                                    theme: "bootstrap"
+                                });
+
+
+
+                                $(function () {
+                                    $("#slider").slider({
+                                        range: "min",
+                                        max: 100,
+                                        value: 40,
+                                    });
+                                    $("#slider-range").slider({
+                                        range: true,
+                                        min: 0,
+                                        max: 500,
+                                        values: [75, 300]
+                                    });
+                                });
+                                $(document).ready(function () {
+                                    $('.scrollbar-inner').scrollbar();
+                                });
+
+                            </script>
+
+
+
+
+                            <script>
+                                $(document).ready(function () {
+                                    $("#FilterBtn").click(function () {
+                                        $("#FilterSection").slideToggle("slow");
+                                        updateConfig();
+
+                                        function updateConfig() {
+                                            var options = {};
+                                            options.ranges = {
+                                                'Today': [moment(), moment()],
+                                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                            };
+
+
+                                            if ($('#locale').is(':checked')) {
+                                                $('#rtl-wrap').show();
+                                                options.locale = {
+                                                    direction: $('#rtl').is(':checked') ? 'rtl' : 'ltr',
+                                                    format: 'MM/DD/YYYY HH:mm',
+                                                    separator: ' - ',
+                                                    applyLabel: 'Apply',
+                                                    cancelLabel: 'Cancel',
+                                                    fromLabel: 'From',
+                                                    toLabel: 'To',
+                                                    customRangeLabel: 'Custom',
+                                                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                                                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                                                    firstDay: 1
+                                                };
+                                            } else {
+                                                $('#rtl-wrap').hide();
+                                            }
+                                            $('#filfdate').daterangepicker(options, function (start, end, label) { console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')'); }).click();;
+
+                                        }
+                                    });
+                                });
+                            </script>
+                            <script type="text/javascript">
+
+                                m(function () {
+                                    m('.J-datepicker-time').datePicker({
+                                        format: 'HH:mm:ss',
+                                        min: '04:23:11',
+                                        language: 'en'
+                                    });
+                                    m('.J-datepicker-time-range').datePicker({
+                                        format: 'HH:mm:ss',
+                                        isRange: true,
+                                        min: '04:23:11',
+                                        max: '20:59:59',
+                                        language: 'en'
+                                    });
+
+                                    var DATAPICKERAPI = {
+                                        activeMonthRange: function () {
+                                            return {
+                                                begin: moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format('YYYY-MM-DD HH:mm:ss'),
+                                                end: moment().set({ 'hour': 23, 'minute': 59, 'second': 59 }).format('YYYY-MM-DD HH:mm:ss')
+                                            }
+                                        },
+                                        shortcutMonth: function () {
+                                            var nowDay = moment().get('date');
+                                            var prevMonthFirstDay = moment().subtract(1, 'months').set({ 'date': 1 });
+                                            var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
+                                            return {
+                                                now: '-' + nowDay + ',0',
+                                                prev: '-' + prevMonthDay + ',-' + nowDay
+                                            }
+                                        },
+                                        shortcutPrevHours: function (hour) {
+                                            var nowDay = moment().get('date');
+                                            var prevHours = moment().subtract(hour, 'hours');
+                                            var prevDate = prevHours.get('date') - nowDay;
+                                            var nowTime = moment().format('HH:mm:ss');
+                                            var prevTime = prevHours.format('HH:mm:ss');
+                                            return {
+                                                day: prevDate + ',0',
+                                                time: prevTime + ',' + nowTime,
+                                                name: 'Nearly ' + hour + ' Hours'
+                                            }
+                                        },
+                                        rangeMonthShortcutOption1: function () {
+                                            var result = DATAPICKERAPI.shortcutMonth();
+                                            var resultTime = DATAPICKERAPI.shortcutPrevHours(18);
+                                            return [{
+                                                name: 'Yesterday',
+                                                day: '-1,-1',
+                                                time: '00:00:00,23:59:59'
+                                            }, {
+                                                name: 'This Month',
+                                                day: result.now,
+                                                time: '00:00:00,'
+                                            }, {
+                                                name: 'Lasy Month',
+                                                day: result.prev,
+                                                time: '00:00:00,23:59:59'
+                                            }, {
+                                                name: resultTime.name,
+                                                day: resultTime.day,
+                                                time: resultTime.time
+                                            }];
+                                        },
+                                        rangeShortcutOption1: [{
+                                            name: 'Last week',
+                                            day: '-7,0'
+                                        }, {
+                                            name: 'Last Month',
+                                            day: '-30,0'
+                                        }, {
+                                            name: 'Last Three Months',
+                                            day: '-90, 0'
+                                        }],
+                                        singleShortcutOptions1: [{
+                                            name: 'Today',
+                                            day: '0',
+                                            time: '00:00:00'
+                                        }, {
+                                            name: 'Yesterday',
+                                            day: '-1',
+                                            time: '00:00:00'
+                                        }, {
+                                            name: 'One Week Ago',
+                                            day: '-7'
+                                        }]
+                                    };
+                                    m('.J-datepicker').datePicker({
+                                        hasShortcut: true,
+                                        language: 'en',
+                                        min: '2018-01-01 04:00:00',
+                                        max: '2029-10-29 20:59:59',
+                                        shortcutOptions: [{
+                                            name: 'Today',
+                                            day: '0'
+                                        }, {
+                                            name: 'Yesterday',
+                                            day: '-1',
+                                            time: '00:00:00'
+                                        }, {
+                                            name: 'One Week Ago',
+                                            day: '-7'
+                                        }],
+                                        hide: function () {
+                                            console.info(this)
+                                        }
+                                    });
+
+
+                                    m('.J-datepicker-day').datePicker({
+                                        hasShortcut: true,
+                                        language: 'en',
+                                        shortcutOptions: [{
+                                            name: 'Today',
+                                            day: '0'
+                                        }, {
+                                            name: 'Yesterday',
+                                            day: '-1'
+                                        }, {
+                                            name: 'One week ago',
+                                            day: '-7'
+                                        }]
+                                    });
+
+
+                                    m('.J-datepicker-range-day').datePicker({
+                                        hasShortcut: true,
+                                        language: 'en',
+                                        format: 'YYYY-MM-DD',
+                                        isRange: true,
+                                        shortcutOptions: DATAPICKERAPI.rangeShortcutOption1
+                                    });
+
+
+                                    m('.J-datepickerTime-single').datePicker({
+                                        format: 'YYYY-MM-DD HH:mm',
+                                        language: 'en',
+                                    });
+
+
+                                    m('.J-datepickerTime-range').datePicker({
+                                        format: 'YYYY-MM-DD HH:mm',
+                                        isRange: true,
+                                        language: 'en'
+                                    });
+
+
+                                    m('.J-datepicker-range').datePicker({
+                                        hasShortcut: true,
+                                        language: 'en',
+                                        min: '2018-01-01 06:00:00',
+                                        max: '2029-04-29 20:59:59',
+                                        isRange: true,
+                                        shortcutOptions: [{
+                                            name: 'Yesterday',
+                                            day: '-1,-1',
+                                            time: '00:00:00,23:59:59'
+                                        }, {
+                                            name: 'Last Week',
+                                            day: '-7,0',
+                                            time: '00:00:00,'
+                                        }, {
+                                            name: 'Last Month',
+                                            day: '-30,0',
+                                            time: '00:00:00,'
+                                        }, {
+                                            name: 'Last Months',
+                                            day: '-90, 0',
+                                            time: '00:00:00,'
+                                        }],
+                                        hide: function (type) {
+                                            console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
+                                            console.info('Type:', type)
+                                        }
+                                    });
+                                    m('.J-datepicker-range-betweenMonth').datePicker({
+                                        isRange: true,
+                                        between: 'month',
+                                        language: 'en',
+                                        hasShortcut: true,
+                                        shortcutOptions: DATAPICKERAPI.rangeMonthShortcutOption1()
+                                    });
+
+
+                                    m('.J-datepicker-range-between30').datePicker({
+                                        isRange: true,
+                                        language: 'en',
+                                        between: 30
+                                    });
+
+                                    m('.J-yearMonthPicker-single').datePicker({
+                                        format: 'YYYY-MM',
+                                        language: 'en',
+                                        min: '2018-01',
+                                        max: '2029-04',
+                                        hide: function (type) {
+                                            console.info(this.$input.eq(0).val());
+                                        }
+                                    });
+
+                                    m('.J-yearPicker-single').datePicker({
+                                        format: 'YYYY',
+                                        language: 'en',
+                                        min: '2018',
+                                        max: '2029'
+                                    });
+
+
+                                });
+                                m(document).ready(function () {
+                                    $('.scrollbar-inner').scrollbar();
+
+                                });
+
+                            </script>
+                            <script>
+
+    $(document).ready(function () {
+        var counter = 0;
+
+        $("#fromtoemail").on("click", function () {
+            counter = counter + 1;
+            totalcnt = counter;
+            var refnoval = document.getElementById('txtrefno');
+            var refval = refnoval.value;
+            debugger;
+            var newRow = $("#AddfromtoemailRow");
+            var cols = "";
+            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+            cols += ' <div class="reddotTableCell width1per"> <div>' + counter+'</div > </div > ';
+            cols += ' <div class="reddotTableCell width10per"> <div> ';
+            cols += ' <div class="input-group">';
+            cols += ' <input type="text" class="form-control form-control-sm" id="PostingDate_' + counter + '" name="PostingDate_' + counter +'">';
+            cols += ' <div class="input-group-append">';
+            cols += ' <span class="input-group-text">';
+            cols += ' <i class="far fa-calendar-alt"></i>';
+            cols += ' </span>';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div > </div > ';
+            cols += ' <div class="reddotTableCell width10per"> <div>';
+            cols += '<select class="form-control form-control-sm" id="ddladdcountry_'+counter+'">';
+             cols += ' </select>';
+            cols += '</div > </div > ';
+            cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtvendor_'+counter+'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width20per"> <div> <input type="text" class="form-control form-control-sm " id="txtdescription_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtamount_' + counter +'" onkeyup ="calculate(this)" > </div> </div>';
+            cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtvendorpono_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtsappono_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width10per"> <div>';
+            cols += '<select class="form-control" id="ddlstatusadd_' + counter +'">';
+            cols += '<option value="0">-- Select --</option>';
+            cols += '   <option value="D">Draft</option>';
+            cols += '   <option value="O">Open</option>';
+            cols += '   <option value="H">On-Hold</option>';
+            cols += '   <option value="P">Paid-Closed</option>';
+            cols += '   <option value="C">Unpaid-Closed</option>';
+           cols += ' </select>';
+            cols += '</div > </div > ';
+            cols += ' <div class="reddotTableCell width10per "> <div> <input type="text" class="form-control form-control-sm" id="txtapprstatus_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width20per"> <div> <input type="text" class="form-control form-control-sm" id="txtapprremark_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtkey_' + counter +'"> </div> </div>';
+            cols += ' <div class="reddotTableCell width10per">';
+            cols += ' <div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div></div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+           // counter++;
+            $('#PostingDate_' + counter).datetimepicker({
+                format: 'MM/DD/YYYY',
+            });
+            var addref = document.getElementById('txtkey_' + counter);
+            addref.value = refval + "-" + counter;
+            $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json ;charset=utf-8;",
+                        async: true,
+                        url: '@Url.Action("GetCountry", "MarketingPlan")',
+                        cache: false,
+
+                        processData: false,
+                        success: function (BU) {
+                            debugger;
+                            document.getElementById('ddladdcountry_' + counter ).innerHTML = "";
+                            var selectMonth = $("#ddladdcountry_"+ counter);
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select--';
+                            selectMonth.append(monthElem);
+                            $.each(BU, function (i, value) {
+                                var monthElem = document.createElement("option");
+                                monthElem.value = value.CountryCode;
+                                monthElem.textContent = value.CountryName;
+                                selectMonth.append(monthElem);
+
+                            });
+                        }
+                    });
+        });
+
+
+
+        $("#AddfromtoemailRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+
+
+    });
+
+   function BindRefNo() {
+        debugger;
+       var slval = CountryList.value;
+       // var slperval = slval;
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async:false,
+            url: '@Url.Action("Getrefno", "MarketingPlan")',
+            data: JSON.stringify({ "id": slval }),
+            cache: false,
+
+            processData: false,
+            success: function (nextrefNo) {
+                debugger;
+                var refno = document.getElementById('txtrefno');
+                refno.value = nextrefNo;
+            }
+        });
+
+    }
+
+
+                            </script>
+
+
+
+
+                            <script>
+    var attachmentcnt = 1;
+
+                m(document).ready(function () {
+                    $('.scrollbar-inner').scrollbar();
+
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json ;charset=utf-8;",
+                        async: true,
+                        url: '@Url.Action("GetCountry", "MarketingPlan")',
+                        cache: false,
+
+                        processData: false,
+                        success: function (BU) {
+                            debugger;
+                            document.getElementById('CountryList').innerHTML = "";
+                            var selectMonth = $("#CountryList");
+
+                            document.getElementById('fil_Country').innerHTML = "";
+                            var selectMonth1 = $("#fil_Country");
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select--';
+
+                            var monthElem1 = document.createElement("option");
+                            monthElem1.value = '0';
+                            monthElem1.textContent = '-- Select--';
+                            selectMonth.append(monthElem);
+                            selectMonth1.append(monthElem1);
+
+                            $.each(BU, function (i, value) {
+                                var monthElem = document.createElement("option");
+                                monthElem.value = value.CountryCode;
+                                monthElem.textContent = value.CountryName;
+                                selectMonth.append(monthElem);
+
+                            });
+                            $.each(BU, function (i, value) {
+                                var monthElem1 = document.createElement("option");
+                                monthElem1.value = value.CountryCode;
+                                monthElem1.textContent = value.CountryName;
+                                selectMonth1.append(monthElem1);
+
+                            });
+                        }
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json ;charset=utf-8;",
+                        async: true,
+                        url: '@Url.Action("GetBU", "MarketingPlan")',
+                        cache: false,
+
+                        processData: false,
+                        success: function (BU) {
+                            debugger;
+                            document.getElementById('VenderBu').innerHTML = "";
+                            var selectMonth = $("#VenderBu");
+
+                            document.getElementById('fil_BU').innerHTML = "";
+                            var selectMonthBU = $("#fil_BU");
+
+
+
+                            var monthElem = document.createElement("option");
+                            monthElem.value = '0';
+                            monthElem.textContent = '-- Select--';
+
+                            var monthElem1 = document.createElement("option");
+                            monthElem1.value = '0';
+                            monthElem1.textContent = '-- Select--';
+                            selectMonth.append(monthElem);
+                            selectMonthBU.append(monthElem1);
+
+                            $.each(BU, function (i, value) {
+                                var monthElem = document.createElement("option");
+                                monthElem.value = value.BU;
+                                monthElem.textContent = value.BU;
+                                selectMonth.append(monthElem);
+
+
+                            });
+                            $.each(BU, function (i, value) {
+                                var monthElem1 = document.createElement("option");
+                                monthElem1.value = value.BU;
+                                monthElem1.textContent = value.BU;
+
+                                selectMonthBU.append(monthElem1);
+
+                            });
+                        }
+                    });
+                });
+    function attachfile() {
+
+       // document.getElementById('searchgrid').innerHTML = '  <div class="reddotTableBody"><div class="reddotTableRow odd-even-row"><div class="reddotTableHead"><div>Plan Id</div></div> <div class="reddotTableHead"><div>SourceOfFund</div></div><div class="reddotTableHead"><div> CountryName</div></div><div class="reddotTableHead"><div>StartDate</div></div><div class="reddotTableHead"><div>EndDate</div></div><div class="reddotTableHead"><div>Vendor</div></div><div class="reddotTableHead"><div>VendorApprovedAmt</div></div><div class="reddotTableHead"><div>RDDApprovedAmt</div></div><div class="reddotTableHead"><div>UsedAmount</div></div><div class="reddotTableHead"><div>BalanceAmount</div></div><div class="reddotTableHead"><div>BalanceFromApp</div></div><div class="reddotTableHead"><div>Description</div></div><div class="reddotTableHead"><div> ApprovedBy</div></div><div class="reddotTableHead"><div> planStatus</div></div><div class="reddotTableHead"><div> ApprovalStatus</div></div> <div class="reddotTableHead"><div>CreatedOn</div></div>';
+        var pall = $('#attachmentdiv');
+        var subrow = '  <div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar' + attachmentcnt + '" /></div></div></div> <div class="col-xl-1 col-md-1"><div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button></div></div></div>';
+        attachmentcnt = attachmentcnt + 1;
+        pall.append(subrow);
+        document.getElementById('attchcnt').value = attachmentcnt;
+    }
+    function deletefile() {
+        document.getElementById('attachmentdiv').innerHTML = '';
+        var pall = $('#attachmentdiv');
+        var subrow = '  <div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar" name="avatar" /></div></div></div> <div class="col-xl-1 col-md-1"><div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button></div></div></div>';
+        attachmentcnt = 1;
+        pall.append(subrow);
+        document.getElementById('attchcnt').value = attachmentcnt;
+    }
+    function savedata() {
+        debugger;
+        var fund = ddlfund.value;
+        var fundval = fund;
+        var bu = VenderBu.value;
+        var buval = bu;
+        var country = CountryList.value;
+        var countryval = country;
+        var elt = document.getElementById("CountryList");
+        var countrynm = elt.options[elt.selectedIndex].text;
+        var typeval = document.getElementById("txtappamt");
+        var txnval = typeval.value;
+        var balapp = document.getElementById("txtbalapproved");
+        var balappval = 0;
+        if (balapp.value == "") { balappval = 0; } else {
+            balappval = balapp.value;
+        }
+        var refno = document.getElementById("txtrefno");
+        var refnoval = refno.value;
+        var rddapamt = document.getElementById("txtrddapp_amt");
+
+        var rddapamt_val = 0;
+        if (rddapamt.value != "") { rddapamt_val = rddapamt.value; } else { rddapamt_val = 0;}
+        var balamtrddapp = document.getElementById("txtbalamtrddapp");
+        var balamtrddappval = balamtrddapp.value;
+        var planstatus = ddlplanstatus.value;
+        var desc = document.getElementById("comment");
+        var descval = desc.value;
+        var stdate = document.getElementById("startdate");
+        var stdateval = stdate.value;
+        var endate = document.getElementById("enddate");
+        var enddtval = endate.value;
+        var appstaus = document.getElementById("txtapprovalstatus");
+        var apstatusval = appstaus.value;
+        var apprmk = document.getElementById("txtapprovalremk");
+        var apprmkval = apprmk.value;
+        var crdate = document.getElementById("createdate");
+        var crdateval = crdate.value;
+        var isdrft = "";
+        if (planstatus == "D") { isdrft = "1"; } else { isdrft = "0"; }
+        //  var rjdata = JSON.stringify({ "Ccode": countval, "year": trnyval, "type": txnval, "frommonth": fmonth, "tomonth": tmnt, "Qvalue": Qval, "QYear": quYr });
+        var rjdata = JSON.stringify({
+            "SourceOfFund": fundval, "RefNo": refnoval, "Country": countryval, "CountryName": countrynm, "Vendor": buval,
+            "VendorApprovedAmt": txnval, "RDDApprovedAmt": rddapamt_val, "BalanceAmount":balappval, "BalanceFromApp": balamtrddappval,
+            "UsedAmount": 0, "Description": descval, "planStatus": planstatus, "ApprovalStatus": apstatusval, "ApprovedBy": '', "ApprovedOn ": '', "ApproverRemark": apprmkval,
+            "StartDate": stdateval, "EndDate": enddtval, "IsDraft ": isdrft, "CreatedOn": '', "CreatedBy": '', " LastUpdatedOn": '', "LastUpdateBy": ''
+        });
+        var subdtcnt = totalcnt;
+        if (subdtcnt > 0) {
+
+            var subdtlist = [];
+            var elements = {};
+            debugger;
+            for (var j = 1; j <=subdtcnt; j++) {
+                var lrefno = document.getElementById('txtkey_' + j).value;
+                var subdt = document.getElementById('PostingDate_' + j).value;
+                var descadd = document.getElementById('txtdescription_' + j).value;
+                var vnd = document.getElementById('txtvendor_' + j).value;
+                var amt = document.getElementById('txtamount_' + j).value;
+                var vndpono = document.getElementById('txtvendorpono_' + j).value;
+                var sappono = document.getElementById('txtsappono_' + j).value;
+                var elt = document.getElementById('ddlstatusadd_' + j);
+              //  var addsts = elt.options[elt.selectedIndex];
+              var sts = elt.value;
+                var elt1 = document.getElementById('ddladdcountry_'+ j).value;
+                var ddlcont = elt1.value;// elt1.options[elt1.selectedIndex].value;
+                var elt2 = document.getElementById('ddladdcountry_' + j);
+                var ddlcontnm = elt2.options[elt2.selectedIndex].text;
+
+
+                var appsts = document.getElementById('txtapprstatus_' + j).value;
+                var apprmksub = document.getElementById('txtapprremark_' + j).value;
+
+                elements = {
+                    LineRefNo: lrefno,
+                    VenderPONo: vndpono,
+                    SAPPONo: sappono,
+                    ActivityDate: subdt,
+                    Description: descadd,
+                    Vendor: vnd,
+                    Amount: amt,
+                    Country: ddlcont,
+                    CountryName: ddlcontnm,
+                    Status: sts,
+                    Status1: appsts,
+                    ApprovedBy: '',
+                    ApprovedOn: '',
+                    ApproverRemark: apprmksub,
+                    CreatedOn: '',
+                    CreatedBy: '',
+                    LastUpdatedOn: '',
+                    Lastupdatedby: '',
+                    Flag: '0'
+
+                }
+
+                subdtlist.push(elements);
+            }
+
+            var stateToSave = JSON.stringify(subdtlist);
+            var maintabval = document.getElementById("maintab");
+            maintabval.value = rjdata;
+            var submaintabval = document.getElementById("mainrowtab");
+            submaintabval.value = stateToSave;
+
+            @*$.ajax({
+                type: "Post",
+                url: '@Url.Action("SavePlan", "MarketingPlan")',
+                data: JSON.stringify({ "fdata": rjdata, "subdata": subdtlist }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    //alert("Record Saved Successfully");
+                    RdotAlertSucesstxt("Record Saved Successfully");
+                    // location.reload();
+                    // clearall();
+
+                }
+
+            });*@
+
+        }
+    }
+    function calculate(idx) {
+        debugger;
+        var str = idx.id;
+        var index = str.indexOf("_") + 1;
+
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        var amt= parseFloat($("#txtamount_" + result).val());
+
+        var totalgprr=0;
+        var ival = totalcnt;
+        for (i = 1; i<= ival; i++) {
+
+            totalgprr = parseFloat(totalgprr )+   parseFloat($("#txtamount_" + i).val());
+
+        }
+        var saletar = document.getElementById('txtbalamtrddapp');
+        var tot = parseFloat(0) - parseFloat(totalgprr)
+        saletar.value = tot;
+
+
+        var balapp = document.getElementById('txtbalapproved');
+        var entamt = document.getElementById('txtappamt').value;
+        balapp.value = parseFloat(entamt) - parseFloat( totalgprr);
+
+    }
+    function applyfilter() {
+        debugger;
+        var sts = fil_Status.value;
+        var cont = fil_Country.value;
+        var buval = fil_BU.value;
+        var sour = fil_Source.value;
+
+        var elt = document.getElementById("fil_Country");
+        var countrynm = elt.options[elt.selectedIndex].text;
+
+        var fdt = document.getElementById('filfdate').value;
+        var fmdt = fdt.substr(0,10);
+        var tdt = fdt.substr(13, fdt.length);//document.getElementById('filtdate').value;
+       document.getElementById('searchgrid').innerHTML = "";
+        document.getElementById('searchgrid').innerHTML = '  <div class="reddotTableBody"><div class="reddotTableRow odd-even-row"><div class="reddotTableHead"><div>Plan Id</div></div> <div class="reddotTableHead"><div>SourceOfFund</div></div><div class="reddotTableHead"><div> CountryName</div></div><div class="reddotTableHead"><div>StartDate</div></div><div class="reddotTableHead"><div>EndDate</div></div><div class="reddotTableHead"><div>Vendor</div></div><div class="reddotTableHead"><div>VendorApprovedAmt</div></div><div class="reddotTableHead"><div>RDDApprovedAmt</div></div><div class="reddotTableHead"><div>UsedAmount</div></div><div class="reddotTableHead"><div>BalanceAmount</div></div><div class="reddotTableHead"><div>BalanceFromApp</div></div><div class="reddotTableHead"><div>Description</div></div><div class="reddotTableHead"><div> ApprovedBy</div></div><div class="reddotTableHead"><div> planStatus</div></div><div class="reddotTableHead"><div> ApprovalStatus</div></div> <div class="reddotTableHead"><div>CreatedOn</div></div>';
+        $("#Ind").hide();
+        $("#Ibody").hide();
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetFilteredData", "MarketingPlan")',
+            data: JSON.stringify({ "Country": countrynm, "fund": sour, "BU": buval, "status": sts, "Fromdt": fmdt, "Todate": tdt }),
+
+            cache: false,
+
+            processData: false,
+            success: function (BU) {
+                debugger;
+                if (BU.length > 0) {
+                    var pall = document.getElementById('searchgrid');
+                    $.each(BU, function (i, value) {
+                        var idx = i;
+
+                        var d = document.createElement('div');
+                        d.className = "reddotTableBody";
+                        d.id = "row" + i;
+                        var e = document.createElement('div');
+                        e.className = "reddotTableRow odd-even-row";
+                        e.id = "Subrow" + i;
+
+                        var f = document.createElement('div');
+                        f.className = "reddotTableCell";
+                        f.id = "cell1";
+                        var g = document.createElement('div');
+                        g.id = "cellBU_"+idx;
+                        g.innerHTML = value.Planid;
+                        f.appendChild(g);
+
+
+                        var h = document.createElement('div');
+                        h.className = "reddotTableCell";
+                        h.id = "cell2";
+                        var i = document.createElement('div');
+                        i.id = "fund";
+                        i.innerHTML=value.SourceOfFund;
+                         h.appendChild(i);
+
+
+
+                        var j = document.createElement('div');
+                        j.className = "reddotTableCell";
+                        j.id = "cell2";
+                        var k = document.createElement('div');
+                        k.id = "fund1_" + idx;
+                        k.innerHTML= value.CountryName;
+                        j.appendChild(k);
+
+
+                        var l = document.createElement('div');
+                        l.className = "reddotTableCell";
+                        l.id = "cell2";
+                        var m = document.createElement('div');
+                        m.id = "fund2_" + idx;
+                        m.innerHTML= value.StartDate;
+                       l.appendChild(m);
+
+                        var n = document.createElement('div');
+                        n.className = "reddotTableCell";
+                        n.id = "cell2";
+                        var o = document.createElement('div');
+                        o.id = "fund3_" + idx;
+                        o.innerHTML= value.EndDate;
+
+                        n.appendChild(o);
+
+
+                        var p = document.createElement('div');
+                        p.className = "reddotTableCell";
+                        p.id = "cell2";
+                        var q = document.createElement('div');
+                        q.id = "fund4_" + idx;
+                        q.innerHTML= value.Vendor;
+
+                        p.appendChild(q);
+
+
+                        var r = document.createElement('div');
+                        r.className = "reddotTableCell";
+                        r.id = "cell2";
+                        var s = document.createElement('div');
+                        s.id = "fund5_" + idx;
+                        s.innerHTML=value.VendorApprovedAmt;
+
+                        r.appendChild(s);
+
+
+                        var t = document.createElement('div');
+                        t.className = "reddotTableCell";
+                        t.id = "cell2";
+                        var u = document.createElement('div');
+                        u.id = "fund6_" + idx;
+                        u.innerHTML= value.RDDApprovedAmt;
+
+                        t.appendChild(u);
+
+
+
+                        var v = document.createElement('div');
+                        v.className = "reddotTableCell";
+                        v.id = "cell2";
+                        var w = document.createElement('div');
+                        w.id = "fund7_" + idx;
+                        w.innerHTML= value.UsedAmount;
+
+                        v.appendChild(w);
+
+
+
+
+                        var x = document.createElement('div');
+                        x.className = "reddotTableCell";
+                        x.id = "cell2";
+                        var y = document.createElement('div');
+                        y.id = "fund8_" + idx;
+                        y.innerHTML = value.BalanceAmount ;
+
+                        x.appendChild(y);
+
+
+
+
+
+
+                        var z = document.createElement('div');
+                        z.className = "reddotTableCell";
+                        z.id = "cell2";
+                        var aa = document.createElement('div');
+                        aa.id = "fund9_" + idx;
+                        aa.innerHTML = value.BalanceFromApp;
+
+                        z.appendChild(aa);
+
+
+
+
+
+                        var ab = document.createElement('div');
+                        ab.className = "reddotTableCell";
+                        ab.id = "cell2";
+                        var ac = document.createElement('div');
+                        ac.id = "fund10_" + idx;
+                        ac.innerHTML = value.Description;
+
+                        ab.appendChild(ac);
+
+
+
+                        var ad = document.createElement('div');
+                        ad.className = "reddotTableCell";
+                        ad.id = "cell2";
+                        var ae = document.createElement('div');
+                        ae.id = "fund11_" + idx;
+                        ae.innerHTML = value.ApprovedBy;
+                        ad.appendChild(ae);
+
+
+
+                        var af = document.createElement('div');
+                        af.className = "reddotTableCell";
+                        af.id = "cell2";
+                        var ag = document.createElement('div');
+                        ag.id = "fund12_" + idx;
+                        ag.innerHTML = value.planStatus;
+                       af.appendChild(ag);
+
+
+
+                        var ah = document.createElement('div');
+                        ah.className = "reddotTableCell";
+                        ah.id = "cell2";
+                        var ai = document.createElement('div');
+                        ai.id = "fund13_" + idx;
+                        ai.innerHTML = value.ApprovalStatus;
+
+                        ah.appendChild(ai);
+
+
+
+                        var aj = document.createElement('div');
+                        aj.className = "reddotTableCell";
+                        aj.id = "cell2";
+                        var ak = document.createElement('div');
+                        ak.id = "fund14_" + idx;
+                        ak.innerHTML = value.CreatedOn;
+                         aj.appendChild(ak);
+
+                        var al = document.createElement('div');
+                        al.className = "reddotTableCell";
+                        al.id = "cell2";
+                        var button = document.createElement('input');
+                        button.setAttribute('type', 'button');
+                        button.setAttribute('value', 'Edit');
+                        button.id = "edit_" + idx;
+                        button.setAttribute('onclick', 'Editdata(this)');
+
+
+                        al.appendChild(button);
+
+                        //var al = document.createElement('div');
+                        //al.className = "reddotTableCell";
+                        //al.id = "cell2";
+                        //var am = document.createElement('div');
+                        //am.id = "fund15_" + idx;
+                        //am.innerHTML= value.revenue;
+                        //al.appendChild(am);
+
+
+
+
+                        //var an = document.createElement('div');
+                        //an.className = "reddotTableCell";
+                        //an.id = "cell2";
+                        //var ao = document.createElement('div');
+                        //ao.id = "fund16_" + idx;
+                        //ao.innerHTML=value.revenue;
+                        //an.appendChild(ao);
+
+
+
+
+                        e.appendChild(f);
+                        e.appendChild(h);
+                        e.appendChild(j);
+
+                        e.appendChild(l);
+                        e.appendChild(n);
+                        e.appendChild(p);
+                        e.appendChild(r);
+                        e.appendChild(t);
+                        e.appendChild(v);
+                        e.appendChild(x);
+                        e.appendChild(z);
+                        e.appendChild(ab);
+                        e.appendChild(ad);
+                        e.appendChild(af);
+                        e.appendChild(ah);
+                        e.appendChild(aj);
+                        e.appendChild(al);
+                        //e.appendChild(an);
+
+
+
+                        d.appendChild(e);
+                        pall.appendChild(d);
+
+                    });
+                    document.getElementById("btnExport").disabled = false;
+                   // document.getElementById('btnExport').style.disabled=fal
+                } else {
+                    RdotAlerterrtxt("Data doesn't exist for selected criteria");
+                }
+            }
+        });
+
+
+
+    }
+    function Editdata(idx) {
+        debugger;
+        $('#ContantsPayment').show();
+        var str = idx.id;
+        var index = str.indexOf("_") + 1;
+
+        var result = '';
+        if (index != 0) {
+            result = str.substr(index);
+        }
+        // var planid = $("#cellBU_" + result).innerHTML;
+        var saletar = document.getElementById("cellBU_" + result);
+        var planid = saletar.innerText;
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlan", "MarketingPlan")',
+            cache: false,
+            data: JSON.stringify({ "id": planid }),
+            processData: false,
+            success: function (BU) {
+                debugger;
+                ddlfund.value = BU.SourceOfFund;
+                VenderBu.value = BU.Vendor;
+                CountryList.value = BU.Country;
+                var typeval = document.getElementById("txtappamt");
+                typeval.value = BU.VendorApprovedAmt;
+                var balapp = document.getElementById("txtbalapproved");
+                balapp.value = BU.BalanceAmount;
+                var refno = document.getElementById("txtrefno");
+                refno.value = BU.RefNo;
+                var balamtrddapp = document.getElementById("txtbalamtrddapp");
+                balamtrddapp.value = BU.BalanceFromApp;
+                ddlplanstatus.value = BU.planStatus;
+                var desc = document.getElementById("comment");
+                desc.value = BU.Description;
+                var stdate = document.getElementById("startdate");
+                stdate.value = BU.StartDate;
+                var endate = document.getElementById("enddate");
+                endate.value = BU.EndDate;
+                var appstaus = document.getElementById("txtapprovalstatus");
+                appstaus.value = BU.ApprovalStatus;
+                var apprmk = document.getElementById("txtapprovalremk");
+                apprmk.value = BU.ApproverRemark;
+                var crdate = document.getElementById("createdate");
+                crdate.value = BU.CreatedOn;
+                var isdrft = "";
+                //  if (planstatus == "D") { isdrft = "1"; } else { isdrft = "0"; }
+                //  var rjdata = JSON.stringify({ "Ccode": countval, "year": trnyval, "type": txnval, "frommonth": fmonth, "tomonth": tmnt, "Qvalue": Qval, "QYear": quYr });
+                //var rjdata = JSON.stringify({
+                //    "SourceOfFund": fundval, "RefNo": refnoval, "Country": countryval, "CountryName": countrynm, "Vendor": buval,
+                //    "VendorApprovedAmt": txnval, "RDDApprovedAmt": rddapamt_val, "BalanceAmount": balappval, "BalanceFromApp": balamtrddappval,
+                //    "UsedAmount": 0, "Description": descval, "planStatus": planstatus, "ApprovalStatus": apstatusval, "ApprovedBy": '', "ApprovedOn ": '', "ApproverRemark": apprmkval,
+                //    "StartDate": stdateval, "EndDate": enddtval, "IsDraft ": isdrft, "CreatedOn": '', "CreatedBy": '', " LastUpdatedOn": '', "LastUpdateBy": ''
+                //});
+
+
+
+            }
+        });
+        ////PlanLine
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlanLines", "MarketingPlan")',
+            cache: false,
+            data: JSON.stringify({ "id": planid }),
+            processData: false,
+            success: function (BU1) {
+                if (BU1.length > 0) {
+                    $.each(BU1, function (i, value) {
+                        debugger;
+                        var counter = i + 1;
+                        var refnoval = document.getElementById('txtrefno');
+                        var refval = refnoval.value;
+                        debugger;
+                        var newRow = $("#AddfromtoemailRow");
+                        var cols = "";
+                        cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                        cols += ' <div class="reddotTableCell width1per"> <div>' + counter + '</div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per"> <div> ';
+                        cols += ' <div class="input-group">';
+                        cols += ' <input type="text" class="form-control form-control-sm" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' > ';
+                        cols += ' <div class="input-group-append">';
+                        cols += ' <span class="input-group-text">';
+                        cols += ' <i class="far fa-calendar-alt"></i>';
+                        cols += ' </span>';
+                        cols += ' </div>';
+                        cols += ' </div>';
+                        cols += ' </div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per"> <div>';
+                        cols += '<select class="form-control form-control-sm" id="ddladdcountry_' + counter + '">';
+                        cols += ' </select>';
+                        cols += '</div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' > </div > </div > ';
+                        cols += ' <div class="reddotTableCell width20per"> <div> <input type="text" class="form-control form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' > </div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                        cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtvendorpono_' + counter + '" value=' + value.VenderPONo + '> </div> </div>';
+                        cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtsappono_' + counter + '" value=' + value.SAPPONo + '> </div> </div>';
+                        cols += ' <div class="reddotTableCell width10per"> <div>';
+                        cols += '<select class="form-control" id="ddlstatusadd_' + counter + '">';
+                        cols += '<option value="0">-- Select --</option>';
+                        cols += '   <option value="D">Draft</option>';
+                        cols += '   <option value="O">Open</option>';
+                        cols += '   <option value="H">On-Hold</option>';
+                        cols += '   <option value="P">Paid-Closed</option>';
+                        cols += '   <option value="C">Unpaid-Closed</option>';
+                        cols += ' </select>';
+                        cols += '</div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per "> <div> <input type="text" class="form-control form-control-sm" id="txtapprstatus_' + counter + '" value=' + value.Satus1 + '> </div> </div>';
+                        cols += ' <div class="reddotTableCell width20per"> <div> <input type="text" class="form-control form-control-sm" id="txtapprremark_' + counter + '" value=' +value.ApproverRemark + '> </div> </div>';
+                        cols += ' <div class="reddotTableCell width10per"> <div> <input type="text" class="form-control form-control-sm" id="txtkey_' + counter + '"  value=' +value.LineRefNo + ' > </div > </div > ';
+                        cols += ' <div class="reddotTableCell width10per">';
+                        cols += ' <div>';
+                        cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                        cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                        cols += ' </div>';
+                        cols += ' </div>';
+                        cols += ' </div></div>';
+                        newRow.append(cols);
+                        $("table.order-list").append(newRow);
+                        // counter++;
+                        $('#PostingDate_' + counter).datetimepicker({
+                            format: 'MM/DD/YYYY',
+                        });
+                        var addref = document.getElementById('txtkey_' + counter);
+                        addref.value = refval + "-" + counter;
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            contentType: "application/json ;charset=utf-8;",
+                            async: true,
+                            url: '@Url.Action("GetCountry", "MarketingPlan")',
+                            cache: false,
+
+                            processData: false,
+                            success: function (BUc) {
+                                debugger;
+                                document.getElementById('ddladdcountry_' + counter).innerHTML = "";
+                                var selectMonth = $("#ddladdcountry_" + counter);
+
+                                var monthElem = document.createElement("option");
+                                monthElem.value = '0';
+                                monthElem.textContent = '-- Select--';
+                                selectMonth.append(monthElem);
+                                $.each(BUc, function (i, value) {
+                                    var monthElem = document.createElement("option");
+                                    monthElem.value = value.CountryCode;
+                                    monthElem.textContent = value.CountryName;
+                                    selectMonth.append(monthElem);
+
+                                });
+                            }
+                        });
+                        var selectMonthc = $("#ddladdcountry_" + counter);
+                        selectMonthc.Text = value.CountryName;
+                    });
+                }
+            }
+            });
+    }
+
+    function ExportToExcel() {
+        var contents = $(".searchgrid").html();
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(contents));
+    }
+
+    $("#btnExport").click(function (e) {
+        debugger;
+
+         var table = ($('#searchgrid').get(0));
+
+        var headers = [];
+        var rows = [];
+
+        var elements = {};
+        //  for (var i =0; i < searchEles.childElementCount; i++) {
+        var children = table.childNodes;
+
+        for (var j = 1; j < children.length ; j++) {
+            subnodes = children[j].childNodes[0].childNodes;
+            for (var i = 0; i < subnodes.length; i++) {
+                headers[i] = subnodes[i].textContent;
+            }
+                elements = {
+                    Planid: headers[0],
+                    SourceOfFund: headers[1],
+                    CountryName: headers[2],
+                    StartDate: headers[3],
+                    EndDate: headers[4],
+                    Vendor: headers[5],
+                    VendorApprovedAmt: headers[6],
+                    RDDApprovedAmt: headers[7],
+                    UsedAmount: headers[8],
+                    BalanceAmount: headers[9],
+                    BalanceFromApp: headers[10],
+                    Description: headers[11],
+                    ApprovedBy: headers[12],
+                    planStatus: headers[13],
+                    ApprovalStatus: headers[14],
+                    CreatedOn: headers[15],
+                }
+
+                rows.push(elements);
+            }
+        var CsvString = "";
+        //rows.forEach(function (RowItem, RowIndex) {
+        //    RowItem.forEach(function (ColItem, ColIndex) {
+        //        CsvString += ColItem + ',';
+        //    });
+        //    CsvString += "\r\n";
+        //});
+        rows.forEach(function (rowArray) {
+            let row = rowArray.join(",");
+            CsvString += row + "\r\n";
+        });
+        CsvString = "data:application/csv," + encodeURIComponent(CsvString);
+        var x = document.createElement("A");
+        x.setAttribute("href", CsvString);
+        x.setAttribute("download", "somedata.csv");
+        document.body.appendChild(x);
+        x.click();
+    });
+
+
+
+                            </script>
+                            <script type="text/javascript">
+var message = '@message';
+if (message)
+RedDotAlert_Success(message);
+                            </script>
+                            <script>
+                                var tblhead1 = ['PlanId', 'SourceOfFund', 'CountryName', 'StartDate', 'EndDate', 'Vendor', 'VendorApprovedAmt', 'RDDApprovedAmt', 'UsedAmount', 'BalanceAmount',
+                                    'BalanceFromApp', 'Description', 'ApprovedBy', 'planStatus', 'ApprovalStatus','CreatedOn'];
+                                var tblhide = [];
+                                var tblhead2 = [];
+                                $(document).ready(function () {
+
+                                    // GetMenuList();
+                                    var arr = [];
+                                    var curPage = 1;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '@Url.Action("GetAllData", "MarketingPlan")',
+                                        contentType: "application/json",
+                                        dataType: "json",
+                                        data: JSON.stringify({
+                                            pagesize: 50,
+                                            pageno: curPage,
+                                        }),
+                                        success: function (data) {
+                                            $("#Ist").show();
+                                            arr = data;
+                                            if (arr.data != null && arr.data.length != 0) {
+                                                var i = 0;
+                                                while (arr.data.length > i) {
+                                                    var tr = $("#Ist").clone();
+                                                    var tr1 = $("#Ind").closest();
+                                                    var k = 0;
+                                                    var l1 = tr.find(".Abcd").length;
+                                                    while (l1 > k) {
+                                                        tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                                        var t = tblhead1[k];
+                                                        debugger
+                                                        if (jQuery.inArray(t, tblhide) !== -1) {
+                                                            tr.find(".Abcd").eq(k).addClass("Abc")
+                                                            tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                                        }
+
+                                                        k++;
+                                                    }
+                                                    $("#Ibody").append(tr);
+                                                    i++;
+                                                }
+                                                $("#Ist")[0].remove();
+                                            } else {
+                                                $("#Ist").hide();
+                                                RedDotAlert_Error("No Record Found");
+                                            }
+                                        }, complete: function () {
+                                            $(".loader1").hide();
+                                        }
+
+                                    });
+                                });
+                                //function GetMenuList() {
+                                //    // $('#tblMenusList').html('');
+                                //    var colms = [
+                                //        { "mDataProp": "PlanId" },
+                                //        { "mDataProp": "SourceOfFund" },
+                                //        { "mDataProp": "CountryName" },
+                                //        { "mDataProp": "StartDate" },
+                                //        { "mDataProp": "EndDate" },
+                                //        { "mDataProp": "Vendor" },
+                                //        { "mDataProp": "VendorApprovedAmt" },
+                                //        { "mDataProp": "RDDApprovedAmt" },
+                                //        { "mDataProp": "UsedAmount" },
+                                //        { "mDataProp": "BalanceAmount" },
+                                //        { "mDataProp": "BalanceFromApp" },
+                                //        { "mDataProp": "Description" },
+                                //        { "mDataProp": "ApprovedBy" },
+                                //        { "mDataProp": "planStatus" },
+                                //        { "mDataProp": "ApprovalStatus" },
+                                //        { "mDataProp": "CreatedOn" }
+
+
+                                //    ];
+
+
+                                //    RdottableNDWtbl('tblMenusList', '/MarketingPlan/GetAllData', colms);
+
+                               // }
+                                function RdottableNDWtbl(tblid, url1, colms) {
+                                    debugger;
+                                    var table = $('#' + tblid + '').DataTable({
+                                        //"ColumnDefs": [{ "searchable": false, "orderable": true, "targets": [0] }],
+                                        //"order": [[0, 'asc']],
+                                        ////"scrollY": true,
+                                        //  "scrollX": true,
+
+                                        "paging": true,
+                                        "pageLength": 10,
+
+                                        "dataSrc": "",
+                                        //"language":
+                                        //{
+                                        //    "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+                                        //},
+                                        //"dom": 'lBfrtip',
+                                        //"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+
+                                        "processing": true,
+                                        "serverSide": true,
+                                        "destroy": true,
+                                        "ajax":
+                                        {
+                                            "async": false,
+                                            "cache": false,
+                                            "type": "POST",
+                                            "url": url1,
+                                            //  "data": newrow,
+                                            "dataType": "json",
+                                        },
+
+                                        "aoColumns": colms
+                                        //, "fnDrawCallback": function () {
+                                        //    $("input[id='chkIsDefault']").bootstrapToggle();
+                                        //}
+                                    });
+
+
+
+                                    // $("div.dataTables_filter").append($("<button  id='capture' value='true' class='hb2Smf'><i style='font-size:20px;color:#4285F4' class='fa fa-microphone'></i></button>"));
+                                }
+
+                            </script>
+
