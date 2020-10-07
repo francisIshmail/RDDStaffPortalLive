@@ -70,6 +70,8 @@ namespace RDDStaffPortal.Controllers
         }
         public ActionResult Keepalive()
         {
+
+            //Session.Timeout = Session.Timeout + 20;
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
         public ActionResult SignOut()

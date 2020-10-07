@@ -1,0 +1,296 @@
+﻿@model RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DSR_ReportingFreqTarget
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    
+    
+
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Reporting Frequency</h4>
+                </div>
+
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10">
+
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label p-0 width120px">Country :</label>
+                                        <div class="col-md-8 p-0">
+                                            @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control form-control-sm" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                       <button id="btnsave"  class="btn btn-info btn-sm">Save</button>
+                                        
+                                    </div>
+                                </div>
+
+    
+                
+
+                            </div>
+                            <div id="tblid" class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="Ind" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead"><div>SR.NO </div></div>
+                                            <div class="reddotTableHead"><div>EMPLOYEE NAME </div></div>
+                                            <div class="reddotTableHead"><div>DESIGNATION </div></div>
+                                            <div class="reddotTableHead width10per"><div>VISIT PER MONTH </div></div>
+                                            <div class="reddotTableHead"><div>FREQ OF RPT </div></div>
+                                            <div class="reddotTableHead"><div>TOP MANAGEMENT </div></div>
+                                            <div class="reddotTableHead"><div>REPORT MUST READ BY</div></div>
+                                            <div class="reddotTableHead Abcd Abc"><div>EMPId</div></div>
+                                            <div class="reddotTableHead Abcd Abc"><div>DESIGId</div></div>
+                                            <div class="reddotTableHead Abcd Abc"><div>MANAGER</div></div>
+                                            <div class="reddotTableHead Abcd Abc"><div>MANAGER L2</div></div>
+
+                                        </div>
+                                    </div>
+                                    <div id="Ibody" class="reddotTableBody">
+                                        <div id="Ist" class="reddotTableRow odd-even-row FreqTarget">
+                                            <div class="reddotTableCell Abcd"><div>TargetId</div></div>
+                                            <div class="reddotTableCell Abcd"><div>EmpId</div></div>
+                                            <div class="reddotTableCell Abcd"><div>DesigId</div></div>
+                                            <div class="reddotTableCell Abcd width10per"><div><input id='txtVisitPerMonth' class="form-control form-control-sm" type="number" /></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>@Html.DropDownList("dropFreqtyp", Model.freqOfRptList, new { @class = "form-control form-control-sm" ,@placeholder= "Select " })</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>@Html.DropDownList("dropSendReport", Model.SendReportList, new { @class = "multiselect-ui form-control form-control-sm", @multiple = "multiple", @placeholder = "Select " })</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>@Html.DropDownList("dropReportMustRead", new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" } }, new { @class = "multiselect-ui form-control form-control-sm", @multiple = "multiple", @placeholder = "Select " })</div></div>
+                                            <div class="reddotTableCell Abcd Abc"><div>EmpId</div></div>
+                                            <div class="reddotTableCell Abcd Abc"><div>DesigId</div></div>
+                                            <div class="reddotTableCell Abcd Abc"><div>Manager</div></div>
+                                            <div class="reddotTableCell Abcd Abc"><div>Manager L2</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        //RedtDot_CheckAuthorization("/DailyReports/DSR_Reportingfreqtarget/Index");
+        var tblhead1 = ['SrNo', 'EmpName', 'designation', 'VisitPerMonth', 'FreqOfRpt', 'SendReportTo', 'ReportMustReadBy', 'Empid', 'DesigId', 'Manager','ManagerL2'];
+        var tbltxt = ['VisitPerMonth'];
+        var tbldrop = ['FreqOfRpt', 'SendReportTo', 'ReportMustReadBy']
+        var array = ['Manager', 'ManagerL2'];
+        $('#Country').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select Country--'
+        });
+       
+
+        debugger
+        var ManagerDataList = $("#hdnmanger").val();
+           
+            
+
+           
+        $("#btnsave").hide();
+        $("#Ist").hide();
+        $(".loader1").hide();
+         
+        $('#Country').on("change", function () {
+            try {
+                 
+                if ($("#Country").val() == null || $("#Country").val() =='0') {
+                    $("#Ist").hide();
+                    $("div#Ist").not(':first').remove();
+                    return;
+                }
+                $(".loader1").show();
+                $.ajax({
+                    type: "POST",
+                    url: "/GetRDD_DSR_FREQ_List",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        CountryCode: $("#Country").val()
+                    }),
+                    success: function (data) {
+                        debugger
+                        $("#Ist").show();
+                        $("div#Ist").not(':first').remove();
+                        $("div#Ist:first").find("select.select2-hidden-accessible").select2('destroy');
+                        if (data.Table != null && data.Table.length != 0) {
+                            $(".multiselect-ui").fSelect('destroy');
+                            $("#btnsave").show();
+                            var i = 0;
+                            while (data.Table.length > i) {
+                                var tr = $("#Ist").clone();
+
+                               
+                                $("#Ibody").append(tr);
+                                i++;
+                            }
+                            $("#Ist")[0].remove();
+                        } else {
+                            $("#Ist").hide();
+                            $("#btnsave").hide();
+                            $(".loader1").hide();
+                            RedDotAlert_Error("No Record Found");
+                        }
+                    }
+                    , complete: function (data) {
+                        if (data.responseJSON.Table != null) {
+                            $(".multiselect-ui").val([]).trigger('change');
+                            $(".multiselect-ui").val('').trigger('change');
+                            var i = 0;
+                            $(".FreqTarget").each(function () {
+                                var k = 0;
+                                var l1 = parseInt(tblhead1.length);
+                                while (l1 > k) {
+                                    var t = tblhead1[k];
+                                    if (t == 'SrNo') {
+                                        $(this).find(".Abcd")[k].children[0].textContent = i + 1;
+                                    } else if (jQuery.inArray(t, tbldrop) !== -1) {
+                                        if (t == 'FreqOfRpt') {
+                                            $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('id', "dropFreqtyp" + i);
+                                            $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('data-select2-id', "dropFreqtyp" + i);
+                                            $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('name', "dropFreqtyp" + i);
+                                            $(this).find(".Abcd").find("#dropFreqtyp" + i).select2({ theme: "bootstrap", allowClear: true, placeholder: '--Select--' });
+                                            $(this).find(".Abcd").find("#dropFreqtyp" + i).val(data.responseJSON.Table[i][tblhead1[k]]).trigger('change');
+                                        } else if (t == 'SendReportTo') {
+                                            $(this).find(".Abcd").find("[id^='dropSendReport']").attr('id', "dropSendReport" + i);
+                                            var DropIst = data.responseJSON.Table[i][tblhead1[k]].split(',');
+                                            $("#dropSendReport" + i).val(DropIst).trigger('change');
+                                        } else {
+                                            $(this).find(".Abcd").find("[id^='dropReportMustRead']").attr('id', "dropReportMustRead" + i);
+
+                                            $("#dropReportMustRead" + i).empty();
+                                            var k1 = 0;
+                                            while (data.responseJSON.Table1.length > k1) {
+                                                
+                                                if ((data.responseJSON.Table[i].Manager == data.responseJSON.Table1[k1].EmployeeId) || (data.responseJSON.Table[i].ManagerL2 == data.responseJSON.Table1[k1].EmployeeId)) 
+                                                    {
+                                                        var o = new Option(data.responseJSON.Table1[k1].Email, data.responseJSON.Table1[k1].Email);
+                                                   $("#dropReportMustRead" + i).append(o);
+                                                    }
+                                                    k1++;
+                                                }
+                                                
+                                                var DropIst = data.responseJSON.Table[i][tblhead1[k]].split(',');
+                                                $("#dropReportMustRead" + i).val(DropIst).trigger('change');
+                                            }
+                                        
+                                    } else if (jQuery.inArray(t, tbltxt) !== -1) {
+                                        $(this).find(".Abcd").find("[id^='txtVisitPerMonth']").attr('id', "txtVisitPerMonth" + i);
+                                        $(this).find(".Abcd").find("#txtVisitPerMonth" + i).val(data.responseJSON.Table[i][tblhead1[k]]);
+                                    } else {
+                                        $(this).find(".Abcd")[k].children[0].textContent = data.responseJSON.Table[i][tblhead1[k]];
+                                    }
+                                    k++;
+                                }
+                                i++;
+                            })
+                            $(".loader1").hide();
+                        }
+                        $(document).ready(function () {
+                            (function ($) {
+                                $(function () {
+                                    window.fs_test = $('.multiselect-ui').fSelect();
+                                    $(".multiselect-ui").fSelect('reload');
+                                    $(".multiselect-ui").hide();
+                                });
+                            })(jQuery);
+                        });
+                    }
+                });
+
+            } catch (e) {
+                RedDotAlert_Error(e);
+            }
+           
+        })
+
+
+        $("#btnsave").on("click", function () {
+            debugger
+            var rDD_DSR = {
+                Country: $("#Country").val(),
+                RDD_DSR_ReportingFreqTargetDetailnew:[]
+            }
+            $(".FreqTarget").each(function () {
+
+                var dropSendReport = "";
+                $(this).find("[name^='dropSendReport'] option:selected").each(function () {
+                    dropSendReport += $(this).text() + ",";
+                });
+                var dropReportMustRead = "";
+                $(this).find("[name^='dropReportMustRead'] option:selected").each(function () {
+                    dropReportMustRead += $(this).text() + ",";
+                });
+                var VisitPerMonth = $(this).find("[id^='txtVisitPerMonth']").val();
+                var Freqtyp = $(this).find("[name^='dropFreqtyp']").val();
+               
+            
+                var Empid = $(this).find(".Abcd").eq(7).text();
+                var Desid = $(this).find(".Abcd").eq(8).text();
+                if (Empid != '') {
+                    var RDD_DSR_ReportingFreqTargetDetail = {
+                        EmpId: Empid,
+                        DesigId: Desid,
+                        VisitPerMonth: VisitPerMonth,
+                        freqOfRpt: Freqtyp,
+                        SendReportTo: dropSendReport,
+                        ReportMustReadBy: dropReportMustRead,
+                    };
+                    rDD_DSR.RDD_DSR_ReportingFreqTargetDetailnew.push(RDD_DSR_ReportingFreqTargetDetail);
+                }
+
+            });
+
+            var data = JSON.stringify({
+                rDD_DSR: rDD_DSR,
+            });
+            debugger
+            $.ajax({
+                type: "Post",
+                url: "/SaveRDD_DSR_FREQ",
+                data: data,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {               
+                    if (result.data.ErrorMsg == 'Record Saved Successfully' || result.data.ErrorMsg == 'Record Updated Successfully') {
+                        RedDotAlert_Success(result.data.ErrorMsg);
+                        $("#Country").val('0').trigger('change');
+                    } else {
+                        RedDotAlert_Error(result.data.ErrorMsg);
+                    }
+                }
+            });
+        })
+
+    });
+</script>
+<style>
+    .Abc {
+        display: none !important;
+    }
+</style>

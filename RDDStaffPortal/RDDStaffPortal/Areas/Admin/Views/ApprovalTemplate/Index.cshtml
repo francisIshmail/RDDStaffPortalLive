@@ -21,7 +21,7 @@
                 <div class="col-md-12">
                     <div class="card full-height">
                         <div class="card-body">
-                            <div  id="idCard">
+                            <div id="idCard">
 
                             </div>
                             <div class="rowmin row mar-b10" id="tblid1">
@@ -92,9 +92,9 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
@@ -122,8 +122,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
 <div id="Divid">
-    
+
 </div>
 
 
@@ -134,23 +140,66 @@
 
     $(document).ready(function () {
 
-        var data= JSON.stringify({           
+        var data = JSON.stringify({
             Object_Type: '17',
             Originator: 'Pramod',
         });
         Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
 
+
+
+        $('#ApprovalModal').on('show.bs.modal', function (event) {
+
+
+            var btnMergeField = $(this).find('#btnApproval');
+
+            btnMergeField.on('click', function () {
+
+                console.log('hi')
+                $('#ApprovalModal').modal('hide'); // Hide Modal
+
+            });
+
+        });
+
+
         $("#test").on("click", function () {
             debugger
-            $('#ApprovalModal').modal("show");
+            var a = ConfirmYesNo();
+            debugger
+            a.then(function (b) {
+                debugger
+                console.log(b);
+                alert(b)
+            })
+
         })
 
 
+        function ConfirmYesNo() {
+            var dfd = jQuery.Deferred();
+            var $confirm = $('#ApprovalModal');
+            $confirm.modal('show');
+
+            $('#btnApproval').off('click').click(function () {
+
+                $confirm.modal('hide');
+                dfd.resolve(1);
+                return 1;
+            });
+            $('#btnAppCancel').off('click').click(function () {
+                $confirm.modal('hide');
+                dfd.resolve(0);
+                return 0;
+            });
+            return dfd.promise();
+        }
 
 
-            $(".loader1").show();
-           ApprovalIndex.initialize();
-             $(".loader1").hide();
+
+        $(".loader1").show();
+        ApprovalIndex.initialize();
+        $(".loader1").hide();
 
     })
 </script>

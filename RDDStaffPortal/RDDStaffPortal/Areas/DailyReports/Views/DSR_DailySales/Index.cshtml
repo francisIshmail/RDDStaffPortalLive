@@ -1,0 +1,1545 @@
+﻿@model RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DailySalesReports
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Submit Daily Report</h4>
+            </div>
+            
+                <div class="rowmin">
+                    @Html.HiddenFor(m => m.ActionType)
+                    @Html.HiddenFor(m => m.FromDate)
+                    @Html.HiddenFor(m => m.ToDate)
+                    
+                    <div class="loader1"></div>
+                    <div class="col-md-12">
+                        <div class="card full-height padd-10">
+                            <div class="row">
+                                <label for="email2" class="width60px col-md-1">Date :</label>
+                                <div class="col-md-2">
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                                <span class="required-label">
+                                    You have already submitted report for selected date.Please go to Details section to view Report.
+
+                                </span>
+                                <span style="color:red;" id="lblerror1">
+                                    Please configure Report Frequency..
+
+                                </span>
+                                <span style="color:red;" id="lblerror2">
+                                    No Record Found..
+
+                                </span>
+                                <div class="col-md-1 ml-auto text-right">
+                                    <div id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+                                        <div class="span-mode"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="demo-scrollbar-250 scrollbar-inner" style="max-height:300px">
+                                            <div class="reddotTable">
+                                                <div id="Ind" class="reddotTableBody">
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        
+                                                        <div class="reddotTableHead width10per Abcd"><div>Week#</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>Visit</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>Distinct</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>Repeat</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>New</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>Open</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>Closed</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>No of Deals</div></div>
+                                                        <div class="reddotTableHead width10per Abcd"><div>USD($)</div></div>
+                                                    </div>
+                                                </div>
+                                                <div id="Ibody" class="reddotTableBody">
+                                                    <div id="Ist" class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableCell Abcd"><div>Wk1 ( 2 D )</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                        <div class="reddotTableCell Abcd"><div>0</div></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills nav-secondary dailysales-section" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="pills-home-tab-nobd" data-toggle="pill" href="#pills-home-nobd" role="tab" aria-controls="pills-home-nobd" aria-selected="true">Visit Entry</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill" href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd" aria-selected="false">Details</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="tab-content col-md-12 padd-0" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home-nobd" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div id="div-Country" class="form-group has-error1">
+                                                    <label>Country <span style="color:red">&nbsp;*</span>:</label>
+
+                                                    @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control dropcheck" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="div-ActualVisitDate1" class="form-group">
+                                                    <label>Date <span style="color:red">&nbsp;*</span>:</label>
+                                                    <div class="input-group">
+                                                        @Html.TextBox("ActualVisitDate1", "", new { @class = "form-control DatepickerH" })
+                                                        @Html.HiddenFor(m => m.ActualVisitDate, new { @class = "form-control" })
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="div-ModeOfCall" class="form-group has-error1">
+                                                    <label>Call Mode <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.DropDownListFor(m => m.ModeOfCall, Model.ModeOfCallList, new { @class = "form-control dropcheck" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div id="div-CallStatus" class="form-group has-error1">
+                                                    <label>Call Type <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.DropDownListFor(m => m.CallStatus, Model.CallStatusList, new { @class = "form-control dropcheck" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div id="div-Company" class="form-group has-error1">
+                                                    <label>Company <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.HiddenFor(m => m.CardCode)
+                                                    @Html.TextBoxFor(m => m.Company, new { @class = "form-control txtmax  txtcheck" })
+                                                    @Html.ValidationMessageFor(m => m.Company, "", new { @class = "text-danger" })
+                                                    @*<i class="fas fa-plus-square small menu-icon-c" id="btn-NewReseller" title="New Reseller" data-toggle="modal" data-target="#SelectNewResellerpopup"></i>*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <div id="div-PersonMet" class="form-group has-error1">
+                                                    <label>Contact Person <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.TextBoxFor(m => m.PersonMet, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Contact Person cannot be longer than 200 characters.", @data_val_length_max = "200" })
+                                                    @Html.ValidationMessageFor(model => model.PersonMet, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Designation :</label>
+                                                    @Html.TextBoxFor(m => m.Designation, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div id="div-Email" class="form-group">
+                                                    <label>Email :</label>
+                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Phone :</label>
+                                                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
+                                                    @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>BU :</label>
+                                                    @Html.TextBoxFor(m => m.BU, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.ValidationMessageFor(model => model.BU, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Business Amount($) :</label>
+                                                    @Html.TextBoxFor(m => m.ExpectedBusinessAmt, new { @class = "form-control txtdecimalmax", @data_val = "true", @data_val_number = "The field ExpectedBusinessAmt must be a number.", @data_val_range = "Amount cannot be longer than 9 characters.", @data_val_range_max = "999999999.99", @data_val_range_min = "0", @data_val_required = "The ExpectedBusinessAmt field is required." ,@type="number"})
+                                                    @Html.ValidationMessageFor(model => model.ExpectedBusinessAmt, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div id="div-NextAction" class="form-group has-error1">
+                                                    <label>Next Action <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.DropDownListFor(m => m.NextAction, Model.NextActionList, new { @class = "form-control dropcheck" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div id="div-Discussion" class="form-group has-error1">
+                                                    <label>Discussion <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.TextAreaFor(m => m.Discussion, new { @class = "form-control txtcheck txtmax", @rows = "3", @data_val = "true", @data_val_length = "Discusion cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                    @Html.ValidationMessageFor(model => model.Discussion, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div id="div-Feedback" class="form-group has-error1">
+                                                    <label>Feedback <span style="color:red">&nbsp;*</span>:</label>
+                                                    @Html.TextAreaFor(m => m.Feedback, new { @class = "form-control txtcheck txtmax", @rows = "3", @data_val = "true", @data_val_length = "FeedBack cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                    @Html.ValidationMessageFor(model => model.Feedback, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="accordion">
+                                            <div class="modal-footer">
+
+                                                @*<button type="button" class="btn btn-secondary btn-sm" id="Forwardbtn1" data-toggle="tooltip" title="Forward"><i class="fas fa-reply"></i></button>
+                                            <button type="button" class="btn btn-info btn-sm" id="Remindorbtn1" data-toggle="tooltip" title="Remindor"><i class="fas fa-bell"></i></button>*@
+                                                <div id="headingOne" data-toggle="collapse" class="btn btn-secondary btn-sm" data-target="#Forwardbtn-E" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="fas fa-reply"></div></div>
+                                                <div id="headingtwo" data-toggle="collapse" class="btn btn-info btn-sm" data-target="#Remindorbtn-E" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="fas fa-bell"></div></div>
+                                            </div>
+                                            <div class="row mar-t10 collapse" id="Remindorbtn-E" data-parent="#accordion">
+                                                <div class="col-md-6 ml-auto">
+                                                    <div class="cardnew border1 padd-10">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="inlineinput" class="col-form-label">Date :</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBox("ReminderDate1", "", new { @class = "form-control DatepickerHR" })
+                                                                        @Html.HiddenFor(m => m.ReminderDate, new { @class = "form-control" })
+                                                                        <div class="input-group-append">
+                                                                            <span class="input-group-text">
+                                                                                <i class="far fa-calendar-alt"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="inlineinput" class=" col-form-label">Remarks :</label>
+                                                                    @Html.TextAreaFor(m => m.ReminderDesc, new { @class = "form-control txtmax", @rows = "3", @data_val = "true", @data_val_length = "Description cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                                    @Html.ValidationMessageFor(model => model.ReminderDesc, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mar-t10 collapse" id="Forwardbtn-E" data-parent="#accordion">
+                                                <div class="col-md-6 ml-auto">
+                                                    <div class="cardnew border2 padd-10">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div id="div-ForwardCallToEmail" class="form-group">
+                                                                    <label for="inlineinput" class="col-form-label">Email :</label>
+                                                                    @Html.TextBoxFor(m => m.ForwardCallToEmail, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                                    @Html.ValidationMessageFor(model => model.ForwardCallToEmail, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="inlineinput" class=" col-form-label">Instruction :</label>
+                                                                    @Html.TextAreaFor(m => m.ForwardRemark, new { @class = "form-control txtmax", @rows = "3", @data_val = "true", @data_val_length = "Remark cannot be longer than 2000 characters.", @data_val_length_max = "2000" })
+                                                                    @Html.ValidationMessageFor(model => model.ForwardRemark, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        @*<div class="modal-footer">
+                                    <div class="pull-left">
+                                        <div class="row">
+
+                                            <div class="col-md-1">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                        <div class="pull-right">
+
+                                        </div>
+                                    </div>
+                                    }*@
+                                        <div class="modal-footer" id="footerEntry">
+                                            <div class="pull-left">
+                                                <button type="button" class="btn btn-info btn-sm" title="New Reseller" id="btn-NewReseller">New Reseller</button>
+                                            </div>
+                                            @using (Html.BeginForm("Index", "DSR_DailySales", new { area = "DailyReports", fromdate = Model.FromDate, todate = Model.ToDate }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <span style="color:red;">@Html.ValidationMessageFor(m => m.ErrorMsg)</span>
+
+                                                <input type="file" name="file" />
+                                                <input type="submit" value="Import From Excel" class="btn-sm btn-info " id="btnImport" />
+                                            }
+                                            <a href="~/Uploads/Sample/SampleExcel.xls">Download Template</a>
+
+                                            @*<button type="button" id="btnMainsave" class="btn btn-success btn-sm" data-dismiss="modal">Save</button>*@
+                                            <button type="button" id="btnDraftsave" class="btn btn-info btn-sm">Save as Draft</button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade dailysales-details" id="pills-profile-nobd" role="tabpanel" aria-labelledby="pills-profile-tab-nobd">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                                                        <div class="accordion accordion-secondary" id="DetList">
+
+                                                            @{ Html.RenderAction("GetRDD_DailySalesReports", "DSR_DailySales", new { area = "DailyReports", fromdate = Model.FromDate, todate = Model.ToDate.AddDays(1) }); }
+                                                        </div>
+                                                        <div id="footer-det" class="modal-footer">
+                                                            <button type="button" id="btn1Mainsave" class="btn btn-info btn-sm" data-dismiss="modal">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                                                               
+            </div>
+    </div>
+</div>
+<!-- Modal -->
+<input type="hidden" id="hdnstartdate"/>
+<input type="hidden" id="hdnenddate" />
+<div class="modal fade" id="SelectNewResellerpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">New Reseller Entry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="txtReseller" placeholder="New Reseller" type="text" class="form-control"/> 
+            </div>
+            <div class="modal-footer">
+                <button id="btnNewsave" type="button" class="btn btn-info btn-sm">Save Reseller</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script>
+    $(document).ready(function () {
+        var nowdate;
+        var sdate=new Date();
+        try {
+          $(".required-label").hide();
+            function Isdraftmode() {
+                var t = 0;
+                if ($("[id^='IsDraft-']").length > 1) {
+                    t = 1;
+                }
+               
+                $("#lblerror2").hide();
+                $("#lblerror1").hide();
+                $(".required-label").hide();
+                debugger
+                if ($("[id^='IsDraft-'").eq(t).val() == 'False' || nowdate > sdate) {
+                    if ($("[id^='IsDraft-'").eq(t).val() == undefined) {
+                        $("#lblerror2").show();  
+                        $("#lblerror2").text("No Record Found..")
+                    } else if (nowdate > sdate) {
+                        $("#lblerror2").show();
+                        $("#lblerror2").text("Only First Previous & Current week ...");
+                    }
+                    else {
+                        $(".required-label").show();
+                        }
+                   
+                    $("#pills-home-tab-nobd").hide();
+                    $("#pills-profile-tab-nobd").trigger('click');
+                    $("#footerEntry").attr('style', 'visibility:hidden');
+                    $("#footer-det").attr('style', 'visibility:hidden');
+                } else {
+                    $("#pills-home-tab-nobd").show();
+                    $(".required-label").hide();
+                    $("#pills-home-tab-nobd").trigger('click');
+                    $("#footerEntry").attr('style', 'visibility:none');
+                    $("#footer-det").attr('style', 'visibility:none');
+                }
+               
+                if ($("#ActionType").val() != "DAILY" && $("#ActionType").val() != "WEEKLY") {
+                    $("#pills-home-tab-nobd,#pills-home-nobd").hide();
+                    $("#pills-profile-tab-nobd").hide();
+                    RedDot_DateRange("reportrange");
+                    $("#lblerror1").show();
+                }
+            }
+            Isdraftmode();
+
+            
+            if ($("#ActionType").val() == "DAILY") {
+                var nowMin1 = new Date($("#FromDate").val());
+                nowMin1.setDate(nowMin1.getDate() - 1);
+                $("#hdnstartdate").val(nowMin1);
+                
+                $("#hdnenddate").val($("#ToDate").val());
+                RedDot_DateRange_Min_Max_Daily("reportrange", $("#FromDate").val(), $("#ToDate").val());
+            } else if ($("#ActionType").val()=="WEEKLY") {
+                $("#hdnstartdate").val($("#FromDate").val());
+                var nowMin1 = new Date($("#ToDate").val());
+                nowMin1.setDate(nowMin1.getDate() + 1);
+                $("#hdnenddate").val(nowMin1);
+                RedDot_DateRange_Min_Max("reportrange", $("#FromDate").val(), $("#ToDate").val());
+                nowdate = $("#reportrange").data().startDate;
+                nowdate.setDate(nowdate.getDate() - 7);
+            }
+
+            $("#reportrange").on('show.daterangepicker', function (ev, picker) {
+
+                let active_cell = picker.container[0].querySelector('td.start-date')
+                active_cell.parentElement.classList.add('active') //tr goes active
+            });
+            
+            $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                debugger
+                $(".loader1").show();
+                set_picker_start_end(picker, picker.startDate);
+                $("#ActualVisitDate1").val(picker.startDate.format('DD/MM/YYYY'));
+                if ($("#ActionType").val() != "DAILY") {
+                    if (new Date($("#FromDate").val()) <= new Date(picker.startDate.format('YYYY-MM-DD'))) {
+                        var new_date = new Date($("#FromDate").val());
+                        sdate = new_date;
+                        var startMin = moment(new_date, 'YYYY-MM-DD');
+                        startMin = new Date(startMin);
+                        var startdayMin = ("0" + startMin.getDate()).slice(-2);
+                        var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+                        var new_date = new Date($("#FromDate").val());
+                        var nowMax = moment(new_date, 'YYYY-MM-DD').add(6, 'days');
+                        nowMax = new Date(nowMax);
+                        var dayMax = ("0" + nowMax.getDate()).slice(-2);
+                        var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+                        $('#reportrange span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+                        $("#hdnstartdate").val(startMin);
+                        $("#hdnenddate").val(nowMax);
+                    } else {
+                        var new_date = new Date(picker.startDate.format('YYYY-MM-DD'));//new Date($("#FromDate").val());
+                        sdate = new_date;
+                        var startMin = moment(new_date, 'YYYY-MM-DD'); //.add(-7, 'days');
+                        startMin = new Date(startMin);
+                        var startdayMin = ("0" + startMin.getDate()).slice(-2);
+                        var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2)
+                        new_date = new Date(picker.endDate.format('YYYY-MM-DD'));//new Date($("#FromDate").val());
+                        var nowMax = moment(new_date, 'YYYY-MM-DD');//.add(-1, 'days');
+                        nowMax = new Date(nowMax);
+                        var dayMax = ("0" + nowMax.getDate()).slice(-2);
+                        var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+                        $('#reportrange span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+                        $("#hdnstartdate").val(startMin);
+                        $("#hdnenddate").val(nowMax);
+
+                    }
+                }
+                $.ajax({
+                    url: '@Url.Action("GetRDD_DailySalesReports", "DSR_DailySales", new { area = "DailyReports" })',
+                    type: 'GET',
+                    cache: false,
+                    data: { fromdate: RedDot_setdtpkdateFind($("#hdnstartdate").val()), todate: RedDot_setdtpkdateFind($("#hdnenddate").val()) }
+                }).done(function (result) {
+                    debugger
+                    $('.accordion-secondary').html(result);
+                    DailyDet();
+                    $(".loader1").hide();
+                    Isdraftmode();
+                });
+
+            });
+
+            $("#ActualVisitDate1").val($('#reportrange').data('daterangepicker').startDate.format('DD/MM/YYYY'));
+            RedDot_NewDate(".DatepickerH");
+            RedDot_NewDate(".DatepickerHR");
+
+        } catch (e) {
+        }
+        $("#Email").blur(function () {
+
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(this.value)) {
+                $("#div-Email").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-Email").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+        $("[id^='Email-'").blur(function () {
+
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(this.value)) {
+                $("#div-"+$(this).attr("id")+"").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-"+$(this).attr("id")+"").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+        $("[id^='ForwardCallToEmail-'").blur(function () {
+
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(this.value)) {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+        $(".txtmax").on("keydown keyup change", function () {
+            var value = $(this).val();
+           
+            var t = parseInt($(this).attr("data-val-length-max"));
+            if (t < $(this).val().length) {
+                $(this).val(value.substr(0, t));
+                $("[data-valmsg-for='" + $(this).attr("id") + "']").text($(this).attr("data-val-length"));
+            } else {
+                $("[data-valmsg-for='"+$(this).attr("id")+"']").text('');
+            }
+        })
+
+        $(".txtdecimalmax").on("keydown keyup change", function () {
+            var value = $(this).val();
+            var t = parseFloat($(this).attr("data-val-range-max"));
+            var k = $(this).attr("data-val-range-max").length - 3;
+        if (t < parseFloat($(this).val())) {
+                $(this).val(value.substr(0, k));
+                $("[data-valmsg-for='" + $(this).attr("id") + "']").text($(this).attr("data-val-range"));
+            } else {
+                $("[data-valmsg-for='" + $(this).attr("id") + "']").text('');
+            }
+        })
+        $(".txtcheck").blur(function () {
+
+
+            if ($(this).val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+        $(".dropcheck").blur(function () {
+
+
+            if ($(this).val()!=='0') {
+                $("#div-"+$(this).attr("id")+"").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('0').trigger('change');
+
+            }
+        });
+        $("#ForwardCallToEmail").blur(function () {
+
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(this.value)) {
+                $("#div-ForwardCallToEmail").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-ForwardCallToEmail").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+            $('body').on('focusin', '.DatepickerH', function () {
+                var start = new Date($("#hdnstartdate").val());
+                var end = new Date($("#hdnenddate").val());
+                if ($('.DatepickerH').data('DateTimePicker') != undefined) {
+                    $('.DatepickerH').datetimepicker('destroy');
+                }
+                $('.DatepickerH').datetimepicker({
+
+                    minDate: start,
+                    maxDate: end,
+                    format: 'DD/MM/YYYY',
+                    showClose: true,
+                    showClear: true,
+
+                });
+
+
+
+
+
+            });
+        $('body').on('focusin', '.DatepickerHR', function () {
+            var start = new Date($("#hdnstartdate").val());
+            if ($('.DatepickerHR').data('DateTimePicker') != undefined) {
+                $('.DatepickerHR').datetimepicker('destroy');
+            }
+            $('.DatepickerHR').datetimepicker({
+                minDate: start,
+                format: 'DD/MM/YYYY',
+                showClose: true,
+                showClear: true,
+            });
+        });
+
+
+        //
+        DailyDet();
+        $("#btn-NewReseller").on("click", function () {
+            if ($("#Country").val() == '0' || $("#Country").val() == '-1') {
+                RedDotAlert_Error("Please Select Country");
+                return
+            }
+            $("#SelectNewResellerpopup").modal("show");
+        })
+        $("#btnNewsave").on("click", function () {
+            if ($("#Country").val() == '0' || $("#Country").val() == '-1') {
+                RedDotAlert_Error("Please Select Country");
+                return
+            }
+            if ($("#txtReseller").val() == '') {
+                RedDotAlert_Error("Enter New Reseller");
+                return
+            }
+            var rDD_DSR_New = {
+                CountryCode: $("#Country").val(),
+                Country: $("#Country").val(),
+                NewResellerName: $("#txtReseller").val()
+            };
+
+            var data = JSON.stringify({
+                rDD_DSR_New: rDD_DSR_New
+            });
+            $.ajax({
+                type: "POST",
+                url: "/RDD_DSR_NewSeller",
+                contentType: "application/json",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+
+                    arr = data;
+                    if (arr.data[0].Responsemsg == "Reseller saved successfully.") {
+                        RedDotAlert_Success(arr.data[0].Responsemsg);
+                        $("#txtReseller").val('');
+                        $("#Country").trigger('change');
+                    } else {
+                        RedDotAlert_Error(arr.data[0].Responsemsg);
+                    }
+                }
+            });
+
+
+        })
+        //#region Validation PV*/
+        function ValidateForm(rDD_DailySales) {
+            var response = {
+                ErrorMessage: "",
+                formValid: false
+            };
+
+            if (rDD_DailySales.Country == "0" || rDD_DailySales.Country == "-1" || rDD_DailySales.Country ==null) {
+                response.ErrorMessage += "Country code,";
+            }
+            if (rDD_DailySales.ModeOfCall == "0" || rDD_DailySales.ModeOfCall == "-1" || rDD_DailySales.ModeOfCall == null) {
+                response.ErrorMessage += "Call Mode,";
+            }
+            if (rDD_DailySales.CallStatus == "0" || rDD_DailySales.CallStatus == "-1" || rDD_DailySales.CallStatus == null) {
+                response.ErrorMessage += "Call Type,";
+            }
+            if (rDD_DailySales.NextAction == "0" || rDD_DailySales.NextAction == "-1" || rDD_DailySales.NextAction == null) {
+                response.ErrorMessage += "Next Action,";
+            }
+            if (rDD_DailySales.Company == "" || rDD_DailySales.Company == null) {
+                response.ErrorMessage += "Enter Compnay Name,";
+            }
+            if (rDD_DailySales.PersonMet == "" || rDD_DailySales.PersonMet == null) {
+                response.ErrorMessage += "Enter Contact Person,";
+            }
+            //if (rDD_DailySales.Designation == "") {
+            //    response.ErrorMessage += "Enter Designation,";
+            //}
+            //if (rDD_DailySales.Email == "") {
+            //    response.ErrorMessage += "Enter Email,";
+            //}
+            //if (rDD_DailySales.BU == "") {
+            //    response.ErrorMessage += "Enter BU,";
+            //}
+            //if (rDD_DailySales.ContactNo == "") {
+            //    response.ErrorMessage += "Enter Phone ,";
+            //}
+            if (rDD_DailySales.Discussion == "" || rDD_DailySales.Discussion == null) {
+                response.ErrorMessage += "Enter Discusssion ,";
+            }
+            if (rDD_DailySales.Feedback == "" || rDD_DailySales.Feedback == null) {
+                    response.ErrorMessage += "Enter FeedBack ,";
+                }
+
+
+
+
+
+
+                if (response.ErrorMessage.length == 0) {
+                    response.formValid = true;
+                }
+                else {
+                    response.ErrorMessage = "Enter Mandatory Fields " + response.ErrorMessage + "."
+                    $(".loader1").hide();
+                }
+
+
+
+            return response;
+        }
+            //#endregion
+        $(document).on("hidden.bs.collapse", "[id^='collapse']", function () {
+            debugger
+            var t = "-" + $(this).attr("id").split('-')[1];
+            $('#btn1Draft'+t).attr('disabled', 'disabled');
+            $('#btn1Delete'+t).attr('disabled', 'disabled');
+        });
+
+        $(document).on("shown.bs.collapse", "[id^='collapse']", function () {
+            debugger
+            var t = "-" + $(this).attr("id").split('-')[1];
+            $('#btn1Draft'+t).removeAttr('disabled');
+            $('#btn1Delete'+t).removeAttr('disabled');
+        });
+
+        try {
+            var tblhead1 = [' ', 'Visit', 'Dist', 'Rept', 'N', 'Open', 'Closed', 'No#', 'USD($)']
+                $.ajax({
+                    type: "POST",
+                    url: "/GetWeeklyReports",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#Ist").show();
+                        $("div#Ist").not(':first').remove();
+                        arr = data;
+                        if (arr.Table != null && arr.Table.length != 0) {
+                            var i = 0;
+                            while (arr.Table.length > i) {
+                                var tr = $("#Ist").clone();
+                                var tr1 = $("#Ind").closest();
+                                var k = 0;
+                                var l1 = tr.find(".Abcd").length;
+                                while (l1 > k) {
+                                    tr.find(".Abcd")[k].children[0].textContent = arr.Table[i][tblhead1[k]];
+                                    var t = tblhead1[k];
+
+
+                                    k++;
+                                }
+                                $("#Ibody").append(tr);
+                                i++;
+                            }
+                            $("#Ist")[0].remove();
+                        } else {
+                            $("#Ist").hide();
+                            RedDotAlert_Error("No Record Found");
+                        }
+                    }, complete: function () {
+                        $(".loader1").hide();
+                    }
+                });
+            } catch (e) {
+
+            }
+            function DailyDet() {
+                $(".DailyDet").each(function () {
+                    $(this).find("[id^='Country']").val($(this).find("[id ^='hdnCountry']").val()).trigger('change');
+                    $(this).find("[id^='NextAction']").val($(this).find("[id ^='hdnNextAction']").val()).trigger('change');
+                    $(this).find("[id^='ModeOfCall']").val($(this).find("[id ^='hdnModeOfCall']").val()).trigger('change');
+                    $(this).find("[id^='CallStatus']").val($(this).find("[id ^='hdnCallStatus']").val()).trigger('change');
+
+                    var now = new Date($(this).find("[id^='ActualVisitDate'][type='hidden']").val());
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+                    $(this).find("[id^='ActualVisitDate1'][type = 'text']").val(today);
+
+                    var now = new Date($(this).find("[id^='ReminderDate'][type='hidden']").val());
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                    var today = (day) + "/" + (month) + "/" + now.getFullYear();
+                    $(this).find("[id^='ReminderDate1'][type = 'text']").val(today);
+
+
+
+
+
+                })
+        }
+        $("#btn1Mainsave").on("click", function () {
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, submit repor it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    var rDD_DailySalesDet = [];
+
+                    $(".DailyDet").each(function () {
+
+                        var VisitType = 'D';
+                        if ($(this).find("[id^='ActionType']").val() == 'WEEKLY') {
+                            VisitType = 'R';
+                        }
+                        var rDD_DailySales = {
+                            VisitId: $(this).find("[id^='ActualVisitDate1']").attr("id").split('-')[1],
+
+                            VisitDate: RedDot_setdtpkdate($("[id^='hdnstartdate']").val()),
+                            ToDate: RedDot_setdtpkdate($("[id^='hdnenddate']").val()),
+                            VisitType: VisitType,
+                            IsNewPartner: $(this).find("[id^='IsNewPartner']").val(),
+                            Country: $(this).find("[id^='Country']").val(),
+                            CardCode: $(this).find("[id^='CardCode']").val(),
+                            Company: $(this).find("[id^='Company']").val(),
+                            PersonMet: $(this).find("[id^='PersonMet']").val(),
+                            Email: $(this).find("[id^='Email']").val(),
+                            Designation: $(this).find("[id^='Designation']").val(),
+                            ContactNo: $(this).find("[id^='ContactNo']").val(),
+                            BU: $(this).find("[id^='BU']").val(),
+                            Discussion: $(this).find("[id^='Discussion']").val(),
+                            ExpectedBusinessAmt: $(this).find("[id^='ExpectedBusinessAmt']").val(),
+                            CallStatus: $(this).find("[id^='CallStatus']").val(),
+                            ModeOfCall: $(this).find("[id^='ModeOfCall']").val(),
+                            NextAction: $(this).find("[id^='NextAction']").val(),
+                            Feedback: $(this).find("[id^='Feedback']").val(),
+                            ForwardCallToEmail: $(this).find("[id^='ForwardCallToEmail']").val(),
+                            ForwardRemark: $(this).find("[id^='ForwardRemark']").val(),
+                            ForwardCallCCEmail: $(this).find("[id^='ForwardCallCCEmail']").val(),
+                            Priority: $(this).find("[id^='Priority']").val(),
+                            IsDraft: $(this).find("[id^='IsDraft']").val(),
+                            NextReminderDate: $(this).find("[id^='NextReminderDate']").val(),
+                            IsActive: $(this).find("[id^='IsActive']").val(),
+                            ReminderDate: RedDot_setdtpkdate($(this).find("[id^='ReminderDate1']").val()),
+                            ReminderDesc: $(this).find("[id^='ReminderDesc']").val(),
+                            IsRead: $(this).find("[id^='IsRead']").val(),
+                            ReportReadBy: $(this).find("[id^='ReportReadBy']").val(),
+                            ReportReadOn: $(this).find("[id^='ReportReadOn']").val(),
+                            Comments: $(this).find("[id^='Comments']").val(),
+                            ActualVisitDate: RedDot_setdtpkdate($(this).find("[id^='ActualVisitDate1']").val()),
+                            IsRptSentToManager: $(this).find("[id^='IsRptSentToManager']").val()
+                        };
+                        debugger
+                        var ValidateFormCheck = ValidateForm(rDD_DailySales);
+                        if (ValidateFormCheck.formValid == true && rDD_DailySales.IsDraft=="True") {
+
+                            rDD_DailySalesDet.push(rDD_DailySales);
+                        }
+                    })
+
+                    if (rDD_DailySalesDet.length > 0) {
+
+                        var data = JSON.stringify({
+                            rDD_DailySalesDet: rDD_DailySalesDet,
+                        });
+                        $.ajax({
+                            type: "Post",
+                            url: "/FinalDailSalesReportSave",
+                            data: data,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+
+                            $(".field-validation-error").text('');
+                                if (result.data[0].Responsemsg == "Record Saved Successfully" || result.data[0].Responsemsg == "Record Updated Successfully") {
+                                    $(".required-label").show();
+                                    $("#footerEntry").attr('style', 'visibility:hidden');
+                                    $("#footer-det").attr('style', 'visibility:hidden');
+                                    clrtxt();
+                                    loaddata();
+                                    $(".required-label").show();
+                                    $("#pills-home-tab-nobd").hide();
+                                    $("#pills-profile-tab-nobd").trigger('click');
+                                    $("#footerEntry").attr('style', 'visibility:hidden');
+                                    $("#footer-det").attr('style', 'visibility:hidden');
+                                    RedDotAlert_Success(result.data[0].Responsemsg);
+
+                                    
+
+                                } else {
+                                    RedDotAlert_Error(result.data[0].Responsemsg);
+                                    $(".loader1").hide();
+                                }
+                            }
+                        });
+                    }
+                    swalWithBootstrapButtons.fire(
+                        'Saved!',
+                        'Your Code has been saved.',
+                        'success'
+                    )
+
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Code is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+
+        })
+
+            var arr = "";
+            var arr1 = "";
+            $("#Country").on("change", function () {
+
+                var countryCode = $("#Country").val();
+                if (countryCode != "0" || countryCode != "-1") {
+                $(".field-validation-error").text('');
+                    $.ajax({
+                        type: "POST",
+                        url: "/GetCompanyList",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            CountryCode: countryCode
+                        }),
+                        success: function (data) {
+
+                            arr = data;
+                        }
+                    });
+                }
+            })
+            $("#Company").autocomplete({
+                source: function (request, response) {
+                    if (arr != "") {
+
+                        var k = $("#Company").val().toLowerCase();
+
+
+                        var results = arr.Table.filter(function (elem) {
+                            return elem.CardName.toLowerCase().indexOf(k) > -1;
+                        });
+                        if (results.length > 0) {
+                            response($.map(results, function (value, key) {
+                                return {
+                                    label: value.CardName,
+                                    value: value.CardName,
+                                    val1: value.CardCode
+                                };
+
+                            }));
+                        } else {
+                            $("#CardCode").val('');
+                            $("#Company").val('');
+                            $("#div-Company").removeClass('has-success1').addClass('has-error1');
+                            response([{ label: 'No results found.', value: 'No results found.' }]);
+                        }
+
+                    } else {
+                        $("#CardCode").val('');
+                        $("#Company").val('');
+                        $("#div-Company").removeClass('has-success1').addClass('has-error1');
+                        response([{ label: 'No results found.', value: 'No results found.' }]);
+                    }
+
+                },
+                select: function (event, u) {
+
+                    $("#CardCode").val(u.item.val1);
+                    $('#Company').val(u.item.value);
+                    $("#div-Company").removeClass('has-error1').addClass('has-success1');
+
+                },
+                minLength: 1,
+                delay: 100
+            }).focus(function (e, u) {
+                $("#CardCode").val('0');
+                $("#div-Company").removeClass('has-success1').addClass('has-error1');
+                $(this).autocomplete("search", "");
+            });
+
+        $("#Company").on("focusout", function () {
+
+                var Company = $(this).val();
+                if (Company != "0" || Company != "-1") {
+                $(".field-validation-error").text('');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/GetRDDPersonaDetails",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            Compnay: Company
+                        }),
+                        success: function (data) {
+
+                            arr1 = data;
+                        }
+                    });
+                } else {
+
+                }
+            })
+
+            $('#PersonMet').autocomplete({
+
+                source: function (request, response) {
+
+                    try {
+                        if (arr1 != "") {
+                            var k = $('#PersonMet').val().toLowerCase();
+                            var results = arr1.Table.filter(function (elem) {
+                                return elem.PersonMet.toLowerCase().indexOf(k) > -1;
+                            });
+                            if (results.length > 0) {
+                                response($.map(results, function (value, key) {
+                                    return {
+                                        label: value.PersonMet + ' ' + value.Email + ' ' + value.Designation + ' ' + value.ContactNo,
+                                        value: value.PersonMet,
+                                        val1: value.Email,
+                                        val2: value.Designation,
+                                        val3: value.ContactNo,
+                                    };
+
+                                }));
+                            }
+                            else {
+                                $('#Email').val('');
+                                $('#Designation').val('');
+                                $('#ContactNo').val('');
+                                response([{ label: 'No results found.', value: 'No results found.' }]);
+                            }
+
+                        }
+                    } catch (e) {
+
+                    }
+
+
+                },
+                select: function (event, u) {
+                    try {
+
+                        $("#PersonMet").val(u.item.value);
+                        $('#Email').val(u.item.val1);
+                        $('#Designation').val(u.item.val2);
+                        $('#ContactNo').val(u.item.val3);
+                    } catch (e) {
+
+                    }
+
+
+                },
+                minLength: 1,
+                delay: 100
+            }).focus(function (e, u) {
+                $(this).autocomplete("search", "");
+            });
+
+
+            $("#btnMainsave").on("click", function () {
+                try {
+                    $(".loader1").show();
+                    var VisitType = 'D';
+                    if ($("#ActionType").val() == 'WEEKLY') {
+                        VisitType = 'R';
+                    }
+                    var rDD_DailySales = {
+                        VisitDate: RedDot_setdtpkdate($("#ActualVisitDate1").val()),
+                        ToDate: RedDot_setdtpkdate($("#ActualVisitDate1").val()),
+                        VisitType: VisitType,
+                        IsNewPartner: $("#IsNewPartner").val(),
+                        Country: $("#Country").val(),
+                        CardCode: $("#CardCode").val(),
+                        Company: $("#Company").val(),
+                        PersonMet: $("#PersonMet").val(),
+                        Email: $("#Email").val(),
+                        Designation: $("#Designation").val(),
+                        ContactNo: $("#ContactNo").val(),
+                        BU: $("#BU").val(),
+                        Discussion: $("#Discussion").val(),
+                        ExpectedBusinessAmt: $("#ExpectedBusinessAmt").val(),
+                        CallStatus: $("#CallStatus").val(),
+                        ModeOfCall: $("#ModeOfCall").val(),
+                        NextAction: $("#NextAction").val(),
+                        Feedback: $("#Feedback").val(),
+                        ForwardCallToEmail: $("#ForwardCallToEmail").val(),
+                        ForwardRemark: $("#ForwardRemark").val(),
+                        ForwardCallCCEmail: $("#ForwardCallCCEmail").val(),
+                        Priority: $("#Priority").val(),
+                        IsDraft: $("#IsDraft").val(),
+                        NextReminderDate: $("#NextReminderDate").val(),
+                        IsActive: $("#IsActive").val(),
+                        ReminderDate: RedDot_setdtpkdate($("#ReminderDate1").val()),
+                        ReminderDesc: $("#ReminderDesc").val(),
+                        IsRead: $("#IsRead").val(),
+                        ReportReadBy: $("#ReportReadBy").val(),
+                        ReportReadOn: $("#ReportReadOn").val(),
+                        Comments: $("#Comments").val(),
+                        ActualVisitDate: RedDot_setdtpkdate($("#ActualVisitDate1").val()),
+                        IsRptSentToManager: $("#IsRptSentToManager").val()
+                    };
+
+                    var ValidateFormCheck = ValidateForm(rDD_DailySales);
+                    if (ValidateFormCheck.formValid == false) {
+                        RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+                        return;
+                    }
+                    var data = JSON.stringify({
+                        rDD_DailySales: rDD_DailySales,
+                    });
+                    $.ajax({
+                        type: "Post",
+                        url: "/DailSalesReportSave",
+                        data: data,
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                        $(".field-validation-error").text('');
+                            if (result.data.ErrorMsg == "Record Saved Successfully" || result.data.ErrorMsg == "Record Updated Successfully") {
+                                RedDotAlert_Success(result.data.ErrorMsg);
+                                clrtxt();
+                                loaddata();
+                            } else {
+                                RedDotAlert_Error(result.data.ErrorMsg);
+                                $(".loader1").hide();
+
+                            }
+                        }
+                    });
+                } catch (e) {
+
+                }
+
+            })
+
+            $("[id^='btnsave']").on("click", function () {
+
+                $(".loader1").show();
+                try {
+                    var t = $(this).attr("id").split('-')[1];
+                    var VisitType = 'D';
+                    if ($("#ActionType"+t).val() == 'WEEKLY') {
+                        VisitType = 'R';
+                    }
+                    var rDD_DailySales = {
+                        VisitDate: RedDot_setdtpkdate($("#ActualVisitDate1" + t).val()),
+                        ToDate: RedDot_setdtpkdate($("#ActualVisitDate1" + t).val()),
+                        VisitType: VisitType,
+                        IsNewPartner: $("#IsNewPartner" + t).val(),
+                        Country: $("#Country" + t).val(),
+                        CardCode: $("#CardCode" + t).val(),
+                        Company: $("#Company" + t).val(),
+                        PersonMet: $("#PersonMet" + t).val(),
+                        Email: $("#Email" + t).val(),
+                        Designation: $("#Designation" + t).val(),
+                        ContactNo: $("#ContactNo" + t).val(),
+                        BU: $("#BU" + t).val(),
+                        Discussion: $("#Discussion" + t).val(),
+                        ExpectedBusinessAmt: $("#ExpectedBusinessAmt" + t).val(),
+                        CallStatus: $("#CallStatus" + t).val(),
+                        ModeOfCall: $("#ModeOfCall" + t).val(),
+                        NextAction: $("#NextAction" + t).val(),
+                        Feedback: $("#Feedback" + t).val(),
+                        ForwardCallToEmail: $("#ForwardCallToEmail" + t).val(),
+                        ForwardRemark: $("#ForwardRemark" + t).val(),
+                        ForwardCallCCEmail: $("#ForwardCallCCEmail" + t).val(),
+                        Priority: $("#Priority" + t).val(),
+                        IsDraft: $("#IsDraft" + t).val(),
+                        NextReminderDate: $("#NextReminderDate" + t).val(),
+                        IsActive: $("#IsActive" + t).val(),
+                        ReminderDate: RedDot_setdtpkdate($("#ReminderDate1" + t).val()),
+                        ReminderDesc: $("#ReminderDesc" + t).val(),
+                        IsRead: $("#IsRead" + t).val(),
+                        ReportReadBy: $("#ReportReadBy" + t).val(),
+                        ReportReadOn: $("#ReportReadOn" + t).val(),
+                        Comments: $("#Comments" + t).val(),
+                        ActualVisitDate: RedDot_setdtpkdate($("#ActualVisitDate1" + t).val()),
+                        IsRptSentToManager: $("#IsRptSentToManager" + t).val()
+                    };
+                    var ValidateFormCheck = ValidateForm(rDD_DailySales);
+                    if (ValidateFormCheck.formValid == false) {
+                        RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+                        return;
+                    }
+                    var data = JSON.stringify({
+                        rDD_DailySales: rDD_DailySales,
+                    });
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/DailSalesReportSave",
+                        data: data,
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                        $(".field-validation-error").text('');
+                            if (result.data.ErrorMsg == "Record Saved Successfully" || result.data.ErrorMsg == "Record Updated Successfully") {
+                                RedDotAlert_Success(result.data.ErrorMsg);
+                                clrtxt();
+                                loaddata();
+                            } else {
+                                RedDotAlert_Error(result.data.ErrorMsg);
+                                $(".loader1").hide();
+                            }
+                        }
+                    });
+                } catch (e) {
+
+                }
+            })
+        $(document).on("click", "[id^='btn1Delete']", function () {
+            var t = 0;
+            try {
+                 t = $(this).attr("id").split('-')[1];
+            } catch (e) {
+                t = 0;
+            }
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.getJSON("/DeleteRDD_DailySales", { VisitId: t }).done(function (data) {
+                        if (data.data[0].Responsemsg == "Alredy Deleted") {
+                            RedDotAlert_Error(data.data[0].Responsemsg);
+                            return
+
+                        }
+                        if (data.data[0].Responsemsg
+
+
+
+                            == "Record Deleted") {
+                            loaddata();
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your Code has been deleted.',
+                        'success'
+                    )
+
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Code is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+        });
+        $(document).on('click',"[id^='btn1Draft']", function () {
+
+                $(".loader1").show();
+                try {
+                    var t = "-"+$(this).attr("id").split('-')[1];
+                    var VisitType = 'D';
+                    if ($("#ActionType" + t).val() == 'WEEKLY') {
+                        VisitType = 'R';
+                    }
+                    var rDD_DailySales = {
+                        VisitId: $(this).attr("id").split('-')[1],
+                        VisitDate:RedDot_setdtpkdate($("#hdnstartdate").val()),
+                        ToDate: RedDot_setdtpkdate($("#hdnenddate").val()),
+                        VisitType: VisitType,
+                        IsNewPartner: $("#IsNewPartner" + t).val(),
+                        Country: $("#Country" + t).val(),
+                        CardCode: $("#CardCode" + t).val(),
+                        Company: $("#Company" + t).val(),
+                        PersonMet: $("#PersonMet" + t).val(),
+                        Email: $("#Email" + t).val(),
+                        Designation: $("#Designation" + t).val(),
+                        ContactNo: $("#ContactNo" + t).val(),
+                        BU: $("#BU" + t).val(),
+                        Discussion: $("#Discussion" + t).val(),
+                        ExpectedBusinessAmt: $("#ExpectedBusinessAmt" + t).val(),
+                        CallStatus: $("#CallStatus" + t).val(),
+                        ModeOfCall: $("#ModeOfCall" + t).val(),
+                        NextAction: $("#NextAction" + t).val(),
+                        Feedback: $("#Feedback" + t).val(),
+                        ForwardCallToEmail: $("#ForwardCallToEmail" + t).val(),
+                        ForwardRemark: $("#ForwardRemark" + t).val(),
+                        ForwardCallCCEmail: $("#ForwardCallCCEmail" + t).val(),
+                        Priority: $("#Priority" + t).val(),
+                        IsDraft: $("#IsDraft" + t).val(),
+                        NextReminderDate: $("#NextReminderDate" + t).val(),
+                        IsActive: $("#IsActive" + t).val(),
+                        ReminderDate: RedDot_setdtpkdate($("#ReminderDate1" + t).val()),
+                        ReminderDesc: $("#ReminderDesc" + t).val(),
+                        IsRead: $("#IsRead" + t).val(),
+                        ReportReadBy: $("#ReportReadBy" + t).val(),
+                        ReportReadOn: $("#ReportReadOn" + t).val(),
+                        Comments: $("#Comments" + t).val(),
+                        ActualVisitDate: RedDot_setdtpkdate($("#ActualVisitDate1" + t).val()),
+                        IsRptSentToManager: $("#IsRptSentToManager" + t).val()
+                    };
+                    var ValidateFormCheck = ValidateForm(rDD_DailySales);
+                    if (ValidateFormCheck.formValid == false) {
+                        RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+                        return;
+                    }
+                    var data = JSON.stringify({
+                        rDD_DailySales: rDD_DailySales,
+                    });
+                    $.ajax({
+                        type: "Post",
+                        url: "/DailSalesReportDraftSave",
+                        data: data,
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                        $(".field-validation-error").text('');
+                            if (result.data.ErrorMsg == "Record Saved Successfully" || result.data.ErrorMsg == "Record Updated Successfully") {
+                                RedDotAlert_Success(result.data.ErrorMsg);
+                                clrtxt();
+                                    loaddata();
+                            } else {
+                                RedDotAlert_Error(result.data.ErrorMsg);
+                                $(".loader1").hide();
+                            }
+                        }
+                    });
+                } catch (e) {
+
+                }
+            })
+
+            $("#btnDraftsave").on("click", function () {
+                try {
+                    $(".loader1").show();
+                    var VisitType = 'D';
+                    if ($("#ActionType").val() == 'WEEKLY') {
+                        VisitType = 'R';
+                    }
+                    var rDD_DailySales = {
+                        VisitDate: RedDot_setdtpkdate($("#hdnstartdate").val()),
+                        ToDate: RedDot_setdtpkdate($("#hdnenddate").val()),
+                        VisitType: VisitType,
+                        IsNewPartner: $("#IsNewPartner").val(),
+                        Country: $("#Country").val(),
+                        CardCode: $("#CardCode").val(),
+                        Company: $("#Company").val(),
+                        PersonMet: $("#PersonMet").val(),
+                        Email: $("#Email").val(),
+                        Designation: $("#Designation").val(),
+                        ContactNo: $("#ContactNo").val(),
+                        BU: $("#BU").val(),
+                        Discussion: $("#Discussion").val(),
+                        ExpectedBusinessAmt: $("#ExpectedBusinessAmt").val(),
+                        CallStatus: $("#CallStatus").val(),
+                        ModeOfCall: $("#ModeOfCall").val(),
+                        NextAction: $("#NextAction").val(),
+                        Feedback: $("#Feedback").val(),
+                        ForwardCallToEmail: $("#ForwardCallToEmail").val(),
+                        ForwardRemark: $("#ForwardRemark").val(),
+                        ForwardCallCCEmail: $("#ForwardCallCCEmail").val(),
+                        Priority: $("#Priority").val(),
+                        IsDraft: $("#IsDraft").val(),
+                        NextReminderDate: $("#NextReminderDate").val(),
+                        IsActive: $("#IsActive").val(),
+                        ReminderDate: RedDot_setdtpkdate($("#ReminderDate1").val()),
+                        ReminderDesc: $("#ReminderDesc").val(),
+                        IsRead: $("#IsRead").val(),
+                        ReportReadBy: $("#ReportReadBy").val(),
+                        ReportReadOn: $("#ReportReadOn").val(),
+                        Comments: $("#Comments").val(),
+                        ActualVisitDate: RedDot_setdtpkdate($("#ActualVisitDate1").val()),
+                        IsRptSentToManager: $("#IsRptSentToManager").val()
+                    };
+                    var ValidateFormCheck = ValidateForm(rDD_DailySales);
+                    if (ValidateFormCheck.formValid == false) {
+                        RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+                        return;
+                    }
+                    var data = JSON.stringify({
+                        rDD_DailySales: rDD_DailySales,
+                    });
+                    $.ajax({
+                        type: "Post",
+                        url: "/DailSalesReportDraftSave",
+                        data: data,
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                        $(".field-validation-error").text('');
+                            if (result.data.ErrorMsg == "Record Saved Successfully" || result.data.ErrorMsg == "Record Updated Successfully") {
+                                RedDotAlert_Success(result.data.ErrorMsg);
+                                clrtxt();
+                                loaddata();
+
+                            } else {
+                                RedDotAlert_Error(result.data.ErrorMsg);
+                                $(".loader1").hide();
+                            }
+                        }
+                    });
+                } catch (e) {
+
+                }
+            })
+
+
+
+            function loaddata() {
+                $.ajax({
+                    url: '@Url.Action("GetRDD_DailySalesReports", "DSR_DailySales", new { area = "DailyReports" })',
+                    type: 'GET',
+                    cache: false,
+                    data: { fromdate: RedDot_setdtpkdateFind($("#hdnstartdate").val()), todate: RedDot_setdtpkdateFind($("#hdnenddate").val()) }
+                }).done(function (result) {
+                    $('.accordion-secondary').html(result);
+                    DailyDet();
+                    $(".loader1").hide();
+                });
+            }
+
+        function clrtxt() {
+                $(".has-success1").removeClass('has-success1').addClass('has-error1');
+                $("#CardCode").val('-1'),
+                    $("#PersonMet").val('')
+                $("#Email").val('');
+                $("#Designation").val('');
+                $("#ContactNo").val('');
+                $("#BU").val('');
+                $("#Discussion").val('');
+                $("#ExpectedBusinessAmt").val(0);
+                $("#Feedback").val('');
+                $("#ForwardCallToEmail").val('');
+                $("#ForwardRemark").val();
+                $("#ForwardCallCCEmail").val('');
+                $("#ReminderDesc").val('');
+                $("#ReportReadBy").val('');
+                $("#ReportReadOn").val('');
+                $("#Country").val('0').trigger('change');
+                $("#ModeOfCall").val('0').trigger('change');
+                $("#CallStatus").val('0').trigger('change');
+                $("#NextAction").val('0').trigger('change');
+                $("#Company").val('');
+                $("#Comments").val('');
+            }
+            $("#AllWeekBtn").click(function () {
+                $("#AllWeekSection").slideToggle("slow");
+            });
+            //$('select').select2({
+
+            //    theme: "bootstrap",
+            //    allowClear: true,
+            //    placeholder: '--Select--'
+            //});
+
+
+    });
+
+
+
+
+
+
+</script>
+
+<style>
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+            * we use height instead, but this forces the menu to always be this tall
+            */
+    * html .ui-autocomplete {
+        height: 100px;
+    }
+</style>

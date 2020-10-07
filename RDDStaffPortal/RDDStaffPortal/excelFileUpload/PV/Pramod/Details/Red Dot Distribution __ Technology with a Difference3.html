@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0047)http://localhost:28977/Reports/WebReports/Index -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red Dot Distribution :: Technology with a Difference</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+    <link rel="icon" href="http://localhost:28977/img/reddot.ico" type="image/x-icon">
+
+    <!-- Fonts and icons -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/webfont.min.js.download"></script>
+    <!-- CSS Files -->
+
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/atlantis.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/fonts.min.css" rel="stylesheet">
+    
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="./Red Dot Distribution __ Technology with a Difference3_files/reddot.css">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/reddot.css" rel="stylesheet">
+
+
+
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/dataTables.jqueryui.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="./Red Dot Distribution __ Technology with a Difference3_files/sweetalert2.min.css" rel="stylesheet">
+    
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style>@-webkit-keyframes swal2-show{0%{-webkit-transform:scale(.7);transform:scale(.7)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes swal2-show{0%{-webkit-transform:scale(.7);transform:scale(.7)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}100%{-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{-webkit-transform:scale(1);transform:scale(1);opacity:1}100%{-webkit-transform:scale(.5);transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{-webkit-transform:scale(1);transform:scale(1);opacity:1}100%{-webkit-transform:scale(.5);transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.875em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.875em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}100%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}100%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;-webkit-transform:scale(.4);transform:scale(.4);opacity:0}50%{margin-top:1.625em;-webkit-transform:scale(.4);transform:scale(.4);opacity:0}80%{margin-top:-.375em;-webkit-transform:scale(1.15);transform:scale(1.15)}100%{margin-top:0;-webkit-transform:scale(1);transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;-webkit-transform:scale(.4);transform:scale(.4);opacity:0}50%{margin-top:1.625em;-webkit-transform:scale(.4);transform:scale(.4);opacity:0}80%{margin-top:-.375em;-webkit-transform:scale(1.15);transform:scale(1.15)}100%{margin-top:0;-webkit-transform:scale(1);transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}100%{-webkit-transform:rotateX(0);transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}100%{-webkit-transform:rotateX(0);transform:rotateX(0);opacity:1}}body.swal2-toast-shown .swal2-container{background-color:transparent}body.swal2-toast-shown .swal2-container.swal2-shown{background-color:transparent}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;-webkit-transform:translateY(-50%);transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;-webkit-transform:translateY(-50%);transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}body.swal2-toast-column .swal2-toast{flex-direction:column;align-items:stretch}body.swal2-toast-column .swal2-toast .swal2-actions{flex:1;align-self:stretch;height:2.2em;margin-top:.3125em}body.swal2-toast-column .swal2-toast .swal2-loading{justify-content:center}body.swal2-toast-column .swal2-toast .swal2-input{height:2em;margin:.3125em auto;font-size:1em}body.swal2-toast-column .swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast{flex-direction:row;align-items:center;width:auto;padding:.625em;box-shadow:0 0 .625em #d9d9d9;overflow-y:hidden}.swal2-popup.swal2-toast .swal2-header{flex-direction:row}.swal2-popup.swal2-toast .swal2-title{flex-grow:1;justify-content:flex-start;margin:0 .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{position:initial;width:.8em;height:.8em;line-height:.8}.swal2-popup.swal2-toast .swal2-content{justify-content:flex-start;font-size:1em}.swal2-popup.swal2-toast .swal2-icon{width:2em;min-width:2em;height:2em;margin:0}.swal2-popup.swal2-toast .swal2-icon-text{font-size:2em;font-weight:700;line-height:1em}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{height:auto;margin:0 .3125em}.swal2-popup.swal2-toast .swal2-styled{margin:0 .3125em;padding:.3125em .625em;font-size:1em}.swal2-popup.swal2-toast .swal2-styled:focus{box-shadow:0 0 0 .0625em #fff,0 0 0 .125em rgba(50,100,150,.4)}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:2em;height:2.8125em;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.25em;left:-.9375em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:2em 2em;transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;-webkit-transform-origin:0 2em;transform-origin:0 2em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:showSweetToast .5s;animation:showSweetToast .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:hideSweetToast .2s forwards;animation:hideSweetToast .2s forwards}.swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-tip{-webkit-animation:animate-toast-success-tip .75s;animation:animate-toast-success-tip .75s}.swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-long{-webkit-animation:animate-toast-success-long .75s;animation:animate-toast-success-long .75s}@-webkit-keyframes showSweetToast{0%{-webkit-transform:translateY(-.625em) rotateZ(2deg);transform:translateY(-.625em) rotateZ(2deg);opacity:0}33%{-webkit-transform:translateY(0) rotateZ(-2deg);transform:translateY(0) rotateZ(-2deg);opacity:.5}66%{-webkit-transform:translateY(.3125em) rotateZ(2deg);transform:translateY(.3125em) rotateZ(2deg);opacity:.7}100%{-webkit-transform:translateY(0) rotateZ(0);transform:translateY(0) rotateZ(0);opacity:1}}@keyframes showSweetToast{0%{-webkit-transform:translateY(-.625em) rotateZ(2deg);transform:translateY(-.625em) rotateZ(2deg);opacity:0}33%{-webkit-transform:translateY(0) rotateZ(-2deg);transform:translateY(0) rotateZ(-2deg);opacity:.5}66%{-webkit-transform:translateY(.3125em) rotateZ(2deg);transform:translateY(.3125em) rotateZ(2deg);opacity:.7}100%{-webkit-transform:translateY(0) rotateZ(0);transform:translateY(0) rotateZ(0);opacity:1}}@-webkit-keyframes hideSweetToast{0%{opacity:1}33%{opacity:.5}100%{-webkit-transform:rotateZ(1deg);transform:rotateZ(1deg);opacity:0}}@keyframes hideSweetToast{0%{opacity:1}33%{opacity:.5}100%{-webkit-transform:rotateZ(1deg);transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes animate-toast-success-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes animate-toast-success-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes animate-toast-success-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes animate-toast-success-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-shown{top:auto;right:auto;bottom:auto;left:auto;background-color:transparent}body.swal2-no-backdrop .swal2-shown>.swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}body.swal2-no-backdrop .swal2-shown.swal2-top{top:0;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-top-left,body.swal2-no-backdrop .swal2-shown.swal2-top-start{top:0;left:0}body.swal2-no-backdrop .swal2-shown.swal2-top-end,body.swal2-no-backdrop .swal2-shown.swal2-top-right{top:0;right:0}body.swal2-no-backdrop .swal2-shown.swal2-center{top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}body.swal2-no-backdrop .swal2-shown.swal2-center-left,body.swal2-no-backdrop .swal2-shown.swal2-center-start{top:50%;left:0;-webkit-transform:translateY(-50%);transform:translateY(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-center-end,body.swal2-no-backdrop .swal2-shown.swal2-center-right{top:50%;right:0;-webkit-transform:translateY(-50%);transform:translateY(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-bottom{bottom:0;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-bottom-left,body.swal2-no-backdrop .swal2-shown.swal2-bottom-start{bottom:0;left:0}body.swal2-no-backdrop .swal2-shown.swal2-bottom-end,body.swal2-no-backdrop .swal2-shown.swal2-bottom-right{right:0;bottom:0}.swal2-container{display:flex;position:fixed;top:0;right:0;bottom:0;left:0;flex-direction:row;align-items:center;justify-content:center;padding:10px;background-color:transparent;z-index:1060;overflow-x:hidden;-webkit-overflow-scrolling:touch}.swal2-container.swal2-top{align-items:flex-start}.swal2-container.swal2-top-left,.swal2-container.swal2-top-start{align-items:flex-start;justify-content:flex-start}.swal2-container.swal2-top-end,.swal2-container.swal2-top-right{align-items:flex-start;justify-content:flex-end}.swal2-container.swal2-center{align-items:center}.swal2-container.swal2-center-left,.swal2-container.swal2-center-start{align-items:center;justify-content:flex-start}.swal2-container.swal2-center-end,.swal2-container.swal2-center-right{align-items:center;justify-content:flex-end}.swal2-container.swal2-bottom{align-items:flex-end}.swal2-container.swal2-bottom-left,.swal2-container.swal2-bottom-start{align-items:flex-end;justify-content:flex-start}.swal2-container.swal2-bottom-end,.swal2-container.swal2-bottom-right{align-items:flex-end;justify-content:flex-end}.swal2-container.swal2-grow-fullscreen>.swal2-modal{display:flex!important;flex:1;align-self:stretch;justify-content:center}.swal2-container.swal2-grow-row>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container.swal2-grow-column{flex:1;flex-direction:column}.swal2-container.swal2-grow-column.swal2-bottom,.swal2-container.swal2-grow-column.swal2-center,.swal2-container.swal2-grow-column.swal2-top{align-items:center}.swal2-container.swal2-grow-column.swal2-bottom-left,.swal2-container.swal2-grow-column.swal2-bottom-start,.swal2-container.swal2-grow-column.swal2-center-left,.swal2-container.swal2-grow-column.swal2-center-start,.swal2-container.swal2-grow-column.swal2-top-left,.swal2-container.swal2-grow-column.swal2-top-start{align-items:flex-start}.swal2-container.swal2-grow-column.swal2-bottom-end,.swal2-container.swal2-grow-column.swal2-bottom-right,.swal2-container.swal2-grow-column.swal2-center-end,.swal2-container.swal2-grow-column.swal2-center-right,.swal2-container.swal2-grow-column.swal2-top-end,.swal2-container.swal2-grow-column.swal2-top-right{align-items:flex-end}.swal2-container.swal2-grow-column>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)>.swal2-modal{margin:auto}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-container .swal2-modal{margin:0!important}}.swal2-container.swal2-fade{transition:background-color .1s}.swal2-container.swal2-shown{background-color:rgba(0,0,0,.4)}.swal2-popup{display:none;position:relative;flex-direction:column;justify-content:center;width:32em;max-width:100%;padding:1.25em;border-radius:.3125em;background:#fff;font-family:inherit;font-size:1rem;box-sizing:border-box}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-popup .swal2-header{display:flex;flex-direction:column;align-items:center}.swal2-popup .swal2-title{display:block;position:relative;max-width:100%;margin:0 0 .4em;padding:0;color:#595959;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-popup .swal2-actions{flex-wrap:wrap;align-items:center;justify-content:center;margin:1.25em auto 0;z-index:1}.swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-popup .swal2-actions.swal2-loading .swal2-styled.swal2-confirm{width:2.5em;height:2.5em;margin:.46875em;padding:0;border:.25em solid transparent;border-radius:100%;border-color:transparent;background-color:transparent!important;color:transparent;cursor:default;box-sizing:border-box;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-popup .swal2-actions.swal2-loading .swal2-styled.swal2-cancel{margin-right:30px;margin-left:30px}.swal2-popup .swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after{display:inline-block;width:15px;height:15px;margin-left:5px;border:3px solid #999;border-radius:50%;border-right-color:transparent;box-shadow:1px 1px 1px #fff;content:'';-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal}.swal2-popup .swal2-styled{margin:.3125em;padding:.625em 2em;font-weight:500;box-shadow:none}.swal2-popup .swal2-styled:not([disabled]){cursor:pointer}.swal2-popup .swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#3085d6;color:#fff;font-size:1.0625em}.swal2-popup .swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#aaa;color:#fff;font-size:1.0625em}.swal2-popup .swal2-styled:focus{outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(50,100,150,.4)}.swal2-popup .swal2-styled::-moz-focus-inner{border:0}.swal2-popup .swal2-footer{justify-content:center;margin:1.25em 0 0;padding:1em 0 0;border-top:1px solid #eee;color:#545454;font-size:1em}.swal2-popup .swal2-image{max-width:100%;margin:1.25em auto}.swal2-popup .swal2-close{position:absolute;top:0;right:0;justify-content:center;width:1.2em;height:1.2em;padding:0;transition:color .1s ease-out;border:none;border-radius:0;outline:initial;background:0 0;color:#ccc;font-family:serif;font-size:2.5em;line-height:1.2;cursor:pointer;overflow:hidden}.swal2-popup .swal2-close:hover{-webkit-transform:none;transform:none;color:#f27474}.swal2-popup>.swal2-checkbox,.swal2-popup>.swal2-file,.swal2-popup>.swal2-input,.swal2-popup>.swal2-radio,.swal2-popup>.swal2-select,.swal2-popup>.swal2-textarea{display:none}.swal2-popup .swal2-content{justify-content:center;margin:0;padding:0;color:#545454;font-size:1.125em;font-weight:300;line-height:normal;z-index:1;word-wrap:break-word}.swal2-popup #swal2-content{text-align:center}.swal2-popup .swal2-checkbox,.swal2-popup .swal2-file,.swal2-popup .swal2-input,.swal2-popup .swal2-radio,.swal2-popup .swal2-select,.swal2-popup .swal2-textarea{margin:1em auto}.swal2-popup .swal2-file,.swal2-popup .swal2-input,.swal2-popup .swal2-textarea{width:100%;transition:border-color .3s,box-shadow .3s;border:1px solid #d9d9d9;border-radius:.1875em;font-size:1.125em;box-shadow:inset 0 1px 1px rgba(0,0,0,.06);box-sizing:border-box}.swal2-popup .swal2-file.swal2-inputerror,.swal2-popup .swal2-input.swal2-inputerror,.swal2-popup .swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-popup .swal2-file:focus,.swal2-popup .swal2-input:focus,.swal2-popup .swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:0 0 3px #c4e6f5}.swal2-popup .swal2-file::-webkit-input-placeholder,.swal2-popup .swal2-input::-webkit-input-placeholder,.swal2-popup .swal2-textarea::-webkit-input-placeholder{color:#ccc}.swal2-popup .swal2-file:-ms-input-placeholder,.swal2-popup .swal2-input:-ms-input-placeholder,.swal2-popup .swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-popup .swal2-file::-ms-input-placeholder,.swal2-popup .swal2-input::-ms-input-placeholder,.swal2-popup .swal2-textarea::-ms-input-placeholder{color:#ccc}.swal2-popup .swal2-file::placeholder,.swal2-popup .swal2-input::placeholder,.swal2-popup .swal2-textarea::placeholder{color:#ccc}.swal2-popup .swal2-range input{width:80%}.swal2-popup .swal2-range output{width:20%;font-weight:600;text-align:center}.swal2-popup .swal2-range input,.swal2-popup .swal2-range output{height:2.625em;margin:1em auto;padding:0;font-size:1.125em;line-height:2.625em}.swal2-popup .swal2-input{height:2.625em;padding:0 .75em}.swal2-popup .swal2-input[type=number]{max-width:10em}.swal2-popup .swal2-file{font-size:1.125em}.swal2-popup .swal2-textarea{height:6.75em;padding:.75em}.swal2-popup .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;color:#545454;font-size:1.125em}.swal2-popup .swal2-checkbox,.swal2-popup .swal2-radio{align-items:center;justify-content:center}.swal2-popup .swal2-checkbox label,.swal2-popup .swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-popup .swal2-checkbox input,.swal2-popup .swal2-radio input{margin:0 .4em}.swal2-popup .swal2-validation-message{display:none;align-items:center;justify-content:center;padding:.625em;background:#f0f0f0;color:#666;font-size:1em;font-weight:300;overflow:hidden}.swal2-popup .swal2-validation-message::before{display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center;content:'!';zoom:normal}@supports (-ms-accelerator:true){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@-moz-document url-prefix(){.swal2-close:focus{outline:2px solid rgba(50,100,150,.4)}}.swal2-icon{position:relative;justify-content:center;width:5em;height:5em;margin:1.25em auto 1.875em;border:.25em solid transparent;border-radius:50%;line-height:5em;cursor:default;box-sizing:content-box;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;zoom:normal}.swal2-icon-text{font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-success{border-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:3.75em 3.75em;transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 3.75em;transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;top:-.25em;left:-.25em;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%;z-index:2;box-sizing:content-box}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;top:.5em;left:1.625em;width:.4375em;height:5.625em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);z-index:1}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;height:.3125em;border-radius:.125em;background-color:#a5dc86;z-index:2}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.875em;width:1.5625em;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal2-progresssteps{align-items:center;margin:0 0 1.25em;padding:0;font-weight:600}.swal2-progresssteps li{display:inline-block;position:relative}.swal2-progresssteps .swal2-progresscircle{width:2em;height:2em;border-radius:2em;background:#3085d6;color:#fff;line-height:2em;text-align:center;z-index:20}.swal2-progresssteps .swal2-progresscircle:first-child{margin-left:0}.swal2-progresssteps .swal2-progresscircle:last-child{margin-right:0}.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep{background:#3085d6}.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep~.swal2-progresscircle{background:#add8e6}.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep~.swal2-progressline{background:#add8e6}.swal2-progresssteps .swal2-progressline{width:2.5em;height:.4em;margin:0 -1px;background:#3085d6;z-index:10}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-show.swal2-noanimation{-webkit-animation:none;animation:none}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-hide.swal2-noanimation{-webkit-animation:none;animation:none}.swal2-rtl .swal2-close{right:auto;left:0}.swal2-animate-success-icon .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-animate-success-icon .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-animate-success-icon .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-animate-error-icon{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-animate-error-icon .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}@-webkit-keyframes swal2-rotate-loading{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:initial!important}}</style><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header">
+                <a href="http://localhost:28977/Reports/WebReports/index.html" class="logo">
+                    <img src="./Red Dot Distribution __ Technology with a Difference3_files/reddot-logo.png" alt="navbar brand" class="navbar-brand">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="icon-menu"></i>
+                    </span>
+                </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- End Logo Header -->
+            <!-- Navbar Header -->
+            <nav class="navbar navbar-header navbar-expand-lg">
+
+                <div class="container-fluid">
+                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link menu-icon-c" data-toggle="dropdown" href="http://localhost:28977/Reports/WebReports/Index#" aria-expanded="false">
+                                <i class="fas fa-th"></i>
+                            </a>
+                            <div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
+                                <div class="quick-actions-header">
+                                    <span class="title mb-1">Quick Menu</span>
+                                </div>
+                                <div class="scroll-wrapper quick-actions-scroll scrollbar-outer" style="position: relative;"><div class="quick-actions-scroll scrollbar-outer scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                    <div class="quick-actions-items">
+                                        <div class="row m-0" id="widgetlist">
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-danger rounded-circle">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </div>
+                                                    <span class="text">Calendar</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-warning rounded-circle">
+                                                        <i class="fas fa-map"></i>
+                                                    </div>
+                                                    <span class="text">Maps</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-info rounded-circle">
+                                                        <i class="fas fa-file-excel"></i>
+                                                    </div>
+                                                    <span class="text">Reports</span>
+                                                </div>
+                                            </a>
+                                           
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-success rounded-circle">
+                                                        <i class="fas fa-envelope"></i>
+                                                    </div>
+                                                    <span class="text">Emails</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-primary rounded-circle">
+                                                        <i class="fas fa-file-invoice-dollar"></i>
+                                                    </div>
+                                                    <span class="text">Invoice</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="quick-actions-item">
+                                                    <div class="avatar-item bg-secondary rounded-circle">
+                                                        <i class="fas fa-credit-card"></i>
+                                                    </div>
+                                                    <span class="text">Payments</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div><div class="scroll-element scroll-x" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div><div class="scroll-element scroll-y" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div></div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="http://localhost:28977/Reports/WebReports/Index#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell menu-icon-c"></i>
+                                <span class="notification">4</span>
+                            </a>
+                            <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                                <li>
+                                    <div class="dropdown-title">You have 4 new notification</div>
+                                </li>
+                                <li>
+                                    <div class="scroll-wrapper notif-scroll scrollbar-outer" style="position: relative;"><div class="notif-scroll scrollbar-outer scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                        <div class="notif-center">
+                                            <a href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Employee Registration is ready
+                                                    </span>
+                                                    <span class="time">1 day ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        sales dashboard is deployed
+                                                    </span>
+                                                    <span class="time">1 day ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="notif-img">
+                                                    <img src="./Red Dot Distribution __ Technology with a Difference3_files/profile.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Profile edit is in progress
+                                                    </span>
+                                                    <span class="time">1 day ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="http://localhost:28977/Reports/WebReports/Index#">
+                                                <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Check notification for updates
+                                                    </span>
+                                                    <span class="time">5 hours ago</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div><div class="scroll-element scroll-x" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div><div class="scroll-element scroll-y" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div></div>
+                                </li>
+                                <li>
+                                    <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="http://localhost:28977/Reports/WebReports/Index#" aria-expanded="false">
+                                <div class="avatar-sm">
+                                    <img src="./Red Dot Distribution __ Technology with a Difference3_files/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer" style="position: relative;"><div class="dropdown-user-scroll scrollbar-outer scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                    <li>
+                                        <div class="user-box">
+                                            <div class="avatar-lg"><img src="./Red Dot Distribution __ Technology with a Difference3_files/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                            <div class="u-text">
+                                                <h6>
+                                                        <b> <span> Welcome </span> ASIF </b>                                                </h6>
+                                                
+                                                <a href="http://localhost:28977/HR/Employees/ViewProfile" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="http://localhost:28977/HR/Employees/ViewProfile">My Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="http://localhost:28977/Reports/WebReports/Index#">Account Setting</a>
+                                        <div class="dropdown-divider"></div>
+<form action="http://localhost:28977/Account/SignOut" class="dropdown-item" method="post" role="form">                                            <a href="javascript:;" onclick="document.forms[0].submit();">Sign Out</a>
+</form>
+                                    </li>
+                                </div><div class="scroll-element scroll-x" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div><div class="scroll-element scroll-y" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle"></div></div></div></div>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar sidebar-style-2">
+            <div class="scroll-wrapper sidebar-wrapper scrollbar scrollbar-inner" style="position: relative;"><div class="sidebar-wrapper scrollbar scrollbar-inner scroll-content" style="height: 562px; margin-bottom: 0px; margin-right: 0px; max-height: none;">
+                <div class="sidebar-content">
+                    <ul class="nav nav-primary">
+                        <li class="nav-item active">
+                            
+
+                            <a href="http://localhost:28977/Dashboard/Index">
+                                <i class="fas fa-home"></i>   <p>Dashboard</p>
+                            </a>
+
+                        </li>
+                        <li class="nav-section"> </li>
+                        
+
+
+
+                        
+
+
+
+
+
+
+    <li class="nav-item">
+
+            <a data-toggle="collapse" href="http://localhost:28977/Reports/WebReports/Index#Admin">
+                <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+            </a>
+                    <div class="collapse" id="Admin">
+                <ul class="nav nav-collapse" id="ulid">
+                        <li class="nav-item">
+
+            <a href="http://localhost:28977/Admin/Menus/Index"><span class="sub-item">Menu Master</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/Admin/UserRights/Index"><span class="sub-item">User Access</span></a>
+            </li>
+
+                </ul>
+            </div>
+    </li>
+    <li class="nav-item">
+
+            <a data-toggle="collapse" href="http://localhost:28977/Reports/WebReports/Index#HR">
+                <i class="fas fa-user-tie menu-icon-c"></i> <p>HR</p> <span class="caret"></span>
+            </a>
+                    <div class="collapse" id="HR">
+                <ul class="nav nav-collapse" id="ulid">
+                        <li class="nav-item">
+
+            <a href="http://localhost:28977/Admin/Designations/Index"><span class="sub-item">Designation</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/Admin/Departments/Index"><span class="sub-item">Department</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/admin/EmploymentStatus/Index"><span class="sub-item">Employement status</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/HR/Employees/Index"><span class="sub-item">Employee Master</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/HR/UserList/Index"><span class="sub-item">Employee List</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/Reports/WebReports/Index#"><span class="sub-item">Apply Leave</span></a>
+            </li>
+    <li class="nav-item">
+
+            <a href="http://localhost:28977/HR/BUCountries/Index"><span class="sub-item">BU Mapping</span></a>
+            </li>
+
+                </ul>
+            </div>
+    </li>
+    <li class="nav-item">
+
+            <a data-toggle="collapse" href="http://localhost:28977/Reports/WebReports/Index#SAP">
+                <i class="	fas fa-chart-bar menu-icon-c"></i> <p>SAP</p> <span class="caret"></span>
+            </a>
+                    <div class="collapse" id="SAP">
+                <ul class="nav nav-collapse" id="ulid">
+                        <li class="nav-item">
+
+            <a href="http://localhost:28977/SAP/CustomerMerging/Index"><span class="sub-item">Customer Merging</span></a>
+            </li>
+
+                </ul>
+            </div>
+    </li>
+    <li class="nav-item">
+
+            <a data-toggle="collapse" href="http://localhost:28977/Reports/WebReports/Index#Sales">
+                <i class="fas fa-chart-bar menu-icon-c"></i> <p>Sales</p> <span class="caret"></span>
+            </a>
+            </li>
+|
+                        
+
+                    </ul>
+                </div>
+            </div><div class="scroll-element scroll-x" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle" style="width: 100px;"></div></div></div><div class="scroll-element scroll-y" style=""><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle" style="height: 100px; top: 0px;"></div></div></div></div>
+        </div>
+
+
+        <!-- End Sidebar -->
+        <!--Start : Add page body here -->
+        
+
+<link href="./Red Dot Distribution __ Technology with a Difference3_files/main.css" rel="stylesheet">
+<script src="./Red Dot Distribution __ Technology with a Difference3_files/RedDotUtility.js.download"></script>
+
+<script src="./Red Dot Distribution __ Technology with a Difference3_files/Webreports.js.download"></script>
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Web Reports</h4>
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="rowmin row mar-b10">
+                                    <div class="col-xl-1 col-md-1">
+                                        <div class="form-group">
+                                            <label for="email2" class="width100px mar-t4">User search :</label>
+                                           
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4">
+                                        <div class="select2-input">
+                                            <select class="form-control select2-hidden-accessible" id="Userid" name="basic" data-select2-id="Userid" tabindex="-1" aria-hidden="true"><option value="0" selected="" data-select2-id="2">-Select-</option><option value="patricia" selected="">patricia@reddotdistribution.com</option><option value="najma" selected="">najma@reddotdistribution.com</option><option value="vineet" selected="">vineet@reddotdistribution.com</option><option value="jimmiraj" selected="">jimmiraj@reddotdistribution.com</option><option value="meera" selected="">meera@reddotdistribution.com</option><option value="nasra" selected="">nasra@reddotdistribution.com</option><option value="jumba" selected="">jumba@reddotdistribution.com</option><option value="catherine" selected="">catherine@reddotdistribution.com</option><option value="sayed" selected="">sayed@reddotdistribution.com</option><option value="farzana" selected="">telesales2@reddotdistribution.com</option><option value="khadijah" selected="">khadijah@reddotdistribution.com</option><option value="helen" selected="">helen@reddotdistribution.com</option><option value="samuelk" selected="">samuel@reddotdistribution.com</option><option value="lucy" selected="">lucy@reddotdistribution.com</option><option value="hassanine" selected="">hassanine@reddotdistribution.com</option><option value="tej" selected="">tej@eternatec.com</option><option value="beth.w" selected="">beth@reddotdistribution.com</option><option value="elias" selected="">elias@reddotdistribution.com</option><option value="edbert" selected="">edbert@reddotdistribution.com</option><option value="ruby" selected="">ruby@reddotdistribution.com</option><option value="haridwar" selected="">haridwar@reddotdistribution.com</option><option value="kumars" selected="">kumars@reddotdistribution.com</option><option value="chetan" selected="">chetan@reddotdistribution.com</option><option value="shelina" selected="">shelina@reddotdistribution.com</option><option value="paul" selected="">paul@reddotdistribution.com</option><option value="HusseinB" selected="">Hussein.badri@reddotdistribution.com</option><option value="faizal" selected="">faizal@reddotdistribution.com</option><option value="scott" selected="">scott@reddotdistribution.com</option><option value="rahil" selected="">rahil@reddotdistribution.com</option><option value="alnasir" selected="">alnasir@reddotdistribution.com</option><option value="kimbowa" selected="">kimbowa@reddotdistribution.com</option><option value="deepa" selected="">deepa@reddotdistribution.com</option><option value="janew" selected="">janewambui@reddotdistribution.com</option><option value="munir" selected="">munir@raha.com</option><option value="kesava" selected="">kesava@reddotdistribution.com</option><option value="njambi" selected="">njambi@reddotdistribution.com</option><option value="muriungi" selected="">muriungi@reddotdistribution.com</option><option value="gabriel" selected="">gabriel@reddotdistribution.com</option><option value="brian" selected="">brian@reddotdistribution.com</option><option value="merfat" selected="">merfat@reddotdistribution.com</option><option value="bayang" selected="">bayang@reddotdistribution.com</option><option value="neon" selected="">neon@reddotdistribution.com</option><option value="rana" selected="">rana@reddotdistribution.com</option><option value="gfUser1" selected="">vishav105@eternatec.com</option><option value="Sachin" selected="">Sachin@reddotdistribution.com</option><option value="Jacqueline" selected="">Jacqueline@reddotdistribution.com</option><option value="saahil" selected="">saahil@reddotdistribution.com</option><option value="collins" selected="">collins@reddotdistribution.com</option><option value="sabreena" selected="">sabreena@reddotdistribution.com</option><option value="fridahn" selected="">telesales4@reddotdistribution.com</option><option value="tahera" selected="">tahera@reddotdistribution.com</option><option value="maryam" selected="">maryam@reddotdistribution.com</option><option value="shakir" selected="">shakir@reddotdistribution.com</option><option value="abdul" selected="">abdul@reddotdistribution.com</option><option value="krishna" selected="">krishna@reddotdistribution.com</option><option value="sushil" selected="">sushil@reddotdistribution.com</option><option value="Roshan" selected="">roshan@reddotdistribution.com</option><option value="alikhan" selected="">alikhan@reddotdistribution.com</option><option value="valentinen" selected="">telesales1@reddotdistribution.com</option><option value="ian" selected="">ian@reddotdistribution.com</option><option value="aadila" selected="">aadila@reddotdistribution.com</option><option value="sheikha" selected="">sheikha@reddotdistribution.com</option><option value="alfarid" selected="">alfarid@reddotdistribution.com</option><option value="fabian" selected="">fabian@reddotdistribution.com</option><option value="amrik" selected="">amrik@eternatec.com</option><option value="daniel" selected="">daniel@reddotdistribution.com</option><option value="sam" selected="">sam@reddotdistribution.com</option><option value="cliff" selected="">cliff@reddotdistribution.com</option><option value="weston" selected="">weston@reddotdistribution.com</option><option value="Esther" selected="">esther@reddotdistribution.com</option><option value="sandra" selected="">sandra@reddotdistribution.com</option><option value="biko" selected="">biko@reddotdistribution.com</option><option value="neema" selected="">neema@reddotdistribution.com</option><option value="edith" selected="">edith@reddotdistribution.com</option><option value="vishwas" selected="">vishwas@reddotdistribution.com</option><option value="sajjad" selected="">sajjad@reddotdistribution.com</option><option value="dimple" selected="">dimple@reddotdistribution.com</option><option value="Christine" selected="">Christine@reddotdistribution.com</option><option value="Peris" selected="">peris@reddotdistribution.com</option><option value="frank.s" selected="">frank.s@reddotdistribution.com</option><option value="nishad" selected="">nishad@reddotdistribution.com</option><option value="pmcoordinator" selected="">pmcoordinator@reddotdistribution.com</option><option value="farhaaz" selected="">Farhaaz@reddotdistribution.com</option><option value="NelsonB" selected="">Nelson@reddotdistribution.com</option><option value="grace" selected="">telesales3@reddotdistribution.com</option><option value="milton" selected="">milton@reddotdistribution.com</option><option value="imrans" selected="">Imran.s@reddotdistribution.com</option><option value="sabbaha" selected="">sabbaha@reddotdistribution.com</option><option value="vishav" selected="">vishav@eternatec.com</option><option value="grace.a" selected="">grace.a@reddotdistribution.com</option><option value="Nelson.c" selected="">Nelson.c@reddotdistribution.com</option><option value="Jane" selected="">jane@reddotdistribution.com</option><option value="mohammed" selected="">mohammed@reddotdistribution.com</option><option value="charles" selected="">charleskimani@reddotdistribution.com</option><option value="zakir" selected="">zakir@reddotdistribution.com</option><option value="sajid" selected="">sajid@reddotdistribution.com</option><option value="bindi" selected="">bindi@reddotdistribution.com</option><option value="nishat" selected="">nishat@reddotdistribution.com</option><option value="faith" selected="">faithkimani@reddotdistribution.com</option><option value="haseena" selected="">haseena@reddotdistribution.com</option><option value="Diana" selected="">diana@reddotdistribution.com</option><option value="samueln" selected="">samuel@eternatec.com</option><option value="gracem" selected="">Grace@reddotdistribution.com</option><option value="rashida" selected="">rashida@reddotdistribution.com</option><option value="hossam" selected="">hossam@reddotdistribution.com</option><option value="victor" selected="">victor@eternatec.com</option><option value="Rachael" selected="">rachael@reddotdistribution.com</option><option value="lontiaN" selected="">lontia@reddotdistribution.com</option><option value="ravin" selected="">ravin@reddotdistribution.com</option><option value="pramod" selected="">pramod@reddotdistribution.com</option><option value="psUser1" selected="">vishav109@eternatec.com</option><option value="etuser" selected="">mohammed@reddotdistribution.com</option><option value="sachin.p" selected="">sachin.p@reddotdistribution.com</option><option value="khuzema" selected="">khuzema@reddotdistribution.com</option><option value="Irfan" selected="">irfan@reddotdistribution.com</option><option value="aziz" selected="">aziz@reddotdistribution.com</option><option value="angela" selected="">angela@reddotdistribution.com</option><option value="jamila" selected="">jamila@reddotdistribution.com</option><option value="milka" selected="">milka@reddotdistribution.com</option><option value="hr" selected="">hr@reddotdistribution.com</option><option value="thomas" selected="">thomas@reddotdistribution.com</option><option value="mukhtar" selected="">mukhtar@reddotdistribution.com</option><option value="taher" selected="">taher@reddotdistribution.com</option><option value="nelson.o" selected="">nelson.o@reddotdistribution.com</option><option value="ram" selected="">ram@reddotdistribution.com</option><option value="trupti" selected="">logisticseth@reddotdistribution.com</option><option value="pmUser1" selected="">vishav101@eternatec.com</option><option value="nabila" selected="">nabila@reddotdistribution.com</option><option value="Ali" selected="">Ali@reddotdistribution.com</option><option value="rahul" selected="">rahul@reddotdistribution.com</option><option value="Twaha" selected="">Twaha@reddotdistribution.com</option><option value="jaffer" selected="">Jafferalikhan@reddotdistribution.com</option><option value="beatrice" selected="">beatrice@reddotdistribution.com</option><option value="John.M" selected="">John.Mjema@reddotdistribution.com</option><option value="timothy" selected="">timothy@reddotdistribution.com</option><option value="sakina" selected="">sakina@reddotdistribution.com</option><option value="cmUser1" selected="">vishav104@eternatec.com</option><option value="eunice" selected="">eunice@reddotdistribution.com</option><option value="karrar" selected="">karrar@reddotdistribution.com</option><option value="felix" selected="">felix@reddotdistribution.com</option><option value="thiani" selected="">thiani@reddotdistribution.com</option><option value="ian.m" selected="">mugabi@reddotdistribution.com</option><option value="hasnain" selected="">hasnain@reddotdistribution.com</option><option value="kuldip" selected="">kuldip@eternatec.com</option><option value="simon" selected="">simon@reddotdistribution.com</option><option value="millicent" selected="">millicent@reddotdistribution.com</option><option value="Asif" selected="">asif@reddotdistribution.com</option><option value="mary" selected="">mary@reddotdistribution.com</option><option value="george" selected="">george@reddotdistribution.com</option><option value="hussein" selected="">hussein.w@reddotdistribution.com</option><option value="imranm" selected="">Imran.m@reddotdistribution.com</option><option value="yogesh" selected="">yogesh@reddotdistribution.com</option><option value="glUser1" selected="">vishav106@eternatec.com</option><option value="rabecca" selected="">rabecca@reddotdistribution.com</option><option value="Kawimbe" selected="">douglas@reddotdistribution.com</option><option value="charlesk" selected="">charlesk@reddotdistribution.com</option><option value="Gulamabbas" selected="">Gulamabbas@reddotdistribution.com</option><option value="moses.c" selected="">moses.c@reddotdistribution.com</option><option value="mohamedraza" selected="">mohamedraza@reddotdistribution.com</option><option value="bakari" selected="">bakari@reddotdistribution.com</option><option value="eyassu" selected="">eyassu@reddotdistribution.com</option><option value="kipyegon" selected="">kipyegon@reddotdistribution.com</option><option value="afshaan" selected="">Afshaan@reddotdistribution.com</option><option value="anil" selected="">anil@reddotdistribution.com</option><option value="johnm" selected="">johnm@reddotdistribution.com</option><option value="shallom" selected="">shallom@reddotdistribution.com</option><option value="sabrina" selected="">sabrina@reddotdistribution.com</option><option value="Muchara" selected="">muchara@reddotdistribution.com</option><option value="fatma" selected="">fatmai@reddotdistribution.com</option><option value="amos" selected="">amos@reddotdistribution.com</option><option value="wilson" selected="">wilson@reddotdistribution.com</option><option value="amit" selected="">amit@reddotdistribution.com</option><option value="Shirin" selected="">accountsdxb@reddotdistribution.com</option><option value="Heena" selected="">heena@reddotdistribution.com</option><option value="elbert" selected="">elbert@reddotdistribution.com</option><option value="jali" selected="">logisticstz@reddotdistribution.com</option><option value="john" selected="">john@reddotdistribution.com</option><option value="satish" selected="">satish@reddotdistribution.com</option><option value="amon" selected="">amon@reddotdistribution.com</option></select><span class="select2 select2-container select2-container--bootstrap" dir="ltr" data-select2-id="1" style="width: 311px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-Userid-container"><span class="select2-selection__rendered" id="select2-Userid-container" role="textbox" aria-readonly="true" title="-Select-">-Select-</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="rowmin row mar-b10">
+                                        <div class="col-xl-1 col-md-1">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px mar-t4">Reports :</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4 col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-sm" id="txtsearch" placeholder="Search">
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                    <div class="rowmin row">
+                                        <div class="col-md-8" id="product">
+                                            <div class="row">
+                                                <div class="col-md-4 padd-l5 padd-r5">
+                                                    <div class="panel">
+                                                        <div class="panel-heading text-center">Reports</div>
+                                                        <div id="tblReports_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dataTables_length" id="tblReports_length" style="display: none;"><label>Show <select name="tblReports_length" aria-controls="tblReports" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div class="dt-buttons"><button class="dt-button reloadcss" tabindex="0" aria-controls="tblReports" id="btnreload" style="display:none;"><span>Reload Data</span></button> </div><div id="tblReports_filter" class="dataTables_filter" style="display: none;"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="tblReports"></label></div><div id="tblReports_processing" class="dataTables_processing panel panel-default" style="display: none;"><div class="overlay custom-loader-background"><i class="fa fa-cog fa-spin custom-loader-color"></i></div></div><table id="tblReports" class="table-active table-responsive dataTable no-footer" role="grid" style="width: 0px;">
+                                                            <thead>
+                                                                <tr role="row"><td style="display: none; width: 0px;" class="sorting_asc" tabindex="0" aria-controls="tblReports" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Reports: activate to sort column descending">Reports</td></tr>
+                                                            </thead>
+                                                            <tbody class="clear" style=" display: block; width: 100%;">
+                                                            <tr role="row" class="odd">
+                                                                <td class="sorting_1">
+                                                                <a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Automated Stock Sheet Report </a>
+                                                                    <input type="hidden" id="hdnuse" value="false">
+                                                                    </td>
+                                                                </tr>
+                                                            
+                                                            <tr role="row" class="even"><td class="sorting_1"><li data-id="116" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Consolidated Debtors </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="odd"><td class="sorting_1"><li data-id="119" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Consolidated Debtors By BU </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="even"><td class="sorting_1"><li data-id="120" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Consolidated Debtors Expanded </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="odd"><td class="sorting_1"><li data-id="118" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Consolidated TrialBalance </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="even"><td class="sorting_1"><li data-id="123" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Expenses Report </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="odd"><td class="sorting_1"><li data-id="126" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Forecast Vs Sales </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="even"><td class="sorting_1"><li data-id="114" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Inventory Report </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="odd"><td class="sorting_1"><li data-id="125" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Leave Form </a><input type="hidden" id="hdnuse" value="false"></li></td></tr><tr role="row" class="even"><td class="sorting_1"><li data-id="104" class="ui-draggable ui-draggable-handle" style="background-color: rgb(250, 250, 245); position: relative;"><a href="http://localhost:28977/Reports/WebReports/Index#" style=""> Stock Age Report </a><input type="hidden" id="hdnuse" value="false"></li></td></tr></tbody>
+                                                        </table><div class="dataTables_paginate paging_simple" id="tblReports_paginate"><ul class="pagination"><li class="paginate_button previous disabled ui-draggable ui-draggable-handle" id="tblReports_previous"><a href="http://localhost:28977/Reports/WebReports/Index#" aria-controls="tblReports" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button next ui-draggable ui-draggable-handle" id="tblReports_next"><a href="http://localhost:28977/Reports/WebReports/Index#" aria-controls="tblReports" data-dt-idx="1" tabindex="0">Next</a></li></ul></div></div>
+                                                    </div>
+
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4" id="sidebar">
+                                            <div class="panel">
+                                                <div class="panel-heading text-center" id="hdntitle">Authorized  Reports</div>
+
+                                                <div class="basket ui-droppable">
+                                                    <div class="basket_list" id="pri1">
+                                                        <input id="hdnflag" value="false" type="hidden">
+
+                                                        <ul id="pr1">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="card-action">
+                                                    <button class="btn btn-success btn-sm" id="btnsave">Save</button>
+                                                    <button class="btn btn-danger btn-sm" id="btnclear">Clear</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.min.js.download"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$(function () {
+
+
+Webreports.initialize();
+    });
+</script>
+<style>
+    table {
+        position: relative !important;
+    }
+
+    .bootstrap-datetimepicker-widget li {
+        display: block !important;
+    }
+</style>
+
+        <!--End : Add page body here -->
+
+    </div>
+
+    
+
+
+
+    <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <h4>Logo Header</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+                        <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+                        <br>
+                        <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+                        <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Navbar Header</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeTopBarColor" data-color="dark"></button>
+                        <button type="button" class="changeTopBarColor" data-color="blue"></button>
+                        <button type="button" class="changeTopBarColor" data-color="purple"></button>
+                        <button type="button" class="changeTopBarColor" data-color="light-blue"></button>
+                        <button type="button" class="changeTopBarColor" data-color="green"></button>
+                        <button type="button" class="changeTopBarColor" data-color="orange"></button>
+                        <button type="button" class="changeTopBarColor" data-color="red"></button>
+                        <button type="button" class="changeTopBarColor" data-color="white"></button>
+                        <br>
+                        <button type="button" class="changeTopBarColor" data-color="dark2"></button>
+                        <button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
+                        <button type="button" class="changeTopBarColor" data-color="purple2"></button>
+                        <button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
+                        <button type="button" class="changeTopBarColor" data-color="green2"></button>
+                        <button type="button" class="changeTopBarColor" data-color="orange2"></button>
+                        <button type="button" class="changeTopBarColor" data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Sidebar</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="selected changeSideBarColor" data-color="white"></button>
+                        <button type="button" class="changeSideBarColor" data-color="dark"></button>
+                        <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                        <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                        <button type="button" class="changeSideBarColor" data-color="red"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Background</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+                        <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+                        <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+                        <button type="button" class="changeBackgroundColor" data-color="dark"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-toggle">
+            <i class="flaticon-settings"></i>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+   
+
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.3.2.1.min.js.download"></script>
+
+
+
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/popper.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/bootstrap.min.js.download"></script>
+
+    <!-- jQuery UI -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery-ui.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.ui.touch-punch.min.js.download"></script>
+    <!-- Moment JS -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/moment.min.js.download"></script>
+
+
+    <!-- Bootstrap Toggle -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/bootstrap-toggle.min.js.download"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.scrollbar.min.js.download"></script>
+    <!-- Chart JS -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/chart.min.js.download"></script>
+    <!-- jQuery Sparkline -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.sparkline.min.js.download"></script>
+    <!-- Chart Circle -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/circles.min.js.download"></script>
+    
+    
+    
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jquery.dataTables.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/dataTables.bootstrap.js.download"></script>
+
+
+
+    <!-- DateTimePicker -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/bootstrap-datetimepicker.min.js.download"></script>
+    
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/select2.full.min.js.download"></script>
+    <!-- Bootstrap Tagsinput -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/bootstrap-tagsinput.min.js.download"></script>
+
+    <!-- Atlantis JS -->
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/atlantis.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/setting-demo.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/demo.js.download"></script>
+
+
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/select2.full.min.js.download"></script>
+    <script type="text/javascript" language="javascript" src="./Red Dot Distribution __ Technology with a Difference3_files/dataTables.buttons.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/buttons.flash.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/buttons.colvis.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/jszip.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/pdfmake.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/vfs_fonts.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/buttons.print.min.js.download"></script>
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/buttons.html5.min.js.download"></script>
+
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/sweetalert2.all.min.js.download"></script>
+
+    
+    <script type="text/javascript" src="./Red Dot Distribution __ Technology with a Difference3_files/speechRecognition.js.download"></script>
+    <script type="text/javascript" src="./Red Dot Distribution __ Technology with a Difference3_files/controller.js.download"></script>
+    
+    
+    
+
+    <script src="./Red Dot Distribution __ Technology with a Difference3_files/RedDotUtility.js.download"></script>
+
+    <script>
+        $('a.collapsed das').on("click", function () {
+            debugger;
+
+        });
+                                                    //$('#ulid li').removeAttr('class','');
+                                                    //$('#ulid li a').removeAttr('data-toggle', '');
+
+    </script>
+
+
+<div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"><div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div></div></body></html>

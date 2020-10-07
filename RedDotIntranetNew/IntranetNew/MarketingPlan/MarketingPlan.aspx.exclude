@@ -1,0 +1,563 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/IntranetNew/IntranetNew.master" AutoEventWireup="true" CodeFile="MarketingPlan.aspx.cs" Inherits="IntranetNew_MarketingPlan_MarketingPlan" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+ <script language="javascript" type="text/javascript">
+
+     function isNumberKey(evt) {
+         debugger;
+         var charCode = (evt.which) ? evt.which : event.keyCode;
+         if ((charCode >= 48 && charCode <= 57) || charCode == 46) {
+             return true;
+         } else {
+             alert("Enter only numbers");
+             return false;
+         }
+     }
+
+
+     function Validate() {
+
+         var ddlCountry = document.getElementById('<%= ddlCountry.ClientID %>').value;
+         if (ddlCountry == "--SELECT--") {
+             alert('Please select country');
+             return false;
+         }
+
+         var ddlsourcefd = document.getElementById('<%= ddlsourcefd.ClientID %>').value;
+         if (ddlsourcefd == "--SELECT--") {
+             alert('Please select Source Of Fund');
+             return false;
+         }
+         var ddlBU = document.getElementById('<%= ddlBU.ClientID %>').value;
+         if (ddlBU == "--SELECT--") {
+             alert('Please select BU');
+             return false;
+         }
+
+         var ddlplanstatus = document.getElementById('<%= ddlplanstatus.ClientID %>').value;
+         if (ddlplanstatus == "--SELECT--") {
+             alert('Please select Plan Status');
+             return false;
+         }
+
+
+         var txtappamount = document.getElementById('<%= txtappamount.ClientID %>').value;
+         if (txtappamount.trim() == "" || txtappamount.trim() == null) {
+             alert('Please enter AppAmount');
+             document.getElementById('<%= txtappamount.ClientID %>').focus();
+             return false;
+         }
+
+         var txtrddappamt = document.getElementById('<%= txtrddappamt.ClientID %>').value;
+         if (txtrddappamt.trim() == "" || txtrddappamt.trim() == null) {
+             alert('Please enter RDD AppAmount');
+             document.getElementById('<%= txtrddappamt.ClientID %>').focus();
+             return false;
+         }
+
+
+         var txtstartdate = document.getElementById('<%= txtstartdate.ClientID %>').value;
+         if (txtstartdate.trim() == "" || txtstartdate.trim() == null) {
+             alert('Please enter Start Date');
+             document.getElementById('<%= txtstartdate.ClientID %>').focus();
+             return false;
+         }
+
+         var txtEndDate = document.getElementById('<%= txtEndDate.ClientID %>').value;
+         if (txtEndDate.trim() == "" || txtEndDate.trim() == null) {
+             alert('Please enter End Date');
+             document.getElementById('<%= txtEndDate.ClientID %>').focus();
+             return false;
+         }
+
+         var txtdesc = document.getElementById('<%= txtdesc.ClientID %>').value;
+         if (txtdesc.trim() == "" || txtdesc.trim() == null) {
+             alert('Please enter Description');
+             document.getElementById('<%= txtdesc.ClientID %>').focus();
+             return false;
+         }
+
+         var stdate = new Date(txtstartdate);
+         var endDt = new Date(txtEndDate);
+
+         if (stdate > endDt) {
+             alert('EndDate Should be Greater Than Startdate');
+             document.getElementById('<%= txtstartdate.ClientID %>').focus();
+             return false;
+         }
+
+
+     }
+     
+
+    </script>
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.3.min.js"></script>
+   
+    <asp:UpdatePanel ID="UPManualCLStatusChangeAlert" runat="server">
+    <ContentTemplate>
+    <table width="95%" align="center" cellpadding="3px" cellspacing="3px">
+        <tr>
+            <td width="100%" align="center">
+                <lable style="color: #d71313; font-size: x-large; font-weight: bold; font-family: Raleway;"> &nbsp;&nbsp;&nbsp; Marketing Master </lable>
+            </td>
+        </tr>
+        <%--<tr>
+            <td width="50%">
+                &nbsp;
+            </td>
+            <td width="50%">
+                &nbsp;
+            </td>
+        </tr>
+     --%>
+        <tr>
+            <td width="100%" align="center">
+                <asp:Label ID="lblMsg" runat="server" Style="padding: 5px 12px; margin: 4px 0; box-sizing: border-box;
+                    font-family: Raleway; font-size: 14px; color: Red; font-weight: bold;" />
+                &nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" align="center">
+                <asp:Panel ID="pnlForms" runat="server" Width="100%" Height="25%" BorderWidth="1px"
+                    BorderColor="Red" EnableTheming="true">
+                    <table class="table table-stripped" width="100%" align="center" cellpadding="3px"
+                        cellspacing="3px">
+                        <tr>
+                            <td width="20%">
+                                &nbsp;
+                            </td>
+                            <td width="10%">
+                                &nbsp;
+                            </td>
+                            <td width="20%">
+                                &nbsp;
+                            </td>
+                            <td width="20%">
+                                &nbsp;
+                            </td>
+                            <td width="10%">
+                                &nbsp;
+                            </td>
+                            <td width="15%">
+                                &nbsp;
+                            </td>
+                        </tr>
+                      
+                        <tr>
+                            <td >
+                                <label>
+                                    Source Of Fund &nbsp;
+                                </label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlsourcefd" TabIndex="1" AutoPostBack="true" runat="server" Width="140px"
+                                   class="form-control">
+                                   <asp:ListItem>--Select--</asp:ListItem>
+                                    <asp:ListItem>Internal</asp:ListItem>
+                                    <asp:ListItem>Vendor</asp:ListItem>
+                                   
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <label >
+                                    Vendor/BU &nbsp;
+                                </label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlBU" AutoPostBack="true" runat="server"  class="form-control" TabIndex="2" Width="45%">
+                                </asp:DropDownList>
+                            </td>
+                         
+                            <td>
+                                <label>
+                                    Country &nbsp;
+                                </label>
+                            </td>
+                            <td>
+                         
+                                <asp:DropDownList ID="ddlCountry" AutoPostBack="true" OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged"
+                                    runat="server"  class="form-control" TabIndex="3">
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td  width="20%">
+                                <label >
+                                    Approved Amount
+                                </label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtappamount" runat="server" 
+                                    autocomplete="off" class="form-control" onkeypress="javascript:return isNumberKey(event);"
+                                    TabIndex="4"  Width="120px"></asp:TextBox>
+                            </td>
+                           
+                            <td align="left" width="5%">
+                                <label >
+                                    Balance From Approved &nbsp;
+                                </label>
+                            </td>
+                            <td  width="30px">
+                                <asp:TextBox ID="txtbalfromapp" runat="server" autocomplete="off" class="form-control" Text=0
+                                   Width="100px"></asp:TextBox>
+                                <%-- <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server"
+                                    TargetControlID="txtcreateDate" Format="MM/dd/yyyy">
+                                </cc1:CalendarExtender>--%>
+                            </td>
+                          
+                               <td>
+                                <asp:Label ID="lblrefNO" runat="server">Ref.No&nbsp;</asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtrefno" runat="server"  class="form-control"
+                                   ></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                           <td  width="20%">
+                                <label >
+                                    RDD Approved Amount &nbsp;
+                                </label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtrddappamt" runat="server" Style="width: 50%; padding: 5px 12px;
+                                    margin: 3px 0; box-sizing: border-box; font-family: Raleway; font-size: 14px;"
+                                    autocomplete="off" class="form-control" onkeypress="javascript:return isNumberKey(event);"
+                                    TabIndex="5" Enabled="false" Text=0 ></asp:TextBox>
+                            </td>
+                            <td>
+                                <label >
+                                    Bal From RDD Approved Amt &nbsp;
+                                </label>
+                            </td>
+                            <td  width="30px">
+                            
+                                <asp:TextBox ID="txtrddBalAmt" runat="server" class="form-control" Text=0
+                                    autocomplete="off"   Width="100px"></asp:TextBox>
+                            </td>
+                             <td>
+                                <label >
+                                    Plan Status &nbsp;
+                                </label>
+                            </td>
+                            <td  width="30px">
+                                <asp:DropDownList ID="ddlplanstatus" AutoPostBack="true" runat="server"  class="form-control" TabIndex="6" Width="100px">
+                            
+                                <asp:ListItem Value="0">Draft</asp:ListItem>
+                                    <asp:ListItem Value="1">Open</asp:ListItem>
+                                    <asp:ListItem Value="2"> On Hold   
+                                    </asp:ListItem>
+                                    <asp:ListItem  Value="3"> Closed Unpaid
+                                    </asp:ListItem>
+                                    <asp:ListItem  Value="4"> Closed Paid 
+                                    </asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                           
+                           
+                        </tr>
+                        <tr>
+                          <td  width="20%">
+                                <label>
+                                    Description &nbsp;
+                                </label>
+                            </td>
+                            <td >
+                                <asp:TextBox ID="txtdesc" runat="server" autocomplete="off" class="form-control"
+                                  TabIndex="7" TextMode="MultiLine" width="150px"></asp:TextBox>
+                            </td>
+                             <td>
+                               <label>
+                                    Start Date(MM/dd/YYYY) &nbsp;
+                                </label>
+                            </td>
+                            <td  width="30px"> 
+                                <asp:TextBox ID="txtstartdate" runat="server" 
+                                    autocomplete="off" class="form-control" TabIndex="8"  Width="100px"></asp:TextBox>
+                                <cc1:CalendarExtender ID="txtstartDate_CalendarExtender1" PopupButtonID="imgPopup"
+                                    runat="server" TargetControlID="txtstartDate" Format="MM/dd/yyyy">
+                                </cc1:CalendarExtender>
+                            </td>
+                            <td>
+                                <label >
+                                    End Date(MM/dd/YYYY) 
+                                </label>
+                            </td>
+                            <td  width="30px">
+                                <asp:TextBox ID="txtEndDate" runat="server"  Width="100px" 
+                                    autocomplete="off" class="form-control" TabIndex="9"></asp:TextBox>
+                                <cc1:CalendarExtender ID="txtEndDate_CalendarExtender1" PopupButtonID="imgPopup"
+                                    runat="server" TargetControlID="txtEndDate" Format="MM/dd/yyyy">
+                                </cc1:CalendarExtender>
+                            </td>
+                            
+                           
+                        </tr>
+                        <tr>
+                            
+                          
+                            <td>
+                                <label >
+                                    Approval Status &nbsp;
+                                </label>
+                            </td>
+                            <td width="20%">
+                                <asp:DropDownList ID="ddlappstatus" runat="server" Style="width: 67%; padding: 5px 12px;
+                                    margin: 3px 0; box-sizing: border-box; font-family: Raleway; font-size: 14px;"
+                                    class="form-control">
+                                    <asp:ListItem>Pending</asp:ListItem>
+                                    <asp:ListItem>Draft</asp:ListItem>
+                                    <asp:ListItem>Approved</asp:ListItem>
+                                    <asp:ListItem>Rejected</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                            
+                            <td width="20%">
+                                <label font-weight: normal;">
+                                    Approver Remark &nbsp;
+                                </label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtapprmk" runat="server" Style="width: 80%; padding: 5px 12px;
+                                    margin: 3px 0; box-sizing: border-box; font-family: Raleway; font-size: 14px;"
+                                    class="form-control" ></asp:TextBox>
+                            </td>
+                             <td>
+                                <label >
+                                    Create Date &nbsp;
+                                </label>
+                            </td>
+                            <td class="style1">
+                                <asp:Label ID="lbltodaydate" runat="server" Text="" Enabled="false"></asp:Label>
+                                <%--<asp:TextBox ID="txtcreateDate" runat="server" Style="width: 65%; padding: 5px 12px;
+                                    margin: 3px 0; box-sizing: border-box; font-family: Raleway; font-size: 14px;" autocomplete="off" class="form-control"></asp:TextBox>
+                                <cc1:CalendarExtender ID="txtcreateDate_CalendarExtender1" PopupButtonID="imgPopup"
+                                    runat="server" TargetControlID="txtcreateDate" Format="MM/dd/yyyy">
+                                </cc1:CalendarExtender>--%>
+                            </td>
+                              
+                        </tr>
+                        <tr >
+                        <td  colspan="6">
+                        </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan=6>
+                                &nbsp;&nbsp;
+                                <asp:Button ID="BtnSave" runat="server" Text="Save" Style="width: 20%; padding: 5px 12px;
+                                    margin: 4px 0; box-sizing: border-box; font-family: Raleway; font-size: 14px;"
+                                    OnClick="BtnSave_Click" TabIndex="9999" OnClientClick="return Validate();" class="btn btn-success" />
+                                &nbsp;&nbsp;
+                                <asp:Button ID="BtnCancel" runat="server" Text="Back To List" Style="width: 20%;
+                                    padding: 5px 12px; margin: 4px 0; box-sizing: border-box; font-family: Raleway;
+                                    font-size: 14px;" OnClick="BtnCancel_Click" class="btn btn-primary" />
+                                &nbsp;&nbsp;
+                                                                      
+                            </td>
+                            <asp:HiddenField ID="hdnplanid" runat="server" Visible="false" />
+                        </tr>
+                    </table>
+                </asp:Panel>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" align="center">
+                <%--   <asp:Panel ID="pnlFormList" runat="server" Width="85%"  Height="50%" BorderWidth="1px" BorderColor="Red" EnableTheming="true">--%>
+                <asp:GridView ID="GvPlan" runat="server" AutoGenerateColumns="False" 
+                    ShowFooter="True" Class="table table-bordered table-condensed table-hover"
+                    OnRowDataBound="GvPlan_RowDataBound" Width="100%" Height="120%" 
+                    CellPadding="4" 
+                    ForeColor="#333333" GridLines="None" 
+                    OnPageIndexChanging="GvPlan_PageIndexChanging" 
+                    >
+                    <AlternatingRowStyle BackColor="White" />
+                    <Columns>
+                        <asp:TemplateField HeaderText="S.No">
+                            <ItemTemplate>
+                                <asp:Label ID="lblsrno" runat="server" Text='<%#Container.DataItemIndex + 1 %>'></asp:Label>
+                                <asp:Label ID="lblplanlineid" runat="server" Text='<%#Eval("PlanLineId") %>' Visible="false"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+
+                         <asp:TemplateField HeaderText="Date" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblActivityDate" Text='<%#Eval("ActivityDate","{0:d}")  %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                     <asp:TextBox ID="txtActivityDtEdit" runat="server" 
+                                            autocomplete="off" class="form-control" Text='<%#Eval("ActivityDate","{0:d}")  %>'></asp:TextBox>
+                                        <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server"
+                                            TargetControlID="txtgvdate" Format="MM/dd/yyyy">
+                                        </cc1:CalendarExtender>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                 <asp:TextBox ID="txtActivityDtFooter" runat="server" 
+                                            autocomplete="off" class="form-control" Text='<%#Eval("ActivityDate","{0:d}")  %>'></asp:TextBox>
+                                        <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server"
+                                            TargetControlID="txtgvdate" Format="MM/dd/yyyy">
+                                        </cc1:CalendarExtender>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                          <asp:TemplateField HeaderText="Country" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblCountry" Text='<%#Eval("CountryName")  %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                      <asp:DropDownList ID="ddlcountryEdit" runat="server" autocomplete="off" class="form-control"  >
+                                       </asp:DropDownList>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                 <asp:DropDownList ID="ddlcountryFooter" runat="server" autocomplete="off" class="form-control"  >
+                                       </asp:DropDownList>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                          <asp:TemplateField HeaderText="Vendor" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblVendor" Text='<%#Eval("Vendor") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtvendorEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("Vendor") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtvendorFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+                       
+                    
+                       <asp:TemplateField HeaderText="Description" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblDesc" Text='<%#Eval("Description") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtDescdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("Description") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtDescFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                           <asp:TemplateField HeaderText="Amount" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblAmt" Text='<%#Eval("Amount") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtAmtEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("Amount") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtAmtFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Vendor PO" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lbVenderPO" Text='<%#Eval("VenderPoNo") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtVendorPOEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("VenderPoNo") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtVendorPOFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                           <asp:TemplateField HeaderText="SAP PO" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lbSAPPO" Text='<%#Eval("SAPPONo") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtSAPPOEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("SAPPONo") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtSAPPOFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+                      
+                        <asp:TemplateField HeaderText="Status" HeaderStyle-HorizontalAlign="Center" >
+                             <ItemTemplate> <asp:Label ID="lbSAPPO" Text='<%#Eval("Status") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                   <asp:DropDownList ID="ddlstatus" runat="server" class="form-control" >
+                                    <asp:ListItem>Pending</asp:ListItem>
+                                    <asp:ListItem>Approved</asp:ListItem>
+                                    <asp:ListItem>Rejected</asp:ListItem>
+                                </asp:DropDownList>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:DropDownList ID="ddlstatus" runat="server" class="form-control" Text='<%#Eval("Status") %>'>
+                                    <asp:ListItem>Pending</asp:ListItem>
+                                    <asp:ListItem>Approved</asp:ListItem>
+                                    <asp:ListItem>Rejected</asp:ListItem>
+                                </asp:DropDownList>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+                       
+
+
+                         <asp:TemplateField HeaderText="Apprver Remark" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lbAppRmk" Text='<%#Eval("ApproverRemark") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtAppRmkEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("ApproverRemark") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtAppRmkFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                          <asp:TemplateField HeaderText="Key" HeaderStyle-HorizontalAlign="Center" >
+                            <ItemTemplate> <asp:Label ID="lblLineRefNo" Text='<%#Eval("LineRefNo") %>' runat="server"></asp:Label> </ItemTemplate>
+                            <EditItemTemplate>
+                                    <asp:TextBox ID="txtLineRefNoEdit" runat="server" autocomplete="off" class="form-control"
+                                   Text='<%#Eval("LineRefNo") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                   <asp:TextBox ID="txtLineRefNoFooter" runat="server" autocomplete="off" class="form-control"></asp:TextBox>
+                            </FooterTemplate>
+                         </asp:TemplateField>
+
+                          <asp:TemplateField>
+                        <ItemTemplate>
+                                <asp:LinkButton ID="BtnEdit" runat="server" CausesValidation="False" 
+                                    CommandName="Edit" Text="Edit" class="btn btn-info" ></asp:LinkButton>
+                                &nbsp;<asp:LinkButton ID="BtnDelete" runat="server" CausesValidation="false" 
+                                    CommandName="Delete" Text="Delete" class="btn btn-danger"  OnClientClick="return getConfirmationOnDelete();"  ></asp:LinkButton>
+                            </ItemTemplate>
+                             <EditItemTemplate>
+                                         <asp:LinkButton ID="btnUpdate" runat="server" CausesValidation="False"
+                                             CommandName="Update" Text="Update" class="btn btn-success" ></asp:LinkButton>
+                                         &nbsp;<asp:LinkButton ID="BtnCancel" runat="server" CausesValidation="False" 
+                                             CommandName="Cancel" Text="Canel" class="btn btn-default" ></asp:LinkButton>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:Button ID="btInsert" runat="server" Text="Add New" Class="btn btn-success" CommandName="Add" />
+                            </FooterTemplate>
+                        </asp:TemplateField>
+
+                 
+                    </Columns>
+
+<%--                    <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                    <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                    <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                    <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                    <SortedDescendingHeaderStyle BackColor="#820000" />--%>
+                </asp:GridView>
+            </td>
+        </tr>
+  
+    </table>
+      </ContentTemplate>
+    </asp:UpdatePanel>
+
+</asp:Content>
+

@@ -212,10 +212,19 @@ body {
     border-color: #31CE36 !important;
     color: #31CE36 !important;
 }
+.has-success1 .form-control {
+    border-color: #31CE36 !important;
+    
+}
 
 .has-error .form-control {
     border-color: #F25961 !important;
     color: #F25961 !important;
+}
+
+.has-error1 .form-control {
+    border-color: #F25961 !important;
+    
 }
 
 .card-body .icon-preview {

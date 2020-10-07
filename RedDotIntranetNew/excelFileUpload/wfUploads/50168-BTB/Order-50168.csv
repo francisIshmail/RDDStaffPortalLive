@@ -1,0 +1,18 @@
+Order Type :,BTB,,,,,System PO NO :,50168
+Vendor [BU] :,DELL [DELL COMERCIAL],,,,,EVO PO NO :,UNASSIGNED
+Customer Reference :,A & A Computers Limited [AAC001],,,,,PO Date :,06-21-2013
+FPO Reference :,FPO 89,,,,,	REQ Delivery Date :,06-21-2013
+,,,,,,OPG Code :,UNASSIGNED
+,,,,,,Ship To :,UNASSIGNED
+Comments :,sdf
+
+Line No,Region,Part No,Description,Qty,Curr Price,Amount Total,Rebate Per Unit,Cost Aftr Rebate,Total Cost After Rebate,Selling Price,Total Selling,Margin%
+
+1,TZ,DOD00-3450-01N/HARDWARE/DELL/DELL-DESKTOP/DELL-COMM/DOD00-3450-01N,Dell OptiPlex-7010 Core I3(3240)4GB 500GB Fee DOS,10,100.00,"1,000.00",2.00,98.00,980.00,100.00,"1,000.00",2.04
+2,TZ,DOD3M-3250-02N/HARDWARE/DELL/DELL-DESKTOP/OPTIPLEX," Dell OptiPlex 3010MT Corei3-2120, 2G, 500G PC-NBD",20,100.00,"2,000.00",1.00,99.00,"1,980.00",100.00,"2,000.00",1.01
+
+,,,,,,Amount $,,,Cost After Rebate $,,Selling $,Margin %
+,,,,,Totals $,"3,000.00",,,"2,960.00",,"3,000.00",1.35%
+
+,Product Manager,,,Head Of Finance
+,UNASSIGNED,,,UNASSIGNED

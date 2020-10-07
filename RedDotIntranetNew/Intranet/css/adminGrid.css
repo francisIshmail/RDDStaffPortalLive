@@ -1,0 +1,102 @@
+﻿.innerTable
+        {	
+	        background-color: #f9f9f9;
+        }
+        .titleTable
+        {
+	        background-color: #EBEBEB;
+	        padding-left: 3px;
+	        padding-right: 3px;
+	        padding-bottom: 3px;
+        }
+        .contentTable
+        {
+	        padding-left: 5px;
+	        padding-right: 3px;
+	        padding-bottom: 3px;
+	        text-align: left;
+        }
+        .GrdHdr
+                {
+	                background-color: #EBEBEB;
+	                font-size: 11px;
+	                color: #303030;
+	                text-align: center;
+	                padding-left: 3px;
+	                padding-bottom: 2px;
+	                padding-right: 3px;
+	                padding-top: 2px;
+	                font-weight: bold;
+                }
+
+        .overallGrid
+        {
+	        border: solid 1px #a2a2a2;
+	        padding: 0px 0px 0px 0px;
+	        font-size: 12px;
+	        font-weight: bold;
+        }
+       
+        .footerGrid
+        {
+	        background-color: #EBEBEB;
+	        font-size: 11px;
+	        text-align: center;
+	        color: #303030;
+	        padding: 2px 15px 2px 15px;
+        }
+        .DataCellGrid
+        {
+	        background-color: #f2f2f2;
+	        padding: 1px 2px 1px 2px;
+        }
+        .DataCellGrid1
+        {
+	        background-color: transparent;
+	        padding: 1px 2px 1px 2px;
+        }
+        .pagerGrid
+        {
+	        background-color: #EBEBEB;
+        }
+        .DataCellGridAlt
+        {
+	        background-color: #FFFFE0;
+	        padding: 1px 2px 1px 2px;
+        }
+        .DataCellGridAlt1
+        {
+	        background-color: #c5bad1;
+	        padding: 1px 2px 1px 2px;
+        }
+        .DataCellGridEdit
+        {
+	        background-color: yellow;
+	        padding: 1px 2px 1px 2px;
+        }
+        .lighterData
+        {
+            padding-left:10px;
+	        color: #606060;
+	        white-space: normal;
+        }
+        .GrdHdr
+        {
+	        background-color: #EBEBEB;
+	        font-size: 11px;
+	        color: #303030;
+	        text-align: center;
+	        padding-left: 3px;
+	        padding-bottom: 2px;
+	        padding-right: 3px;
+	        padding-top: 2px;
+	        font-weight: bold;
+        }
+        .inner-table2
+{
+	width: 257px;
+	margin: 0 auto;
+	background-color: #f0f0f0;
+	border: 1px solid #ddd3d3;
+}
+

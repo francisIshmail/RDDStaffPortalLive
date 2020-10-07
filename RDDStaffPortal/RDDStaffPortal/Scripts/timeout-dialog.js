@@ -88,7 +88,7 @@ String.prototype.format = function() {
         .appendTo('body')
         .dialog({
           modal: true,
-          width: settings.dialog_width,
+          width: 'auto',
           minHeight: 'auto',
           zIndex: 10000,
           closeOnEscape: false,
@@ -143,13 +143,17 @@ String.prototype.format = function() {
       keepAlive: function() {
         var self = this;
         this.destroyDialog();
-        window.clearInterval(this.countdown);
+          
 
-        $.get(settings.keep_alive_url, function(data) {
-          if (data == "OK") {
-              if (self.settings.restart_on_yes) {
+          $.get(settings.keep_alive_url, function (data) {
+              debugger
+              window.clearInterval(self.countdown);
+
+            if (data == "OK") {
+             
+                //if (this.settings.restart_on_yes) {
               self.setupDialogTimer();
-            }
+            //}
           }
           else {
             self.signOut(false);

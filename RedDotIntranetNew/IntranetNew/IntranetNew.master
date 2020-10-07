@@ -1,0 +1,303 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="IntranetNew.master.cs" Inherits="IntranetNew_IntranetNew" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta charset="utf-8" >
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <%-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">--%>
+
+    <title>Red Dot Distribution :: Staff Portal</title>
+    <link rel="stylesheet" href="../outer%20css-js/css/metro-all.css"  />
+    <%--<link rel="stylesheet" href="../outer%20css-js/css/metro.css" />--%>
+    <link rel="stylesheet" href="../outer%20css-js/css/metro-colors.css" />
+    <link rel="stylesheet" href="../outer%20css-js/css/metro-rtl.css" />
+    <link rel="stylesheet" href="../outer%20css-js/css/metro-icons.css" />
+    <link rel="icon" href="../outer%20css-js/images/faviconrdd.png" type="image/x-icon" />
+    <link href="../outer%20css-js/vendors/animate/animate.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <!-- Top Header_Area -->
+    <section>
+	    <div class="container-fluid" style="background-color: #141414">
+           <ul class="h-menu place-right-md" style="background-color: #141414; padding-right: 150px">
+                <li>
+                    <asp:LoginView ID="LoginView" runat="server">
+                                           <AnonymousTemplate>
+                                             <h3 class="text-bold" style="color: #d71313">  Staff 
+                                                <asp:LoginStatus ID="LoginLink" runat="server" /> </h3>
+                                            </AnonymousTemplate>
+                                            <LoggedInTemplate>
+                                               <a href="#" class="dropdown-toggle marker-light"  style="font-size: 9pt; color: white"> <span stype="font-size: .875rem;" >Welcome, <asp:LoginName ID="LoginName" runat="server" /> </span></a>
+                                                <ul class="d-menu" data-role="dropdown" style="font-size: 20px">
+                                                    <li><a href="../change-password.aspx">Change Password</a> </li>
+                                                    <li><asp:LoginStatus ID="LogoutLink" runat="server" /> </li>
+                                                    <li class="divider"></li>
+                                                </ul>
+                                     </LoggedInTemplate>
+                         </asp:LoginView>
+                </li>
+            </ul>
+	    </div>
+	</section>
+    <!-- End Top Header_Area -->
+    <!-- Header_Area -->
+    <section class="container-fluid" style="background-color: #d71313">
+       <div class="" style="padding-left: 10px; color: white; padding-bottom: 5px; padding-top: 5px; font-family: Raleway; font-weight: 100">
+       <h4><img id="Img1" src="../outer%20css-js/images/logowhite.png" runat="server" /> &nbsp | &nbsp Staff Portal</h4>
+   
+       </div>
+       </section>
+    <!-- End Header_Area -->
+    <!-- Banner area -->
+    <div class="container-fluid">
+        <div class="grid" style="height: auto; padding-top: 20px; padding-left: 0px; top: 0px;
+            left: 0px;">
+            <div class="row">
+                <div class="cell-2">
+                    <ul class="sidenav-m3 h-auto-sm" style="height: 700em; z-index: 1" >
+                        <li class="title" style="color: #d71313; font-weight: bold">Menu</li>
+                        <li><a href="#"><span class="mif-user mif-3x icon fg-blue">&nbsp</span> <span class="title" style="font-size: 14px;
+                            font-weight: 200"><b>My Profile</b></span> </a></li>
+                        <li id="LiAdmin" runat="server" visible="false">
+                        <a href="#" class="dropdown-toggle">
+                        <span class="mif-earth icon fg-darkMagenta">
+                        </span><span class="title" style="font-size: 14px; font-weight: 200"><b>Administrator</b></span></a>
+                            <ul id="ulAdmin"  runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                <li><a id="ancFrmMaster" href="~/IntranetNew/Admin/FormsMaster.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Forms Master</a></li>
+                                <li><a id="ancUserAuth" href="~/IntranetNew/Admin/Authorization.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Authorization</a></li>
+                                <li><a id="ancWebAdmin" href="~/IntranetNew/Admin/UserCreationMembershipDatabase.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Website Administration</a></li>
+                                <li><a id="ancReportAdmin" href="~/IntranetNew/Admin/ReportAdmin.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Report Admin</a></li>
+
+                                <li><a id="LiBPStatus" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> SETUP - SAP CUSTOMER STATUS  </a>
+                                        <ul id="ul10"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                <li><a id="ancActivateBPStatus" href="~/IntranetNew/Admin/BPStatusActivation.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Activate customer status </a></li>
+                                                <li><a id="ancBPStatusGlobalSettings" href="~/IntranetNew/Admin/BPGlobalSetting.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Customer Status Global setting </a></li>
+                                                <li><a id="ancBPWithholdingTax" href="~/IntranetNew/Admin/BPWithholdingTaxSlab.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Withholding Tax Slab </a></li>
+                                                <li><a id="ancAutoTransStatus" href="~/IntranetNew/Admin/BPAutoChangeTransStatusNew.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Auto change Trans status </a></li>
+                                                <li><a id="ancAutoTransStatusChangeAlert" href="~/IntranetNew/Admin/BPAutoChangeTransStatusAlert.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Alert - On Auto change Trans status </a></li>
+                                                <li><a id="ancManualTransStatusChange" href="~/IntranetNew/Admin/BPManualChangeTransStatus.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Manually Trans status change</a></li>
+                                                <li><a id="ancManualTransStatusChangeAlert" href="~/IntranetNew/Admin/BPManualChangeTransStatusAlert.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Alert - On Manually Trans status change </a></li>
+                                                <li><a id="ancAutoCLStatusAlert" href="~/IntranetNew/Admin/BPAutoCLStatusChangeAlert.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Alert - On auto credit limit status change</a></li>
+                                                <li><a id="ancManualCLStatusChange" href="~/IntranetNew/Admin/BPManualCLStatusChange.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Manually credit limit status change</a></li>
+                                                <li><a id="ancAlertsOnCLStatusChange" href="~/IntranetNew/Admin/BPManualCLStatusChangeAlerts.aspx" style="font-size: 12px;" runat="server" ><b style="color: red">> &nbsp</b> Alert - On Manually credit limit status change </a></li>
+                                        </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li id="LiWorkFlow" runat="server" visible="false"><a href="#" class="dropdown-toggle"><span class="mif-cart icon fg-green"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>WorkFlow</b></span></a>
+                            <ul id="ulWorkFLow" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                <li><a id="ancSAPPO" href="~/IntranetNew/Orders/SapViewOrdersPO.aspx?wfTypeId=10011" style="font-size: 12px;background-color:White" runat="server" visible="false">SAP PO</a></li>
+                               <%-- <li><a id="a2" href="~/IntranetNew/Partners/RewardMasterSetting.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward Master Setting</a></li>
+                                <li><a id="a3" href="~/IntranetNew/Partners/RewardUserAuthorization.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward User Authorization</a></li>
+                                <li><a id="a4" href="~/IntranetNew/Partners/Quartarlyrewardpercentage.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Quarterly Reward Percentage</a></li>
+                                <li><a id="a5" href="~/IntranetNew/Partners/RecalculateReward.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Recalculate Reward Points</a></li>
+                                <li><a id="a6" href="~/IntranetNew/Partners/RewardLedgerReport.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward Ledger Report</a></li>--%>
+                            </ul>
+                        </li>
+
+                        <li id="LiCustomerStatus" runat="server" visible="true"><a href="#" class="dropdown-toggle"><span class="mif-users icon fg-green"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>SAP </b></span></a>
+                            <ul id="ul9" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                               <li><a id="ancSAPCredentials" href="~/IntranetNew/BPStatus/SAPCredentials.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >SAP Login Details </a></li>
+                               <li><a id="ancChageBPStatus" href="~/IntranetNew/BPStatus/ChangeBPStatus.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Change Customer Status</a></li>
+                               <li><a id="ancPVSetup" href="~/IntranetNew/BPStatus/PVSetup.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >PV - setup </a></li>
+                               <li><a id="ancPV" href="~/IntranetNew/BPStatus/PV.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >Payment Voucher</a></li>
+                               <li><a id="ancPVLists" href="~/IntranetNew/BPStatus/PVLists.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >View Payment Vouchers</a></li>
+                               <li><a id="ancSOR" href="~/IntranetNew/Orders/SalesOrder.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >Sales Order</a></li>
+                               <li><a id="ancViewSOR" href="~/IntranetNew/Orders/SalesOrderList.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >View Sales Orders</a></li>
+                            </ul>
+                        </li>
+
+                        <li id="LiReward" runat="server" visible="false"><a href="#" class="dropdown-toggle"><span class="mif-trophy icon fg-SandyBrown"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>Reward Point</b></span></a>
+                            <ul id="ulReward" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                <li><a id="ancActivateReward" href="~/IntranetNew/Partners/ActivateRewardforCountry.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Activate Reward for Country</a></li>
+                                <li><a id="ancRewardMasterSetting" href="~/IntranetNew/Partners/RewardMasterSetting.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward Master Setting</a></li>
+                                <li><a id="ancRewardUserAuth" href="~/IntranetNew/Partners/RewardUserAuthorization.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward User Authorization</a></li>
+                                <li><a id="ancQrtlyRewardPercent" href="~/IntranetNew/Partners/Quartarlyrewardpercentage.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Quarterly Reward Percentage</a></li>
+                                <li><a id="ancRecalculateReward" href="~/IntranetNew/Partners/RecalculateReward.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Recalculate Reward Points</a></li>
+                                <li><a id="ancRewardLedgerRpt" href="~/IntranetNew/Partners/RewardLedgerReport.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward Ledger Report</a></li>
+                                <%--<li><a id="ancGPRange" href="~/IntranetNew/Partners/GPRangeMaster.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">GP % Range Master</a></li>
+                                <li><a id="ancBURewardPercent" href="~/IntranetNew/Partners/BURewardPercentage.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">BUWise reward %</a></li>
+                                <li><a id="ancRewardValueInUSD" href="~/IntranetNew/Partners/RewardPointValue.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">Reward point value in USD</a></li>--%>
+                            </ul>
+                        </li>
+
+
+                         <li id="LiFunnel" runat="server" visible="true"><a href="#" class="dropdown-toggle"><span class="mif-filter icon fg-SandyBrown"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>Funnel</b></span></a>
+                            <ul id="ul8" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                               <li><a id="ancFunnelSetup" href="~/IntranetNew/Funnel/Funnelsetup.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Funnel Setup</a></li>
+                               <li><a id="ancFunnelNewDeal" href="~/IntranetNew/Funnel/NewFunnelDeal.aspx?fid=0&Access=NEW&Action=Add" style="font-size: 12px;background-color:White" runat="server" visible="true" >Funnel New Deal</a></li>
+                               <li><a id="ancFunnelList" href="~/IntranetNew/Funnel/FunnelList.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >Funnel List</a></li>
+                            </ul>
+                        </li>
+
+                         <li id="LiDSR" runat="server" visible="true"><a href="#" class="dropdown-toggle"><span class="mif-file-text icon fg-SandyBrown"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>Daily Report</b></span></a>
+                            <ul id="ul12" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                <li><a id="ancNextAction" href="~/IntranetNew/DailySalesReport/NextActionSetUp.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Setup - Next Action</a></li>
+                                <li><a id="ancModeOfCall" href="~/IntranetNew/DailySalesReport/ModeOfCallSetUp.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Setup - Mode Of Call</a></li>
+                                <li><a id="ancDSRSetup" href="~/IntranetNew/DailySalesReport/DSRSetupMaster.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Setup - Call Type</a></li>
+                                <li><a id="ancReportReqAndTrget" href="~/IntranetNew/DailySalesReport/TargetDesigMasterNew.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" > Setup - Reporting Frequency & Targets </a></li>
+                                <li><a id="ancDSR" href="~/IntranetNew/DailySalesReport/DSREntry.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" > Submit Daily report </a></li>
+                                <li><a id="ancReadReports" href="~/IntranetNew/DailySalesReport/ViewReportNew.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" > Read Report </a></li>
+                                <li><a id="ancViewScoreCard" href="~/IntranetNew/DailySalesReport/DSR_RPT.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" > View Score Card</a></li>
+                                <li><a id="ancNewCustVisits" href="~/IntranetNew/DailySalesReport/DSRWeekwise_RPT.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" > New Customer Visits</a></li>
+                               <%--<li><a id="ancDSRList" href="~/IntranetNew/DailySalesReport/DailySaleRptList.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >View customer visit report</a></li>
+                               <li><a id="ancScoreCard" href="~/IntranetNew/DailySalesReport/CardCodeReport.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >View score card</a></li>--%>
+                            </ul>
+                        </li>
+
+                        <li id="LiTarget" runat="server" visible="false"><a href="#" class="dropdown-toggle"><span class="mif-chart-line icon fg-green "></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>Target & Forecast</b></span></a>
+                            <ul id="ulTarget" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                               <li><a id="designationmaster" href="~/IntranetNew/Targets/designationmaster.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Designation Master</a></li>
+                               <li><a id="salesemployeemaster" href="~/IntranetNew/Targets/salesemployeemaster.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Sales Employee Master</a></li>
+                               <li><a id="emailconfig" href="~/IntranetNew/Targets/emailconfigurationsetting.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Email Configuration Setting</a></li>
+                               <li><a id="countrytarqur" href="~/IntranetNew/Targets/countrytargets_quarterly.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Country Targets Quarterly</a></li>
+                               <li><a id="ancCountryTrget" href="~/IntranetNew/Targets/countrytargets.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false">CountryTarget-Edit</a></li>
+                          <%-- <li><a id="countrytargets" href="~/IntranetNew/Targets/CountryTargets.aspx" style="font-size: 12px;" runat="server" visible="false" >Country Targets</a></li>--%>
+                           <li><a id="salepertarqur" href="~/IntranetNew/Targets/salespersontargets_quarterly.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Sales Person Target Quarterly</a></li>
+                           <li><a id="salespersontarget" href="~/IntranetNew/Targets/salespersontargets.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Sales Person Targets-Edit</a></li>
+                            <li><a id="forecast" href="~/IntranetNew/Targets/forecast.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Forecast</a></li>
+                            </ul>
+                        </li>
+
+                         <li id="LiMarketnig" runat="server" visible="false"><a href="#" class="dropdown-toggle"><span class="mif-broadcast icon fg-SandyBrown"></span><span
+                            class="title" style="font-size: 14px; font-weight: 200"><b>Marketing</b></span></a>
+                            <ul id="ul11" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                               <li><a id="ancMrktingSetup" href="~/IntranetNew/MarketingPlan/UserCreation.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >Marketing Setup</a></li>
+                               <li><a id="ancMrketingPlan" href="~/IntranetNew/MarketingPlan/MarketingPlan-Master.aspx" style="font-size: 12px;background-color:White" runat="server" visible="false" >New Plan</a></li>
+                               <li><a id="ancMrketingPlanList" href="~/IntranetNew/MarketingPlan/MarketingListData.aspx" style="font-size: 12px;background-color:White" runat="server" visible="true" >Marketing PlanList</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="#" class="dropdown-toggle"><span class="mif-chart-bars icon fg-orange"></span><span class="title" style="font-size: 14px;
+                            font-weight: 200"><b>Reports</b></span> </a>
+                                <ul id="ul1" runat="server" class="d-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                   
+                                    <li><a id="ancManagementRpt" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> Management Reports </a>
+                                            <ul id="ul3"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancWeeklyGP" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=weekly" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Weekly GP </a></li>
+                                                    <li><a id="ancForecastSales" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=ForecastVSSales" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Forecast VS Sales </a></li>
+                                            </ul>
+                                    </li>
+                                   
+                                    <li><a id="ancLogisticsRpt" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> Logistics Reports</a>
+                                            <ul id="ul2"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancStockAge" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=stockAge" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Stock Age </a></li>
+                                                    <li><a id="ancStockSheet" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=automatedStockSheet" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Stock Sheet </a></li>
+                                                    <li><a id="ancInventorySheet" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=InventorySheet" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Inventory Sheet </a></li>
+                                                    <li><a id="ancstockTrend" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=stockTrend" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Stock Trend </a></li>
+                                            </ul>
+                                    </li>
+                                    <li><a id="ancFinanceRpt" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> Finance Reports</a>
+                                            <ul id="ul5"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancConDebtors" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=ConsolidatedDebtors" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Consolidated Debtors</a></li>
+                                                    <li><a id="ancConDebtorExpanded" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=ConsolidatedDebtorsExpanded" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Consolidated Debtors Expanded</a></li>
+                                                    <li><a id="ancConDebtorByBU" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=ConsolidatedDebtorsByBu" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Consolidated Debtors By BU</a></li>
+                                                    <li><a id="ancConTrialBalance" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=ConsolidatedTrialBalance" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Consolidated Trial Balance</a></li>
+                                                    <li><a id="ancExpenses" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=Expenses" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> Expenses Report</a></li>
+                                                    
+                                            </ul>
+                                    </li>
+
+                                     <li><a id="ancSAPSalesRpt" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> SAP Sales Reports</a>
+                                            <ul id="ul4"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancSaleReport1" href="#" style="font-size: 12px;" runat="server" visible="true"><b style="color: red">> &nbsp</b> Report 1 </a></li>
+                                            </ul>
+                                    </li>
+
+                                     <li><a id="ancSAPPurchaseRpt" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> SAP Purchase Reports</a>
+                                            <ul id="ul7"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancPurReport1" href="#" style="font-size: 12px;" runat="server" visible="true"><b style="color: red">> &nbsp</b> Report 1 </a></li>
+                                            </ul>
+                                    </li>
+                                    <li><a id="ancHRReports" href="#" style="font-size: 12px; background-color:#b8b6ae" runat="server" visible="false" ><b style="color: red">● &nbsp</b> HR Reports</a>
+                                            <ul id="ul6"  runat="server" class="h-menu" data-role="dropdown" style="display: none; font-size: 8px">
+                                                    <li><a id="ancHRForms" href="~/IntranetNew/Reports/DownloadReports.aspx?repType=HR-Forms" style="font-size: 12px;" runat="server" visible="false"><b style="color: red">> &nbsp</b> HR-Forms</a></li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                         </li>
+                        <%-- <li><a href="#">
+                            <span class="mif-shareable icon"></span>
+                            <span class="title"  style="font-size: 16px; font-weight: 200">Promotions</span>
+                            <span class="counter" style="color: #d71313">0</span>
+                        </a></li>
+                        <li><a href="#">
+                            <span class="mif-cart icon"></span>
+                            <span class="title"  style="font-size: 16px; font-weight: 200">Customer Requests</span>
+                            <span class="counter" style="color: #d71313">0</span>
+                        </a></li>--%>
+                        <li><a href="/Intranet/Home.aspx"><span class="mif-info icon fg-blue" ></span>
+                            <span class="title" style="font-size: 14px; font-weight: 200"><b>Go to Intranet</b></span> </a>
+                        </li>
+                        <li><a href="http://rddsrv96/sentrifugo_3.2/index.php" target="_blank" ><span class="mif-users icon fg-green" ></span>
+                            <span class="title" style="font-size: 14px; font-weight: 200"> <b>Sentrifugo  HR </b> </span> </a>
+                        </li>
+                        <li><a href="https://app.powerbi.com/groups/me/getdata/welcome" target="_blank" ><span class="mif-chart-bars2 icon fg-black" ></span>
+                            <span class="title" style="font-size: 14px; font-weight: 200"> <b>Power BI </b> </span> </a>
+                        </li>
+                        <li><a id="ancCCTVCamera" runat="server" href="~/IntranetNew/Reports/CCTVSurveillance.aspx" visible="false" ><span class="mif-video-camera icon fg-red" ></span>
+                            <span class="title" style="font-size: 14px; font-weight: 200"> <b>CCTV - Surveillance </b> </span> </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="flex-align-center cell auto-size padding20" id="cell-content">                 <div class="row grid">
+                    <div class="cell">
+                      <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                       </asp:ContentPlaceHolder>
+                    </div>
+                   </div>  
+                </div>
+        </div>
+    </div>
+    <footer class="footer" style="background-color: #000000; margin-top: relative; z-index: 1;
+        left: 0; bottom: 0; width: 100%; position: fixed">
+   <div class="footer row" style="padding-left: 30px; padding-top: 20px; color: white; font-size: 9px">
+	   <ul class="inline-list">
+   <li><a href="#" style="color: #ffffff">Disclaimer &nbsp | </a></li>
+  <li><a href="#" style="color: #ffffff">Terms & Conditions &nbsp | </a></li>
+   <li><a href="#" style="color: #ffffff">Privacy Policy &nbsp | </a></li>
+   <li><a href="#" style="color: #ffffff">FAQ &nbsp | </a></li>
+   <li><a href="www.reddotdistribution.com" style="color: #ffffff">Red Dot Main Site &nbsp | </a></li>
+   
+   <li><p style="color: #d1d1d1">Copyright, All Rights Reserved, Red dot Distribution 2018</p></li>
+	   </ul>
+   </div>
+   </footer>
+     
+        <script src="../../jscss/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <link href="../../jscss/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="../../jscss/bootstrap.min.js" type="text/javascript"></script>
+        <link href="../../jscss/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+        <script src="../../jscss/bootstrap-multiselect.js" type="text/javascript"></script>
+   
+        <!--- important --->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/metro/4.2.49/js/metro.js" ></script>
+       
+
+ <%-- Below 2 ajax.aspnetcdn are used for auto search --%>       
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />  
+
+
+    </form>
+</body>
+</html>

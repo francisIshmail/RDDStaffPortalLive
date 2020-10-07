@@ -1,0 +1,508 @@
+﻿@model RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DailySalesReports
+
+@{
+    ViewBag.Title = "DailySalesComments";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Read Reports</h4>
+            </div>
+            <div class="rowmin">
+
+                <div class="loader1"></div>
+
+                <div class="col-md-12">
+                    <div class="card full-height padd-10">
+                        <div class="row">
+                            <label for="email2" class="width60px col-md-1">Date :</label>
+                            <div class="col-md-2">
+                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                    <i class="fa fa-calendar"></i>&nbsp;
+                                    <span></span> <i class="fa fa-caret-down"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills nav-secondary dailysales-section" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-home-tab-nobd" data-toggle="pill" href="#pills-home-nobd" role="tab" aria-controls="pills-home-nobd" aria-selected="true">Un-Read</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill" href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd" aria-selected="false">Read</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content col-md-12 padd-0" id="pills-without-border-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home-nobd" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tab-content" id="v-pills-tabContent">
+                                                <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                                                    <div class="accordion accordion-secondary" id="UnReadList">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade dailysales-details" id="pills-profile-nobd" role="tabpanel" aria-labelledby="pills-profile-tab-nobd">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tab-content" id="v-pills-tabContent">
+                                                <div class="tab-pane fade active show" id="v-pills-home-icons" role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                                                    <div class="accordion accordion-secondary" id="ReadList">
+                                                        <div class="rowmin" id="unreadF">
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+        </div>
+    </div>
+</div>
+    <input type="hidden" id="hdnFlag"/>
+<input type="hidden" id="hdnstartdate" />
+<input type="hidden" id="hdnenddate" />
+<div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-90per" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Daily Reports</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="tblid" class="table-responsive">
+                    <div class="reddotTable sm-form mar-t0">
+                                                             
+                    <div id="Ind" class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead xyz"><div>VisitId </div></div>
+                            <div class="reddotTableHead"><div>ActualVisitDate </div></div>
+                            
+                            
+                            <div class="reddotTableHead"><div>Country </div></div>
+                           
+                            <div class="reddotTableHead"><div>Company </div></div>
+                            <div class="reddotTableHead"><div>PersonMet </div></div>
+                            <div class="reddotTableHead"><div>Email </div></div>
+                            <div class="reddotTableHead"><div>Designation </div></div>
+                            <div class="reddotTableHead"><div>ContactNo </div></div>
+                            <div class="reddotTableHead"><div>BU </div></div>
+                            <div class="reddotTableHead"><div>Discussion </div></div>
+                            <div class="reddotTableHead"><div>ExpectedBusinessAmt </div></div>
+                            <div class="reddotTableHead"><div>CallStatus </div></div>
+                            <div class="reddotTableHead"><div>ModeOfCall </div></div>
+                            <div class="reddotTableHead"><div>NextAction </div></div>
+                            <div class="reddotTableHead"><div>Feedback </div></div>
+                            <div class="reddotTableHead"><div>ForwardCallToEmail </div></div>
+                            <div class="reddotTableHead"><div>ForwardRemark </div></div>
+                            <div class="reddotTableHead"><div>ForwardCallCCEmail </div></div>
+                            
+                            <div class="reddotTableHead"><div>NextReminderDate </div></div>
+                            
+                            <div class="reddotTableHead"><div>ReminderDate </div></div>
+                            <div class="reddotTableHead"><div>ReminderDesc </div></div>
+                            
+                            <div class="reddotTableHead"><div>HOD Comments </div></div>                            
+                            <div class="reddotTableHead"><div>PM Comments  </div></div>
+                            
+                        </div>
+                        </div>                                      
+                    <div id="Ibody" class="reddotTableBody">
+                        <div id="Ist" class="reddotTableRow odd-even-row dailysalesDet">
+                            <div class="reddotTableCell Abcd xyz"><div>VisitId</div></div>
+                            <div class="reddotTableCell Abcd"><div>ActualVisitDate </div></div>                            
+                            
+                            <div class="reddotTableCellLeft Abcd"><div>Country</div></div>
+                            
+                            <div class="reddotTableCellLeft Abcd"><div>Company</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>PersonMet</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>Email</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>Designation</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ContactNo</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>BU</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>Discussion</div></div>
+                            <div class="reddotTableCellRight Abcd"><div>ExpectedBusinessAmt</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>CallStatus</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ModeOfCall</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>NextAction</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>Feedback</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ForwardCallToEmail</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ForwardRemark</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ForwardCallCCEmail</div></div>
+                            
+                            <div class="reddotTableCell Abcd"><div>NextReminderDate</div></div>
+                            
+
+                            
+                            <div class="reddotTableCellLeft Abcd"><div>Reminder Date</div></div>
+                            <div class="reddotTableCellLeft Abcd"><div>ReminderDesc</div></div>
+                            
+                        
+                            <div class="reddotTableCell Abcd"><div><textarea rows="3" id="txtcomment" ></textarea></div></div>
+                            
+                            <div class="reddotTableCell Abcd"><div><textarea rows="3" id="txtrepmanger"></textarea></div></div>
+                            
+                        </div>
+                        </div>
+                    </div>                                  
+               
+                </div>            
+            </div>
+            <div class="modal-footer">
+                <button id="btnNewsave" type="button" class="btn btn-info btn-sm">Mark as Read</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .xyz{
+        display:none;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script>
+    var output1 = [], arr = [], output2 = [];
+    $(document).ready(function () {
+        RedDot_DateRange('reportrange');
+        $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+            $(".loader1").show();
+            loaddata();
+        });
+        function loaddata() {
+            $(".loader1").show();
+        $.ajax({
+            type: "POST",
+            url: "/GetRDD_DailySalesDateRange",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                FromDate: $("#reportrange").data('daterangepicker').startDate.format('YYYY-MM-DD'),
+                ToDate: $("#reportrange").data('daterangepicker').endDate.format('YYYY-MM-DD')
+
+            }),
+            success: function (data) {
+                $("#UnReadList").empty();
+                $("#ReadList").empty();
+                output1 = [], output2 = [];
+                arr = data;
+                var flags = [], output = [], l = arr.Table.length, i;
+                for (i = 0; i < l; i++) {
+                    if (flags[arr.Table[i].CreatedBy.toUpperCase()]) continue;
+                    flags[arr.Table[i].CreatedBy.toUpperCase()] = true;
+                    output.push(arr.Table[i].CreatedBy.toUpperCase());
+                }
+                var l1 = output.length, i1, flags1 = [], flags2 = [];
+                for (i1 = 0; i1 < l1; i1++) {
+                    var tempArray = [];
+                    var tempArray1 = [];
+                    for (i = 0; i < l; i++) {
+                        if ((arr.Table[i].CreatedBy.toUpperCase() == output[i1])) {
+                            if (arr.Table[i].Flag == 'HOD') {
+                                if (arr.Table[i].IsRead == true) {
+                                    if (flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
+                                    flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
+                                    tempArray.push(arr.Table[i]);
+                                } else {
+                                    if (flags2[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
+                                    flags2[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
+                                    tempArray1.push(arr.Table[i]);
+                                }
+                            } else {
+                                if (arr.Table[i].IsPMRead == true) {
+                                    if (flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
+                                    flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
+                                    tempArray.push(arr.Table[i]);
+                                } else {
+                                    if (flags2[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
+                                    flags2[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
+                                    tempArray1.push(arr.Table[i]);
+                                }
+                            }
+                            
+
+                        }
+                    }
+                    if (tempArray.length > 0) {
+                        output1.push(tempArray);
+                    }
+                    if (tempArray1.length > 0) {
+                        output2.push(tempArray1);
+                    }
+                }
+
+
+                if (output2.length > 0) {
+                    var k = 0;
+                    while (output2.length > k) {
+                        var k1 = 0;
+                        var divid = '<div class="card">' +
+                            '<div class="card-header" id = "headingOne-U-' + k + '" data-toggle="collapse" data-target="#collapse-U-' + k + '" aria-expanded="true" aria-controls="collapseOne" role = "button" >' +
+                            '<div class="span-title">' +
+                            '' + output2[k][k1].CreatedBy.toUpperCase() + '' +
+                            '</div>' +
+                            '</div >' +
+                            '<div id="collapse-U-' + k + '" class="collapse" aria-labelledby="headingOne-U-' + k + '" data-parent="#accordion">' +
+                            '<div class="card-body DailyDet">' +
+                            '<div class="row width120px">' +
+                            '<div class="reddotTable sm-form mar-t0">' +
+                            '<div id="IInd-' + k + '" class="reddotTableBody">' +
+                            '<div class="reddotTableRow odd-even-row">' +
+                            '<div class="reddotTableHead width100px"><div> Visite Date</div></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div id="IIbody-' + k + '" class="reddotTableBody">' +
+
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div >';
+                        $("#UnReadList").append(divid);
+                        while (output2[k].length > k1) {
+                            $("#IIbody-" + k).append('<div id="IIst-' + k + '" class="reddotTableRow odd-even-row"><div class="reddotTableCell Abcd width100px"><div data-toggle="modal" class="Abc"> <input type="hidden" id="UnRead"  value="' + output2[k][k1].CreatedBy.toUpperCase() +'">' + RedDot_dateEditFormat(output2[k][k1].VisitDate) + '</div></div></div>');
+                            k1++;
+                        }
+                        k++;
+                    }
+
+
+
+                }
+                if (output1.length > 0) {
+                    var k = 0;
+                    while (output1.length > k) {
+                        var k1 = 0;
+                        var divid = '<div class="card">' +
+                            '<div class="card-header" id = "headingOne-R-' + k + '" data-toggle="collapse" data-target="#collapse-R-' + k + '" aria-expanded="true" aria-controls="collapseOne" role = "button" >' +
+                            '<div class="span-title">' +
+                            '' + output1[k][k1].CreatedBy.toUpperCase() + '' +
+                            '</div>' +
+                            '</div >' +
+                            '<div id="collapse-R-' + k + '" class="collapse" aria-labelledby="headingOne-R-' + k + '" data-parent="#accordion">' +
+                            '<div class="card-body DailyDet">' +
+                            '<div class="row width120px">' +
+                            '<div class="reddotTable sm-form mar-t0">' +
+                            '<div id="IInd-R-' + k + '" class="reddotTableBody">' +
+                            '<div class="reddotTableRow odd-even-row">' +
+                            '<div class="reddotTableHead width100px"><div> Visite Date</div></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div id="IIbody-R-' + k + '" class="reddotTableBody">' +
+
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div >';
+                        $("#ReadList").append(divid);
+                        debugger
+                        while (output1[k].length > k1) {
+                            $("#IIbody-R-" + k).append('<div id="IIst-R-' + k + '" class="reddotTableRow odd-even-row"><div class="reddotTableCell Abcd width100px"><div data-toggle="modal" class="Abc"> <input type="hidden" id="Read"  value="' + output1[k][k1].CreatedBy.toUpperCase() +'">' + RedDot_dateEditFormat(output1[k][k1].VisitDate) + '</div></div></div>');
+                            k1++;
+                        }
+                        k++;
+                    }
+
+
+
+                }
+
+
+                $(".loader1").hide();
+            }
+            , complete: function () {
+                $(".loader1").hide();
+            }
+        });
+        }
+        loaddata();
+        $(document).on('click', '.Abc', function () {
+            $(".loader1").show();           
+           var UserName= $(this).find("[type='hidden']").val();
+            var ReadType = $(this).find("[type='hidden']").attr("id");
+                debugger;
+
+            var IsRead = false;
+            $(".modal-footer").show();
+            if (ReadType == 'Read') {
+                IsRead = true;
+                $(".modal-footer").hide();
+            }
+            ///n.IsRead === IsRead &&
+            var Datetxt = $(this).text().trim();
+            var data = $(arr.Table)
+                .filter(function (i, n) {
+                    return RedDot_dateEditFormat(n.VisitDate) === Datetxt &&
+                        n.CreatedBy.toUpperCase() === UserName;
+                });
+            var tblhead1 = ['VisitId', 'ActualVisitDate', 'Country', 'Company', 'PersonMet', 'Email', 'Designation', 'ContactNo', 'BU', 'Discussion', 'ExpectedBusinessAmt', 'CallStatus', 'ModeOfCall', 'NextAction', 'Feedback', 'ForwardCallToEmail', 'ForwardRemark', 'ForwardCallCCEmail', 'NextReminderDate', 'ReminderDate', 'ReminderDesc', 'Comments', 'PM_Comments'];
+            var txtarr = ['Comments', 'PM_Comments'];
+            var DteCond = ['ActualVisitDate', 'NextReminderDate', 'ReminderDate']
+            $("#Ist").show();
+            $("div#Ist").not(':first').remove();
+            
+            if (data != null && data.length != 0) {
+                var i = 0;
+                
+                while (data.length > i) {
+                    var tr = $("#Ist").clone();
+                    var tr1 = $("#Ind").closest();
+                    var k = 0;
+                    var l1 = tr.find(".Abcd").length;
+                   
+                    while (l1 > k) {
+                        
+                        var t = tblhead1[k];
+                        
+                        if (jQuery.inArray(t, txtarr) !== -1) {
+                            debugger
+                            if (t == 'Comments') {
+                                tr.find("[id^='txtcomment']").val(data[i][tblhead1[k]]);
+                                    
+                            } else {
+                                tr.find("[id^='txtrepmanger']").val(data[i][tblhead1[k]]);
+                            }
+                            if (data[i].Flag == 'PM' ) {
+                                $("#hndFlag").val("H");
+                                tr.find("[id^='txtcomment']").prop("disabled", false)
+                                tr.find("[id^='txtrepmanger']").prop("disabled", true)
+                            } else {
+                                $("#hndFlag").val("H2")
+                                tr.find("[id^='txtcomment']").prop("disabled", true)
+                                tr.find("[id^='txtrepmanger']").prop("disabled",false)
+                            }
+                            // tr.find(".Abcd").eq(k).addClass("Abc")
+                            //tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                        } else if (jQuery.inArray(t, DteCond) !== -1) {
+                            tr.find(".Abcd")[k].children[0].textContent =RedDot_dateEditFormat(data[i][tblhead1[k]]);
+                        } else {
+                            tr.find(".Abcd")[k].children[0].textContent = data[i][tblhead1[k]];
+                        }
+                        k++;
+                    }
+                    $("#Ibody").append(tr);
+                    i++;
+                }
+                $("#Ist")[0].remove();
+            } else {
+                $("#Ist").hide();
+                RedDotAlert_Error("No Record Found");
+            }
+            $(".loader1").hide();
+            $('#SelectWidgetspopup').modal('show');
+
+
+        });
+        $("#btnNewsave").on("click", function () {
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, submit comment it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    var rDD_DailySalesDet = [];
+                    $(".loader1").show();
+                    $(".dailysalesDet").each(function () {                        
+                        var rDD_DailySales = {
+                            VisitId: $(this).find(".xyz").text().trim(),
+                            Comments: $(this).find("[id^='txtcomment']").val(),
+                            PM_Comments: $(this).find("[id^='txtrepmanger']").val(),
+                            Flag:$("hdnFlag").val()
+                            
+                        };
+                        debugger
+                       
+
+                            rDD_DailySalesDet.push(rDD_DailySales);
+                        
+                    })
+
+                    if (rDD_DailySalesDet.length > 0) {
+
+                        var data = JSON.stringify({
+                            rDD_DailySalesDet: rDD_DailySalesDet,
+                        });
+                        $.ajax({
+                            type: "Post",
+                            url: "/DailSalesReportCommentSave",
+                            data: data,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (result) {
+                                
+                                if (result.data[0].Outtf == true) {
+                                    RedDotAlert_Success(result.data[0].Responsemsg);
+                                    $('#SelectWidgetspopup').modal('hide');                                    
+                                    loaddata();
+
+                                } else {
+                                    RedDotAlert_Error(result.data[0].Responsemsg);
+                                    $(".loader1").hide();
+                                }
+                            }
+                        });
+                    }
+                    swalWithBootstrapButtons.fire(
+                        'Saved!',
+                        'Your Code has been saved.',
+                        'success'
+                    )
+
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Code is safe :)',
+                        'error'
+                    )
+                }
+            })
+        })
+
+
+    });
+</script>

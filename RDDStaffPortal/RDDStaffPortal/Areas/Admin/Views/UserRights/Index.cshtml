@@ -154,11 +154,11 @@
             }
             tf = true;
             $.get("/GetUserRightsList", { UserId: Userid }).done(function (response) {
-
+    debugger
                 var ary = [];
                 ary = response;
                 var n = 0;
-
+                $(".card-header").find("[id^='smallSelect']").val('N');
                 while (ary.length > n) {
                     $(".card-header").find("[id='smallSelect-" + ary[n].Code + "']").val(ary[n].CodeName);
 

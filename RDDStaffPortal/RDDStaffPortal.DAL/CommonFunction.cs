@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Reflection;
+
 namespace RDDStaffPortal.DAL
 {
     public class CommonFunction
@@ -33,6 +35,42 @@ namespace RDDStaffPortal.DAL
             public string Responsemsg { get; set; }
         }
 
+        public bool SqlBulkCopyQuery(DataTable dt,string tblname, SqlParameter[] p)
+        {
+            bool t = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Conn))
+                {
+                    using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                    {
+                        //Set the database table name.
+                        sqlBulkCopy.DestinationTableName = tblname;
+
+                        // Map the Excel columns with that of the database table, this is optional but good if you do
+                        // 
+                        int k = p.Length;
+                        int j = 0;
+                        while (j < k )
+                        {
+                            sqlBulkCopy.ColumnMappings.Add(p[j].SourceColumn, p[j].ParameterName);
+                            j = j + 1;
+                        }
+                        con.Open();
+                        sqlBulkCopy.WriteToServer(dt);
+                        con.Close();
+                    }
+                }
+                t = true;
+            }
+            catch (Exception ex)
+            {
+
+                t = false;
+            }
+            
+            return t;
+        }
         public int ExecuteNonQuery(string SqlCommondText)
         {
             int rowaffected = 0;
@@ -439,6 +477,8 @@ namespace RDDStaffPortal.DAL
             return numrows.Value;
         }
         #endregion
+
+        
     }
 
 

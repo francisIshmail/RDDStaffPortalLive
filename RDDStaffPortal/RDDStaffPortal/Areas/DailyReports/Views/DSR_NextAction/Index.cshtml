@@ -1,0 +1,248 @@
+﻿@model RDDStaffPortal.DAL.DataModels.DailyReports.RDD_DSR_NextAction
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Next Action</h4>
+            </div>
+            <div class="rowmin row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <div class="card danger-border">
+                        <div class="card-body padd-7">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-2 col-form-label p-0">Search :</label>
+                                        <div class="col-md-8 p-0">
+                                            <input type="text" class="form-control form-control-sm" id="txtSearchDep">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 ml-auto text-right mar-t4">
+                                    <button type="button" class="btn btn-info btn-sm" id="btnadd"><i class="fas fa-plus"></i> Add</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rowmin row" id="DSR_Nextid">
+
+                @{ Html.RenderAction("GetDSR_NextList", "DSR_NextAction", new { area = "DailyReports" }); }
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="DSRACTIONEditPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Next Action </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-2 col-form-label p-0">Name :</label>
+                            <div class="col-md-8 p-0">
+                                <input type="text" class="form-control form-control-sm" id="txtDSRACTIONName">
+                                <input type="hidden" id="hdnDSRACTIONOld" value="0" />
+                                <input type="hidden" id="hdnEditFlag" value="false" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnsave" class="btn btn-info btn-sm">Save</button>
+                <button type="button" class="btn btn-danger btn-sm" id="btnclose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+    // This is the code to filte r/search record
+
+
+
+    $(document).ready(function () {
+        //RedtDot_CheckAuthorization("/DailyReports/DSR_NextAction/Index");
+        
+       
+
+      $("#txtSearchDep").on("keyup", function () {
+
+            var value = $("#txtSearchDep").val().toLowerCase();
+
+            $(".col-sm-6").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#btnadd").click(function () { // Click to only happen on announce links
+
+
+            $('#DSRACTIONEditPopup').modal('show');
+        });
+        $(document).on('click', '.announcedel', function () {
+
+            var tr = $(this).closest(".NextActionedit");
+            var ids = tr.find("input[id^='hdnNextActionid']").val();
+            const swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "Post",
+                        url: "/DeleteDSR_NextAction?ids=" + ids,
+                        success: function (data) {
+                            debugger
+                            if (data.data[0].Responsemsg == "Record Deleted") {
+                                RedDotAlert_Error(data.data[0].Responsemsg);
+                                  $("#DSR_Nextid").load('@Url.Action("GetDSR_NextList", "DSR_NextAction", new { area="DailyReports"})');
+                            } else {
+                                RedDotAlert_Error(data.data[0].Responsemsg);
+                            }
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your Code has been deleted.',
+                        'success'
+                    )
+
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Code is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        })
+
+
+        //departmentedit
+        $(document).on('dblclick', '.card-body', function () { // Click to only happen on announce links
+            debugger
+            var tr = $(this).closest(".card-body");
+            if (tr.find("input[id^='hdnNextActionid']").val() == undefined) {
+                return;
+            }
+            $("#hdnDSRACTIONOld").val(tr.find("input[id^='hdnNextActionid']").val());
+            $("#txtDSRACTIONName").val(tr.find("input[id^='hdnNextActionname']").val());
+            $("#hdnEditFlag").val("true");
+            $('#DSRACTIONEditPopup').modal('show');
+        });
+        $(document).on('click', '.announce', function () { // Click to only happen on announce links
+           debugger
+            var tr = $(this).closest(".NextActionedit");
+            if (tr.find("input[id^='hdnNextActionid']").val() == undefined) {
+                return;
+            }
+            $("#hdnDSRACTIONOld").val(tr.find("input[id^='hdnNextActionid']").val());          
+            $("#txtDSRACTIONName").val(tr.find("input[id^='hdnNextActionname']").val());
+            $("#hdnEditFlag").val("true");
+            $('#DSRACTIONEditPopup').modal('show');
+        });
+
+        $('#DSRACTIONEditPopup').on('hidden.bs.modal', function (e) {
+            $(this)
+                .find("input,textarea,select")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end().find("#hdnDSRACTIONOld").val(0)
+                .end().find("#hdnEditFlag").val("false");
+        })
+
+        $('#btnsave').on("click",function () {
+
+            if ($("#txtDSRACTIONName").val() == "") {
+                alert('please enter Next Action');
+                $("#txtDSRACTIONName").focus();
+                return false;
+            }
+            //var data = $("#SubmitForm").serialize();
+            //var status = $('#chkstatus').is(':checked');
+
+
+            var DSRACTIONData = {};
+            DSRACTIONData["ID"] = $("#hdnDSRACTIONOld").val();
+            DSRACTIONData["NextAction"] = $("#txtDSRACTIONName").val();
+            DSRACTIONData["Editflag"] = $("#hdnEditFlag").val();
+
+            var data = JSON.stringify({
+                rDD_DSR_Next: DSRACTIONData,
+            });
+
+            // console.log(data);
+
+            $.ajax({
+                type: "Post",
+                url: "/SaveDSR_NextAction",
+                data: data,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    debugger
+                    if (result.data.ErrorMsg == "Record Saved Successfully" || result.data.ErrorMsg == "Record Updated Successfully") {
+                        RedDotAlert_Success(result.data.ErrorMsg);
+
+                        $("#DSR_Nextid").load('@Url.Action("GetDSR_NextList", "DSR_NextAction", new { area="DailyReports"})');
+
+                        $("#NextAction").val('');
+                        $("#btnclose").trigger("click");
+
+                        // GetDeptList();
+                    }
+                    else {
+                        RedDotAlert_Error(result.data.ErrorMsg);
+                        // alert(result);
+
+                    }
+                }
+            });
+        });
+    })
+</script>
+

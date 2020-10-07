@@ -328,20 +328,23 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             cmd.Parameters.Add("@Curr_1", SqlDbType.VarChar).Value = Header[0].Curr_1.ToString();
                             cmd.Parameters.Add("@Amount_1", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_1.ToString());
 
-                            if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
+                            if (Header[0].Pay_Method_2 != null)
                             {
+                                if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
+                                {
 
-                                cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
-                                cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
+                                    cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
+                                    cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
 
-                                if (Header[0].Rcpt_check_Date_2.ToString() != null)
-                                    cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
-                               
+                                    if (Header[0].Rcpt_check_Date_2.ToString() != null)
+                                        cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
 
-                                cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
-                                cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
-                                cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
 
+                                    cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
+                                    cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
+                                    cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
+
+                                }
                             }
 
                             cmd.Parameters.Add("@Total_Bef_Tax", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Bef_Tax.ToString());
@@ -381,7 +384,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             {
                                 if (ItemDetail.Length > 0)
                                 {
-                                    string sql = "Delete From [SOR1] Where SO_ID=" + SO_ID.ToString();
+                                    string sql = "Delete From [RDD_SOR1] Where SO_ID=" + SO_ID.ToString();
                                     Db.myExecuteSQL(sql);
 
                                     for (int i = 0; i < ItemDetail.Length; i++)

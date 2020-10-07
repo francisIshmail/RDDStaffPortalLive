@@ -166,9 +166,9 @@
                                                         @Html.HiddenFor(m => m.FId, new { @id = "FId" })
 
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {@Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" })}
-                                                            else
-                                                            {*@
+                        {@Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" })}
+                    else
+                    {*@
                                                         @Html.TextBoxFor(m => m.FName, ViewBag.FNameD != null ? (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
                                                         @*}*@
 
@@ -178,11 +178,11 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Last Name :</label>
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" })
-                                                            }
-                                                            else
-                                                            {*@
+                    {
+                        @Html.TextBoxFor(m => m.LName, new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" })
+                    }
+                    else
+                    {*@
                                                         @Html.TextBoxFor(m => m.LName, ViewBag.LNameD != null ? (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
                                                         @*}*@
                                                     </div>
@@ -204,11 +204,11 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Email :</label>
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                            {
-                                                                @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control form-control-sm" })
-                                                            }
-                                                            else
-                                                            {*@
+                    {
+                        @Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control form-control-sm" })
+                    }
+                    else
+                    {*@
                                                         @Html.TextBoxFor(m => m.Email, ViewBag.EmailD != null ? (object)new { @id = "Email", @class = "form-control form-control-sm" } : (object)new { @id = "Email", @class = "form-control form-control-sm", @disabled = "disabled" })
                                                         @*}*@
                                                     </div>
@@ -217,18 +217,18 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Skype Id :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                            {*@
+                    {*@
                                                         @Html.TextBoxFor(m => m.IM_Id, ViewBag.IM_IdD != null ? (object)new { @id = "IM_Id", @class = "form-control form-control-sm" } : (object)new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
                                                         @*}
-                                                                else
-                                                                {
-                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                                    {
-                                                                        @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
-                                                                    }
-                                                                    else
-                                                                    { @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm" })}
-                                                            }*@
+                        else
+                        {
+                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                            {
+                                @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm", @disabled = "disabled" })
+                            }
+                            else
+                            { @Html.TextBoxFor(m => m.IM_Id, new { @id = "IM_Id", @class = "form-control form-control-sm" })}
+                    }*@
                                                         @*<input type="text" class="form-control form-control-sm" id="">*@
                                                     </div>
                                                 </div>
@@ -238,18 +238,18 @@
 
                                                         <label for="email2" class="width100px">Cisco Extn No :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                            {*@
+                    {*@
                                                         @Html.TextBoxFor(m => m.Ext_no, ViewBag.Ext_noD != null ? (object)new { @id = "Ext_no", @class = "form-control form-control-sm", @maxlength = "20" } : (object)new { @id = "Ext_no", @class = "form-control form-control-sm", @disabled = "disabled" })
                                                         @*}
-                                                                else
-                                                                {
-                                                                    if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                                    {
-                                                                        @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
-                                                                    }
-                                                                    else
-                                                                    { @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20" })}
-                                                            }*@
+                        else
+                        {
+                            if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                            {
+                                @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                            }
+                            else
+                            { @Html.TextBoxFor(m => m.Ext_no, new { @id = "Ext_no", @class = "form-control form-control-sm", maxlength = "20" })}
+                    }*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,17 +259,17 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Telephone No :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                            {*@
+                    {*@
                                                         @Html.TextBoxFor(m => m.Contact_No, ViewBag.Contact_NoD != null ? (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @maxlength = "15" } : (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @disabled = "disabled" })
                                                         @*}
-                                                                    else
-                                                                    {
-                                                                        if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                            else
+                            {
+                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
 
-                                                                        { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })}
-                                                                    else
-                                                                    { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10" })}
-                                                            }*@
+                                { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })}
+                            else
+                            { @Html.TextBoxFor(m => m.Contact_No, new { @id = "Contact_No", @class = "form-control form-control-sm", maxlength = "10" })}
+                    }*@
                                                     </div>
                                                 </div>
 
@@ -278,11 +278,11 @@
                                                         <label for="email2" class="width100px">Designation :</label>
                                                         <div class="input-group">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {*@
+                        {*@
                                                             @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", ViewBag.DesigIdD != null ? (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*}
-                                                                else
-                                                                { @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                        else
+                        { @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -293,11 +293,11 @@
                                                         <div class="select2-input">
                                                             @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", ViewBag.DeptIdD != null ? (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist" })
-                                                                }
-                                                                else
-                                                                { @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                        {
+                            @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist" })
+                        }
+                        else
+                        { @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -307,15 +307,70 @@
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
                                                     <div class="form-group">
+                                                        <label for="email2" class="width100px">Local HR:</label>
+                                                        <div class="select2-input">
+                                                            @Html.DropDownListFor(m => m.Local_HR, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.Local_HRD != null ? (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist", @onchange = "FillHRManagerL2()" } : (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                        {
+                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
+                        }
+                        else
+                        { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">HOD HR :</label>
+                                                        <div class="select2-input">
+
+
+                                                            @Html.DropDownListFor(m => m.HOD_HR, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.HOD_HRD != null ? (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist" } : (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                        {
+                            @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email2" class="width100px">Country :</label>
+                                                        <div class="select2-input">
+                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", ViewBag.CountryD != null ? (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" } : (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
+                        {
+
+                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" })
+                        }
+
+                        else
+                        { @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-4 multipleselect">
+                                                    <div class="form-group">
                                                         <label for="email2" class="width100px">Manager L1:</label>
                                                         <div class="select2-input">
                                                             @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.managerD != null ? (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" } : (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
-                                                                }
-                                                                else
-                                                                { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                    {
+                        @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
+                    }
+                    else
+                    { @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
 
                                                         </div>
                                                     </div>
@@ -329,41 +384,16 @@
 
                                                             @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.managerL2D != null ? (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" } : (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                    {
+                        @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
 
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="email2" class="width100px">Country :</label>
-                                                        <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", ViewBag.CountryD != null ? (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" } : (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
-                                                            @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-
-                                                                    @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" })
-                                                                }
-
-                                                                else
-                                                                { @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-                                            <div class="row">
-
-
 
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="form-group">
@@ -371,14 +401,20 @@
                                                         <div class="select2-input">
                                                             @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", ViewBag.EmpstatusD != null ? (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist" })
-                                                                }
-                                                                else
-                                                                { @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
+                    {
+                        @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist" })
+                    }
+                    else
+                    { @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+
+
+
+
 
 
                                                 <div class="col-xl-4 col-md-4">
@@ -389,19 +425,19 @@
                                                 new SelectListItem { Text = "FullTime", Value = "FullTime" }
                                                  }, "-Select-", ViewBag.type_of_employmentD != null ? (object)new { @id = "type_of_employement", @class = "form-control form-control-sm" } : (object)new { @id = "type_of_employement", @class = "form-control form-control-sm", @disabled = "disabled" })
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                                                       {
-                                                                                                           @Html.DropDownListFor(m => m.type_of_employement,
-                                                                                                     new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                                                                    new SelectListItem { Text = "PartTime", Value = "PartTime" },
-                                                                                                    new SelectListItem { Text = "FullTime", Value = "FullTime" }
-                                                                                                     }, new { @class = "form-control form-control-sm combolist" })
-                                                                                                       }
-                                                                                                       else
-                                                                                                       { @Html.DropDownListFor(m => m.type_of_employement,
-                                                             new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                            new SelectListItem { Text = "PartTime", Value = "PartTime" },
-                                                            new SelectListItem { Text = "FullTime", Value = "FullTime" }
-                                                             }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}*@
+                                                           {
+                                                               @Html.DropDownListFor(m => m.type_of_employement,
+                                                         new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                        new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                                                        new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                                                         }, new { @class = "form-control form-control-sm combolist" })
+                                                           }
+                                                           else
+                                                           { @Html.DropDownListFor(m => m.type_of_employement,
+                 new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                new SelectListItem { Text = "PartTime", Value = "PartTime" },
+                new SelectListItem { Text = "FullTime", Value = "FullTime" }
+                 }, new { @class = "form-control form-control-sm", @disabled = "disabled" })}*@
                                                     </div>
                                                 </div>
 
@@ -410,13 +446,13 @@
                                                         <label for="email2" class="width100px">Joining Date :</label>
                                                         <div class="input-group">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {*@
+                    {*@
                                                             @Html.HiddenFor(m => m.Joining_Date)
                                                             @Html.TextBox(string.Concat("Joining_Date", "1"), "", ViewBag.joining_dateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
 
                                                             @*}
-                                                                else
-                                                                { @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "Joining_date", @disabled = "disabled" })}*@
+                    else
+                    { @Html.TextBoxFor(m => m.Joining_Date, new { @id = "Joining_date", @class = "form-control form-control-sm", @name = "Joining_date", @disabled = "disabled" })}*@
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">
                                                                     <i class="far fa-calendar-alt"></i>
@@ -426,37 +462,37 @@
                                                     </div>
                                                 </div>
 
-
-
-                                            </div>
-                                            <div class="row">
-
-
                                                 <div class="col-xl-4 col-md-4 multipleselect">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Job Grade :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" })
-                                                                }
-                                                                else
-                                                                {*@
+                    {
+                        @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" })
+                    }
+                    else
+                    {*@
                                                             @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", ViewBag.JobGradeD != null ? (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*}*@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                            </div>
+                                            <div class="row">
+
+
+                                               
                                                 <div class="col-xl-4 col-md-4 multipleselect">
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">Job Band :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
-                                                                {
-                                                                    @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm combolist" })
-                                                                }
-                                                                else
-                                                                {*@
+                        {
+                            @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", new { @id = "JobBandId", @class = "form-control form-control-sm combolist" })
+                        }
+                        else
+                        {*@
                                                             @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", ViewBag.JobBandD != null ? (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*}*@
                                                         </div>
@@ -484,22 +520,22 @@
                                                     <div class="form-group">
                                                         <label for="email2" class="width100px">About :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
-                                                            {*@
+                    {*@
                                                         @Html.TextAreaFor(m => m.About, ViewBag.AboutUsD != null ? (object)new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" } : (object)new { @id = "About", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "1000", style = "width: 725px;" })
                                                         @*}
 
-                                                            else
-                                                            {
-                                                                if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
-                                                                {
-                                                                    @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;", @disabled = "disabled" })
-                                                                }
+                    else
+                    {
+                        if (ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True")
+                        {
+                            @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;", @disabled = "disabled" })
+                        }
 
-                                                                else
-                                                                {
-                                                                    @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
-                                                                }
-                                                            }*@
+                        else
+                        {
+                            @Html.TextAreaFor(m => m.About, new { @id = "About", @class = "form-control form-control-sm", maxlength = "1000", style = "width: 725px;" })
+                        }
+                    }*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -1426,6 +1462,35 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         });
     }
 
+   
+
+    function FillHRManagerL2() {
+        var managerL1Id = $('#Local_HR').val();
+        //  alert(GroupId);
+        $.ajax({
+            url: '/Employees/Fillmanagerl2',
+            type: "GET",
+            dataType: "JSON",
+            data: { managerL1Id: managerL1Id },
+            success: function (ManagerListL2) {
+                $("#HOD_HR").html("");
+
+                $("#HOD_HR").append($('<option/>', { value: 0, text: '--Select--' }));
+
+                $.each(ManagerListL2, function (i, RDD_EmployeeRegistration) {
+                    $("#HOD_HR").append(
+                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
+
+
+                });
+                $('#HOD_HR').select2({
+                    theme: "bootstrap",
+                    allowClear: true,
+                    placeholder: '--Select--'
+                });
+            }
+        });
+    }
     //function FillManagerL1() {
     //    var managerL1 = $('#ManagerId').val();
     //    //  alert(GroupId);
@@ -1648,6 +1713,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $('#NEmpPrEdu_EndDate').datetimepicker({
             defaultDate: new Date(),
             format: 'DD/MM/YYYY',
+        });
+        $('#Local_HR').select2({
+            theme: "bootstrap"
         });
 
         $('#ManagerId').select2({
@@ -2024,7 +2092,8 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         // EmpData["my_file"] = $("#my_file").val();
 
         EmpData["FId"] = $("#FId").val();
-
+        EmpData["HOD_HR"] = $("#HOD_HR").val();
+        EmpData["Local_HR"] = $("#Local_HR").val();
         EmpData["EmployeeId"] = $("#EmployeeId").val();
         EmpData["ManagerId"] = $("#ManagerId").val();
         EmpData["About"] = $("#About").val();
@@ -2323,6 +2392,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
             RedDotAlert_Error('please Enter Manager');
             $("#ManagerId").focus();
+            return false;
+        }
+        if ($("#Local_HR").val() == "") {
+            Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
+            RedDotAlert_Error('please Enter HR Manager');
+            $("#Local_HR").focus();
             return false;
         }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,7 +17,10 @@ namespace RDDStaffPortal.DAL.DataModels
     }
     public class RDD_EmployeeRegistration
     {
+       // [StringLength(20, ErrorMessage = "Contact No cannot be longer than 20 characters.")]
         public string LoginName { get; set; }
+        public int HOD_HR { get; set; }
+        public int Local_HR { get; set; }
         public class Translations
         {
             public string de { get; set; }

@@ -41,6 +41,8 @@ namespace RDDStaffPortal.Areas.HR.Models
     }
     public class Employees
     {
+        public int Local_HR { get; set; }
+        public int HOD_HR { get; set; }
         public int ManagerIdL2 { get; set; }
         public int JobBandId { get; set; }
         public string JobBandName { get; set; }

@@ -12,12 +12,12 @@ using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.DAL.Admin
 {
-   public  class RDD_Approval_TemplatesDBOperation
+    public class RDD_Approval_TemplatesDBOperation
     {
         CommonFunction Com = new CommonFunction();
 
 
-        public RDD_Approval_Templates GetDropList(string username,string Eflag)
+        public RDD_Approval_Templates GetDropList(string username, string Eflag)
         {
             RDD_Approval_Templates RDD_Approval = new RDD_Approval_Templates();
             List<SelectListItem> DocumentList = new List<SelectListItem>();
@@ -35,17 +35,17 @@ namespace RDDStaffPortal.DAL.Admin
                 if (dsModules.Tables.Count > 0)
                 {
                     DataTable dtModule;
-                    DataRowCollection drc;                   
-                        dtModule = dsModules.Tables[0];
-                        drc = dtModule.Rows;
-                        foreach (DataRow dr in drc)
+                    DataRowCollection drc;
+                    dtModule = dsModules.Tables[0];
+                    drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        DocumentList.Add(new SelectListItem()
                         {
-                            DocumentList.Add(new SelectListItem()
-                            {
-                                Text = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
-                                Value = !string.IsNullOrWhiteSpace(dr["ObjType"].ToString()) ? dr["ObjType"].ToString() : "",
-                            });
-                        }                                        
+                            Text = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                            Value = !string.IsNullOrWhiteSpace(dr["ObjType"].ToString()) ? dr["ObjType"].ToString() : "",
+                        });
+                    }
                 }
 
             }
@@ -57,7 +57,7 @@ namespace RDDStaffPortal.DAL.Admin
                     Value = "-1",
                 });
 
-            }          
+            }
             RDD_Approval.DocumentNameList = DocumentList;
             return RDD_Approval;
         }
@@ -114,7 +114,7 @@ namespace RDDStaffPortal.DAL.Admin
                              new SqlParameter("@p_typ",RDD_Approval.Ptype)};
                             var det2 = Com.ExecuteNonQuery("RDD_Approval_Originators_Insert_Update_Delete", ParaDet3);
 
-                            if (det1 == true && det2==true)
+                            if (det1 == true && det2 == true)
                             {
                                 RDD_Approval.Ptype = "U";
                             }
@@ -135,7 +135,7 @@ namespace RDDStaffPortal.DAL.Admin
                                             new SqlParameter("@p_CreatedOn",RDD_Approval.CreatedOn),
                                             new SqlParameter("@p_CreatedBy",RDD_Approval.CreatedBy),
                                             new SqlParameter("@p_LastUpdatedOn",RDD_Approval.LastUpdatedOn),
-                                            new SqlParameter("@p_LastUpdatedBy",RDD_Approval.LastUpdatedBy),                                           
+                                            new SqlParameter("@p_LastUpdatedBy",RDD_Approval.LastUpdatedBy),
                                             new SqlParameter("@p_typ",RDD_Approval.Ptype)
 
                             };
@@ -197,7 +197,7 @@ namespace RDDStaffPortal.DAL.Admin
             return str;
         }
 
-         public List<RDD_Approval_Templates> GetALLDATA(string UserName, int pagesize, int pageno, string psearch)
+        public List<RDD_Approval_Templates> GetALLDATA(string UserName, int pagesize, int pageno, string psearch)
         {
             List<RDD_Approval_Templates> _RDD_Approval = new List<RDD_Approval_Templates>();
 
@@ -240,7 +240,7 @@ namespace RDDStaffPortal.DAL.Admin
                         });
                     }
                 }
-                        }
+            }
             catch (Exception)
             {
                 _RDD_Approval.Add(new RDD_Approval_Templates()
@@ -260,7 +260,7 @@ namespace RDDStaffPortal.DAL.Admin
 
 
                 });
-             }
+            }
 
             return _RDD_Approval;
         }
@@ -305,17 +305,17 @@ namespace RDDStaffPortal.DAL.Admin
                     {
                         RDDApprovers.Add(new RDD_Approval_Approvers
                         {
-                           Approver_Id = !string.IsNullOrWhiteSpace(dr["Approver_Id"].ToString()) ? Convert.ToInt32(dr["Approver_Id"].ToString()) : 0,
-                        Template_Id = !string.IsNullOrWhiteSpace(dr["Template_Id"].ToString()) ? Convert.ToInt32(dr["Template_Id"].ToString()) : 0,
-                        Approver = !string.IsNullOrWhiteSpace(dr["Approver"].ToString()) ? dr["Approver"].ToString() : "",
-                        Approval_Sequence = !string.IsNullOrWhiteSpace(dr["Approval_Sequence"].ToString()) ? Convert.ToInt32(dr["Approval_Sequence"].ToString()) : 0,
-                        IsApproval_Mandatory = !string.IsNullOrWhiteSpace(dr["IsApproval_Mandatory"].ToString()) ? Convert.ToBoolean(dr["IsApproval_Mandatory"].ToString()) : false,
-                        CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
-                        CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "",
-                        LastUpdatedOn = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : System.DateTime.Now,
-                        LastUpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() : "",
+                            Approver_Id = !string.IsNullOrWhiteSpace(dr["Approver_Id"].ToString()) ? Convert.ToInt32(dr["Approver_Id"].ToString()) : 0,
+                            Template_Id = !string.IsNullOrWhiteSpace(dr["Template_Id"].ToString()) ? Convert.ToInt32(dr["Template_Id"].ToString()) : 0,
+                            Approver = !string.IsNullOrWhiteSpace(dr["Approver"].ToString()) ? dr["Approver"].ToString() : "",
+                            Approval_Sequence = !string.IsNullOrWhiteSpace(dr["Approval_Sequence"].ToString()) ? Convert.ToInt32(dr["Approval_Sequence"].ToString()) : 0,
+                            IsApproval_Mandatory = !string.IsNullOrWhiteSpace(dr["IsApproval_Mandatory"].ToString()) ? Convert.ToBoolean(dr["IsApproval_Mandatory"].ToString()) : false,
+                            CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
+                            CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "",
+                            LastUpdatedOn = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : System.DateTime.Now,
+                            LastUpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() : "",
 
-                    });
+                        });
                     }
                     RDD_Approval.RDD_Approval_ApproversList = RDDApprovers;
 
@@ -369,7 +369,7 @@ namespace RDDStaffPortal.DAL.Admin
         }
 
 
-        public DataSet GetApprovaldata(string Object_Type,string Originator)
+        public DataSet GetApprovaldata(string Object_Type, string Originator, string DocKey)
         {
             DataSet ds;
             try
@@ -377,10 +377,11 @@ namespace RDDStaffPortal.DAL.Admin
                 SqlParameter[] ParaDet1 = {
                                                 new SqlParameter("@Object_Type",Object_Type),
                                                 new SqlParameter("@Originator",Originator),
+                                                 new SqlParameter("@DocKey",DocKey),
 
                             };
-                 ds = Com.ExecuteDataSet("RDD_Check_DocumentApproval",CommandType.StoredProcedure, ParaDet1);
-               
+                ds = Com.ExecuteDataSet("RDD_Check_DocumentApproval", CommandType.StoredProcedure, ParaDet1);
+
             }
             catch (Exception)
             {
@@ -390,5 +391,132 @@ namespace RDDStaffPortal.DAL.Admin
             return ds;
 
         }
+
+        public DataSet RDD_Approver_Insert_Records(string Object_Type, string Originator, string DocKey, string OriginatorRemark)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] ParaDet1 = {
+                                                new SqlParameter("@Object_Type",Object_Type),
+                                                new SqlParameter("@Originator",Originator),
+                                                new SqlParameter("@DocKey",DocKey),
+                                                new SqlParameter("@OriginatorRemark",OriginatorRemark),
+                            };
+                ds = Com.ExecuteDataSet("RDD_Approver_Insert_Records", CommandType.StoredProcedure, ParaDet1);
+
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
+
+        }
+
+        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBName, string ApproverName, int pagesize, int pageno, string psearch)
+        {
+            List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
+
+            try
+            {
+                SqlParameter[] Para = {
+                    new SqlParameter("@p_UserName",ApproverName),
+                     new SqlParameter("@SearchCriteria ", psearch),
+                    new SqlParameter("@p_PageNo", pageno),
+                    new SqlParameter("@p_PageSize",pagesize),
+                    new SqlParameter("@p_SortColumn", "Template_Id"),
+                    new SqlParameter("@p_SortOrder", "ASC"),
+                        new SqlParameter("@p_type","GetAll"),
+
+                };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Get_Document_Approval_List", CommandType.StoredProcedure, Para);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _RDD_APPROVAL_DOC.Add(new RDD_APPROVAL_DOC()
+                        {
+                            SRNO = !string.IsNullOrWhiteSpace(dr["SRNO"].ToString()) ? Convert.ToInt32(dr["SRNO"].ToString()) : 0,
+                            OBJTYPE = !string.IsNullOrWhiteSpace(dr["OBJTYPE"].ToString()) ? Convert.ToInt32(dr["OBJTYPE"].ToString()) : 0,
+                            DocumentName = !string.IsNullOrWhiteSpace(dr["DocType"].ToString()) ? dr["DocType"].ToString() : "",
+                            DOC_ID = !string.IsNullOrWhiteSpace(dr["DocKey"].ToString()) ? Convert.ToInt32(dr["DocKey"].ToString()) : 0,
+                            DOC_DATE = Convert.ToDateTime(dr["DocDate"].ToString()),
+                            CARDNAME = !string.IsNullOrWhiteSpace(dr["CardName"].ToString()) ? dr["CardName"].ToString() : "",
+                            DocTotal = !string.IsNullOrWhiteSpace(dr["DocTotal"].ToString()) ? Convert.ToDecimal(dr["DocTotal"].ToString()) : 0,
+                            ORIGINATOR = !string.IsNullOrWhiteSpace(dr["ORIGINATOR"].ToString()) ? dr["ORIGINATOR"].ToString() : "",
+                            ORG_Remark = !string.IsNullOrWhiteSpace(dr["Remark"].ToString()) ? dr["Remark"].ToString() : "",
+                            APPROVER = !string.IsNullOrWhiteSpace(dr["APPROVER"].ToString()) ? dr["APPROVER"].ToString() : "",
+                            APPROVAL_DECISION = !string.IsNullOrWhiteSpace(dr["APPROVAL_DECISION"].ToString()) ? dr["APPROVAL_DECISION"].ToString() : "",
+                            APPROVAL_DATE = string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString())
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()),
+                           // dr["APPROVAL_DATE"].ToString()//!string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString()) ? Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()) : null,
+
+
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                _RDD_APPROVAL_DOC.Add(new RDD_APPROVAL_DOC()
+                {
+                    OBJTYPE = 0,
+                    DocumentName = "",
+                    DOC_ID = 0,
+                    DOC_DATE = null,
+                    CARDNAME = "",
+                    DocTotal = 0,
+                    ORIGINATOR = "",
+                    ORG_Remark = "",
+                    APPROVER = "",
+                    APPROVAL_DECISION = "",
+                    APPROVAL_DATE = null
+
+                });
+            }
+
+            return _RDD_APPROVAL_DOC;
+        }
+
+        public DataSet Get_Doc_ApproverList(string ObjectType, string DocKey,string LoginUser)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("Execute RDD_Doc_Approver_List @ObjectType=" + ObjectType + ",@DocKey=" + DocKey + ",@LoginUser='"+ LoginUser+"'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataSet Get_Doc_ApproverAction(string ID, string Template_ID, string ObjectType, string DocKey, string Approver, string Action, string Remark, DateTime ApprovalDate)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("Execute RDD_Doc_Approver_Action @ID=" + ID + ",@Template_ID=" + Template_ID + ",@ObjectType=" + ObjectType + ",@DocKey=" + DocKey + ",@Approver='" + Approver + "',@ApproverAction='" + Action + "',@ApproverRemark='" + Remark + "', @ApprovedDate='" + ApprovalDate + "'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }
