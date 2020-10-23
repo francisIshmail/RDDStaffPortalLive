@@ -793,6 +793,14 @@
     <Content Include="Areas\DailyReports\Views\DSR_DailySales\GetRDD_DailySalesReports.cshtml" />
     <Content Include="Areas\DailyReports\Views\DSR_DailySales\DailySalesComments.cshtml" />
     <Content Include="Areas\DailyReports\Views\DSR_ReportingFreqTarget\DSR_Report.cshtml" />
+    <Content Include="Areas\Marketing\Views\MarketingPlan\Index.cshtml" />
+    <Content Include="Areas\Marketing\Views\web.config" />
+    <Content Include="Areas\Targets\Views\CountryTarget\Index.cshtml" />
+    <Content Include="Areas\Targets\Views\Forecast\Index.cshtml" />
+    <Content Include="Areas\Targets\Views\SalesPersonTarget\Index.cshtml" />
+    <Content Include="Areas\Targets\Views\web.config" />
+    <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_PV\VIEWRDDPV.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -905,9 +913,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28983/</IISUrl>
+          <IISUrl>http://localhost:28986/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28983/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28986/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

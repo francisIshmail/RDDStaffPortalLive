@@ -120,8 +120,18 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                  ds = EmpDbOp.GetDrop2(username, EmployeeId);
                 // DataSet ds1 = Db.myGetDS("exec RDD_UpdateEmployeeLogin");
-             //   DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
-                string name = ds.Tables[0].Rows[0]["LoginName"].ToString();
+                //   DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
+                string name = "";
+                try
+                {
+                     name= ds.Tables[0].Rows[0]["LoginName"].ToString();
+                }
+                catch (Exception)
+                {
+
+                    name = "Inavalid";
+                }
+                
                 
                 if (username.ToLower() == name.ToLower())
                 {

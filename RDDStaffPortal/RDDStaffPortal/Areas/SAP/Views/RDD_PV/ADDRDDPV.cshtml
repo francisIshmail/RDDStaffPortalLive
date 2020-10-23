@@ -6,21 +6,25 @@
 
 <div class="card-body smform-section">
     <div class="row">
+        @Html.HiddenFor(m => m.Doc_Object)
         @Html.HiddenFor(m => m.EditFlag, true)
-        @Html.HiddenFor(m=>m.PVId)
+        @Html.HiddenFor(m => m.PVId)
+        @Html.HiddenFor(m => m.IsDraft)
+        @Html.Hidden(string.Concat("ViewMode"), false)
+
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Country :</label>
+            <div id="div-Country" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Country </label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control form-control-sm dropcheck" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Database :</label>
+            <div id="div-DBName" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Database </label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.DBName, Model.DBNameList, new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(m => m.DBName, Model.DBNameList, new { @class = "form-control form-control-sm dropcheck" })
                 </div>
 
 
@@ -29,68 +33,69 @@
 
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Ref No. :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Ref No. </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.RefNo, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(m => m.RefNo, new { @class = "form-control form-control-sm", @disabled = "disabled" })
                 </div>
             </div>
         </div>
         @{var k = new SelectList(
-          new List<SelectListItem>
-          {
+              new List<SelectListItem>
+              {
             new SelectListItem {Text = "Internal", Value = "Internal"},
             new SelectListItem {Text = "Vendor", Value = "Vendor"},
-          }, "Value", "Text"); 
-          
-          }
+              }, "Value", "Text");
+
+        }
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Type :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Type </label>
                 <div class="col-md-8 p-0">
                     @Html.DropDownListFor(m => m.VType, k, new { @class = "form-control form-control-sm" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Employee :</label>
+            <div id="div-VendorEmployee" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px" id="lblemp">Employee </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.VendorEmployee, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(m => m.VendorEmployee, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Name cannot be longer than 50 characters.", @data_val_length_max = "50" })
+                    @Html.HiddenFor(m => m.VendorCode)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-DocStatus" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Status </label>
+                <div class="col-md-8 p-0">
+                    @Html.DropDownListFor(m => m.DocStatus, Model.VTypeList, new { @class = "form-control form-control-sm dropcheck" })
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Currency" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Currency </label>
+                <div class="col-md-8 p-0">
+                    @Html.DropDownListFor(m => m.Currency, Model.CurrencyList, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Benificiary" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Benificiary </label>
+                <div class="col-md-8 p-0">
+                    @Html.TextBoxFor(m => m.Benificiary, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Benificiary cannot be longer than 50 characters.", @data_val_length_max = "50" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Voucher Status :</label>
-                <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.DocStatus, Model.VTypeList, new { @class = "form-control form-control-sm" })
-                   
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Currency :</label>
-                <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.Currency,Model.CurrencyList, new { @class = "form-control form-control-sm" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Benificiary :</label>
-                <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.Benificiary, new { @class = "form-control form-control-sm" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Payment Req. Date :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Payment Req. Date </label>
                 <div class="col-md-8 p-0">
                     <div class="input-group">
                         @Html.TextBox(string.Concat("PayRequestDate", 1), count, new { @class = "form-control form-control-sm datepickerH" })
-                        @Html.HiddenFor(m=>m.PayRequestDate)
+                        @Html.HiddenFor(m => m.PayRequestDate)
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="far fa-calendar-alt"></i>
@@ -101,25 +106,25 @@
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Requested Amt. :</label>
+            <div id="div-RequestedAmt" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Requested Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.RequestedAmt, new { @class = "form-control form-control-sm", @type = "number" })
+                    @Html.TextBoxFor(m => m.RequestedAmt, new { @class = "form-control form-control-sm txtcheck txtmax number", @data_val = "true", @data_val_length = "Request Amt cannot be longer than 13 characters.", @data_val_length_max = "13" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-PayMethod" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Method </label>
+                <div class="col-md-8 p-0">
+                    @Html.DropDownListFor(m => m.PayMethod, Model.PayMethList, new { @class = "form-control form-control-sm dropcheck" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Method :</label>
-                <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.PayMethod, Model.PayMethList, new { @class = "form-control form-control-sm" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Ref. Img. :</label>
-                <div class="col-md-5 p-0">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px" id="lblChequeImage">Pay Ref. Img. </label>
+                <div class="col-md-7 p-0">
                     <div class="file-upload">
                         <div class="file-select">
                             <div class="file-select-button" id="fileName"><i class="fas fa-paperclip"></i> File</div>
@@ -134,28 +139,28 @@
                 </div>
                 <div class="col-md-1 p-0">
                     <a id="FilePathview" class="fa fa-eye"></a>
-                    </div>
                 </div>
             </div>
+        </div>
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved Amt. :</label>
+            <div id="div-ApprovedAmt" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.ApprovedAmt, new { @class = "form-control form-control-sm", @type = "number" })
+                    @Html.TextBoxFor(m => m.ApprovedAmt, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Approve Amt cannot be longer than 13 characters.", @data_val_length_max = "13", @readonly = "true", @type = "number" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-PayRefNo" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px" id="lblChequeNo">Pay Ref. No. </label>
+                <div class="col-md-8 p-0">
+                    @Html.TextBoxFor(m => m.PayRefNo, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Pay Ref No cannot be longer than 500 characters.", @data_val_length_max = "500" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-4">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Ref. No. :</label>
-                <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.PayRefNo, new { @class = "form-control form-control-sm" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Pay Ref. Date. :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px" id="lblChequeDate">Pay Ref. Date. </label>
                 <div class="col-md-8 p-0">
                     <div class="input-group">
                         @Html.TextBox(string.Concat("PayDate", 1), count, new { @class = "form-control form-control-sm datepickerH" })
@@ -166,43 +171,45 @@
                             </span>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </div>
         </div>
         <div class="col-md-6 col-lg-4">
 
         </div>
         <div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Bank Name :</label>
+            <div id="div-BankName" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Bank Name </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Bank Name cannot be longer than 500 characters.", @data_val_length_max = "500" })
+                    @Html.HiddenFor(m => m.BankCode)
+                    @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-4" id="Div1-Approval">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Created By :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approval Status </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(m => m.ApprovalStatus, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-8">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Being Payment of :</label>
+            <div id="div-BeingPayOf" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Being Payment of </label>
                 <div class="col-md-10 p-0">
-                    @Html.TextBoxFor(m => m.BeingPayOf, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(m => m.BeingPayOf, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "BeingofPay cannot be longer than 500 characters.", @data_val_length_max = "500" })
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-4" id="Div1-ApprovedBy">
             <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Created No. :</label>
+                <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved By  </label>
                 <div class="col-md-8 p-0">
                     <div class="input-group">
-                        @Html.TextBoxFor(m => m.PayRefNo, new { @class = "form-control form-control-sm" })
-                       
+                        @Html.TextBoxFor(m => m.AprovedBy, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                        @Html.HiddenFor(m => m.CreatedBy)
                     </div>
                 </div>
             </div>
@@ -210,40 +217,45 @@
     </div>
 </div>
 <div class="row creditlimit">
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Vendor Ageing Report</h5>
-    </div>
-    <div class="table-responsive">
-        <div class="quick-scroll scrollbar-inner">
-            <div class="reddotTable sm-form mar-t0">
-                <div class="reddotTableBody">
-                    <div class="reddotTableRow odd-even-row">
-                        <div class="reddotTableHead"><div>Balance</div></div>
-                        <div class="reddotTableHead"><div>0 - 30</div></div>
-                        <div class="reddotTableHead"><div>31 - 45</div></div>
-                        <div class="reddotTableHead"><div>46 - 60</div></div>
-                        <div class="reddotTableHead"><div>61 - 90</div></div>
-                        <div class="reddotTableHead"><div>91 - 120</div></div>
-                        <div class="reddotTableHead"><div>120</div></div>
-                    </div>
-                </div>
-                <div class="reddotTableBody">
-                    <div class="reddotTableRow odd-even-row">
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                        <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="" disabled></div></div>
-                    </div>
-
-                </div>
-
-            </div>
+    
+    <div class="col-sm-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Vendor Ageing Report</h5>
         </div>
+    </div>
+    <div class="col-sm-10">
+        <div class="table-responsive">
+            <div class="quick-scroll scrollbar-inner">
+                <div class="reddotTable sm-form mar-t0">
+                    <div class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead"><div>Balance</div></div>
+                            <div class="reddotTableHead"><div>0 - 30</div></div>
+                            <div class="reddotTableHead"><div>31 - 45</div></div>
+                            <div class="reddotTableHead"><div>46 - 60</div></div>
+                            <div class="reddotTableHead"><div>61 - 90</div></div>
+                            <div class="reddotTableHead"><div>91 - 120</div></div>
+                            <div class="reddotTableHead"><div>121+</div></div>
+                        </div>
+                    </div>
+                    <div id="IIIbody" class="reddotTableBody">
+                        <div id="IIIst" class="reddotTableRow odd-even-row">
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txtbal" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt0" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt31" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt46" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt61" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt91" disabled></div></div>
+                            <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm text-right" value="0" id="txt121" disabled></div></div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
 
 
+        </div>
     </div>
 </div>
 
@@ -254,12 +266,12 @@
                 <div id="IInd" class="reddotTableBody">
                     <div class="reddotTableRow odd-even-row">
                         <div class="reddotTableHead width5per"><div>Sr. No.</div></div>
-                        <div class="reddotTableHead width8per"><div>Date</div></div>
-                        <div class="reddotTableHead width15per"><div>Description</div></div>
-                        <div class="reddotTableHead width8per"><div>Amount</div></div>
-                        <div class="reddotTableHead width15per"><div>Remark</div></div>
+                        <div class="reddotTableHead width10per"><div>Date</div></div>
+                        <div class="reddotTableHead width25per"><div>Description</div></div>
+                        <div class="reddotTableHead width10per"><div>Amount</div></div>
+                        <div class="reddotTableHead width25per"><div>Remarks</div></div>
                         <div class="reddotTableHead width15per"><div>View</div></div>
-                        <div class="reddotTableHead width15per"><div>Add Attechment</div></div>
+                        <div class="reddotTableHead width25per"><div>Add Attechment</div></div>
                         <div class="reddotTableHead width7per"><div>Action</div></div>
                     </div>
                 </div>
@@ -272,13 +284,13 @@
                         for (int i = 0; i < Model.RDD_PVLinesDetails.Count(); i++)
                         {
                             <div id="IIst" class="reddotTableRow odd-even-row PVLines">
-                                <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("LineRefNo", count), count, new { @readonly = "readonly" })
+                                <div class="reddotTableCell  Abcd"> <div> @Html.TextBox(string.Concat("LineRefNo", count), count, new { @readonly = "readonly", @class = "form-control form-control-sm" })
                                        @Html.Hidden(string.Concat("PVLineId", count), Model.RDD_PVLinesDetails[count-1].PVLineId.ToString())</div> </div>
                                 <div class="reddotTableCell Abcd"> <div>  @Html.TextBox(string.Concat("Date1", count), "", new { @class = "form-control form-control-sm datepicker" })
                                        @Html.Hidden(string.Concat("hdnDate1", count), Model.RDD_PVLinesDetails[count - 1].Date.ToString())
                                        </div> </div>
                                 <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("Description", count), Model.RDD_PVLinesDetails[count-1].Description.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
-                                <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), Model.RDD_PVLinesDetails[count-1].Amount.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
+                                <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), Model.RDD_PVLinesDetails[count-1].Amount.ToString(), new { @class = "form-control form-control-sm number" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Remarks", count), Model.RDD_PVLinesDetails[count-1].Remarks.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
                                 <div class="reddotTableCell text-left Abcd"><div><a class="fas fa-eye" href="" target="_blank"></a> <label id="lblDocname">Document Name</label>@Html.Hidden(string.Concat("hdnFileURLInput", count), "")</div></div>
                                 <div class="reddotTableCell Abcd">
@@ -301,10 +313,10 @@
                     }
 
                     <div id="IIst" class="reddotTableRow odd-even-row PVLines">
-                        <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("LineRefNo", count), count, new { @readonly = "readonly" })</div> </div>
+                        <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("LineRefNo", count), count, new { @readonly = "readonly", @class = "form-control form-control-sm" })</div> </div>
                         <div class="reddotTableCell Abcd"> <div>  @Html.TextBox(string.Concat("Date1", count), "", new { @class = "form-control form-control-sm datepicker" })</div> </div>
                         <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("Description", count), "", new { @class = "form-control form-control-sm" })</div> </div>
-                        <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), "", new { @class = "form-control form-control-sm", @type = "number" })</div> </div>
+                        <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), "", new { @class = "form-control form-control-sm number"})</div> </div>
                         <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Remarks", count), "", new { @class = "form-control form-control-sm" })</div> </div>
                         <div class="reddotTableCell text-left Abcd">
                             <div>
@@ -348,6 +360,10 @@
 
 
     </div>
+    <div class="row">
+        <br />
+        <br />
+    </div>
 </div>
 
 <div class="modal fade" id="DocumentviewPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
@@ -367,7 +383,7 @@
         </div>
     </div>
 </div>
-
+<div id="Divid"></div>
 <!-- DateTimePicker -->
 
 
@@ -379,7 +395,9 @@
 <script>
     $(document).ready(function () {
         $(".loader1").show();
+        debugger
        OperationPV.initialize();      
         $(".loader1").hide();
+        
     });
 </script>
