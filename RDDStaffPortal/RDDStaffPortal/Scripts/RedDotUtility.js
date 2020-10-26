@@ -9,8 +9,9 @@
         '<div class="modal-dialog">' +
         '<div class="modal-content">' +
         '<div class="modal-header">' +
-        '<button type="button" class="close" onclick="closeModal()">×</button>' +
-        '<h4 class="modal-title">Modal Header</h4>' +
+        '<h4 class="modal-title">Approval Request</h4>' +
+        '<button type="button" class="close" data-dismiss="modal"">×</button>' +
+        
         '</div>' +
         '<div class="modal-body">' +
         '<div class="row">' +
@@ -105,7 +106,7 @@
         '</div>' +
         '<div class="modal-footer">' +
         '<button type="button" id="btnApproval" class="btn btn-info btn-sm">send</button>' +
-        '<button type="button" id="btnAppCancel" class="btn btn-default btn-sm" >cancel</button>' +
+        '<button type="button" id="btnAppCancel" class="btn btn-default btn-sm" data-dismiss="modal">cancel</button>' +
        
         '</div>' +
 
@@ -115,34 +116,49 @@
     //#endregion
 
     var CheckApproval = false;
+    try {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: data,
+            url: "/GetApprovalModal",
+            dataType: 'Json',
+            contentType: "Application/json",
 
-    $.ajax({
-        async: false,
-        cache: false,
-        type: "POST",
-        data: data,
-        url: "/GetApprovalModal",
-        dataType: 'Json',
-        contentType: "Application/json",
+            success: function (response) {
+                debugger
+                if (response.Table.length != 0) {
+                    CheckApproval = true;
+                    $("#MDescription").val(response.Table[0].Description)
+                    $("#MDocumentName").val(response.Table[0].DocumentName)
+                    $("#MObjType").val(response.Table[0].ObjType)
+                    $("#MTemplate_Id").val(response.Table[0].Template_Id)
 
-        success: function (response) {
-            debugger
-            if (response.Table.length != 0) {
-                CheckApproval = true;
-                $("#MDescription").val(response.Table[0].Description)
-                $("#MDocumentName").val(response.Table[0].DocumentName)
-                $("#MObjType").val(response.Table[0].ObjType)
-                $("#MTemplate_Id").val(response.Table[0].Template_Id)
+                    $("#MOriginator").val(response.Table[0].Originator)
+                    $("#MOriginator_Id").val(response.Table[0].Originator_Id)
+                    $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
+                }
 
-                $("#MOriginator").val(response.Table[0].Originator)
-                $("#MOriginator_Id").val(response.Table[0].Originator_Id)
-                $("#Mno_of_approvals").val(response.Table[0].no_of_approvals)
             }
-           
-        }
-    });
+        });
+
+    } catch (e) {
+
+    }
+    
     return CheckApproval;
    
+}
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }
 
 function RdotAlertdele(code) {
@@ -968,6 +984,7 @@ function RedDot_Button_Init_HideShow() {
     $("#btnAdd").show();
     $("#btnSave").hide();
     $("#btnCancel").hide();
+    $("#btnDelete").hide();
     $("#btnSendMail").hide();
     $("#tblid").show();
     $("#tblid1").show();
@@ -977,6 +994,7 @@ function RedDot_Button_New_HideShow() {
     $("#btnAdd").hide();
     $("#btnSave").show();
     $("#btnCancel").show();
+    $("#btnDelete").show();   
     $("#btnSendMail").show();
     $("#tblid").hide();
     $("#tblid1").hide();
@@ -984,7 +1002,7 @@ function RedDot_Button_New_HideShow() {
 }
 
 
-function RedDot_Table_Attribute(tr, tblDt, count1, tblclass) {
+function RedDot_Table_Attribute(tr, tblDt, count1, tblclass, hdnid) {
     var i = 0;
     $(tblclass).each(function () {
         while (tblDt.length > i) {
@@ -1215,7 +1233,7 @@ function RedDot_DateRange_Min_Max(id,min1,max1) {
         startDate: startMin,
         endDate: nowMax,
         maxDate: nowMax,
-        minDate: nowMin,        
+       // minDate: nowMin,        
         singleDatePicker: true,
         //isInvalidDate: function (date) {
         //    //return true if date is sunday or saturday
@@ -1226,6 +1244,16 @@ function RedDot_DateRange_Min_Max(id,min1,max1) {
 
     cb(start, end);
 
+}
+set_picker_start_end = (picker, when) => {
+
+    let m = (when == 'now') ? moment() : moment(when) //moment
+
+    let week_start = m.startOf('isoweek')
+    let week_end = m.clone().endOf('isoweek')
+
+    picker.setStartDate(week_start);
+    picker.setEndDate(week_end);
 }
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
@@ -1251,6 +1279,7 @@ function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     }
 
     $('#' + id + '').daterangepicker({
+        autoApply: true,
         startDate: startMin,
         endDate: nowMax,
         maxDate: nowMax,

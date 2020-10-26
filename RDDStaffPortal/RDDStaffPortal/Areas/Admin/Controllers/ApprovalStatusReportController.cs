@@ -20,31 +20,31 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         RDD_Approval_TemplatesDBOperation RDD_Approval_TemplatesDBOperation = new RDD_Approval_TemplatesDBOperation();
         public ActionResult Index()
         {
-            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            //Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-            DataSet DS = Db.myGetDS("EXEC RDD_DOC_Get_Originator_List ");
-            List<RDD_APPROVAL_DOC> ddlOriginatorList = new List<RDD_APPROVAL_DOC>();
-            if (DS.Tables.Count > 0)
-            {
-                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
-                {
-                    RDD_APPROVAL_DOC OriginatorList = new RDD_APPROVAL_DOC();
-                    OriginatorList.ORIGINATORCode = DS.Tables[0].Rows[i]["Originator"].ToString();
-                    OriginatorList.ORIGINATOR = DS.Tables[0].Rows[i]["OriginatorName"].ToString();
-                    ddlOriginatorList.Add(OriginatorList);
+            //DataSet DS = Db.myGetDS("EXEC RDD_DOC_Get_Originator_List ");
+            //List<RDD_APPROVAL_DOC> ddlOriginatorList = new List<RDD_APPROVAL_DOC>();
+            //if (DS.Tables.Count > 0)
+            //{
+            //    for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+            //    {
+            //        RDD_APPROVAL_DOC OriginatorList = new RDD_APPROVAL_DOC();
+            //        OriginatorList.ORIGINATORCode = DS.Tables[0].Rows[i]["Originator"].ToString();
+            //        OriginatorList.ORIGINATOR = DS.Tables[0].Rows[i]["OriginatorName"].ToString();
+            //        ddlOriginatorList.Add(OriginatorList);
 
-                }
-            }
-            ViewBag.ddlOriginatorList = new SelectList(ddlOriginatorList, "ORIGINATORCode", "ORIGINATOR");
+            //    }
+            //}
+            //ViewBag.ddlOriginatorList = new SelectList(ddlOriginatorList, "ORIGINATORCode", "ORIGINATOR");
 
             return View();
         }
 
         [Route("Get_ApprovalDoc_List")]
-        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch)
+        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch,string Objtype)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
-            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch);
+            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch, Objtype);
             return Json(new { data = _RDD_APPROVAL_DOC }, JsonRequestBehavior.AllowGet);
         }
 
@@ -78,6 +78,28 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             try
             {
                 DS = RDD_Approval_TemplatesDBOperation.Get_Doc_ApproverAction(ID,Template_ID,ObjectType, DocKey, Approver, Action,Remark,ApprovalDate);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Route("GetApprovalFill")]
+        public ActionResult Get_Approver()
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = RDD_Approval_TemplatesDBOperation.GetFillRadioButton();
 
                 if (DS.Tables.Count > 0)
                 {

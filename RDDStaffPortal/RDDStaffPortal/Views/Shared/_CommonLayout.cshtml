@@ -18,7 +18,6 @@
 
     <link rel="stylesheet" href="~/Scripts/multiselect/multiselect.css" type="text/css">
 
-    @*<link href="~/Content/demo.css" rel="stylesheet" />*@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="~/Content/reddot.css">
@@ -217,6 +216,7 @@
                                         </div>
                                     </li>
                                     <li>
+
                                         <div class="dropdown-divider"></div>
                                         @*<a class="dropdown-item" href="/HR/Employees/ViewProfile">My Profile</a>*@
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ChangePasswordPopup">Change Password</a>
@@ -690,6 +690,7 @@
             </div>
         </div>
     </div>
+  
     @*<div id="dialogID">
         Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
         Do you want to stay signed in?
@@ -781,10 +782,10 @@
 
         $(document).ready(function () {
             debugger
-            
-           
-               
-            
+
+
+
+
 
         $('a.collapsed das').on("click", function () {
             debugger;
@@ -849,7 +850,7 @@
                             //  RdotAlerterrtxt(response.ErrorMsg);
                         }
                     }, complete: function () {
-                        
+
                         $(document).ready(function () {
                             $('.scrollbar-inner').scrollbar();
                         });
@@ -984,8 +985,19 @@
         })
 
             var pathname = window.location.pathname;
-            if (pathname !== '/Dashboard/ErrorPage') {
-                
+            debugger
+
+
+
+            if (pathname == "/HR/Employees" ) {
+                var useremail = $("#Email").val();
+                var username = useremail.substring(0, useremail.lastIndexOf("@@"));
+                if (username !==  @HttpContext.Current.User.Identity.Name) {
+                    RedtDot_CheckAuthorization(pathname);
+                }
+            }
+            else if (pathname !== '/Dashboard/ErrorPage') {
+
                 RedtDot_CheckAuthorization(pathname);
             }
         //$('#ulid li').removeAttr('class','');
@@ -1032,10 +1044,16 @@
 
         }
         </script>
-    <style>
-        .demo-scrollbar {
-            height: 300px;
-        }
+        <style>
+            .demo-scrollbar {
+                height: 300px;
+            }
+
+            
+            .colHide {
+                display: none;
+            }
+        
     </style>
 
 </body>

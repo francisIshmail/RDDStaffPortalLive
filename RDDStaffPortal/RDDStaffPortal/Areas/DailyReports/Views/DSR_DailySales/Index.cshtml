@@ -36,6 +36,10 @@
                                     Please configure Report Frequency..
 
                                 </span>
+                                <span style="color:red;" id="lblerror2">
+                                    No Record Found..
+
+                                </span>
                                 <div class="col-md-1 ml-auto text-right">
                                     <div id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
                                         <div class="span-mode"></div>
@@ -374,6 +378,8 @@
 <script src="~/Scripts/RedDotUtility.js"></script>
 <script>
     $(document).ready(function () {
+        var nowdate;
+        var sdate=new Date();
         try {
           $(".required-label").hide();
             function Isdraftmode() {
@@ -381,8 +387,23 @@
                 if ($("[id^='IsDraft-']").length > 1) {
                     t = 1;
                 }
-                if ($("[id^='IsDraft-'").eq(t).val() == 'False') {
-                    $(".required-label").show();
+               
+                $("#lblerror2").hide();
+                $("#lblerror1").hide();
+                $(".required-label").hide();
+                debugger
+                if ($("[id^='IsDraft-'").eq(t).val() == 'False' || nowdate > sdate) {
+                    if ($("[id^='IsDraft-'").eq(t).val() == undefined) {
+                        $("#lblerror2").show();  
+                        $("#lblerror2").text("No Record Found..")
+                    } else if (nowdate > sdate) {
+                        $("#lblerror2").show();
+                        $("#lblerror2").text("Only First Previous & Current week ...");
+                    }
+                    else {
+                        $(".required-label").show();
+                        }
+                   
                     $("#pills-home-tab-nobd").hide();
                     $("#pills-profile-tab-nobd").trigger('click');
                     $("#footerEntry").attr('style', 'visibility:hidden');
@@ -390,11 +411,11 @@
                 } else {
                     $("#pills-home-tab-nobd").show();
                     $(".required-label").hide();
-
+                    $("#pills-home-tab-nobd").trigger('click');
                     $("#footerEntry").attr('style', 'visibility:none');
                     $("#footer-det").attr('style', 'visibility:none');
                 }
-                $("#lblerror1").hide();
+               
                 if ($("#ActionType").val() != "DAILY" && $("#ActionType").val() != "WEEKLY") {
                     $("#pills-home-tab-nobd,#pills-home-nobd").hide();
                     $("#pills-profile-tab-nobd").hide();
@@ -418,14 +439,25 @@
                 nowMin1.setDate(nowMin1.getDate() + 1);
                 $("#hdnenddate").val(nowMin1);
                 RedDot_DateRange_Min_Max("reportrange", $("#FromDate").val(), $("#ToDate").val());
+                nowdate = $("#reportrange").data().startDate;
+                nowdate.setDate(nowdate.getDate() - 7);
             }
+
+            $("#reportrange").on('show.daterangepicker', function (ev, picker) {
+
+                let active_cell = picker.container[0].querySelector('td.start-date')
+                active_cell.parentElement.classList.add('active') //tr goes active
+            });
             
             $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                debugger
                 $(".loader1").show();
+                set_picker_start_end(picker, picker.startDate);
                 $("#ActualVisitDate1").val(picker.startDate.format('DD/MM/YYYY'));
                 if ($("#ActionType").val() != "DAILY") {
                     if (new Date($("#FromDate").val()) <= new Date(picker.startDate.format('YYYY-MM-DD'))) {
                         var new_date = new Date($("#FromDate").val());
+                        sdate = new_date;
                         var startMin = moment(new_date, 'YYYY-MM-DD');
                         startMin = new Date(startMin);
                         var startdayMin = ("0" + startMin.getDate()).slice(-2);
@@ -439,14 +471,14 @@
                         $("#hdnstartdate").val(startMin);
                         $("#hdnenddate").val(nowMax);
                     } else {
-                        var new_date = new Date($("#FromDate").val());
-
-                        var startMin = moment(new_date, 'YYYY-MM-DD').add(-7, 'days');
+                        var new_date = new Date(picker.startDate.format('YYYY-MM-DD'));//new Date($("#FromDate").val());
+                        sdate = new_date;
+                        var startMin = moment(new_date, 'YYYY-MM-DD'); //.add(-7, 'days');
                         startMin = new Date(startMin);
                         var startdayMin = ("0" + startMin.getDate()).slice(-2);
                         var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2)
-                        new_date = new Date($("#FromDate").val());
-                        var nowMax = moment(new_date, 'YYYY-MM-DD').add(-1, 'days');
+                        new_date = new Date(picker.endDate.format('YYYY-MM-DD'));//new Date($("#FromDate").val());
+                        var nowMax = moment(new_date, 'YYYY-MM-DD');//.add(-1, 'days');
                         nowMax = new Date(nowMax);
                         var dayMax = ("0" + nowMax.getDate()).slice(-2);
                         var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);

@@ -1,15 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using Newtonsoft.Json;
+using RDDStaffPortal.DAL;
 using RDDStaffPortal.DAL.DailyReports;
 using RDDStaffPortal.DAL.DataModels.DailyReports;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using DataTable = System.Data.DataTable;
 
 namespace RDDStaffPortal.Areas.DailyReports.Controllers
@@ -20,6 +30,7 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
         // GET: DailyReports/DSR
 
         RDD_DailySalesReports_Db_Operation rDD_Daily = new RDD_DailySalesReports_Db_Operation();
+        CommonFunction com = new CommonFunction();
         public ActionResult Index(bool? Status, string erromsg = null)
         {
             //HtmlHelper.ClientValidationEnabled = false;
@@ -318,7 +329,36 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
 
                 i++;
             }
-            return Json(new { data = rDD_Daily.FinalSave(rDD_DailySalesDet) }, JsonRequestBehavior.AllowGet);
+            DataTable dt=ToDataTable(rDD_DailySalesDet);
+
+            MemoryStream ms = DataToExcel(dt);
+            return Json(new { data = rDD_Daily.FinalSave(rDD_DailySalesDet,ms) }, JsonRequestBehavior.AllowGet);
+        }
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
         [Route("DailSalesReportSave")]
         public ActionResult DailSalesReportSave(RDD_DailySalesReports rDD_DailySales)
@@ -580,5 +620,123 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
             return View(rdd);
         }
 
+
+        public MemoryStream DataToExcel(DataTable dt)
+        {
+            //StreamWriter sw = new StreamWriter();
+            System.IO.StringWriter tw = new System.IO.StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(tw);
+            if (dt.Rows.Count > 0)
+            {
+                dt.Columns.Remove("VisitId");               
+                dt.Columns.Remove("ToDate");
+                dt.Columns.Remove("VisitType");
+                dt.Columns.Remove("IsNewPartner");               
+                dt.Columns.Remove("ForwardCallCCEmail");
+                dt.Columns.Remove("Priority");
+                dt.Columns.Remove("IsDraft");
+                dt.Columns.Remove("NextReminderDate");
+                dt.Columns.Remove("DocDraftDate");
+                dt.Columns.Remove("CreatedBy");
+                dt.Columns.Remove("CreatedOn");
+                dt.Columns.Remove("LastUpdatedBy");
+                dt.Columns.Remove("LastUpdatedOn");
+                dt.Columns.Remove("IsActive");                
+                dt.Columns.Remove("IsRead");
+                dt.Columns.Remove("ReportReadBy");
+                dt.Columns.Remove("ReportReadOn");
+                dt.Columns.Remove("Comments");
+                dt.Columns.Remove("ActualVisitDate");
+                dt.Columns.Remove("IsRptSentToManager");               
+                dt.Columns.Remove("EditFlag");
+                dt.Columns.Remove("SaveFlag");
+                dt.Columns.Remove("ActionType");
+                dt.Columns.Remove("ErrorMsg");
+                dt.Columns.Remove("FromDate");
+                dt.Columns.Remove("ModeOfCallList");
+                dt.Columns.Remove("NextActionList");
+                //dt.Columns.Remove("ModeOfCallList");
+                dt.Columns.Remove("CallStatusList");
+                dt.Columns.Remove("CompanyList");
+                dt.Columns.Remove("CountryList");
+                dt.Columns.Add("DateStr");
+                dt.Columns.Add("DateStr1");
+                dt.Columns.Add("DateStr2",typeof(double));
+                dt.Columns.Add("DateStr3",typeof(string));
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["DateStr"] = string.Format("{0:dd-MMM-yyyy}", dr["VisitDate"]);
+                    dr["DateStr1"] = string.Format("{0:dd-MMM-yyyy}", dr["ReminderDate"]);
+                    dr["DateStr2"] =  dr["ExpectedBusinessAmt"];
+                    dr["DateStr3"] = dr["ContactNo"];
+                }
+                dt.Columns.Remove("VisitDate");
+                dt.Columns.Remove("ReminderDate");
+                dt.Columns.Remove("ExpectedBusinessAmt");
+                dt.Columns.Remove("ContactNo");
+                dt.Columns["DateStr"].ColumnName = "VisitDate";
+                dt.Columns["DateStr1"].ColumnName = "ReminderDate";
+                dt.Columns["DateStr2"].ColumnName = "Biz Amt";
+                dt.Columns["DateStr3"].ColumnName = "ContactNo";
+                dt.Columns["Country"].SetOrdinal(0);
+                dt.Columns["VisitDate"].SetOrdinal(1);
+                dt.Columns["ModeOfCall"].SetOrdinal(2);
+                dt.Columns["CallStatus"].SetOrdinal(3);              
+                dt.Columns["CardCode"].SetOrdinal(4);
+                dt.Columns["Company"].SetOrdinal(5);
+                dt.Columns["PersonMet"].SetOrdinal(6);
+                dt.Columns["Email"].SetOrdinal(7);
+                dt.Columns["Designation"].SetOrdinal(8);
+                dt.Columns["ContactNo"].SetOrdinal(9);
+                dt.Columns["BU"].SetOrdinal(10);
+                dt.Columns["Discussion"].SetOrdinal(11);
+                dt.Columns["Biz Amt"].SetOrdinal(12);
+                dt.Columns["NextAction"].SetOrdinal(13);
+                dt.Columns["Feedback"].SetOrdinal(14);
+                dt.Columns["ForwardCallToEmail"].SetOrdinal(15);
+                dt.Columns["ForwardRemark"].SetOrdinal(16);
+
+                dt.Columns["ReminderDate"].SetOrdinal(17);
+                dt.Columns["ReminderDesc"].SetOrdinal(18);
+
+                dt.Columns["CallStatus"].ColumnName = "Call Type";
+                dt.Columns["ModeOfCall"].ColumnName = "Call Mode";
+                dt.Columns["Company"].ColumnName = "Customer";
+                dt.Columns["PersonMet"].ColumnName = "Contact Person";
+
+                dt.Columns["NextAction"].ColumnName = "Next Action";
+                dt.Columns["ForwardCallToEmail"].ColumnName = "ForwardCallTo";
+                dt.Columns["ForwardRemark"].ColumnName = "Forward Remark";
+                dt.Columns["ReminderDate"].ColumnName = "Reminder Date";
+                dt.Columns["ReminderDesc"].ColumnName = "Reminder Desc";
+
+                dt.AcceptChanges();
+
+
+                DataGrid dgGrid = new DataGrid();
+                dgGrid.DataSource = dt;
+                dgGrid.DataBind();
+                dgGrid.HeaderStyle.Font.Bold = true;
+                dgGrid.HeaderStyle.BackColor = Color.Yellow;
+                //Get the HTML for the control.
+                dgGrid.RenderControl(hw);
+                //Write the HTML back to the browser.
+                //Response.ContentType = application/vnd.ms-excel;
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.ContentEncoding = System.Text.Encoding.Default;
+               
+            }
+            MemoryStream s = new MemoryStream();
+            System.Text.Encoding Enc = System.Text.Encoding.Default;
+            byte[] mBArray = Enc.GetBytes(tw.ToString());
+            s = new MemoryStream(mBArray, false);
+
+            return s;
+        }
+        
+
     }
+   
 }

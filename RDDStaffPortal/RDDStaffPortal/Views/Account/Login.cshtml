@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+@using System.Web.Optimization;
 
 <html lang="en">
 <head>
@@ -11,9 +12,9 @@
     <link rel="icon" href="~/img/reddot.ico" type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="~/js/plugin/webfont/webfont.min.js"></script>
-    <script src="~/js/jquery-1.2.6.min.js"></script>
-
+    @*<script src="~/js/plugin/webfont/webfont.min.js"></script>
+    <script src="~/js/jquery-1.2.6.min.js"></script>*@
+    @Scripts.Render("~/JS/LoginHeaderJs");
     <script type="text/javascript">
 
         function slideSwitch() {
@@ -40,18 +41,19 @@
         }
 
         $(function () {
-            setInterval("slideSwitch()", 2000);
+           // setInterval("slideSwitch()", 2000);
         });
 
     </script>
 
+    @Styles.Render("~/CSS/logincss");
     <!-- CSS Files -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/atlantis.min.css" rel="stylesheet" />
-    <link href="~/Content/fonts.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts.min.css" rel="stylesheet" />*@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="~/Content/reddot.css" rel="stylesheet" />
+    @*<link href="~/Content/reddot.css" rel="stylesheet" />*@
 </head>
 
 <body>
@@ -168,9 +170,11 @@
             
         </div>
 
-        <script src="~/js/core/jquery.3.2.1.min.js"></script>
+        @Scripts.Render("~/JS/LoginFooterJs");
+        @*<script src="~/js/core/jquery.3.2.1.min.js"></script>
         <script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
-        <script src="~/Scripts/RedDotUtility.js"></script>
+        <script src="~/Scripts/RedDotUtility.js"></script>*@
+
         <script>
             $(".loader1").hide();
             $("#ForgetPassword").click(function () {
