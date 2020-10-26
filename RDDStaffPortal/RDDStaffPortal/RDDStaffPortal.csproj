@@ -706,6 +706,8 @@
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.js" />
     <Content Include="Scripts\multiselect\multiselect.css" />
