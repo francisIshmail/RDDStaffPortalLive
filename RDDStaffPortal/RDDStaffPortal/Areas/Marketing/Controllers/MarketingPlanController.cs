@@ -10,8 +10,6 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using RDDStaffPortal.DAL.DataModels;
-using RDDStaffPortal.DAL.InitialSetup;
 namespace RDDStaffPortal.Areas.Marketing.Controllers
 {
     public class MarketingPlanController : Controller
@@ -25,6 +23,7 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
 
             return View();
         }
+
 
         public JsonResult GetCountry()
         {
@@ -55,10 +54,11 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
         }
         [HttpPost]
         public ActionResult SavePlan(string maintab, List<MarketingPlanLines> mainrowtab, HttpPostedFileBase files)//string fdata, List<MarketingPlanLines> subdata)
+                                                                                                                   //  public JsonResult SavePlan(string model, string model1, HttpPostedFileBase files)//string fdata, List<MarketingPlanLines> subdata)
         {
             string usernm = User.Identity.Name;
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            string result = string.Empty;
+            string result1 = string.Empty;
             string maindt = Request.Form["maintab"].ToString();
             string subrow = Request.Form["mainrowtab"].ToString();
             JavaScriptSerializer jss = new JavaScriptSerializer();
@@ -67,7 +67,7 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             try
             {
 
-                result = MarketingDbOp.SaveMaketingPlan(datum, sbdata, usernm);
+                result1 = MarketingDbOp.SaveMaketingPlan(datum, sbdata, usernm);
                 string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + datum.RefNo);
                 HttpFileCollectionBase f = Request.Files;
                 var httpContext = System.Web.HttpContext.Current;
@@ -85,6 +85,8 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                 }
 
                 TempData["Msg"] = "Record Saved Successfully";
+                TempData["Val"] = result1;
+                TempData["Originator"] = usernm;
             }
             catch (Exception ex)
             {
@@ -92,17 +94,27 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                 TempData["Msg"] = "Error occured :" + ex.Message;
             }
             //  return RedirectToAction("Index", "SalesPersonTarget", new { area = "Targets" });
-            //  return Json(result, JsonRequestBehavior.AllowGet);
-            return RedirectToAction("Index", "MarketingPlan");
+            var result = new
+            {
+                msg = "True",
+                user = usernm,
+                id = result1,
+
+            };
+            return Json(result);// new { result =result, url = Url.Action("Index", "MarketingPlan") });// (result, JsonRequestBehavior.AllowGet);
+                                //  return RedirectToAction("Index", "MarketingPlan", new { area = "Marketing" });
         }
 
         public JsonResult GetFilteredData(string Country, string fund, string BU, string status, string Fromdt, string Todate)
         {
             //RDD_GetFilterMarketingPlan
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            List<Marketing_SearchData> data = new List<Marketing_SearchData>();
-            data = MarketingDbOp.GetFilList(Country, fund, BU, status, Fromdt, Todate);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            // List<Marketing_SearchData> data = new List<Marketing_SearchData>();
+            //  data = MarketingDbOp.GetFilList(Country, fund, BU, status, Fromdt, Todate);
+            //  return Json(data, JsonRequestBehavior.AllowGet);
+            // List<Marketing_SearchData> data = MarketingDbOp.GetAllList();//w List<Marketing_SearchData>();
+            return Json(new { data = MarketingDbOp.GetFilList(Country, fund, BU, status, Fromdt, Todate) }, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetPlan(string id)
@@ -180,7 +192,7 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
 
         public JsonResult GetAllData()
         {
-           
+
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<Marketing_SearchData> data = MarketingDbOp.GetAllList();//w List<Marketing_SearchData>();
             return Json(new { data = MarketingDbOp.GetAllList() }, JsonRequestBehavior.AllowGet);

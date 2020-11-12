@@ -151,7 +151,7 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
 
    
                 }
-                rslt = "Record Saved Successfully";
+                rslt = result.ToString();
                
             }catch(Exception e)
             {
@@ -246,8 +246,10 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                         _BU.Planid =Convert.ToInt32( dtBU.Rows[i]["PlanId"]);
                         _BU.SourceOfFund= dtBU.Rows[i]["SourceOfFund"].ToString();
                         _BU.CountryName= dtBU.Rows[i]["CountryName"].ToString();
-                        _BU.StartDate= dtBU.Rows[i]["StartDate"].ToString();
-                        _BU.EndDate = dtBU.Rows[i]["EndDate"].ToString();
+                        DateTime dt = Convert.ToDateTime(dtBU.Rows[i]["StartDate"]);
+                        _BU.StartDate= dt.ToString("dd/MM/yyyy");
+                        DateTime dt1 = Convert.ToDateTime(dtBU.Rows[i]["EndDate"]);
+                        _BU.EndDate =dt1 .ToString("dd/MM/yyyy");
                         _BU.Vendor= dtBU.Rows[i]["Vendor"].ToString();
                         _BU.VendorApprovedAmt= dtBU.Rows[i]["VendorApprovedAmt"].ToString();
                         _BU.RDDApprovedAmt= dtBU.Rows[i]["RDDApprovedAmt"].ToString();
@@ -258,7 +260,8 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                         _BU.ApprovedBy= dtBU.Rows[i]["ApprovedBy"].ToString();
                         _BU.planStatus = dtBU.Rows[i]["planStatus"].ToString();
                         _BU.ApprovalStatus= dtBU.Rows[i]["ApprovalStatus"].ToString();
-                        _BU.CreatedOn = dtBU.Rows[i]["CreatedOn"].ToString();
+                        DateTime dt2 = Convert.ToDateTime(dtBU.Rows[i]["CreatedOn"]);
+                        _BU.CreatedOn = dt2.ToString("dd/MM/yyyy");
 
                         _filList.Add(_BU);
                     }
@@ -297,8 +300,10 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                         _BU.Planid = Convert.ToInt32(dtBU.Rows[i]["PlanId"]);
                         _BU.SourceOfFund = dtBU.Rows[i]["SourceOfFund"].ToString();
                         _BU.CountryName = dtBU.Rows[i]["CountryName"].ToString();
-                        _BU.StartDate = dtBU.Rows[i]["StartDate"].ToString();
-                        _BU.EndDate = dtBU.Rows[i]["EndDate"].ToString();
+                        DateTime dt = Convert.ToDateTime(dtBU.Rows[i]["StartDate"]);
+                        _BU.StartDate = dt.ToString("dd/MM/yyyy");
+                        DateTime dt1 = Convert.ToDateTime(dtBU.Rows[i]["EndDate"]);
+                        _BU.EndDate = dt1.ToString("dd/MM/yyyy");
                         _BU.Vendor = dtBU.Rows[i]["Vendor"].ToString();
                         _BU.VendorApprovedAmt = dtBU.Rows[i]["VendorApprovedAmt"].ToString();
                         _BU.RDDApprovedAmt = dtBU.Rows[i]["RDDApprovedAmt"].ToString();
@@ -309,7 +314,8 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                         _BU.ApprovedBy = dtBU.Rows[i]["ApprovedBy"].ToString();
                         _BU.planStatus = dtBU.Rows[i]["planStatus"].ToString();
                         _BU.ApprovalStatus = dtBU.Rows[i]["ApprovalStatus"].ToString();
-                        _BU.CreatedOn = dtBU.Rows[i]["CreatedOn"].ToString();
+                        DateTime dt2 = Convert.ToDateTime(dtBU.Rows[i]["CreatedOn"]);
+                        _BU.CreatedOn = dt2.ToString("dd/MM/yyyy");
 
                         _filList.Add(_BU);
                     }
@@ -360,10 +366,13 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                        // _BU. ApprovedBy = dtCountry.Rows[i]["SourceOfFund"].ToString();
                       //  _BU. ApprovedOn = dtCountry.Rows[i]["SourceOfFund"].ToString();
                         _BU. ApproverRemark = dtCountry.Rows[0]["ApproverRemark"].ToString();
-                        _BU.StartDate = dtCountry.Rows[0]["StartDate"].ToString();
-                        _BU. EndDate = dtCountry.Rows[0]["EndDate"].ToString();
-                       // _BU.IsDraft = dtCountry.Rows[i]["SourceOfFund"].ToString();
-                        _BU.CreatedOn = dtCountry.Rows[0]["CreatedOn"].ToString();
+                        DateTime sdt = Convert.ToDateTime(dtCountry.Rows[0]["StartDate"]);
+                        _BU.StartDate = sdt.ToString("dd/MM/yyyy");
+                        DateTime edt = Convert.ToDateTime(dtCountry.Rows[0]["EndDate"]);
+                        _BU. EndDate = edt.ToString("dd/MM/yyyy");
+                        // _BU.IsDraft = dtCountry.Rows[i]["SourceOfFund"].ToString();
+                        DateTime cdt = Convert.ToDateTime(dtCountry.Rows[0]["CreatedOn"]);
+                        _BU.CreatedOn = cdt.ToString("dd/MM/yyyy");
 
 
 
