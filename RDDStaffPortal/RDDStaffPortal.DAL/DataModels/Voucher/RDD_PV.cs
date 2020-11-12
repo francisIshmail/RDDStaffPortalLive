@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAPbobsCOM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,12 +12,18 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
 {
     public partial class RDD_PV
     {
+        public int Doc_Object { get; set; }
+        public string AprovedBy { get; set; }
+
+        public bool IsDraft { get; set; }
         public string ApprovalStatus { get; set; }
+        public string Approvalby { get; set; }
 
         public string Erormsg { get; set; }
         public bool EditFlag { get; set; }
         public bool SaveFlag { get; set; }
         public int PVId { get; set; }
+        [StringLength(30, ErrorMessage = "Country cannot be longer than 30 characters.")]
         public string Country { get; set; }
         public string RType { get; set; }
         public List<SelectListItem> CountryList { get; set; }
@@ -24,24 +31,34 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
         public string DocStatus { get; set; }
         public string VType { get; set; }
         public List<SelectListItem> VTypeList { get; set; }
+        [StringLength(30, ErrorMessage = "DBName cannot be longer than 30 characters.")]
         public string DBName { get; set; }
 
         public List<SelectListItem> DBNameList { get; set; }
+        [StringLength(30, ErrorMessage = "Currency cannot be longer than 30 characters.")]
         public string Currency { get; set; }
 
         public List<SelectListItem> CurrencyList { get; set; }
         public string VendorCode { get; set; }
+        [StringLength(500, ErrorMessage = "Employee cannot be longer than 500 characters.")]
         public string VendorEmployee { get; set; }
+        [StringLength(500, ErrorMessage = "Benificiary cannot be longer than 500 characters.")]
         public string Benificiary { get; set; }
+        [Range(0, 999999999.99, ErrorMessage = "Request Amt cannot be longer than 9 characters.")]
         public decimal RequestedAmt { get; set; }
+        [Range(0, 999999999.99, ErrorMessage = "Approve Amt  cannot be longer than 9 characters.")]
         public decimal ApprovedAmt { get; set; }
+        [StringLength(500, ErrorMessage = "Being Pay cannot be longer than 500 characters.")]
         public string BeingPayOf { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime? PayRequestDate { get; set; }
         public string BankCode { get; set; }
+        [StringLength(500, ErrorMessage = "Bank Name cannot be longer than 500 characters.")]
         public string BankName { get; set; }
+        [StringLength(30, ErrorMessage = "Pay Method cannot be longer than 500 characters.")]
         public string PayMethod { get; set; }
         public List<SelectListItem> PayMethList { get; set; }
+        [StringLength(500, ErrorMessage = "Being Pay cannot be longer than 500 characters.")]
         public string PayRefNo { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime? PayDate { get; set; }

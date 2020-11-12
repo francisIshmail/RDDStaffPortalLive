@@ -12,19 +12,20 @@
                 <div class="col-md-9 padd-0">
                     <h4 class="page-title">Approval Status Report</h4>
                 </div>
-                <div class="col-md-1 ml-auto text-right">
+                @*<div class="col-md-1 ml-auto text-right">
                     <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
-                </div>
+                </div>*@
 
             </div>
 
-            <div class="rowmin" id="FilterSection" style="display:none">
+            <div class="rowmin" id="FilterSection">
                 <div class="col-md-12">
                     <div class="card success-border full-height padd-10 smform-section">
                         <div class="row">
                             <div class="col-xl-4 col-md-4">
-                                <div class="row">
-                                    <div class="col-xl-6 col-md-6 col-6">
+                              
+                                <div class="row" id="rdbtn">
+                                    @*<div class="col-xl-6 col-md-6 col-6">
                                         <div class="form-check form-check-inline align-items">
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="SalesOrder" name="ApprovalStatus" class="custom-control-input" checked>
@@ -88,6 +89,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="ccol-xl-6 col-md-6 col-6">
+                                        <div class="form-check form-check-inline align-items">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="PaymentVoucher" name="ApprovalStatus" class="custom-control-input">
+                                                <label class="custom-control-label" for="PaymentVoucher">Payment Voucher </label>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="col-xl-8 col-md-8">
@@ -124,13 +133,21 @@
                                     </div>
 
                                 </div>
+                                @{var k = new SelectList(
+new List<SelectListItem>
+{
+            new SelectListItem {Text = "Select", Value = "0"},
+            
+}, "Value", "Text");
+
+                                }
                                 <div class="row">
                                     <div class="col-xl-5 col-md-5">
                                         <div class="form-group form-inline">
                                             <label for="Database" class="col-md-1 col-form-label p-0 width80px">Originator :</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    @Html.DropDownListFor(m => m.ORIGINATOR, ViewBag.ddlOriginatorList as SelectList, new { @id = "cbOriginator", @class = "form-control form-control-sm" })
+                                                    @Html.DropDownListFor(m => m.ORIGINATOR,k , new { @id = "cbOriginator", @class = "form-control form-control-sm" })
 
                                                 </div>
                                             </div>
@@ -192,15 +209,15 @@
                                 <div class="reddotTable sm-form mar-t0">
                                     <div id="IInd" class="reddotTableBody">
                                         <div class="reddotTableRow odd-even-row">
-                                            <div class="reddotTableHead"><div>SRNO</div></div>
-                                            <div class="reddotTableHead"><div>OBJTYPE</div></div>
-                                            <div class="reddotTableHead"><div>DocumentName</div></div>
+                                            <div class="reddotTableHead"><div>Sr No</div></div>
+                                            <div class="reddotTableHead"><div>Obj Type</div></div>
+                                            <div class="reddotTableHead"><div>Doc Name</div></div>
                                             <div class="reddotTableHead"><div>Doc Number</div></div>
-                                            <div class="reddotTableHead"><div>DOC_DATE</div></div>
+                                            <div class="reddotTableHead"><div>Doc Date</div></div>
                                             <div class="reddotTableHead"><div>Customer</div></div>
-                                            <div class="reddotTableHead"><div>Document total</div></div>
+                                            <div class="reddotTableHead"><div>Doc Total</div></div>
                                             <div class="reddotTableHead"><div>Originator</div></div>
-                                            <div class="reddotTableHead"><div>Remark</div></div>
+                                            <div class="reddotTableHead"><div>Remarks</div></div>
                                             <div class="reddotTableHead"><div>Approver</div></div>
                                             <div class="reddotTableHead"><div>Status</div></div>
                                             <div class="reddotTableHead"><div>Approved On</div></div>
@@ -254,7 +271,7 @@
         </div>
     </div>
 </div>
-	</div>
+	
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -387,7 +404,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="ApprovalDecisionPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ApprovalDecisionPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -411,10 +428,10 @@
                     </div>
                     <div id="IIIBody" class="reddotTableBody">
                         <div id="IIIst" class="reddotTableRow odd-even-row ApproverAction">
-                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtID"></div></div>
-                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtTemplate_ID"></div></div>
-                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtObjType"></div></div>
-                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprover"></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtID" readonly></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtTemplate_ID" readonly></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtObjType" readonly></div></div>
+                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprover" readonly></div></div>
                             <div class="reddotTableCell Abcd">
                                 <div>
                                     <select class="form-control form-control-sm" id="cbAction">
@@ -448,7 +465,7 @@
             </div>
             <div class="modal-footer">
                 <button id="btnActionSave" class="btn btn-info btn-sm">Save</button>
-                <button id="btnActionCancel" class="btn btn-danger btn-sm">Cancel</button>
+                <button id="btnActionCancel" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 
@@ -457,15 +474,15 @@
 <div id="Divid">
 
 </div>
+<div id="tab1">
+
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
 
 <script src="~/Scripts/Application/ApproverStatusReport.js" type="text/javascript"></script>
 
-<style>
-    .colHide{display:none;}
-</style>
 
 @*<script>
         $(document).ready(function () {

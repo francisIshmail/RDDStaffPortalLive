@@ -196,7 +196,39 @@ namespace RDDStaffPortal.DAL.Admin
             }
             return str;
         }
+        public List<Outcls1> MailSending(string PVID)
+        {
+            int id = 0;
+            string Erormsg = string.Empty;
+            List<Outcls1> str = new List<Outcls1>();
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] Para = {
+                        new SqlParameter("@p_PVId",PVID),
+                        new SqlParameter("@p_type","MailSending"),
+                        new SqlParameter("@p_id",id),
+                        new SqlParameter("@p_response",Erormsg)
+                };
 
+                    str = Com.ExecuteNonQueryListID("RDD_PV_Insert_Update_Delete", Para);
+
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
         public List<RDD_Approval_Templates> GetALLDATA(string UserName, int pagesize, int pageno, string psearch)
         {
             List<RDD_Approval_Templates> _RDD_Approval = new List<RDD_Approval_Templates>();
@@ -415,20 +447,22 @@ namespace RDDStaffPortal.DAL.Admin
 
         }
 
-        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBName, string ApproverName, int pagesize, int pageno, string psearch)
+        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBNAme, string ApproverName, int pagesize, int pageno, string psearch,string Objtype)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
 
             try
             {
                 SqlParameter[] Para = {
+                    
+                  
                     new SqlParameter("@p_UserName",ApproverName),
                      new SqlParameter("@SearchCriteria ", psearch),
                     new SqlParameter("@p_PageNo", pageno),
                     new SqlParameter("@p_PageSize",pagesize),
                     new SqlParameter("@p_SortColumn", "Template_Id"),
                     new SqlParameter("@p_SortOrder", "ASC"),
-                        new SqlParameter("@p_type","GetAll"),
+                        new SqlParameter("@p_type",Objtype),
 
                 };
                 DataSet dsModules = Com.ExecuteDataSet("RDD_Get_Document_Approval_List", CommandType.StoredProcedure, Para);
@@ -444,7 +478,9 @@ namespace RDDStaffPortal.DAL.Admin
                             OBJTYPE = !string.IsNullOrWhiteSpace(dr["OBJTYPE"].ToString()) ? Convert.ToInt32(dr["OBJTYPE"].ToString()) : 0,
                             DocumentName = !string.IsNullOrWhiteSpace(dr["DocType"].ToString()) ? dr["DocType"].ToString() : "",
                             DOC_ID = !string.IsNullOrWhiteSpace(dr["DocKey"].ToString()) ? Convert.ToInt32(dr["DocKey"].ToString()) : 0,
-                            DOC_DATE = Convert.ToDateTime(dr["DocDate"].ToString()),
+                            DOC_DATE = string.IsNullOrEmpty(dr["DocDate"].ToString())
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(dr["DocDate"].ToString()),
                             CARDNAME = !string.IsNullOrWhiteSpace(dr["CardName"].ToString()) ? dr["CardName"].ToString() : "",
                             DocTotal = !string.IsNullOrWhiteSpace(dr["DocTotal"].ToString()) ? Convert.ToDecimal(dr["DocTotal"].ToString()) : 0,
                             ORIGINATOR = !string.IsNullOrWhiteSpace(dr["ORIGINATOR"].ToString()) ? dr["ORIGINATOR"].ToString() : "",
@@ -498,6 +534,23 @@ namespace RDDStaffPortal.DAL.Admin
             {
                 throw ex;
             }
+        }
+        //"RDD_Approval_Controler_Fill"
+
+        public DataSet GetFillRadioButton()
+        {
+            DataSet ds = null;
+            try
+            {               
+                SqlParameter[] Para = { };
+                ds = Com.ExecuteDataSet("RDD_Approval_Controler_Fill", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
         }
 
         public DataSet Get_Doc_ApproverAction(string ID, string Template_ID, string ObjectType, string DocKey, string Approver, string Action, string Remark, DateTime ApprovalDate)

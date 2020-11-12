@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Net.Mail;
 using System.Transactions;
 using System.Web.Mvc;
 using static RDDStaffPortal.DAL.CommonFunction;
@@ -199,7 +201,7 @@ namespace RDDStaffPortal.DAL.DailyReports
             }
             return outcls;
         }
-        public List<Outcls> FinalSave(List<RDD_DailySalesReports> rDD_DailySales)
+        public List<Outcls> FinalSave(List<RDD_DailySalesReports> rDD_DailySales, MemoryStream ms)
         {
             List<Outcls> outcls = new List<Outcls>();
             try
@@ -266,8 +268,39 @@ namespace RDDStaffPortal.DAL.DailyReports
 
 
 
+                    DataSet ds1 = null;
+                    try
+                    {
+                        SqlParameter[] parm ={
+                        new SqlParameter("@p_username",rDD_DailySales[0].LastUpdatedBy),
+                        };
 
-                    scope.Complete();
+                        ds1 = Com.ExecuteDataSet("RDD_DSR_SendMail_Finalsubmit", CommandType.StoredProcedure, parm);
+
+                        string sendemail = ds1.Tables[0].Rows[0]["SendReport"].ToString();
+                        string Reportemail = ds1.Tables[0].Rows[0]["ReportMust"].ToString();
+                        string Tomail = sendemail.Substring(0, sendemail.Length - 1) + "," + Reportemail.Substring(0, Reportemail.Length - 1);
+                        string html = " Dear " + Tomail + ", <br/><br/>  Please find attached <b> " + rDD_DailySales[0].LastUpdatedBy + " </b>'s customer visit report. <br/> ";
+                        html = html + " Visit Date  -  <b> " + Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " </b>  to  <b>  " + Convert.ToDateTime(rDD_DailySales[0].ToDate).ToString("dd/MMM/yyyy") + " </b>  <br/><br/>";
+                        html = html + "Best Regards, <br/> Red Dot Distribution.";
+                        string cc = ds1.Tables[0].Rows[0]["Self"].ToString();
+
+
+
+                        string Filename = ds1.Tables[0].Rows[0]["Country"].ToString() + "-" + rDD_DailySales[0].LastUpdatedBy + "-Visit Report.xls";
+                        Attachment at = new Attachment(ms, Filename);
+
+                        string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
+                        SendMail.SendMailWithAttachment("nikhilesh@reddotdistribution.com,pramod@reddotdistribution.com","", subject, html, true, at);
+                        scope.Complete();
+                    }
+                    catch (Exception)
+                    {
+
+                        ds1 = null;
+                    }
+
+
                 }
 
             }
@@ -688,5 +721,12 @@ namespace RDDStaffPortal.DAL.DailyReports
             return GetListData;
 
         }
+
+
+
+
+
+
+
     }
 }

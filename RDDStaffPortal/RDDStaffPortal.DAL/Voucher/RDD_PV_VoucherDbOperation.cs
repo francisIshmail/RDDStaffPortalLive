@@ -3,19 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using System.Web.Mvc;
 using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.DAL.Voucher
 {
-   public class RDD_PV_VoucherDbOperation
+    public class RDD_PV_VoucherDbOperation
     {
         CommonFunction Com = new CommonFunction();
-        
+
 
         public RDD_PV GetDropList(string username)
         {
@@ -42,7 +39,7 @@ namespace RDDStaffPortal.DAL.Voucher
                 Text = "--Select--",
                 Value = "0",
             });
-           DBNameList.Add(new SelectListItem()
+            DBNameList.Add(new SelectListItem()
             {
                 Text = "--Select--",
                 Value = "0",
@@ -63,12 +60,12 @@ namespace RDDStaffPortal.DAL.Voucher
                 {
                     DataTable dtModule;
                     DataRowCollection drc;
-                   
+
                     try
                     {
                         dtModule = dsModules.Tables[0];
                         drc = dtModule.Rows;
-                       
+
                         foreach (DataRow dr in drc)
                         {
                             CountryList.Add(new SelectListItem()
@@ -89,7 +86,7 @@ namespace RDDStaffPortal.DAL.Voucher
                     }
                     try
                     {
-                       
+
                         dtModule = dsModules.Tables[1];
                         drc = dtModule.Rows;
                         foreach (DataRow dr in drc)
@@ -179,6 +176,34 @@ namespace RDDStaffPortal.DAL.Voucher
                             Value = "-1",
                         });
                     }
+                    try
+                    {
+                        dtModule = dsModules.Tables[5];
+                        drc = dtModule.Rows;
+                        foreach (DataRow dr in drc)
+                        {
+                            RPV.VType = !string.IsNullOrWhiteSpace(dr["VType"].ToString()) ? dr["VType"].ToString() : "";
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    try
+                    {
+                        dtModule = dsModules.Tables[6];
+                        drc = dtModule.Rows;
+                        foreach (DataRow dr in drc)
+                        {
+                            RPV.RefNo = !string.IsNullOrWhiteSpace(dr[0].ToString()) ? dr[0].ToString() : "";
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
 
                 }
 
@@ -196,11 +221,11 @@ namespace RDDStaffPortal.DAL.Voucher
                     Text = "Error",
                     Value = "-1",
                 });
-               DBNameList.Add(new SelectListItem()
+                DBNameList.Add(new SelectListItem()
                 {
-                   Text = "Error",
-                   Value = "-1",
-               });
+                    Text = "Error",
+                    Value = "-1",
+                });
                 PayMethodList.Add(new SelectListItem()
                 {
                     Text = "Error",
@@ -213,19 +238,55 @@ namespace RDDStaffPortal.DAL.Voucher
                 });
             }
 
-          
-           
 
-           
+
+
+
             RPV.CurrencyList = CurrencyList;
             RPV.CountryList = CountryList;
             RPV.DBNameList = DBNameList;
             RPV.PayMethList = PayMethodList;
             RPV.VTypeList = VtypList;
 
-                return RPV;
+            return RPV;
+        }
+        public List<Outcls1> ChangeVoucherStatus(string VoucherStatus, int PVID)
+        {
+            int id = 0;
+            string Erormsg = string.Empty;
+            List<Outcls1> str = new List<Outcls1>();
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] Para = {
+                        new SqlParameter("@p_PVId",PVID),
+                        new SqlParameter("@p_DocStatus",VoucherStatus),
+                        new SqlParameter("@p_type","Voucher"),
+                        new SqlParameter("@p_id",id),
+                        new SqlParameter("@p_response",Erormsg)
+                };
+
+                    str = Com.ExecuteNonQueryListID("RDD_PV_Insert_Update_Delete", Para);
+
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
         }
 
+
+       
 
         public List<Outcls1> Save1(RDD_PV RPV)
         {
@@ -281,15 +342,15 @@ namespace RDDStaffPortal.DAL.Voucher
                         new SqlParameter("@p_id",RPV.id),
                         new SqlParameter("@p_response",RPV.Erormsg)
 
-                        
+
 
                 };
 
                     str = Com.ExecuteNonQueryListID("RDD_PV_Insert_Update_Delete", Para);
                     if (str[0].Outtf == true)
                     {
-                       
-                        int k=0;
+
+                        int k = 0;
                         if (RPV.EditFlag == false)
                         {
                             RPV.Ptype = "I";
@@ -308,7 +369,7 @@ namespace RDDStaffPortal.DAL.Voucher
                             {
                                 RPV.Ptype = "";
                             }
-                           
+
                         }
                         while (RPV.RDD_PVLinesDetails.Count > k)
                         {
@@ -326,19 +387,19 @@ namespace RDDStaffPortal.DAL.Voucher
                                             new SqlParameter("@p_LastUpdatedOn",RPV.LastUpdatedOn),
                                             new SqlParameter("@p_LastUpdatedBy",RPV.LastUpdatedBy),
                                             new SqlParameter("@p_typ",RPV.Ptype)
-                                            
+
                             };
-                           
-                            var det1=Com.ExecuteNonQuery("RDD_PVLinesInsert_Update_Delete", ParaDet1);
+
+                            var det1 = Com.ExecuteNonQuery("RDD_PVLinesInsert_Update_Delete", ParaDet1);
                             if (det1 == false)
                             {
                                 str.Clear();
                                 str.Add(new Outcls1
                                 {
                                     Outtf = false,
-                                    Id=-1,
-                                    Responsemsg = "Error occured : PVLines Details "
-                                }) ;
+                                    Id = -1,
+                                    Responsemsg = "Error occured : All Row Mandatory Details "
+                                });
                                 return str;
                             }
 
@@ -358,15 +419,17 @@ namespace RDDStaffPortal.DAL.Voucher
                     Id = -1,
                     Responsemsg = "Error occured : " + ex.Message
                 });
-                
-            }          
+
+            }
             return str;
         }
 
-        public List<Outcls> Delete1(int PVId)
+        public List<Outcls1> Delete1(int PVId)
         {
-            List<Outcls> str = new List<Outcls>();
+            List<Outcls1> str = new List<Outcls1>();
             string RType = "Delete1";
+            string response = string.Empty;
+            int id = 0;
             try
             {
                 using (TransactionScope scope = new TransactionScope())
@@ -374,9 +437,10 @@ namespace RDDStaffPortal.DAL.Voucher
                     SqlParameter[] Para = {
                         new SqlParameter("@p_PVId",PVId),
                         new SqlParameter("@p_type",RType),
-
+                         new SqlParameter("@p_id",id),
+                         new SqlParameter("@p_response",response),
                 };
-                    str = Com.ExecuteNonQueryList("RDD_PV_Insert_Update_Delete", Para);
+                    str = Com.ExecuteNonQueryListID("RDD_PV_Insert_Update_Delete", Para);
                     scope.Complete();
 
                 }
@@ -384,24 +448,27 @@ namespace RDDStaffPortal.DAL.Voucher
             catch (Exception ex)
             {
 
-                str.Add(new Outcls
+                str.Add(new Outcls1
+
                 {
                     Outtf = false,
+                    Id = id,
                     Responsemsg = "Error occured : " + ex.Message
                 });
             }
-            
+
 
             return str;
         }
 
-        public List<RDD_PV> GetALLDATA(string UserName, int pagesize, int pageno, string psearch)
+        public List<RDD_PV> GetALLDATA(string UserName, int pagesize, int pageno, string psearch, string SearchCon)
         {
             List<RDD_PV> _RPVList = new List<RDD_PV>();
 
             try
             {
                 SqlParameter[] Para = {
+                      new SqlParameter("@SearchCriteria",SearchCon),
                     new SqlParameter("@p_UserName",UserName),
                      new SqlParameter("@p_Search", psearch),
                     new SqlParameter("@p_PageNo", pageno),
@@ -420,7 +487,9 @@ namespace RDDStaffPortal.DAL.Voucher
                     {
                         _RPVList.Add(new RDD_PV()
                         {
+                            IsDraft = !string.IsNullOrWhiteSpace(dr["IsDraft"].ToString()) ? Convert.ToBoolean(dr["IsDraft"].ToString()) : true,
                             ApprovalStatus = !string.IsNullOrWhiteSpace(dr["ApprovalStatus"].ToString()) ? dr["ApprovalStatus"].ToString() : "",
+                            AprovedBy = !string.IsNullOrWhiteSpace(dr["ApprovedBy"].ToString()) ? dr["ApprovedBy"].ToString() : "",
                             PVId = !string.IsNullOrWhiteSpace(dr["PVId"].ToString()) ? Convert.ToInt32(dr["PVId"].ToString()) : 0,
                             Country = !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "",
                             RefNo = !string.IsNullOrWhiteSpace(dr["RefNo"].ToString()) ? dr["RefNo"].ToString() : "",
@@ -442,25 +511,15 @@ namespace RDDStaffPortal.DAL.Voucher
                             PayDate = !string.IsNullOrWhiteSpace(dr["PayDate"].ToString()) ? Convert.ToDateTime(dr["PayDate"].ToString()) : System.DateTime.Now,
                             FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "",
                             ClosedDate = !string.IsNullOrWhiteSpace(dr["ClosedDate"].ToString()) ? Convert.ToDateTime(dr["ClosedDate"].ToString()) : System.DateTime.Now,
-                            CAappStatus = !string.IsNullOrWhiteSpace(dr["CAappStatus"].ToString()) ? dr["CAappStatus"].ToString() : "",
-                            CAappRemarks = !string.IsNullOrWhiteSpace(dr["CAappRemarks"].ToString()) ? dr["CAappRemarks"].ToString() : "",
-                            CAapprovedBy = !string.IsNullOrWhiteSpace(dr["CAapprovedBy"].ToString()) ? dr["CAapprovedBy"].ToString() : "",
-                            CAapprovedOn = !string.IsNullOrWhiteSpace(dr["CAapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CAapprovedOn"].ToString()) : System.DateTime.Now,
-                            CMappStatus = !string.IsNullOrWhiteSpace(dr["CMappStatus"].ToString()) ? dr["CMappStatus"].ToString() : "",
-                            CMappRemarks = !string.IsNullOrWhiteSpace(dr["CMappRemarks"].ToString()) ? dr["CMappRemarks"].ToString() : "",
-                            CMapprovedBy = !string.IsNullOrWhiteSpace(dr["CMapprovedBy"].ToString()) ? dr["CMapprovedBy"].ToString() : "",
-                            CMapprovedOn = !string.IsNullOrWhiteSpace(dr["CMapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CMapprovedOn"].ToString()) : System.DateTime.Now,
-                            CFOappStatus = !string.IsNullOrWhiteSpace(dr["CFOappStatus"].ToString()) ? dr["CFOappStatus"].ToString() : "",
-                            CFOappRemarks = !string.IsNullOrWhiteSpace(dr["CFOappRemarks"].ToString()) ? dr["CFOappRemarks"].ToString() : "",
-                            CFOapprovedBy = !string.IsNullOrWhiteSpace(dr["CFOapprovedBy"].ToString()) ? dr["CFOapprovedBy"].ToString() : "",
-                            CFOapprovedOn = !string.IsNullOrWhiteSpace(dr["CFOapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CFOapprovedOn"].ToString()) : System.DateTime.Now,
-                            TotalCount= !string.IsNullOrWhiteSpace(dr["TotalCount"].ToString()) ? Convert.ToInt32(dr["TotalCount"].ToString()) : 0,
+
+                            TotalCount = !string.IsNullOrWhiteSpace(dr["TotalCount"].ToString()) ? Convert.ToInt32(dr["TotalCount"].ToString()) : 0,
                             RowNum = !string.IsNullOrWhiteSpace(dr["RowNum"].ToString()) ? Convert.ToInt32(dr["RowNum"].ToString()) : 0,
+                            CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
 
                         });
                     }
                 }
-                        }
+            }
             catch (Exception)
             {
                 _RPVList.Add(new RDD_PV()
@@ -486,37 +545,24 @@ namespace RDDStaffPortal.DAL.Voucher
                     PayDate = System.DateTime.Now,
                     FilePath = "",
                     ClosedDate = System.DateTime.Now,
-                    CAappStatus = "",
-                    CAappRemarks = "",
-                    CAapprovedBy = "",
-                    CAapprovedOn = System.DateTime.Now,
-                    CMappStatus = "",
-                    CMappRemarks = "",
-                    CMapprovedBy = "",
-                    CMapprovedOn = System.DateTime.Now,
-                    CFOappStatus = "",
-                    CFOappRemarks = "",
-                    CFOapprovedBy = "",
-                    CFOapprovedOn = System.DateTime.Now,
-                   
 
                 });
 
-                }
+            }
 
             return _RPVList;
         }
 
-        public RDD_PV GetData(string UserName,int PVid, RDD_PV RPV)
+        public RDD_PV GetData(string UserName, int PVid, RDD_PV RPV)
         {
-           
-           
+
+
             try
             {
                 SqlParameter[] Para = {
                     new SqlParameter("@p_PVId",PVid),
                     new SqlParameter("@p_UserName",UserName),
-                    new SqlParameter("@p_type","Single"),                  
+                    new SqlParameter("@p_type","Single"),
                 };
                 DataSet dsModules = Com.ExecuteDataSet("RDD_PV_GET_DATA", CommandType.StoredProcedure, Para);
                 if (dsModules.Tables.Count > 0)
@@ -525,6 +571,10 @@ namespace RDDStaffPortal.DAL.Voucher
                     DataRowCollection drc = dtModule.Rows;
                     foreach (DataRow dr in drc)
                     {
+                        RPV.Doc_Object = !string.IsNullOrWhiteSpace(dr["Doc_Object"].ToString()) ? Convert.ToInt32(dr["Doc_Object"].ToString()) : 0;
+                        RPV.AprovedBy = !string.IsNullOrWhiteSpace(dr["ApprovedBy"].ToString()) ? dr["ApprovedBy"].ToString() : "";
+                        RPV.IsDraft = !string.IsNullOrWhiteSpace(dr["IsDraft"].ToString()) ? Convert.ToBoolean(dr["IsDraft"].ToString()) : true;
+                        RPV.ApprovalStatus = !string.IsNullOrWhiteSpace(dr["ApprovalStatus"].ToString()) ? dr["ApprovalStatus"].ToString() : "";
                         RPV.PVId = !string.IsNullOrWhiteSpace(dr["PVId"].ToString()) ? Convert.ToInt32(dr["PVId"].ToString()) : 0;
                         RPV.Country = !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "";
                         RPV.RefNo = !string.IsNullOrWhiteSpace(dr["RefNo"].ToString()) ? dr["RefNo"].ToString() : "";
@@ -546,44 +596,33 @@ namespace RDDStaffPortal.DAL.Voucher
                         RPV.PayDate = !string.IsNullOrWhiteSpace(dr["PayDate"].ToString()) ? Convert.ToDateTime(dr["PayDate"].ToString()) : System.DateTime.Now;
                         RPV.FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "";
                         RPV.ClosedDate = !string.IsNullOrWhiteSpace(dr["ClosedDate"].ToString()) ? Convert.ToDateTime(dr["ClosedDate"].ToString()) : System.DateTime.Now;
-                        RPV.CAappStatus = !string.IsNullOrWhiteSpace(dr["CAappStatus"].ToString()) ? dr["CAappStatus"].ToString() : "";
-                        RPV.CAappRemarks = !string.IsNullOrWhiteSpace(dr["CAappRemarks"].ToString()) ? dr["CAappRemarks"].ToString() : "";
-                        RPV.CAapprovedBy = !string.IsNullOrWhiteSpace(dr["CAapprovedBy"].ToString()) ? dr["CAapprovedBy"].ToString() : "";
-                        RPV.CAapprovedOn = !string.IsNullOrWhiteSpace(dr["CAapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CAapprovedOn"].ToString()) : System.DateTime.Now;
-                        RPV.CMappStatus = !string.IsNullOrWhiteSpace(dr["CMappStatus"].ToString()) ? dr["CMappStatus"].ToString() : "";
-                        RPV.CMappRemarks = !string.IsNullOrWhiteSpace(dr["CMappRemarks"].ToString()) ? dr["CMappRemarks"].ToString() : "";
-                        RPV.CMapprovedBy = !string.IsNullOrWhiteSpace(dr["CMapprovedBy"].ToString()) ? dr["CMapprovedBy"].ToString() : "";
-                        RPV.CMapprovedOn = !string.IsNullOrWhiteSpace(dr["CMapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CMapprovedOn"].ToString()) : System.DateTime.Now;
-                        RPV.CFOappStatus = !string.IsNullOrWhiteSpace(dr["CFOappStatus"].ToString()) ? dr["CFOappStatus"].ToString() : "";
-                        RPV.CFOappRemarks = !string.IsNullOrWhiteSpace(dr["CFOappRemarks"].ToString()) ? dr["CFOappRemarks"].ToString() : "";
-                        RPV.CFOapprovedBy = !string.IsNullOrWhiteSpace(dr["CFOapprovedBy"].ToString()) ? dr["CFOapprovedBy"].ToString() : "";
-                        RPV.CFOapprovedOn = !string.IsNullOrWhiteSpace(dr["CFOapprovedOn"].ToString()) ? Convert.ToDateTime(dr["CFOapprovedOn"].ToString()) : System.DateTime.Now;
+
                         RPV.CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "";
-                        RPV.CreatedOn= !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now;
+                        RPV.CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now;
                     }
 
-                   
+
                     DataTable dtModule1 = dsModules.Tables[1];
                     DataRowCollection drc1 = dtModule1.Rows;
                     List<RDD_PVLines> RDDLines = new List<RDD_PVLines>();
                     foreach (DataRow dr in drc1)
                     {
                         RDDLines.Add(new RDD_PVLines
-                       {
-                           //,Date,Description,Amount,Remarks,FilePath
-                           Description = !string.IsNullOrWhiteSpace(dr["Description"].ToString()) ? dr["Description"].ToString() : "",
+                        {
+                            //,Date,Description,Amount,Remarks,FilePath
+                            Description = !string.IsNullOrWhiteSpace(dr["Description"].ToString()) ? dr["Description"].ToString() : "",
                             PVId = !string.IsNullOrWhiteSpace(dr["LineRefNo"].ToString()) ? Convert.ToInt32(dr["LineRefNo"].ToString()) : 0,
-                           Amount = !string.IsNullOrWhiteSpace(dr["Amount"].ToString()) ? Convert.ToDecimal(dr["Amount"].ToString()) : 0,
-                           Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
-                           FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "",
-                           PVLineId = !string.IsNullOrWhiteSpace(dr["PVLineId"].ToString()) ? Convert.ToInt32(dr["PVLineId"].ToString()) : 0,
-                            Date = !string.IsNullOrWhiteSpace(dr["Date"].ToString()) ? Convert.ToDateTime(dr["Date"].ToString()) :System.DateTime.Now,
+                            Amount = !string.IsNullOrWhiteSpace(dr["Amount"].ToString()) ? Convert.ToDecimal(dr["Amount"].ToString()) : 0,
+                            Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
+                            FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "",
+                            PVLineId = !string.IsNullOrWhiteSpace(dr["PVLineId"].ToString()) ? Convert.ToInt32(dr["PVLineId"].ToString()) : 0,
+                            Date = !string.IsNullOrWhiteSpace(dr["Date"].ToString()) ? Convert.ToDateTime(dr["Date"].ToString()) : System.DateTime.Now,
 
                         });
                     }
                     RPV.RDD_PVLinesDetails = RDDLines;
 
-                        }
+                }
             }
             catch (Exception ex)
             {
@@ -623,7 +662,7 @@ namespace RDDStaffPortal.DAL.Voucher
                 RPV.CFOapprovedOn = System.DateTime.Now;
                 RPV.CreatedBy = "";
                 RPV.CreatedOn = System.DateTime.Now;
-                
+
             }
 
             return RPV;
@@ -631,5 +670,93 @@ namespace RDDStaffPortal.DAL.Voucher
 
         }
 
+
+        public DataSet GetVendor(string DBName, string Vtype)
+        {
+            DataSet ds = null;
+            try
+            {
+                int v = 0;
+                if (Vtype == "Vendor")
+                {
+                    v = 1;
+                }
+                SqlParameter[] Para = {
+
+                    new SqlParameter("@p_DBName",DBName),
+                    new SqlParameter("@p_IsVendor",v),
+                };
+                ds = Com.ExecuteDataSet("RDD_PV_GetVendors_Employees", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return ds;
         }
+
+
+        public DataSet GetBank(string DBName)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para = {
+
+                    new SqlParameter("@DBName",DBName),
+
+                };
+                ds = Com.ExecuteDataSet("RDD_PV_GetBankLists", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return ds;
+        }
+
+        public DataSet GetRefNo(string Country)
+        {
+            DataSet ds = null;
+            try
+            {
+
+                ds = Com.ExecuteDataSet("select dbo.GetPVRefNo('" + Country + "')");
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
+        }
+        public DataSet GetVendorAgeing(string DBName, string BP)
+        {
+            DataSet ds = null;
+            try
+            {
+
+                SqlParameter[] Para = {
+
+                    new SqlParameter("@DBName",DBName),
+                    new SqlParameter("@BP",BP)
+
+                };
+                ds = Com.ExecuteDataSet("rddVendordue", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
+        }
+
+
+
+    }
 }

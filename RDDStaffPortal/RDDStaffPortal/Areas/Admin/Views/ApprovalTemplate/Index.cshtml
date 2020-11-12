@@ -14,7 +14,7 @@
                     <button class="btn btn-info btn-sm" id="btnAdd">New</button>
                     <button class="btn btn-info btn-sm" id="btnSave">save</button>
                     <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
-                    <button id="test" class="btn-dark">test</button>
+                    @*<button id="test" class="btn-dark">test</button>*@
                 </div>
             </div>
             <div class="rowmin">
@@ -140,11 +140,11 @@
 
     $(document).ready(function () {
 
-        var data = JSON.stringify({
-            Object_Type: '17',
-            Originator: 'Pramod',
-        });
-        Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
+        //var data = JSON.stringify({
+        //    Object_Type: '17',
+        //    Originator: 'Pramod',
+        //});
+        //Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
 
 
 
@@ -163,17 +163,17 @@
         });
 
 
-        $("#test").on("click", function () {
-            debugger
-            var a = ConfirmYesNo();
-            debugger
-            a.then(function (b) {
-                debugger
-                console.log(b);
-                alert(b)
-            })
+        //$("#test").on("click", function () {
+        //    debugger
+        //    var a = ConfirmYesNo();
+        //    debugger
+        //    a.then(function (b) {
+        //        debugger
+        //        console.log(b);
+        //        alert(b)
+        //    })
 
-        })
+        //})
 
 
         function ConfirmYesNo() {

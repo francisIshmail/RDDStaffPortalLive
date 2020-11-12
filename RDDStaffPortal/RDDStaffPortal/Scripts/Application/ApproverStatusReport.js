@@ -20,12 +20,12 @@ ApproverStatusReport.prototype = {
     ControlInit: function () {
       
         debugger;
-       
-        $("select").not("#cbAction").select2({
-            theme: "bootstrap",
-            allowClear: true,
+        var arr3 =""
+        //$("select").not("#cbAction").select2({
+        //    theme: "bootstrap",
+        //    allowClear: true,
 
-        });
+        //});
         //$(".datepicker").datetimepicker({
 
         //    format: 'DD/MM/YYYY'
@@ -35,7 +35,9 @@ ApproverStatusReport.prototype = {
        
 
         $('.loader1').hide();
-        Get_DocumentApprove_List();
+        GetFillRadioButton();
+      // Get_DocumentApprove_List();
+        $('#IIst').hide();
     },
 
     ClickEvent: function () {
@@ -118,12 +120,25 @@ ApproverStatusReport.prototype = {
 
         }
 
+        $(document).on("click", "#IIst button[id^='btnView']", function (e) {
+            debugger;
+            var tr = $(this).closest("#IIst");
+            var Pvid = tr.find(".Abcd").eq(3).text();
+            //var _ObjType = tr.find(".Abcd").eq(1).text();
+           
+            location.href = $("input[name='ApprovalStatus']:checked").labels(0).attr("alt")+""+Pvid;
+           
+            
+           
+        })
+
         $(document).on("click", "#IIst button[id^='btnAction']", function (e) {
             debugger;
             var tr = $(this).closest("#IIst");
            
             _DocKey = tr.find(".Abcd").eq(3).text();
             var _ObjType = tr.find(".Abcd").eq(1).text();
+           
             var tr1 = $("#IIIst").clone(true);
             $.ajax({
                 async: false,
@@ -155,7 +170,10 @@ ApproverStatusReport.prototype = {
                     var actiontblValue = ['ID','TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];                 
                     $(".ApproverAction").each(function () {  
                         if (jData[count1 - 1].Flag == 'Disable') {
-
+                            if ($('#txtApprover').val().toLowerCase() == jData[count1 - 1][actiontblValue[3]].toLowerCase()) {
+                               $("#btnActionSave").prop('disabled', true);
+                            }
+                           // 
                             $(this).find('.Abcd input[id^="txtID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtObjType"]').prop('disabled', true);
@@ -166,6 +184,10 @@ ApproverStatusReport.prototype = {
 
                         }
                         else {
+                            if ($('#txtApprover').val().toLowerCase() == jData[count1 - 1][actiontblValue[3]].toLowerCase()) {
+                                $("#btnActionSave").removeAttr('disabled');
+                            }
+                           // 
                             $(this).find('.Abcd input[id^="txtID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtObjType"]').removeAttr('disabled');
@@ -213,6 +235,7 @@ ApproverStatusReport.prototype = {
            
 
         });
+        
     },
 
 
@@ -253,15 +276,49 @@ function RedDot_dateEditFormat(dtval) {
 
 }
 
+$(document).on('change', 'input[type=radio][name=ApprovalStatus]', function () {
+    debugger
+    FillOriginator();
+
+});
+
+function FillOriginator() {
+    $('#IIst').hide();
+    $('div#IIst').not(':first').remove();
+    $("#cbOriginator").empty();
+   // $('#ORIGINATOR').append('<option value="0" selected="">-Select-</option>');
+    debugger
+    var i1 = 0;
+    var k = $("input[name='ApprovalStatus']:checked").attr('id');
+    var found_names = $.grep(arr3.Table1, function (v) {
+        return v.ObjType === k;
+    });
+
+    while (i1 < found_names.length) {
+        //,
+        $('#cbOriginator').append('<option value=' + found_names[i1]['Originator'] + ' selected="">' + found_names[i1]['OriginatorName']+'</option>');
+       i1 ++;
+    }
+    var found_names1 = $.grep(arr3.Table2, function (v) {
+        return v.Action === k;
+    });    
+        
+    RedDot_DivTable_Header_Fill("II", found_names1);
+
+
+
+}
 function Get_DocumentApprove_List() {
     debugger;
     //$("[id$=pgHeader]").html('<h4 class="page-title">Sales Order List</h4>');
-    var value1 = '';//$("#Search-Forms").val().toLowerCase();
-    if ($("input[name='ApprovalStatus']:checked").attr('id') == 'SalesOrder')
-        value1 = 'T0.OBJTYPE=17';
+    var value1 = 'T0.OBJTYPE='+$("input[name='ApprovalStatus']:checked").attr('id')+'';//$("#Search-Forms").val().toLowerCase();
+    //if ($("input[name='ApprovalStatus']:checked").attr('id') == 'SalesOrder')
+    //    value1 = 'T0.OBJTYPE=17';
+    //if ($("input[name='ApprovalStatus']:checked").attr('id') == 'PaymentVoucher')
+    //    value1 = 'T0.OBJTYPE=18';
 
     if ($("#txtFrmDate").val() != '' && $("#txtToDate").val() != '')
-        value1 = value1 + " And T1.PostingDate BetWeen $" + GetSqlDateformat($("[id$=txtFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtToDate]").val())+"$"
+        value1 = value1 + " And T1." + $("input[name='ApprovalStatus']:checked").attr("alt")+" BetWeen $" + GetSqlDateformat($("[id$=txtFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtToDate]").val())+"$"
 
     if ($("#cbOriginator").val() != '')
         value1 = value1 + " And ORIGINATOR=$" + $("#cbOriginator").val() + "$";
@@ -270,7 +327,8 @@ function Get_DocumentApprove_List() {
         value1 = value1 + " And APPROVER=$" + $("#txtApprover").val()+"$";
 
     if ($("#cbStatus").val() != '' && $("#cbStatus").val() !='-- Select --')
-        value1 = value1 + " And APPROVAL_DECISION=$" + $("#cbStatus").val()+"$";
+        value1 = value1 + " And APPROVAL_DECISION=$" + $("#cbStatus").val() + "$";
+    var Objtype = $("input[name='ApprovalStatus']:checked").attr('id');
 
     //GetSqlDateformat($("[id$=txtChkDate2]").val());, ,APPROVAL_DECISION
     var DBName = 'All';
@@ -282,7 +340,8 @@ function Get_DocumentApprove_List() {
         pageno: curPage,
         psearch: value1,
         DBName: DBName,
-        UserName: UserName
+        UserName: UserName,
+        Objtype: Objtype,
     });
     arr = RedDot_DivTable_Fill("II", "/Get_ApprovalDoc_List", data, dateCond, tblhead1, tblhide, tblhead2);
     debugger;
@@ -296,4 +355,43 @@ function Get_DocumentApprove_List() {
     });
 
 
+}
+
+
+function GetFillRadioButton() {
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        url: "/GetApprovalFill",
+        contentType: "application/json",
+        dataType: "json",
+       
+        success: function (data) {
+             arr3 = data;
+            var i = 0;
+            var rdbtn = "";
+            while (i < arr3.Table.length) {
+                debugger
+                var chk = '';
+                if (i == 0) {
+                    chk = 'checked';
+                } 
+                rdbtn = rdbtn+ "<div class='col-xl-6 col-md-6 col-6'>" +
+                    "<div class='form-check form-check-inline align-items'>" +
+                    "<div class='custom-control custom-radio'>" +
+                    " <input type='radio' alt='" + arr3.Table[i]['DocDateColumn'] +"' id='" + arr3.Table[i]['ObjType'] +"' name='ApprovalStatus' class='custom-control-input' "+chk+">" +
+                    " <label class='custom-control-label' alt='" + arr3.Table[i]['RedirectURL'] +"' for='" + arr3.Table[i]['ObjType'] +"'>" + arr3.Table[i]['DocumentName'] +"</label>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
+               
+                i++;
+            }
+            $("#rdbtn").html(rdbtn);
+           
+
+            FillOriginator();
+        }
+    });
 }

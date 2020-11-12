@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Reflection;
+
 namespace RDDStaffPortal.DAL
 {
     public class CommonFunction
@@ -475,6 +477,8 @@ namespace RDDStaffPortal.DAL
             return numrows.Value;
         }
         #endregion
+
+        
     }
 
 
