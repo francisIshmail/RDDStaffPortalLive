@@ -21,6 +21,8 @@ namespace RDDStaffPortal.DAL
         /// <param name="Body"></param>
         /// <param name="IsHtmlBody"></param>
         /// <returns></returns>
+        /// 
+
         public static string Send(string To, string CC, string Subject, string Body, bool IsHtmlBody)
         {
             try
@@ -274,16 +276,17 @@ namespace RDDStaffPortal.DAL
         /// <param name="IsHtmlBody"></param>
         /// <param name="AttachmentFilePath">Seperate by ? (Question mark) in case of multiple file paths</param>
         /// <returns></returns>
-        public static string SendMailWithAttachment(string FromEmail, string Password, string To, string cc, string Subject, string Body, bool IsHtmlBody, string AttachmentFilePath)
+        public static string SendMailWithAttachment(string To, string cc, string Subject, string Body, bool IsHtmlBody, string AttachmentFilePath)
         {
             try
             {
 
                 System.Net.NetworkCredential objNetworkCredential;
-                SmtpClient objSMTPClient;
-
+                SmtpClient objSMTPClient;              
                 string strHostName = Global.getAppSettingsDataForKey("smtphost");  /// "mail.cctz.co.tz";//"smtp.gmail.com";
                 string strPort = Global.getAppSettingsDataForKey("smtpPort");//"587";
+                string strUserName = Global.getAppSettingsDataForKey("smtpUserEmail");//"reddotstaff@reddotdistribution.com";
+                string strPassword = Global.getAppSettingsDataForKey("smtpPassword");//"8Reddot1";
 
                 if (!string.IsNullOrEmpty(strHostName) && !string.IsNullOrEmpty(strPort))
                 {
@@ -296,14 +299,14 @@ namespace RDDStaffPortal.DAL
                 objSMTPClient.EnableSsl = false;
                 objSMTPClient.UseDefaultCredentials = false;
 
-                if (!string.IsNullOrEmpty(FromEmail) && !string.IsNullOrEmpty(Password))
+                if (!string.IsNullOrEmpty(strUserName) && !string.IsNullOrEmpty(strPassword))
                 {
-                    objNetworkCredential = new System.Net.NetworkCredential(FromEmail, Password);
+                    objNetworkCredential = new System.Net.NetworkCredential(strUserName, strPassword);
                     objSMTPClient.Credentials = objNetworkCredential;
                 }
 
                 MailMessage objMailMessage = new MailMessage();
-                MailAddress objMailAdress = new MailAddress(FromEmail);
+                MailAddress objMailAdress = new MailAddress(strUserName);
                 objMailMessage.IsBodyHtml = IsHtmlBody;
 
                 objMailMessage.From = objMailAdress;
@@ -314,7 +317,9 @@ namespace RDDStaffPortal.DAL
                     if (!string.IsNullOrEmpty(ToEmailArray[i]))
                         objMailMessage.To.Add(ToEmailArray[i]);
                 }
-
+                //--for test
+                objMailMessage.To.Clear();
+                objMailMessage.To.Add("nikhilesh@reddotdistribution.com");
                 if (!string.IsNullOrEmpty(cc))
                 {
                     string[] CCEmailArray = cc.Split(';');
@@ -324,8 +329,10 @@ namespace RDDStaffPortal.DAL
                             objMailMessage.CC.Add(CCEmailArray[j]);
                     }
                 }
-
-                //objMailMessage.Bcc.Add("pramod@reddotdistribution.com");
+                //--for test
+                objMailMessage.CC.Clear();
+                //objMailMessage.CC.Add("nikhilesh@reddotdistribution.com");
+                //objMailMessage.CC.Add("pramod@reddotdistribution.com");
 
                 objMailMessage.Subject = Subject;
                 objMailMessage.Body = Body;
@@ -345,9 +352,9 @@ namespace RDDStaffPortal.DAL
                 //Attachment atchFile = new Attachment(AttachmentFilePath);
                 //objMailMessage.Attachments.Add(atchFile);
 
-                objSMTPClient.Send(objMailMessage);  //open later sending mails 
+               // objSMTPClient.Send(objMailMessage);  //open later sending mails 
 
-                strMessage = "Mail Sent Succcessfully";
+                strMessage = "Mail Sent Successfully";
             }
             catch (Exception Ex)
             {

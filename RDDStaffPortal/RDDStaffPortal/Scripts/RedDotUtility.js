@@ -985,6 +985,7 @@ function RedDot_Button_Init_HideShow() {
     $("#btnSave").hide();
     $("#btnCancel").hide();
     $("#btnDelete").hide();
+    $("#btnPrint").hide();
     $("#btnSendMail").hide();
     $("#tblid").show();
     $("#tblid1").show();
@@ -992,6 +993,7 @@ function RedDot_Button_Init_HideShow() {
 }
 function RedDot_Button_New_HideShow() {
     $("#btnAdd").hide();
+    $("#btnPrint").hide();
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").show();   
@@ -1391,7 +1393,24 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
     });
 }
 
-
+function RedDot_DivTable_Header_Fill(Ids,data) {
+    if (data != null && data.length != 0) {
+        var i = 0;
+        while (data.length > i) {
+            var tr1 = $('#' + Ids + 'st').clone();
+            var k = 0;
+            var l1 = tr1.find(".Abcd").length;
+            while (l1 > k) {
+                var t = tblhead1[k];
+                if (tblhead1[k] !== 'Action') {
+                    $('#' + Ids + 'nd').find(".reddotTableHead")[k].children[0].textContent = data[i][tblhead1[k]];
+                }
+                k++;
+            }
+            i++;
+        }
+    }
+}
 function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
     debugger;
     var arr = [];

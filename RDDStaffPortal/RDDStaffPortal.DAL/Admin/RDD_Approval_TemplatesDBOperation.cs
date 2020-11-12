@@ -196,7 +196,39 @@ namespace RDDStaffPortal.DAL.Admin
             }
             return str;
         }
+        public List<Outcls1> MailSending(string PVID)
+        {
+            int id = 0;
+            string Erormsg = string.Empty;
+            List<Outcls1> str = new List<Outcls1>();
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] Para = {
+                        new SqlParameter("@p_PVId",PVID),
+                        new SqlParameter("@p_type","MailSending"),
+                        new SqlParameter("@p_id",id),
+                        new SqlParameter("@p_response",Erormsg)
+                };
 
+                    str = Com.ExecuteNonQueryListID("RDD_PV_Insert_Update_Delete", Para);
+
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
         public List<RDD_Approval_Templates> GetALLDATA(string UserName, int pagesize, int pageno, string psearch)
         {
             List<RDD_Approval_Templates> _RDD_Approval = new List<RDD_Approval_Templates>();

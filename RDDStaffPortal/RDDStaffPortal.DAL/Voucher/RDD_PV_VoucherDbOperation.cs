@@ -285,6 +285,9 @@ namespace RDDStaffPortal.DAL.Voucher
             return str;
         }
 
+
+       
+
         public List<Outcls1> Save1(RDD_PV RPV)
         {
             List<Outcls1> str = new List<Outcls1>();
@@ -486,7 +489,7 @@ namespace RDDStaffPortal.DAL.Voucher
                         {
                             IsDraft = !string.IsNullOrWhiteSpace(dr["IsDraft"].ToString()) ? Convert.ToBoolean(dr["IsDraft"].ToString()) : true,
                             ApprovalStatus = !string.IsNullOrWhiteSpace(dr["ApprovalStatus"].ToString()) ? dr["ApprovalStatus"].ToString() : "",
-                            AprovedBy = !string.IsNullOrWhiteSpace(dr["AprovedBy"].ToString()) ? dr["AprovedBy"].ToString() : "",
+                            AprovedBy = !string.IsNullOrWhiteSpace(dr["ApprovedBy"].ToString()) ? dr["ApprovedBy"].ToString() : "",
                             PVId = !string.IsNullOrWhiteSpace(dr["PVId"].ToString()) ? Convert.ToInt32(dr["PVId"].ToString()) : 0,
                             Country = !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "",
                             RefNo = !string.IsNullOrWhiteSpace(dr["RefNo"].ToString()) ? dr["RefNo"].ToString() : "",
@@ -508,7 +511,7 @@ namespace RDDStaffPortal.DAL.Voucher
                             PayDate = !string.IsNullOrWhiteSpace(dr["PayDate"].ToString()) ? Convert.ToDateTime(dr["PayDate"].ToString()) : System.DateTime.Now,
                             FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "",
                             ClosedDate = !string.IsNullOrWhiteSpace(dr["ClosedDate"].ToString()) ? Convert.ToDateTime(dr["ClosedDate"].ToString()) : System.DateTime.Now,
-                            
+
                             TotalCount = !string.IsNullOrWhiteSpace(dr["TotalCount"].ToString()) ? Convert.ToInt32(dr["TotalCount"].ToString()) : 0,
                             RowNum = !string.IsNullOrWhiteSpace(dr["RowNum"].ToString()) ? Convert.ToInt32(dr["RowNum"].ToString()) : 0,
                             CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
@@ -542,7 +545,7 @@ namespace RDDStaffPortal.DAL.Voucher
                     PayDate = System.DateTime.Now,
                     FilePath = "",
                     ClosedDate = System.DateTime.Now,
-                   
+
                 });
 
             }
@@ -569,7 +572,7 @@ namespace RDDStaffPortal.DAL.Voucher
                     foreach (DataRow dr in drc)
                     {
                         RPV.Doc_Object = !string.IsNullOrWhiteSpace(dr["Doc_Object"].ToString()) ? Convert.ToInt32(dr["Doc_Object"].ToString()) : 0;
-                        RPV.AprovedBy = !string.IsNullOrWhiteSpace(dr["AprovedBy"].ToString()) ? dr["AprovedBy"].ToString() : "";
+                        RPV.AprovedBy = !string.IsNullOrWhiteSpace(dr["ApprovedBy"].ToString()) ? dr["ApprovedBy"].ToString() : "";
                         RPV.IsDraft = !string.IsNullOrWhiteSpace(dr["IsDraft"].ToString()) ? Convert.ToBoolean(dr["IsDraft"].ToString()) : true;
                         RPV.ApprovalStatus = !string.IsNullOrWhiteSpace(dr["ApprovalStatus"].ToString()) ? dr["ApprovalStatus"].ToString() : "";
                         RPV.PVId = !string.IsNullOrWhiteSpace(dr["PVId"].ToString()) ? Convert.ToInt32(dr["PVId"].ToString()) : 0;
@@ -593,7 +596,7 @@ namespace RDDStaffPortal.DAL.Voucher
                         RPV.PayDate = !string.IsNullOrWhiteSpace(dr["PayDate"].ToString()) ? Convert.ToDateTime(dr["PayDate"].ToString()) : System.DateTime.Now;
                         RPV.FilePath = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString() : "";
                         RPV.ClosedDate = !string.IsNullOrWhiteSpace(dr["ClosedDate"].ToString()) ? Convert.ToDateTime(dr["ClosedDate"].ToString()) : System.DateTime.Now;
-                        
+
                         RPV.CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "";
                         RPV.CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now;
                     }
@@ -752,5 +755,8 @@ namespace RDDStaffPortal.DAL.Voucher
             }
             return ds;
         }
+
+
+
     }
 }
