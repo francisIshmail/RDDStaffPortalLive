@@ -29,6 +29,23 @@ namespace RDDStaffPortal.DAL.SAP
             }
         }
 
+        public DataSet Get_BindDDLPayMethod(string dbname,string payterms)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_SOR_Get_Pay_Method '" + dbname + "','"+payterms+"'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public SqlDataReader GetCustomers(string prefix, string dbname, string field)
         {
             try
@@ -405,6 +422,21 @@ namespace RDDStaffPortal.DAL.SAP
             return result_ds;
         }
 
+        public DataSet Get_DeleteRecord(string so_id, string dbname)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
+                DataSet DS = Db.myGetDS("Execute RDD_Doc_Delete_Record '" + dbname + "'," + so_id);
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

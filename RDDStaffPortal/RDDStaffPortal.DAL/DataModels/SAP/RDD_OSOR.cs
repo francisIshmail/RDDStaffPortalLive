@@ -62,10 +62,14 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public Int64 SAP_DocEntry { get; set; }
         public string SAP_DocNum { get; set; }
 
-
+        public string DocCur { get; set; }
         public RDD_SOR1 RDD_SOR1 { get; set; }
 
         public List<RDD_SOR1> RDD_SOR1List { get; set; }
+
+        public RDD_SOR2 RDD_SOR2 { get; set; }
+
+        public List<RDD_SOR2> RDD_SOR2List { get; set; }
     }
 
     public class DBList
@@ -104,5 +108,26 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public decimal GP { get; set; }
         public decimal GPPer { get; set; }
         public decimal TaxRate { get; set; }
+    }
+
+    public partial class RDD_SOR2
+    {
+
+        public Int64 Pay_Line_Id { get; set; }
+        public Int32 SO_ID { get; set; }
+        public Int32 Base_Obj { get; set; }
+        public Int32 Base_Id { get; set; }
+        public Int32 Base_LinId { get; set; }
+        public string Pay_Method_Id { get; set; }
+        public string Pay_Method { get; set; }
+        public string Rcpt_Check_No { get; set; }
+        public DateTime Rcpt_Check_Date { get; set; }
+        public string Curr_Id { get; set; }
+        public string Currency { get; set; }
+        public decimal Rcpt_Check_Amt { get; set; }
+        public decimal Allocated_Amt { get; set; }
+        public decimal Balance_Amt { get; set; }
+        public string Remark { get; set; }
+
     }
 }

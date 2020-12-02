@@ -19,7 +19,6 @@ namespace RDDStaffPortal.Controllers
     {
         // GET: Account
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
-       
         public ActionResult Index()
         {
             return View();
@@ -30,6 +29,12 @@ namespace RDDStaffPortal.Controllers
             return View();
         }
 
+        /// <summary>
+        ///  Login Method of account controller
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Login(Login login, string ReturnUrl)
         {
