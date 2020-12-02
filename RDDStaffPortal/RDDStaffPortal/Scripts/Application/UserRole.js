@@ -12,7 +12,9 @@
        // var draggableOptions = ;
 
         // drop down image fill with name 
-        RdotDropimg("Userid", "/GetUserList");
+        //RdotDropimg("Userid", "/GetUserList");
+
+        RdotDrop("Userid", "/GetUserList");
         
         var tf = true;
         $("#Userid").on("change", function () {

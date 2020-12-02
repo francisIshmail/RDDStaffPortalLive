@@ -59,10 +59,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        <div class="form-group form-inline">
+                        <div id="div-txtDSRACTIONName"class="form-group form-inline has-error1">
                             <label for="Database" class="col-md-2 col-form-label p-0">Name :</label>
                             <div class="col-md-8 p-0">
-                                <input type="text" class="form-control form-control-sm" id="txtDSRACTIONName">
+                                <input type="text" class="form-control form-control-sm txtcheck" id="txtDSRACTIONName">
                                 <input type="hidden" id="hdnDSRACTIONOld" value="0" />
                                 <input type="hidden" id="hdnEditFlag" value="false" />
                             </div>
@@ -90,7 +90,18 @@
     $(document).ready(function () {
         //RedtDot_CheckAuthorization("/DailyReports/DSR_NextAction/Index");
         
-       
+        $(document).on("blur", ".txtcheck", function () {
+
+            if ($(this).val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
 
       $("#txtSearchDep").on("keyup", function () {
 
@@ -170,6 +181,11 @@
             $("#hdnDSRACTIONOld").val(tr.find("input[id^='hdnNextActionid']").val());
             $("#txtDSRACTIONName").val(tr.find("input[id^='hdnNextActionname']").val());
             $("#hdnEditFlag").val("true");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
             $('#DSRACTIONEditPopup').modal('show');
         });
         $(document).on('click', '.announce', function () { // Click to only happen on announce links
@@ -181,6 +197,11 @@
             $("#hdnDSRACTIONOld").val(tr.find("input[id^='hdnNextActionid']").val());          
             $("#txtDSRACTIONName").val(tr.find("input[id^='hdnNextActionname']").val());
             $("#hdnEditFlag").val("true");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
             $('#DSRACTIONEditPopup').modal('show');
         });
 
@@ -193,6 +214,11 @@
                 .prop("checked", "")
                 .end().find("#hdnDSRACTIONOld").val(0)
                 .end().find("#hdnEditFlag").val("false");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() == '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                }
+            });
         })
 
         $('#btnsave').on("click",function () {

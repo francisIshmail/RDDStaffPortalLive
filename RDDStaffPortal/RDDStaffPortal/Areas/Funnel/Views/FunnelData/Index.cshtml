@@ -251,7 +251,7 @@
 </div>
 @*</div>*@
 @*</div>*@
-<div class="modal fade" id="NewDealPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="NewDealPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content width">
             <div class="modal-header">
@@ -265,12 +265,12 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-6 col-lg-6 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-Country" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-2 col-form-label p-0  width130px">Country :</label>
                                     <div class="col-md-6 p-0">
                                         <div class="select2-input">
 
-                                            @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control" })
+                                            @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control dropcheck" })
                                             @*<select id="basic1" name="basic" class="form-control">
 
                                                 </select>*@
@@ -295,12 +295,12 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-BUName" class="form-group form-inline has-error1">
                                     <label for="Database" class="ccol-md-2 col-form-label p-0  width130px">BU :</label>
                                     <div class="col-md-6 p-0">
                                         <div class="select2-input">
                                             <input type="hidden" id="hdnBUName" />
-                                            <select id="BUName" name="BUName" class="form-control form-control-sm">
+                                            <select id="BUName" name="BUName" class="form-control form-control-sm dropcheck">
                                                 <option value="0">-Select-</option>
                                             </select>
                                             @*@Html.DropDownList("ItmsGrpNam", (List<SelectListItem>)ViewBag.BU, "-Select-", new { @id = "ItmsGrpNam", @class = "form-control" })*@
@@ -311,7 +311,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-CardName" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-1 col-form-label p-0  width90px">Customer :</label>
                                     <div class="col-md-8">
                                         <input type="hidden" id="hdnCardName" />
@@ -329,35 +329,35 @@
 
 
                             <div class="col-md-6 col-lg-6 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-bdm" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-2 col-form-label p-0  width130px">BDM :</label>
                                     <div class="col-md-6 p-0">
-                                        @Html.TextBoxFor(m => m.bdm, new { @id = "bdm", @class = "form-control form-control-sm", maxlength = "155", placeholder = "Enter BDM" })
+                                        @Html.TextBoxFor(m => m.bdm, new { @id = "bdm", @class = "form-control form-control-sm txtcheck", maxlength = "155", placeholder = "Enter BDM" })
                                         @*<input type="text" class="form-control form-control-sm" id="">*@
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-enduser" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-1 col-form-label p-0  width90px">Enter User :</label>
                                     <div class="col-md-8">
-                                        @Html.TextBoxFor(m => m.enduser, new { @id = "enduser", @class = "form-control form-control-sm", maxlength = "155", placeholder = "Enter EndUser" })
+                                        @Html.TextBoxFor(m => m.enduser, new { @id = "enduser", @class = "form-control form-control-sm txtcheck", maxlength = "155", placeholder = "Enter EndUser" })
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-goodsDescr" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-2 col-form-label width130px p-0"> Goods Description :</label>
                                     <div class="col-md-9 p-0">
-                                        @Html.TextBoxFor(m => m.goodsDescr, new { @id = "goodsDescr", @class = "form-control form-control-sm", maxlength = "1024", placeholder = "Enter Goods Description" })
+                                        @Html.TextBoxFor(m => m.goodsDescr, new { @id = "goodsDescr", @class = "form-control form-control-sm txtcheck", maxlength = "1024", placeholder = "Enter Goods Description" })
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12 flexinherit">
-                                <div class="form-group form-inline">
+                                <div id="div-remarks" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-2 col-form-label width130px p-0">Remark 1 :</label>
                                     <div class="col-md-9 p-0">
-                                        @Html.TextBoxFor(m => m.remarks, new { @id = "remarks", @class = "form-control form-control-sm", maxlength = "225", placeholder = "Enter Remark" })
+                                        @Html.TextBoxFor(m => m.remarks, new { @id = "remarks", @class = "form-control form-control-sm txtcheck", maxlength = "225", placeholder = "Enter Remark" })
                                     </div>
                                 </div>
                             </div>
@@ -453,11 +453,11 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div class="form-group form-inline has-success1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Quote Date :</label>
                                     <div class="col-md-7 p-0">
                                         <div class="input-group">
-                                            @Html.TextBoxFor(m => m.quoteDate, new { @id = "quoteDate", @class = "form-control form-control-sm", @name = "quoteDate" })
+                                            @Html.TextBoxFor(m => m.quoteDate, new { @id = "quoteDate", @class = "form-control form-control-sm txtcheck", @name = "quoteDate" })
                                             @*<input type="text" class="form-control form-control-sm" id="quoteDate" name="datepicker">*@
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
@@ -469,49 +469,49 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-Cost" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Cost :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.TextBoxFor(m => m.Cost, new { @id = "Cost", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Cost" })
+                                        @Html.TextBoxFor(m => m.Cost, new { @id = "Cost", @class = "form-control form-control-sm txtcheck", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Cost" })
                                         @*<input type="text" class="form-control form-control-sm" id="">*@
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-Landed" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Landed :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.TextBoxFor(m => m.Landed, new { @id = "Landed", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Landed" })
+                                        @Html.TextBoxFor(m => m.Landed, new { @id = "Landed", @class = "form-control form-control-sm txtcheck", @onkeypress = "javascript:return isNumberKey(event);", @placeholder = "Enter Landed" })
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-marginper" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Margin % :</label>
                                     <div class="col-md-7 p-0">
-                                        <input type="text" class="form-control form-control-sm" id="marginper" onkeypress="javascript:return isNumberKey(event);" onkeyup="javascript:calculateMargin()" placeholder="Enter Margin %">
+                                        <input type="text" class="form-control form-control-sm txtcheck" id="marginper" onkeypress="javascript:return isNumberKey(event);" onkeyup="javascript:calculateMargin()" placeholder="Enter Margin %">
 
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-MarginUSD" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Margin $ :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.TextBoxFor(m => m.MarginUSD, new { @id = "MarginUSD", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calculateMarginPercent()", @placeholder = "Enter Margin $" })
+                                        @Html.TextBoxFor(m => m.MarginUSD, new { @id = "MarginUSD", @class = "form-control form-control-sm txtcheck", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calculateMarginPercent()", @placeholder = "Enter Margin $" })
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-value" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Sell Amount :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.TextBoxFor(m => m.value, new { @id = "value", @class = "form-control form-control-sm", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calcMarginAndPercentBasedOnTotalSell();", @placeholder = "Enter Sell Amount" })
+                                        @Html.TextBoxFor(m => m.value, new { @id = "value", @class = "form-control form-control-sm txtcheck", @onkeypress = "javascript:return isNumberKey(event);", @onkeyup = "javascript:calcMarginAndPercentBasedOnTotalSell();", @placeholder = "Enter Sell Amount" })
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-DealStaus" class="form-group form-inline has-success1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
                                     <div class="col-md-7 p-0">
                                         @Html.DropDownList("DealStatus", ViewBag.StatusList as SelectList, new { @id = "DealStatus", @class = "form-control form-control-sm" })
@@ -522,11 +522,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-expClosingDt" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Closing Date :</label>
                                     <div class="col-md-7 p-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control form-control-sm" id="expClosingDt" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <input type="text" class="form-control form-control-sm txtcheck" id="expClosingDt" name="datepicker" placeholder="dd/mm/yyyy">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     <i class="far fa-calendar-alt"></i>
@@ -537,11 +537,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-orderBookedDate" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Order Date :</label>
                                     <div class="col-md-7 p-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control form-control-sm" id="orderBookedDate" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <input type="text" class="form-control form-control-sm txtcheck" id="orderBookedDate" name="datepicker" placeholder="dd/mm/yyyy">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     <i class="far fa-calendar-alt"></i>
@@ -552,11 +552,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
-                                <div class="form-group form-inline">
+                                <div id="div-InvoiceDt" class="form-group form-inline has-error1">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Invoice Date :</label>
                                     <div class="col-md-7 p-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control form-control-sm" id="InvoiceDt" name="datepicker" placeholder="dd/mm/yyyy">
+                                            <input type="text" class="form-control form-control-sm txtcheck" id="InvoiceDt" name="datepicker" placeholder="dd/mm/yyyy">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     <i class="far fa-calendar-alt"></i>
@@ -657,8 +657,9 @@
                 var dateCond = ["quoteDate", "expClosingDt"];
                 var curPage = 1;
 
-                 
+               
                 $(document).ready(function () {
+                   
                     var arr = [];
                     (function ($) {
                         $(function () {
@@ -683,7 +684,28 @@
                     var today = (day) + "/" + (month) + "/" + now.getFullYear();
 
                     $("#fromDate").val(today);
+                     $(document).on("change", ".dropcheck", function () {
+            debugger
+            if ($(this).val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('0').trigger('change');
+            }
+                     });
+                    $(document).on("blur", ".txtcheck", function () {
 
+                        if ($(this).val() !== '') {
+                            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+                        }
+                        else {
+                            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            $(this).val('');
+
+                        }
+                    });
 
                     //#region close reseller
                     $(".newResCls").click(function () {
@@ -716,13 +738,16 @@
 
                     })
                     //#endregion
+                   
                     $('#Country').select2({
-
-                        theme: "bootstrap",
+                        theme: "bootstrap",                       
                         allowClear: true,
                         placeholder: '--Select--'
                     });
+                   // $('#Country').next().addClass("alert");
+                   
 
+                   
                     $("#newDealPopUp").click(function () {
 
                         // if ($("#fid").val() == "") {
@@ -2015,7 +2040,19 @@
 
                             }
                             $("#lblQuoteID").text(data.quoteID);
+
+                            $(".txtcheck").each(function (index) {
+                                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                                }
+                            });
+                            $(".dropcheck").each(function (index) {
+                                if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                                }
+                            });
                         }
+                        
                     });
                 }
 
@@ -2154,6 +2191,7 @@
                         }
 
                     });
+
                     //});
                 }
 
@@ -2549,6 +2587,7 @@
                         format: 'DD/MM/YYYY',
                     });
                 });
+
             
                 function isNumberKey(evt) {
 
@@ -2563,8 +2602,6 @@
 
                 // Function to calculate Margin $ if Margin % is entered
                 function calculateMargin() {
-
-
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2573,6 +2610,8 @@
 
                         $("#MarginUSD").val((Landed * (Marginpercent / 100)).toFixed(2));
                         $("#value").val((Landed + Landed * (Marginpercent / 100)).toFixed(2));
+                        $("#div-MarginUSD").removeClass('has-error1').addClass('has-success1');
+                        $("#div-value").removeClass('has-error1').addClass('has-success1');
 
                     }
                 }
@@ -2587,6 +2626,10 @@
                     if (Landed != null && Landed != NaN && Margindoller != null && Margindoller != NaN) {
                         $("#marginper").val(((Margindoller / Landed) * 100).toFixed(2));
                         $("#value").val((Landed + Margindoller).toFixed(2));
+                        
+                        $("#div-marginper").removeClass('has-error1').addClass('has-success1');
+                        $("#div-value").removeClass('has-error1').addClass('has-success1');
+                        
                     }
                 }
 
@@ -2652,8 +2695,21 @@
     .quick-scroll {
         max-height: 300px;
     }
+    .alert {
+        border: 2px solid red !important;
+    }
+    .has-error1 .select2-selection {
+        /*border: 1px solid #a94442;
+    border-radius: 4px;*/
+        border-color: rgb(185, 74, 72) !important;
+    }
 
-
+    .has-success1 .select2-selection {
+        /*border: 1px solid #a94442;
+    border-radius: 4px;*/
+        border-color: #31CE36 !important;
+    }
+   
     .Abc {
         display: none;
     }

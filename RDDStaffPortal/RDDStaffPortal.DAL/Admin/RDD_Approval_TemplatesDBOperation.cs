@@ -436,6 +436,18 @@ namespace RDDStaffPortal.DAL.Admin
                                                 new SqlParameter("@OriginatorRemark",OriginatorRemark),
                             };
                 ds = Com.ExecuteDataSet("RDD_Approver_Insert_Records", CommandType.StoredProcedure, ParaDet1);
+                if (Object_Type == "18")
+                {
+                    #region mailsending
+                    SqlParameter[] sqlPar_ = { new SqlParameter("@PVID", DocKey),
+                             new SqlParameter("@LoggedInUser", Originator),
+                              new SqlParameter("@p_Event", "ADD"),
+
+                        };
+                    Com.ExecuteNonQuery("PV_SendApprovalRequestEmail", sqlPar_);
+                    #endregion
+                }
+
 
             }
             catch (Exception)

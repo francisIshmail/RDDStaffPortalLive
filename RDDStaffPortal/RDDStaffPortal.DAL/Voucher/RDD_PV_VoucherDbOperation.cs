@@ -405,14 +405,18 @@ namespace RDDStaffPortal.DAL.Voucher
 
                             k++;
                         }
+                        
 
                     }
+                    
                     scope.Complete();
                 }
+                
 
             }
             catch (Exception ex)
             {
+                str.Clear();
                 str.Add(new Outcls1
                 {
                     Outtf = false,

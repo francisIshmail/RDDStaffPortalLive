@@ -16,10 +16,10 @@
     <div class="col-md-6 col-lg-6">
         <div class="row rowmin">
             <div class="col-md-8 col-lg-8">
-                <div class="form-group form-inline">
+                <div id="div-ObjType"class="form-group form-inline has-error1">
                     <label for="Database" class="col-md-1 col-form-label width120px">Document :</label>
                     <div class="col-md-8 p-0">
-                        @Html.DropDownListFor(m => m.ObjType, Model.DocumentNameList, new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(m => m.ObjType, Model.DocumentNameList, new { @class = "form-control form-control-sm dropcheck" })
 
                     </div>
                 </div>
@@ -44,10 +44,10 @@
         </div>
         <div class="row rowmin">
             <div class="col-md-8 col-lg-8">
-                <div class="form-group form-inline">
+                <div id="div-Description" class="form-group form-inline has-error1">
                     <label for="Database" class="col-md-1 col-form-label width120px">Description :</label>
                     <div class="col-md-8 p-0">
-                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-sm",@maxlength = "510" })
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-sm txtcheck",@maxlength = "510" })
                     </div>
                 </div>
             </div>

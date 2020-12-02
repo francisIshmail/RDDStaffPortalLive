@@ -32,6 +32,7 @@ using System.Web.Script.Serialization;
 
 namespace RDDStaffPortal.Areas.SAP.Controllers
 {
+    [Authorize]
     public class SalesOrderController : Controller
     {
         // GET: SAP/SalesOrder

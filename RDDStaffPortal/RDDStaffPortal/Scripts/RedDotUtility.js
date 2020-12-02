@@ -824,6 +824,27 @@ function RdotDropimg(ids, url) {
 }
 
 
+function RdotDrop(ids, url) {
+
+    $.getJSON(url).done(function (data) {
+        $('#' + ids + '').empty();
+        $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
+        var ary = [];
+        ary = data;
+        for (var i = 0; i < ary.length; i++) {
+            $('#' + ids + '').append('<option value="' + ary[i].Code + '" selected=""  >' + ary[i].CodeName + '</option>');
+        }
+        $('#' + ids + '').val(0);
+        // $('#Userid').selectpicker('refresh');
+    });
+    $('#' + ids + '').select2({
+        theme: "bootstrap",
+       
+    });
+
+    
+}
+
 
 function RdotDropimg1(ids, url, path) {
     $.getJSON(url).done(function (data) {
