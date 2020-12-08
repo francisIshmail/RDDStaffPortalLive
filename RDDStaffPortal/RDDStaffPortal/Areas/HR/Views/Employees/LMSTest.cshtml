@@ -1,0 +1,280 @@
+﻿
+@{
+    ViewBag.Title = "LMSTest";
+    Layout = "~/Views/Shared/_LMSLayout.cshtml";
+}
+
+<div class="p-0 dropdown-header py-3 pt-md-5 pb-md-4 mx-auto">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <form>
+                    <select name="name" class="custom-select">
+                        <option selected>Subhojit Ghosh </option>
+                        <option value="one">Link 1</option>
+                        <option value="two">Link 2</option>
+                        <option value="three">Link 3</option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <form>
+                    <select name="date" class="custom-select">
+                        <option selected>Jan 01-2020 - Dec 31 2020 </option>
+                        <option value="one">Link 1</option>
+                        <option value="two">Link 2</option>
+                        <option value="three">Link 3</option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <form>
+                    <select name="calendar" class="custom-select">
+                        <option selected>Calendar </option>
+                        <option value="one">Calendar 1</option>
+                        <option value="two">Calendar 2</option>
+                        <option value="three">Calendar 3</option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <div class="nav-masthead"><button type="button" class="btn btn-primary btn-lg">Book Leave</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-9">
+            <div class="row">
+                <div id="calendar"></div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card mt-3 mb-3 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-bold">Annual Leaves</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-0 mb-4">
+                        <li><strong>Allowance </strong> <span class="blu">20 days </span></li>
+                        <li><strong>Total </strong> <span>20 days </span></li>
+                        <li><strong>Taken </strong> <span>3 days </span></li>
+                        <li><strong>Booked </strong> <span>1 day </span></li>
+                        <li><strong>Remaining to take </strong> <span>17 days </span></li>
+                        <li><strong>Remaining to Book </strong> <span>16 days </span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mt-3 mb-3 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-bold">Options </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-0 mb-4">
+                        <li><a href="#"><strong class="blu">Add to regilar calendar </strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Modal
+=======================-->
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 bg-white">
+                        <div class="modal-header">
+                            <div class="rounded-circle blu"><span>SG</span></div>
+                            <div class="headername"><h2>Subhojit Ghosh </h2></div>
+                        </div>
+                        <div class="modal-body">
+                            <form name="modal-form" method="post" action="">
+                                <div class="form-group">
+                                    <label for="sel1">Employees:</label>
+                                    <select class="form-control" id="sel1">
+                                        <option>Subhojit Ghosh </option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sel1">Leave Type <i class="fas fa-star"></i></label>
+                                    <select class="form-control" id="sel1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="form-check-inline mb-2 mr-sm-2">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox"> Private
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Date <i class="fas fa-star"></i></label>
+                                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                        <input placeholder="02/05/2020 - 02/05/2020" type="text" id="example" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Comments:</label>
+                                    <textarea class="form-control" rows="5" id="comment">Trip to Darjeeling</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Attachments:</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                        <div class="rgtside">
+                            <div class="modal-body rgttop">
+                                <h6>YOUR REQUEST </h6>
+                                <div class="info-section">
+                                    <div class="info-left">Dec 07</div>
+                                    <div class="info-rgt">
+                                        <form>
+                                            <select name="daytime" class="custom-select">
+                                                <option selected>All day </option>
+                                                <option value="one">Half day - Morning  </option>
+                                                <option value="two">Half day - Afternoon </option>
+                                                <option value="three">Other </option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="info-section">
+                                    <div class="info-left">Dec 08</div>
+                                    <div class="info-rgt">
+                                        <form>
+                                            <select name="daytime" class="custom-select">
+                                                <option selected>All day </option>
+                                                <option value="one">Half day - Morning  </option>
+                                                <option value="two">Half day - Afternoon </option>
+                                                <option value="three">Other </option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="info-section">
+                                    <div class="info-left">Dec 09</div>
+                                    <div class="info-rgt">
+                                        <form>
+                                            <select name="daytime" class="custom-select">
+                                                <option selected>All day </option>
+                                                <option value="one">Half day - Morning  </option>
+                                                <option value="two">Half day - Afternoon </option>
+                                                <option value="three">Other </option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="info-section">
+                                    <div class="info-left">Dec 10</div>
+                                    <div class="info-rgt">
+                                        <form>
+                                            <select name="daytime" class="custom-select">
+                                                <option selected>All day </option>
+                                                <option value="one">Half day - Morning  </option>
+                                                <option value="two">Half day - Afternoon </option>
+                                                <option value="three">Other </option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="info-section">
+                                    <div class="info-left">Dec 11</div>
+                                    <div class="info-rgt">
+                                        <form>
+                                            <select name="daytime" class="custom-select">
+                                                <option selected>All day </option>
+                                                <option value="one">Half day - Morning  </option>
+                                                <option value="two">Half day - Afternoon </option>
+                                                <option value="three">Other </option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rgtmid">
+                                <h5>1 day of Annual Leave </h5>
+                                <h6>20 days remaining </h6>
+                            </div>
+                            <div class="modal-footer"><button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Send Request</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $('body').on('focusin', '.datepicker', function () {
+        $('.datepicker').datetimepicker({
+            format: 'DD/MM/YYYY',
+            showClose: true,
+            showClear: true,
+
+        });
+
+    });
+    $(document).ready(function () {
+        //$('.datepicker').datepicker({
+        //    inline: true
+        //});
+
+       
+        $('.datepicker').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD/MM/YYYY',
+            showClose: true,
+            showClear: true,
+            // minDate: new Date(),
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.day').on('click', function () {
+            $('#myModal').modal('toggle');
+        });
+    });
+</script>
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+<script type="text/javascript" src="~/Scripts/calendarize.js"></script>
+<script type="text/javascript">
+    var $calendar = document.getElementById("calendar");
+    var currentYear = new Date().getFullYear();
+    var calendarize = new Calendarize();
+    calendarize.buildYearCalendar($calendar, currentYear);
+</script>

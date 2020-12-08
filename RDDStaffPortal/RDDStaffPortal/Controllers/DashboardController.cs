@@ -538,5 +538,11 @@ namespace RDDStaffPortal.Controllers
 
         }
 
+        //THis method use for custom partial view Layout
+        public ActionResult _PartialLoginUserProfile()
+        {
+            return PartialView();
+        }
+
     }
 }

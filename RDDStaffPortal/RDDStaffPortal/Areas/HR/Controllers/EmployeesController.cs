@@ -843,6 +843,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         }
 
 
+        public ActionResult LMSTest()
+        {
+            return View();
+        }
+
+
     }
 }
 
