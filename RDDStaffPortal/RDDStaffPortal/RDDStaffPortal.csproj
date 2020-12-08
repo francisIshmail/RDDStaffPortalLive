@@ -235,6 +235,7 @@
     <Content Include="img\bg\Background-001.JPG" />
     <Content Include="img\bg\Background-002.JPG" />
     <Content Include="Images\timeout-icon.png" />
+    <Content Include="img\bg\StaffPortalBG-01.png" />
     <Content Include="js\datapicker-separate\datepicker.all.js" />
     <Content Include="js\datapicker-separate\datepicker.all.min.js" />
     <Content Include="js\datapicker-separate\datepicker.css" />
