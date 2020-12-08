@@ -23,7 +23,7 @@ namespace RDDStaffPortal.Controllers
         {
             return View();
         }
-        
+        //Login method of login view
         public ActionResult Login()
         {
             return View();
