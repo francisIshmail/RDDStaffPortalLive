@@ -24,7 +24,6 @@ namespace RDDStaffPortal.Controllers
             return View();
         }
         
-        // Login view
         public ActionResult Login()
         {
             return View();
