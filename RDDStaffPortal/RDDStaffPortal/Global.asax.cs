@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RDDStaffPortal.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -18,10 +19,11 @@ namespace RDDStaffPortal
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            GlobalFilters.Filters.Add(new CustomAuthenticationFilter());
+            GlobalFilters.Filters.Add(new MyCustomHandleErrorAttribute());
         }
 
-        protected void Application_BeginRequest(Object sender, EventArgs e)
+        protected void Application_BeginRequest(Object sender, EventArgs e)                           
         {
             CultureInfo cInfo = new CultureInfo("en-IN");
             cInfo.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";

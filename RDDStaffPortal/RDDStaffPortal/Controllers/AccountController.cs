@@ -15,6 +15,7 @@ using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
+    [OverrideAuthorization]
     public class AccountController : Controller
     {
         // GET: Account
@@ -23,7 +24,8 @@ namespace RDDStaffPortal.Controllers
         {
             return View();
         }
-        
+       
+
         public ActionResult Login()
         {
             return View();

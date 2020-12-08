@@ -9,7 +9,7 @@ using RDDStaffPortal.DAL.InitialSetup;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DesignationsController : Controller
     {
      

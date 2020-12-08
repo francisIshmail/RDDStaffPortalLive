@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class ApprovalTemplateController : Controller
     {
         // GET: Admin/ApprovalTemplate

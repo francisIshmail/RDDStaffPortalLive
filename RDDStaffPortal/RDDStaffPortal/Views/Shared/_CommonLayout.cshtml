@@ -202,6 +202,7 @@
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
+                                            @Html.Hidden("hdnuser", @HttpContext.Current.Session["LoginName"])
                                             <div class="avatar-lg"><img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="image profile" class="avatar-img rounded" id="Profilimg"></div>
                                             <div class="u-text">
                                                 <h6>
@@ -783,8 +784,11 @@
         $(document).ready(function () {
             debugger
 
+            
+            var user = $("#hdnuser").val();
+            if (user != "") {
 
-
+            }
 
 
         $('a.collapsed das').on("click", function () {

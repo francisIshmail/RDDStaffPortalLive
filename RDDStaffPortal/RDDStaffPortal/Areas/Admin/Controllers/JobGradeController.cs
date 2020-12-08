@@ -9,6 +9,7 @@ using RDDStaffPortal.DAL.DataModels;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    [Authorize]
     public class JobGradeController : Controller
     {
         JobGradeDbOperations JobGradeDbOp = new JobGradeDbOperations();

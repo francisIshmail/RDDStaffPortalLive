@@ -10,7 +10,9 @@ using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
-    [Authorize]
+    //[Authorize]
+   
+
     public class DashboardController : Controller
     {
         // GET: Dashboard
