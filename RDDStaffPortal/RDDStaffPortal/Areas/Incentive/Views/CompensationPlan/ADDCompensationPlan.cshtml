@@ -1,0 +1,247 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Incentive.RDD_CompensationPlan
+
+
+<div class="rowmin">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body smform-section">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Sales Employee :</label>
+                            <div class="col-md-8 p-0">
+                                <select class="form-control form-control-sm" id="">
+                                    <option>-- select --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Period :</label>
+                            <div class="col-md-8 p-0">
+                                @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
+                                                new SelectListItem { Text = "H1", Value = "H1" },
+                                                new SelectListItem { Text = "H2", Value = "H2" }
+                                                 }, new { @class = "form-control form-control-sm dropcheck" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Year :</label>
+                            <div class="col-md-8 p-0">
+                                @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Designation :</label>
+                            <div class="col-md-8 p-0">
+                                @Html.TextBoxFor(m => m.Years, new { @class = "form-control form-control-sm txtcheck", @readonly="readonly"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Currency :</label>
+                            <div class="col-md-8 p-0">
+                                <select class="form-control form-control-sm" id="">
+                                    <option>-- select --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Total Comp :</label>
+                            <div class="col-md-8 p-0">
+                                <input type="text" class="form-control form-control-sm" id="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">KPI Template  :</label>
+                            <div class="col-md-8 p-0">
+                                <select class="form-control form-control-sm" id="">
+                                    <option>-- select --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-1 col-form-label p-0 width120px">Accepted By Sales Person  :</label>
+                            <div class="col-md-8 p-0">
+                                <div class="input-group">
+                                    <label class="switch">
+                                        <input type="checkbox"> <div></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel padd-10 mar-t10 panel-red-border">
+                    <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-Sales-tab" data-toggle="pill" href="#pills-Sales" role="tab" aria-controls="pills-Sales" aria-selected="true">Sales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-KPI-tab" data-toggle="pill" href="#pills-KPI" role="tab" aria-controls="pills-KPI" aria-selected="false">KPI</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-Sales" role="tabpanel" aria-labelledby="pills-Sales-tab">
+                            <div class="row">
+                                <div class="col-xl-8 col-md-8 p-0">
+                                    <div class="table-responsive">
+                                        <div class="quick-scroll scrollbar-inner">
+                                            <div class="reddotTable sm-form m-0">
+                                                <div class="reddotTableBody">
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableHead width20per"><div>BU</div></div>
+                                                        <div class="reddotTableHead width20per"><div>GP Target</div></div>
+                                                        <div class="reddotTableHead width20per"><div>Rev Target</div></div>
+                                                        <div class="reddotTableHead width20per"><div>Split GP % (Max 20)</div></div>
+                                                        <div class="reddotTableHead width20per"><div>Split Rev % (Max 50)</div></div>
+                                                    </div>
+                                                </div>
+                                                <div class="reddotTableBody">
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" value="CSD" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="44" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="47" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="45" id=""> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="20" id=""> </div> </div>
+                                                    </div>
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" value="CSD" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="44" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="47" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="45" id=""> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="20" id=""> </div> </div>
+                                                    </div>
+                                                    <div class="reddotTableRow odd-even-row total-bg">
+                                                        <div class="reddotTableCell"> <div> </div> </div>
+                                                        <div class="reddotTableCell"> <div></div> </div>
+                                                        <div class="reddotTableCell"> <div>Total </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="90" id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="40" id="" disabled> </div> </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-KPI" role="tabpanel" aria-labelledby="pills-KPI-tab">
+
+                            <div class="row">
+                                <div class="col-xl-6 col-md-6 p-0">
+                                    <div class="table-responsive">
+                                        <div class="quick-scroll scrollbar-inner">
+                                            <div class="reddotTable sm-form m-0">
+                                                <div class="reddotTableBody">
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableHead width20per"><div>KPI Parameter</div></div>
+                                                        <div class="reddotTableHead width20per"><div>Target Numbers</div></div>
+                                                        <div class="reddotTableHead width20per"><div>Split %</div></div>
+                                                    </div>
+                                                </div>
+                                                <div class="reddotTableBody">
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" value="Customer Visit " id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="45" id=""> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="47" id="" disabled> </div> </div>
+                                                    </div>
+
+                                                    <div class="reddotTableRow odd-even-row">
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" value="Customer Visit " id="" disabled> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="45" id=""> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="47" id="" disabled> </div> </div>
+                                                    </div>
+
+                                                    <div class="reddotTableRow odd-even-row total-bg">
+                                                        <div class="reddotTableCell"> <div>Total</div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="45" id=""> </div> </div>
+                                                        <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm text-right" value="47" id="" disabled> </div> </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <div class="row">
+                    <div class="col-md-1 ml-auto text-right">
+                        <button class="btn btn-info btn-sm">save</button>
+                        <button class="btn btn-warning btn-sm">View Comp Calculation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script type="text/javascript">
+    if ($("#EditFlag").val() == "True") {
+        $(".txtcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+        $(".dropcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+        $(".OriginatorDet").each(function () {
+            var HdnEarnOrDeduct = $(this).find("[name^='HdnddlEarnOrDeduct']").val();
+            $(this).find("[name^='ddlEarnOrDeduct']").val(HdnEarnOrDeduct).trigger('change');
+        });
+    }
+    $(".txtcheck").blur(function () {
+        if ($(this).val() !== '') {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+        }
+        else {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+            $(this).val('');
+        }
+    });
+    $(".dropcheck").blur(function () {
+        if ($(this).val() !== '0') {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+        }
+        else {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+            $(this).val('0').trigger('change');
+        }
+    });
+</script>
+
+
+

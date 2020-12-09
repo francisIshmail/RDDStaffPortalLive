@@ -72,7 +72,7 @@
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Jagdish\ReddotStaffLive\RDDStaffPortalLive\RDDStaffPortal\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\Jagdish\ReddotStaffLive\RDDStaffPortalLive\RDDStaffPortal\RDDStaffPortal\bin\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
@@ -112,6 +112,9 @@
     <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
     <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\Incentive\RDD_CompensationPlan.cs" />
+    <Compile Include="DataModels\Incentive\RDD_IncentiveKPI.cs" />
+    <Compile Include="DataModels\Incentive\RDD_IncentiveSlab.cs" />
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
     <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
@@ -158,6 +161,9 @@
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HR\BUCountriesDbOperations.cs" />
+    <Compile Include="Incentive\RDD_CompensationPlan_DbOperation.cs" />
+    <Compile Include="Incentive\RDD_IncentiveKPI_DbOperation.cs" />
+    <Compile Include="Incentive\RDD_IncentiveSlab_DbOperation.cs" />
     <Compile Include="InitialSetup\DashBoardDbOperation.cs" />
     <Compile Include="InitialSetup\DepartmentsDbOperation.cs" />
     <Compile Include="InitialSetup\DesignationDbOperation.cs" />
