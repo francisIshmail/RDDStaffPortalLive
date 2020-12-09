@@ -11,6 +11,29 @@
     Attachevent: function () {
         var k1 = 1;
         var k2 = 1;
+        $(document).on("change", ".dropcheck", function () {
+            debugger
+            if ($(this).val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('0').trigger('change');
+            }
+        });
+        $(document).on("blur", ".txtcheck", function () {
+
+            if ($(this).val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
+
         if ($("#EditFlag").val() == "True") {
 
             if ($("input[id='Condition']").val() == 'True') {
@@ -34,7 +57,9 @@
                 k2++;
             });
 
+
         } else {
+
             $("#TempStatus").trigger('click');
             applyAutoComplete2("#Originator1", "#hdnOriginator1", "/GetUserListAuto");
             applyAutoComplete2("#Approver1", "#hdnApprover1", "/GetUserListAuto");

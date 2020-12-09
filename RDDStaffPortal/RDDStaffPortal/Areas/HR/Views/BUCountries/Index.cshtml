@@ -242,7 +242,9 @@
         //$('#SearchByEmp').click(function () {
         $(document).ready(function () {
             // drop down image fill with name
-            RdotDropimg("EmpName", "/GetEmpList");
+            //RdotDropimg("EmpName", "/GetEmpList");
+
+            RdotDrop("EmpName", "/GetEmpList");
             $("#EmpName").on("change", function () {
 
                 SearchByEmp($("#EmpName option:selected").val());

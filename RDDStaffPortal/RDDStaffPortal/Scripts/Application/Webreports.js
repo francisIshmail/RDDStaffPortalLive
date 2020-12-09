@@ -8,7 +8,9 @@
 		var selectedObjs;
 		$(".loader1").show();
 		// drop down image fill with name 
-		RdotDropimg("Userid", "/GetUserList");
+		//RdotDropimg("Userid", "/GetUserList");
+
+		RdotDrop("Userid", "/GetUserList");
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
