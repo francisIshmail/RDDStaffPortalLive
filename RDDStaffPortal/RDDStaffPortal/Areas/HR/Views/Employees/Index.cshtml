@@ -327,7 +327,7 @@
                                                         <div class="select2-input">
 
 
-                                                            @Html.DropDownListFor(m => m.HOD_HR, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.HOD_HRD != null ? (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.HOD_HR, ViewBag.ManagerListHR2 as SelectList, "-Select-", ViewBag.HOD_HRD != null ? (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {
                             @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })

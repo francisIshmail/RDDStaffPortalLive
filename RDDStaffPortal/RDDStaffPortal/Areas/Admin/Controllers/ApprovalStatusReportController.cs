@@ -18,6 +18,7 @@ using System.Security.AccessControl;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    //[Authorize]
     public class ApprovalStatusReportController : Controller
     {
         // GET: Admin/ApprovalStatusReport

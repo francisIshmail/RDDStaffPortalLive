@@ -1,0 +1,512 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<style>
+    .modal-dialog {
+        max-width: 400px;
+        min-width: 300px;
+    }
+</style>
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">KPI Setup</h4></div>
+                <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                    <button class="btn btn-info btn-sm" id="btnAdd">New</button>
+                    <button class="btn btn-info btn-sm" id="btnSave">Save</button>
+                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+            <div class="rowmin" id="divKPIshow">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div id="idCard">
+
+                            </div>
+                            <div class="rowmin row mar-b10" id="tblid1">
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tblid" class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="IIInd" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead" hidden="hidden"><div>KPI Id </div></div>
+                                            <div class="reddotTableHead" hidden="hidden"><div>Designation Id </div></div>
+                                            <div class="reddotTableHead"><div>Designation </div></div>
+                                            <div class="reddotTableHead"><div>KPI Name </div></div>
+                                            <div class="reddotTableHead"><div>Retain %</div></div>
+                                            <div class="reddotTableHead"><div>Period</div></div>
+                                            <div class="reddotTableHead"><div>Year</div></div>
+                                            <div class="reddotTableHead"><div>T & C </div></div>
+                                            <div class="reddotTableHead"><div>CreatedOn </div></div>
+                                            <div class="reddotTableHead"><div>CreatedBy </div></div>
+                                            <div class="reddotTableHead"><div>LastUpdatedOn </div></div>
+                                            <div class="reddotTableHead"><div>LastUpdatedBy </div></div>
+                                        </div>
+                                    </div>
+                                    <div id="IIIbody" class="reddotTableBody">
+                                        <div id="IIIst" class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>KPI Id</div></div>
+                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>Designation Id</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Designation</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>KPI Name</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>Retain %</div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>Period</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Year</div></div>
+                                            <div class="reddotTableCell Abcd"><div>T & C</div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>CreatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div>LastUpdatedBy</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GetPartial">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="SelectWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Save KPI Parameter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section">
+                <div class="row rowmin" id="idchk">
+                    <div class="col-xl-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="txtKpiParamModal" />
+                        </div>
+                    </div>
+                    @*<br />*@
+                    <div class="col-xl-2 text-right">
+                        <div class="form-group">
+                            <button id="btnSaveModal" type="button" style="float:right" class="btn btn-info btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="tblKPIDetailsModal" class="reddotTableBody">
+                    <div class="reddotTableRow odd-even-row">
+                        <div class="reddotTableHead width20per"><div>KPI Parameter </div></div>
+                        <div class="reddotTableHead width5per"><div>Action</div></div>
+                    </div>
+                </div>
+                <div id="Ibody" class="reddotTableBody">
+                    <div id="Ist" class="reddotTableRow odd-even-row OriginatorDet">
+                        <div class="reddotTableCell width20per Abc"><div></div></div>
+                        <div class="reddotTableCell width3per Abc" hidden="hidden"><div></div></div>
+                        <div class="reddotTableCell width5per Abc">
+                            <div>
+                                <button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script type="text/javascript">
+    var tblhead1 = ['KPI_Id','DesigId','DesigName', 'KPIname', 'Retain_Percentage', 'Period', 'Years', 'TermsAndCondition', 'CreatedOn', 'CreatedBy', 'LastUpdatedOn', 'LastUpdatedBy'];
+    var tblhide = [];
+    var tblhead2 = [];
+    var dateCond = ['CreatedOn', 'LastUpdatedOn'];
+    var arr = [];
+    var curPage = 1;
+    //#region Pageload table bind*/
+    function GetKpiData() {
+        debugger;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        $('.loader1').show();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETKPI", data, dateCond, tblhead1, tblhide, tblhead2);
+        debugger;
+    }
+    //#endregion
+    //#region Next Button*/
+    $('.next').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage++;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (curPage > arr.data[0].TotalCount)
+            curPage = 0;
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETKPI", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Prev Button*/
+    $('.prev').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage--;
+
+        if (curPage < 0)
+            curPage = (arr.data[0].TotalCount - 1);
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETKPI", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Search Textbox*/
+    $("#Search-Forms").on("keyup", function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $(this).val().toLowerCase();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETKPI", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    @*function GetDesignationYearList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDesignationList", "IncentiveKPI")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                var arry = data;
+                $.each(arry.Table, function (index, value) {
+                    $("#ddlDesignation").append('<option value="' + value.DesigId + '">' + value.DesigName+ '</option>');
+                });
+                $.each(arry.Table1, function (index, value) {
+                    $("#ddlYear").append('<option value="' + value.Years + '">' + value.Years + '</option>');
+                });
+            }
+        });
+    }*@
+    function GetKPIdetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetKPIdetail", "IncentiveKPI")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $('div#IIst').not(':first').remove();
+                var a = data;
+                $.each(a.Table, function (index, value) {
+                    var tr = $("#IIst").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.KPI_ParameterName;
+                    $("#IIbody").append(tr);
+                });
+                $("#IIst")[0].remove();
+            }
+        });
+    }
+    function GetKPIdetailsModal() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetKPIdetail", "IncentiveKPI")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $('div#Ist').not(':first').remove();
+                var a = data;
+                $.each(a.Table, function (index, value) {
+                    var tr = $("#Ist").clone();
+                    tr.find(".Abc")[0].children[0].textContent = value.KPI_ParameterName;
+                    tr.find(".Abc")[1].children[0].textContent = value.KPIparamId;
+                    $("#Ibody").append(tr);
+                });
+                $("#Ist")[0].remove();
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('.loader1').show();
+        GetKpiData();
+        $('.loader1').hide();
+        $("#divKPIshow").show();
+        //GetKPIdetails();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('click', '#btnNewModal', function () {
+        GetKPIdetailsModal();
+    });
+    $(document).on('click', '.ibtnDel', function () {
+        var Currow = $(this).closest("#Ist");
+        var KPIParameterId = Currow.find(".Abc").eq(1).text();
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.getJSON("/IncentiveKPI/DeleteKPIdetail", { "_KPIParamId": KPIParameterId }).done(function (data) {
+                    //if (data == "Record Deleted Successfully") {
+                    //    //  $("#Ist").remove();
+
+                    //    RedDotAlert_Success(data);
+                    //    Currow.remove();
+                    //    GetKPIdetails();
+                    //    GetKPIdetailsModal();
+                    //}
+                    if (data[0].Outtf == true) {
+                        RedDotAlert_Success(data[0].Responsemsg);
+                        GetKPIdetails();
+                        GetKPIdetailsModal();
+                    }
+                });
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+        })
+    });
+    $(document).on('click', '#btnAdd', function (e) {
+        e.preventDefault();
+        $.post("/ADDKPI", { TEMPId: -1 }, function (response) {
+
+            $("#idCard").html(response);
+                    RedDot_Button_New_HideShow();
+            GetKPIdetails();
+            GetKPIdetailsModal();
+                })
+    });
+    $(document).on('click', '#btnCancel', function (e) {
+        e.preventDefault();
+        RedDot_Button_Init_HideShow();
+        $("#idCard").html("");
+        $("#divKPIshow").show();
+        $("#ContantsPayment").hide();
+        $("#btnNew").show();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('click', '#btnSaveModal', function () {
+        var KpiParam = $.trim($("#txtKpiParamModal").val());
+        if (KpiParam.length == 0) {
+            RedDotAlert_Error("Please Enter KPI Parameter");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveKPIparameter", "IncentiveKPI")',
+            async: false,
+            cache: false,
+            contentType: "Application/json",
+            data: JSON.stringify({ _KpiParam: KpiParam }),
+            dataType: "json",
+            success: function (data) {
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    $("#txtKpiParamModal").val("");
+                    GetKPIdetails();
+                    GetKPIdetailsModal();
+                } else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+            }
+        });
+    });
+    
+    $(document).on('keyup', '.text', function () {
+        //alert("hi
+        var Sum = 0;
+        var t = $(this).val() || 0;
+        if (t > 100) {
+            $(this).val("0");
+        }
+        $(".OriginatorDet").each(function () {
+
+            var SplitPercent = $(this).find("[name^='txtSplit']").val() || 0;
+            if (SplitPercent != '' && SplitPercent != 0) {
+                Sum = Sum + parseInt(SplitPercent);
+
+                }
+        });
+        //var CVSP = $.trim($("#txtCVsplit").val()) || 0;
+        //var FSP = $.trim($("#txtForcstSplit").val()) || 0;
+        //var AtndSP = $.trim($("#txtAtndSplit").val()) || 0;
+        //var AbsntSP = $.trim($("#txtAbsntSplit").val()) || 0;
+        //var SadSP = $.trim($("#txtStckSplit").val()) || 0;
+        //var SrtSP = $.trim($("#txtRevSplit").val()) || 0;
+        //var SgpSP = $.trim($("#txtGptSplit").val()) || 0;
+        //sum = parseInt(CVSP) + parseInt(FSP) + parseInt(AtndSP) + parseInt(AbsntSP) + parseInt(SadSP) + parseInt(SrtSP) + parseInt(SgpSP);
+        if (Sum > 100) {
+            var t1 = parseInt(Sum) - parseInt(t);
+            $(this).val(100-t1);
+            RedDotAlert_Error("Sum cannot exceed 100");
+        }
+    });
+    debugger
+
+    $(document).on('click', '#btnSave', function () {
+        var RDD_Incentive = {
+            KPI_Id: $("#KPI_Id").val(),
+            DesignationId: $("#DesigId option:selected").val(),
+            Years: $("#Years option:selected").val(),
+            Period: $("#Period option:selected").val(),
+            KPIname: $.trim($("#KPIname").val()),
+            EditFlag: $("#EditFlag").val(),
+            Retain_Percentage: $.trim($("#Retain_Percentage").val()),
+            TermsAndCondition: $.trim($("#TermsAndCondition").val()),
+            Total_Percentage: $.trim($("#txtTotal").val()),
+            RDD_IncentiveKPI_ParameterList: []
+        };
+        $(".OriginatorDet").each(function () {
+            var Currow = $(this).closest("#IIst");
+            var KpiParameters = Currow.find(".Abcd").eq(0).text();
+            var SplitPercent = $(this).find("[name^='txtSplit']").val();
+            var EarnOrDeduct = $(this).find("[name^='ddlEarnOrDeduct']").val();
+            if (SplitPercent != '' && EarnOrDeduct != '' && SplitPercent!= undefined && EarnOrDeduct!=undefined) {
+                var RDD_IncentiveKPI_Parameter = {
+                    KPI_Parameter: KpiParameters,
+                    Split_Percentage: SplitPercent,
+                    KPIType:EarnOrDeduct
+                };
+                RDD_Incentive.RDD_IncentiveKPI_ParameterList.push(RDD_IncentiveKPI_Parameter);
+            }
+
+        });
+        var ValidateFormCheck = ValidateForm(RDD_Incentive);
+        if (ValidateFormCheck.formValid == false) {
+            RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+            return;
+        }
+        var data = JSON.stringify({ RDD_Incentive: RDD_Incentive });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveIncentiveKPI", "IncentiveKPI")',
+            async: false,
+            cache: false,
+            data: data,
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                debugger
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                } else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+                window.location.href = '@Url.Action("Index", "IncentiveKPI")';
+            }
+        });
+    });
+    //#region Edit PV*/
+    $("#IIIbody").on('dblclick', "#IIIst", function (e) {
+        e.preventDefault();
+        var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
+        $.post("/ADDKPI", { TEMPId: TEMPId }, function (response) {
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();
+        })
+    });
+    function ValidateForm(RDD_Incentive) {
+        var response = {
+            ErrorMessage: "",
+            formValid: false
+        };
+
+        if (RDD_Incentive.DesignationId == "0" || RDD_Incentive.DesignationId == "-1") {
+            response.ErrorMessage += "Designation,";
+        }
+
+        if (RDD_Incentive.Years == "0" || RDD_Incentive.Years == "-1") {
+            response.ErrorMessage += "Year,";
+        }
+
+        if (RDD_Incentive.Period == "0" || RDD_Incentive.Period == "-1") {
+            response.ErrorMessage += "Period,";
+        }
+
+        if (RDD_Incentive.KPIname.length == 0) {
+            response.ErrorMessage += "Please Enter KPI Name";
+        }
+        if (RDD_Incentive.Retain_Percentage.length == 0) {
+            response.ErrorMessage += "Please Enter Retain %";
+        }
+        if (RDD_Incentive.TermsAndCondition.length == 0) {
+            response.ErrorMessage += "Please Enter T&C";
+        }
+
+        if (response.ErrorMessage.length == 0) {
+            response.formValid = true;
+        }
+        else {
+            response.ErrorMessage = "Enter Mandatory Fields " + response.ErrorMessage + "."
+        }
+
+        return response;
+    }
+</script>
