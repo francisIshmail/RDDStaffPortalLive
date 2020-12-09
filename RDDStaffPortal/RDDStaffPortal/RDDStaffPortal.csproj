@@ -180,6 +180,8 @@
     <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
+    <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
@@ -815,6 +817,8 @@
     <Content Include="Areas\Targets\Views\web.config" />
     <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
     <Content Include="Areas\SAP\Views\RDD_PV\VIEWRDDPV.cshtml" />
+    <Content Include="Areas\LMS\Views\web.config" />
+    <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -866,6 +870,8 @@
     <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\LMS\Models\" />
+    <Folder Include="Areas\LMS\Views\Shared\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
