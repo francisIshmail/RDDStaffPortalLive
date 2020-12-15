@@ -1,9 +1,10 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
     var message = TempData["Msg"] ?? string.Empty;
-var result=TempData["Val"] ?? string.Empty;
-var origin=TempData["Originator"]??string.Empty;
+    var result = TempData["Val"] ?? string.Empty;
+    var origin = TempData["Originator"] ?? string.Empty;
 }
 
 
@@ -11,292 +12,288 @@ var origin=TempData["Originator"]??string.Empty;
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
-            <div class="page-header">
-                <div id="pgHeader" class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Marketing Plan</h4></div>
-                <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
-                    <button id="btn_MainSave" class="btn btn-success btn-sm" onclick="showaddfrm()">New</button>
-                    @*<button type="submit" class="btn btn-info btn-sm" id="btnsave" style="display:none"  onclick="savedata()">Save</button>*@
-                    <button id="btn_MainClear" class="btn btn-info btn-sm" onclick="ClearControls()">Clear</button>
-                    <button id="btn_MainSearch" class="btn btn-warning btn-sm" onclick="GetallDataList()">Find</button>
-                    @*<button id="btn_MainCancel" class="btn btn-danger btn-sm" disabled>Cancel</button>*@
 
-                </div>
+            @using (Ajax.BeginForm("SavePlan", "MarketingPlan", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                @*OnBegin = "begin",*@
+                OnSuccess = "Showpopup",
+                OnFailure = "handleError(error)"@*,
+                    UpdateTargetId = "addcontent",
+                    InsertionMode = InsertionMode.InsertAfter*@
+            }))
+            {
+                <div class="page-header">
+                    <div id="pgHeader" class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Marketing Plan <span class="required-label"></span></h4></div>
 
+                    <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                        <button id="btn_MainSave" type="button" class="btn btn-info btn-sm" onclick="showaddfrm()">New</button>
+                        <button type="submit" class="btn btn-info btn-sm" id="btnsave" onclick="savedata()">Save</button>
+                        <button type="button" class="btn btn-info btn-sm" id="btnrowsave" style="display:none" onclick="approverowdata()">Save</button>
+                        <button type="button" class="btn btn-info btn-sm" id="btnupdatesave" style="display:none" onclick="updaterownheadrdata()">Save</button>
+                        <button id="btn_MainClear" type="button" class="btn btn-info btn-sm" onclick="ClearControls()" style="display:none">Clear</button>
+                        <button id="btn_MainSearch" type="button" class="btn btn-danger btn-sm" onclick="GetallDataList()" style="display:none">Cancel</button> @*\\onclick="GetallDataList()"*@
 
-            </div>
-            @*<div class="page-header">
-                <div class="col-md-9 padd-0">
-                    <h4 class="page-title">Marketing Plan</h4>
-                </div>
-                <div class="col-md-1 ml-auto text-right">
-                    <div class="row">
-                        <div class="col-md-1 col-2"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
-                        <div class="col-md-1 mar-t3 p-0 col-3 ml-auto"><div id="headingOne" data-toggle="collapse" data-target="#ContantsPayment" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="plus-minus"></div></div></div>
+                        <button type="button" class="btn btn-info btn-sm" id="btnAction" style="display:none">Approval Decision</button>
+
 
                     </div>
                 </div>
-            </div>*@
-            @*FormMethod.Post, new { enctype = "multipart/form-data" }*@
-            @using (Ajax.BeginForm("SavePlan", "MarketingPlan",new AjaxOptions
-            {
-            HttpMethod = "POST",
-            @*OnBegin = "begin",*@
-            OnSuccess = "Showpopup",
-            OnFailure = "handleError(error)"@*,
-            UpdateTargetId = "addcontent",
-            InsertionMode = InsertionMode.InsertAfter*@
-            }))
-            {
-            <div class="rowmin collapse" id="ContantsPayment" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="col-md-12">
-                    <div class="card success-border full-height smform-section">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Source of fund :</label>
-                                        <div class="col-md-7 p-0">
-                                            <select class="form-control form-control-sm" id="ddlfund">
-                                                <option value="0">-- Select --</option>
-                                                <option value="Vendor">Vendor</option>
-                                                <option value="Internal">Internal</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Vendor BU :</label>
-                                        <div class="col-md-7 p-0">
-                                            <select class="form-control form-control-sm" id="VenderBu">
-                                                <option>-- Select --</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Country :</label>
-                                        <div class="col-md-7 p-0">
-
-                                            <select class="form-control form-control-sm" id="CountryList" onchange="BindRefNo()">
-                                                <option>-- Select --</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Approved Amount :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm text-right" id="txtappamt" onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)'>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Balance from Approved :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm text-right" id="txtbalapproved" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Ref No. :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm text-right" id="txtrefno" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">RDD Approved Amount :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm text-right" id="txtrddapp_amt" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Bal amt. from RDD Apped :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm text-right" id="txtbalamtrddapp" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Plan Status :</label>
-                                        <div class="col-md-7 p-0">
-                                            <select class="form-control form-control-sm" id="ddlplanstatus">
-                                                <option value="0">-- Select --</option>
-                                                <option value="Draft" selected="selected">Draft</option>
-                                                <option value="Open">Open</option>
-                                                <option value="On Hold">On-Hold</option>
-                                                <option value="Paid Closed">Paid-Closed</option>
-                                                <option value="Unpaid Closed">Unpaid-Closed</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-8">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-2 col-form-label p-0" style="margin-right:17px;">Description :</label>
-                                        <div class="col-md-9 p-1">
-                                            <textarea class="form-control" id="comment" rows="3"> </textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Start Date :</label>
-                                        <div class="col-md-7 p-0">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control form-control-sm" id="startdate" name="startdate">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">End Date :</label>
-                                        <div class="col-md-7 p-0">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control form-control-sm" id="enddate" name="enddate">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
 
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Approval Status :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm" id="txtapprovalstatus" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Approver Remark :</label>
-                                        <div class="col-md-7 p-0">
-                                            <input type="text" class="form-control form-control-sm" id="txtapprovalremk" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group form-inline">
-                                        <label for="Database" class="col-md-5 col-form-label p-0">Create Date :</label>
-                                        <div class="col-md-7 p-0">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control form-control-sm" id="createdate" name="createdate">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row">
-                                <div class="col-xl-1 col-md-1 ml-auto">
-                                    <button type="button" class="btn btn-success btn-sm" id="fromtoemail">Add</button>
-                                </div>
-                            </div>
-                            <hr />
 
 
-                            @*//class="card-body salesorder-section"*@
-                            @*<div class="card-body">
+                <div class="rowmin collapse" id="ContantsPayment" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="col-md-12">
+                        <div class="card success-border full-height smform-section">
+                            <div class="card-body">
                                 <div class="row">
-                                    *@
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <div class="reddotTable sm-form mar-t0" id="AddfromtoemailRow">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Source of fund :</label>
+                                            <div id="div-ddlfund" class="col-md-7 p-0 has-error1">
+                                                <select class="form-control form-control-sm dropcheck" id="ddlfund" required>
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="Vendor">Vendor</option>
+                                                    <option value="Internal">Internal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Vendor BU :</label>
+                                            <div id="div-VenderBu" class="col-md-7 p-0 has-error1">
+                                                <select class="form-control form-control-sm dropcheck" id="VenderBu" required>
+                                                    <option value="0">-- Select --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                <div class="reddotTableBody">
-                                                    <div class="reddotTableRow odd-even-row">
-                                                        <div class="reddotTableHead width1px"><div>#</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Date</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Country</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Vendor</div></div>
-                                                        <div class="reddotTableHead width20per"><div>Description</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Amount</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Vendor PO No.</div></div>
-                                                        <div class="reddotTableHead width10per"><div>SAP PO No.</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Status</div></div>
-                                                        <div class="reddotTableHead width10per"><div>Appr Status</div></div>
-                                                        <div class="reddotTableHead width20per"><div>Approver Remark</div></div>
-                                                        <div class="reddotTableHead width100px"><div>Key</div></div>
-                                                        <div class="reddotTableHead width100px"><div>Action</div></div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Country :</label>
+                                            <div id="div-CountryList" class="col-md-7 p-0 has-error1">
+
+                                                <select class="form-control form-control-sm dropcheck" id="CountryList" onchange="BindRefNo()" required>
+                                                    <option value="0">-- Select --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Approved Amount :</label>
+                                            <div id="div-txtappamt" class="col-md-7 p-0 has-error1">
+                                                <input type="text" data-vaue="true" class="form-control form-control-sm text-right txtcheck" id="txtappamt" required onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Balance from Approved :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm text-right" id="txtbalapproved" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Ref No. :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm text-right" id="txtrefno" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">RDD Approved Amount :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm text-right" id="txtrddapp_amt" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Bal amt. from RDD Apped :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm text-right " id="txtbalamtrddapp" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Plan Status :</label>
+                                            <div id="div-ddlplanstatus" class="col-md-7 p-0 has-error1">
+                                                <select class="form-control form-control-sm dropcheck" id="ddlplanstatus">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="Draft">Draft</option>
+                                                    <option value="Open" selected>Open</option>
+                                                    <option value="On Hold">On-Hold</option>
+                                                    <option value="Paid Closed">Paid-Closed</option>
+                                                    <option value="Unpaid Closed">Unpaid-Closed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-8">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-2 col-form-label p-0" style="margin-right:17px;">Description :</label>
+                                            <div id="dev-comment" class="col-md-9 p-1 has-error1">
+                                                <textarea class="form-control txtcheck " id="comment" rows="3" required> </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Start Date :</label>
+                                            <div class="col-md-7 p-0">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="startdate" name="startdate" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
                                                     </div>
-
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">End Date :</label>
+                                            <div class="col-md-7 p-0">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="enddate" name="enddate" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @*
+
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Approval Status :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm" id="txtapprovalstatus" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Approver Remark :</label>
+                                            <div class="col-md-7 p-0">
+                                                <input type="text" class="form-control form-control-sm" id="txtapprovalremk" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group form-inline">
+                                            <label for="Database" class="col-md-5 col-form-label p-0">Create Date :</label>
+                                            <div class="col-md-7 p-0">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-sm" id="createdate" name="createdate" disabled>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>*@
-                            <hr />
-                            <div id="attachmentdiv">
+                                <hr />
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <div class="file-upload">
-                                                @*<div class="file-select">
-                                                    *@
+                                    <div class="col-xl-1 col-md-1 ml-auto">
+                                        <button type="button" class="btn btn-info btn-sm" id="fromtoemail">Add</button>
+                                    </div>
+                                </div>
+                                <hr />
+
+
+                                @*//class="card-body salesorder-section"*@
+                                @*<div class="card-body">
+                                    <div class="row">
+                                *@
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="lines">
+                                        <div class="reddotTable sm-form mar-t0" id="AddfromtoemailRow">
+
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+                                                    <div class="reddotTableHead width1px"><div>#</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Date</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Country</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Vendor</div></div>
+                                                    <div class="reddotTableHead width20per"><div>Description</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Amount</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Vendor PO No.</div></div>
+                                                    <div class="reddotTableHead width10per"><div>SAP PO No.</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Status</div></div>
+                                                    <div class="reddotTableHead width10per"><div>Appr Status</div></div>
+                                                    <div class="reddotTableHead width20per"><div>Approver Remark</div></div>
+                                                    <div class="reddotTableHead width100px"><div>Key</div></div>
+                                                    <div class="reddotTableHead width100px"><div>Action</div></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div id="attachmentdiv">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="file-upload">
                                                     <div class="file-select-button" id="fileName"></div>
 
 
                                                     <input type="file"
-                                                           id="avatar" name="avatar" />
-                                                    @*
-                                                </div>*@
+                                                           id="avatar_0" name="avatar_0" class="file-select-name" onchange="assignfile(this)" />
+                                                    <input type="hidden" id="avatar_0" />
+                                                </div>
+
                                             </div>
-                                        </div>
 
-                                    </div>
-                                    <div class="col-xl-1 col-md-1">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button>
-                                            <button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button>
                                         </div>
+                                        <div class="col-xl-1 col-md-1">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button>
+                                                <a id="FilePathview_0" class="fa fa-eye"></a>
 
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-info btn-sm" id="btnsave" onclick="savedata()">Save</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
+                            <div class="modal-footer">
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <input type="hidden" id="maintab" name="maintab" />
-            <input type="hidden" id="mainrowtab" name="mainrowtab" />
-            <input type="hidden" id="attchcnt" />
+                <input type="hidden" id="maintab" name="maintab" />
+                <input type="hidden" id="mainrowtab" name="mainrowtab" />
+                <input type="hidden" id="attchcnt" />
             }
-            <div class="rowmin">
+            <input type="hidden" id="createnm" name="createnm" value="@ViewData["nm"]" />
+            <input type="hidden" id="planid" name="planid" />
+            <input type="hidden" id="txtDocStatus" name="txtDocStatus" />
+
+
+            <div class="rowmin" id="filterwind">
                 <div class="col-md-12">
                     <div class="card ">
                         <div class="card-body salesorder-section">
@@ -314,66 +311,66 @@ var origin=TempData["Originator"]??string.Empty;
                             <div class="rowmin" id="FilterSection" style="display:none">
 
                                 <div class="col-md-12">
-                                    <div class="card success-border full-height padd-10">
-                                        <div class="row">
+                                    @*<div class="card success-border full-height padd-10">*@
+                                    <div class="row">
 
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email2" class="width100px">Source Of Fund :</label>
-                                                    <div class="select2-input">
-                                                        <select id="fil_Source" name="basic" class="form-control">
-                                                            <option value="0">-- Select --</option>
-
-                                                            <option value="V">Vendor</option>
-                                                            <option value="I">Inventor</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email2" class="width100px">Vendor BU:</label>
-                                                    <select class="form-control" id="fil_BU">
+                                        <div class="col-xl-3 col-md-3">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Source Of Fund :</label>
+                                                <div class="select2-input">
+                                                    <select id="fil_Source" name="basic" class="form-control">
                                                         <option value="0">-- Select --</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email2" class="width100px">Country :</label>
-                                                    <select class="form-control" id="fil_Country">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="V">Vendor</option>
+                                                        <option value="I">Inventor</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email2" class="width100px">Plan Status :</label>
-                                                    <select class="form-control" id="fil_Status">
-                                                        <option value="0">-- Select --</option>
-                                                        <option value="D">Draft</option>
-                                                        <option value="O">Open</option>
-                                                        <option value="H">On-Hold</option>
-                                                        <option value="P">Paid-Closed</option>
-                                                        <option value="C">Unpaid-Closed</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email2" class="width100px">Date :</label>
-                                                    <div class="col-md-1">
-                                                        <input type="text" id="filfdate" class="form-control">
-                                                    </div>
+                                        <div class="col-xl-3 col-md-3">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Vendor BU:</label>
+                                                <select class="form-control" id="fil_BU">
+                                                    <option value="0">-- Select --</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-3">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Country :</label>
+                                                <select class="form-control" id="fil_Country">
+                                                    <option value="0">-- Select --</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-3">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Plan Status :</label>
+                                                <select class="form-control" id="fil_Status">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="D">Draft</option>
+                                                    <option value="O">Open</option>
+                                                    <option value="H">On-Hold</option>
+                                                    <option value="P">Paid-Closed</option>
+                                                    <option value="C">Unpaid-Closed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="email2" class="width100px">Date :</label>
+                                                <div class="col-md-1">
+                                                    <input type="text" id="filfdate" class="form-control">
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            @*<div class="col-xl-1 col-md-1 ml-auto text-right">
+                                        @*<div class="col-xl-1 col-md-1 ml-auto text-right">
                                                 <div class="form-group">
                                                     <label for="email2" class="width100px"></label>
                                                     <button class="btn btn-success btn-sm" id="btnapply" onclick="applyfilter()">Apply</button>
@@ -383,8 +380,8 @@ var origin=TempData["Originator"]??string.Empty;
 
 
 
-                                        </div>
                                     </div>
+                                    @*</div>*@
 
 
                                 </div>
@@ -460,18 +457,18 @@ var origin=TempData["Originator"]??string.Empty;
 
 
             @*<div class="rowmin">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="reddotTable sm-form " id="searchgrid"></div>
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="reddotTable sm-form " id="searchgrid"></div>
+                                </div>
+
+
                             </div>
-
-
                         </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
 
         </div>
     </div>
@@ -488,8 +485,8 @@ var origin=TempData["Originator"]??string.Empty;
             <div class="modal-body selectwidget-section">
                 <div class="row rowmin" id="idchk">
                     @*<div class="col-md-12 mar-b10">
-                        <div class="row" id="idchk"> </div>
-                    </div>*@
+                            <div class="row" id="idchk"> </div>
+                        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -502,6 +499,73 @@ var origin=TempData["Originator"]??string.Empty;
 <div id="Divid">
 
 </div>
+<div class="modal fade" id="ApprovalDecisionPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Approval Decision</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body padd-b0">
+                <div class="reddotTable sm-form mar-t0">
+                    <div id="IIIInd" class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead colHide"><div>ID</div></div>
+                            <div class="reddotTableHead colHide"><div>Template_ID</div></div>
+                            <div class="reddotTableHead colHide"><div>ObjType</div></div>
+                            <div class="reddotTableHead"><div>Approver Name</div></div>
+                            <div class="reddotTableHead width12per"><div>Action</div></div>
+                            <div class="reddotTableHead"><div>Approver Remarks</div></div>
+                            <div class="reddotTableHead width12per"><div>Date</div></div>
+                        </div>
+                    </div>
+                    <div id="IIIIBody" class="reddotTableBody">
+                        <div id="IIIIst" class="reddotTableRow odd-even-row ApproverAction">
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtID" readonly></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtTemplate_ID" readonly></div></div>
+                            <div class="reddotTableCell Abcd colHide"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtObjType" readonly></div></div>
+                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprover" readonly></div></div>
+                            <div class="reddotTableCell Abcd">
+                                <div>
+                                    <select class="form-control form-control-sm" id="cbAction">
+                                        <option value="P">Pending</option>
+                                        <option value="A">Approved</option>
+                                        <option value="RO">Rejected-Open</option>
+                                        <option value="RC">Rejected-Closed</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="reddotTableCell Abcd"><div><input type="text" class="form-control form-control-sm" value="XXX" id="txtApprRemark"></div></div>
+                            <div class="reddotTableCell Abcd">
+                                <div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm datepicker" id="txtApprovedDate" name="datepicker">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnActionSave" class="btn btn-info btn-sm">Save</button>
+                <button id="btnActionCancel" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
@@ -512,10 +576,10 @@ var origin=TempData["Originator"]??string.Empty;
 <!--   Core JS Files   -->
 <script src="~/js/core/jquery.3.2.1.min.js"></script>
 <script src="~/js/core/popper.min.js"></script>
-<script src="~/js/core/bootstrap.min.js"></script>
+@*<script src="~/js/core/bootstrap.min.js"></script>*@
 <!-- jQuery UI -->
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
 <script src="~/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="~/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 <!-- Chart JS -->
@@ -525,7 +589,7 @@ var origin=TempData["Originator"]??string.Empty;
 <script src="~/js/plugin/select2/select2.full.min.js"></script>
 
 <!-- Atlantis JS -->
-<script src="~js/atlantis.min.js"></script>
+
 
 <script src="~/js/setting-demo2.js"></script>
 <!-- jQuery Sparkline -->
@@ -549,17 +613,13 @@ var origin=TempData["Originator"]??string.Empty;
 <script>
     m = jQuery.noConflict();
 </script>
-<script>
-    (function ($) {
-        $(function () {
-            window.fs_test = $('.test').fSelect();
-        });
-    })(jQuery);
-</script>
+
 
 <script>
     var totalcnt = 0;
-    var counter=0;
+    var counter = 0;
+    var aflag = "New";
+
     m('#startdate').datetimepicker({
         format: 'DD/MM/YYYY',
         defaultDate: new Date(),
@@ -573,405 +633,10 @@ var origin=TempData["Originator"]??string.Empty;
         format: 'DD/MM/YYYY',
         defaultDate: new Date(),
     });
-   
-    //$('.datepicker').datetimepicker({
-    //    defaultDate: new Date(),
-    //    format: 'DD/MM/YYYY',
-    //    showClose: true,
-    //    showClear: true,
-    //    // minDate: new Date(),
-
-    //});
-   
-
-
-
-    $(function () {
-        $("#slider").slider({
-            range: "min",
-            max: 100,
-            value: 40,
-        });
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 500,
-            values: [75, 300]
-        });
-    });
-    $(document).ready(function () {
-        $('.scrollbar-inner').scrollbar();
-    });
-
-</script>
-
-
-
-
-
-<script type="text/javascript">
-
-    m(function () {
-        m('.J-datepicker-time').datePicker({
-            format: 'HH:mm:ss',
-            min: '04:23:11',
-            language: 'en'
-        });
-        m('.J-datepicker-time-range').datePicker({
-            format: 'HH:mm:ss',
-            isRange: true,
-            min: '04:23:11',
-            max: '20:59:59',
-            language: 'en'
-        });
-
-        var DATAPICKERAPI = {
-            activeMonthRange: function () {
-                return {
-                    begin: moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format('YYYY-MM-DD HH:mm:ss'),
-                    end: moment().set({ 'hour': 23, 'minute': 59, 'second': 59 }).format('YYYY-MM-DD HH:mm:ss')
-                }
-            },
-            shortcutMonth: function () {
-                var nowDay = moment().get('date');
-                var prevMonthFirstDay = moment().subtract(1, 'months').set({ 'date': 1 });
-                var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
-                return {
-                    now: '-' + nowDay + ',0',
-                    prev: '-' + prevMonthDay + ',-' + nowDay
-                }
-            },
-            shortcutPrevHours: function (hour) {
-                var nowDay = moment().get('date');
-                var prevHours = moment().subtract(hour, 'hours');
-                var prevDate = prevHours.get('date') - nowDay;
-                var nowTime = moment().format('HH:mm:ss');
-                var prevTime = prevHours.format('HH:mm:ss');
-                return {
-                    day: prevDate + ',0',
-                    time: prevTime + ',' + nowTime,
-                    name: 'Nearly ' + hour + ' Hours'
-                }
-            },
-            rangeMonthShortcutOption1: function () {
-                var result = DATAPICKERAPI.shortcutMonth();
-                var resultTime = DATAPICKERAPI.shortcutPrevHours(18);
-                return [{
-                    name: 'Yesterday',
-                    day: '-1,-1',
-                    time: '00:00:00,23:59:59'
-                }, {
-                    name: 'This Month',
-                    day: result.now,
-                    time: '00:00:00,'
-                }, {
-                    name: 'Lasy Month',
-                    day: result.prev,
-                    time: '00:00:00,23:59:59'
-                }, {
-                    name: resultTime.name,
-                    day: resultTime.day,
-                    time: resultTime.time
-                }];
-            },
-            rangeShortcutOption1: [{
-                name: 'Last week',
-                day: '-7,0'
-            }, {
-                name: 'Last Month',
-                day: '-30,0'
-            }, {
-                name: 'Last Three Months',
-                day: '-90, 0'
-            }],
-            singleShortcutOptions1: [{
-                name: 'Today',
-                day: '0',
-                time: '00:00:00'
-            }, {
-                name: 'Yesterday',
-                day: '-1',
-                time: '00:00:00'
-            }, {
-                name: 'One Week Ago',
-                day: '-7'
-            }]
-        };
-        m('.J-datepicker').datePicker({
-            hasShortcut: true,
-            language: 'en',
-            min: '2018-01-01 04:00:00',
-            max: '2029-10-29 20:59:59',
-            shortcutOptions: [{
-                name: 'Today',
-                day: '0'
-            }, {
-                name: 'Yesterday',
-                day: '-1',
-                time: '00:00:00'
-            }, {
-                name: 'One Week Ago',
-                day: '-7'
-            }],
-            hide: function () {
-                console.info(this)
-            }
-        });
-
-
-        m('.J-datepicker-day').datePicker({
-            hasShortcut: true,
-            language: 'en',
-            shortcutOptions: [{
-                name: 'Today',
-                day: '0'
-            }, {
-                name: 'Yesterday',
-                day: '-1'
-            }, {
-                name: 'One week ago',
-                day: '-7'
-            }]
-        });
-
-
-        m('.J-datepicker-range-day').datePicker({
-            hasShortcut: true,
-            language: 'en',
-            format: 'YYYY-MM-DD',
-            isRange: true,
-            shortcutOptions: DATAPICKERAPI.rangeShortcutOption1
-        });
-
-
-        m('.J-datepickerTime-single').datePicker({
-            format: 'YYYY-MM-DD HH:mm',
-            language: 'en',
-        });
-
-
-        m('.J-datepickerTime-range').datePicker({
-            format: 'YYYY-MM-DD HH:mm',
-            isRange: true,
-            language: 'en'
-        });
-
-
-        m('.J-datepicker-range').datePicker({
-            hasShortcut: true,
-            language: 'en',
-            min: '2018-01-01 06:00:00',
-            max: '2029-04-29 20:59:59',
-            isRange: true,
-            shortcutOptions: [{
-                name: 'Yesterday',
-                day: '-1,-1',
-                time: '00:00:00,23:59:59'
-            }, {
-                name: 'Last Week',
-                day: '-7,0',
-                time: '00:00:00,'
-            }, {
-                name: 'Last Month',
-                day: '-30,0',
-                time: '00:00:00,'
-            }, {
-                name: 'Last Months',
-                day: '-90, 0',
-                time: '00:00:00,'
-            }],
-            hide: function (type) {
-                console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
-                console.info('Type:', type)
-            }
-        });
-        m('.J-datepicker-range-betweenMonth').datePicker({
-            isRange: true,
-            between: 'month',
-            language: 'en',
-            hasShortcut: true,
-            shortcutOptions: DATAPICKERAPI.rangeMonthShortcutOption1()
-        });
-
-
-        m('.J-datepicker-range-between30').datePicker({
-            isRange: true,
-            language: 'en',
-            between: 30
-        });
-
-        m('.J-yearMonthPicker-single').datePicker({
-            format: 'YYYY-MM',
-            language: 'en',
-            min: '2018-01',
-            max: '2029-04',
-            hide: function (type) {
-                console.info(this.$input.eq(0).val());
-            }
-        });
-
-        m('.J-yearPicker-single').datePicker({
-            format: 'YYYY',
-            language: 'en',
-            min: '2018',
-            max: '2029'
-        });
-
-
-    });
-
-
-</script>
-<style>
-    .addrow {
-        height: 1.40rem;
-        border-color: #b9bec8;
-        border: 1px solid #b9bec8;
-        border-radius: .2rem
-    }
-</style>
-<script>
-
-    $(document).ready(function () {
-        // var counter = 0;
-       
-        $("#fromtoemail").on("click", function () {
-            counter = counter + 1;
-            totalcnt = counter;
-            var refnoval = document.getElementById('txtrefno');
-            var refval = refnoval.value;
-            debugger;
-           // RedDot_tbldtpicker();
-            var newRow = $("#AddfromtoemailRow");
-            var cols = "";
-            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
-            cols += ' <div class="reddotTableCell "> <div>' + counter + '</div > </div > ';
-            cols += ' <div class="reddotTableCell "> <div> ';
-            cols += ' <div class="input-group" >';
-            cols += ' <input type="text" class="form-control-sm addrow datepicker"  id="PostingDate_' + counter + '" name="PostingDate_' + counter + '">';
-            ////cols += ' <div class="input-group-append">';
-            ////cols += ' <span class="input-group-text">';
-            ////cols += ' <i class="far fa-calendar-alt"></i>';
-            ////cols += ' </span>';
-            ////cols += ' </div>';
-            cols += ' </div>';
-            cols += ' </div > </div > ';
-            cols += ' <div class="reddotTableCell"> <div>';
-            cols += '<select class="form-control-sm addrow" id="ddladdcountry_' + counter + '">';
-            cols += ' </select>';
-            cols += '</div > </div > ';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtvendor_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow " id="txtdescription_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtamount_' + counter + '" onkeyup ="calculate(this)" > </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtvendorpono_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtsappono_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div>';
-            cols += '<select class="form-control-sm addrow" id="ddlstatusadd_' + counter + '">';
-            cols += '<option value="0">-- Select --</option>';
-            cols += '   <option value="Draft">Draft</option>';
-            cols += '   <option value="Open">Open</option>';
-            cols += '   <option value="On Hold">On-Hold</option>';
-            cols += '   <option value="Paid Closed">Paid-Closed</option>';
-            cols += '   <option value="Unpaid Closed">Unpaid-Closed</option>';
-            cols += ' </select>';
-            cols += '</div > </div > ';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtapprstatus_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtapprremark_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtkey_' + counter + '"> </div> </div>';
-            cols += ' <div class="reddotTableCell addrow">';
-            cols += ' <div>';
-            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
-            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
-            cols += ' </div>';
-            cols += ' </div>';
-            cols += ' </div></div>';
-            newRow.append(cols);
-            $("table.order-list").append(newRow);
-            // counter++;
-            $('#PostingDate_' + counter).datetimepicker({
-                //defaultDate: new Date(),
-                format: 'DD/MM/YYYY',
-                showClose: true,
-                showClear: true,
-             });
-            var addref = document.getElementById('txtkey_' + counter);
-            addref.value = refval + "-" + counter;
-            $.ajax({
-                type: "POST",
-                dataType: "JSON",
-                contentType: "application/json ;charset=utf-8;",
-                async: true,
-                url: '@Url.Action("GetCountry", "MarketingPlan")',
-                cache: false,
-
-                processData: false,
-                success: function (BU) {
-                    debugger;
-                    document.getElementById('ddladdcountry_' + counter).innerHTML = "";
-                    var selectMonth = $("#ddladdcountry_" + counter);
-
-                    var monthElem = document.createElement("option");
-                    monthElem.value = '0';
-                    monthElem.textContent = '-- Select--';
-                    selectMonth.append(monthElem);
-                    $.each(BU, function (i, value) {
-                        var monthElem = document.createElement("option");
-                        monthElem.value = value.CountryCode;
-                        monthElem.textContent = value.CountryName;
-                        selectMonth.append(monthElem);
-
-                    });
-                }
-            });
-        });
-
-
-
-        $("#AddfromtoemailRow").on("click", ".ibtnDel", function (event) {
-            $(this).closest(".reddotTableRow").remove();
-            counter -= 1
-        });
-
-
-    });
-
-    function BindRefNo() {
-        debugger;
-        var slval = CountryList.value;
-        // var slperval = slval;
-
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            contentType: "application/json ;charset=utf-8;",
-            async: false,
-            url: '@Url.Action("Getrefno", "MarketingPlan")',
-            data: JSON.stringify({ "id": slval }),
-            cache: false,
-
-            processData: false,
-            success: function (nextrefNo) {
-                debugger;
-                var refno = document.getElementById('txtrefno');
-                refno.value = nextrefNo;
-            }
-        });
-
-    }
-
-
-</script>
-
-
-
-
-<script>
-    var attachmentcnt = 1;
-
-    m(document).ready(function () {
-        $('.scrollbar-inner').scrollbar();
-
-        $.ajax({
+    debugger;
+    var me = getUrlVars()["PlanId"];
+    $('.loader1').hide();
+     $.ajax({
             type: "POST",
             dataType: "JSON",
             contentType: "application/json ;charset=utf-8;",
@@ -1062,12 +727,814 @@ var origin=TempData["Originator"]??string.Empty;
                 });
             }
         });
+    if (me != undefined) {
+        debugger;
+        aflag = "Approver";
+        $("#btnAction").show();
+       debugger;
+       // $('#btnsave').show();
+        $('#ContantsPayment').show();
+        $('#filterwind').hide();
+        $('#Ind').hide();
+        $('#Ibody').hide();
+        $('#btn_MainSave').hide();
+        var planid = me;// saletar.innerText;
+        document.getElementById('planid').value = planid;
+
+        var refnoval = "";
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlan", "MarketingPlan")',
+            cache: false,
+            data: JSON.stringify({ "id": planid }),
+            processData: false,
+            success: function (BU) {
+                debugger;
+                document.getElementById("txtrddapp_amt").disabled =false;
+                ddlfund.value = BU.SourceOfFund;
+                VenderBu.value = BU.Vendor;
+                CountryList.value = BU.Country;
+                var typeval = document.getElementById("txtappamt");
+                typeval.value = BU.VendorApprovedAmt;
+                var balapp = document.getElementById("txtbalapproved");
+                balapp.value = BU.BalanceAmount;
+                var refno = document.getElementById("txtrefno");
+                refno.value = BU.RefNo;
+                refnoval = BU.RefNo;
+                var balamtrddapp = document.getElementById("txtbalamtrddapp");
+                balamtrddapp.value = BU.BalanceFromApp;
+                ddlplanstatus.value = BU.planStatus;
+                var desc = document.getElementById("comment");
+                desc.value = BU.Description;
+                var stdate = document.getElementById("startdate");
+                stdate.value = BU.StartDate;
+                var endate = document.getElementById("enddate");
+                endate.value = BU.EndDate;
+                var appstaus = document.getElementById("txtapprovalstatus");
+                appstaus.value = BU.ApprovalStatus;
+
+                document.getElementById('txtDocStatus').value = BU.ApprovalStatus;
+                var apprmk = document.getElementById("txtapprovalremk");
+                apprmk.value = BU.ApproverRemark;
+                var crdate = document.getElementById("createdate");
+                crdate.value = BU.CreatedOn;
+                var rddapamt = document.getElementById("txtrddapp_amt");
+                rddapamt.value = BU.RDDApprovedAmt;
+                var isdrft = "";
+
+                debugger;
+                if (BU.planStatus == "Draft") {
+                    $(".required-label").text("[ Draft ]");
+
+                } else if (BU.ApprovalStatus == "Pending") {
+                    $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
+                    document.getElementById("txtrddapp_amt").disabled = false;
+
+                } else {
+                    $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
+                    document.getElementById("txtrddapp_amt").disabled = true;
+
+                }
+
+                $("#fromtoemail").hide();
+                $('#btn_MainSearch').hide();
+                $('#btn_MainSave').hide();
+                $("#btnsave").hide();
+                $("#btnDelete").hide();
+                disableheader();
+
+
+                 $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlanfiles", "MarketingPlan")',
+            cache: false,
+                     data: JSON.stringify({ "id": BU.RefNo }),
+            processData: false,
+            success: function (BUfile) {
+                debugger
+                document.getElementById('attachmentdiv').innerHTML = '';
+                var pall = $('#attachmentdiv');
+                if (BUfile.length > 0) {
+                    $.each(BUfile, function (i, value) {
+                        debugger;
+                        var val = value.replace(/\\/g, "\\\\");
+                        var flnm = val.substring(val.lastIndexOf('\\') + 1);
+                        var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value +'  target="_blank"></a> </div></div></div>';
+                      attachmentcnt = attachmentcnt + 1;
+                        pall.append(subrow);
+                       document.getElementById('attchcnt').value = attachmentcnt;
+                    });
+                }
+            }
+        });
+            }
+        });
+        ////PlanLine
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlanLines", "MarketingPlan")',
+            cache: false,
+            data: JSON.stringify({ "id": planid }),
+            processData: false,
+            success: function (BU1) {
+                if (BU1.length > 0) {
+                    $.each(BU1, function (i, value) {
+                        debugger;
+                        counter = i + 1;
+                        var refnoval = document.getElementById('txtrefno');
+                        var refval = refnoval.value;
+                        debugger;
+                        var newRow = $("#AddfromtoemailRow");
+                        var cols = "";
+                        var appstaus = document.getElementById("txtapprovalstatus");
+                        if (appstaus.value == "Approved" && value.Status1!="Approved") {
+                            $("#btnrowsave").show();
+                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> ';
+                            cols += ' <div class="input-group">';
+                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                            cols += ' </div>';
+                            cols += ' </div > </div > ';
+                            cols += ' <div class="reddotTableCell width10per"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '"  disabled value=' + value.Vendor + '> </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" disabled  value=' + value.Description + ' > </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" disabled onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                            cols += '<option value="Planned">Planned</option>';
+                            cols += '   <option value="Close">Close</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="txtapprstatus_' + counter + '"  >';
+                            cols += '<option value="0">--Select--</option>';
+                            cols += '   <option value="Approved">Approved</option>';
+                            cols += '   <option value="Rejected">Rejected</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" value=' + value.ApproverRemark + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled  value=' + value.LineRefNo + ' > </div > </div > ';
+                            cols += ' <div class="reddotTableCell ">';
+                            cols += ' <div>';
+                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" disabled data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                            cols += ' </div>';
+                            cols += ' </div>';
+                            cols += ' </div></div>';
+                        }
+                        else {
+                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> ';
+                            cols += ' <div class="input-group">';
+                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                            cols += ' </div>';
+                            cols += ' </div > </div > ';
+                            cols += ' <div class="reddotTableCell width10per"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled> </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' disabled> </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' disabled> </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                            cols += '<option value="Planned">Planned</option>';
+                            cols += '   <option value="Close">Close</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" disabled id="txtapprstatus_' + counter + '" >';
+                            cols += '<option value="0">--Select--</option>';
+                            cols += '   <option value="Approved">Approved</option>';
+                            cols += '   <option value="Rejected">Rejected</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled value=' + value.LineRefNo + ' > </div > </div > ';
+                            cols += ' <div class="reddotTableCell ">';
+                            cols += ' <div>';
+                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" disabled data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                            cols += ' </div>';
+                            cols += ' </div>';
+                            cols += ' </div></div>';
+                        }
+                        newRow.append(cols);
+                        $("table.order-list").append(newRow);
+                        var sts = document.getElementById("ddlstatusadd_" + counter);
+                        sts.value = value.Status;
+                        
+                        var sts1 = document.getElementById("txtapprstatus_" + counter);
+                        sts1.value = value.Status1;
+                        // counter++;
+                        //$('#PostingDate_' + counter).datetimepicker({
+                        //    format: 'MM/DD/YYYY',
+                        //});
+                      //  var addref = document.getElementById('txtkey_' + counter);
+                      //  addref.value = refval + "-" + counter;
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            contentType: "application/json ;charset=utf-8;",
+                            async: true,
+                            url: '@Url.Action("GetCountry", "MarketingPlan")',
+                            cache: false,
+
+                            processData: false,
+                            success: function (BUc) {
+                                debugger;
+                                document.getElementById('ddladdcountry_' + counter).innerHTML = "";
+                                var selectMonth = $("#ddladdcountry_" + counter);
+
+                                var monthElem = document.createElement("option");
+                                monthElem.value = '0';
+                                monthElem.textContent = '-- Select--';
+                                selectMonth.append(monthElem);
+                                $.each(BUc, function (i, valuec) {
+                                    debugger;
+                                    var monthElem = document.createElement("option");
+                                    monthElem.value = valuec.CountryCode;
+                                    monthElem.textContent = valuec.CountryName;
+
+                                    selectMonth.append(monthElem);
+                                    if (valuec.CountryName == value.CountryName) {
+
+                                        //selectMonth.selected = true;
+                                        monthElem.setAttribute('selected', 'selected');
+                                    }
+
+                                });
+                            }
+                        });
+
+                    });
+                }
+               
+                totalcnt = counter;
+            }
+        });
+       // var refnost = document.getElementById("txtrefno");
+
+    } else {
+       $('#btnsave').hide();
+        $('#ContantsPayment').hide();
+        $('#filterwind').show();
+        $('#Ind').show();
+        $('#Ibody').show();
+        var arr = [];
+        var curPage = 1;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetAllData", "MarketingPlan")',
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+               pagesize: 50,
+                pageno: curPage,
+            }),
+            success: function (data) {
+                debugger;
+               // document.getElementById('Ist').innerHTML = '';
+                $("#Ist").show();
+                arr = data;
+                if (arr.data != null && arr.data.length != 0) {
+                    var i = 0;
+                    while (arr.data.length > i) {
+                        var tr = $("#Ist").clone();
+                        var tr1 = $("#Ind").closest();
+                        var k = 0;
+                        var l1 = tr.find(".Abcd").length;
+                        while (l1 > k) {
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                            var t = tblhead1[k];
+                            debugger
+                            if (jQuery.inArray(t, tblhide) !== -1) {
+                                tr.find(".Abcd").eq(k).addClass("Abc")
+                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                            }
+
+                            k++;
+                        }
+                        $("#Ibody").append(tr);
+                        i++;
+                    }
+                    $("#Ist")[0].remove();
+                } else {
+                    $("#Ist").hide();
+                    RedDotAlert_Error("No Record Found");
+                }
+            }, complete: function () {
+                $(".loader1").hide();
+            }
+
+        });
+
+    }
+
+
+
+
+
+    $(function () {
+        $("#slider").slider({
+            range: "min",
+            max: 100,
+            value: 40,
+        });
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [75, 300]
+        });
     });
+    $(document).ready(function () {
+        $('.scrollbar-inner').scrollbar();
+    });
+    $("#btnAction").on("click", function () {
+        debugger
+        _DocKey = document.getElementById('planid').value;// $("#planid").val();
+        var _ObjType = "30";
+        var nm = document.getElementById('createnm').value;
+        var tr1 = $("#IIIIst").clone(true);
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            url: "/Get_Doc_ApproverList",
+            data: JSON.stringify({ ObjectType: _ObjType, DocKey: _DocKey, LoginUser: nm }),
+            dataType: 'Json',
+            contentType: "Application/json",
+            success: function (value) {
+                debugger;
+                $("div#IIIIst").not(':first').remove();
+                //var tr1 = $("#IIIst").clone(true);
+                var jData = value.Table;
+                var i1 = 0;
+                while (jData.length > i1) {
+                    // $("#IIIBody").append(tr1[0]);
+                    $("#IIIIst").clone().insertAfter("#IIIIBody");
+
+                    i1++;
+                }
+                $("#IIIIst")[0].remove();
+                var Approvername = $("input[id='txtApprover']").val(function () {
+                    return this.value.toUpperCase();
+                })
+                //$("div#IIIst:first").remove();
+                // Getgrid(tr, jData.length);
+                var count1 = 1;
+                var actiontblValue = ['ID', 'TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];
+                var doc = $("#txtDocStatus").val();
+                if (aflag == "Approver") { $("#btnActionSave").show(); } else {
+                    if ($("#ViewMode").val() != "True") {
+                        $("#btnActionSave").hide();
+                    }
+                    else if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
+                        $("#btnActionSave").hide();
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision   [ You can not take action on Rejected-Closed/Paid-Closed vourcher ]");
+                    } else {
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision");
+                    }
+                }
+                $(".ApproverAction").each(function () {
+
+
+                    if (jData[count1 - 1].Flag == 'Disable') {//|| $("#EditFlag").val() == "True"
+
+                        $(this).find('.Abcd input[id^="txtID"]').prop('disabled', true);
+                        $(this).find('.Abcd input[id^="txtTemplate_ID"]').prop('disabled', true);
+                        $(this).find('.Abcd input[id^="txtObjType"]').prop('disabled', true);
+                        $(this).find('.Abcd input[id^="txtApprover"]').prop('disabled', true);
+                        $(this).find('.Abcd [id^="cbAction"]').prop('disabled', true);
+                        $(this).find('.Abcd input[id^="txtApprRemark"]').prop('disabled', true);
+                        $(this).find('.Abcd input[id^="txtApprovedDate"]').prop('disabled', true);
+
+                    }
+                    else {
+                        // $("#btnActionSave").removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtID"]').removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtTemplate_ID"]').removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtObjType"]').removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtApprover"]').removeAttr('disabled');
+                        $(this).find('.Abcd [id^="cbAction"]').removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtApprRemark"]').removeAttr('disabled');
+                        $(this).find('.Abcd input[id^="txtApprovedDate"]').removeAttr('disabled');
+                    }
+                    $(this).find('.Abcd input[id^="txtID"]').attr("id", 'txtID' + count1);
+                    $(this).find('.Abcd input[id^="txtID"]').attr("name", 'txtID' + count1);
+                    $(this).find('.Abcd input[id^="txtTemplate_ID"]').attr("id", 'txtTemplate_ID' + count1);
+                    $(this).find('.Abcd input[id^="txtTemplate_ID"]').attr("name", 'txtTemplate_ID' + count1);
+                    $(this).find('.Abcd input[id^="txtObjType"]').attr("id", 'txtObjType' + count1);
+                    $(this).find('.Abcd input[id^="txtObjType"]').attr("name", 'txtObjType' + count1);
+                    $(this).find('.Abcd input[id^="txtApprover"]').attr("id", 'txtApprover' + count1);
+                    $(this).find('.Abcd input[id^="txtApprover"]').attr("name", 'txtApprover' + count1);
+                    $(this).find('.Abcd input[id^="cbAction"]').attr("id", 'cbAction' + count1);
+                    $(this).find('.Abcd input[id^="cbAction"]').attr("name", 'cbAction' + count1);
+                    $(this).find('.Abcd input[id^="txtApprRemark"]').attr("id", 'txtApprRemark' + count1);
+                    $(this).find('.Abcd input[id^="txtApprRemark"]').attr("name", 'txtApprRemark' + count1);
+                    $(this).find('.Abcd input[id^="txtApprovedDate"]').attr("id", 'txtApprovedDate' + count1);
+                    $(this).find('.Abcd input[id^="txtApprovedDate"]').attr("name", 'txtApprovedDate' + count1);
+
+                    $(this).find('.Abcd input[id^="txtID"]').val(jData[count1 - 1][actiontblValue[0]]);
+                    $(this).find('.Abcd input[id^="txtTemplate_ID"]').val(jData[count1 - 1][actiontblValue[1]]);
+                    $(this).find('.Abcd input[id^="txtObjType"]').val(jData[count1 - 1][actiontblValue[2]]);
+                    $(this).find('.Abcd input[id^="txtApprover"]').val(jData[count1 - 1][actiontblValue[3]]);
+                    $(this).find('.Abcd [id^="cbAction"]').val(jData[count1 - 1][actiontblValue[4]]);
+                    $(this).find('.Abcd input[id^="txtApprRemark"]').val(jData[count1 - 1][actiontblValue[5]]);
+                    $(this).find('.Abcd input[id^="txtApprovedDate"]').val(RedDot_dateEditFormat(jData[count1 - 1][actiontblValue[6]]));
+                    count1++;
+
+                });
+            },
+            error: function (response) {
+                alert(response.responseText);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+        $("#ApprovalDecisionPopup").modal("show");
+    });
+    $(document).on("click", "#btnActionSave", function () {
+        debugger;
+        var k = 1;
+        var _LoginUser = $('#createnm').val();//#CreatedBy').val();
+        var amt = document.getElementById("txtrddapp_amt");
+        var eamt = 0;
+        if (amt.value != "") { eamt = amt.value; } else { eamt = 0; }
+        $(".ApproverAction").each(function () {
+                var _ID = $(this).find(".Abcd [id^='txtID']").val();
+                var _Template_ID = $(this).find(".Abcd [id^='txtTemplate_ID']").val();
+                var _ObjectType = $(this).find(".Abcd [id^='txtObjType']").val();
+
+                var _Approver = $(this).find(".Abcd [id^='txtApprover']").val();
+                var _Action = $(this).find(".Abcd [id^='cbAction']").val();
+                var _Remark = $(this).find(".Abcd [id^='txtApprRemark']").val();
+                var _ApprovalDate = GetSqlDateformat($(this).find(".Abcd [id^='txtApprovedDate']").val());
+
+                if (_LoginUser.toUpperCase() == _Approver.toUpperCase()) {
+                    if (_Action == "A" && parseInt(eamt) > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("UpdateAmt", "MarketingPlan")',
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                RDDamt: eamt, pid: me
+                            }),
+                            success: function (data) {
+                                debugger;
+                            }
+
+                        });
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            type: "POST",
+                            url: "/Get_Doc_ApproverAction",
+                            data: JSON.stringify({ ID: _ID, Template_ID: _Template_ID, ObjectType: _ObjectType, DocKey: _DocKey, Approver: _Approver, Action: _Action, Remark: _Remark, ApprovalDate: _ApprovalDate }),
+                            dataType: 'Json',
+                            contentType: "Application/json",
+                            success: function (value) {
+                                debugger;
+                                var jData = value.Table;
+
+                                $('#ApprovalDecisionPopup').modal('hide');
+                                RedDotAlert_Success("Save Succesfully");
+                                location.href = "/Admin/ApprovalStatusReport/Index";
+                                return;
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    } else if (_Action == "A" && parseInt(eamt) <= 0) {
+                        RedDotAlert_Error("RDD Approved Amount should be greter than zero.");
+                        $("#ApprovalDecisionPopup").modal("hide");
+                    } else {
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            type: "POST",
+                            url: "/Get_Doc_ApproverAction",
+                            data: JSON.stringify({ ID: _ID, Template_ID: _Template_ID, ObjectType: _ObjectType, DocKey: _DocKey, Approver: _Approver, Action: _Action, Remark: _Remark, ApprovalDate: _ApprovalDate }),
+                            dataType: 'Json',
+                            contentType: "Application/json",
+                            success: function (value) {
+                                debugger;
+                                var jData = value.Table;
+
+                                $('#ApprovalDecisionPopup').modal('hide');
+                                RedDotAlert_Success("Save Succesfully");
+                                location.href = "/Admin/ApprovalStatusReport/Index";
+                                return;
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+
+    });
+
+
+    function GetSqlDateformat(obj) {
+        try {
+            if (obj != undefined && obj != null) {
+                SqlDate = obj.toString().split('/')[1] + '/';
+                SqlDate += obj.toString().split('/')[0] + '/';
+                SqlDate += obj.toString().split('/')[2];
+                return SqlDate;
+            }
+        }
+        catch (ex) {
+            log(ex);
+        }
+    }
+</script>
+
+
+
+
+
+
+<style>
+    .addrow {
+        height: 1.40rem;
+        border-color: #b9bec8;
+        border: 1px solid #b9bec8;
+        border-radius: .2rem
+    }
+</style>
+<script>
+
+    $(document).ready(function () {
+        // var counter = 0;
+        debugger;
+        var me = getUrlVars()["PlanId"];
+
+        if (me == undefined) {
+            $("#fromtoemail").on("click", function () {
+                counter = counter + 1;
+                totalcnt = counter;
+                var refnoval = document.getElementById('txtrefno');
+                var refval = refnoval.value;
+                debugger;
+                var newRow = $("#AddfromtoemailRow");
+                var cols = "";
+                if (refval != "") {
+
+                    cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                    cols += ' <div class="reddotTableCell "> <div>' + counter + '</div > </div > ';
+                    cols += ' <div class="reddotTableCell "> <div> ';
+                    cols += ' <div class="input-group" >';
+                    cols += ' <input type="text" class="form-control-sm addrow datepicker"  id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" required>';
+
+                    cols += ' </div>';
+                    cols += ' </div > </div > ';
+                    cols += ' <div class="reddotTableCell"> <div>';
+                    cols += '<select class="form-control-sm addrow" id="ddladdcountry_' + counter + '" required>';
+                    cols += ' </select>';
+                    cols += '</div > </div > ';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" required  id="txtvendor_' + counter + '"> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow " required id="txtdescription_' + counter + '"> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" required  id="txtamount_' + counter + '" onkeyup ="calculate(this)" > </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtvendorpono_' + counter + '"> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtsappono_' + counter + '"> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div>';
+                    cols += '<select class="form-control-sm addrow" id="ddlstatusadd_' + counter + '">';
+                    cols += '<option value="Planned">Planned</option>';
+                    cols += '   <option value="Close">Colse</option>';
+                    cols += ' </select>';
+                    cols += '</div > </div > ';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtapprstatus_' + counter + '" disabled> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtapprremark_' + counter + '" disabled> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" disabled id="txtkey_' + counter + '"> </div> </div>';
+                    cols += ' <div class="reddotTableCell addrow">';
+                    cols += ' <div>';
+                    //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                    cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                    cols += ' </div>';
+                    cols += ' </div>';
+                    cols += ' </div></div>';
+
+                     newRow.append(cols);
+                $("table.order-list").append(newRow);
+                // counter++;
+                $('#PostingDate_' + counter).datetimepicker({
+                    //defaultDate: new Date(),
+                    format: 'DD/MM/YYYY',
+                    showClose: true,
+                    showClear: true,
+                });
+                var addref = document.getElementById('txtkey_' + counter);
+                addref.value = refval + "-" + counter;
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    contentType: "application/json ;charset=utf-8;",
+                    async: true,
+                    url: '@Url.Action("GetCountry", "MarketingPlan")',
+                    cache: false,
+
+                    processData: false,
+                    success: function (BU) {
+                        debugger;
+                        document.getElementById('ddladdcountry_' + counter).innerHTML = "";
+                        var selectMonth = $("#ddladdcountry_" + counter);
+
+                        var monthElem = document.createElement("option");
+                        monthElem.value = '0';
+                        monthElem.textContent = '-- Select--';
+                        selectMonth.append(monthElem);
+                        $.each(BU, function (i, value) {
+                            var monthElem = document.createElement("option");
+                            monthElem.value = value.CountryCode;
+                            monthElem.textContent = value.CountryName;
+                            selectMonth.append(monthElem);
+
+                        });
+                    }
+                });
+                } else {
+                    RedDotAlert_Error("Please select country");
+                    counter = counter - 1;
+                    totalcnt = counter;
+                }
+
+            });
+
+
+
+            $("#AddfromtoemailRow").on("click", ".ibtnDel", function (event) {
+                $(this).closest(".reddotTableRow").remove();
+                counter -= 1
+            });
+
+        }
+    });
+
+    function approverowdata() {
+        debugger;
+        var refnoval = document.getElementById('planid');
+        var refval = refnoval.value;
+        debugger;
+
+        var appstaus = document.getElementById("txtapprovalstatus");
+
+        var subdtcnt = totalcnt;
+        var subdtlist = [];
+        var elements = {};
+        if (subdtcnt > 0) {
+
+
+            debugger;
+            for (var j = 1; j <= subdtcnt; j++) {
+                var lrefno = document.getElementById('txtkey_' + j).value;
+                var appsts = document.getElementById('txtapprstatus_' + j).value;
+                var apprmksub = document.getElementById('txtapprremark_' + j).value;
+
+                elements = {
+                    LineRefNo: lrefno,
+                     Status1: appsts,
+                    ApproverRemark: apprmksub,
+                    planid: refval ,
+                   }
+
+                subdtlist.push(elements);
+            }
+        }
+        var stateToSave = JSON.stringify(subdtlist);
+        //var submaintabval = document.getElementById("mainrowtab");
+        //submaintabval.value = stateToSave;
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("ApprovePlanLines", "MarketingPlan")',
+            cache: false,
+            data: JSON.stringify({ "data": stateToSave }),//
+            processData: false,
+            success: function (result) {
+                if (result.msg == "True") {
+                    RdotAlertSucesstxt("Save Successfully");
+                    location.href = "/Admin/ApprovalStatusReport/Index";
+                } else {
+                    RedDotAlert_Error("Record Not Updated");
+                }
+            }
+        });
+
+    }
+    function BindRefNo() {
+        debugger;
+        var slval = CountryList.value;
+        // var slperval = slval;
+
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: false,
+            url: '@Url.Action("Getrefno", "MarketingPlan")',
+            data: JSON.stringify({ "id": slval }),
+            cache: false,
+
+            processData: false,
+            success: function (nextrefNo) {
+                debugger;
+                var refno = document.getElementById('txtrefno');
+                refno.value = nextrefNo;
+            }
+        });
+
+    }
+    function disableheader() {
+        ddlfund.disabled = true;
+        VenderBu.disabled = true;
+        CountryList.disabled = true;
+        document.getElementById("txtappamt").disabled = true;
+        document.getElementById("txtbalapproved").disabled = true;
+        document.getElementById("txtrefno").disabled = true;
+        document.getElementById("txtbalamtrddapp").disabled = true;
+        ddlplanstatus.disabled = true;
+        document.getElementById("comment").disabled = true;
+        document.getElementById("startdate").disabled = true;
+        document.getElementById("enddate").disabled = true;
+        document.getElementById("txtapprovalstatus").disabled = true;
+         document.getElementById("txtapprovalremk").disabled = true;
+         document.getElementById("createdate").disabled = true;
+
+    }
+    function enableheader() {
+        ddlfund.disabled = false;
+        VenderBu.disabled = false;
+        CountryList.disabled = false;
+        document.getElementById("txtappamt").disabled = false;
+        document.getElementById("txtrddapp_amt").disabled = true;
+       // document.getElementById("txtbalapproved").disabled = false;
+       // document.getElementById("txtrefno").disabled = false;
+       // document.getElementById("txtbalamtrddapp").disabled = false;
+        ddlplanstatus.disabled = false;
+        document.getElementById("comment").disabled = false;
+        document.getElementById("startdate").disabled = false;
+        document.getElementById("enddate").disabled = false;
+      //  document.getElementById("txtapprovalstatus").disabled = false;
+      //  document.getElementById("txtapprovalremk").disabled = false;
+    }
+
+
+</script>
+
+
+
+
+<script>
+    var attachmentcnt = 1;
+
     function attachfile() {
 
         // document.getElementById('searchgrid').innerHTML = '  <div class="reddotTableBody"><div class="reddotTableRow odd-even-row"><div class="reddotTableHead"><div>Plan Id</div></div> <div class="reddotTableHead"><div>SourceOfFund</div></div><div class="reddotTableHead"><div> CountryName</div></div><div class="reddotTableHead"><div>StartDate</div></div><div class="reddotTableHead"><div>EndDate</div></div><div class="reddotTableHead"><div>Vendor</div></div><div class="reddotTableHead"><div>VendorApprovedAmt</div></div><div class="reddotTableHead"><div>RDDApprovedAmt</div></div><div class="reddotTableHead"><div>UsedAmount</div></div><div class="reddotTableHead"><div>BalanceAmount</div></div><div class="reddotTableHead"><div>BalanceFromApp</div></div><div class="reddotTableHead"><div>Description</div></div><div class="reddotTableHead"><div> ApprovedBy</div></div><div class="reddotTableHead"><div> planStatus</div></div><div class="reddotTableHead"><div> ApprovalStatus</div></div> <div class="reddotTableHead"><div>CreatedOn</div></div>';
         var pall = $('#attachmentdiv');
-        var subrow = '  <div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar' + attachmentcnt + '" /></div></div></div> <div class="col-xl-1 col-md-1"><div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button></div></div></div>';
+       // var subrow = '  <div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar' + attachmentcnt + '" /></div></div></div> <div class="col-xl-1 col-md-1"><div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button></div></div></div>';
+
+        var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye"></a> </div></div></div>';
+
         attachmentcnt = attachmentcnt + 1;
         pall.append(subrow);
         document.getElementById('attchcnt').value = attachmentcnt;
@@ -1104,7 +1571,9 @@ var origin=TempData["Originator"]??string.Empty;
         var rddapamt_val = 0;
         if (rddapamt.value != "") { rddapamt_val = rddapamt.value; } else { rddapamt_val = 0; }
         var balamtrddapp = document.getElementById("txtbalamtrddapp");
-        var balamtrddappval = balamtrddapp.value;
+
+        var balamtrddappval = 0;// balamtrddapp.value;
+        if (balamtrddapp.value != "") { balamtrddappval = balamtrddapp.value; } else { balamtrddappval = 0; }
         var planstatus = ddlplanstatus.value;
         var desc = document.getElementById("comment");
         var descval = desc.value;
@@ -1202,6 +1671,93 @@ var origin=TempData["Originator"]??string.Empty;
         //    }
 
         //});
+    }
+    function updaterownheadrdata() {
+
+         debugger;
+        
+        var refno = document.getElementById("txtrefno");
+        var refnoval = refno.value;
+        var planstatus = ddlplanstatus.value;
+       
+      
+        var subdtcnt = totalcnt;
+        var subdtlist = [];
+        var elements = {};
+        if (subdtcnt > 0) {
+
+
+            debugger;
+            for (var j = 1; j <= subdtcnt; j++) {
+                var lrefno = document.getElementById('txtkey_' + j).value;
+                var subdt = document.getElementById('PostingDate_' + j).value;
+                var descadd = document.getElementById('txtdescription_' + j).value;
+                var vnd = document.getElementById('txtvendor_' + j).value;
+                var amt = document.getElementById('txtamount_' + j).value;
+                var vndpono = document.getElementById('txtvendorpono_' + j).value;
+                var sappono = document.getElementById('txtsappono_' + j).value;
+                var elt = document.getElementById('ddlstatusadd_' + j);
+                //  var addsts = elt.options[elt.selectedIndex];
+                var sts = elt.value;
+                var elt1 = document.getElementById('ddladdcountry_' + j).value;
+                var ddlcont = elt1.value;// elt1.options[elt1.selectedIndex].value;
+                var elt2 = document.getElementById('ddladdcountry_' + j);
+                var ddlcontnm = elt2.options[elt2.selectedIndex].text;
+
+
+                var appsts = document.getElementById('txtapprstatus_' + j).value;
+                var apprmksub = document.getElementById('txtapprremark_' + j).value;
+
+                elements = {
+                    LineRefNo: lrefno,
+                    VenderPONo: vndpono,
+                    SAPPONo: sappono,
+                    ActivityDate: subdt,
+                    Description: descadd,
+                    Vendor: vnd,
+                    Amount: amt,
+                    Country: ddlcont,
+                    CountryName: ddlcontnm,
+                    Status: sts,
+                    Status1: appsts,
+                    ApprovedBy: '',
+                    ApprovedOn: '',
+                    ApproverRemark: apprmksub,
+                    CreatedOn: '',
+                    CreatedBy: '',
+                    LastUpdatedOn: '',
+                    Lastupdatedby: '',
+                    Flag: '0'
+
+                }
+                if (appsts != "Approved") {
+                    subdtlist.push(elements);
+                }
+            }
+        }
+        var stateToSave = JSON.stringify(subdtlist);
+       
+        var refnoval = document.getElementById('planid');
+        var refval = refnoval.value;
+
+        $.ajax({
+           type: "Post",
+           url: '@Url.Action("UpdatePlandtl", "MarketingPlan")',
+            data: JSON.stringify({ "planid": refval, "status": planstatus, "data": stateToSave}),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                debugger;
+
+                if (result.msg == "True") {
+                    RdotAlertSucesstxt("Record Saved Successfully");
+                } else {
+                    RdotAlertSucesstxt("Record Not updated.");
+                }
+       }
+
+        });
+
     }
     function calculate(idx) {
         debugger;
@@ -1561,20 +2117,14 @@ var origin=TempData["Originator"]??string.Empty;
     }
     function Editdata(idx) {
         debugger;
-        $('#btnsave').show();
+        //$('#btnsave').show();
         $('#ContantsPayment').show();
+        $('#filterwind').hide();
         $('#Ind').hide();
         $('#Ibody').hide();
-        //// var str = idx.id;
-        //var index = str.indexOf("_") + 1;
 
-        //var result = '';
-        //if (index != 0) {
-        //    result = str.substr(index);
-        //}
-        // var planid = $("#cellBU_" + result).innerHTML;
-        // var saletar = document.getElementById("cellBU_" + result);
         var planid = idx;// saletar.innerText;
+        var refnoval = "";
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -1595,6 +2145,7 @@ var origin=TempData["Originator"]??string.Empty;
                 balapp.value = BU.BalanceAmount;
                 var refno = document.getElementById("txtrefno");
                 refno.value = BU.RefNo;
+                refnoval = BU.RefNo;
                 var balamtrddapp = document.getElementById("txtbalamtrddapp");
                 balamtrddapp.value = BU.BalanceFromApp;
                 ddlplanstatus.value = BU.planStatus;
@@ -1610,6 +2161,8 @@ var origin=TempData["Originator"]??string.Empty;
                 apprmk.value = BU.ApproverRemark;
                 var crdate = document.getElementById("createdate");
                 crdate.value = BU.CreatedOn;
+                var rddapamt = document.getElementById("txtrddapp_amt");
+                rddapamt.value = BU.RDDApprovedAmt;
                 var isdrft = "";
                 //  if (planstatus == "D") { isdrft = "1"; } else { isdrft = "0"; }
                 //  var rjdata = JSON.stringify({ "Ccode": countval, "year": trnyval, "type": txnval, "frommonth": fmonth, "tomonth": tmnt, "Qvalue": Qval, "QYear": quYr });
@@ -1619,9 +2172,72 @@ var origin=TempData["Originator"]??string.Empty;
                 //    "UsedAmount": 0, "Description": descval, "planStatus": planstatus, "ApprovalStatus": apstatusval, "ApprovedBy": '', "ApprovedOn ": '', "ApproverRemark": apprmkval,
                 //    "StartDate": stdateval, "EndDate": enddtval, "IsDraft ": isdrft, "CreatedOn": '', "CreatedBy": '', " LastUpdatedOn": '', "LastUpdateBy": ''
                 //});
+                debugger;
+                if (BU.planStatus == "Draft") {
+                    $(".required-label").text("[ Draft ]");
+                    $("#btnsave").show();
+                    $("#btnDelete").show();
+                    $('#btn_MainSearch').show();
+                    $('#fromtoemail').show();
+                    //$("#Div1-Approval").hide();
+                    //$("#Div1-ApprovedBy").hide();
+                } else if (BU.ApprovalStatus == "Rejected-Open") {
+                    $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
+                    $("#btnAction").show();
+                    $("#btnsave").show();
+                    $('#btn_MainSearch').show();
+                    $('#fromtoemail').show();
+                   // $('#btn_MainSave').show();
+                    enableheader();
+                    //$("#btnDelete").hide();
+                    //$("#Div1-Approval").show();
+                    //$("#Div1-ApprovedBy").show();
+                }
+                else {
+                    $("#btnAction").show();
+                    $("#btnsave").hide();
+                    $('#btn_MainSearch').show();
+                    $('#fromtoemail').hide();
+                    //$("#btnDelete").hide();
+                    $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
+                    //$("#Div1-Approval").show();
+                    //$("#Div1-ApprovedBy").show();
+                    disableheader();
+                }
 
 
+                if (BU.ApprovalStatus == "Approved" && BU.planStatus == "Open") {
+                    ddlplanstatus.disabled = false;
+                    $("#btnupdatesave").show();
+                    $("#fromtoemail").show();
+                }
+                 $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json ;charset=utf-8;",
+            async: true,
+            url: '@Url.Action("GetPlanfiles", "MarketingPlan")',
+            cache: false,
+                     data: JSON.stringify({ "id": BU.RefNo }),
+            processData: false,
+                     success: function (BUfile) {
+                         debugger
+                         document.getElementById('attachmentdiv').innerHTML = '';
+                         var pall = $('#attachmentdiv');
+                         if (BUfile.length > 0) {
+                             $.each(BUfile, function (i, value) {
+                                 debugger;
+                                 var val = value.replace(/\\/g, "\\\\");
+                                 var flnm = val.substring(val.lastIndexOf('\\') + 1);
+                                 var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value + '  target="_blank"></a> </div></div></div>';
+                                 attachmentcnt = attachmentcnt + 1;
+                                 pall.append(subrow);
+                                 document.getElementById('attchcnt').value = attachmentcnt;
+                             });
+                         }
 
+            }
+        });
             }
         });
         ////PlanLine
@@ -1637,65 +2253,99 @@ var origin=TempData["Originator"]??string.Empty;
             processData: false,
             success: function (BU1) {
                 if (BU1.length > 0) {
+                    var appcnt=0
                     $.each(BU1, function (i, value) {
                         debugger;
                         counter = i + 1;
+
                         var refnoval = document.getElementById('txtrefno');
                         var refval = refnoval.value;
+                        var appstaus = document.getElementById("txtapprovalstatus");
+                        var apval = appstaus.value;
                         debugger;
                         var newRow = $("#AddfromtoemailRow");
                         var cols = "";
-                        cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
-                        cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
-                        cols += ' <div class="reddotTableCell "> <div> ';
-                        cols += ' <div class="input-group">';
-                        cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' > ';
-                        //cols += ' <div class="input-group-append">';
-                        //cols += ' <span class="input-group-text">';
-                        //cols += ' <i class="far fa-calendar-alt"></i>';
-                        //cols += ' </span>';
-                        //cols += ' </div>';
-                        cols += ' </div>';
-                        cols += ' </div > </div > ';
-                        cols += ' <div class="reddotTableCell width10per"> <div>';
-                        cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '">';
-                        cols += ' </select>';
-                        cols += '</div > </div > ';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' > </div > </div > ';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' > </div > </div > ';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" value=' + value.VenderPONo + '> </div> </div>';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" value=' + value.SAPPONo + '> </div> </div>';
-                        cols += ' <div class="reddotTableCell"> <div>';
-                        cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '">';
-                        cols += '<option value="0">-- Select --</option>';
-                        cols += '   <option value="Draft">Draft</option>';
-                        cols += '   <option value="Open">Open</option>';
-                        cols += '   <option value="On Hod">On-Hold</option>';
-                        cols += '   <option value="Paid Closed">Paid-Closed</option>';
-                        cols += '   <option value="Unpaid Closed">Unpaid-Closed</option>';
-                        cols += ' </select>';
-                        cols += '</div > </div > ';
-                        cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" value=' + value.Satus1 + '> </div> </div>';
-                        cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" value=' + value.ApproverRemark + '> </div> </div>';
-                        cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '"  value=' + value.LineRefNo + ' > </div > </div > ';
-                        cols += ' <div class="reddotTableCell ">';
-                        cols += ' <div>';
-                        //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
-                        cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
-                        cols += ' </div>';
-                        cols += ' </div>';
-                        cols += ' </div></div>';
-                        newRow.append(cols);
+                        if ((apval == "Pending" || apval == "Rejected-Close") || (value.Status1 == "Approved" && apval == "Approved")) {
+                            appcnt = appcnt + 1;
+                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> ';
+                            cols += ' <div class="input-group">';
+                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                            cols += ' </div>';
+                            cols += ' </div > </div > ';
+                            cols += ' <div class="reddotTableCell width10per"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                            cols += '<option>' + value.CountryName + '</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled > </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" disabled onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + '  > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                            cols += '<option value="Planned">Planned</option>';
+                            cols += '   <option value="Closed">Closed</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '"  value=' + value.LineRefNo + ' disabled> </div > </div > ';
+                            cols += ' <div class="reddotTableCell ">';
+                            cols += ' <div>';
+                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" disabled> <i class="fas fa-trash"></i></button >';
+                            cols += ' </div>';
+                            cols += ' </div>';
+                            cols += ' </div></div>';
+                            newRow.append(cols);
                         $("table.order-list").append(newRow);
                         var sts = document.getElementById("ddlstatusadd_" + counter);
                         sts.value = value.Status;
-                        // counter++;
-                        //$('#PostingDate_' + counter).datetimepicker({
-                        //    format: 'MM/DD/YYYY',
-                        //});
-                        var addref = document.getElementById('txtkey_' + counter);
-                        addref.value = refval + "-" + counter;
+
+
+                        }
+                        else {
+                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> ';
+                            cols += ' <div class="input-group">';
+                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' > ';
+                            cols += ' </div>';
+                            cols += ' </div > </div > ';
+                            cols += ' <div class="reddotTableCell width10per"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" >';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' > </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + '  > </div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" value=' + value.VenderPONo + '  > </div> </div>';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" value=' + value.SAPPONo + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div>';
+                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" >';
+                            cols += '<option value="Planned">Planned</option>';
+                            cols += '   <option value="Closed">Closed</option>';
+                            cols += ' </select>';
+                            cols += '</div > </div > ';
+                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabed value=' + value.ApproverRemark + ' > </div> </div>';
+                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled  value=' + value.LineRefNo + '> </div > </div > ';
+                            cols += ' <div class="reddotTableCell ">';
+                            cols += ' <div>';
+                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" > <i class="fas fa-trash"></i></button >';
+                            cols += ' </div>';
+                            cols += ' </div>';
+                            cols += ' </div></div>';
+                            newRow.append(cols);
+                        $("table.order-list").append(newRow);
+                        var sts = document.getElementById("ddlstatusadd_" + counter);
+                        sts.value = value.Status;
+
+
                         $.ajax({
                             type: "POST",
                             dataType: "JSON",
@@ -1707,7 +2357,7 @@ var origin=TempData["Originator"]??string.Empty;
                             processData: false,
                             success: function (BUc) {
                                 debugger;
-                                document.getElementById('ddladdcountry_' + counter).innerHTML = "";
+                               // document.getElementById('ddladdcountry_' + counter).innerHTML = "";
                                 var selectMonth = $("#ddladdcountry_" + counter);
 
                                 var monthElem = document.createElement("option");
@@ -1730,156 +2380,89 @@ var origin=TempData["Originator"]??string.Empty;
                                 });
                             }
                         });
-                      //  var selectMonthc = $("#ddladdcountry_" + counter);
-                     //   selectMonthc.Text = value.CountryName;
-                       // $("#ddladdcountry_ "+ counter+" option[text=" + value.CountryName+"]").attr('selected', 'selected');
+                        }
+                        if (appcnt != counter) {
+                            $("#btnsave").show();
+                        }
+
 
                     });
                 }
             }
         });
+
     }
-
-    function ExportToExcel() {
-        var contents = $(".searchgrid").html();
-        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(contents));
-    }
-
-    $("#btnExport").click(function (e) {
-        debugger;
-
-        var table = ($('#searchgrid').get(0));
-
-        var headers = [];
-        var rows = [];
-
-        var elements = {};
-        //  for (var i =0; i < searchEles.childElementCount; i++) {
-        var children = table.childNodes;
-
-        for (var j = 1; j < children.length; j++) {
-            subnodes = children[j].childNodes[0].childNodes;
-            for (var i = 0; i < subnodes.length; i++) {
-                headers[i] = subnodes[i].textContent;
-            }
-            elements = {
-                Planid: headers[0],
-                SourceOfFund: headers[1],
-                CountryName: headers[2],
-                StartDate: headers[3],
-                EndDate: headers[4],
-                Vendor: headers[5],
-                VendorApprovedAmt: headers[6],
-                RDDApprovedAmt: headers[7],
-                UsedAmount: headers[8],
-                BalanceAmount: headers[9],
-                BalanceFromApp: headers[10],
-                Description: headers[11],
-                ApprovedBy: headers[12],
-                planStatus: headers[13],
-                ApprovalStatus: headers[14],
-                CreatedOn: headers[15],
-            }
-
-            rows.push(elements);
-        }
-        var CsvString = "";
-        //rows.forEach(function (RowItem, RowIndex) {
-        //    RowItem.forEach(function (ColItem, ColIndex) {
-        //        CsvString += ColItem + ',';
-        //    });
-        //    CsvString += "\r\n";
-        //});
-        rows.forEach(function (rowArray) {
-            let row = rowArray.join(",");
-            CsvString += row + "\r\n";
-        });
-        CsvString = "data:application/csv," + encodeURIComponent(CsvString);
-        var x = document.createElement("A");
-        x.setAttribute("href", CsvString);
-        x.setAttribute("download", "somedata.csv");
-        document.body.appendChild(x);
-        x.click();
-    });
 
 
 
 </script>
 <script type="text/javascript">
-    //$(document).ready(function () {
-    //    debugger;
-    //    var message = '@message';
 
-    //    if (message)
-    //        if (message == "Record Saved Successfully") {
-
-    //            showpopup();
-    //        }
-
-
-
-    //}
-    //);
     function Showpopup(result) {
-        alert("Onsuccess");
-        debugger
-        //var id = result.Val;
-        var rslt = result.msg;//'@result';
-        var o_val = result.user;//'@origin';
-        _SO_ID = result.id;// rslt;
+      //  alert("Onsuccess");
+       
+            debugger
+            //var id = result.Val;
+            var rslt = result.msg;//'@result';
+            var o_val = result.user;//'@origin';
+            _SO_ID = result.id;// rslt;
 
-        var data = JSON.stringify({
-            Object_Type: '30',
-            Originator: o_val,
-            DocKey: _SO_ID,
+            var data = JSON.stringify({
+                Object_Type: '30',
+                Originator: o_val,
+                DocKey: _SO_ID,
 
-        });
-        var CheckApproval = Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
+            });
+            var CheckApproval = Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
 
-        if (CheckApproval == true) {
-            var a = ConfirmYesNo("ApprovalModal");
+            if (CheckApproval == true) {
+                var a = ConfirmYesNo("ApprovalModal");
 
-            a.then(function (b) {
-                debugger
-                if (b == 1) {
+                a.then(function (b) {
+                    debugger
+                    if (b == 1) {
 
-                    $.ajax({
-                        async: false,
-                        cache: false,
-                        type: "POST",
-                        data: JSON.stringify({ Object_Type: '30', Originator: o_val, DocKey: _SO_ID, OriginatorRemark: $("[id$=MRemark]").val() }),
-                        url: "/RDD_Approver_Insert_Records",
-                        dataType: 'Json',
-                        contentType: "Application/json",
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            type: "POST",
+                            data: JSON.stringify({ Object_Type: '30', Originator: o_val, DocKey: _SO_ID, OriginatorRemark: $("[id$=MRemark]").val() }),
+                            url: "/RDD_Approver_Insert_Records",
+                            dataType: 'Json',
+                            contentType: "Application/json",
 
-                        success: function (response) {
-                            debugger
-                            if (response.Table.length != 0) {
+                            success: function (response) {
+                                debugger
+                                if (response.Table.length != 0) {
 
-                                if (response.Table[0].Result == 'True') {
-                                    RedDotAlert_Success("Marketing Plan ID-" + _SO_ID + ' And Document send for Approval');
-                                    ClearControls();
+                                    if (response.Table[0].Result == 'True') {
+                                        RedDotAlert_Success("Marketing Plan ID-" + _SO_ID + ' And Document send for Approval');
+                                        ClearControls();
+                                        GetallDataList();
+                                    }
+
                                 }
 
                             }
+                        });
 
-                        }
-                    });
-
-                }
-                else {
-                    RedDotAlert_Success(jData.table[0].Message + ' As Draft. ' + " Trans ID-" + jData.table[1].Message);
-                    ClearControls();
-                }
-            })
-        }
-        else {
-            RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message);
-            ClearControls();
-        }
-
+                    }
+                    else {
+                        RedDotAlert_Success('Marketing Plan Saved As Draft. ' + " Trans ID-" + _SO_ID);
+                        ClearControls();
+                        GetallDataList();
+                    }
+                })
+            }
+            else {
+                RedDotAlert_Success('Marketing Plan Saved' + " Trans ID-" + _SO_ID);
+                ClearControls();
+                GetallDataList();
+            }
+       
         //  }
     }
+
     function ConfirmYesNo(ModelId) {
         debugger;
         var dfd = jQuery.Deferred();
@@ -1911,8 +2494,10 @@ var origin=TempData["Originator"]??string.Empty;
         typeval.value="";
         var balapp = document.getElementById("txtbalapproved");
         var balappval = 0;
-        balapp.value="";
-        
+        balapp.value = "";
+        var appstatus = document.getElementById("txtapprovalstatus");
+        appstatus.value = "";
+
         var refno = document.getElementById("txtrefno");
         refno.value="";
         var rddapamt = document.getElementById("txtrddapp_amt");
@@ -1923,30 +2508,22 @@ var origin=TempData["Originator"]??string.Empty;
         ddlplanstatus.selectedIndex = 0;
         var desc = document.getElementById("comment");
         desc.value = "";
-
+        $(".required-label").text("");
         //if (counter > 0) {
         //    var i;
         //    for (i = 0; i < counter; i++) {
-        //        $("#AddfromtoemailRow").closest(".reddotTableRow").remove();
+       // $("#AddfromtoemailRow").parent().remove();//.closest(".reddotTableRow").remove();
+
         //        counter -= 1
         //    }
         //}
         //var newRow = $("#AddfromtoemailRow");
-        //document.getElementById('fromtoemail').innerHTML = "";
-        document.getElementById("AddfromtoemailRow").deleteRow(0);
+        document.getElementById('lines').innerHTML = "";
+        document.getElementById('lines').innerHTML = '<div class="reddotTable sm-form mar-t0" id="AddfromtoemailRow"><div class="reddotTableBody"> <div class="reddotTableRow odd-even-row" > <div class="reddotTableHead width1px"><div>#</div></div> <div class="reddotTableHead width10per"><div>Date</div></div><div class="reddotTableHead width10per"><div>Country</div></div>  <div class="reddotTableHead width10per"><div>Vendor</div></div> <div class="reddotTableHead width20per"><div>Description</div></div> <div class="reddotTableHead width10per"><div>Amount</div></div><div class="reddotTableHead width10per"><div>Vendor PO No.</div></div><div class="reddotTableHead width10per"><div>SAP PO No.</div></div><div class="reddotTableHead width10per"><div>Status</div></div> <div class="reddotTableHead width10per"><div>Appr Status</div></div><div class="reddotTableHead width20per"><div>Approver Remark</div></div> <div class="reddotTableHead width100px"><div>Key</div></div><div class="reddotTableHead width100px"><div>Action</div></div></div > </div ></div >';
+      //  document.getElementById("AddfromtoemailRow").deleteRow(0);
         counter = 0;
-
-        //var stdate = document.getElementById("startdate");
-        //stdate.value="";
-        //var endate = document.getElementById("enddate");
-        //var enddtval = endate.value;
-        //var appstaus = document.getElementById("txtapprovalstatus");
-        //var apstatusval = appstaus.value;
-        //var apprmk = document.getElementById("txtapprovalremk");
-        //var apprmkval = apprmk.value;
-        //var crdate = document.getElementById("createdate");
-        //var crdateval = crdate.value;
-
+        document.getElementById('attachmentdiv').innerHTML = '';
+       
     }
 </script>
 <script>
@@ -1955,7 +2532,18 @@ var origin=TempData["Originator"]??string.Empty;
     var tblhide = ['Planid'];
     var tblhead2 = [];
     $(document).ready(function () {
-        GetallDataList();
+        $(".txtcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+        $(".dropcheck").each(function (index) {
+            debugger;
+            if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+
         $("#FilterBtn").click(function () {
             $("#FilterSection").slideToggle("slow");
             updateConfig();
@@ -1995,59 +2583,145 @@ var origin=TempData["Originator"]??string.Empty;
             }
         });
     });
-
-    function GetallDataList() {
-        $('#btnsave').hide();
-        $('#ContantsPayment').hide();
-        $('#Ind').show();
-        $('#Ibody').show();
-        var arr = [];
-        var curPage = 1;
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetAllData", "MarketingPlan")',
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                pagesize: 50,
-                pageno: curPage,
-            }),
-            success: function (data) {
-                $("#Ist").show();
-                arr = data;
-                if (arr.data != null && arr.data.length != 0) {
-                    var i = 0;
-                    while (arr.data.length > i) {
-                        var tr = $("#Ist").clone();
-                        var tr1 = $("#Ind").closest();
-                        var k = 0;
-                        var l1 = tr.find(".Abcd").length;
-                        while (l1 > k) {
-                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
-                            var t = tblhead1[k];
-                            debugger
-                            if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".Abcd").eq(k).addClass("Abc")
-                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
-                            }
-
-                            k++;
-                        }
-                        $("#Ibody").append(tr);
-                        i++;
-                    }
-                    $("#Ist")[0].remove();
-                } else {
-                    $("#Ist").hide();
-                    RedDotAlert_Error("No Record Found");
-                }
-            }, complete: function () {
-                $(".loader1").hide();
+    $(document).change(function () {
+        $(".txtcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
             }
-
         });
-    }
+        $(".dropcheck").each(function (index) {
+            debugger;
+            if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
 
+        //$("#FilePathview").attr("href", $("input[id='avatar']").val());
+        //$("#FilePathview").attr("target", "_blank");
+    });
+    function GetallDataList() {
+        var me = getUrlVars()["PlanId"];
+
+        if (me != undefined) {
+            location.href = "/Admin/ApprovalStatusReport/Index";
+            return;
+        } else {
+            ClearControls();
+            $("#btn_MainSearch").hide();
+            $('#btn_MainSave').show();
+           
+            $("#btnsave").hide();
+            $("#btnrowsave").hide();
+          
+            $("#btnAction").hide();
+            $('#ContantsPayment').hide();
+            $('#filterwind').show();
+            $('#Ind').show();
+            $('#Ibody').show();
+            var arr = [];
+            var curPage = 1;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetAllData", "MarketingPlan")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    pagesize: 50,
+                    pageno: curPage,
+                }),
+                success: function (data) {
+                    debugger;
+                    document.getElementById('Ibody').innerHTML = '';
+                    var pall = $('#Ibody');
+                    var subrow = ' <div id="Ist" class="reddotTableRow odd-even-row"><div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div> <div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCell Abcd"><div></div></div> <div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCellRight Abcd"><div></div></div><div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div><div class="reddotTableCellRight Abcd"><div></div></div><div class="reddotTableCell Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div><div class="reddotTableCellLeft Abcd"><div></div></div></div>';
+                    pall.append(subrow);
+
+
+
+
+                    $("#Ist").show();
+                    arr = data;
+                    if (arr.data != null && arr.data.length != 0) {
+                        var i = 0;
+                        while (arr.data.length > i) {
+                            var tr = $("#Ist").clone();
+                            var tr1 = $("#Ind").closest();
+                            var k = 0;
+                            var l1 = tr.find(".Abcd").length;
+                            while (l1 > k) {
+                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                var t = tblhead1[k];
+                                debugger
+                                if (jQuery.inArray(t, tblhide) !== -1) {
+                                    tr.find(".Abcd").eq(k).addClass("Abc")
+                                    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                                }
+
+                                k++;
+                            }
+                            $("#Ibody").append(tr);
+                            i++;
+                        }
+                        $("#Ist")[0].remove();
+                    } else {
+                        $("#Ist").hide();
+                        RedDotAlert_Error("No Record Found");
+                    }
+                }, complete: function () {
+                    $(".loader1").hide();
+                }
+
+            });
+        }
+    }
+   // $('#avatar').on("change", function () {
+    function assignfile(fid) {
+        debugger;
+        var data = new FormData();
+        var str = fid.id;
+        var files = $("input[id = '"+str+"']").get(0).files;
+
+            var index = str.indexOf("_") + 1;
+
+            var result = '';
+            if (index != 0) {
+                result = str.substr(index);
+            }
+            debugger
+            var refno = document.getElementById('txtrefno').value;
+       // $("#RefNo").removeAttr('disabled');
+        if (files.length > 0) {
+            data.append("Files", files[0]);
+            data.append("type", "Header");
+            data.append("Refno", refno);
+        }
+       // $("#RefNo").attr('disabled', true);
+        $.ajax({
+            url: "/Marketing/MarketingPlan/UploadDoc",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+
+                if (response.indexOf("Error occurred") == 0) {
+                    $("input[id='"+str+"'][type='hidden']").val('');
+                    $("#FilePathview_"+result).removeAttr("href");
+                    $("#FilePathview_" + result).removeAttr("target");
+                    RedDotAlert_Error(response);
+                    // RdotAlerterrtxt("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                }
+                else {
+                    $("input[id='"+str+"'][type='hidden']").val(response);
+                    $("#FilePathview_" + result).attr("href", $("input[id='"+str+"'][type='hidden']").val());
+                    $("#FilePathview_" + result).attr("target", "_blank");
+                }
+            },
+            error: function (er) {
+                RedDotAlert_Error(er);
+            }
+        });
+    }//);
     //function GetMenuList() {
     //    // $('#tblMenusList').html('');
     //    var colms = [
@@ -2121,165 +2795,76 @@ var origin=TempData["Originator"]??string.Empty;
         debugger;
         _SO_ID = $(this).closest("Ist").prevObject.find(".Abcd").eq(0).text();
         //  var DBName = $(this).closest("IIst").prevObject.find(".Abcd").eq(0).text();
+       document.getElementById('planid').value = _SO_ID;
+       // id.value=_SO_ID;
         Editdata(_SO_ID);
 
-        $('#btn_MainClear').removeAttr('disabled');
-        $('#btn_MainSearch').removeAttr('disabled');
-        $('#btn_MainCancel').removeAttr('disabled');
+        //$('#btn_MainClear').removeAttr('disabled');
+        //$('#btn_MainSearch').removeAttr('disabled');
+        //$('#btn_MainCancel').removeAttr('disabled');
 
+    });
+
+    $('.next').bind('click', function () {
+        $(".loader1").show();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage++;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (curPage > arr.data[0].TotalCount)
+            curPage = 0;
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("I", "/GETRDDPV", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Prev Button*/
+    $('.prev').bind('click', function () {
+        $(".loader1").show();
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage--;
+        if (curPage < 0)
+            curPage = (arr.data[0].TotalCount - 1);
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("I", "/GETRDDPV", data, dateCond, tblhead1, tblhide, tblhead2);
     });
 
 
 
-    function getId(dbName, e) {
-        try {
-            debugger;
-
-            _SO_ID = e;
-
-            $.ajax({
-                async: false,
-                cache: false,
-                type: "POST",
-                url: "/SAP/SalesOrder/Get_Rec_SalesOrder",
-                data: JSON.stringify({ dbname: dbName, so_id: _SO_ID }),
-                dataType: 'Json',
-                contentType: "Application/json",
-
-                success: function (value) {
-                    var jData = value;
-                    debugger;
-
-                    ItemDetails = new Array();
-
-                    var SO_Header = jData.Table;
-                    var SO_Details = jData.Table1;
-
-
-                    _SO_ID = SO_Header[0].so_id;
-                    _Post_To_SAP = SO_Header[0].post_sap;
-
-                    //if (SO_Header.apprstatus != '')
-                    //    $("[id$=pgHeader]").html('<span>Sales Order [' + SO_Header.apprstatus + ']</span>');
-                    //else
-                    //    $("[id$=pgHeader]").html('<span>Sales Order</span>');
-
-                    $("#DBName").val(SO_Header[0].dbname).trigger('change');
-                    $("[id$=txtCardCode]").val(SO_Header[0].cardcode);
-                    $("[id$=txtCardName]").val(SO_Header[0].cardname);
-                    $("[id$=txtRefNum]").val(SO_Header[0].refno);
-                    $("[id$=txtPostingDate]").val(SO_Header[0].postingdate);
-                    $("[id$=txtDelDate]").val(SO_Header[0].deliverydate);
-                    $("[id$=txtDocStatus]").val(SO_Header[0].docstatus);
-                    $("[id$=txtApprvBy]").val(SO_Header[0].aprovedby);
-                    $("[id$=txtCreatedBy]").val(SO_Header[0].createdby);
-                    $("[id$=cbRDDProject]").val(SO_Header[0].rdd_project);
-                    $("[id$=cbBusinessType]").val(SO_Header[0].businestype);
-                    $("[id$=cbInvPayTerm]").val(SO_Header[0].invpayterms);
-                    $("[id$=cbCustPayTerm]").val(SO_Header[0].custpayterms);
-                    $("[id$=txt_ForworderDet]").val(SO_Header[0].forwarder);
-                    $("[id$=cbSalesEmp]").val(SO_Header[0].salesemp);
-
-                    //if (SO_Header.trns_status == "Active") { $("[id$=txtTrnStatus]").attr('style', 'Width:130px; Height:33px;font-family: Raleway; font-size: 14px; font-weight: bold; text-align:center;background-color:Green;color:White;'); }
-                    //else {
-                    //    $("[id$=txtTrnStatus]").attr('style', 'Width:130px; Height:33px;font-family: Raleway; font-size: 14px; font-weight: bold; text-align:center;background-color:red;color:White;');
-                    //}
-
-                    //if (SO_Header.cl_status == "Ok") { $("[id$=txtCLStatus]").attr('style', 'Width:130px; Height:33px;font-family: Raleway; font-size: 14px; font-weight: bold; text-align:center;background-color:Green;color:white;'); }
-                    //else { $("[id$=txtCLStatus]").attr('style', 'Width:130px; Height:33px;font-family: Raleway; font-size: 14px; font-weight: bold; text-align:center;background-color:red;color:white;'); }
-
-                    $("[id$=cbPayMth1]").val(SO_Header[0].pay_method_1);
-                    $("[id$=txtCheck1]").val(SO_Header[0].rcpt_check_no_1);
-                    $("[id$=txtChkDate1]").val(SO_Header[0].rcpt_check_date_1);
-                    $("[id$=txtRemarks1]").val(SO_Header[0].remarks_1);
-                    $("[id$=cbCur1]").val(SO_Header[0].curr_1);
-                    $("[id$=txtAmount1]").val(SO_Header[0].amount_1);
-
-                    $("[id$=cbPayMth2]").val(SO_Header[0].pay_method_2);
-                    $("[id$=txtCheck2]").val(SO_Header[0].rcpt_check_no_2);
-                    $("[id$=txtChkDate2]").val(SO_Header[0].rcpt_check_date_2);
-                    $("[id$=txtRemarks2]").val(SO_Header[0].remarks_2);
-                    $("[id$=cbCur2]").val(SO_Header[0].curr_2);
-                    $("[id$=txtAmount2]").val(SO_Header[0].amount_2);
-
-                    $("[id$=txtTotBefTax]").val(SO_Header[0].total_bef_tax);
-                    $("[id$=txtTotalTax]").val(SO_Header[0].total_tx);
-                    $("[id$=txtTotal]").val(SO_Header[0].doctotal);
-                    $("[id$=txtGP]").val(SO_Header[0].gp);
-                    $("[id$=txtGPPer]").val(SO_Header[0].gp_per);
-                    $("[id$=txtRemarks]").val(SO_Header[0].remarks);
-
-                    ItemDetails = jData.Table1;
-                    debugger;
-                    EditMode = true;
-                    SalesOrder.prototype.BindGrid(ItemDetails, ItemDetails);
-
-                    get_Customer_Due(SO_Header[0].cardcode.toString());
-
-                    $("#FilterSection1").hide();
-                    $("#FilterSection").hide();
-                    $("#tblid").hide();
-                    $("#SalesOrderForm").show();
-                    if ($("[id$=txtDocStatus]").val() == 'Draft') {
-                        $('#btn_MainSave').removeAttr('disabled');
-                        $("#btn_MainSave").text("Save");
-                        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Draft</h4>');
-                    }
-                    else if ($("[id$=txtDocStatus]").val() == 'Pending') {
-                        $("#btn_MainSave").text("Save");
-
-                        $('#btn_MainSave').prop('disabled', true);
-                        $('#btn_MainCancel').prop('disabled', true);
-                        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Pending for Approval</h4>');
-                    }
-                    else if ($("[id$=txtDocStatus]").val() == 'Approved') {
-                        $("#btn_MainSave").text("Save");
-                        $('#btn_MainCancel').removeAttr('disabled');
-                        $('#btn_MainCancel').prop('disabled', true);
-                        $('#btn_MainSave').prop('disabled', true);
-
-                        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Approved</h4>');
-                    }
-                    else if ($("[id$=txtDocStatus]").val() == 'Rejected-Open') {
-                        $("#btn_MainSave").text("Save");
-                        $('#btn_MainSave').removeAttr('disabled');
-                        $('#btn_MainCancel').removeAttr('disabled');
-
-                        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Rejected-Open</h4>');
-                    }
-                    else if ($("[id$=txtDocStatus]").val() == 'Rejected-Closed') {
-                        $("#btn_MainSave").text("Save");
-                        $('#btn_MainSave').prop('disabled', true);
-                        $('#btn_MainCancel').prop('disabled', true);
-
-                        $("[id$=pgHeader]").html('<h4 class="page-title">Sales Order - Rejected-Closed</h4>');
-                    }
-                    else
-                        $("#btn_MainSave").text("Update");
-
-                    EditMode = false;
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                }
-            });
-
-
-        } catch (n) {
-            alert(n)
-        }
-    }
-
     function showaddfrm() {
         // $('#ContantsPayment').Show();
-     
+        ClearControls();
+        enableheader();
+        document.getElementById('attachmentdiv').innerHTML = '';
+        $('#fromtoemail').show();
         $('#btnsave').show();
+        $('#btnAction').hide();
+        $('#btn_MainSearch').show();
+        $('#btn_MainSave').hide();
         $('#ContantsPayment').show();
+        $('#filterwind').hide();
         $('#Ind').hide();
         $('#Ibody').hide();
+        var pall = $('#attachmentdiv');
+        
+        var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye"></a> </div></div></div>';
+
+        attachmentcnt = attachmentcnt + 1;
+        pall.append(subrow);
+        document.getElementById('attchcnt').value = attachmentcnt;
     }
 </script>
 

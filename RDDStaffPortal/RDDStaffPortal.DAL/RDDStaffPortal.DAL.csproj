@@ -112,6 +112,7 @@
     <Compile Include="DataModels\DailyReports\RDD_DSR_NextAction.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_ReportingFreqTarget.cs" />
     <Compile Include="DataModels\CountryTarget.cs" />
+    <Compile Include="DataModels\MarketingPlan\ApproveLinedata.cs" />
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
     <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="InitialSetup\RDD_User_RightsDBOperation.cs" />
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
+    <Compile Include="MarketingPlan\MarketingPlanDoc.cs" />
     <Compile Include="obj\Debug\DataModels\DailyReports\UserControl1.g.i.cs" />
     <Compile Include="MarketingPlan\MarketingPlanDbOperation.cs" />
     <Compile Include="MarketingPlan\MarketingPlanLines.cs" />

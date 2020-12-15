@@ -1,4 +1,5 @@
-﻿using RDDStaffPortal.DAL.DataModels.MarketingPlan;
+﻿
+using RDDStaffPortal.DAL.DataModels.MarketingPlan;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,7 +48,7 @@ namespace RDDStaffPortal.DAL.MarketingPlan
 
         }
 
-       public string SaveMaketingPlan(MarketingPlanMaster MPlanmas,List<MarketingPlanLines> mPlanLines,string usernm)
+       public string SaveMaketingPlan(MarketingPlanMaster MPlanmas,List<MarketingPlanLines> mPlanLines,string usernm,List<MarketingPlanDoc> fdoc)
         {
             int result = 0;
             string result1 = "";
@@ -138,7 +139,8 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
         new SqlParameter("@p_LastUpdatedOn",""),
         new SqlParameter("@p_Lastupdatedby",usernm),
         new SqlParameter("@p_Flag",""),
-        new SqlParameter("@p_Response",1)
+
+         new SqlParameter("@p_Response",1)
 
                 };
                         Para1[20].Direction = ParameterDirection.Output;
@@ -148,9 +150,24 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                     }
 
 
+                    for(int j=0;j<fdoc.Count;j++)
+                    {
+                        SqlParameter[] Para2 = {
 
-   
+new SqlParameter("@p_planid",Convert.ToInt32(result)),
+new SqlParameter("@p_filepath",fdoc[j].fpath),
+new SqlParameter("@p_createdby",usernm),
+ new SqlParameter("@p_Response",1)
+                };
+                        Para2[3].Direction = ParameterDirection.Output;
+
+                        result1 = Com.ExecuteScalars("RDD_InsertMarketingPlanDoc", Para2);// Db.myGetDS("RDD_MonthlyCountryBU");
+
+                    }
+
                 }
+
+                
                 rslt = result.ToString();
                
             }catch(Exception e)
@@ -160,9 +177,103 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
             }
             return rslt;
         }
+        public string AddupdatePlanLines(List<MarketingPlanLines> mPlanLines, string usernm,string planid)
+        {
+            string result = "";
+            for (int i = 0; i < mPlanLines.Count; i++)
+            {
+                SqlParameter[] Para1 = {
 
+                   new SqlParameter("@p_PlanId",Convert.ToInt32(planid)),
+new SqlParameter("@p_LineRefNo",mPlanLines[i].LineRefNo),
+new SqlParameter("@p_VenderPONo",mPlanLines[i].VenderPONo),
+new SqlParameter("@p_SAPPONo",mPlanLines[i].SAPPONo),
+new SqlParameter("@p_ActivityDate ",mPlanLines[i].ActivityDate),
+new SqlParameter("@p_Description",mPlanLines[i].Description),
+        new SqlParameter("@p_Vendor",mPlanLines[i].Vendor),
+        new SqlParameter("@p_Amount",mPlanLines[i].Amount),
+        new SqlParameter("@p_Country",mPlanLines[i].Country),
+        new SqlParameter("@p_CountryName",mPlanLines[i].CountryName),
+        new SqlParameter("@p_Status",mPlanLines[i].Status),
+        new SqlParameter("@p_Status1",mPlanLines[i].Status1),
+        new SqlParameter("@p_ApprovedBy",mPlanLines[i].ApprovedBy),
+        new SqlParameter("@p_ApprovedOn",""),
+        new SqlParameter("@p_ApproverRemark",mPlanLines[i].ApproverRemark),
+        new SqlParameter("@p_CreatedOn",""),
+        new SqlParameter("@p_CreatedBy",usernm),
+        new SqlParameter("@p_LastUpdatedOn",""),
+        new SqlParameter("@p_Lastupdatedby",usernm),
+        new SqlParameter("@p_Flag",""),
+        new SqlParameter("@p_Response",1)
 
+                };
+                Para1[20].Direction = ParameterDirection.Output;
 
+                result = Com.ExecuteScalars("RDD_SaveMarketingPlanLines", Para1);// Db.myGetDS("RDD_MonthlyCountryBU");
+
+            }
+            return result;
+        }
+        public string updateamt(string RDDamt, string pid, string usernm)
+        {
+            string rslt = "";
+            SqlConnection SqlConn = null;
+            SqlCommand SqlCmd = null;
+            SqlDataAdapter da = null;
+            SqlTransaction trans = null;
+            string errormsg;
+            DataSet ds = null;
+            string Conn;
+                Conn = ConfigurationManager.ConnectionStrings["tejSAP"].ToString();
+
+            SqlConn = new SqlConnection(Conn);
+            SqlConn.Open();
+            SqlCommand cmd = new SqlCommand("RDD_UpdateRDDApproverAmt", SqlConn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@p_amount", RDDamt);
+            cmd.Parameters.AddWithValue("@p_id", pid);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                rslt = "True";
+            }catch(Exception e)
+            {
+                rslt = "False";
+            }
+            return rslt;
+        }
+        public string updateplanstatus(string pid, string status)
+        {
+            string rslt = "";
+            SqlConnection SqlConn = null;
+            SqlCommand SqlCmd = null;
+            SqlDataAdapter da = null;
+            SqlTransaction trans = null;
+            string errormsg;
+            DataSet ds = null;
+            string Conn;
+            Conn = ConfigurationManager.ConnectionStrings["tejSAP"].ToString();
+
+            SqlConn = new SqlConnection(Conn);
+            SqlConn.Open();
+            SqlCommand cmd = new SqlCommand("RDD_UpdateRDDplanstatus", SqlConn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@p_status", status);
+            cmd.Parameters.AddWithValue("@p_id", pid);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                rslt = "True";
+            }
+            catch (Exception e)
+            {
+                rslt = "False";
+            }
+            return rslt;
+        }
+        
         public List<Marketing_SearchData> GetFilList(string Country, string fund, string BU, string status, string Fromdt, string Todate)
         {
             List<Marketing_SearchData> _filList = new List<Marketing_SearchData>();
@@ -428,6 +539,37 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                 _BU = null;
             }
             return _BU;
+        }
+
+        public string ApprovePlanLines(List<ApproveLinedata> Ldata,string usernm)
+        {
+            string result = "";
+            if (Ldata.Count > 0)
+            {
+                for (int i = 0; i < Ldata.Count; i++)
+                {
+                    SqlParameter[] Para1 = {
+
+                   new SqlParameter("@planid",Convert.ToInt32(Ldata[i].planid)),
+new SqlParameter("@linerefno",Ldata[i].LineRefNo),
+new SqlParameter("@status",Ldata[i].Status1),
+ new SqlParameter("@Approverremark",Ldata[i].ApproverRemark),
+
+        new SqlParameter("@Approvedby",usernm),
+        new SqlParameter("@p_Response",1)
+
+                };
+                    Para1[5].Direction = ParameterDirection.Output;
+
+                    result = Com.ExecuteScalars("RDD_UpdatePlanLines", Para1);// Db.myGetDS("RDD_MonthlyCountryBU");
+
+                }
+            }
+            else
+            {
+                result = "False";
+            }
+            return result;
         }
     }
 }
