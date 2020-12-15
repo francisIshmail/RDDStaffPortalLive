@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    @*<title>@ViewBag.Title </title>*@
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    @*<link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-grid.min.css" rel="stylesheet">
+        <link href="css/bootstrap-reboot.min.css" rel="stylesheet">*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/atlantis.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/reddot.css">
+    <link href="~/Content/reddot.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    @*<link href="css/style.css" rel="stylesheet">*@
+</head>
+<body>
+    <nav class="p-0 navbar navbar-expand-md fixed-top navbar-dark bg-white border-bottom box-shadow">
+        <button class="navbar-toggler p-3 border-0" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse justify-content-center p3" id="navbarsExampleDefault">
+            <ul class="navbar-nav">
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="#">Dashboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="#">Wall Chart</a>
+                </li>
+                <li class="p-3 nav-item active">
+                    <a class="nav-link text-dark font-weight-normal" href="#">My Leaves</a>
+                </li>
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+        <nav class="navbar navbar-header navbar-expand-lg">
+
+            <div class="container-fluid">
+                <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                    @{ Html.RenderAction("_PartialLoginUserProfile", "Dashboard", new { area = "" });}
+                </ul>
+            </div>
+        </nav>
+    </nav>
+
+    <div>
+        @RenderBody()
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ['PT+Sans:400,400i,700,700i', 'Lato:100,100i,300,300i,400,400i,700,700i,900,900i', 'Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i']
+            }
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="~/Scripts/jquery-slim.min.js"><\/script>')</script>
+
+    <!-- Moment JS -->
+    <script src="~/js/plugin/moment/moment.min.js"></script>
+    
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/holder.min.js"></script>
+    <script src="~/Scripts/offcanvas.js"></script>
+    <!-- DateTimePicker -->
+    <script src="~/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+
+</body>
+</html>
+<!--   Core JS Files   -->
+
+
+
+
+

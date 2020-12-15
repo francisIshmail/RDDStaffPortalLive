@@ -135,7 +135,7 @@ ApproverStatusReport.prototype = {
         $(document).on("click", "#IIst button[id^='btnAction']", function (e) {
             debugger;
             var tr = $(this).closest("#IIst");
-           
+            var doc = tr.find(".Abcd").eq(10).text().trim();
             _DocKey = tr.find(".Abcd").eq(3).text();
             var _ObjType = tr.find(".Abcd").eq(1).text();
            
@@ -167,10 +167,23 @@ ApproverStatusReport.prototype = {
                  //   $("div#IIIst:first").remove(); 
                    // Getgrid(tr, jData.length);                   
                     var count1 = 1;                    
-                    var actiontblValue = ['ID','TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];                 
+                    var actiontblValue = ['ID', 'TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];                 
+
+
+                    
+                    if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
+                        $("#btnActionSave").hide();
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision   [ You can not take action on Rejected-Closed/Paid-Closed vourcher ]");
+                    } else {
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision");
+                    }
+
                     $(".ApproverAction").each(function () {  
                         if (jData[count1 - 1].Flag == 'Disable') {
-                            $("#btnActionSave").prop('disabled', true);
+                            if ($('#txtApprover').val().toLowerCase() == jData[count1 - 1][actiontblValue[3]].toLowerCase()) {
+                               $("#btnActionSave").prop('disabled', true);
+                            }
+                           // 
                             $(this).find('.Abcd input[id^="txtID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtObjType"]').prop('disabled', true);
@@ -181,7 +194,10 @@ ApproverStatusReport.prototype = {
 
                         }
                         else {
-                            $("#btnActionSave").removeAttr('disabled');
+                            if ($('#txtApprover').val().toLowerCase() == jData[count1 - 1][actiontblValue[3]].toLowerCase()) {
+                                $("#btnActionSave").removeAttr('disabled');
+                            }
+                           // 
                             $(this).find('.Abcd input[id^="txtID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtObjType"]').removeAttr('disabled');
@@ -273,9 +289,12 @@ function RedDot_dateEditFormat(dtval) {
 $(document).on('change', 'input[type=radio][name=ApprovalStatus]', function () {
     debugger
     FillOriginator();
+
 });
 
 function FillOriginator() {
+    $('#IIst').hide();
+    $('div#IIst').not(':first').remove();
     $("#cbOriginator").empty();
    // $('#ORIGINATOR').append('<option value="0" selected="">-Select-</option>');
     debugger
@@ -290,6 +309,12 @@ function FillOriginator() {
         $('#cbOriginator').append('<option value=' + found_names[i1]['Originator'] + ' selected="">' + found_names[i1]['OriginatorName']+'</option>');
        i1 ++;
     }
+    var found_names1 = $.grep(arr3.Table2, function (v) {
+        return v.Action === k;
+    });    
+        
+    RedDot_DivTable_Header_Fill("II", found_names1);
+
 
 
 }

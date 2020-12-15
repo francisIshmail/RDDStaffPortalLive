@@ -243,9 +243,17 @@
                 RedDot_Button_New_HideShow();
                 $("#btnSave").show();
                 $("#btnDelete").hide();
+                $("#btnPrint").hide();
             })
         })
+
         //#endregion
+        $("#btnPrint").on("click", function () {
+
+            window.location.href = "/SAP/RDD_PV/DownloadPdf?p_pvid=" + $("#PVId").val()+"";  
+            
+
+        })
        //#region Cancel PV*/
         $("#btnCancel").on("click", function () {
             var me = getUrlVars()["PVId"];
@@ -450,6 +458,9 @@
                     $(".required-label").text("[ " + $("#ApprovalStatus").val() + " ]");
                     $("#Div1-Approval").show();
                     $("#Div1-ApprovedBy").show();
+                    if ($("#ApprovalStatus").val() == "Approved") {
+                        $("#btnPrint").show();
+                    }
                 }
 
                 $("#btnSave").hide();
@@ -492,6 +503,9 @@
                     $("#Div1-ApprovedBy").show();
                 }
                 else {
+                    if ($("#ApprovalStatus").val() == "Approved") {
+                        $("#btnPrint").show();
+                    }
                     $("#btnAction").show();
                     $("#btnSave").hide();
                     $("#btnDelete").hide();

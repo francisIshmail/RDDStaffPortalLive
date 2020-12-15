@@ -32,6 +32,7 @@ using System.Web.Script.Serialization;
 
 namespace RDDStaffPortal.Areas.SAP.Controllers
 {
+    [Authorize]
     public class SalesOrderController : Controller
     {
         // GET: SAP/SalesOrder
@@ -67,6 +68,28 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             try
             {
                 DS = SalesOrder_DBOperation.Get_BindDDLList(dbname);
+
+                if (DS.Tables.Count > 0)
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                else
+                    retVal = null;
+
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult Get_BindDDLPayMethod(string dbname, string payterms)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+
+            try
+            {
+                DS = SalesOrder_DBOperation.Get_BindDDLPayMethod(dbname, payterms);
 
                 if (DS.Tables.Count > 0)
                     retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
@@ -256,7 +279,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
         }
 
-        public ActionResult Save_SalesOrder(string model, string model1, string dbname)
+        public ActionResult Save_SalesOrder(string model, string model1, string model2, string dbname)
         {
             ContentResult retVal = null;
             string Result = string.Empty;
@@ -289,6 +312,9 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                         js = new JavaScriptSerializer();
                         RDD_SOR1[] ItemDetail = js.Deserialize<RDD_SOR1[]>(model1);
 
+                        js = new JavaScriptSerializer();
+                        RDD_SOR2[] PayDetail = js.Deserialize<RDD_SOR2[]>(model2);
+
                         if (Header.Length > 0)
                         {
                             SqlCommand cmd = new SqlCommand();
@@ -317,35 +343,37 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             cmd.Parameters.Add("@CustPayTerms", SqlDbType.VarChar).Value = Header[0].CustPayTerms.ToString();
                             cmd.Parameters.Add("@Forwarder", SqlDbType.VarChar).Value = Header[0].Forwarder.ToString();
                             cmd.Parameters.Add("@SalesEmp", SqlDbType.VarChar).Value = Header[0].SalesEmp.ToString();
+                            cmd.Parameters.Add("@SlpName", SqlDbType.VarChar).Value = Header[0].SlpName.ToString();
+                            cmd.Parameters.Add("@DocCur", SqlDbType.VarChar).Value = Header[0].DocCur.ToString();
 
-                            cmd.Parameters.Add("@Pay_Method_1", SqlDbType.VarChar).Value = Header[0].Pay_Method_1.ToString();
-                            cmd.Parameters.Add("@Rcpt_check_No_1", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_1.ToString();
+                            //cmd.Parameters.Add("@Pay_Method_1", SqlDbType.VarChar).Value = Header[0].Pay_Method_1.ToString();
+                            //cmd.Parameters.Add("@Rcpt_check_No_1", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_1.ToString();
 
-                            if (Header[0].Rcpt_check_Date_1.ToString() != null)
-                                cmd.Parameters.Add("@Rcpt_check_Date_1", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_1;
+                            //if (Header[0].Rcpt_check_Date_1.ToString() != null)
+                            //    cmd.Parameters.Add("@Rcpt_check_Date_1", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_1;
 
-                            cmd.Parameters.Add("@Remarks_1", SqlDbType.VarChar).Value = Header[0].Remarks_1.ToString();
-                            cmd.Parameters.Add("@Curr_1", SqlDbType.VarChar).Value = Header[0].Curr_1.ToString();
-                            cmd.Parameters.Add("@Amount_1", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_1.ToString());
+                            //cmd.Parameters.Add("@Remarks_1", SqlDbType.VarChar).Value = Header[0].Remarks_1.ToString();
+                            //cmd.Parameters.Add("@Curr_1", SqlDbType.VarChar).Value = Header[0].Curr_1.ToString();
+                            //cmd.Parameters.Add("@Amount_1", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_1.ToString());
 
-                            if (Header[0].Pay_Method_2 != null)
-                            {
-                                if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
-                                {
+                            //if (Header[0].Pay_Method_2 != null)
+                            //{
+                            //    if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
+                            //    {
 
-                                    cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
-                                    cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
+                            //        cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
+                            //        cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
 
-                                    if (Header[0].Rcpt_check_Date_2.ToString() != null)
-                                        cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
+                            //        if (Header[0].Rcpt_check_Date_2.ToString() != null)
+                            //            cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
 
 
-                                    cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
-                                    cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
-                                    cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
+                            //        cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
+                            //        cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
+                            //        cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
 
-                                }
-                            }
+                            //    }
+                            //}
 
                             cmd.Parameters.Add("@Total_Bef_Tax", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Bef_Tax.ToString());
                             cmd.Parameters.Add("@Total_Tx", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Tx.ToString());
@@ -371,7 +399,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             //if (Header[0].LastUpdatedOn == null)
                             //    cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = DBNull.Value;
                             //else
-                                cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = Header[0].LastUpdatedBy.ToString();
+                            cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = Header[0].LastUpdatedBy.ToString();
 
                             cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
@@ -424,6 +452,49 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
                             }
 
+                            if (SO_ID != 0)
+                            {
+                                if (PayDetail.Length > 0)
+                                {
+                                    string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
+                                    Db.myExecuteSQL(sql);
+
+                                    for (int i = 0; i < PayDetail.Length; i++)
+                                    {
+                                        cmd = new SqlCommand();
+
+                                        cmd.CommandType = CommandType.StoredProcedure;
+                                        cmd.CommandText = "RDD_SOR2_Insert_Update_Records";
+                                        cmd.Connection = connection;
+                                        cmd.Transaction = transaction;
+
+                                        cmd.Parameters.Add("@Pay_Line_Id", SqlDbType.BigInt).Value = PayDetail[i].Pay_Line_Id.ToString();
+                                        cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = SO_ID;
+                                        cmd.Parameters.Add("@Base_Obj", SqlDbType.NVarChar).Value = PayDetail[i].Base_Obj.ToString();
+                                        cmd.Parameters.Add("@Base_Id", SqlDbType.NVarChar).Value = PayDetail[i].Base_Id.ToString();
+                                        cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = PayDetail[i].Base_LinId.ToString();
+                                        cmd.Parameters.Add("@Pay_Method_Id", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method_Id.ToString();
+                                        cmd.Parameters.Add("@Pay_Method", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method.ToString();
+                                        cmd.Parameters.Add("@Rcpt_Check_No", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_No.ToString();
+
+                                        if (PayDetail[i].Rcpt_Check_Date.ToString() != null)
+                                            cmd.Parameters.Add("@Rcpt_Check_Date", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_Date;
+
+                                        cmd.Parameters.Add("@Curr_Id", SqlDbType.NVarChar).Value = PayDetail[i].Curr_Id.ToString();
+                                        cmd.Parameters.Add("@Currency", SqlDbType.NVarChar).Value = PayDetail[i].Currency.ToString();
+                                        cmd.Parameters.Add("@Rcpt_Check_Amt", SqlDbType.Float).Value = PayDetail[i].Rcpt_Check_Amt.ToString();
+                                        cmd.Parameters.Add("@Allocated_Amt", SqlDbType.Float).Value = PayDetail[i].Allocated_Amt.ToString();
+                                        cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();
+                                        cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = PayDetail[i].Remark.ToString();
+                                        
+
+                                        cmd.ExecuteNonQuery();
+
+                                        cmd.Dispose();
+                                    }
+                                }
+
+                            }
                             if (Result == "True")
                             {
                                 if (Header[0].SO_ID == 0)
@@ -434,7 +505,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                 t1.Rows.Add("SO_ID", SO_ID);
                                 result_ds.Tables.Add(t1);
 
-                                retVal= Content(JsonConvert.SerializeObject(result_ds), "application/json");
+                                retVal = Content(JsonConvert.SerializeObject(result_ds), "application/json");
                                 //Result = JsonUtil.ToJSONString(result_ds.Tables[0]);
 
                                 transaction.Commit();
@@ -466,7 +537,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
         public ActionResult Get_SalesOrder_List(string DBName, string UserName, int pagesize, int pageno, string psearch)
         {
             List<RDD_OSOR> _RDD_OSOR = new List<RDD_OSOR>();
-            _RDD_OSOR = SalesOrder_DBOperation.Get_SalesOrder_List(DBName,User.Identity.Name, pagesize, pageno, psearch);
+            _RDD_OSOR = SalesOrder_DBOperation.Get_SalesOrder_List(DBName, User.Identity.Name, pagesize, pageno, psearch);
             return Json(new { data = _RDD_OSOR }, JsonRequestBehavior.AllowGet);
         }
 
@@ -489,6 +560,28 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             {
                 throw ex;
             }
+        }
+
+        public ActionResult Get_DeleteRecord(string so_id, string dbname)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.Get_DeleteRecord(so_id, dbname);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public ActionResult Post_SalesOrder_InTo_SAP(string dbname, string _so_id)

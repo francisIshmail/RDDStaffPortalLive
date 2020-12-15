@@ -160,7 +160,7 @@
                                         <div class="col-12 col-md-12 padd-0">
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-FName" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">First Name :</label>
                                                         @Html.HiddenFor(m => m.EmployeeId, new { @id = "EmployeeId" })
                                                         @Html.HiddenFor(m => m.FId, new { @id = "FId" })
@@ -169,13 +169,13 @@
                         {@Html.TextBoxFor(m => m.FName, new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" })}
                     else
                     {*@
-                                                        @Html.TextBoxFor(m => m.FName, ViewBag.FNameD != null ? (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "FName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
+                                                        @Html.TextBoxFor(m => m.FName, ViewBag.FNameD != null ? (object)new { @id = "FName", @class = "form-control form-control-sm txtcheck", maxlength = "100" } : (object)new { @id = "FName", @class = "form-control form-control-sm txtcheck", maxlength = "100", @disabled = "disabled" })
                                                         @*}*@
 
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-LName" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Last Name :</label>
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {
@@ -183,7 +183,7 @@
                     }
                     else
                     {*@
-                                                        @Html.TextBoxFor(m => m.LName, ViewBag.LNameD != null ? (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100" } : (object)new { @id = "LName", @class = "form-control form-control-sm", maxlength = "100", @disabled = "disabled" })
+                                                        @Html.TextBoxFor(m => m.LName, ViewBag.LNameD != null ? (object)new { @id = "LName", @class = "form-control form-control-sm txtcheck", maxlength = "100" } : (object)new { @id = "LName", @class = "form-control form-control-sm txtcheck", maxlength = "100", @disabled = "disabled" })
                                                         @*}*@
                                                     </div>
                                                 </div>
@@ -201,7 +201,7 @@
 
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-Email" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Email :</label>
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {
@@ -209,7 +209,7 @@
                     }
                     else
                     {*@
-                                                        @Html.TextBoxFor(m => m.Email, ViewBag.EmailD != null ? (object)new { @id = "Email", @class = "form-control form-control-sm" } : (object)new { @id = "Email", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @Html.TextBoxFor(m => m.Email, ViewBag.EmailD != null ? (object)new { @id = "Email", @class = "form-control form-control-sm txtcheck" } : (object)new { @id = "Email", @class = "form-control form-control-sm txtcheck", @disabled = "disabled" })
                                                         @*}*@
                                                     </div>
                                                 </div>
@@ -274,12 +274,12 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-DesigId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Designation :</label>
                                                         <div class="input-group">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {*@
-                                                            @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", ViewBag.DesigIdD != null ? (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", ViewBag.DesigIdD != null ? (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "DesigId", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*}
                         else
                         { @Html.DropDownListFor(m => m.DesigId, ViewBag.DesigList as SelectList, "-Select-", new { @id = "DesigId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })}*@
@@ -288,10 +288,10 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-DeptId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Department :</label>
                                                         <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", ViewBag.DeptIdD != null ? (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", ViewBag.DeptIdD != null ? (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "DeptId", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {
                             @Html.DropDownListFor(m => m.DeptId, ViewBag.DeptList as SelectList, "-Select-", new { @id = "DeptId", @class = "form-control form-control-sm combolist" })
@@ -306,10 +306,10 @@
                                             <div class="row">
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-Local_HR" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Local HR:</label>
                                                         <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.Local_HR, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.Local_HRD != null ? (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist", @onchange = "FillHRManagerL2()" } : (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.Local_HR, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.Local_HRD != null ? (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist dropcheck", @onchange = "FillHRManagerL2()" } : (object)new { @id = "Local_HR", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {
                             @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
@@ -322,12 +322,12 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div  id="div-HOD_HR"class="form-group has-error1">
                                                         <label for="email2" class="width100px">HOD HR :</label>
                                                         <div class="select2-input">
 
 
-                                                            @Html.DropDownListFor(m => m.HOD_HR, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.HOD_HRD != null ? (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist" } : (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.HOD_HR, ViewBag.ManagerListHR2 as SelectList, "-Select-", ViewBag.HOD_HRD != null ? (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "HOD_HR", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {
                             @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
@@ -341,10 +341,10 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-CountryCodeName" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Country :</label>
                                                         <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", ViewBag.CountryD != null ? (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist" } : (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.CountryCodeName, ViewBag.ddlCountry as SelectList, "-Select-", ViewBag.CountryD != null ? (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "CountryCodeName", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                         {
 
@@ -361,10 +361,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-ManagerId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Manager L1:</label>
                                                         <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.managerD != null ? (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" } : (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", ViewBag.managerD != null ? (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist dropcheck", @onchange = "FillManagerL2()" } : (object)new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {
                         @Html.DropDownListFor(m => m.ManagerId, ViewBag.ManagerList as SelectList, "-Select-", new { @id = "ManagerId", @class = "form-control form-control-sm combolist", @onchange = "FillManagerL2()" })
@@ -377,12 +377,12 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-ManagerIdL2" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Manager L2:</label>
                                                         <div class="select2-input">
 
 
-                                                            @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.managerL2D != null ? (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" } : (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", ViewBag.managerL2D != null ? (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {
                         @Html.DropDownListFor(m => m.ManagerIdL2, ViewBag.ManagerListL2 as SelectList, "-Select-", new { @id = "ManagerIdL2", @class = "form-control form-control-sm combolist" })
@@ -396,10 +396,10 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id ="div-StatusId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Employment Status :</label>
                                                         <div class="select2-input">
-                                                            @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", ViewBag.EmpstatusD != null ? (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", ViewBag.EmpstatusD != null ? (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "StatusId", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {
                         @Html.DropDownListFor(m => m.StatusId, ViewBag.StatusList as SelectList, "-Select-", new { @id = "StatusId", @class = "form-control form-control-sm combolist" })
@@ -418,12 +418,12 @@
 
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-type_of_employement" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Employment Type :</label>
                                                         @Html.DropDownListFor(m => m.type_of_employement, new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
                                                 new SelectListItem { Text = "PartTime", Value = "PartTime" },
                                                 new SelectListItem { Text = "FullTime", Value = "FullTime" }
-                                                 }, "-Select-", ViewBag.type_of_employmentD != null ? (object)new { @id = "type_of_employement", @class = "form-control form-control-sm" } : (object)new { @id = "type_of_employement", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                 }, "-Select-", ViewBag.type_of_employmentD != null ? (object)new { @id = "type_of_employement", @class = "form-control form-control-sm dropcheck" } : (object)new { @id = "type_of_employement", @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
                                                         @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                                                            {
                                                                @Html.DropDownListFor(m => m.type_of_employement,
@@ -442,13 +442,13 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-Joining_Date1" class="form-group has-error1">
                                                         <label for="email2" class="width100px">Joining Date :</label>
                                                         <div class="input-group">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
                     {*@
                                                             @Html.HiddenFor(m => m.Joining_Date)
-                                                            @Html.TextBox(string.Concat("Joining_Date", "1"), "", ViewBag.joining_dateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                            @Html.TextBox(string.Concat("Joining_Date", "1"), "", ViewBag.joining_dateD != null ? (object)new { @class = "form-control form-control-sm txtcheck" } : (object)new { @class = "form-control form-control-sm txtcheck", @disabled = "disabled" })
 
                                                             @*}
                     else
@@ -463,7 +463,7 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-JobGradeId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Job Grade :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
@@ -472,7 +472,7 @@
                     }
                     else
                     {*@
-                                                            @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", ViewBag.JobGradeD != null ? (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.JobGradeId, ViewBag.JobGradeList as SelectList, "-Select-", ViewBag.JobGradeD != null ? (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "JobGradeId", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*}*@
                                                         </div>
                                                     </div>
@@ -484,7 +484,7 @@
 
                                                
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div class="form-group">
+                                                    <div id="div-JobBandId" class="form-group  has-error1">
                                                         <label for="email2" class="width100px">Job Band :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
@@ -493,12 +493,12 @@
                         }
                         else
                         {*@
-                                                            @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", ViewBag.JobBandD != null ? (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist" } : (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+                                                            @Html.DropDownListFor(m => m.JobBandId, ViewBag.JobBandList as SelectList, "-Select-", ViewBag.JobBandD != null ? (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @id = "JobBandId", @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                             @*}*@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group  has-error1">
                                                     <label for="email2" class="width100px">Status :</label>
                                                     <div class="input-group">
                                                         <label class="switch">
@@ -561,7 +561,7 @@
                                         <div class="col-md-12 col-md-12 padd-0">
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-Current_Address" class="form-group has-error1">
 
                                                         <label for="email2" class="width100px">Current Address :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
@@ -577,12 +577,12 @@
                                                                 else
                                                                 {*@
 
-                                                        @Html.TextBoxFor(m => m.Current_Address, ViewBag.Current_AddressD != null ? (object)new { @id = "Current_Address", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "Current_Address", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "800" })
+                                                        @Html.TextBoxFor(m => m.Current_Address, ViewBag.Current_AddressD != null ? (object)new { @id = "Current_Address", @class = "form-control form-control-sm txtcheck", maxlength = "800" } : (object)new { @id = "Current_Address", @class = "form-control form-control-sm txtcheck", @disabled = "disabled", @maxlength = "800" })
                                                         @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-Permanent_Address" class="form-group has-error1">
                                                         <label for="email2" class="width100px">Permanent Address :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {
@@ -596,12 +596,12 @@
                                                                 }
                                                                 else
                                                                 {*@
-                                                        @Html.TextBoxFor(m => m.Permanent_Address, ViewBag.Permanent_AddressD != null ? (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm", @disabled = "disabled", @maxlength = "800" })
+                                                        @Html.TextBoxFor(m => m.Permanent_Address, ViewBag.Permanent_AddressD != null ? (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm txtcheck", maxlength = "800" } : (object)new { @id = "Permanent_Address", @class = "form-control form-control-sm txtcheck", @disabled = "disabled", @maxlength = "800" })
                                                         @*}*@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-Gender"class="form-group has-error1">
                                                         <label for="email2" class="width100px">Gender :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                                                                           {
@@ -627,7 +627,7 @@
 new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
              new SelectListItem { Text = "Male", Value = "Male" },
              new SelectListItem { Text = "Female", Value = "Female" }
-}, ViewBag.GenderD != null ? (object)new { @class = "form-control form-control-sm combolist" } : (object)new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+}, ViewBag.GenderD != null ? (object)new { @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                         @*}
                                                             }*@
                                                     </div>
@@ -636,7 +636,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                             </div>
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-DOB1"class="form-group has-error1">
                                                         <label for="email2" class="width100px">DOB :</label>
                                                         <div class="input-group">
                                                             @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
@@ -650,7 +650,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                                 else
                                                                 {*@
                                                             @Html.HiddenFor(m => m.DOB)
-                                                            @Html.TextBox(string.Concat("DOB", "1"), "", ViewBag.DOBD != null ? (object)new { @id = "DOB1", @class = "form-control form-control-sm" } : (object)new { @id = "DOB1", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                            @Html.TextBox(string.Concat("DOB", "1"), "", ViewBag.DOBD != null ? (object)new { @id = "DOB1", @class = "form-control form-control-sm txtcheck" } : (object)new { @id = "DOB1", @class = "form-control form-control-sm txtcheck", @disabled = "disabled" })
 
                                                             @*}*@
                                                             <div class="input-group-append">
@@ -662,7 +662,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id ="div-Marital_Status"class="form-group has-error1">
                                                         <label for="email2" class="width100px">Marital Status :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                              {
@@ -691,17 +691,17 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
              new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
              new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
               new SelectListItem { Text = "Divorced", Value = "Divorced" }
-}, ViewBag.Marital_StatusD != null ? (object)new { @class = "form-control form-control-sm combolist" } : (object)new { @class = "form-control form-control-sm combolist", @disabled = "disabled" })
+}, ViewBag.Marital_StatusD != null ? (object)new { @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
                                                         @*}*@
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id="div-No_Child"class="form-group has-error1">
                                                         <label for="email2" class="width100px">No of Children :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {*@
-                                                        @Html.TextBoxFor(m => m.No_child, ViewBag.No_childD != null ? (object)new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800" } : (object)new { @id = "No_child", @class = "form-control form-control-sm", maxlength = "800", @disabled = "disabled" })
+                                                        @Html.TextBoxFor(m => m.No_child, ViewBag.No_childD != null ? (object)new { @id = "No_child", @class = "form-control form-control-sm txtcheck", maxlength = "800" } : (object)new { @id = "No_child", @class = "form-control form-control-sm txtcheck", maxlength = "800", @disabled = "disabled" })
                                                         @*}
                                                                 else
                                                                 {
@@ -718,14 +718,14 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
 
-                                                    <div class="form-group">
+                                                    <div id="div-hdnCitizenship"class="form-group has-error1">
                                                         <label for="email2" class="width100px">Nationality :</label>
 
                                                         @*<select class="form-control" id="Citizenship" name="basic">*@
 
                                                         @Html.HiddenFor(m => m.Citizenship)
                                                         @if (ViewBag.CitizenshipD != null)
-                                                        {<select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm combolist">
+                                                        {<select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm combolist dropcheck">
                                                             </select>
 
                                                             // @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
@@ -733,7 +733,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                         else
                                                         {
 
-                                                            <select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm" disabled>
+                                                            <select name="hdnCitizenship" id="Citizenship" class="form-control form-control-sm dropcheck" disabled>
                                                             </select>
                                                             // @Html.DropDownListFor(m => m.Citizenship, ViewBag.CitizenshipList as SelectList, "-Select-", new { @class = "form-control form-control-sm", @disabled = "disabled" })
 
@@ -860,15 +860,15 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                     </div>
                                     <div class="row mar-b10">
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Currency"class="form-group  has-error1">
                                                 <label for="email2" class="width100px">Currency :</label>
-                                                @Html.DropDownListFor(m => m.Currency, ViewBag.CurrencyList as SelectList, ViewBag.CurrencyD != null ? (object)new { @id = "Currency", @class = "form-control form-control-sm" } : (object)new { @id = "Currency", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                @Html.DropDownListFor(m => m.Currency, ViewBag.CurrencyList as SelectList, ViewBag.CurrencyD != null ? (object)new { @id = "Currency", @class = "form-control form-control-sm dropcheck" } : (object)new { @id = "Currency", @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
 
                                             </div>
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Account_No"class="form-group  has-error1">
                                                 <label for="email2" class="width100px">Account No :</label>
                                                 @Html.TextBoxFor(m => m.Account_No, ViewBag.Account_NoD != null ? (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
                                             </div>
@@ -884,23 +884,23 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                                     <div class="row mar-b10">
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Salary" class="form-group has-error1">
                                                 <label for="email2" class="width100px">Salary :</label>
                                                 @if (ViewBag.FinancialD != null)
                                                 {
-                                                    @Html.TextBoxFor(m => m.Salary, ViewBag.SalaryD != null ? (object)new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10" } : (object)new { @id = "Salary", @class = "form-control form-control-sm", maxlength = "10", @disabled = "disabled" })
+                                                    @Html.TextBoxFor(m => m.Salary, ViewBag.SalaryD != null ? (object)new { @id = "Salary", @class = "form-control form-control-sm txtcheck", maxlength = "10" } : (object)new { @id = "Salary", @class = "form-control form-control-sm txtcheck", maxlength = "10", @disabled = "disabled" })
                                                 }
                                                 else
                                                 {
-                                                    @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @Type = "password", @Value = "1", @class = "form-control form-control-sm", maxlength = "10" })
+                                                    @Html.TextBoxFor(m => m.Salary, new { @id = "Salary", @Type = "password", @Value = "1", @class = "form-control form-control-sm txtcheck", maxlength = "10" })
                                                 }
 
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Bank_Name" class="form-group has-error1">
                                                 <label for="email2" class="width100px">Bank Name :</label>
-                                                @Html.TextBoxFor(m => m.Bank_Name, ViewBag.Bank_NameD != null ? (object)new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Bank_Name", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                @Html.TextBoxFor(m => m.Bank_Name, ViewBag.Bank_NameD != null ? (object)new { @id = "Bank_Name", @class = "form-control form-control-sm txtcheck", maxlength = "20" } : (object)new { @id = "Bank_Name", @class = "form-control form-control-sm txtcheck", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
@@ -914,12 +914,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                                     <div class="row mar-b10">
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div  id="div-Salary_Start_Date1"class="form-group has-error1">
                                                 <label for="email2" class="width100px">Salary Start Date :</label>
 
                                                 <div class="input-group">
                                                     @Html.HiddenFor(m => m.Salary_Start_Date)
-                                                    @Html.TextBox(string.Concat("Salary_Start_Date", "1"), "", ViewBag.Salary_Start_DateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                    @Html.TextBox(string.Concat("Salary_Start_Date", "1"), "", ViewBag.Salary_Start_DateD != null ? (object)new { @class = "form-control form-control-sm txtcheck" } : (object)new { @class = "form-control form-control-sm txtcheck", @disabled = "disabled" })
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">
                                                             <i class="far fa-calendar-alt"></i>
@@ -930,9 +930,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Branch_Name" class="form-group has-error1">
                                                 <label for="email2" class="width100px">Branch Name :</label>
-                                                @Html.TextBoxFor(m => m.Branch_Name, ViewBag.Branch_NameD != null ? (object)new { @id = "Branch_Name", @class = "form-control form-control-sm", maxlength = "15" } : (object)new { @class = "form-control form-control-sm", maxlength = "15", @disabled = "disabled" })
+                                                @Html.TextBoxFor(m => m.Branch_Name, ViewBag.Branch_NameD != null ? (object)new { @id = "Branch_Name", @class = "form-control form-control-sm txtcheck", maxlength = "15" } : (object)new { @class = "form-control form-control-sm txtcheck", maxlength = "15", @disabled = "disabled" })
 
                                             </div>
                                         </div>
@@ -953,9 +953,9 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         </div>
 
                                         <div class="col-xl-4 col-md-4">
-                                            <div class="form-group">
+                                            <div id="div-Bank_Code" class="form-group has-error1">
                                                 <label for="email2" class="width100px">Bank Code :</label>
-                                                @Html.TextBoxFor(m => m.Bank_Code, ViewBag.Bank_CodeD != null ? (object)new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Bank_Code", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                @Html.TextBoxFor(m => m.Bank_Code, ViewBag.Bank_CodeD != null ? (object)new { @id = "Bank_Code", @class = "form-control form-control-sm txtcheck", maxlength = "20" } : (object)new { @id = "Bank_Code", @class = "form-control form-control-sm txtcheck", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
@@ -1539,6 +1539,28 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             debugger
             $("input[id='Citizenship']:hidden").val($(this).val());
         })
+        $(document).on("change", ".dropcheck", function () {
+            debugger
+            if ($(this).val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('0').trigger('change');
+            }
+        });
+        $(document).on("blur", ".txtcheck", function () {
+
+            if ($(this).val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
 
 
     });
@@ -1932,6 +1954,17 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             RedDot_dateEdit("#DOB1", "#DOB[type='hidden']");
             RedDot_dateEdit("#Joining_Date1", "#Joining_Date[type='hidden']");
             RedDot_dateEdit("#Contract_Start_Date1", "#Contract_Start_Date[type='hidden']");
+
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
+            $(".dropcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
         }
     });
 
@@ -3009,3 +3042,16 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
 
+<style>
+    .has-error1 .select2-selection {
+        /*border: 1px solid #a94442;
+    border-radius: 4px;*/
+        border-color: rgb(185, 74, 72) !important;
+    }
+
+    .has-success1 .select2-selection {
+        /*border: 1px solid #a94442;
+    border-radius: 4px;*/
+        border-color: #31CE36 !important;
+    }
+</style>
