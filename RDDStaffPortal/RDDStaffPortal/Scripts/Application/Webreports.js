@@ -10,7 +10,8 @@
 		// drop down image fill with name 
 		//RdotDropimg("Userid", "/GetUserList");
 
-		RdotDrop("Userid", "/GetUserList");
+		//("Userid", "/GetUserList");
+		applyAutoComplete2("#Userid", "#hdnUserid", "/GetUserListAuto");
 		var colms = [
 			//{ "mDataProp": "CardCode", "sWidth": "30%" },
 			{
@@ -35,10 +36,12 @@
 
 
 		var tf = true;
-		$("#Userid").on("change", function () {
-
-			var Userid = $('#Userid Option:selected').val();
-			if (Userid == '0' && tf == true) {
+		$("#Userid").on("focusout", function () {
+			debugger
+			var Userid = $('#hdnUserid').val();
+			if (Userid == '-1' && tf == true) {
+				$(".basket_list  ul").empty();
+				RdottableNDWPara1("tblReports", "/GetWebReportMapData", colms, Userid, 15);
 				RedDotAlert_Error("Please select  User");
 				return false
 
@@ -339,7 +342,7 @@
 			var tr = $(this).closest("li");
 			var Code = tr.attr("data-id");
 			var Role = tr.find(".name").text();
-			var Username = $('#Userid Option:selected').val();
+			var Username = $('#hdnUserid').val();
 			var typ1 = tr.find("input[id='hdntyp']").val();
 			var k = $(this).closest("ul").attr("id");
 			if (k == "pr1" && $("#hdnflag").val() == "true") {
@@ -435,8 +438,9 @@
 				$(this).closest("li").remove();
 			});
 			tf = false;
-			$('#Userid').val("0").trigger("change");
-			
+			$('#Userid').val("").trigger("change");
+			$('#hdnUserid').val("-1")
+		
 		})
 
 		//$(".basket_list").on("hover","ul li .name", function () {
@@ -454,7 +458,7 @@
 			
 			
 			var WURep = {
-				userName: $('#Userid Option:selected').val(),
+				userName: $('#hdnUserid').val(),
 				
 				WebRepLists: []
 			}
