@@ -171,6 +171,8 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\CollectionForecast\CollectionForecastAreaRegistration.cs" />
+    <Compile Include="Areas\CollectionForecast\Controllers\CollectionForecastController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_DailySalesController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_CallStatusController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_NextActionController.cs" />
@@ -180,6 +182,13 @@
     <Compile Include="Areas\Funnel\Controllers\FunnelDataController.cs" />
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
+    <Compile Include="Areas\Incentive\Controllers\CompensationPlanController.cs" />
+    <Compile Include="Areas\Incentive\Controllers\IncentiveKPIController.cs" />
+    <Compile Include="Areas\Incentive\Controllers\IncentiveSlabController.cs" />
+    <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
+    <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
+    <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
@@ -236,6 +245,7 @@
     <Content Include="img\bg\Background-001.JPG" />
     <Content Include="img\bg\Background-002.JPG" />
     <Content Include="Images\timeout-icon.png" />
+    <Content Include="img\bg\StaffPortalBG-01.png" />
     <Content Include="js\datapicker-separate\datepicker.all.js" />
     <Content Include="js\datapicker-separate\datepicker.all.min.js" />
     <Content Include="js\datapicker-separate\datepicker.css" />
@@ -826,7 +836,19 @@
     <Content Include="Areas\Targets\Views\web.config" />
     <Content Include="Areas\Admin\Views\ApprovalStatusReport\Index.cshtml" />
     <Content Include="Areas\SAP\Views\RDD_PV\VIEWRDDPV.cshtml" />
-    <Content Include="Areas\HR\Views\Employees\LMSTest.cshtml" />
+    <Content Include="Areas\Incentive\Views\web.config" />
+    <Content Include="Areas\Incentive\Views\IncentiveSlab\Index.cshtml" />
+    <Content Include="Areas\Incentive\Views\IncentiveKPI\Index.cshtml" />
+    <Content Include="Areas\Incentive\Views\IncentiveKPI\PartialView_IncentiveKPI.cshtml" />
+    <Content Include="Areas\Incentive\Views\IncentiveSlab\PartialView_IncentiveSlab.cshtml" />
+    <Content Include="Areas\Incentive\Views\IncentiveKPI\ADDIncentiveKPI.cshtml" />
+    <Content Include="Areas\Incentive\Views\IncentiveSlab\ADDIncentiveSlab.cshtml" />
+    <Content Include="Areas\Incentive\Views\CompensationPlan\Index.cshtml" />
+    <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
+    <Content Include="Areas\LMS\Views\web.config" />
+    <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
+    <Content Include="Areas\CollectionForecast\Views\web.config" />
+    <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -875,11 +897,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CollectionForecast\Data\" />
+    <Folder Include="Areas\CollectionForecast\Views\Shared\" />
     <Folder Include="Areas\DailyReports\Data\" />
     <Folder Include="Areas\DailyReports\Views\Shared\" />
     <Folder Include="Areas\Funnel\Views\Shared\" />
     <Folder Include="Areas\HR\Images\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Incentive\Data\" />
+    <Folder Include="Areas\Incentive\Views\Shared\" />
+    <Folder Include="Areas\Incentive\Views\ViewCompensationPlan\" />
+    <Folder Include="Areas\LMS\Models\" />
+    <Folder Include="Areas\LMS\Views\Shared\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
@@ -942,9 +971,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28988/</IISUrl>
+          <IISUrl>http://localhost:28987/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28988/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28987/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

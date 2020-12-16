@@ -17,7 +17,7 @@ namespace RDDStaffPortal.DAL
         SqlDataAdapter da = null;
         SqlTransaction trans = null;
         string errormsg;
-        DataSet ds = null;
+        DataSet ds = null;        
         string Conn;
         public CommonFunction()
         {
@@ -118,7 +118,7 @@ namespace RDDStaffPortal.DAL
                     try
                     {
                         int i = SqlCmd.ExecuteNonQuery();
-                        if (i > 0)
+                        //if (i > 0)
                         {
                             trans.Commit(); 
                             t = true;
@@ -276,7 +276,6 @@ namespace RDDStaffPortal.DAL
                     errormsg = ex.Message;
                 }
             }
-
             return ds;
         }
         #endregion
@@ -302,6 +301,7 @@ namespace RDDStaffPortal.DAL
 
             return ds;
         }
+                
         #endregion
 
         public string ExecuteScalar1(string sqlCommandText)
@@ -477,8 +477,8 @@ namespace RDDStaffPortal.DAL
             return numrows.Value;
         }
         #endregion
+       
 
-        
     }
 
 

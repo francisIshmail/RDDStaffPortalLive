@@ -1,0 +1,167 @@
+﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_Holidays
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Red Dot Distribution :: Technology with a Difference</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="img/reddot.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="js/plugin/webfont/webfont.min.js"></script>
+
+
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/atlantis.min.css">
+    <link rel="stylesheet" href="css/fonts.min.css">
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="css/reddot.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Holiday List</h4>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="row addwidgetclass mar-b10">
+                                <div class="col-md-12 padd-0">
+
+                                    <div class="form-group">
+                                        <!-- <label for="email2" class="width100px">Country :</label> -->
+                                        <div class="input-group width200px">
+                                            <select class="form-control" id="defaultSelect">
+                                                <option>-- Select Country --</option>
+                                                <option>India</option>
+                                                <option>Tanzania</option>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px"></label>
+                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new">Submit</button></div>
+
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label for="email2" class="width100px">Search</label>
+                                        <input type="text" class="form-control width180px"  id="myWidgets">
+                                    </div> -->
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="width180px">Holiday</th>
+
+                                            <th class="width180px">Date</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userTable">
+                                        <tr>
+                                            <td>Republic Day</td>
+                                            <td>Tue, 26 Jan, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Good Friday</td>
+                                            <td>Tue, 26 Jan, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ambedkar Jayanti</td>
+                                            <td>Tue, 26 Jan, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Rama Navami
+                                            </td>
+                                            <td>Tue, 26 Jan, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Eid al-Fitr
+                                            </td>
+                                            <td> 12–13 May 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Eid al-Adha
+                                            </td>
+                                            <td>Wed, 21 Jul, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Indian Independence Day
+                                            </td>
+                                            <td>Sun, 15 Aug, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Gandhi Jayanti
+                                            </td>
+                                            <td>Sat, 2 Oct, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dussehra</td>
+                                            <td>Fri, 15 Oct, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prophet's Birthday</td>
+                                            <td>18–19 Oct 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Diwali</td>
+                                            <td>Thu, 4 Nov, 2021</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Christmas Day
+                                            </td>
+                                            <td>Sat, 25 Dec, 2021</td>
+                                        </tr>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</body>
+</html>
