@@ -688,7 +688,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                                  {*@
                                                         @Html.DropDownListFor(m => m.Marital_Status,
 new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-             new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },
+             new SelectListItem { Text = "Single", Value = "Single" }, new SelectListItem { Text = "Married", Value = "Married" },new SelectListItem { Text = "Engaged", Value = "Engaged" },
              new SelectListItem { Text = "Widowed", Value = "Widowed" }, new SelectListItem { Text = "Separated", Value = "Separated" },
               new SelectListItem { Text = "Divorced", Value = "Divorced" }
 }, ViewBag.Marital_StatusD != null ? (object)new { @class = "form-control form-control-sm combolist dropcheck" } : (object)new { @class = "form-control form-control-sm combolist dropcheck", @disabled = "disabled" })
