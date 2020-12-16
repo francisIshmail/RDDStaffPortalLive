@@ -27,8 +27,9 @@
                                             <div class="form-group">
 
                                                 <div class="select2-input">
-                                                    <select class="form-control" id="Userid" name="basic">
-                                                    </select>
+                                                    <input class="form-control" id="Userid" name="basic"/>
+                                                    <input id="hdnUserid" type="hidden" value="-1"/>
+                                                    
                                                 </div>
 
                                             </div>
@@ -145,14 +146,14 @@
         //RdotDropimg("Userid", "/GetUserList");
 
 
-        RdotDrop("Userid", "/GetUserList");
-
+       // RdotDrop("Userid", "/GetUserList");
+        applyAutoComplete2("#Userid", "#hdnUserid", "/GetUserListAuto");
 
         var tf = true;
-        $("#Userid").on("change", function () {
+        $("#Userid").on("focusout", function () {
 
-            var Userid = $('#Userid Option:selected').val();
-            if (Userid == '0' && tf==true) {
+            var Userid = $('#hdnUserid').val();
+            if (Userid == '-1' && tf==true) {
                 RedDotAlert_Error("Please select  User");               
                 return false
 
@@ -183,8 +184,8 @@
       
         $('#btnSaveMenu').hide();
         $('#Btnsearch').on("click", function () {
-            var Userid = $('#Userid Option:selected').val();
-            if (Userid == '0') {
+            var Userid = $('#hdnUserid').val();
+            if (Userid == '-1') {
                 RedDotAlert_Error("Please select  User");
                 return false
 
@@ -208,12 +209,12 @@
         $('#btnSaveMenu').on("click", function () {
             $(".loader1").show();
             var Users = {
-                UserId: $('#Userid Option:selected').val(),                
+                UserId: $('#hdnUserid').val(),                
                 MenuDetails: [],
                 DashDetails:[]
 
             };
-            if (Users.UserId == '0') {
+            if (Users.UserId == '-1') {
                 RedDotAlert_Error("Please select  User");
                 $(".loader1").hide();
                 return false
@@ -252,7 +253,8 @@
                    tf = false;
                    RedDotAlert_Success('Save Succcesfully');
                    $("[id*='smallSelect']").val("N");
-                   $('#Userid').val("0").trigger("change");
+                   $('#Userid').val("").trigger("change");
+                   $('#hdnUserid').val("-1")
                    $('#btnSaveMenu').hide();
                } else {
                    RedDotAlert_Error('Error Occur');

@@ -256,11 +256,11 @@
 
                                             <div class="row">
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div class="form-group">
+                                                    <div id ="div-Contact_No"class="form-group has-error1">
                                                         <label for="email2" class="width100px">Telephone No :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                     {*@
-                                                        @Html.TextBoxFor(m => m.Contact_No, ViewBag.Contact_NoD != null ? (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @maxlength = "15" } : (object)new { @id = "Contact_No", @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                        @Html.TextBoxFor(m => m.Contact_No, ViewBag.Contact_NoD != null ? (object)new { @id = "Contact_No", @class = "form-control form-control-sm txtcheck", @maxlength = "15" } : (object)new { @id = "Contact_No", @class = "form-control form-control-sm txtcheck", @disabled = "disabled" })
                                                         @*}
                             else
                             {
@@ -322,7 +322,7 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div  id="div-HOD_HR"class="form-group has-error1">
+                                                    <div  class="form-group">
                                                         <label for="email2" class="width100px">HOD HR :</label>
                                                         <div class="select2-input">
 
@@ -377,7 +377,7 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div id="div-ManagerIdL2" class="form-group  has-error1">
+                                                    <div  class="form-group ">
                                                         <label for="email2" class="width100px">Manager L2:</label>
                                                         <div class="select2-input">
 
@@ -463,7 +463,7 @@
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div id="div-JobGradeId" class="form-group  has-error1">
+                                                    <div  class="form-group  ">
                                                         <label for="email2" class="width100px">Job Grade :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
@@ -484,7 +484,7 @@
 
                                                
                                                 <div class="col-xl-4 col-md-4 multipleselect">
-                                                    <div id="div-JobBandId" class="form-group  has-error1">
+                                                    <div  class="form-group  ">
                                                         <label for="email2" class="width100px">Job Band :</label>
                                                         <div class="select2-input">
                                                             @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
@@ -697,7 +697,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 </div>
 
                                                 <div class="col-xl-4 col-md-4">
-                                                    <div id="div-No_Child"class="form-group has-error1">
+                                                    <div class="form-group">
                                                         <label for="email2" class="width100px">No of Children :</label>
                                                         @*@if ((ViewBag.loginuserList[0].IsUserInRoleHeadOfFinance == "True") && (ViewBag.comparename == "True"))
                                                             {*@
@@ -870,7 +870,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                         <div class="col-xl-4 col-md-4">
                                             <div id="div-Account_No"class="form-group  has-error1">
                                                 <label for="email2" class="width100px">Account No :</label>
-                                                @Html.TextBoxFor(m => m.Account_No, ViewBag.Account_NoD != null ? (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20" } : (object)new { @id = "Account_No", @class = "form-control form-control-sm", maxlength = "20", @disabled = "disabled" })
+                                                @Html.TextBoxFor(m => m.Account_No, ViewBag.Account_NoD != null ? (object)new { @id = "Account_No", @class = "form-control form-control-sm txtcheck", maxlength = "20" } : (object)new { @id = "Account_No", @class = "form-control form-control-sm txtcheck", maxlength = "20", @disabled = "disabled" })
                                             </div>
                                         </div>
 
@@ -2069,7 +2069,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     });
 
     $('#SaveEmpChanges').click(function () {
-        $('.Loader1').css('display', 'block');
+       $('.Loader1').css('display', 'block');
         debugger
         var res = validate();
         //alert(res);
@@ -2146,8 +2146,13 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         EmpData["DeptId"] = $("#DeptId").val();
         EmpData["Emergency_Contact"] = $("#Emergency_Contact").val();
         EmpData["passport_no"] = $("#passport_no").val();
+        if ($("#Currency option:selected").index() <= 0) {
+            EmpData["Currency"] = '';
+        } else {
+            EmpData["Currency"] = $("#Currency").val();
+        }
 
-        EmpData["Currency"] = $("#Currency").val();
+        
         EmpData["Salary"] = $("#Salary").val();
         EmpData["Salary_Start_Date"] = RedDot_setdtpkdate($("#Salary_Start_Date1[type='text']").val());
         EmpData["Remark"] = $("#Remark").val();
@@ -2222,7 +2227,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             
 
         });
-       // $(".loader1").show();
+       $(".loader1").show();
 
         debugger
         $.ajax({
@@ -2234,22 +2239,35 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             data: JSON.stringify({ EmpData:EmpData , EmpInfoProEdu: EmpInfoProEdu ,EmpDatas:EmpDatas }),
 
             success: function (result) {
+                debugger
                 $('.loader1').css('display', 'block');
 
                 if (result == "Registration saved successfully.") {
                     GetCreateUserAcc();
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                  //  RdotAlertSucesstxt(result);
-                    ClearControl();
+                    //  RdotAlertSucesstxt(result);
+
+                    var pathname = window.location.search;
+                    
+
+
+
+                    if (pathname =="") {
+                        ClearControl();
+                    }
+                    
 
                 }
 
-                else if (result == "Registration updated successfully.")
-                {
+                else if (result == "Registration updated successfully.") {
 
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
                     RedDotAlert_Success(result);
-                  // ClearControl();
+                    // ClearControl();
+                    $('.loader1').css('display', 'none');
+                } else {
+                    $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
+                    RedDotAlert_Success(result);
                     $('.loader1').css('display', 'none');
                 }
 
@@ -2504,18 +2522,18 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             return false;
         }
 
-        if ($("#National_id").val() == "") {
-            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
-            RedDotAlert_Error('please Enter National Id');
-            $("#National_id").focus();
-            return false;
-        }
-        if ($("#No_child").val() == "") {
-            Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
-            RedDotAlert_Error('please Enter No of Child');
-            $("#No_child").focus();
-            return false;
-        }
+        //if ($("#National_id").val() == "") {
+        //    Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+        //    RedDotAlert_Error('please Enter National Id');
+        //    $("#National_id").focus();
+        //    return false;
+        //}
+        //if ($("#No_child").val() == "") {
+        //    Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
+        //    RedDotAlert_Error('please Enter No of Child');
+        //    $("#No_child").focus();
+        //    return false;
+        //}
 
         if ($("#Contract_Start_date1").val() == "") {
             Tab_Activity_Hide_Show("#v-pills-general-tab-nobd", "#v-pills-general-nobd");
@@ -2619,30 +2637,30 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         }
 
-        if ($("#Currency option:selected").index() != 0) {
+        //if ($("#Currency option:selected").index() != 0) {
 
-            if ($("#Salary").val() == "0") {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('Should be Greater Than 0');
-                $("#Salary").focus();
-                return false;
-            }
+        //    if ($("#Salary").val() == "0") {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('Should be Greater Than 0');
+        //        $("#Salary").focus();
+        //        return false;
+        //    }
 
-            if ($("#Salary_Start_Date1").val() == "") {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('please Enter Salary Start Date');
-               // $("#Salary_Start_Date").focus();
-                $("#Salary_Start_Date1").val('');
-                return false;
-            }
+        //    if ($("#Salary_Start_Date1").val() == "") {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('please Enter Salary Start Date');
+        //       // $("#Salary_Start_Date").focus();
+        //        $("#Salary_Start_Date1").val('');
+        //        return false;
+        //    }
 
-            if ($("#Salary").val() == "") {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('Please Enter Salary');
-                $("#Salary").focus();
-                return false;
-            }
-        }
+        //    if ($("#Salary").val() == "") {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('Please Enter Salary');
+        //        $("#Salary").focus();
+        //        return false;
+        //    }
+        //}
 
 
         //if ($("#Salary").val() == 0) {
@@ -2651,7 +2669,32 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         //    return ValFlag = false;
         //}
 
-        if ($("#Salary").val() != ""){
+        if ($("#Salary").val() != "") {
+            if ($("#Account_No").val() == "") {
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Account No');
+                $("#Account_No").focus();
+                return false;
+            }
+            else if ($("#Branch_Name").val() == "") {
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Branch Name');
+                $("#Branch_Name").focus();
+                return false;
+            }
+
+            else if ($("#Bank_Name").val() == "") {
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Name');
+                $("#Bank_Name").focus();
+                return false;
+            }
+            else if ($("#Bank_Code").val() == "") {
+                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+                RedDotAlert_Error('please Enter Bank Code');
+                $("#Bank_Code").focus();
+                return false;
+            }
 
             if ($("#Currency option:selected").index() <= 0) {
                 Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
@@ -2671,29 +2714,29 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
 
-        if ($("#Salary_Start_Date").val() != "") {
+        //if ($("#Salary_Start_Date").val() != "") {
 
-            if ($("#Currency option:selected").index() <= 0) {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('please select Currency ');
-                $("#Currency").focus();
-                return false;
-            }
+        //    if ($("#Currency option:selected").index() <= 0) {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('please select Currency ');
+        //        $("#Currency").focus();
+        //        return false;
+        //    }
 
-            if ($("#Salary").val() == "") {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('please Enter Salary');
-                $("#Salary").focus();
-                return false;
-            }
+        //    if ($("#Salary").val() == "") {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('please Enter Salary');
+        //        $("#Salary").focus();
+        //        return false;
+        //    }
 
-            if ($("#Salary").val() == 0) {
-                Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
-                RedDotAlert_Error('Salary Should be Greater than 0');
-                $("#Salary").focus();
-                return false;
-            }
-        }
+        //    if ($("#Salary").val() == 0) {
+        //        Tab_Activity_Hide_Show("#v-pills-financial-tab-nobd", "#v-pills-financial-nobd");
+        //        RedDotAlert_Error('Salary Should be Greater than 0');
+        //        $("#Salary").focus();
+        //        return false;
+        //    }
+        //}
 
         return ValFlag;
 

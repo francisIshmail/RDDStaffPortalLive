@@ -215,6 +215,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomAuthenticationFilter.cs" />
+    <Compile Include="Infrastructure\CustomRoleRequirement.cs" />
     <Compile Include="Infrastructure\MyCustomHandleErrorAttribute.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Modules.cs" />
