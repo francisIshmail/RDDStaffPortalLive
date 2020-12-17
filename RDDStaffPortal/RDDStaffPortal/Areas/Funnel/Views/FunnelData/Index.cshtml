@@ -97,7 +97,7 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.DropDownListFor(m => m.DealStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                        @Html.DropDownListFor(m => m.FStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
@@ -190,13 +190,14 @@
                                             <div class="reddotTableHead"><div>Reseller</div></div>
                                             <div class="reddotTableHead"><div>Country</div></div>
                                             <div class="reddotTableHead"><div>BU</div></div>
-                                            <div class="reddotTableHead"><div>Goods Desc</div></div>
+                                            <div class="reddotTableHead"><div>Goods Description</div></div>
                                             <div class="reddotTableHead"><div>Quote Dt</div></div>
                                             <div class="reddotTableHead"><div>Close Dt</div></div>
                                             <div class="reddotTableHead"><div>Deal Status</div></div>
 
-                                            <div class="reddotTableHead"><div>Landed</div></div>
+
                                             <div class="reddotTableHead"><div>Cost</div></div>
+                                            <div class="reddotTableHead"><div>Landed</div></div>
                                             <div class="reddotTableHead"><div>Value</div></div>
                                             <div class="reddotTableHead"><div>Action</div></div>
 
@@ -652,8 +653,8 @@
     <div>
         <div>
             <script type="text/javascript">
-                var tblhead1 = ["fid", "bdm", "quoteID", "enduser", "CardName", "Country", "BUName", "goodsDescr", "quoteDate", "expClosingDt", "DealStatus", "Landed", "Cost", "value", "Action"];
-                var tblhide = ["bdm", "enduser"];
+                var tblhead1 = ["fid", "bdm", "quoteID", "enduser", "CardName", "Country", "BUName", "goodsDescr", "quoteDate", "expClosingDt", "DealStatus", "Cost", "Landed", "value", "Action"];
+                var tblhide = ["bdm", "enduser","fid"];
                 var dateCond = ["quoteDate", "expClosingDt"];
                 var curPage = 1;
 
@@ -750,6 +751,17 @@
                    
                     $("#newDealPopUp").click(function () {
 
+                        $(".txtcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+                        $(".dropcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '0') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+
                         // if ($("#fid").val() == "") {
                         //$("#quoteDate").datetimepicker({
                         //    defaultDate: new Date(),
@@ -779,7 +791,7 @@
 
                         $("#Landed").val('');
 
-                        $("#DealStatus").val('OPEN');
+                        $("select#DealStatus").val('OPEN').trigger("change");
 
 
                         $("#divhdnchk").hide();
@@ -814,6 +826,21 @@
                         });
 
                         // $(".selected").removeAttr('checked');
+
+
+
+                        $(".txtcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+                        $(".dropcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '0') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+
+
                         $(this)
                             .find("input,textarea,select")
                             .val('')
@@ -893,7 +920,7 @@
                             data: { Country: Country },
 
                             success: function (QuoteID) {
-
+debugger
                                 $("#lblQuoteID").text(QuoteID);
 
                                 //lblQuoteID.text()
@@ -997,6 +1024,12 @@
                                     allowClear: true,
                                     placeholder: '--Select--'
                                 });
+                                
+                                    if ($("#BUName").val() !== '0') {
+                                        $("#div-BUName").removeClass('has-error1').addClass('has-success1');
+                                    }
+                               
+
 
 
                             }
@@ -2003,10 +2036,18 @@
 
 
                             $("#value").val(data.value);
-                            $("#DealStatus").val(data.DealStatus);
+                            $("select#DealStatus").val(data.DealStatus).trigger("change");
+                           
                             $("#expClosingDt").val(RdotdatefrmtRes1(data.expClosingDt));
+                            
                             $("#orderBookedDate").val(RdotdatefrmtRes1(data.orderBookedDate));
+                            if ($("#orderBookedDate").val() == "01-Jan-1") {
+                                $("#orderBookedDate").val('');
+                            }
                             $("#InvoiceDt").val(RdotdatefrmtRes1(data.InvoiceDt));
+                            if ($("#InvoiceDt").val() == "01-Jan-1") {
+                                $("#InvoiceDt").val('');
+                            }
                             if ($("#hdnChangeCount").val() == '1') {
                                 $("#Remarks2").attr("disabled", false);
                                 $('#remarks').attr('disabled', 'disabled');
@@ -2095,20 +2136,23 @@
                     FunnelDataa["Remarks2"] = $("#Remarks2").val();
                     FunnelDataa["Remarks3"] = $("#Remarks3").val();
                     FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
-                    FunnelDataa["Createddte"] = $("#Createddte").val();
+                    FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
                     FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
-                    FunnelDataa["Updateddte"] = $("#Updateddte").val();
-                    FunnelDataa["NextReminderDt"] = $("#NextReminderDt").val();
-                    FunnelDataa["quoteDate"] = $("#quoteDate").val();
+                    FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
+                    if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
+                        FunnelDataa["NextReminderDt"] = $("#NextReminderDt").val();
+                    }
+                    
+                    FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
                     FunnelDataa["Cost"] = $("#Cost").val();
                     FunnelDataa["Landed"] = $("#Landed").val();
                     FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
 
                     FunnelDataa["value"] = $("#value").val();
-                    FunnelDataa["DealStatus"] = $("#DealStatus").val();
-                    FunnelDataa["expClosingDt"] = $("#expClosingDt").val();
-                    FunnelDataa["orderBookedDate"] = $("#orderBookedDate").val();
-                    FunnelDataa["InvoiceDt"] = $("#InvoiceDt").val();
+                    FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
+                    FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
+                    FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
+                    FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
 
 
 
@@ -2128,14 +2172,17 @@
                                 RdotAlertSucesstxt(result);
                                 ClearControl();
                                 getdatalistaftersuccess();
-
+                                $("#NewDealPopUp").modal('hide');
                             }
 
                             else if (result == "updated successfully.") {
                                 RdotAlertSucesstxt(result);
                                 getdatalistaftersuccess();
+                                $("#NewDealPopUp").modal('hide');
+                            } else {
+                                RdotAlerterr(result);
                             }
-                            $("#NewDealPopUp").modal('hide');
+                           
 
                         },
                         error: function (result) {
@@ -2395,7 +2442,7 @@
 
                     var landed = $("#Landed").val();
                     var cost = $("#Cost").val();
-                    var status = $("#DealStatus").val();
+                    var status = $("#DealStatus option:selected").val();
 
 
                     if (landed != "") {
@@ -2420,8 +2467,8 @@
                         return ValFlag = false;
                     }
 
-                    if ($("#DealStatus").val() != "OPEN" || $("#DealStatus").val() != "LOST-CLOSED") {
-                        if ($("#expClosingDt").val() > $("#InvoiceDt").val()) {
+                    if ($("#DealStatus  option:selected").val() != "OPEN" || $("#DealStatus  option:selected").val() != "LOST-CLOSED") {
+                        if (new Date($("#expClosingDt").val()) > new Date($("#InvoiceDt").val())) {
                             RdotAlerterrtxt('Invoice  Date must be greater than Closing Date');
                             // $("#InvoiceDt").focus();
                             $("#InvoiceDt").val('');
@@ -2429,13 +2476,13 @@
                         }
 
 
-                        if ($("#quoteDate").val() > $("#expClosingDt").val()) {
+                        if (new Date($("#quoteDate").val()) > new Date($("#expClosingDt").val())) {
                             RdotAlerterrtxt('Expected Closing Date must be greater than quote date');
                             //  $("#expClosingDt").focus();
                             $("#expClosingDt").val('');
                             return ValFlag = false;
                         }
-                        if ($("#expClosingDt").val() > $("#orderBookedDate").val()) {
+                        if (new Date($("#expClosingDt").val()) > new Date($("#orderBookedDate").val())) {
                             RdotAlerterrtxt('Order Date must be greater than Closing date');
                             // $("#orderBookedDate").focus();
                             $("#orderBookedDate").val('');
@@ -2458,7 +2505,7 @@
 
 
 
-
+                    debugger
                     if ((status) == "WON-R OPG" || status == "WON OPG") {
 
                         var closingDt = $("#expClosingDt").val();
@@ -2480,7 +2527,7 @@
                             return ValFlag = false;
                         }
 
-                        if (OrderDt > closingDt) {
+                        if (new Date(OrderDt) > new Date(closingDt)) {
                             RdotAlerterrtxt('Order date must be greater than  Closing Date');
                             $("#closingDt").focus();
                             return ValFlag = false;
@@ -2537,7 +2584,7 @@
                     $("#Landed").val('');
                     $("#MarginUSD").val('');
                     $("#value").val('');
-                    $("#DealStatus").val("0").trigger("change");
+                    $("select#DealStatus").val("0").trigger("change");
                     $("#expClosingDt").val('');
                     $("#orderBookedDate").val('');
                     $("#InvoiceDt").val('');

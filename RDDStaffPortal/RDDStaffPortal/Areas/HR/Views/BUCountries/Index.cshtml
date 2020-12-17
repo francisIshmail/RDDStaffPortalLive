@@ -32,8 +32,8 @@
 
                                             @*@Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm" })*@
                                                                                       
-                                            <select  id="EmpName" name="EmpName" class="form-control form-control-sm">
-                                            </select>
+                                            <input  id="EmpName" name="EmpName" class="form-control form-control-sm"/>
+                                            <input id="hdnEmpName" type="hidden">
                                         </div>
                                     </div>
                                     <div class="col-xl-1 col-md-1 ml-auto text-right">
@@ -188,9 +188,9 @@
 
             //  $('#loader').show();
             debugger
-            var empid = $("#EmpName option:selected").val();
+            var empid = $("#hdnEmpName").val();
 
-            if (empid == "0") {
+            if (empid == "-1") {
 
               //  RdotAlerterrtxt('please select EmployeeName');
 
@@ -244,10 +244,12 @@
             // drop down image fill with name
             //RdotDropimg("EmpName", "/GetEmpList");
 
-            RdotDrop("EmpName", "/GetEmpList");
+            //RdotDrop("EmpName", "/GetEmpList");
+            applyAutoComplete2("#EmpName", "#hdnEmpName", "/GetEmpList");
+
             $("#EmpName").on("change", function () {
 
-                SearchByEmp($("#EmpName option:selected").val());
+                SearchByEmp($("#hdnEmpName").val());
 
             });
 
@@ -379,7 +381,7 @@
             // var BUCountrie = [];
             $("." + countryCode + " li").each(function () {
                 debugger
-                var empid = $("#EmpName option:selected").val();
+                var empid = $("#hdnEmpName").val();
                // var empid = $("#EmployeeId").val();
 
 
@@ -438,9 +440,10 @@
                     if (result == "saved successfully.") {
 
                         RedDotAlert_Success(result);
-                        $('#EmployeeId').val("0").trigger("change");
+                        $('#EmployeeId').val("").trigger("change");
 
-                        $('#EmpName').val("0").trigger("change");
+                        $('#EmpName').val("").trigger("change");
+                        $('#hdnEmpName').val("-1").trigger("change");
 
                        // $("#EmpName option:selected").empty();
                         $(".basket_list  ul li").each(function () {

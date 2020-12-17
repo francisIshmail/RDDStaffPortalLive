@@ -589,7 +589,7 @@ function RdotdatefrmtRes1(dte) {
 }
 
 function RedDot_setdtpkdate(date1) {
-    if (date1 !== undefined) {
+    if (date1 !== undefined && date1 !== null && date1 !== "") {
         var d = new Date(date1.split("/").reverse().join("-"));
         var dd = d.getDate();
         var mm = d.getMonth() + 1;
@@ -825,22 +825,48 @@ function RdotDropimg(ids, url) {
 
 
 function RdotDrop(ids, url) {
+    debugger
+    $.ajax({
+        async: false,
+        cache: false,
+        url: url,
+        type: "GET",
+        dataType: "json",
 
-    $.getJSON(url).done(function (data) {
-        $('#' + ids + '').empty();
-        $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
-        var ary = [];
-        ary = data;
-        for (var i = 0; i < ary.length; i++) {
-            $('#' + ids + '').append('<option value="' + ary[i].Code + '" selected=""  >' + ary[i].CodeName + '</option>');
+        success: function (data) {
+           debugger
+            if (data.length > 0) {
+                $('#' + ids + '').empty();
+                $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
+                var ary = [];
+                ary = data;
+                for (var i = 0; i < ary.length; i++) {
+                    $('#' + ids + '').append('<option value="' + ary[i].Code + '" selected=""  >' + ary[i].CodeName + '</option>');
+                }
+                $('#' + ids + '').val(0);
+                //$('#' + ids + '').select2({
+                //    theme: "bootstrap",
+
+                //});
+            }
         }
-        $('#' + ids + '').val(0);
-        // $('#Userid').selectpicker('refresh');
-    });
-    $('#' + ids + '').select2({
-        theme: "bootstrap",
+    })
+    //$.getJSON(url).done(function (data) {
+    //    debugger
+    //    $('#' + ids + '').empty();
+    //    $('#' + ids + '').append('<option value="0" selected="">-Select-</option>');
+    //    var ary = [];
+    //    ary = data;
+    //    for (var i = 0; i < ary.length; i++) {
+    //        $('#' + ids + '').append('<option value="' + ary[i].Code + '" selected=""  >' + ary[i].CodeName + '</option>');
+    //    }
+    //    $('#' + ids + '').val(0);
+    //    // $('#Userid').selectpicker('refresh');
+    //});
+    //$('#' + ids + '').select2({
+    //    theme: "bootstrap",
        
-    });
+    //});
 
     
 }

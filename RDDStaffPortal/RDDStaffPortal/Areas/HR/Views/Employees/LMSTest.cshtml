@@ -124,8 +124,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Date <i class="fas fa-star"></i></label>
-                                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
-                                        <input placeholder="02/05/2020 - 02/05/2020" type="text" id="example" class="form-control">
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -226,32 +227,33 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
 <script type="text/javascript">
 
 
-    $('body').on('focusin', '.datepicker', function () {
-        $('.datepicker').datetimepicker({
-            format: 'DD/MM/YYYY',
-            showClose: true,
-            showClear: true,
+    //$('body').on('focusin', '.datepicker', function () {
+    //    $('.datepicker').datetimepicker({
+    //        format: 'DD/MM/YYYY',
+    //        showClose: true,
+    //        showClear: true,
 
-        });
+    //    });
 
-    });
+    //});
     $(document).ready(function () {
         //$('.datepicker').datepicker({
         //    inline: true
         //});
-
+        RedDot_DateRange("reportrange");
        
-        $('.datepicker').datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD/MM/YYYY',
-            showClose: true,
-            showClear: true,
-            // minDate: new Date(),
+        //$('.datepicker').datetimepicker({
+        //    defaultDate: new Date(),
+        //    format: 'DD/MM/YYYY',
+        //    showClose: true,
+        //    showClear: true,
+        //    // minDate: new Date(),
 
-        });
+        //});
     });
 </script>
 

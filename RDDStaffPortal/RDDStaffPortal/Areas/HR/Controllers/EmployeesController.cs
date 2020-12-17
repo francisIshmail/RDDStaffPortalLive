@@ -316,7 +316,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             List<RDD_EmployeeRegistration> CurrencyList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
-                for (int i = 0; i < ds.Tables[11].Rows.Count; i++)
+                for (
+                    
+                    
+                    int i = 0; i < ds.Tables[11].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration CurrencyLst = new RDD_EmployeeRegistration();
                     CurrencyLst.Currency = (ds.Tables[11].Rows[i]["Currency"]).ToString();
@@ -381,12 +384,20 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
                 var itemToRemove = ManagerListL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.ManagerId);
                 if (itemToRemove != null)
-                    ManagerListL2.Remove(itemToRemove);
-                ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+                {
+                    if (itemToRemove.ManagerId != 0)
+                        ManagerListL2.Remove(itemToRemove);
+                    ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+                }
+                
 
                 var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
                 if (itemToRemove1 != null)
-                    ManagerListHRL2.Remove(itemToRemove1);
+                {
+                    if (itemToRemove1.Local_HR != 0)
+                        ManagerListHRL2.Remove(itemToRemove1);
+                }
+                
 
                 ViewBag.ManagerListHR2 = new SelectList(ManagerListHRL2, "ManagerIdL2", "Managername");
                 //  Session["FILE"] = objemp.ImagePath;
@@ -842,7 +853,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         }
 
-
+        //[Route("LMSTEST")]
         public ActionResult LMSTest()
         {
             return View();

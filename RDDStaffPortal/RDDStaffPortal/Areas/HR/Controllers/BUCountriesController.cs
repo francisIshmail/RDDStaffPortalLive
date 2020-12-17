@@ -24,24 +24,33 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         //}
 
         [Route("GetEmpList")]
-        public ActionResult GetEmpList()
+        public ActionResult GetEmpList(string Prefix)
         {
 
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-            DataSet DS = Db.myGetDS("exec RDD_GetBUList");
+            DataSet DS = Db.myGetDS("exec RDD_GetBUListEmp'" + Prefix+"'");
             List<Rdd_comonDrop> EmpList = new List<Rdd_comonDrop>();
-            if (DS.Tables.Count > 0)
+            try
             {
-                for (int i = 0; i < DS.Tables[2].Rows.Count; i++)
+                if (DS.Tables.Count > 0)
                 {
-                    Rdd_comonDrop EmpLst = new Rdd_comonDrop();
-                    EmpLst.Code = DS.Tables[2].Rows[i]["EmployeeId"].ToString();
-                    EmpLst.CodeName = DS.Tables[2].Rows[i]["Empname"].ToString();
-                    EmpLst.imagepath = Convert.ToBase64String((byte[])DS.Tables[2].Rows[i]["ImagePath"]);
-                    EmpList.Add(EmpLst);
+                    for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                    {
+                        Rdd_comonDrop EmpLst = new Rdd_comonDrop();
+                        EmpLst.Code = DS.Tables[0].Rows[i]["EmployeeId"].ToString();
+                        EmpLst.CodeName = DS.Tables[0].Rows[i]["Empname"].ToString();
+                        EmpLst.imagepath = Convert.ToBase64String((byte[])DS.Tables[0].Rows[i]["ImagePath"]);
+                        EmpList.Add(EmpLst);
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                EmpList = null;
+            }
+           
             return Json(EmpList, JsonRequestBehavior.AllowGet);
            
         }
@@ -49,47 +58,57 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         {
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             DataSet DS = Db.myGetDS("exec RDD_GetBUList");
-            //List<RDD_EmployeeRegistration> EmpList = new List<RDD_EmployeeRegistration>();
-            //if (DS.Tables.Count > 0)
-            //{
-            //    for (int i = 0; i < DS.Tables[2].Rows.Count; i++)
-            //    {
-            //        RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
-            //        EmpLst.EmployeeId = Convert.ToInt32(DS.Tables[2].Rows[i]["EmployeeId"]);
-            //        EmpLst.EmpName = DS.Tables[2].Rows[i]["Empname"].ToString();
-
-            //        EmpList.Add(EmpLst);
-
-            //    }
-            //}
-
-
-
             List<RDD_EmployeeRegistration> BUItmList = new List<RDD_EmployeeRegistration>();
-            if (DS.Tables.Count > 0)
-            {
-                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
-                {
-                    RDD_EmployeeRegistration BUItmLst = new RDD_EmployeeRegistration();
-                    BUItmLst.ItmsGrpNam = DS.Tables[0].Rows[i]["ItmsGrpNam"].ToString();
-                    BUItmLst.ItmsGrpCod = Convert.ToInt32(DS.Tables[0].Rows[i]["ItmsGrpCod"].ToString());
-
-                    BUItmList.Add(BUItmLst);
-
-                }
-            }
-
             List<RDD_EmployeeRegistration> CountryList = new List<RDD_EmployeeRegistration>();
-            if (DS.Tables.Count > 0)
+            try
             {
-                for (int i = 0; i < DS.Tables[1].Rows.Count; i++)
+              
+                if (DS.Tables.Count > 0)
                 {
-                    RDD_EmployeeRegistration CountryLst = new RDD_EmployeeRegistration();
-                    CountryLst.CountryCode = DS.Tables[1].Rows[i]["CountryCode"].ToString();
-                    CountryList.Add(CountryLst);
+                    for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                    {
+                        RDD_EmployeeRegistration BUItmLst = new RDD_EmployeeRegistration();
+                        BUItmLst.ItmsGrpNam = DS.Tables[0].Rows[i]["ItmsGrpNam"].ToString();
+                        BUItmLst.ItmsGrpCod = Convert.ToInt32(DS.Tables[0].Rows[i]["ItmsGrpCod"].ToString());
 
+                        BUItmList.Add(BUItmLst);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                BUItmList = null;
+            }
+            try
+            {
+                if (DS.Tables.Count > 0)
+                {
+                    for (int i = 0; i < DS.Tables[1].Rows.Count; i++)
+                    {
+                        RDD_EmployeeRegistration CountryLst = new RDD_EmployeeRegistration();
+                        CountryLst.CountryCode = DS.Tables[1].Rows[i]["CountryCode"].ToString();
+                        CountryList.Add(CountryLst);
+
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                CountryList = null;
+            }
+           
+
+            
+           
+          
+
+
+
+          
 
            // ViewBag.EmpList = new SelectList(EmpList, "EmployeeId", "EmpName");
             ViewBag.BUItmList = BUItmList;
