@@ -177,9 +177,11 @@ new SqlParameter("@p_createdby",usernm),
             }
             return rslt;
         }
-        public string AddupdatePlanLines(List<MarketingPlanLines> mPlanLines, string usernm,string planid)
+        public string AddupdatePlanLines(List<MarketingPlanLines> mPlanLines, string usernm,string planid, List<MarketingPlanDoc> fdoc)
         {
             string result = "";
+            string result1 = "";
+            string rslt = "";
             for (int i = 0; i < mPlanLines.Count; i++)
             {
                 SqlParameter[] Para1 = {
@@ -210,6 +212,30 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
                 Para1[20].Direction = ParameterDirection.Output;
 
                 result = Com.ExecuteScalars("RDD_SaveMarketingPlanLines", Para1);// Db.myGetDS("RDD_MonthlyCountryBU");
+
+            }
+
+SqlParameter[] Para3 = {
+
+                new SqlParameter("@p_planid", Convert.ToInt32(planid))
+                };
+            rslt = Com.ExecuteScalars("RDD_DeletemarketingPlanDoc", Para3);// Db.myGetDS("RDD_MonthlyCountryBU");
+
+
+
+
+            for (int j = 0; j < fdoc.Count; j++)
+            {
+                SqlParameter[] Para2 = {
+
+new SqlParameter("@p_planid",Convert.ToInt32(planid)),
+new SqlParameter("@p_filepath",fdoc[j].fpath),
+new SqlParameter("@p_createdby",usernm),
+ new SqlParameter("@p_Response",1)
+                };
+                Para2[3].Direction = ParameterDirection.Output;
+
+                result1 = Com.ExecuteScalars("RDD_InsertMarketingPlanDoc", Para2);// Db.myGetDS("RDD_MonthlyCountryBU");
 
             }
             return result;
@@ -243,7 +269,7 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
             }
             return rslt;
         }
-        public string updateplanstatus(string pid, string status)
+        public string updateplanstatus(string pid, string status,string bamt,string bappamt)
         {
             string rslt = "";
             SqlConnection SqlConn = null;
@@ -261,6 +287,8 @@ new SqlParameter("@p_Description",mPlanLines[i].Description),
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@p_status", status);
             cmd.Parameters.AddWithValue("@p_id", pid);
+            cmd.Parameters.AddWithValue("@p_BalanceAmount",Convert.ToInt32(bamt));
+            cmd.Parameters.AddWithValue("@p_BalanceFromApp", Convert.ToInt32(bappamt));
 
             try
             {

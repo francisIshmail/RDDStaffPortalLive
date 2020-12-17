@@ -69,11 +69,11 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             {
                 sbdata = jss.Deserialize<List<MarketingPlanLines>>(subrow);
             }
-            string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + datum .RefNo+ "/");
+            string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + datum.RefNo + "/");
             string strMappath = "~/excelFileUpload/" + "MarketingPlan/" + datum.RefNo + "/";
             DirectoryInfo d = new DirectoryInfo(path);//Assuming Test is your Folder
             List<MarketingPlanDoc> mdoc = new List<MarketingPlanDoc>();
-            if (!Directory.Exists(strMappath))
+            if (Directory.Exists(path))
             {
                 FileInfo[] Files = d.GetFiles(); //Getting Text files
                 string str = "";
@@ -86,7 +86,7 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                 }
                 str = str.Substring(0, str.Length - 1);
                 string[] fileList = str.Split(',');
-               
+
                 for (int j = 0; j < fileList.Length; j++)
                 {
                     MarketingPlanDoc mdoclst = new MarketingPlanDoc();
@@ -95,13 +95,13 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                     mdoc.Add(mdoclst);
                 }
             }
-            
-           
+
+
             try
             {
-                
-               result1 = MarketingDbOp.SaveMaketingPlan(datum, sbdata, usernm,mdoc);
-               
+
+                result1 = MarketingDbOp.SaveMaketingPlan(datum, sbdata, usernm, mdoc);
+
                 TempData["Msg"] = "Record Saved Successfully";
                 TempData["Val"] = result1;
                 TempData["Originator"] = usernm;
@@ -125,12 +125,12 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
 
         public JsonResult GetFilteredData(string Country, string fund, string BU, string status, string Fromdt, string Todate)
         {
-            
+
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-           return Json(new { data = MarketingDbOp.GetFilList(Country, fund, BU, status, Fromdt, Todate) }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = MarketingDbOp.GetFilList(Country, fund, BU, status, Fromdt, Todate) }, JsonRequestBehavior.AllowGet);
 
         }
-        public JsonResult  ApprovePlanLines(string data)
+        public JsonResult ApprovePlanLines(string data)
         {
             List<ApproveLinedata> sbdata = new List<ApproveLinedata>();
             JavaScriptSerializer jss = new JavaScriptSerializer();
@@ -138,47 +138,9 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             //string subrow = Request.Form["mainrowtab"].ToString();
             try
             {
-               
-                    sbdata = jss.Deserialize<List<ApproveLinedata>>(data);
-                    string rslt = MarketingDbOp.ApprovePlanLines(sbdata,  usernm);
-                
-                var result = new
-                {
-                    msg = "True",
 
-
-                };
-                return Json(result);
-            }
-            catch(Exception e)
-            {
-                var result = new
-                {
-                    msg = "False",
-
-
-                };
-                return Json(result);
-            }
-        }
-        public JsonResult UpdatePlandtl(string planid, string status, string data)
-        {
-            List<MarketingPlanLines> sbdata = new List<MarketingPlanLines>();
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            string usernm = User.Identity.Name;
-            string rslt;
-            string result1;
-            //string subrow = Request.Form["mainrowtab"].ToString();
-            try
-            {
-                if(status!="Open")
-                {
-                    result1 = MarketingDbOp.updateplanstatus(planid,status);
-
-
-                }
-                sbdata = jss.Deserialize<List<MarketingPlanLines>>(data);
-                 rslt = MarketingDbOp.AddupdatePlanLines(sbdata, usernm,planid);
+                sbdata = jss.Deserialize<List<ApproveLinedata>>(data);
+                string rslt = MarketingDbOp.ApprovePlanLines(sbdata, usernm);
 
                 var result = new
                 {
@@ -199,8 +161,80 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                 return Json(result);
             }
         }
-          
-        public JsonResult UpdateAmt(string RDDamt , string pid)
+        public JsonResult UpdatePlandtl(string planid, string status, string data, string BalanceAmount, string BalanceFromApp,string planrefno)
+        {
+            List<MarketingPlanLines> sbdata = new List<MarketingPlanLines>();
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            string usernm = User.Identity.Name;
+            string rslt;
+            string result1;
+            //string subrow = Request.Form["mainrowtab"].ToString();
+            try
+            {
+                if (status != "Open")
+                {
+                    result1 = MarketingDbOp.updateplanstatus(planid, status, BalanceAmount, BalanceFromApp);
+
+
+                }
+                else
+                {
+                    result1 = MarketingDbOp.updateplanstatus(planid, status, BalanceAmount, BalanceFromApp);
+
+                }
+                sbdata = jss.Deserialize<List<MarketingPlanLines>>(data);
+                string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + planrefno + "/");
+                string strMappath = "~/excelFileUpload/" + "MarketingPlan/" + planrefno + "/";
+                DirectoryInfo d = new DirectoryInfo(path);//Assuming Test is your Folder
+                List<MarketingPlanDoc> mdoc = new List<MarketingPlanDoc>();
+                if (Directory.Exists(path))
+                {
+                    FileInfo[] Files = d.GetFiles(); //Getting Text files
+                    string str = "";
+                    foreach (FileInfo file in Files)
+                    {
+                        string fpath = strMappath.ToString().Replace("~", "") + "" + file.Name;
+                        str += fpath.Replace(" ", "%20") + ",";
+
+
+                    }
+                    str = str.Substring(0, str.Length - 1);
+                    string[] fileList = str.Split(',');
+
+                    for (int j = 0; j < fileList.Length; j++)
+                    {
+                        MarketingPlanDoc mdoclst = new MarketingPlanDoc();
+                        mdoclst.docid = j + 1.ToString();
+                        mdoclst.fpath = fileList[j].ToString();
+                        mdoc.Add(mdoclst);
+                    }
+                }
+
+
+
+                rslt = MarketingDbOp.AddupdatePlanLines(sbdata, usernm, planid,mdoc);
+
+                var result = new
+                {
+                    msg = "True",
+
+
+                };
+                return Json(result);
+            }
+            catch (Exception e)
+            {
+                var result = new
+                {
+                    msg = "False",
+
+
+                };
+                return Json(result);
+            }
+        }
+
+        public JsonResult UpdateAmt(string RDDamt, string pid)
         {
             string usernm = User.Identity.Name;
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -213,12 +247,12 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 msg = "Error occured :" + ex.Message;
             }
             var result = new
             {
-                rspmsg=msg,
+                rspmsg = msg,
 
             };
             return Json(result);
@@ -243,11 +277,11 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
         public JsonResult GetPlanfiles(string id)
         {
             System.Web.Script.Serialization.JavaScriptSerializer objSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-           // List<MarketingPlanLines> data = new List<MarketingPlanLines>();
-            string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + id+"/");
-            string strMappath = "~/excelFileUpload/" + "MarketingPlan/" +id + "/";
+            // List<MarketingPlanLines> data = new List<MarketingPlanLines>();
+            string path = Server.MapPath("~/excelFileUpload/MarketingPlan/" + id + "/");
+            string strMappath = "~/excelFileUpload/" + "MarketingPlan/" + id + "/";
             DirectoryInfo d = new DirectoryInfo(path);//Assuming Test is your Folder
-            if (!Directory.Exists(strMappath))
+            if (Directory.Exists(path))
             {
                 FileInfo[] Files = d.GetFiles(); //Getting Text files
                 string str = "";
@@ -269,11 +303,11 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             }
             else
             {
-                string[] fileList=new string[] { };
+                string[] fileList = new string[] { };
                 return Json(fileList, JsonRequestBehavior.AllowGet);
             }
         }
-      
+
         public JsonResult GetAllData()
         {
 
@@ -281,7 +315,7 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
             List<Marketing_SearchData> data = MarketingDbOp.GetAllList();//w List<Marketing_SearchData>();
             return Json(new { data = MarketingDbOp.GetAllList() }, JsonRequestBehavior.AllowGet);
 
-           
+
 
         }
 
@@ -315,23 +349,23 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                     {
                         HttpPostedFileBase file = files[i];
                         // Checking for Internet Explorer  
-                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
-                        {
+                        //if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
+                        //{
                             string[] testfiles = file.FileName.Split(new char[] { '\\' });
                             fname = testfiles[testfiles.Length - 1];
-                        }
-                        else
-                        {
+                        //}
+                        //else
+                        //{
 
-                            fname = file.FileName;
-                            fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                            _ext = System.IO.Path.GetExtension(fname).ToUpper();
-                            if ((_ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF") && type == "Header")
-                            {
-                                return Json("Error occurred. Error details: Only Image Or Pdf", JsonRequestBehavior.AllowGet);
-                            }
+                        //    fname = file.FileName;
+                        //    fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                        //    _ext = System.IO.Path.GetExtension(fname).ToUpper();
+                        //    if ((_ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF" && _ext != "xls" && _ext != "xlsx" && _ext != "doc" && _ext != "docx") && type == "Header")
+                        //    {
+                        //        return Json("Error occurred. Error details: Only Image ,Pdf, Excel And Word Document Accept", JsonRequestBehavior.AllowGet);
+                        //    }
 
-                        }
+                        //}
 
                         // Get the complete folder path and store the file inside it.
                         _imgname1 = fileName + "" + System.DateTime.Now.ToString("ddMMyyyyHHMMss") + "" + _ext;

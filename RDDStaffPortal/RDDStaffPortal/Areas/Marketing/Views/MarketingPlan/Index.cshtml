@@ -30,7 +30,7 @@
                         <button id="btn_MainSave" type="button" class="btn btn-info btn-sm" onclick="showaddfrm()">New</button>
                         <button type="submit" class="btn btn-info btn-sm" id="btnsave" onclick="savedata()">Save</button>
                         <button type="button" class="btn btn-info btn-sm" id="btnrowsave" style="display:none" onclick="approverowdata()">Save</button>
-                        <button type="button" class="btn btn-info btn-sm" id="btnupdatesave" style="display:none" onclick="updaterownheadrdata()">Save</button>
+                        <button type="button" class="btn btn-info btn-sm" id="btnupdatesave" style="display:none" onclick="updaterownheadrdata()">Save</button> @*onclick="updaterownheadrdata()"*@
                         <button id="btn_MainClear" type="button" class="btn btn-info btn-sm" onclick="ClearControls()" style="display:none">Clear</button>
                         <button id="btn_MainSearch" type="button" class="btn btn-danger btn-sm" onclick="GetallDataList()" style="display:none">Cancel</button> @*\\onclick="GetallDataList()"*@
 
@@ -87,7 +87,7 @@
                                         <div class="form-group form-inline">
                                             <label for="Database" class="col-md-5 col-form-label p-0">Approved Amount :</label>
                                             <div id="div-txtappamt" class="col-md-7 p-0 has-error1">
-                                                <input type="text" data-vaue="true" class="form-control form-control-sm text-right txtcheck" id="txtappamt" required onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)'>
+                                                <input type="text" data-vaue="true" class="form-control form-control-sm text-right txtcheck" id="txtappamt" required onkeypress='return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)' onchange="assignval()">
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                                     <div class="col-md-6 col-lg-8">
                                         <div class="form-group form-inline">
                                             <label for="Database" class="col-md-2 col-form-label p-0" style="margin-right:17px;">Description :</label>
-                                            <div id="dev-comment" class="col-md-9 p-1 has-error1">
+                                            <div id="div-comment" class="col-md-9 p-1 has-error1">
                                                 <textarea class="form-control txtcheck " id="comment" rows="3" required> </textarea>
                                             </div>
                                         </div>
@@ -351,11 +351,11 @@
                                                 <label for="email2" class="width100px">Plan Status :</label>
                                                 <select class="form-control" id="fil_Status">
                                                     <option value="0">-- Select --</option>
-                                                    <option value="D">Draft</option>
-                                                    <option value="O">Open</option>
-                                                    <option value="H">On-Hold</option>
-                                                    <option value="P">Paid-Closed</option>
-                                                    <option value="C">Unpaid-Closed</option>
+                                                    <option value="Draft">Draft</option>
+                                                    <option value="Open">Open</option>
+                                                    <option value="On Hold">On-Hold</option>
+                                                    <option value="Paid Closed">Paid-Closed</option>
+                                                    <option value="Unpaid Closed">Unpaid-Closed</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -633,6 +633,7 @@
         format: 'DD/MM/YYYY',
         defaultDate: new Date(),
     });
+    
     debugger;
     var me = getUrlVars()["PlanId"];
     $('.loader1').hide();
@@ -732,7 +733,7 @@
         aflag = "Approver";
         $("#btnAction").show();
        debugger;
-       // $('#btnsave').show();
+       $('#btnsave').hide();
         $('#ContantsPayment').show();
         $('#filterwind').hide();
         $('#Ind').hide();
@@ -775,6 +776,12 @@
                 endate.value = BU.EndDate;
                 var appstaus = document.getElementById("txtapprovalstatus");
                 appstaus.value = BU.ApprovalStatus;
+                if (appstaus.value == "Approved") {
+                    $('#btnrowsave').show();
+                } else {
+
+                    $('#btnrowsave').hide();
+                }
 
                 document.getElementById('txtDocStatus').value = BU.ApprovalStatus;
                 var apprmk = document.getElementById("txtapprovalremk");
@@ -805,7 +812,17 @@
                 $("#btnsave").hide();
                 $("#btnDelete").hide();
                 disableheader();
-
+                $(".txtcheck").each(function (index) {
+                    if ($("#" + $(this).attr("id") + "").val() !== '') {
+                        $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                    }
+                });
+                $(".dropcheck").each(function (index) {
+                    debugger;
+                    if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                        $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                    }
+                });
 
                  $.ajax({
             type: "POST",
@@ -825,7 +842,7 @@
                         debugger;
                         var val = value.replace(/\\/g, "\\\\");
                         var flnm = val.substring(val.lastIndexOf('\\') + 1);
-                        var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value +'  target="_blank"></a> </div></div></div>';
+                        var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" disabled onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value +'  target="_blank"></a> </div></div></div>';
                       attachmentcnt = attachmentcnt + 1;
                         pall.append(subrow);
                        document.getElementById('attchcnt').value = attachmentcnt;
@@ -836,7 +853,7 @@
             }
         });
         ////PlanLine
-
+        var rowapp = 0;
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -857,8 +874,94 @@
                         var newRow = $("#AddfromtoemailRow");
                         var cols = "";
                         var appstaus = document.getElementById("txtapprovalstatus");
-                        if (appstaus.value == "Approved" && value.Status1!="Approved") {
-                            $("#btnrowsave").show();
+                        if (appstaus.value == "Approved") {
+                            if (value.Status1 == "") {
+                               // $("#btnrowsave").show();
+
+                                cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                                cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> ';
+                                cols += ' <div class="input-group">';
+                                cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                                cols += ' </div>';
+                                cols += ' </div > </div > ';
+                                cols += ' <div class="reddotTableCell width10per"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                                cols += '<option>' + value.CountryName + '</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '"  disabled value=' + value.Vendor + '> </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" disabled  value=' + value.Description + ' > </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" disabled onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                                cols += '<option value="Planned">Planned</option>';
+                                cols += '   <option value="Closed">Closed</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="txtapprstatus_' + counter + '"  >';
+                                cols += '<option value="0">--Select--</option>';
+                                cols += '   <option value="Approved">Approved</option>';
+                                cols += '   <option value="Rejected">Rejected</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" value=' + value.ApproverRemark + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled  value=' + value.LineRefNo + ' > </div > </div > ';
+                                cols += ' <div class="reddotTableCell ">';
+                                cols += ' <div>';
+                                //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" disabled data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                                cols += ' </div>';
+                                cols += ' </div>';
+                                cols += ' </div></div>';
+                            }
+                            else {
+                                cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                                cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> ';
+                                cols += ' <div class="input-group">';
+                                cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                                cols += ' </div>';
+                                cols += ' </div > </div > ';
+                                cols += ' <div class="reddotTableCell width10per"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                                cols += '<option>' + value.CountryName + '</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' disabled> </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                                cols += '<option value="Planned">Planned</option>';
+                                cols += '   <option value="Closed">Closed</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" disabled id="txtapprstatus_' + counter + '" >';
+                                cols += '<option value="0">--Select--</option>';
+                                cols += '   <option value="Approved">Approved</option>';
+                                cols += '   <option value="Rejected">Rejected</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled value=' + value.LineRefNo + ' > </div > </div > ';
+                                cols += ' <div class="reddotTableCell ">';
+                                cols += ' <div>';
+                                //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" disabled data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
+                                cols += ' </div>';
+                                cols += ' </div>';
+                                cols += ' </div></div>';
+                            }
+                        } else {
                             cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
                             cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
                             cols += ' <div class="reddotTableCell "> <div> ';
@@ -868,6 +971,7 @@
                             cols += ' </div > </div > ';
                             cols += ' <div class="reddotTableCell width10per"> <div>';
                             cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                            cols += '<option>' + value.CountryName + '</option>';
                             cols += ' </select>';
                             cols += '</div > </div > ';
                             cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '"  disabled value=' + value.Vendor + '> </div > </div > ';
@@ -878,7 +982,7 @@
                             cols += ' <div class="reddotTableCell"> <div>';
                             cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
                             cols += '<option value="Planned">Planned</option>';
-                            cols += '   <option value="Close">Close</option>';
+                            cols += '   <option value="Closed">Closed</option>';
                             cols += ' </select>';
                             cols += '</div > </div > ';
 
@@ -899,52 +1003,11 @@
                             cols += ' </div>';
                             cols += ' </div></div>';
                         }
-                        else {
-                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
-                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> ';
-                            cols += ' <div class="input-group">';
-                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
-                            cols += ' </div>';
-                            cols += ' </div > </div > ';
-                            cols += ' <div class="reddotTableCell width10per"> <div>';
-                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
-                            cols += ' </select>';
-                            cols += '</div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled> </div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' disabled> </div> </div>';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' disabled> </div> </div>';
-                            cols += ' <div class="reddotTableCell"> <div>';
-                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
-                            cols += '<option value="Planned">Planned</option>';
-                            cols += '   <option value="Close">Close</option>';
-                            cols += ' </select>';
-                            cols += '</div > </div > ';
-
-                            cols += ' <div class="reddotTableCell"> <div>';
-                            cols += '<select class="addrow form-control-sm" disabled id="txtapprstatus_' + counter + '" >';
-                            cols += '<option value="0">--Select--</option>';
-                            cols += '   <option value="Approved">Approved</option>';
-                            cols += '   <option value="Rejected">Rejected</option>';
-                            cols += ' </select>';
-                            cols += '</div > </div > ';
-                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled value=' + value.LineRefNo + ' > </div > </div > ';
-                            cols += ' <div class="reddotTableCell ">';
-                            cols += ' <div>';
-                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
-                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" disabled data-original-title="Delete"> <i class="fas fa-trash"></i></button >';
-                            cols += ' </div>';
-                            cols += ' </div>';
-                            cols += ' </div></div>';
-                        }
                         newRow.append(cols);
                         $("table.order-list").append(newRow);
                         var sts = document.getElementById("ddlstatusadd_" + counter);
                         sts.value = value.Status;
-                        
+
                         var sts1 = document.getElementById("txtapprstatus_" + counter);
                         sts1.value = value.Status1;
                         // counter++;
@@ -953,50 +1016,19 @@
                         //});
                       //  var addref = document.getElementById('txtkey_' + counter);
                       //  addref.value = refval + "-" + counter;
-                        $.ajax({
-                            type: "POST",
-                            dataType: "JSON",
-                            contentType: "application/json ;charset=utf-8;",
-                            async: true,
-                            url: '@Url.Action("GetCountry", "MarketingPlan")',
-                            cache: false,
 
-                            processData: false,
-                            success: function (BUc) {
-                                debugger;
-                                document.getElementById('ddladdcountry_' + counter).innerHTML = "";
-                                var selectMonth = $("#ddladdcountry_" + counter);
-
-                                var monthElem = document.createElement("option");
-                                monthElem.value = '0';
-                                monthElem.textContent = '-- Select--';
-                                selectMonth.append(monthElem);
-                                $.each(BUc, function (i, valuec) {
-                                    debugger;
-                                    var monthElem = document.createElement("option");
-                                    monthElem.value = valuec.CountryCode;
-                                    monthElem.textContent = valuec.CountryName;
-
-                                    selectMonth.append(monthElem);
-                                    if (valuec.CountryName == value.CountryName) {
-
-                                        //selectMonth.selected = true;
-                                        monthElem.setAttribute('selected', 'selected');
-                                    }
-
-                                });
-                            }
-                        });
 
                     });
+                    
                 }
-               
+
                 totalcnt = counter;
             }
         });
-       // var refnost = document.getElementById("txtrefno");
-
-    } else {
+      
+       
+    }
+    else {
        $('#btnsave').hide();
         $('#ContantsPayment').hide();
         $('#filterwind').show();
@@ -1271,6 +1303,12 @@
     });
 
 
+                                            
+    function assignval() {
+        var apval = document.getElementById('txtappamt').value;
+        var assval = document.getElementById('txtbalapproved');
+        assval.value = apval;
+    }
     function GetSqlDateformat(obj) {
         try {
             if (obj != undefined && obj != null) {
@@ -1321,7 +1359,7 @@
                     cols += ' <div class="reddotTableCell "> <div>' + counter + '</div > </div > ';
                     cols += ' <div class="reddotTableCell "> <div> ';
                     cols += ' <div class="input-group" >';
-                    cols += ' <input type="text" class="form-control-sm addrow datepicker"  id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" required>';
+                    cols += ' <input type="text" class="form-control-sm addrow datepicker"  id="PostingDate_' + counter + '" placeholder="dd/MM/yyyy" name="PostingDate_' + counter + '" required>';
 
                     cols += ' </div>';
                     cols += ' </div > </div > ';
@@ -1337,7 +1375,7 @@
                     cols += ' <div class="reddotTableCell addrow"> <div>';
                     cols += '<select class="form-control-sm addrow" id="ddlstatusadd_' + counter + '">';
                     cols += '<option value="Planned">Planned</option>';
-                    cols += '   <option value="Close">Colse</option>';
+                    cols += '   <option value="Closed">Closed</option>';
                     cols += ' </select>';
                     cols += '</div > </div > ';
                     cols += ' <div class="reddotTableCell addrow"> <div> <input type="text" class="form-control-sm addrow" id="txtapprstatus_' + counter + '" disabled> </div> </div>';
@@ -1409,6 +1447,7 @@
 
     function approverowdata() {
         debugger;
+        var flg = 0;
         var refnoval = document.getElementById('planid');
         var refval = refnoval.value;
         debugger;
@@ -1422,44 +1461,60 @@
 
 
             debugger;
+         
             for (var j = 1; j <= subdtcnt; j++) {
                 var lrefno = document.getElementById('txtkey_' + j).value;
                 var appsts = document.getElementById('txtapprstatus_' + j).value;
                 var apprmksub = document.getElementById('txtapprremark_' + j).value;
+                if (appsts != "" && appsts != "0") {
+                    if (apprmksub != "") {
+                        elements = {
+                            LineRefNo: lrefno,
+                            Status1: appsts,
+                            ApproverRemark: apprmksub,
+                            planid: refval,
+                        }
 
-                elements = {
-                    LineRefNo: lrefno,
-                     Status1: appsts,
-                    ApproverRemark: apprmksub,
-                    planid: refval ,
-                   }
+                        subdtlist.push(elements);
+                       
+                    } else {
+                      
+                        flg = parseInt(flg) + 1;
+                    }
+                } else {
+                  
+                    flg = parseInt(flg) + 1;
+                }
+                }
 
-                subdtlist.push(elements);
+               
             }
-        }
+        
         var stateToSave = JSON.stringify(subdtlist);
         //var submaintabval = document.getElementById("mainrowtab");
         //submaintabval.value = stateToSave;
-
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            contentType: "application/json ;charset=utf-8;",
-            async: true,
-            url: '@Url.Action("ApprovePlanLines", "MarketingPlan")',
-            cache: false,
-            data: JSON.stringify({ "data": stateToSave }),//
-            processData: false,
-            success: function (result) {
-                if (result.msg == "True") {
-                    RdotAlertSucesstxt("Save Successfully");
-                    location.href = "/Admin/ApprovalStatusReport/Index";
-                } else {
-                    RedDotAlert_Error("Record Not Updated");
+        if (flg == 0) {
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                contentType: "application/json ;charset=utf-8;",
+                async: true,
+                url: '@Url.Action("ApprovePlanLines", "MarketingPlan")',
+                cache: false,
+                data: JSON.stringify({ "data": stateToSave }),//
+                processData: false,
+                success: function (result) {
+                    if (result.msg == "True") {
+                        RdotAlertSucesstxt("Save Successfully");
+                        location.href = "/Admin/ApprovalStatusReport/Index";
+                    } else {
+                        RedDotAlert_Error("Record Not Updated");
+                    }
                 }
-            }
-        });
-
+            });
+        } else {
+            RedDotAlert_Error("Please enter Approver status and remark");
+        }
     }
     function BindRefNo() {
         debugger;
@@ -1674,13 +1729,55 @@
     }
     function updaterownheadrdata() {
 
-         debugger;
-        
-        var refno = document.getElementById("txtrefno");
-        var refnoval = refno.value;
+        debugger;
+        debugger;
+        var fund = ddlfund.value;
+        var fundval = fund;
+        var bu = VenderBu.value;
+        var buval = bu;
+        var country = CountryList.value;
+        var countryval = country;
+        var elt = document.getElementById("CountryList");
+        var countrynm = elt.options[elt.selectedIndex].text;
+        var typeval = document.getElementById("txtappamt");
+        var txnval = typeval.value;
+        var balapp = document.getElementById("txtbalapproved");
+        var balappval = 0;
+        if (balapp.value == "") { balappval = 0; } else {
+            balappval = balapp.value;
+        }
+        var refno1 = document.getElementById("txtrefno");
+        var planrefnoval = refno1.value;
+        var rddapamt = document.getElementById("txtrddapp_amt");
+
+        var rddapamt_val = 0;
+        if (rddapamt.value != "") { rddapamt_val = rddapamt.value; } else { rddapamt_val = 0; }
+        var balamtrddapp = document.getElementById("txtbalamtrddapp");
+
+        var balamtrddappval = 0;// balamtrddapp.value;
+        if (balamtrddapp.value != "") { balamtrddappval = balamtrddapp.value; } else { balamtrddappval = 0; }
         var planstatus = ddlplanstatus.value;
+        var desc = document.getElementById("comment");
+        var descval = desc.value;
+        var stdate = document.getElementById("startdate");
+        var stdateval = stdate.value;
+        var endate = document.getElementById("enddate");
+        var enddtval = endate.value;
+        var appstaus = document.getElementById("txtapprovalstatus");
+        var apstatusval = appstaus.value;
+        var apprmk = document.getElementById("txtapprovalremk");
+        var apprmkval = apprmk.value;
+        var crdate = document.getElementById("createdate");
+        var crdateval = crdate.value;
+        var isdrft = "";
+        if (planstatus == "D") { isdrft = "1"; } else { isdrft = "0"; }
+        //  var rjdata = JSON.stringify({ "Ccode": countval, "year": trnyval, "type": txnval, "frommonth": fmonth, "tomonth": tmnt, "Qvalue": Qval, "QYear": quYr });
        
-      
+        var refno = document.getElementById("txtrefno");
+        var plrefnoval = refno.value;
+        var planstatus = ddlplanstatus.value;
+
+
         var subdtcnt = totalcnt;
         var subdtlist = [];
         var elements = {};
@@ -1730,20 +1827,20 @@
                     Flag: '0'
 
                 }
-                if (appsts != "Approved") {
+               // if (appsts != "Approved") {
                     subdtlist.push(elements);
-                }
+               // }
             }
         }
         var stateToSave = JSON.stringify(subdtlist);
-       
+
         var refnoval = document.getElementById('planid');
         var refval = refnoval.value;
 
         $.ajax({
            type: "Post",
            url: '@Url.Action("UpdatePlandtl", "MarketingPlan")',
-            data: JSON.stringify({ "planid": refval, "status": planstatus, "data": stateToSave}),
+            data: JSON.stringify({ "planid": refval, "status": planstatus, "data": stateToSave, "BalanceAmount": balappval, "BalanceFromApp": balamtrddappval, "planrefno": planrefnoval}),
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (result) {
@@ -1751,6 +1848,8 @@
 
                 if (result.msg == "True") {
                     RdotAlertSucesstxt("Record Saved Successfully");
+                    ClearControls();
+                    GetallDataList();
                 } else {
                     RdotAlertSucesstxt("Record Not updated.");
                 }
@@ -1769,7 +1868,7 @@
             result = str.substr(index);
         }
         var amt = parseFloat($("#txtamount_" + result).val());
-
+        var appoveramt = parseFloat($("#txtrddapp_amt").val());
         var totalgprr = 0;
         var ival = totalcnt;
         for (i = 1; i <= ival; i++) {
@@ -1778,7 +1877,7 @@
 
         }
         var saletar = document.getElementById('txtbalamtrddapp');
-        var tot = parseFloat(0) - parseFloat(totalgprr)
+        var tot = appoveramt - parseFloat(totalgprr)
         saletar.value = tot;
 
 
@@ -2117,6 +2216,7 @@
     }
     function Editdata(idx) {
         debugger;
+
         //$('#btnsave').show();
         $('#ContantsPayment').show();
         $('#filterwind').hide();
@@ -2187,21 +2287,28 @@
                     $("#btnsave").show();
                     $('#btn_MainSearch').show();
                     $('#fromtoemail').show();
-                   // $('#btn_MainSave').show();
+                    $("#btnupdatesave").hide();
+                    $('#btnrowsave').hide();
                     enableheader();
-                    //$("#btnDelete").hide();
-                    //$("#Div1-Approval").show();
-                    //$("#Div1-ApprovedBy").show();
+                } else if (BU.planStatus == "Paid-Closed" || BU.planStatus == "Unpaid-Closed")
+                {
+                    $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
+                    $("#btnAction").show();
+                    $("#btnsave").hide();
+                    $('#btn_MainSearch').show();
+                    $('#fromtoemail').hide();
+                    $("#btnupdatesave").hide();
+                    $('#btnrowsave').hide();
+                   
                 }
                 else {
                     $("#btnAction").show();
                     $("#btnsave").hide();
                     $('#btn_MainSearch').show();
                     $('#fromtoemail').hide();
-                    //$("#btnDelete").hide();
+                   
                     $(".required-label").text("[ " + BU.ApprovalStatus + " ]");
-                    //$("#Div1-Approval").show();
-                    //$("#Div1-ApprovedBy").show();
+                  
                     disableheader();
                 }
 
@@ -2209,8 +2316,10 @@
                 if (BU.ApprovalStatus == "Approved" && BU.planStatus == "Open") {
                     ddlplanstatus.disabled = false;
                     $("#btnupdatesave").show();
+                    $('#btnrowsave').hide();
                     $("#fromtoemail").show();
                 }
+                var p_sts = ddlplanstatus.value;
                  $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -2229,11 +2338,23 @@
                                  debugger;
                                  var val = value.replace(/\\/g, "\\\\");
                                  var flnm = val.substring(val.lastIndexOf('\\') + 1);
-                                 var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value + '  target="_blank"></a> </div></div></div>';
+                                 if (p_sts == "Open") {
+                                     var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value + '  target="_blank"></a> </div></div></div>';
+
+                                 } else {
+                                     var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" disabled onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value + '  target="_blank"></a> </div></div></div>';
+
+                                 }
                                  attachmentcnt = attachmentcnt + 1;
                                  pall.append(subrow);
                                  document.getElementById('attchcnt').value = attachmentcnt;
                              });
+                         } else {
+                             var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" value="' + value + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye" href=' + value + '  target="_blank"></a> </div></div></div>';
+                             attachmentcnt = attachmentcnt + 1;
+                             pall.append(subrow);
+                             document.getElementById('attchcnt').value = attachmentcnt;
+
                          }
 
             }
@@ -2241,7 +2362,8 @@
             }
         });
         ////PlanLine
-
+        var countrylistval = [];
+        var conelements = {};
         $.ajax({
             type: "POST",
             dataType: "JSON",
@@ -2256,17 +2378,146 @@
                     var appcnt=0
                     $.each(BU1, function (i, value) {
                         debugger;
+                        totalcnt = i + 1;
                         counter = i + 1;
-
+                        conelements = { CountryName:value.CountryName }
+                        countrylistval.push(conelements);
                         var refnoval = document.getElementById('txtrefno');
                         var refval = refnoval.value;
                         var appstaus = document.getElementById("txtapprovalstatus");
                         var apval = appstaus.value;
+                        var plnsts = ddlplanstatus.value;
                         debugger;
                         var newRow = $("#AddfromtoemailRow");
                         var cols = "";
-                        if ((apval == "Pending" || apval == "Rejected-Close") || (value.Status1 == "Approved" && apval == "Approved")) {
-                            appcnt = appcnt + 1;
+                        if (plnsts == "Open") {
+                            if ((apval == "Pending" || apval == "Rejected-Close") || (value.Status1 == "Approved" && apval == "Approved" && value.Status == "Planned")  ) {
+                                appcnt = appcnt + 1;
+                                cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                                cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> ';
+                                cols += ' <div class="input-group">';
+                                cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                                cols += ' </div>';
+                                cols += ' </div > </div > ';
+                                cols += ' <div class="reddotTableCell width10per"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                                cols += '<option>' + value.CountryName + '</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled > </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" disabled onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '"  value=' + value.VenderPONo + '  > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '"  value=' + value.SAPPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" >';
+                                cols += '<option value="Planned">Planned</option>';
+                                cols += '   <option value="Closed">Closed</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '"  value=' + value.LineRefNo + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell ">';
+                                cols += ' <div>';
+                                //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" disabled> <i class="fas fa-trash"></i></button >';
+                                cols += ' </div>';
+                                cols += ' </div>';
+                                cols += ' </div></div>';
+                                newRow.append(cols);
+                                $("table.order-list").append(newRow);
+                                var sts = document.getElementById("ddlstatusadd_" + counter);
+                                sts.value = value.Status;
+
+
+                            }
+                            else if (value.Status1 == "Rejected" || value.Status =="Closed") {
+
+                                cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                                cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> ';
+                                cols += ' <div class="input-group">';
+                                cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' disabled> ';
+                                cols += ' </div>';
+                                cols += ' </div > </div > ';
+                                cols += ' <div class="reddotTableCell width10per"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" disabled>';
+                                cols += '<option>' + value.CountryName + '</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + ' disabled > </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" disabled onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + '  > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" disabled>';
+                                cols += '<option value="Planned">Planned</option>';
+                                cols += '   <option value="Closed">Closed</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '"  value=' + value.LineRefNo + ' disabled> </div > </div > ';
+                                cols += ' <div class="reddotTableCell ">';
+                                cols += ' <div>';
+                                //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" disabled> <i class="fas fa-trash"></i></button >';
+                                cols += ' </div>';
+                                cols += ' </div>';
+                                cols += ' </div></div>';
+                                newRow.append(cols);
+                                $("table.order-list").append(newRow);
+                                var sts = document.getElementById("ddlstatusadd_" + counter);
+                                sts.value = value.Status;
+                            }
+                            else {
+                                cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
+                                cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> ';
+                                cols += ' <div class="input-group">';
+                                cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' > ';
+                                cols += ' </div>';
+                                cols += ' </div > </div > ';
+                                cols += ' <div class="reddotTableCell width10per" > <div >';
+                                cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" >';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' > </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + '  > </div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" disabled value=' + value.VenderPONo + '  > </div> </div>';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" disabled value=' + value.SAPPONo + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div>';
+                                cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" >';
+                                cols += '<option value="Planned">Planned</option>';
+                                cols += '   <option value="Closed">Closed</option>';
+                                cols += ' </select>';
+                                cols += '</div > </div > ';
+                                cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabled value=' + value.ApproverRemark + ' > </div> </div>';
+                                cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled  value=' + value.LineRefNo + '> </div > </div > ';
+                                cols += ' <div class="reddotTableCell ">';
+                                cols += ' <div>';
+                                //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
+                                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" > <i class="fas fa-trash"></i></button >';
+                                cols += ' </div>';
+                                cols += ' </div>';
+                                cols += ' </div></div>';
+                                newRow.append(cols);
+                                var sts = document.getElementById("ddlstatusadd_" + counter);
+                                sts.value = value.Status;
+
+
+                                $("table.order-list").append(newRow);
+
+
+
+
+                            }
+                        } else {
                             cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
                             cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
                             cols += ' <div class="reddotTableCell "> <div> ';
@@ -2301,52 +2552,34 @@
                             cols += ' </div>';
                             cols += ' </div></div>';
                             newRow.append(cols);
-                        $("table.order-list").append(newRow);
-                        var sts = document.getElementById("ddlstatusadd_" + counter);
-                        sts.value = value.Status;
-
-
+                            $("table.order-list").append(newRow);
+                            var sts = document.getElementById("ddlstatusadd_" + counter);
+                            sts.value = value.Status;
                         }
-                        else {
-                            cols += '<div class="reddotTableBody"><div class="reddotTableRow odd-even-row">';
-                            cols += ' <div class="reddotTableCell addrow"> <div>' + counter + '</div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> ';
-                            cols += ' <div class="input-group">';
-                            cols += ' <input type="text" class="addrow form-control-sm datepicker" id="PostingDate_' + counter + '" name="PostingDate_' + counter + '" value=' + value.ActivityDate + ' > ';
-                            cols += ' </div>';
-                            cols += ' </div > </div > ';
-                            cols += ' <div class="reddotTableCell width10per"> <div>';
-                            cols += '<select class="addrow form-control-sm" id="ddladdcountry_' + counter + '" >';
-                            cols += ' </select>';
-                            cols += '</div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendor_' + counter + '" value=' + value.Vendor + ' > </div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm " id="txtdescription_' + counter + '" value=' + value.Description + '  > </div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtamount_' + counter + '" onkeyup ="calculate(this)" value=' + value.Amount + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtvendorpono_' + counter + '" value=' + value.VenderPONo + '  > </div> </div>';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtsappono_' + counter + '" value=' + value.SAPPONo + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell"> <div>';
-                            cols += '<select class="addrow form-control-sm" id="ddlstatusadd_' + counter + '" >';
-                            cols += '<option value="Planned">Planned</option>';
-                            cols += '   <option value="Closed">Closed</option>';
-                            cols += ' </select>';
-                            cols += '</div > </div > ';
-                            cols += ' <div class="reddotTableCell "> <div> <input type="text" class="addrow form-control-sm" id="txtapprstatus_' + counter + '" disabled value=' + value.Status1 + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtapprremark_' + counter + '" disabed value=' + value.ApproverRemark + ' > </div> </div>';
-                            cols += ' <div class="reddotTableCell"> <div> <input type="text" class="addrow form-control-sm" id="txtkey_' + counter + '" disabled  value=' + value.LineRefNo + '> </div > </div > ';
-                            cols += ' <div class="reddotTableCell ">';
-                            cols += ' <div>';
-                            //cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-success delete btn-sm ibtnedit" data-original-title="Edit"> <i class="fas fa-edit"></i></button >';
-                            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Delete" > <i class="fas fa-trash"></i></button >';
-                            cols += ' </div>';
-                            cols += ' </div>';
-                            cols += ' </div></div>';
-                            newRow.append(cols);
-                        $("table.order-list").append(newRow);
-                        var sts = document.getElementById("ddlstatusadd_" + counter);
-                        sts.value = value.Status;
+                        if (plnsts == "Open") {//appcnt != counter ||
+                            $("#btnupdatesave").show();
+                            $("#btnsave").hide();
+                        } else {
+                            $("#btnupdatesave").hide();
+                            $("#btnsave").hide();
+                        }
+                        bindcountry(value.CountryName,counter)
 
+                    });
 
-                        $.ajax({
+                }
+            }
+   
+
+        });
+
+      
+       
+    }
+  
+    function bindcountry(cnm, cnt) {
+        debugger;
+         $.ajax({
                             type: "POST",
                             dataType: "JSON",
                             contentType: "application/json ;charset=utf-8;",
@@ -2357,8 +2590,8 @@
                             processData: false,
                             success: function (BUc) {
                                 debugger;
-                               // document.getElementById('ddladdcountry_' + counter).innerHTML = "";
-                                var selectMonth = $("#ddladdcountry_" + counter);
+                               // var cntv = parseInt(l) + 1;
+                                var selectMonth = $("#ddladdcountry_" +cnt);
 
                                 var monthElem = document.createElement("option");
                                 monthElem.value = '0';
@@ -2371,7 +2604,7 @@
                                     monthElem.textContent = valuec.CountryName;
 
                                     selectMonth.append(monthElem);
-                                    if (valuec.CountryName == value.CountryName) {
+                                    if (valuec.CountryName == cnm) {
 
                                         //selectMonth.selected = true;
                                         monthElem.setAttribute('selected', 'selected');
@@ -2380,20 +2613,8 @@
                                 });
                             }
                         });
-                        }
-                        if (appcnt != counter) {
-                            $("#btnsave").show();
-                        }
-
-
-                    });
-                }
-            }
-        });
-
+                   
     }
-
-
 
 </script>
 <script type="text/javascript">
@@ -2532,17 +2753,17 @@
     var tblhide = ['Planid'];
     var tblhead2 = [];
     $(document).ready(function () {
-        $(".txtcheck").each(function (index) {
-            if ($("#" + $(this).attr("id") + "").val() !== '') {
-                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
-            }
-        });
-        $(".dropcheck").each(function (index) {
-            debugger;
-            if ($("#" + $(this).attr("id") + "").val() !== '0') {
-                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
-            }
-        });
+    //    $(".txtcheck").each(function (index) {
+    //        if ($("#" + $(this).attr("id") + "").val() !== '') {
+    //            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+    //        }
+    //    });
+    //    $(".dropcheck").each(function (index) {
+    //        debugger;
+    //        if ($("#" + $(this).attr("id") + "").val() !== '0') {
+    //            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+    //        }
+    //    });
 
         $("#FilterBtn").click(function () {
             $("#FilterSection").slideToggle("slow");
@@ -2609,7 +2830,7 @@
             ClearControls();
             $("#btn_MainSearch").hide();
             $('#btn_MainSave').show();
-           
+            $("#btnupdatesave").hide();
             $("#btnsave").hide();
             $("#btnrowsave").hide();
           
@@ -2858,6 +3079,7 @@
         $('#filterwind').hide();
         $('#Ind').hide();
         $('#Ibody').hide();
+        $('#btnupdatesave').hide();
         var pall = $('#attachmentdiv');
         
         var subrow = '<div class="row"><div class="col-md-3"><div class="form-group"><div class="file-upload"><div class="file-select-button" id="fileName"></div><input type="file" id="avatar_' + attachmentcnt + '" name="avatar_' + attachmentcnt + '" class="file-select-name" onchange="assignfile(this)" /><input type="hidden" id="avatar_' + attachmentcnt + '" /> </div> </div> </div> <div class="col-xl-1 col-md-1"> <div class="form-group"><button type="button" class="btn btn-info btn-sm" onclick="attachfile()">Attach More File</button><button type="button" class="btn btn-danger btn-sm" onclick="deletefile()">Cancel All</button> <a id="FilePathview_' + attachmentcnt + '" class="fa fa-eye"></a> </div></div></div>';
