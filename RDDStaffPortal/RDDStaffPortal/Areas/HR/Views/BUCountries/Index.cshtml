@@ -188,9 +188,9 @@
 
             //  $('#loader').show();
             debugger
-            var empid = $("#EmpName option:selected").val();
+            var empid = $("#hdnEmpName").val();
 
-            if (empid == "0") {
+            if (empid == "-1") {
 
               //  RdotAlerterrtxt('please select EmployeeName');
 
@@ -245,7 +245,7 @@
             //RdotDropimg("EmpName", "/GetEmpList");
 
             //RdotDrop("EmpName", "/GetEmpList");
-            applyAutoComplete2("#EmpName", "#hdnEmpName", "/GetUserListAuto");
+            applyAutoComplete2("#EmpName", "#hdnEmpName", "/GetEmpList");
 
             $("#EmpName").on("change", function () {
 
@@ -440,9 +440,10 @@
                     if (result == "saved successfully.") {
 
                         RedDotAlert_Success(result);
-                        $('#EmployeeId').val("0").trigger("change");
+                        $('#EmployeeId').val("").trigger("change");
 
-                        $('#EmpName').val("0").trigger("change");
+                        $('#EmpName').val("").trigger("change");
+                        $('#hdnEmpName').val("-1").trigger("change");
 
                        // $("#EmpName option:selected").empty();
                         $(".basket_list  ul li").each(function () {

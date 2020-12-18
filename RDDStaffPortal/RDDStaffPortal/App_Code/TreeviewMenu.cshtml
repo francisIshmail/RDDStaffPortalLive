@@ -1,50 +1,60 @@
 ﻿@helper GetTreeview(List<RDDStaffPortal.DAL.DataModels.RDD_Menus> Treemenu, Int32 ParentId)
 {
+   
     foreach (var i in Treemenu.Where(a => a.ModuleId.Equals(ParentId)))
     {
-    <li class="nav-item">
-        @{var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
-        @if (@i.Levels <= 0 || submenu > 0)
-        {
-            <a data-toggle="collapse" href="#@i.MenuName">
-                <i class="@i.MenuCssClass"></i> <p>@i.MenuName</p> <span class="caret"></span>
-            </a>
-        }
-        else
-        {
-
-    <a href="@i.URL"><span class="sub-item">@i.MenuName</span></a>
-
-            if (@i.QuickLink == 0)
-            {
-                <div class="quickmenu">
-                    <input type="hidden" id="hdnQLink" value="@i.QuickLink">
-                    <button class="btn btn-toggle ml-auto" type="button"  aria-haspopup="true" aria-expanded="false"><i title="Added Quick Links" class="icon-star small Quic"></i></button>
-                </div>
+        <li class="nav-item">
+            @{var submenu = Treemenu.Where(a => a.ModuleId.Equals(i.MenuId)).Count();}
+    @if (@i.Levels <= 0 || submenu > 0)
+    {
+                <a data-toggle="collapse" href="#@i.MenuName">
+                    <i class="@i.MenuCssClass"></i> <p>@i.MenuName</p> <span class="caret"></span>
+                </a>
             }
             else
             {
-    <div class="quickmenu">
-        <input type="hidden" id="hdnQLink" value="@i.QuickLink">
-        <button class="btn btn-toggle ml-auto" type="button" aria-haspopup="true" aria-expanded="false"><i title="Remove Quick Links" class="fas fa-star small Quic"></i></button>
-    </div>
-                    }
+
+                <a href="@i.URL"><span class="sub-item">@i.MenuName</span></a>
+
+                if (@i.QuickLink == 0)
+                {
+                    <div class="quickmenu">
+                        <input type="hidden" id="hdnQLink" value="@i.QuickLink">
+                        <button class="btn btn-toggle ml-auto" type="button" aria-haspopup="true" aria-expanded="false"><i title="Added Quick Links" class="icon-star small Quic"></i></button>
+                    </div>
+                }
+                else
+                {
+                    <div class="quickmenu">
+                        <input type="hidden" id="hdnQLink" value="@i.QuickLink">
+                        <button class="btn btn-toggle ml-auto" type="button" aria-haspopup="true" aria-expanded="false"><i title="Remove Quick Links" class="fas fa-star small Quic"></i></button>
+                    </div>
+                }
 
 
 
 
-                    }
-                    @if (submenu > 0)
-                    {
-                        <div class="collapse" id="@i.MenuName">
-                            <ul class="nav nav-collapse" id="ulid">
-                                @TreeviewMenu.GetTreeview(Treemenu, i.MenuId)
-                            </ul>
-                        </div>
+            }
+            @if (submenu > 0)
+{
+                <div class="collapse" id="@i.MenuName">
+                    <ul class="nav nav-collapse" id="ulid">
+                        @TreeviewMenu.GetTreeview(Treemenu, i.MenuId)
+                    </ul>
+                </div>
 
-                    }
-            </li>
-    }
+            }
+        </li>
+
+                   
+                }
+                
+
+                
+    
+
+
 }
+
 
 
