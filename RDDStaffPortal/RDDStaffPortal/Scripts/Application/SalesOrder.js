@@ -43,7 +43,7 @@ SalesOrder.prototype = {
 
 
         RedDot_NewDate("#txtPostingDate");
-
+        $('#chooseFile').change(handleFile);
         this.BindGrid();
         this.BindGrid1();
     },
@@ -281,6 +281,13 @@ SalesOrder.prototype = {
     },
 
     ClickEvent: function () {
+
+        $('#btnGetTemplate').click(function () {
+            debugger;
+            var templeteFileCSV = '../excelFileUpload/Template/SalesOrder_Itens.xlsx'; /// <reference path="../Template/SalesOrder_Items.xlsx" />
+
+            window.open(templeteFileCSV, '_blank');
+        });
 
         $("[id$=btnPopShow]").click(function () {
             debugger;
@@ -2499,5 +2506,38 @@ function getId(dbName, e) {
 
     } catch (n) {
         alert(n)
+    }
+}
+
+function handleFile(e) {
+    debugger;
+   // alert("Hidssafsfdsdfs");
+    //Get the files from Upload control
+    var files = e.target.files;
+    var i, f;
+    ////Loop through files
+    for (i = 0, f = files[i]; i != files.length; ++i) {
+        var reader = new FileReader();
+        var name = f.name;
+        reader.onload = function (e) {
+            var data = e.target.result;
+            debugger;
+            var result;
+            var workbook =XLSX.read(data, { type: 'binary' });
+           // var workbook = XLSX.read(data, { type: 'binary' });
+            
+            var sheet_name_list = workbook.SheetNames;
+            sheet_name_list.forEach(function (y) { /* iterate through sheets */
+                //Convert the cell value to Json
+                var roa = XLSX.utils.sheet_to_json(workbook.Sheets[y]);
+                if (roa.length > 0) {
+                    result = roa;
+                }
+            });
+            //Get the first column first cell value
+            alert(result[0].Column1);
+           // Get_DataFromExcel(result);
+        };
+        reader.readAsArrayBuffer(f);
     }
 }
