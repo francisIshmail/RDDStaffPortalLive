@@ -357,9 +357,9 @@ namespace RDDStaffPortal.Areas.Marketing.Controllers
                         //else
                         //{
 
-                        //    fname = file.FileName;
-                        //    fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                        //    _ext = System.IO.Path.GetExtension(fname).ToUpper();
+                            fname = file.FileName;
+                           fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                         _ext = System.IO.Path.GetExtension(fname).ToUpper();
                         //    if ((_ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF" && _ext != "xls" && _ext != "xlsx" && _ext != "doc" && _ext != "docx") && type == "Header")
                         //    {
                         //        return Json("Error occurred. Error details: Only Image ,Pdf, Excel And Word Document Accept", JsonRequestBehavior.AllowGet);
