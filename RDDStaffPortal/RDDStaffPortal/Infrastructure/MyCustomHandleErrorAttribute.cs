@@ -23,6 +23,7 @@ namespace RDDStaffPortal.Infrastructure
             //,,,,
 
             var controllerName = (string)filterContext.RouteData.Values["controller"];
+            
             var actionName = (string)filterContext.RouteData.Values["action"];
             var area = (string)filterContext.RouteData.Values["Area"];
             var model = new HandleErrorInfo(filterContext.Exception, controllerName, actionName);
@@ -40,7 +41,9 @@ namespace RDDStaffPortal.Infrastructure
 
             filterContext.Result = new ViewResult()
             {
-                ViewName = "CustomErrorView"
+                ViewData = new ViewDataDictionary<HandleErrorInfo>(model),
+                ViewName = "Error",
+                
             };
         }
     }

@@ -171,6 +171,8 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\CollectionForecast\CollectionForecastAreaRegistration.cs" />
+    <Compile Include="Areas\CollectionForecast\Controllers\CollectionForecastController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_DailySalesController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_CallStatusController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_NextActionController.cs" />
@@ -222,6 +224,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomAuthenticationFilter.cs" />
+    <Compile Include="Infrastructure\CustomRoleRequirement.cs" />
     <Compile Include="Infrastructure\MyCustomHandleErrorAttribute.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Modules.cs" />
@@ -844,6 +847,9 @@
     <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
     <Content Include="Areas\LMS\Views\web.config" />
     <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
+    <Content Include="Areas\CollectionForecast\Views\web.config" />
+    <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
+    <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -892,6 +898,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CollectionForecast\Data\" />
+    <Folder Include="Areas\CollectionForecast\Views\Shared\" />
     <Folder Include="Areas\DailyReports\Data\" />
     <Folder Include="Areas\DailyReports\Views\Shared\" />
     <Folder Include="Areas\Funnel\Views\Shared\" />
@@ -964,9 +972,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28986/</IISUrl>
+          <IISUrl>http://localhost:28987/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28986/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28987/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

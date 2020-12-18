@@ -11,6 +11,7 @@ using RDDStaffPortal.DAL;
 using System.IO;
 using System.Diagnostics;
 using RDDStaffPortal.WebServices;
+using System.Data.SqlClient;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -20,15 +21,27 @@ namespace RDDStaffPortal.Areas.HR.Controllers
     {
         AccountService accountservice = new AccountService();
         Common cm = new Common();
+        CommonFunction Com = new CommonFunction();
         // GET: HR/UserList
         //public ActionResult gethistory(int empid, string tblname)
         //{
 
         //    return Json(cm.GetChangeLog(empid, tblname), JsonRequestBehavior.AllowGet);
         //}
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string searchString , int? page)
         {
 
+            if (searchString == null)
+            {
+                currentFilter = "";
+            }
+            else
+            {
+                currentFilter = searchString;
+                
+            }
+            ViewBag.txtSearch = searchString;
+            ViewBag.numSize = 10;
             string loginuser = User.Identity.Name;
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
             //DataSet ds = Db.myGetDS("EXEC RDD_GetUserType '"+loginuser+"'");
@@ -70,10 +83,30 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
 
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-            DataSet DS = Db.myGetDS("EXEC RDD_DisplayEmployeeList");
+            if (page > 0)
+            {
+                page = page;
+            }
+            else
+            {
+                page = 1;
+            }
+            // DataSet DS = Db.myGetDS("EXEC RDD_DisplayEmployeeList "+ currentFilter);
+            SqlParameter[] Para = {
+
+                    new SqlParameter("@p_search",currentFilter),
+                     new SqlParameter("@p_pagesize",10),
+                     new SqlParameter("@p_pageno",page),
+                     new SqlParameter("@p_SortColumn","EmployeeId"),
+                     new SqlParameter("@p_SortOrder","ASC")
+
+
+                };
+            DataSet DS = Com.ExecuteDataSet("RDD_DisplayEmployeeListtest",CommandType.StoredProcedure,Para);
             List<RDD_EmployeeRegistration> EmpDisplayList = new List<RDD_EmployeeRegistration>();
             if (DS.Tables.Count > 0)
             {
+                ViewBag.pageCurrent= !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[0]["TotalCount"].ToString()) ? Convert.ToInt32(DS.Tables[0].Rows[0]["TotalCount"].ToString()) : 0;
                 for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
@@ -130,9 +163,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
 
-                ViewBag.EmpDisplayList = EmpDisplayList;
+                
             }
-                return View();
+            ViewBag.EmpDisplayList = EmpDisplayList;
+            return View();
             }
         }
 

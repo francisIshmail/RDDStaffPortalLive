@@ -190,7 +190,12 @@
             </div>
         </li>*@
 
-                        @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }|
+                        @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }
+                        <li class="nav-item">
+                            <a href="https://reddotdistribution.atlassian.net/servicedesk/customer/portal/2" target="_blank">
+                                <i class="fas fa-question-circle menu-icon-c"></i> <p>IT Support </p>
+                            </a>
+                        </li>|
 
                         @*<li class="nav-item">
             <a data-toggle="collapse" href="#Admin">
@@ -409,30 +414,30 @@
 
         </li>*@
                         @*<li class="nav-item">
-                            <a data-toggle="collapse" href="#TargetsForcos">
-                                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="TargetsForcos">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="@Url.Action("Index","CountryTarget" )">
-                                            <span class="sub-item">Country Target Quarterly</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="Report2.html">
-                                            <span class="sub-item">Monthly</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="Report2.html">
-                                            <span class="sub-item">Sales Person Target Quarterly</span>
-                                        </a>
-                                    </li>
+            <a data-toggle="collapse" href="#TargetsForcos">
+                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
+            </a>
+            <div class="collapse" id="TargetsForcos">
+                <ul class="nav nav-collapse">
+                    <li>
+                        <a href="@Url.Action("Index","CountryTarget" )">
+                            <span class="sub-item">Country Target Quarterly</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Report2.html">
+                            <span class="sub-item">Monthly</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Report2.html">
+                            <span class="sub-item">Sales Person Target Quarterly</span>
+                        </a>
+                    </li>
 
-                                </ul>
-                            </div>
-                        </li>*@
+                </ul>
+            </div>
+        </li>*@
                     </ul>
                 </div>
             </div>
@@ -900,6 +905,8 @@
                 if (username !==  @HttpContext.Current.User.Identity.Name) {
                     RedtDot_CheckAuthorization(pathname);
                 }
+            } else if (pathname == "/HR/UserList") {
+                RedtDot_CheckAuthorization("/HR/UserList/Index");
             }
             else if (pathname !== '/Dashboard/ErrorPage') {
 
@@ -953,7 +960,11 @@
             .demo-scrollbar {
                 height: 300px;
             }
-
+            .ui-autocomplete {
+                max-height: 100px;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
             
             .colHide {
                 display: none;
