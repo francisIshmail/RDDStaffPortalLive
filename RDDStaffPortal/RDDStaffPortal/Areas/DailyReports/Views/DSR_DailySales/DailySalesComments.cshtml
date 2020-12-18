@@ -396,11 +396,11 @@
                                 tr.find("[id^='txtrepmanger']").val(data[i][tblhead1[k]]);
                             }
                             if (data[i].Flag == 'PM' ) {
-                                $("#hndFlag").val("H");
+                                $("#hdnFlag").val("H");
                                 tr.find("[id^='txtcomment']").prop("disabled", false)
                                 tr.find("[id^='txtrepmanger']").prop("disabled", true)
                             } else {
-                                $("#hndFlag").val("H2")
+                                $("#hdnFlag").val("H2")
                                 tr.find("[id^='txtcomment']").prop("disabled", true)
                                 tr.find("[id^='txtrepmanger']").prop("disabled",false)
                             }
@@ -449,7 +449,7 @@
                             VisitId: $(this).find(".xyz").text().trim(),
                             Comments: $(this).find("[id^='txtcomment']").val(),
                             PM_Comments: $(this).find("[id^='txtrepmanger']").val(),
-                            Flag:$("hdnFlag").val()
+                            Flag:$("#hdnFlag").val()
                             
                         };
                         debugger

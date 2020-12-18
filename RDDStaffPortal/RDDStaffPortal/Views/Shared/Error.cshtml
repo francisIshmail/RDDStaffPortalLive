@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.title = "error";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+    }
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -8,6 +14,9 @@
     <hgroup>
         <h1>Error.</h1>
         <h2>An error occurred while processing your request.</h2>
+        <h3>@Model.ActionName</h3>
+        <h2>@Model.ControllerName</h2>
+        <h3>@Model.Exception</h3>
     </hgroup>
 </body>
 </html>

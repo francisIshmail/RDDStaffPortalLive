@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         EmployeeRegistrationDbOperation EmpDbOp = new EmployeeRegistrationDbOperation();
@@ -246,6 +246,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
             //DS = Db.myGetDS("EXEC RDD_GetManagerList '" + username + "'");
             List<RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
+            List<RDD_EmployeeRegistration> ManagerListHRL2 = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
@@ -256,6 +257,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     ManagerListL2.Add(MangLstl2);
 
                 }
+                ManagerListHRL2 = ManagerListL2;
             }
 
 
@@ -314,7 +316,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             List<RDD_EmployeeRegistration> CurrencyList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
-                for (int i = 0; i < ds.Tables[11].Rows.Count; i++)
+                for (
+                    
+                    
+                    int i = 0; i < ds.Tables[11].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration CurrencyLst = new RDD_EmployeeRegistration();
                     CurrencyLst.Currency = (ds.Tables[11].Rows[i]["Currency"]).ToString();
@@ -333,8 +338,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             ViewBag.CountryList = CountryList;
             ViewBag.ManagerList = new SelectList(ManagerList, "ManagerId", "Managername");
             ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+            ViewBag.ManagerListHR2 = new SelectList(ManagerListHRL2, "ManagerIdL2", "Managername");
 
-            
+
             ViewBag.ddlCountry = new SelectList(ddlCountry, "CountryCodeName", "Country");
             
             ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency");
@@ -376,7 +382,25 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             else
             {
                 RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
-              //  Session["FILE"] = objemp.ImagePath;
+                var itemToRemove = ManagerListL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.ManagerId);
+                if (itemToRemove != null)
+                {
+                    if (itemToRemove.ManagerId != 0)
+                        ManagerListL2.Remove(itemToRemove);
+                    ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+                }
+                
+
+                var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
+                if (itemToRemove1 != null)
+                {
+                    if (itemToRemove1.Local_HR != 0)
+                        ManagerListHRL2.Remove(itemToRemove1);
+                }
+                
+
+                ViewBag.ManagerListHR2 = new SelectList(ManagerListHRL2, "ManagerIdL2", "Managername");
+                //  Session["FILE"] = objemp.ImagePath;
                 ViewBag.EmployeeNo = objemp.EmployeeNo;
                 
                 objemp.Editflag = true;
@@ -827,6 +851,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         {
             return Json(EmpDbOp.EmployeeConfigure(EmpConfig),JsonRequestBehavior.AllowGet);
 
+        }
+
+        //[Route("LMSTEST")]
+        public ActionResult LMSTest()
+        {
+            return View();
         }
 
 

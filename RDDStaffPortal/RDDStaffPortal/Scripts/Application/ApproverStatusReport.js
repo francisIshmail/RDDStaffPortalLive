@@ -135,7 +135,7 @@ ApproverStatusReport.prototype = {
         $(document).on("click", "#IIst button[id^='btnAction']", function (e) {
             debugger;
             var tr = $(this).closest("#IIst");
-           
+            var doc = tr.find(".Abcd").eq(10).text().trim();
             _DocKey = tr.find(".Abcd").eq(3).text();
             var _ObjType = tr.find(".Abcd").eq(1).text();
            
@@ -167,7 +167,17 @@ ApproverStatusReport.prototype = {
                  //   $("div#IIIst:first").remove(); 
                    // Getgrid(tr, jData.length);                   
                     var count1 = 1;                    
-                    var actiontblValue = ['ID','TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];                 
+                    var actiontblValue = ['ID', 'TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];                 
+
+
+                    
+                    if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
+                        $("#btnActionSave").hide();
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision   [ You can not take action on Rejected-Closed/Paid-Closed vourcher ]");
+                    } else {
+                        $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision");
+                    }
+
                     $(".ApproverAction").each(function () {  
                         if (jData[count1 - 1].Flag == 'Disable') {
                             if ($('#txtApprover').val().toLowerCase() == jData[count1 - 1][actiontblValue[3]].toLowerCase()) {

@@ -161,7 +161,16 @@
 
                     RedDot_Button_New_HideShow();
 
-                   
+                    $(".txtcheck").each(function (index) {
+                        if ($("#" + $(this).attr("id") + "").val() !== '') {
+                            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                        }
+                    });
+                    $(".dropcheck").each(function (index) {
+                        if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                        }
+                    });
 
 
                     

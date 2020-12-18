@@ -32,7 +32,7 @@ namespace RDDStaffPortal.DAL.HR
                     {
                         try
                         {
-                            if (BUCountrie != null)
+                            if (BUCountrie.BUCountriesnew != null )
                             {
                                 for (int i = 0; i < BUCountrie.BUCountriesnew.Count; i++)
                                 {

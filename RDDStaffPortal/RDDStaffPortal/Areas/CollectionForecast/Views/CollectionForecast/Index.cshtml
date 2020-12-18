@@ -1,0 +1,293 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Collection Forecast</h4>
+                </div>
+            </div>
+
+
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card full-height">
+
+                        <div class="card-body">
+
+                            <div class="row header-bg">
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2">Import Excel :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 p-0">
+                                    <div class="form-group">
+                                        <div class="file-upload">
+                                            <div class="file-select">
+                                                <div class="file-select-button" id="fileName">Choose File</div>
+                                                <div class="file-select-name" id="noFile">No file chosen...</div>
+                                                <input type="file" name="chooseFile" id="chooseFile">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-sm">Upload</button>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-1 col-md-1 ml-auto text-right">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-download"></i> Download Template</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class=" mar-t4">DB Name :</label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <select class="form-control" id="ddldbname">
+                                            <option>-- Select --</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class=" mar-t4">Country :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <select class="form-control" id="defaultSelect">
+                                            <option>--select --</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class="mar-t4">Month :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-2 col-md-2">
+                                    <div class="form-group">
+                                        <select class="form-control" id="defaultSelect">
+                                            <option>-- Select --</option>
+                                            <option>Jan</option>
+                                            <option>Feb</option>
+                                            <option>Mar</option>
+                                            <option>Apr</option>
+                                            <option>May</option>
+                                            <option>Jun</option>
+                                            <option>Jul</option>
+                                            <option>Aug</option>
+                                            <option>Sep</option>
+                                            <option>Oct</option>
+                                            <option>Nov</option>
+                                            <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class="mar-t4">Year :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-2 col-md-2">
+                                    <div class="form-group">
+                                        <select class="form-control" id="defaultSelect">
+                                            <option>-- Select --</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-1 col-md-1 p-0">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">Go</button>
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">Save</button>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-1 col-md-1">
+                                    <div class="form-group">
+                                        <label for="email2" class="mar-t4">Description :</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" id="">
+                                    </div>
+                                </div>
+                                @*<div class="col-xl-1 col-md-1 p-0">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-sm" id="addrow">Search</button>
+                                    </div>
+                                </div>*@
+
+                            </div>
+
+
+                            <div class="table-responsive">
+                                <div class="quick-scroll scrollbar-inner">
+                                    <div class="reddotTable sm-form">
+                                        <div class="reddotTableBody">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableHead"><div>DB</div></div>
+                                                <div class="reddotTableHead"><div>Code</div></div>
+                                                <div class="reddotTableHead"><div>Customer Name</div></div>
+                                                <div class="reddotTableHead"><div>Balance</div></div>
+                                                <div class="reddotTableHead"><div>0-30</div></div>
+                                                <div class="reddotTableHead"><div>31-45</div></div>
+                                                <div class="reddotTableHead"><div>46-60</div></div>
+                                                <div class="reddotTableHead"><div>61-90</div></div>
+                                                <div class="reddotTableHead"><div>Last Paid</div></div>
+                                                <div class="reddotTableHead"><div>Forecast</div></div>
+                                                <div class="reddotTableHead"><div>Week 1</div></div>
+                                                <div class="reddotTableHead"><div>Week 2</div></div>
+                                                <div class="reddotTableHead"><div>Week 3</div></div>
+                                                <div class="reddotTableHead"><div>Week 4</div></div>
+                                                <div class="reddotTableHead"><div>Week 5</div></div>
+                                            </div>
+                                        </div>
+                                        <div class="reddotTableBody" id="AddCMRow">
+                                            <div class="reddotTableRow odd-even-row">
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" disabled></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id=""></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id=""></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" ></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" ></div></div>
+                                                <div class="reddotTableCell"><div><input type="text" class="form-control form-control-sm" value="XXX" id="" ></div></div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+	
+<div class="modal fade" id="CopyFromPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Copy From</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">For Month :</label>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-1 col-md-1">
+                        <div class="form-group">
+                            <select class="width140px form-control" id="defaultSelect">
+                                <option selected="" value="">--Select Month--</option>
+                                <option value="1">Janaury</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-1 col-md-1">
+                        <div class="form-group">
+                            <label for="email2">Year :</label>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-1 col-md-1">
+                        <div class="form-group">
+                            <select class="form-control" id="defaultSelect">
+                                <option>-- Year --</option>
+                                <option>2000</option>
+                                <option>2001</option>
+                                <option>2002</option>
+                                <option>2003</option>
+                                <option>2004</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-3 col-md-3">
+                        <div class="form-group">
+                            <label for="email2">Sales Person :</label>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-8 col-md-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-sm">Save</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

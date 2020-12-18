@@ -14,9 +14,11 @@ using RDDStaffPortal.DAL;
 using static RDDStaffPortal.DAL.CommonFunction;
 using RDDStaffPortal.DAL.DataModels.Voucher;
 using RDDStaffPortal.DAL.Voucher;
+using System.Security.AccessControl;
 
 namespace RDDStaffPortal.Areas.Admin.Controllers
 {
+    //[Authorize]
     public class ApprovalStatusReportController : Controller
     {
         // GET: Admin/ApprovalStatusReport
@@ -89,6 +91,18 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                     
                     
                        SendMailToSignatories(DocKey,ObjectType);
+                    #region mailsending
+                    if (ObjectType == "18")
+                    {
+                        SqlParameter[] sqlPar_ = { new SqlParameter("@PVID", DocKey),
+                             new SqlParameter("@LoggedInUser", Approver),
+                              new SqlParameter("@p_Event", "ApprovalDecision"),
+
+                        };
+                        Com.ExecuteNonQuery("PV_SendApprovalRequestEmail", sqlPar_);
+                    }
+                    
+                    #endregion
                     
 
                     retVal = Content(JsonConvert.SerializeObject(DS), "application/json");

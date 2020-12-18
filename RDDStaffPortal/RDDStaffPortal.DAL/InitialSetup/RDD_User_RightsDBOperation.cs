@@ -119,15 +119,17 @@ namespace RDDStaffPortal.DAL.InitialSetup
         }
 
         public List<Rdd_comonDrop> GetUserList()
+        
         {
             List<Rdd_comonDrop> _UserList = new List<Rdd_comonDrop>();
+            DataSet dsModules;
             try
             {
                 SqlParameter[] parm = { };
 
 
 
-                DataSet dsModules = Com.ExecuteDataSet("RDD_View_User", CommandType.StoredProcedure, parm);
+                 dsModules = Com.ExecuteDataSet("RDD_View_User", CommandType.StoredProcedure, parm);
 
                 if (dsModules.Tables.Count > 0)
                 {
@@ -139,10 +141,10 @@ namespace RDDStaffPortal.DAL.InitialSetup
                         {
 
                             Code = !string.IsNullOrWhiteSpace(dr["Code"].ToString()) ? dr["Code"].ToString() : "",
-                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",                                                    
-                            imagepath =Convert.ToBase64String((byte[])dr["ImagePath"])                       
+                            CodeName = !string.IsNullOrWhiteSpace(dr["CodeName"].ToString()) ? dr["CodeName"].ToString() : "",
+                            imagepath = Convert.ToBase64String((byte[])dr["ImagePath"])
 
-                    });
+                        });
                     }
 
                 }

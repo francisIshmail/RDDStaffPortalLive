@@ -15,21 +15,28 @@ using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
+    [OverrideAuthorization]
     public class AccountController : Controller
     {
         // GET: Account
+        //test nikhileh
         ModulesDbOperation moduleDbOp = new ModulesDbOperation();
-       
         public ActionResult Index()
         {
             return View();
         }
-        
+        //Login method of login view
         public ActionResult Login()
         {
             return View();
         }
 
+        /// <summary>
+        ///  Login Method of account controller
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Login(Login login, string ReturnUrl)
         {

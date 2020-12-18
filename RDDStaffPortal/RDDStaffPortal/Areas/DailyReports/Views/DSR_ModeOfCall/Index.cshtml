@@ -59,10 +59,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        <div class="form-group form-inline">
+                        <div id="div-txtMODEOFCALLName"class="form-group form-inline has-error1">
                             <label for="Database" class="col-md-2 col-form-label p-0">Name :</label>
                             <div class="col-md-8 p-0">
-                                <input type="text" class="form-control form-control-sm" id="txtMODEOFCALLName">
+                                <input type="text" class="form-control form-control-sm txtcheck" id="txtMODEOFCALLName">
                                 <input type="hidden" id="hdnMODEOFCALLOld" value="0" />
                                 <input type="hidden" id="hdnEditFlag" value="false" />
                             </div>
@@ -89,6 +89,19 @@
 
     $(document).ready(function () {
         //RedtDot_CheckAuthorization("/DailyReports/DSR_ModeOfCall/Index");
+
+        $(document).on("blur", ".txtcheck", function () {
+
+            if ($(this).val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+            }
+            else {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                $(this).val('');
+
+            }
+        });
 
       $("#txtSearchDep").on("keyup", function () {
 
@@ -168,6 +181,11 @@
             $("#hdnMODEOFCALLOld").val(tr.find("input[id^='hdnModeOfCallid']").val());
             $("#txtMODEOFCALLName").val(tr.find("input[id^='hdnModeOfCallname']").val());
             $("#hdnEditFlag").val("true");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
             $('#DSRMODEOFCALLEditPopup').modal('show');
         });
         $(document).on('click', '.announce', function () { // Click to only happen on announce links
@@ -179,6 +197,11 @@
             $("#hdnMODEOFCALLOld").val(tr.find("input[id^='hdnModeOfCallid']").val());
             $("#txtMODEOFCALLName").val(tr.find("input[id^='hdnModeOfCallname']").val());
             $("#hdnEditFlag").val("true");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
             $('#DSRMODEOFCALLEditPopup').modal('show');
         });
 
@@ -191,6 +214,11 @@
                 .prop("checked", "")
                 .end().find("#hdnMODEOFCALLOld").val(0)
                 .end().find("#hdnEditFlag").val("false");
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() == '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                }
+            });
         })
 
         $('#btnsave').on("click",function () {

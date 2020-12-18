@@ -406,13 +406,14 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             else {
                                 cmd.Parameters.Add("@p_LastUpdatedBy", SqlDbType.VarChar, 255).Value = FunnelDataa.CreatedBy;
                             }
-                            if (FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1))
+                            if (FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1))//FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1)
                             {
                                 cmd.Parameters.Add("@p_NextReminderDt", SqlDbType.Date).Value = DBNull.Value;
                             }
                             else {
                                 cmd.Parameters.Add("@p_NextReminderDt", SqlDbType.Date).Value = FunnelDataa.NextReminderDt;
                             }
+                           
                             cmd.Parameters.Add("@p_quoteDate", SqlDbType.Date).Value = FunnelDataa.quoteDate;
                             cmd.Parameters.Add("@p_quoteMonth", SqlDbType.Int).Value = FunnelDataa.quoteDate.Month;
                             cmd.Parameters.Add("@p_quoteYear", SqlDbType.Int).Value = FunnelDataa.quoteDate.Year;
@@ -435,10 +436,26 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
                             cmd.Parameters.Add("@p_expclosingMonthMMM", SqlDbType.VarChar, 255).Value = FunnelDataa.expClosingDt.ToString("MMM");
 
+                            if (FunnelDataa.orderBookedDate.Year < (DateTime.Now.Year - 1))
+                            {
+                                cmd.Parameters.Add("@p_orderBookedDate", SqlDbType.Date).Value = DBNull.Value;
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add("@p_orderBookedDate", SqlDbType.Date).Value = FunnelDataa.orderBookedDate;
+                            }
+                            if (FunnelDataa.InvoiceDt.Year < (DateTime.Now.Year - 1))
+                            {
+                                cmd.Parameters.Add("@p_InvoiceDt", SqlDbType.Date).Value = DBNull.Value;
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add("@p_InvoiceDt", SqlDbType.Date).Value = FunnelDataa.InvoiceDt;
+                            }
 
 
-                            cmd.Parameters.Add("@p_orderBookedDate", SqlDbType.Date).Value = FunnelDataa.orderBookedDate;
-                            cmd.Parameters.Add("@p_InvoiceDt", SqlDbType.Date).Value = FunnelDataa.InvoiceDt;
+
+                           
 
 
 

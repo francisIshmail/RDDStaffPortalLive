@@ -12,14 +12,46 @@
        // var draggableOptions = ;
 
         // drop down image fill with name 
-        RdotDropimg("Userid", "/GetUserList");
+        //RdotDropimg("Userid", "/GetUserList");
+        debugger
+       // RdotDrop(RdotDrop("Userid", "/GetUserList");
+
+        applyAutoComplete2("#Userid", "#hdnUserid", "/GetUserListAuto");
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/GetUserList",           
+        //    contentType: "Application/json",
+        //    dataType: "json",           
+        //    success: function (data) {
+        //        debugger
+        //        if (data.length > 0) {
+        //            $('#Userid').empty();
+        //            $('#Userid').append('<option value="0" selected="">-Select-</option>');
+        //            var ary = [];
+        //            ary = data;
+        //            for (var i = 0; i < ary.length; i++) {
+        //                $('#Userid').append('<option value="' + ary[i].Code + '" selected=""  >' + ary[i].CodeName + '</option>');
+        //            }
+        //            $('#Userid').val(0);
+        //            //$('#' + ids + '').select2({
+        //            //    theme: "bootstrap",
+
+        //            //});
+        //        }
+        //    }
+        //})
         
         var tf = true;
-        $("#Userid").on("change", function () {
+        $("#Userid").on("focusout", function () {
             $(".loader1").show();
-            var Userid = $('#Userid Option:selected').val();
-            if (Userid == '0' && tf == true) {
+            var Userid = $('#hdnUserid').val();
+            if (Userid == '-1' && tf == true) {
+                
                 RedDotAlert_Error("Please select  User");
+                $(".basket_list  ul").empty();
+                $('#product ul li').removeClass("disabled");
+                $('#product ul li').find("input[id='hdnuse']").val('false');
                 $(".loader1").hide();
                 return false
 
@@ -231,7 +263,7 @@
             debugger
             var tr = $(this).closest("li");
             var Role = tr.attr("data-id");
-            var Username = $('#Userid Option:selected').val();
+            var Username = $('#hdnUserid').val();
             var typ1 = tr.find("input[id='hdntyp']").val();
             // var k = $(this).closest("ul").attr("id");
             //if (k == "pr1" && $("#hdnflag").val() == "true") {
@@ -339,14 +371,15 @@
 
 
 
-            $('#Userid').val("0").trigger("change");
+            $('#Userid').val("").trigger("change");
+            $('#hdnUserid').val("-1")
 
         })
         //Save 
         $("#btnsave").on("click", function () {
             debugger
             $(".loader1").show();
-            var UserName = $('#Userid Option:selected').val();
+            var UserName = $('#hdnUserid').val();
             var WebRepLists = [];
             $("#pri1  ul li").each(function () {
                 debugger
@@ -386,7 +419,8 @@
                         i++;
                     }
                    
-                    $('#Userid').val("0").trigger("change");
+                    $('#Userid').val("").trigger("change");
+                    $('#hdnUserid').val("-1")
 
                 } else {
                     RdotAlerterr(response.Message);

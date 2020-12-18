@@ -10,7 +10,9 @@ using static RDDStaffPortal.DAL.Global;
 
 namespace RDDStaffPortal.Controllers
 {
-    [Authorize]
+    //[Authorize]
+   
+
     public class DashboardController : Controller
     {
         // GET: Dashboard
@@ -534,6 +536,12 @@ namespace RDDStaffPortal.Controllers
 
             return result;
 
+        }
+
+        //THis method use for custom partial view Layout
+        public ActionResult _PartialLoginUserProfile()
+        {
+            return PartialView();
         }
 
     }
