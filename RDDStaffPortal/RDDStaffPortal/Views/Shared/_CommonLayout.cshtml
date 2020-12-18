@@ -905,6 +905,8 @@
                 if (username !==  @HttpContext.Current.User.Identity.Name) {
                     RedtDot_CheckAuthorization(pathname);
                 }
+            } else if (pathname == "/HR/UserList") {
+                RedtDot_CheckAuthorization("/HR/UserList/Index");
             }
             else if (pathname !== '/Dashboard/ErrorPage') {
 
