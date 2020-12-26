@@ -468,6 +468,7 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
                             }
                         }
                     }
+
                     //
                     DataColumn newColumn3 = new DataColumn("CreatedOn", typeof(System.DateTime));
                     newColumn3.DefaultValue = System.DateTime.Now;
