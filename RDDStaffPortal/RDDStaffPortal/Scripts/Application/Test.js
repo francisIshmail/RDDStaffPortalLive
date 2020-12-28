@@ -68,7 +68,7 @@
                     });
                     swalWithBootstrapButtons.fire(
                         'Status',
-                        'Your Code has been Chaged.',
+                        'Your Data has been Chaged.',
                         'success'
                     )
                 } else if (
@@ -77,7 +77,7 @@
                     $('#btnrelod').trigger('click');
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }
@@ -331,7 +331,7 @@
                             });
                             swalWithBootstrapButtons.fire(
                                 'Deleted!',
-                                'Your Code has been deleted.',
+                                'Your Data has been deleted.',
                                 'success'
                             )
                         } else if (                          
@@ -339,7 +339,7 @@
                         ) {
                             swalWithBootstrapButtons.fire(
                                 'Cancelled',
-                                'Your Code is safe :)',
+                                'Your Data is safe :)',
                                 'error'
                             )
                         }

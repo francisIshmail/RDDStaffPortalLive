@@ -314,9 +314,9 @@ namespace RDDStaffPortal.DAL.Report
                 "WhseStatus, groupDesc as [BU], BUGroup, AvgUnitCost as [UnitCost], QtyOnHand as  [Qty],    " +
                 "QtyOnPO as [QtyOrdered],QtyOnSO as [QtyCommitted],Value,WhseOwner,ProdCategory,ProdLine," +
                 "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
+            SqlParameter[] parm = { };
 
-
-            DataSet dsModules = Com.ExecuteDataSet(qur);
+            DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel",CommandType.StoredProcedure,parm);
             dt = dsModules.Tables[0];
             return dt;
             // return dsModules;
@@ -333,7 +333,9 @@ namespace RDDStaffPortal.DAL.Report
                "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
 
 
-                DataSet dsModules = Com.ExecuteDataSet(qur);
+                SqlParameter[] parm = { };
+
+                DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel1", CommandType.StoredProcedure, parm);
                 dt = dsModules.Tables[0];
             }
             catch (Exception)

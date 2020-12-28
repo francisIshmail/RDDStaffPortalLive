@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RDD_Approval_TemplatesDBOperation.cs" />
+    <Compile Include="Admin\RDD_Welcome_MessageDBOperation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DailyReports\RDD_DailySalesReports_Db_Operation.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="DailyReports\RDD_DSR_ReportingFreqTarget_Db_Operation.cs" />
     <Compile Include="DataModels\Admin\RDD_APPROVAL_DOC.cs" />
     <Compile Include="DataModels\Admin\RDD_Approval_Templates.cs" />
+    <Compile Include="DataModels\Admin\RDD_Welcome_Message.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DailySalesReports.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_CallStatus.cs" />
     <Compile Include="DataModels\DailyReports\RDD_DSR_ModeOfCall.cs" />

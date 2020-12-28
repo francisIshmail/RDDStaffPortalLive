@@ -440,6 +440,9 @@
 
                                         @*</button>*@
                                     </div>
+                                   
+                                        <input type="file" name="my_file" id="my_file" />
+                                       
 
 
                                     <div class="col-md-1 ml-auto text-right p-0 mar-min3"><button type="button" id="btnPopShow" style="margin-top:8px;" class="btn btn-info btn-sm" data-toggle="modal"><i class="fas fa-plus"></i> Add</button></div> <!--data-target="#ItemDetailModalPopPup"-->
@@ -1040,16 +1043,63 @@
 
 <script src="~/Scripts/Application/SalesOrder.js" type="text/javascript"></script>
 
-@*<script>
+<script>
         $(document).ready(function () {
+            FieldName = ['SrNo', 'pvlineid', 'ItemCode', 'Description', 'Quantity', 'UnitPrice', 'Disc', 'TaxCode', 'taxrate', 'Total', 'Warehouse', 'Qty_In_Whs', 'Qty_Aval', 'opgRefAlpha', 'GP', 'GP_%'];
+            
 
-            $('#DBName').select2({
-                theme: "bootstrap",
-                allowClear: true
+            $("input[id='my_file']").on("change", function () {
+                debugger;
+               
+                var data = new FormData();
+                var files = $("input[id = 'my_file']").get(0).files;
+                if (files.length > 0) {
+                    data.append("file", files[0]);
+                }
+                $.ajax({
+                    url: "/SAP/SalesOrder/ImportExcelSalesOrder",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+                        //code after success
+                        debugger
+                        var arr = response.Table1;
+                        if (arr != null && arr.length != 0) {
+                            var i = 0;
+                            $("#Ist").show();
+                            $('div#Ist').not(':first').remove();
 
-            });
+                            while (arr.length > i) {
+                                var tr = $("#Ist").clone();
+                                var k = 0;
+                                var l1 = tr.find(".Abcd").length;
+                                while (l1 > k) {
+                                    tr.find(".Abcd")[k].textContent = arr[i][FieldName[k]]; //arr[FieldName[k]];
+                                    k++;
+                                }
+                               /// tr.find(".Abcd")[0].textContent = i + 1;
+                                $("#Ibody").append(tr);
+                                i++;
+                            }
+
+                            
+                                $("#Ist")[0].remove();
+                            
+                            
+                        }
+                        
+
+                    },
+                    error: function (er) {
+                        RedDotAlert_Error(er);
+                    }
+                });
+
+            })
         });
-    </script>*@
+    </script>
 
 <style>
     .disred {

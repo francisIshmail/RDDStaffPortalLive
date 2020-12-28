@@ -428,8 +428,9 @@
             
             if ($("#ActionType").val() == "DAILY") {
                 var nowMin1 = new Date($("#FromDate").val());
-                nowMin1.setDate(nowMin1.getDate() - 1);
                 $("#hdnstartdate").val(nowMin1);
+                nowMin1.setDate(nowMin1.getDate() - 1);
+               
                 
                 $("#hdnenddate").val($("#ToDate").val());
                 RedDot_DateRange_Min_Max_Daily("reportrange", $("#FromDate").val(), $("#ToDate").val());
@@ -846,7 +847,7 @@
                 text: "You won't be able to revert this!",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, submit repor it!',
+                confirmButtonText: 'Yes, submit report !',
                 cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
@@ -942,7 +943,7 @@
                     }
                     swalWithBootstrapButtons.fire(
                         'Saved!',
-                        'Your Code has been saved.',
+                        'Your Data has been saved.',
                         'success'
                     )
 
@@ -952,7 +953,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }
@@ -1303,7 +1304,7 @@
                     });
                     swalWithBootstrapButtons.fire(
                         'Deleted!',
-                        'Your Code has been deleted.',
+                        'Your Data has been deleted.',
                         'success'
                     )
 
@@ -1313,7 +1314,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }

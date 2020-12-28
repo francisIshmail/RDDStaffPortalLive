@@ -104,33 +104,36 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 };
             DataSet DS = Com.ExecuteDataSet("RDD_DisplayEmployeeListtest",CommandType.StoredProcedure,Para);
             List<RDD_EmployeeRegistration> EmpDisplayList = new List<RDD_EmployeeRegistration>();
+
             if (DS.Tables.Count > 0)
             {
-                ViewBag.pageCurrent= !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[0]["TotalCount"].ToString()) ? Convert.ToInt32(DS.Tables[0].Rows[0]["TotalCount"].ToString()) : 0;
-                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                DataTable dtModule =  DS.Tables[0];
+                DataRowCollection drc = dtModule.Rows;
+                foreach (DataRow dr1 in drc)
                 {
                     RDD_EmployeeRegistration EmpLst = new RDD_EmployeeRegistration();
-                    EmpLst.EmployeeId = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["EmployeeId"].ToString()) ? Convert.ToInt32(DS.Tables[0].Rows[i]["EmployeeId"].ToString()) : 0;
+                    ViewBag.pageCurrent = !string.IsNullOrWhiteSpace(dr1["TotalCount"].ToString()) ? Convert.ToInt32(dr1["TotalCount"].ToString()) : 0;
+                    EmpLst.EmployeeId = !string.IsNullOrWhiteSpace(dr1["EmployeeId"].ToString()) ? Convert.ToInt32(dr1["EmployeeId"].ToString()) : 0;
 
-                    EmpLst.FName = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["FName"].ToString()) ? DS.Tables[0].Rows[i]["FName"].ToString() : "";
-                    EmpLst.LName = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["LName"].ToString()) ? DS.Tables[0].Rows[i]["LName"].ToString() : "";
-                    EmpLst.Country = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Country"].ToString()) ? DS.Tables[0].Rows[i]["Country"].ToString() : "";
-                    EmpLst.DesigName = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["DesigName"].ToString()) ? DS.Tables[0].Rows[i]["DesigName"].ToString() : "";
-                    EmpLst.Email = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Email"].ToString()) ? DS.Tables[0].Rows[i]["Email"].ToString() : "";
-                    EmpLst.DeptName = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["DeptName"].ToString()) ? DS.Tables[0].Rows[i]["DeptName"].ToString() : "";
-                    EmpLst.Contact_No = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Contact_No"].ToString()) ? DS.Tables[0].Rows[i]["Contact_No"].ToString() : "";
-                    EmpLst.Ext_no = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["Ext_no"].ToString()) ? DS.Tables[0].Rows[i]["Ext_no"].ToString() : "";
-                    EmpLst.About = !string.IsNullOrWhiteSpace(DS.Tables[0].Rows[i]["AboutUs"].ToString()) ? DS.Tables[0].Rows[i]["AboutUs"].ToString() : "";
-                   // EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"].ToString());
-                    if (DS.Tables[0].Rows[i]["ProfileCompletedPercentage"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"]))
+                    EmpLst.FName = !string.IsNullOrWhiteSpace(dr1["FName"].ToString()) ? dr1["FName"].ToString() : "";
+                    EmpLst.LName = !string.IsNullOrWhiteSpace(dr1["LName"].ToString()) ? dr1["LName"].ToString() : "";
+                    EmpLst.Country = !string.IsNullOrWhiteSpace(dr1["Country"].ToString()) ? dr1["Country"].ToString() : "";
+                    EmpLst.DesigName = !string.IsNullOrWhiteSpace(dr1["DesigName"].ToString()) ? dr1["DesigName"].ToString() : "";
+                    EmpLst.Email = !string.IsNullOrWhiteSpace(dr1["Email"].ToString()) ? dr1["Email"].ToString() : "";
+                    EmpLst.DeptName = !string.IsNullOrWhiteSpace(dr1["DeptName"].ToString()) ? dr1["DeptName"].ToString() : "";
+                    EmpLst.Contact_No = !string.IsNullOrWhiteSpace(dr1["Contact_No"].ToString()) ? dr1["Contact_No"].ToString() : "";
+                    EmpLst.Ext_no = !string.IsNullOrWhiteSpace(dr1["Ext_no"].ToString()) ? dr1["Ext_no"].ToString() : "";
+                    EmpLst.About = !string.IsNullOrWhiteSpace(dr1["AboutUs"].ToString()) ? dr1["AboutUs"].ToString() : "";
+                    // EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"].ToString());
+                    if (dr1["ProfileCompletedPercentage"] != null && !DBNull.Value.Equals(dr1["ProfileCompletedPercentage"]))
                     {
-                        EmpLst.ProfileCompletedPercentage = Convert.ToInt32(DS.Tables[0].Rows[i]["ProfileCompletedPercentage"]);
+                        EmpLst.ProfileCompletedPercentage = Convert.ToInt32(dr1["ProfileCompletedPercentage"]);
                     }
 
-                    if (DS.Tables[0].Rows[i]["ImagePath"] != null && DS.Tables[0].Rows[i]["ImagePath"].ToString().Length > 0)
+                    if (dr1["ImagePath"] != null && dr1["ImagePath"].ToString().Length > 0)
 
                     {
-                        EmpLst.ImagePath = (byte[])DS.Tables[0].Rows[i]["ImagePath"];
+                        EmpLst.ImagePath = (byte[])dr1["ImagePath"];
                     }
                     else
                     {
@@ -138,9 +141,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                         EmpLst.ImagePath = file;
                     }
 
-                    DataRow[] dr = DS.Tables[0].Select("Country = '" + EmpLst.Country+"'");
+                    DataRow[] dr = DS.Tables[0].Select("Country = '" + EmpLst.Country + "'");
 
-                    List <CountryLists> Countrylst1 = new List<CountryLists>();
+                    List<CountryLists> Countrylst1 = new List<CountryLists>();
                     for (int j = 0; j < dr.Length; j++)
                     {
                         Countrylst1.Add(new CountryLists
@@ -154,11 +157,15 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                     EmpLst.CountryLists = Countrylst1;
 
-                        string base64String = Convert.ToBase64String(EmpLst.ImagePath);
+                    string base64String = Convert.ToBase64String(EmpLst.ImagePath);
                     EmpLst.ImagePath1 = base64String;
 
-                    EmpDisplayList.Add(EmpLst); 
+                    EmpDisplayList.Add(EmpLst);
                 }
+                //    for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
+                //{
+                    
+                //}
 
 
 

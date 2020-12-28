@@ -164,6 +164,7 @@
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WelcomeMessageController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
@@ -850,6 +851,8 @@
     <Content Include="Areas\CollectionForecast\Views\web.config" />
     <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
     <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
+    <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

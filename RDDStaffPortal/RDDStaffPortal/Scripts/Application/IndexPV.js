@@ -205,7 +205,7 @@
                     });
                     swalWithBootstrapButtons.fire(
                         'Deleted!',
-                        'Your Code has been deleted.',
+                        'Your Data has been deleted.',
                         'success'
                     )
 
@@ -215,7 +215,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }

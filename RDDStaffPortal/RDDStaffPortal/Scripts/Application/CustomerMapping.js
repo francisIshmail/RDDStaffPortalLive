@@ -251,7 +251,7 @@
 							});
 							swalWithBootstrapButtons.fire(
 								'Status',
-								'Your Code has been Chaged.',
+								'Your Data has been Chaged.',
 								'success'
 							)
 						} else if (
@@ -261,7 +261,7 @@
 							$('#txtsearch').trigger("keyup");
 							swalWithBootstrapButtons.fire(
 								'Cancelled',
-								'Your Code is safe :)',
+								'Your Data is safe :)',
 								'error'
 							)
 						}
