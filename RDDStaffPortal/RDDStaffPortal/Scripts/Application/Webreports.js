@@ -408,7 +408,7 @@
 						//$('#tblReports td li:contains(' + Code + ')').find("input[id='hdnuse']").val('false');
 						swalWithBootstrapButtons.fire(
 							'Cancelled',
-							'Your Code is safe :)',
+							'Your Data is safe :)',
 							'error'
 						)
 					}
