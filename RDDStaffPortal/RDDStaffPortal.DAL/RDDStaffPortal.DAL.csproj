@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.SAPbobsCOM">
-      <HintPath>..\..\..\..\Users\Avijeet_RDD\Documents\Interop.SAPbobsCOM.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />

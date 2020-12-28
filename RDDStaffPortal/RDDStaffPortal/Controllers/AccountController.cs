@@ -64,8 +64,10 @@ namespace RDDStaffPortal.Controllers
 
                     var urlToRemove = Url.Action("Index", "Dashboard");
                     HttpResponse.RemoveOutputCacheItem(urlToRemove);
-
-                    return RedirectToAction("Index", "Dashboard");
+                    if(!string.IsNullOrEmpty(ReturnUrl))
+                        return Redirect(ReturnUrl);
+                    else
+                        return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
