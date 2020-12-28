@@ -292,6 +292,7 @@ namespace RDDStaffPortal.DAL.DailyReports
 
                         string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
                         SendMail.SendMailWithAttachment("nikhilesh@reddotdistribution.com,pramod@reddotdistribution.com","", subject, html, true, at);
+                        Com.ExecuteNonQuery("update RDD_DailySalesReports set IsRptSentToManager=1 where VisitId =" + rDD_DailySales[0].VisitId + "");
                         scope.Complete();
                     }
                     catch (Exception)
