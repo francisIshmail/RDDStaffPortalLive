@@ -2076,7 +2076,8 @@ debugger
                                 var landed = $('#Landed').val();
                                 var mardol = totalsell - landed;
                                 var marper = (mardol / landed) * 100;
-                                $('#marginper').val(marper);
+                                debugger
+                                $('#marginper').val(marper.toFixed(2));
 
 
                             }
@@ -2097,8 +2098,8 @@ debugger
                     });
                 }
 
-                $('#btnSaveFunnel').on("click", function () {
-
+                $('#btnSaveFunnel').on("click", function (e) {
+                    e.preventDefault();
 
                     var res = validate();
 
@@ -2140,7 +2141,7 @@ debugger
                     FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
                     FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
                     if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
-                        FunnelDataa["NextReminderDt"] = $("#NextReminderDt").val();
+                        FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
                     }
                     
                     FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
@@ -2466,9 +2467,19 @@ debugger
                         RdotAlerterrtxt('Total Sell Amount must be greater than or equal to Landed');
                         return ValFlag = false;
                     }
+                    debugger
+                    if ($("#NextReminderDt").val() != '') {
+                        if (new Date(RedDot_setdtpkdate($("#NextReminderDt").val())) < new Date(RedDot_setdtpkdate($("#quoteDate").val()))) {
+                            RdotAlerterrtxt('Reminder Date must be greater than quote date');
+                            //  $("#expClosingDt").focus();
+                            $("#NextReminderDt").val('');
+                            return ValFlag = false;
+                        }
+                    }
+                   
 
                     if ($("#DealStatus  option:selected").val() != "OPEN" || $("#DealStatus  option:selected").val() != "LOST-CLOSED") {
-                        if (new Date($("#expClosingDt").val()) > new Date($("#InvoiceDt").val())) {
+                        if (new Date(RedDot_setdtpkdate($("#expClosingDt").val())) > new Date(RedDot_setdtpkdate($("#InvoiceDt").val()))) {
                             RdotAlerterrtxt('Invoice  Date must be greater than Closing Date');
                             // $("#InvoiceDt").focus();
                             $("#InvoiceDt").val('');
@@ -2476,13 +2487,13 @@ debugger
                         }
 
 
-                        if (new Date($("#quoteDate").val()) > new Date($("#expClosingDt").val())) {
+                        if (new Date(RedDot_setdtpkdate($("#quoteDate").val())) > new Date(RedDot_setdtpkdate($("#expClosingDt").val()))) {
                             RdotAlerterrtxt('Expected Closing Date must be greater than quote date');
                             //  $("#expClosingDt").focus();
                             $("#expClosingDt").val('');
                             return ValFlag = false;
                         }
-                        if (new Date($("#expClosingDt").val()) > new Date($("#orderBookedDate").val())) {
+                        if (new Date(RedDot_setdtpkdate($("#expClosingDt").val())) > new Date(RedDot_setdtpkdate($("#orderBookedDate").val()))) {
                             RdotAlerterrtxt('Order Date must be greater than Closing date');
                             // $("#orderBookedDate").focus();
                             $("#orderBookedDate").val('');
@@ -2511,23 +2522,24 @@ debugger
                         var closingDt = $("#expClosingDt").val();
                         var ordedate = $("#orderBookedDate").val();
 
-                        if (closingDt.val() == "") {
+                        if (closingDt == "") {
                             RdotAlerterrtxt('Please enter Closing Date');
                             $("#expClosingDt").focus();
                             return ValFlag = false;
                         }
-                        if (ordedate.val() == "") {
+                        if (ordedate == "") {
                             RdotAlerterrtxt('Please enter Order Date');
                             $("#ordedate").focus();
                             return ValFlag = false;
                         }
-                        if (InvoiceDt.val() == "") {
+                        if (InvoiceDt == "") {
                             RdotAlerterrtxt('Please enter Invoice Date');
                             $("#ordedate").focus();
                             return ValFlag = false;
                         }
 
-                        if (new Date(OrderDt) > new Date(closingDt)) {
+                        if (new Date(RedDot_setdtpkdate(ordedate)) < new Date(RedDot_setdtpkdate(closingDt))) {
+                            debugger
                             RdotAlerterrtxt('Order date must be greater than  Closing Date');
                             $("#closingDt").focus();
                             return ValFlag = false;
@@ -2553,7 +2565,7 @@ debugger
 
                     }
 
-                    if ($("#NextReminderDt") == "" && $("#status") == "OPEN") {
+                    if ($("#NextReminderDt").val() == "" && $("#status") == "OPEN") {
                         return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
                     }
 
@@ -2698,7 +2710,7 @@ debugger
 
                 // Function to calculate Margin % & Margin $ if Landed and Total Sell Amount is Entered
                 function calcMarginAndPercentBasedOnTotalSell() {
-
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;

@@ -476,7 +476,7 @@
             $.post("/ADDRDDPV", { PVId: PVId }, function (response) {
                 
                 $("#idCard").html(response);
-                RedDot_Button_New_HideShow();
+                RedDot_Button_Edit_HideShow();
                 debugger
                 $(".txtcheck").each(function (index) {
                     if ($("#" + $(this).attr("id") + "").val() !== '') {
