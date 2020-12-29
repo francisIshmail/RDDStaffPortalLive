@@ -329,7 +329,7 @@
                         //$('#product ul li:contains(' + Role + ')').find("input[id='hdnuse']").val('false');
                         swalWithBootstrapButtons.fire(
                             'Cancelled',
-                            'Your Code is safe :)',
+                            'Your Data is safe :)',
                             'error'
                         )
                     }

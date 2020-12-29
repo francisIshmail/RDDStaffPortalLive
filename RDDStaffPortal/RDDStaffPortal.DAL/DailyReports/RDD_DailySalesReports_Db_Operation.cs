@@ -134,9 +134,11 @@ namespace RDDStaffPortal.DAL.DailyReports
                 using (TransactionScope scope = new TransactionScope())
                 {
                     int i = 0;
+                    string visitIds = string.Empty;
                     string response = string.Empty;
                     while (rDD_DailySales.Count > i)
                     {
+                        
                         SqlParameter[] p = {
                         new SqlParameter("@p_VisitId", rDD_DailySales[i].visitid),
                          new SqlParameter("@p_ReportReadBy",rDD_DailySales[i].ReportReadBy),
@@ -149,13 +151,41 @@ namespace RDDStaffPortal.DAL.DailyReports
                     };
                         SqlParameter[] parm = p;
 
-
                         t = Com.ExecuteNonQuery("RDD_Dailysales_Comment", parm);
+
+                        if (string.IsNullOrEmpty(visitIds))
+                            visitIds =rDD_DailySales[i].visitid.ToString();
+                        else
+                            visitIds = visitIds + "," + rDD_DailySales[i].visitid.ToString();
 
                         i++;
                     }
 
+                    try
+                    {
+                        //visitIds = visitIds + "'";
+                        string RptReadby = string.Empty;
+                        if (rDD_DailySales[0].Flag == "H")
+                            RptReadby = rDD_DailySales[0].ReportReadBy;
+                        else
+                            RptReadby = rDD_DailySales[0].PM_ReportReadBy;
+                        SqlParameter[] parm = {
+                        new SqlParameter("@p_LoggedInUser", RptReadby),
+                        new SqlParameter("@p_VisitIds", visitIds),
+                    };
+                        DataSet ds1 = Com.ExecuteDataSet("DSR_SendReadReportEmail", CommandType.StoredProcedure, parm);
+
+                       // bool retvalue = Com.ExecuteNonQuery("DSR_SendReadReportEmail", parm);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
                     scope.Complete();
+                   
+
+
                     if (t == true)
                     {
                         errormsg = "Save Succesfully";
@@ -285,16 +315,26 @@ namespace RDDStaffPortal.DAL.DailyReports
                         html = html + "Best Regards, <br/> Red Dot Distribution.";
                         string cc = ds1.Tables[0].Rows[0]["Self"].ToString();
 
-
-
                         string Filename = ds1.Tables[0].Rows[0]["Country"].ToString() + "-" + rDD_DailySales[0].LastUpdatedBy + "-Visit Report.xls";
                         Attachment at = new Attachment(ms, Filename);
-
                         string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
-                        SendMail.SendMailWithAttachment("nikhilesh@reddotdistribution.com,pramod@reddotdistribution.com","", subject, html, true, at);
+                        
+                        Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
+                        cc = "nikhilesh@reddotdistribution.com";
+                        
+                        SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at);
+
+                        SqlParameter[] parm1 ={
+                        new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
+                        new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
+                        new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
+                        };
+                        ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+
+                        //Com.ExecuteNonQuery("update RDD_DailySalesReports set IsRptSentToManager=1 where VisitId =" + rDD_DailySales[0].VisitId + "");
                         scope.Complete();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                         ds1 = null;

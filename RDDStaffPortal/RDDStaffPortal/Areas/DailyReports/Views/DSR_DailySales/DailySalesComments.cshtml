@@ -228,8 +228,9 @@
                     var tempArray1 = [];
                     for (i = 0; i < l; i++) {
                         if ((arr.Table[i].CreatedBy.toUpperCase() == output[i1])) {
+                            debugger
                             if (arr.Table[i].Flag == 'HOD') {
-                                if (arr.Table[i].IsRead == true) {
+                                if (arr.Table[i].IsPMRead == true) {
                                     if (flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
                                     flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
                                     tempArray.push(arr.Table[i]);
@@ -239,7 +240,7 @@
                                     tempArray1.push(arr.Table[i]);
                                 }
                             } else {
-                                if (arr.Table[i].IsPMRead == true) {
+                                if (arr.Table[i].IsRead == true) {
                                     if (flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
                                     flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)] = true;
                                     tempArray.push(arr.Table[i]);
@@ -437,7 +438,7 @@
                 text: "You won't be able to revert this!",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, submit comment it!',
+                confirmButtonText: 'Yes, submit comment !',
                 cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
@@ -486,7 +487,7 @@
                     }
                     swalWithBootstrapButtons.fire(
                         'Saved!',
-                        'Your Code has been saved.',
+                        'Your Data has been saved.',
                         'success'
                     )
 
@@ -496,7 +497,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }

@@ -29,6 +29,7 @@ using ClosedXML.Excel;
 using System.Data.SqlClient;
 using System.Net.Mime;
 using System.Web.Script.Serialization;
+using System.Data.OleDb;
 
 namespace RDDStaffPortal.Areas.SAP.Controllers
 {
@@ -60,7 +61,79 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             return View();
         }
 
-        public ActionResult Get_BindDDLList(string dbname)
+        [HttpPost]
+        public ActionResult ImportExcelSalesOrder(HttpPostedFileBase file)
+        {            
+            ContentResult retVal = null;
+            DataSet DS = new DataSet();            
+            DataTable dt = new DataTable();
+            string filePath = string.Empty;
+
+            try
+            {
+                if (file != null)
+                {
+                    string path = Server.MapPath("~/Uploads/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    filePath = path + Path.GetFileName(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    file.SaveAs(filePath);
+
+                    string conString = string.Empty;
+
+                    switch (extension)
+                    {
+                        case ".xls": //Excel 97-03.
+                            conString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=YES'";
+                            break;
+                        case ".xlsx": //Excel 07 and above.
+                            conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=YES'";
+                            break;
+                    }
+                    conString = string.Format(conString, filePath);
+
+                    using (OleDbConnection connExcel = new OleDbConnection(conString))
+                    {
+                        using (OleDbCommand cmdExcel = new OleDbCommand())
+                        {
+                            using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                            {
+                                cmdExcel.Connection = connExcel;
+
+                                //Get the name of First Sheet.
+                                connExcel.Open();
+                                DataTable dtExcelSchema;
+                                dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                                string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                                connExcel.Close();
+
+                                //Read Data from First Sheet.
+                                connExcel.Open();
+                                cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                                odaExcel.SelectCommand = cmdExcel;
+                                odaExcel.Fill(dt);
+                                connExcel.Close();
+                                DS.Tables.Add(dt);
+                            }
+                        }
+                    }
+
+                }
+                retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+            }
+            catch (Exception ex)
+            {
+                retVal= Content(ex.Message,"application/json");
+            }
+
+            return retVal;
+        }
+
+            public ActionResult Get_BindDDLList(string dbname)
         {
             ContentResult retVal = null;
             DataSet DS;
