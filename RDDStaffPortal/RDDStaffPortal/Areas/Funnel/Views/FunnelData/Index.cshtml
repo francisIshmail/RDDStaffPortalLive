@@ -2102,11 +2102,32 @@ debugger
                     e.preventDefault();
 
                     var res = validate();
+                  
 
                     if (res == false) {
                         return false;
                     };
 
+                    if (res == 'Reminder') {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: false,
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Are you sure?',
+                            text: "You have not set the next reminder date!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, You want to Save Funnel Deal ?',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
+                                
+
+
+                           
                     var FunnelDataa = {};
                     var CardName = "";
                     var CardCodeName = "";
@@ -2191,6 +2212,21 @@ debugger
                         }
 
                     });
+                            } else if (
+                                // Read more about handling dismissals
+
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    'Your Data is safe :)',
+                                    'error'
+                                )
+
+                            }
+                        })
+                    }
 
                 });
                 
@@ -2546,7 +2582,7 @@ debugger
                         }
                     }
 
-                    else if ($("#status option:selected") == "LOST-CLOSED") {
+                    else if ($("#DealStatus option:selected").val() == "LOST-CLOSED") {
 
 
                         if ($("#orderBookedDate").val() != "") {
@@ -2564,9 +2600,11 @@ debugger
 
 
                     }
-
-                    if ($("#NextReminderDt").val() == "" && $("#status") == "OPEN") {
-                        return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                debugger
+                    if ($("#NextReminderDt").val() == "" && $("#DealStatus option:selected").val() == "OPEN") {
+                      //  return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                       return ValFlag = 'Reminder';
+                        
                     }
 
                 }
