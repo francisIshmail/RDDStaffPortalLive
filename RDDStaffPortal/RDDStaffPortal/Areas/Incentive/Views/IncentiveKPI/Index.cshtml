@@ -469,7 +469,7 @@
         var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
         $.post("/ADDKPI", { TEMPId: TEMPId }, function (response) {
             $("#idCard").html(response);
-            RedDot_Button_New_HideShow();
+            RedDot_Button_Edit_HideShow();
         })
     });
     function ValidateForm(RDD_Incentive) {

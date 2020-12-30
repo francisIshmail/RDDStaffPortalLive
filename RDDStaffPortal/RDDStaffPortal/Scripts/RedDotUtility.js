@@ -1043,7 +1043,18 @@ function RedDot_Button_New_HideShow() {
     $("#btnPrint").hide();
     $("#btnSave").show();
     $("#btnCancel").show();
-    $("#btnDelete").show();   
+    $("#btnDelete").hide();   
+    $("#btnSendMail").show();
+    $("#tblid").hide();
+    $("#tblid1").hide();
+
+}
+function RedDot_Button_Edit_HideShow() {
+    $("#btnAdd").hide();
+    $("#btnPrint").hide();
+    $("#btnSave").show();
+    $("#btnCancel").show();
+    $("#btnDelete").show();
     $("#btnSendMail").show();
     $("#tblid").hide();
     $("#tblid1").hide();

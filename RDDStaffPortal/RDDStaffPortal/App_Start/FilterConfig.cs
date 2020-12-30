@@ -26,6 +26,7 @@ namespace RDDStaffPortal
                 str =  roleKey.ToString()+","+str;
             }
             filters.Add(new HandleErrorAttribute());
+          
             filters.Add(new AuthorizeAttribute() { Roles =str });//"Admin,HR,Funnel,Marketing,Reports,SAP,Targets" 
             //filters.Add(new System.Web.Mvc.AuthorizeAttribute() );
 

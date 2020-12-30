@@ -23,6 +23,9 @@ namespace RDDStaffPortal.DAL.Targets
 
             try
             {
+                int DisableForecastAfterDays = 30;
+                DisableForecastAfterDays = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["DisableForecastEntryAfterDays"].ToString());
+
                 string curyr = DateTime.Now.Year.ToString();
                 string curmnt = DateTime.Now.Month.ToString();
                 string cuday = DateTime.Now.Day.ToString();
@@ -47,7 +50,7 @@ namespace RDDStaffPortal.DAL.Targets
                 {
                     buenable = "Disable";
                 }
-                else if (Convert.ToInt32(year) == Convert.ToInt32(curyr) && (Convert.ToInt32(curmnt) == Convert.ToInt32(Month))  && (Convert.ToInt32(cuday)>5))
+                else if (Convert.ToInt32(year) == Convert.ToInt32(curyr) && (Convert.ToInt32(curmnt) == Convert.ToInt32(Month))  && (Convert.ToInt32(cuday)> DisableForecastAfterDays))
                 {
                     buenable = "Disable";
                 }
