@@ -402,6 +402,47 @@ SalesOrder.prototype = {
             $('#uxTrowindex').val('');
         });
 
+        $('#IIIbody').on('click', "[id$=PGrid_Edit]", function (event) {
+            debugger;
+            var tr = $(this).closest("#IIIst");
+
+           // 'SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+
+            $("[id$=uxProwindex]").val(tr.find(".Abcd").eq(0).text());
+            $("[id$=cbPPaymentMethod]").val(tr.find(".Abcd").eq(2).text()).trigger('change');
+
+            $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(4).text());
+            $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(5).text());
+            $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(6).text()).trigger('change');
+            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(8).text());
+            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(9).text());           
+            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(10).text());
+            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(11).text());
+                      
+
+            $("[id$=btn_PAddRow]").text("Update");
+            $('#PaymentModalPopPup').modal('show');
+        });
+
+        $('#IIIbody').on('click', "[id$=PGrid_Delete]", function (event) {
+            debugger;
+            var tr = $(this).closest("#IIIst");
+            var Row_Index = tr.find(".Abcd").eq(0).text();
+
+            PayTermDetails.splice(Row_Index - 1, 1);
+            tr.remove()
+
+            var k = 1;
+            $(".PayDetail").each(function () {
+
+                $(this).find(".Abcd").eq(0).text(k);
+                k++;
+
+            });           
+
+            $('#uxProwindex').val('');
+        });
+
         $("[id$=btn_PCancel]").click(function () {
             SalesOrder.prototype.AddPaymentClearControls();
             $('#PaymentModalPopPup').modal('hide');
@@ -1527,6 +1568,7 @@ SalesOrder.prototype = {
             $("#FilterSection").slideToggle("slow");
 
         });
+
 
         $("#IIbody").on('dblclick', "#IIst", function (event) {
             debugger;
