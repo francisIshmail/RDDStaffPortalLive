@@ -2102,95 +2102,217 @@ debugger
                     e.preventDefault();
 
                     var res = validate();
+                  
 
                     if (res == false) {
                         return false;
                     };
 
-                    var FunnelDataa = {};
-                    var CardName = "";
-                    var CardCodeName = "";
-                    $("#CardName option:selected").each(function () {
-                        CardName += $(this).text() + ",";
-                    });
-                    $("#CardName option:selected").each(function () {
-                        CardCodeName += $(this).val() + ",";
-                    });
+                    if (res == 'Reminder') {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: false,
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Are you sure?',
+                            text: "You have not set the next reminder date!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, You want to Save Funnel Deal ?',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
 
 
-                    // hdnChangeCount
-                    FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
-                    FunnelDataa["fid"] = $("#fid").val();
-                    FunnelDataa["Country"] = $("#Country").val();
-                    FunnelDataa["BUName"] = $("#BUName").val();
-                    FunnelDataa["bdm"] = $("#bdm").val();
 
-                    //FunnelDataa["CardCode"] = $("#CardName").val();
-                    //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
-                    FunnelDataa["CardCode"] = CardCodeName;
-                    FunnelDataa["CardName"] = CardName;
-                    FunnelDataa["quoteID"] = $("#lblQuoteID").text();
 
-                    FunnelDataa["enduser"] = $("#enduser").val();
-                    FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
-                    FunnelDataa["remarks"] = $("#remarks").val();
-                    FunnelDataa["Remarks2"] = $("#Remarks2").val();
-                    FunnelDataa["Remarks3"] = $("#Remarks3").val();
-                    FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
-                    FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
-                    FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
-                    FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
-                    if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
-                        FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
+                                var FunnelDataa = {};
+                                var CardName = "";
+                                var CardCodeName = "";
+                                $("#CardName option:selected").each(function () {
+                                    CardName += $(this).text() + ",";
+                                });
+                                $("#CardName option:selected").each(function () {
+                                    CardCodeName += $(this).val() + ",";
+                                });
+
+
+                                // hdnChangeCount
+                                FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
+                                FunnelDataa["fid"] = $("#fid").val();
+                                FunnelDataa["Country"] = $("#Country").val();
+                                FunnelDataa["BUName"] = $("#BUName").val();
+                                FunnelDataa["bdm"] = $("#bdm").val();
+
+                                //FunnelDataa["CardCode"] = $("#CardName").val();
+                                //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
+                                FunnelDataa["CardCode"] = CardCodeName;
+                                FunnelDataa["CardName"] = CardName;
+                                FunnelDataa["quoteID"] = $("#lblQuoteID").text();
+
+                                FunnelDataa["enduser"] = $("#enduser").val();
+                                FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
+                                FunnelDataa["remarks"] = $("#remarks").val();
+                                FunnelDataa["Remarks2"] = $("#Remarks2").val();
+                                FunnelDataa["Remarks3"] = $("#Remarks3").val();
+                                FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
+                                FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
+                                FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
+                                FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
+                                if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
+                                    FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
+                                }
+
+                                FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
+                                FunnelDataa["Cost"] = $("#Cost").val();
+                                FunnelDataa["Landed"] = $("#Landed").val();
+                                FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
+
+                                FunnelDataa["value"] = $("#value").val();
+                                FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
+                                FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
+                                FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
+                                FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
+
+
+
+                                $.ajax({
+
+                                    type: "POST",
+                                    url: "/FunnelData/SaveFunlData",
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+
+                                    success: function (result) {
+
+
+                                        if (result == "saved successfully") {
+
+                                            RdotAlertSucesstxt(result);
+                                            ClearControl();
+                                            getdatalistaftersuccess();
+                                            $("#NewDealPopUp").modal('hide');
+                                        }
+
+                                        else if (result == "updated successfully.") {
+                                            RdotAlertSucesstxt(result);
+                                            getdatalistaftersuccess();
+                                            $("#NewDealPopUp").modal('hide');
+                                        } else {
+                                            RdotAlerterr(result);
+                                        }
+
+
+                                    },
+                                    error: function (result) {
+                                        console.log(result);
+                                    }
+
+                                });
+                            } else if (
+                                // Read more about handling dismissals
+
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    'Your Data is safe :)',
+                                    'error'
+                                )
+
+                            }
+                        })
                     }
-                    
-                    FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
-                    FunnelDataa["Cost"] = $("#Cost").val();
-                    FunnelDataa["Landed"] = $("#Landed").val();
-                    FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
-
-                    FunnelDataa["value"] = $("#value").val();
-                    FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
-                    FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
-                    FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
-                    FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
-
+                    else {
+                        var FunnelDataa = {};
+                        var CardName = "";
+                        var CardCodeName = "";
+                        $("#CardName option:selected").each(function () {
+                            CardName += $(this).text() + ",";
+                        });
+                        $("#CardName option:selected").each(function () {
+                            CardCodeName += $(this).val() + ",";
+                        });
 
 
-                    $.ajax({
+                        // hdnChangeCount
+                        FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
+                        FunnelDataa["fid"] = $("#fid").val();
+                        FunnelDataa["Country"] = $("#Country").val();
+                        FunnelDataa["BUName"] = $("#BUName").val();
+                        FunnelDataa["bdm"] = $("#bdm").val();
 
-                        type: "POST",
-                        url: "/FunnelData/SaveFunlData",
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+                        //FunnelDataa["CardCode"] = $("#CardName").val();
+                        //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
+                        FunnelDataa["CardCode"] = CardCodeName;
+                        FunnelDataa["CardName"] = CardName;
+                        FunnelDataa["quoteID"] = $("#lblQuoteID").text();
 
-                        success: function (result) {
-
-
-                            if (result == "saved successfully") {
-
-                                RdotAlertSucesstxt(result);
-                                ClearControl();
-                                getdatalistaftersuccess();
-                                $("#NewDealPopUp").modal('hide');
-                            }
-
-                            else if (result == "updated successfully.") {
-                                RdotAlertSucesstxt(result);
-                                getdatalistaftersuccess();
-                                $("#NewDealPopUp").modal('hide');
-                            } else {
-                                RdotAlerterr(result);
-                            }
-                           
-
-                        },
-                        error: function (result) {
-                            console.log(result);
+                        FunnelDataa["enduser"] = $("#enduser").val();
+                        FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
+                        FunnelDataa["remarks"] = $("#remarks").val();
+                        FunnelDataa["Remarks2"] = $("#Remarks2").val();
+                        FunnelDataa["Remarks3"] = $("#Remarks3").val();
+                        FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
+                        FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
+                        FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
+                        FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
+                        if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
+                            FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
                         }
 
-                    });
+                        FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
+                        FunnelDataa["Cost"] = $("#Cost").val();
+                        FunnelDataa["Landed"] = $("#Landed").val();
+                        FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
+
+                        FunnelDataa["value"] = $("#value").val();
+                        FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
+                        FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
+                        FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
+                        FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
+
+
+
+                        $.ajax({
+
+                            type: "POST",
+                            url: "/FunnelData/SaveFunlData",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+
+                            success: function (result) {
+
+
+                                if (result == "saved successfully") {
+
+                                    RdotAlertSucesstxt(result);
+                                    ClearControl();
+                                    getdatalistaftersuccess();
+                                    $("#NewDealPopUp").modal('hide');
+                                }
+
+                                else if (result == "updated successfully.") {
+                                    RdotAlertSucesstxt(result);
+                                    getdatalistaftersuccess();
+                                    $("#NewDealPopUp").modal('hide');
+                                } else {
+                                    RdotAlerterr(result);
+                                }
+
+
+                            },
+                            error: function (result) {
+                                console.log(result);
+                            }
+
+                        });
+                    }
 
                 });
                 
@@ -2546,7 +2668,7 @@ debugger
                         }
                     }
 
-                    else if ($("#status option:selected") == "LOST-CLOSED") {
+                    else if ($("#DealStatus option:selected").val() == "LOST-CLOSED") {
 
 
                         if ($("#orderBookedDate").val() != "") {
@@ -2564,9 +2686,11 @@ debugger
 
 
                     }
-
-                    if ($("#NextReminderDt").val() == "" && $("#status") == "OPEN") {
-                        return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                debugger
+                    if ($("#NextReminderDt").val() == "" && $("#DealStatus option:selected").val() == "OPEN") {
+                      //  return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                       return ValFlag = 'Reminder';
+                        
                     }
 
                 }
