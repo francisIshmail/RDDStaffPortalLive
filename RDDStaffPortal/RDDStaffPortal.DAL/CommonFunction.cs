@@ -232,7 +232,8 @@ namespace RDDStaffPortal.DAL
                         j = j + 1;
                     }
                     try
-                    {                                              
+                    {
+                        SqlCmd.CommandTimeout = 0;
                         int i = SqlCmd.ExecuteNonQuery();
                         if (i > 0)
                         {
