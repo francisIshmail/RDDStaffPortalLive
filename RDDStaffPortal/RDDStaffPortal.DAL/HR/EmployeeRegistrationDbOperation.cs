@@ -13,10 +13,11 @@ namespace RDDStaffPortal.DAL.HR
     {
         CommonFunction Com = new CommonFunction();
         // public string Save(RDD_EmployeeRegistration EmpData)
-        public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
+        public List<Outcls1> Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
         {
             string response = string.Empty;
             string result = string.Empty;
+            List<Outcls1> str = new List<Outcls1>();
             try
             {
                 using (TransactionScope scope = new TransactionScope())
@@ -80,7 +81,7 @@ namespace RDDStaffPortal.DAL.HR
                             new SqlParameter("@p_EmployeeIdOUT",Emp_ID),
                             new SqlParameter("@p_Response",response),
                             };
-                        List<Outcls1> str = new List<Outcls1>();
+                       
                         str = Com.ExecuteNonQueryListID("RDD_Employees_InsertUpdate", Para);
                         Emp_ID = str[0].Id;
                         response = str[0].Responsemsg;
@@ -160,15 +161,27 @@ namespace RDDStaffPortal.DAL.HR
                     }
                     catch (Exception ex)
                     {
-                        response = "Error occured : " + ex.Message;
+                        str.Clear();
+                        str.Add(new Outcls1
+                        {
+                            Outtf = false,
+                            Id = -1,
+                            Responsemsg = "Error occured : " + ex.Message
+                        });
                     }
                 }
             }
             catch (Exception ex)
             {
-                response = "Error occured : " + ex.Message;
+                str.Clear();
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
             }
-            return response;
+            return str;
 
         }
 

@@ -17,6 +17,7 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DataTable = System.Data.DataTable;
 using Antlr.Runtime;
 using Newtonsoft.Json;
+using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -485,7 +486,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
-                    string result = string.Empty;
+            // string result = string.Empty;
+            List<Outcls1> result = new List<Outcls1>();
             try
             {
                
@@ -595,7 +597,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             catch (Exception ex)
             {
-                result = "Error occured :" + ex.Message;
+                //result = "Error occured :" + ex.Message;
+                result.Clear();
+                result.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

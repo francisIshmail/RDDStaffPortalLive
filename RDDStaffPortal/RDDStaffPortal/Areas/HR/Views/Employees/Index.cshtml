@@ -2067,9 +2067,13 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     $('#btncancel').click(function () {
         location.reload();
     });
-
+    var saveflag = false;
     $('#SaveEmpChanges').click(function () {
-       $('.Loader1').css('display', 'block');
+        $('.Loader1').css('display', 'block');
+        if (saveflag == true) {
+            RedDotAlert_Error("Please refresh Page");
+            return;
+        }
         debugger
         var res = validate();
         //alert(res);
@@ -2211,7 +2215,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             var obj = {
 
                 EId: $(this).find('#EmpPrEdu_EId').val(),
-                Type: $(this).find('[id^="NEmpPrEdu_Type"] option:selected').text(),
+                Type: $(this).find('[id^="NEmpPrEdu_Type"] option:selected').text(),//NEmpPrEdu_Type
                 Institute: $(this).find('#EmpPrEdu_Institute').val(),
                 //StartDate: $(this).find('#EmpPrEdu_StartDate').val(),
                 StartDate: RedDot_setdtpkdate($(this).find("input[id^='NEmpPrEdu_StartDate']").val()),
@@ -2220,7 +2224,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                 //Description: $(this).find('#EmpPrEdu_Description').val(),
                 Score: $(this).find('#EmpPrEdu_Score').val(),
             }
-            if (obj.Institute != '') {
+            if (obj.Institute != '' && (obj.StartDate !=''&& obj.StartDate!=undefined) && (obj.EndDate!=''&& obj.EndDate!=undefined)) {
                 EmpInfoProEdu.push(obj);
             }
            
@@ -2241,8 +2245,12 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             success: function (result) {
                 debugger
                 $('.loader1').css('display', 'block');
-
-                if (result == "Registration saved successfully.") {
+                if (result.length > 0) {
+                    if (result[0].Outtf == true) {
+                        saveflag = true;
+                    }
+               
+                if (result[0].Responsemsg == "Registration saved successfully." && result[0].Outtf==true) {
                     GetCreateUserAcc();
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
                     //  RdotAlertSucesstxt(result);
@@ -2259,16 +2267,17 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 }
 
-                else if (result == "Registration updated successfully.") {
+                else if (result[0].Responsemsg == "Registration updated successfully." && result[0].Outtf == true) {
 
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    RedDotAlert_Success(result);
+                    RedDotAlert_Success(result[0].Responsemsg);
                     // ClearControl();
                     $('.loader1').css('display', 'none');
                 } else {
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    RedDotAlert_Success(result);
+                    RedDotAlert_Success(result[0].Responsemsg);
                     $('.loader1').css('display', 'none');
+                    }
                 }
 
             },
@@ -2752,7 +2761,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
     });
 
-    counter =parseInt($("#AddCMRow").length)+1;
+    counter = parseInt($("#AddCMRow .reddotTableRow ").length)+1;
 
     $("#addrow").on("click", function () {
 
@@ -2764,7 +2773,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         @*cols += '<div> @Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" })</div>';*@
         cols += ' <div class="reddotTableCell text-left"><div>';
 
-        cols += '<select class="form-control combolist2" id="EmpPrEdu_Type" name="EmpPrEdu.Type"><option value="Professional">Professional</option>';
+        cols += '<select class="form-control combolist2" id="NEmpPrEdu_Type" name="EmpPrEdu.Type"><option value="Professional">Professional</option>';
         cols += '  <option value="Educational">Educational</option>';
         cols += ' </select >@Html.HiddenFor(m => m.EId, new { @id = "EmpPrEdu_EId", @class = "form-control" }) ';
 
