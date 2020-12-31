@@ -316,7 +316,7 @@ namespace RDDStaffPortal.DAL.Report
                 "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
             SqlParameter[] parm = { };
 
-            DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel",CommandType.StoredProcedure,parm);
+            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetStockSheetToExportToExcel", CommandType.StoredProcedure,parm);
             dt = dsModules.Tables[0];
             return dt;
             // return dsModules;
@@ -335,7 +335,7 @@ namespace RDDStaffPortal.DAL.Report
 
                 SqlParameter[] parm = { };
 
-                DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel1", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetInventorySheetToExportToExcel", CommandType.StoredProcedure, parm);
                 dt = dsModules.Tables[0];
             }
             catch (Exception)
