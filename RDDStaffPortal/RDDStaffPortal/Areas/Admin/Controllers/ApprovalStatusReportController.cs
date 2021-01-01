@@ -239,8 +239,8 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                         #endregion
 
-                        signatoryEmail = "nikhilesh@reddotdistribution.com; pramod@reddotdistribution.com";
-                        CFOEmail = "pramod@reddotdistribution.com";
+                        //signatoryEmail = "nikhilesh@reddotdistribution.com; pramod@reddotdistribution.com";
+                        //CFOEmail = "pramod@reddotdistribution.com";
                         try
                         {
                             //string sendmailresponse = Mail.SendSingleAttachPV("reddotstaff@reddotdistribution.com", signatoryEmail, CFOEmail , subject, html, true, Server.MapPath(ancChequeImage.HRef));
