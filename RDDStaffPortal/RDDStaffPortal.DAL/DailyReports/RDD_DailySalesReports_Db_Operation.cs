@@ -319,17 +319,18 @@ namespace RDDStaffPortal.DAL.DailyReports
                         Attachment at = new Attachment(ms, Filename);
                         string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
                         
-                        Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
-                        cc = "nikhilesh@reddotdistribution.com";
-                        
-                        SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at);
+                        //Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
+                        //cc = "nikhilesh@reddotdistribution.com";
 
-                        SqlParameter[] parm1 ={
+                        if (SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at) == "Mail Sent Succcessfully")
+                        {
+                            SqlParameter[] parm1 ={
                         new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
                         new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
                         new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
                         };
-                        ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                            ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                        }
 
                         //Com.ExecuteNonQuery("update RDD_DailySalesReports set IsRptSentToManager=1 where VisitId =" + rDD_DailySales[0].VisitId + "");
                         scope.Complete();
