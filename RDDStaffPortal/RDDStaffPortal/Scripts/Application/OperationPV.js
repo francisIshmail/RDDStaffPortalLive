@@ -152,11 +152,17 @@
         //#region File Upload Header
         /*Header File Uplaod*/
         $("#FilePath").on("change", function () {
+            debugger
             var data = new FormData();
             var files = $("input[id = 'FilePath']").get(0).files;
+            if ($("input[id = 'FilePath']").get(0).files[0].size > 10000000) {
+                RedDotAlert_Error("Can not greater than 10 mb");
+                return;
+            }
+
             var val = $(this).val();
             switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-                case 'gif': case 'jpg': case 'png': case 'pdf':                    
+                case 'gif': case 'jpg': case 'png': case 'pdf': case 'jpeg':
                     break;                
                 default:
                     $(this).val('');
@@ -207,8 +213,13 @@
         /* Details PVLines File uplaod*/
         $(document).on("change", "#IIst input[id^='FilePathInput']", function (event) {            
             var tr = $(this).closest("#IIst");
+
             var data = new FormData();
             var files = tr.find("input[id ^= 'FilePathInput']").get(0).files;
+            if (tr.find("input[id ^= 'FilePath']").get(0).files[0].size > 10000000) {
+                RedDotAlert_Error("Can not greater than 10 mb");
+                return;
+            }
             $("#RefNo").removeAttr('disabled');
             if (files.length > 0) {
                 data.append("Files", files[0]);

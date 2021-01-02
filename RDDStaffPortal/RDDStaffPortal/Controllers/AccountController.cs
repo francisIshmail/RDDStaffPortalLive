@@ -43,6 +43,8 @@ namespace RDDStaffPortal.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
+                var urlToRemove = Url.Action("Index", "Dashboard");
+                HttpResponse.RemoveOutputCacheItem(urlToRemove);
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
@@ -62,8 +64,7 @@ namespace RDDStaffPortal.Controllers
                     }
                      Session["LoginName"] = ab;
 
-                    var urlToRemove = Url.Action("Index", "Dashboard");
-                    HttpResponse.RemoveOutputCacheItem(urlToRemove);
+                    
                     if(!string.IsNullOrEmpty(ReturnUrl))
                         return Redirect(ReturnUrl);
                     else
