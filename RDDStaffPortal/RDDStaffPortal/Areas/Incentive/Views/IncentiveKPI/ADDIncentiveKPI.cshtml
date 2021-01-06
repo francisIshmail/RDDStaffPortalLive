@@ -7,142 +7,140 @@
 @Html.HiddenFor(m => m.EditFlag, true)
 @Html.HiddenFor(m => m.KPI_Id)
 
-<div class="rowmin" id="ContantsPayment" aria-labelledby="headingOne" data-parent="#accordion">
-    <div class="col-md-12">
-        <div class="card success-border full-height padd-10 smform-section">
-            <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-DesigId" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">Designation  :</label>
-                        <div class="col-md-7 p-0">
 
-                            @Html.DropDownListFor(m => m.DesigId, Model.DesignationNameList, new { @class = "form-control form-control-sm dropcheck" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-Period" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">Period  :</label>
-                        <div class="col-md-7 p-0">
-                            @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
-                                                new SelectListItem { Text = "H1", Value = "H1" },
-                                                new SelectListItem { Text = "H2", Value = "H2" }
-                                                 }, new { @class = "form-control form-control-sm dropcheck" })
-                        </div>
-                    </div>
-                </div>
+<div class="card-body smform-section">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div id="div-DesigId" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Designation  :</label>
+                <div class="col-md-7 p-0">
 
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-Years" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">Year :</label>
-                        <div class="col-md-7 p-0">
-                            @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-KPIname" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">KPI Name :</label>
-                        <div class="col-md-7 p-0">
-                            @Html.TextBoxFor(m => m.KPIname, new { @class = "form-control form-control-sm txtcheck" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-Retain_Percentage" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">Retain % :</label>
-                        <div class="col-md-7 p-0">
-
-                            @Html.TextBoxFor(m => m.Retain_Percentage, new { @class = "form-control form-control-sm txtcheck" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div id="div-TermsAndCondition" class="form-group form-inline has-error1">
-                        <label for="Database" class="col-md-3 col-form-label p-0">T & C :</label>
-                        <div class="col-md-7 p-0">
-
-                            @Html.TextAreaFor(m => m.TermsAndCondition, new { @class = "form-control form-control-sm txtcheck" })
-                        </div>
-                    </div>
+                    @Html.DropDownListFor(m => m.DesigId, Model.DesignationNameList, new { @class = "form-control form-control-sm dropcheck" })
                 </div>
             </div>
-            <hr />
-            <div class="row">
-                <div class="col-xl-8 col-md-8">
-                    <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
-                        <button class="btn btn-info btn-sm" id="btnNewModal" data-toggle="modal" data-target="#SelectWidgetspopup">ADD KPI Parameter</button>
-                    </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Period" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Period  :</label>
+                <div class="col-md-7 p-0">
+                    @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
+                                        new SelectListItem { Text = "H1", Value = "H1" },
+                                        new SelectListItem { Text = "H2", Value = "H2" }
+                                         }, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
 
-                    <div id="tblKPIDetails" class="reddotTableBody">
-                        <div class="reddotTableRow odd-even-row">
-                            <div class="reddotTableHead width20per"><div>KPI Parameter </div></div>
-                            <div class="reddotTableHead width10per"><div>Split %</div></div>
-                            <div class="reddotTableHead width10per"><div>Earning / Deduction </div></div>
-                        </div>
-                    </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Years" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Year :</label>
+                <div class="col-md-7 p-0">
+                    @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-KPIname" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">KPI Name :</label>
+                <div class="col-md-7 p-0">
+                    @Html.TextBoxFor(m => m.KPIname, new { @class = "form-control form-control-sm txtcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Retain_Percentage" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Retain % :</label>
+                <div class="col-md-7 p-0">
 
-                    <div id="IIbody" class="reddotTableBody">
-                        @if (Model.EditFlag == false)
-                        {
+                    @Html.TextBoxFor(m => m.Retain_Percentage, new { @class = "form-control form-control-sm txtcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-TermsAndCondition" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">T & C :</label>
+                <div class="col-md-7 p-0">
 
-                            <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
-                                <div class="reddotTableCell width20per Abcd"><div></div></div>
-                                <div class="reddotTableCell width10per Abcd">
-                                    <div>
-                                        @Html.TextBox(string.Concat("txtSplit"), "0", new { @type = "number", @class = "form-control form-control-sm inputs text" })
-
-                                    </div>
-                                </div>
-                                <div class='reddotTableCell width20per'>
-                                    <div>
-                                        @Html.DropDownList(string.Concat("ddlEarnOrDeduct"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                    new SelectListItem { Text = "Earning", Value = "Earning" },
-                                                    new SelectListItem { Text = "Deduction", Value = "Deduction" }
-                                                     }, new { @class = "form-control form-control-sm" })
-                                    </div>
-                                </div>
-                            </div>
-
-                        }
-
-                        @if (Model.RDD_IncentiveKPI_ParameterList != null)
-                        {
-                            for (int i = 0; i < Model.RDD_IncentiveKPI_ParameterList.Count(); i++)
-                            {
-                                <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
-                                    <div class="reddotTableCell width20per Abcd"><div>@Model.RDD_IncentiveKPI_ParameterList[i].KPI_Parameter</div></div>
-                                    <div class="reddotTableCell width10per Abcd">
-                                        <div>
-                                            @Html.TextBox(string.Concat("txtSplit"), Model.RDD_IncentiveKPI_ParameterList[i].Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text" })
-
-                                        </div>
-                                    </div>
-                                    <div class="reddotTableCell width20per">
-                                        <div>
-
-                                            @Html.Hidden(string.Concat("HdnddlEarnOrDeduct"), Model.RDD_IncentiveKPI_ParameterList[i].KPIType)
-                                            @Html.DropDownList(string.Concat("ddlEarnOrDeduct"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
-                                                        new SelectListItem { Text = "Earning", Value = "Earning" },
-                                                        new SelectListItem { Text = "Deduction", Value = "Deduction" }
-                                                         }, "", new { @class = "form-control form-control-sm" })
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
-
-                    </div>
-                    <div id="" class="reddotTableRow odd-even-row ">
-                        <div class="reddotTableCell width20per"><div>Total</div></div>
-                        <div class="reddotTableCell width10per"><div>100</div></div>
-                        <div class="reddotTableCell width10per"><div></div></div>
-                    </div>
+                    @Html.TextAreaFor(m => m.TermsAndCondition, new { @class = "form-control form-control-sm txtcheck" })
                 </div>
             </div>
         </div>
     </div>
+    <hr />
+    <div class="row">
+        <div class="col-xl-8 col-md-8">
+            <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                <button class="btn btn-info btn-sm" id="btnNewModal" data-toggle="modal" data-target="#SelectWidgetspopup">ADD KPI Parameter</button>
+            </div>
+
+            <div id="tblKPIDetails" class="reddotTableBody">
+                <div class="reddotTableRow odd-even-row">
+                    <div class="reddotTableHead width20per"><div>KPI Parameter </div></div>
+                    <div class="reddotTableHead width10per"><div>Split %</div></div>
+                    <div class="reddotTableHead width10per"><div>Earning / Deduction </div></div>
+                </div>
+            </div>
+
+            <div id="IIbody" class="reddotTableBody">
+                @if (Model.EditFlag == false)
+                {
+
+                    <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                        <div class="reddotTableCell width20per Abcd"><div></div></div>
+                        <div class="reddotTableCell width10per Abcd">
+                            <div>
+                                @Html.TextBox(string.Concat("txtSplit"), "0", new { @type = "number", @class = "form-control form-control-sm inputs text" })
+
+                            </div>
+                        </div>
+                        <div class='reddotTableCell width20per'>
+                            <div>
+                                @Html.DropDownList(string.Concat("ddlEarnOrDeduct"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                            new SelectListItem { Text = "Earning", Value = "Earning" },
+                                            new SelectListItem { Text = "Deduction", Value = "Deduction" }
+                                             }, new { @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+                @if (Model.RDD_IncentiveKPI_ParameterList != null)
+                {
+                    for (int i = 0; i < Model.RDD_IncentiveKPI_ParameterList.Count(); i++)
+                    {
+                        <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                            <div class="reddotTableCell width20per Abcd"><div>@Model.RDD_IncentiveKPI_ParameterList[i].KPI_Parameter</div></div>
+                            <div class="reddotTableCell width10per Abcd">
+                                <div>
+                                    @Html.TextBox(string.Concat("txtSplit"), Model.RDD_IncentiveKPI_ParameterList[i].Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text" })
+
+                                </div>
+                            </div>
+                            <div class="reddotTableCell width20per">
+                                <div>
+
+                                    @Html.Hidden(string.Concat("HdnddlEarnOrDeduct"), Model.RDD_IncentiveKPI_ParameterList[i].KPIType)
+                                    @Html.DropDownList(string.Concat("ddlEarnOrDeduct"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" },
+                                                new SelectListItem { Text = "Earning", Value = "Earning" },
+                                                new SelectListItem { Text = "Deduction", Value = "Deduction" }
+                                                 }, "", new { @class = "form-control form-control-sm" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div id="" class="reddotTableRow odd-even-row ">
+                <div class="reddotTableCell width20per"><div>Total</div></div>
+                <div class="reddotTableCell width10per"><div>100</div></div>
+                <div class="reddotTableCell width10per"><div></div></div>
+            </div>
+        </div>
+    </div>
 </div>
+   
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
 

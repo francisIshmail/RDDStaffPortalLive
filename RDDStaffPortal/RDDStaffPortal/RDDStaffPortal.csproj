@@ -181,9 +181,9 @@
     <Compile Include="Areas\Funnel\FunnelAreaRegistration.cs" />
     <Compile Include="Areas\Funnel\Models\FunnelData.cs" />
     <Compile Include="Areas\Incentive\Controllers\CompensationPlanController.cs" />
+    <Compile Include="Areas\Incentive\Controllers\GenerateCompController.cs" />
     <Compile Include="Areas\Incentive\Controllers\IncentiveKPIController.cs" />
     <Compile Include="Areas\Incentive\Controllers\IncentiveSlabController.cs" />
-    <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
@@ -840,6 +840,9 @@
     <Content Include="Areas\Incentive\Views\IncentiveSlab\ADDIncentiveSlab.cshtml" />
     <Content Include="Areas\Incentive\Views\CompensationPlan\Index.cshtml" />
     <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
+    <Content Include="Areas\Incentive\Views\CompensationPlan\VIEWRddCompplan.cshtml" />
+    <Content Include="Areas\Incentive\Views\GenerateComp\Index.cshtml" />
+    <Content Include="Areas\Incentive\Views\GenerateComp\ADDGenerateCompensationPlan.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -895,7 +898,6 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Incentive\Data\" />
     <Folder Include="Areas\Incentive\Views\Shared\" />
-    <Folder Include="Areas\Incentive\Views\ViewCompensationPlan\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />

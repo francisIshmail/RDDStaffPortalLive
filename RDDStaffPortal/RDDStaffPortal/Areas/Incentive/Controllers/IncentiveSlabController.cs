@@ -55,7 +55,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
             else
             {
                 RDD_Incentive.CreatedBy = User.Identity.Name;
-                //RDD_Incentive.CreatedOn = DateTime.Now.ToString();
+                //RDD_Incentive.LastUpdatedBy = User.Identity.Name;
             }
             return Json(IslabDbOp.Save1(RDD_Incentive), JsonRequestBehavior.AllowGet);
         }

@@ -4,109 +4,105 @@
 }
 @Html.HiddenFor(m => m.EditFlag, true)
 @Html.HiddenFor(m => m.SlabId)
-<div class="rowmin">
-    <div class="col-md-12">
-        <div class="card full-height">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xl-1 col-md-1">
-                        <div class="form-group">
-                            <label for="email2">Year :</label>
-                        </div>
-                    </div>
-                    <div class="col-xl-1 col-md-1">
-                        <div id="div-Years" class="form-group form-inline has-error1">
-                            @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
-                        </div>
-                    </div>
-                    <div class="col-xl-1 col-md-1">
-                        <div class="form-group">
-                            <label for="email2">Period :</label>
-                        </div>
-                    </div>
-                    <div class="col-xl-1 col-md-1">
-                        <div id="div-Period" class="form-group form-inline has-error1">
-                            @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
-                                            new SelectListItem { Text = "H1", Value = "H1" },
-                                            new SelectListItem { Text = "H2", Value = "H2" }
-                                             }, new { @class = "form-control form-control-sm dropcheck" })
-                        </div>
-                    </div>
-                </div>
 
-
-                <div class="table-responsive">
-                    <div class="quick-scroll scrollbar-inner">
-                        <div class="reddotTable sm-form m-0">
-
-                            <div class="reddotTable sm-form mar-t0">
-
-                                <div id="IInd" class="reddotTableBody">
-                                    <div class="reddotTableRow odd-even-row">
-                                        <div class="reddotTableHead width20per"><div>Achieve % From</div></div>
-                                        <div class="reddotTableHead width20per"><div>Achieve %  To</div></div>
-                                        <div class="reddotTableHead width20per"><div>Incentive %</div></div>
-                                        <div class="reddotTableHead width10per"><div>Action </div></div>
-                                    </div>
-                                </div>
-                                <div id="IIbody" class="reddotTableBody">
-                                    @if (Model.RDD_IncentiveSlabs_TransList != null)
-                                    {
-                                        for (int i = 0; i < Model.RDD_IncentiveSlabs_TransList.Count(); i++)
-                                        {
-                                            <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
-                                                <div class="reddotTableCell width20per Abcd">
-                                                    <div>
-                                                        @Html.TextBox(string.Concat("AchivePercentFrom", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Achieved_Percentage_From, new { @class = "form-control form-control-sm inputs" })
-                                                        @Html.Hidden(string.Concat("HdnSrno", count), count)
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="reddotTableCell width20per Abcd">
-                                                    <div>
-                                                        @Html.TextBox(string.Concat("AchivePercentTo", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Achieved_Percentage_To, new { @class = "form-control form-control-sm inputs" })
-                                                        @*@Html.Hidden(string.Concat("hdnOriginator", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Originator)*@
-
-                                                    </div>
-                                                </div>
-                                                <div class="reddotTableCell width20per Abcd">
-                                                    <div>
-                                                        @Html.TextBox(string.Concat("IncentivePercent", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Incentive_Percentage, new { @class = "form-control form-control-sm inputs" })
-                                                        @*@Html.Hidden(string.Concat("hdnOriginator", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Originator)*@
-
-                                                    </div>
-                                                </div>
-
-                                                <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
-                                            </div>
-                                            count++;
-                                        }
-                                    }
-
-                                    <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
-                                        <div class="reddotTableCell width20per Abcd"><div>@Html.Hidden(string.Concat("HdnSrno", count), count) @Html.TextBox(string.Concat("AchivePercentFrom", count), "", new { @class = "form-control form-control-sm inputs" })</div></div>
-                                        <div class="reddotTableCell width20per Abcd"><div>@Html.TextBox(string.Concat("AchivePercentTo", count), "", new { @class = "form-control form-control-sm inputs" })</div></div>
-                                        <div class="reddotTableCell width20per Abcd">
-                                            <div>
-                                                @Html.TextBox(string.Concat("IncentivePercent", count), "", new { @class = "form-control form-control-sm inputs" })
-                                                @*@Html.Hidden(string.Concat("hdnOriginator", count))*@
-                                            </div>
-                                        </div>
-
-                                        <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                            @Html.Hidden(string.Concat("hdncount"), count)
-                        </div>
-                    </div>
-                </div>
-
+<div class="card-body smform-section">
+    <div class="row">
+        <div class="col-xl-1 col-md-1">
+            <div class="form-group">
+                <label for="email2">Year :</label>
+            </div>
+        </div>
+        <div class="col-xl-1 col-md-1">
+            <div id="div-Years" class="form-group form-inline has-error1">
+                @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
+            </div>
+        </div>
+        <div class="col-xl-1 col-md-1">
+            <div class="form-group">
+                <label for="email2">Period :</label>
+            </div>
+        </div>
+        <div class="col-xl-1 col-md-1">
+            <div id="div-Period" class="form-group form-inline has-error1">
+                @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
+                                new SelectListItem { Text = "H1", Value = "H1" },
+                                new SelectListItem { Text = "H2", Value = "H2" }
+                                 }, new { @class = "form-control form-control-sm dropcheck" })
             </div>
         </div>
     </div>
+
+
+    <div class="table-responsive">
+        <div class="quick-scroll scrollbar-inner">
+            <div class="reddotTable sm-form m-0">
+                <div class="reddotTable sm-form mar-t0">
+                    <div id="IInd" class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead width20per"><div>Achieve % From</div></div>
+                            <div class="reddotTableHead width20per"><div>Achieve %  To</div></div>
+                            <div class="reddotTableHead width20per"><div>Incentive %</div></div>
+                            <div class="reddotTableHead width10per"><div>Action </div></div>
+                        </div>
+                    </div>
+                    <div id="IIbody" class="reddotTableBody">
+                        @if (Model.RDD_IncentiveSlabs_TransList != null)
+                        {
+                            for (int i = 0; i < Model.RDD_IncentiveSlabs_TransList.Count(); i++)
+                            {
+                                <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                                    <div class="reddotTableCell width20per Abcd">
+                                        <div>
+                                            @Html.TextBox(string.Concat("AchivePercentFrom", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Achieved_Percentage_From, new { @class = "form-control form-control-sm inputs" })
+                                            @Html.Hidden(string.Concat("HdnSrno", count), count)
+
+                                        </div>
+                                    </div>
+
+                                    <div class="reddotTableCell width20per Abcd">
+                                        <div>
+                                            @Html.TextBox(string.Concat("AchivePercentTo", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Achieved_Percentage_To, new { @class = "form-control form-control-sm inputs" })
+                                            @*@Html.Hidden(string.Concat("hdnOriginator", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Originator)*@
+
+                                        </div>
+                                    </div>
+                                    <div class="reddotTableCell width20per Abcd">
+                                        <div>
+                                            @Html.TextBox(string.Concat("IncentivePercent", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Incentive_Percentage, new { @class = "form-control form-control-sm inputs" })
+                                            @*@Html.Hidden(string.Concat("hdnOriginator", count), Model.RDD_IncentiveSlabs_TransList[count - 1].Originator)*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                </div>
+                                count++;
+                            }
+                        }
+
+                        <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                            <div class="reddotTableCell width20per Abcd"><div>@Html.Hidden(string.Concat("HdnSrno", count), count) @Html.TextBox(string.Concat("AchivePercentFrom", count), "", new { @class = "form-control form-control-sm inputs" })</div></div>
+                            <div class="reddotTableCell width20per Abcd"><div>@Html.TextBox(string.Concat("AchivePercentTo", count), "", new { @class = "form-control form-control-sm inputs" })</div></div>
+                            <div class="reddotTableCell width20per Abcd">
+                                <div>
+                                    @Html.TextBox(string.Concat("IncentivePercent", count), "", new { @class = "form-control form-control-sm inputs" })
+                                    @*@Html.Hidden(string.Concat("hdnOriginator", count))*@
+                                </div>
+                            </div>
+                            <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden(string.Concat("hdncount"), count)
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <b>**Note**     INCENTIVE % WILLL BE  '-1'  IF SALES PERSON WILL GET INCENTIVE WHAT THEY HAVE ACHIVED</b>
+    </div>
 </div>
+
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
@@ -122,7 +118,7 @@
             if ($("#" + $(this).attr("id") + "").val() !== '0') {
                 $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
             }
-        });        
+        });
     }
     $(".txtcheck").blur(function () {
         if ($(this).val() !== '') {

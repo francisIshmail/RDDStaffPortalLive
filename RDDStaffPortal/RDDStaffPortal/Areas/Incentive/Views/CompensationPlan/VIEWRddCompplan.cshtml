@@ -2,7 +2,7 @@
 
 @Html.HiddenFor(m => m.EditFlag, true)
 @Html.HiddenFor(m => m.CompPlanId)
-@Html.HiddenFor(m=>m.MailFlag, true)
+@Html.HiddenFor(m => m.MailFlag, true)
 
 <div class="card-body smform-section">
     <div class="row">
@@ -10,7 +10,7 @@
             <div id="div-EmployeeId" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Sales Employee :</label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.EmployeeId, Model.EmployeeList, new { @class = "form-control form-control-sm dropcheck" })
+                    @Html.DropDownListFor(m => m.EmployeeId, Model.EmployeeList, new { @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
 
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
                                     new SelectListItem { Text = "H1", Value = "H1" },
                                     new SelectListItem { Text = "H2", Value = "H2" }
-                                     }, new { @class = "form-control form-control-sm dropcheck" })
+                                     }, new { @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div id="div-Years" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Year :</label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
+                    @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             <div id="div-Currency" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Currency :</label>
                 <div class="col-md-8 p-0">
-                    @Html.DropDownListFor(m => m.Currency, Model.CurrencyList, new { @class = "form-control form-control-sm dropcheck" })
+                    @Html.DropDownListFor(m => m.Currency, Model.CurrencyList, new { @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -59,28 +59,19 @@
             <div id="div-TotalCompensation" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Total Comp :</label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.TotalCompensation, "", new { @type = "number", @class = "form-control form-control-sm txtcheck", @min = "0", @oninput = "validity.valid||(value='');" })
+                    @Html.TextBoxFor(m => m.TotalCompensation, "", new { @type = "number", @class = "form-control form-control-sm txtcheck", @readonly = "readonly", @min = "0", @oninput = "validity.valid||(value='');" })
                 </div>
             </div>
         </div>
-        @*<div class="col-md-6 col-lg-4">
-            <div class="form-group form-inline">
-                <label for="Database" class="col-md-1 col-form-label p-0 width120px">KPI Template  :</label>
-                <div class="col-md-8 p-0">
-                    <select class="form-control form-control-sm" id="">
-                        <option>-- select --</option>
-                    </select>
-                </div>
-            </div>
-        </div>*@
+
         <div class="col-md-6 col-lg-4">
             <div id="div-Period" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Accepted By Sales Person :</label>
                 <div class="col-md-8 p-0">
                     @Html.DropDownListFor(m => m.AcceptedBySalesperson, new List<SelectListItem> { new SelectListItem { Text = "--- Select Action ---", Value = "Pending" },
-                                    new SelectListItem { Text = "Accepted", Value = "Accepted" },
+                                    new SelectListItem { Text = "Accept", Value = "Accepted" },
                                     new SelectListItem { Text = "Need Changes", Value = "Need Changes" }
-                                     }, new { @class = "form-control form-control-sm dropcheck", @disabled = "disabled" })
+                                     }, new { @class = "form-control form-control-sm dropcheck"})
                 </div>
             </div>
         </div>
@@ -88,7 +79,7 @@
             <div id="div-Description" class="form-group form-inline">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Reason :</label>
                 <div class="col-md-8 p-0">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control form-control-sm" })
                 </div>
             </div>
         </div>
@@ -121,43 +112,12 @@
                                         </div>
                                     </div>
                                     <div id="Ibody" class="reddotTableBody">
-                                        @if (Model.EditFlag == false)
-                                        {
-
-                                        <div id="Ist" class="reddotTableRow odd-even-row OriginatorDet">
-                                            <div class="reddotTableCell width20per Abcd"><div></div></div>
-                                            <div class="reddotTableCell width20per Abcd">
-                                                <div>
-
-                                                </div>
-                                            </div>
-                                            <div class="reddotTableCell width20per Abcd">
-                                                <div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="reddotTableCell width10per Abcd">
-                                                <div>
-                                                    @Html.TextBox(string.Concat("txtSplitREVpercent"), "0", new { @type = "number", @class = "form-control form-control-sm inputs text1" })
-
-                                                </div>
-                                            </div>
-                                            <div class="reddotTableCell width10per Abcd">
-                                                <div>
-                                                    @Html.TextBox(string.Concat("txtSplitGPpercent"), "0", new { @type = "number", @class = "form-control form-control-sm inputs text" })
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        }
 
                                         @if (Model.RDD_KPI_CompensationPlanList != null)
                                         {
                                             for (int i = 0; i < Model.RDD_BU_CompensationPlanList.Count(); i++)
                                             {
-                                                
+
                                                 <div id="Ist" class="reddotTableRow odd-even-row OriginatorDet">
                                                     <div class="reddotTableCell width20per Abcd"><div>@Model.RDD_BU_CompensationPlanList[i].BU</div></div>
                                                     <div class="reddotTableCell width20per Abcd">
@@ -173,13 +133,13 @@
 
                                                     <div class="reddotTableCell width10per Abcd">
                                                         <div>
-                                                            @Html.TextBox(string.Concat("txtSplitREVpercent"), Model.RDD_BU_CompensationPlanList[i].Rev_Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text1" })
+                                                            @Html.TextBox(string.Concat("txtSplitREVpercent"), Model.RDD_BU_CompensationPlanList[i].Rev_Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text1", @readonly = "readonly" })
 
                                                         </div>
                                                     </div>
                                                     <div class="reddotTableCell width10per Abcd">
                                                         <div>
-                                                            @Html.TextBox(string.Concat("txtSplitGPpercent"), Model.RDD_BU_CompensationPlanList[i].GP_Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text" })
+                                                            @Html.TextBox(string.Concat("txtSplitGPpercent"), Model.RDD_BU_CompensationPlanList[i].GP_Split_Percentage, new { @type = "number", @class = "form-control form-control-sm inputs text", @readonly = "readonly" })
 
                                                         </div>
                                                     </div>
@@ -218,25 +178,6 @@
                                         </div>
                                     </div>
                                     <div id="IIbody" class="reddotTableBody">
-                                        @if (Model.EditFlag == false)
-                                        {
-
-                                            <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet1">
-                                                <div class="reddotTableCell width30per Abcd"><div></div></div>
-                                                <div class="reddotTableCell width10per Abcd">
-                                                    <div>
-                                                        @Html.TextBox(string.Concat("txtTargetNo"), "0", new { @type = "number", @class = "form-control form-control-sm inputs text2" })
-
-                                                    </div>
-                                                </div>
-                                                <div class="reddotTableCell width10per Abcd">
-                                                    <div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        }
 
                                         @if (Model.RDD_KPI_CompensationPlanList != null)
                                         {
@@ -246,7 +187,7 @@
                                                     <div class="reddotTableCell width30per Abcd"><div>@Model.RDD_KPI_CompensationPlanList[i].KPI_Parameter</div></div>
                                                     <div class="reddotTableCell width10per Abcd">
                                                         <div>
-                                                            @Html.TextBox(string.Concat("txtTargetNo"), Model.RDD_KPI_CompensationPlanList[i].KPI_Target, new { @class = "form-control form-control-sm inputs text2" })
+                                                            @Html.TextBox(string.Concat("txtTargetNo"), Model.RDD_KPI_CompensationPlanList[i].KPI_Target, new { @class = "form-control form-control-sm inputs", @readonly = "readonly" })
 
                                                         </div>
                                                     </div>
@@ -278,8 +219,14 @@
     </div>
     @Html.Hidden(string.Concat("HdnRevSplit"))
     @Html.Hidden(string.Concat("HdnGpSplit"))
-    @Html.Hidden(string.Concat("HdnCCMail"))
-    
+    @*<div class="card-action">
+            <div class="row">
+                <div class="col-md-1 ml-auto text-right">
+                    <button class="btn btn-warning btn-sm" id="btnShowCompCalculation">View Comp Calculation</button>
+                </div>
+            </div>
+
+        </div>*@
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
@@ -297,52 +244,28 @@
                 $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
             }
         });
-        $(".OriginatorDet").each(function () {
-            var HdnEarnOrDeduct = $(this).find("[name^='HdnddlEarnOrDeduct']").val();
-            $(this).find("[name^='ddlEarnOrDeduct']").val(HdnEarnOrDeduct).trigger('change');
-        });
     }
-    $(".txtcheck").blur(function () {
-        if ($(this).val() !== '') {
-            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
-        }
-        else {
-            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
-            $(this).val('');
-        }
-    });
-    $(".dropcheck").blur(function () {
-        if ($(this).val() !== '0') {
-            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
-        }
-        else {
-            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
-            $(this).val('0').trigger('change');
-        }
-    });
-    @*$(document).on('click', '#btnShowCompCalculation', function () {
-        window.location.href = '@Url.Action("Index", "ViewCompensationPlan")';
-    });*@
-    $(document).ready(function () {
-        $("#MailFlag").val("False");
-        var Status = $("#AcceptedBySalesperson option:selected").val();
+    $(document).on('change', '#AcceptedBySalesperson', function () {
+        var Status = $(this).val();
         if (Status == "Accepted") {
-            $("#div-Description").hide();
-            $('.dropcheck').prop("disabled", true);
-            $('.txtcheck').attr("readonly", "readonly");
-            $('.text1').attr("readonly", "readonly");
-            $('.text2').attr("readonly", "readonly");
-            $('.inputs').attr("readonly", "readonly");
-            return;
-        }
-        if (Status == "Pending") {
             $("#div-Description").hide();
         }
         else {
             $("#div-Description").show();
         }
     });
+    $(document).ready(function () {
+        $("#div-Description").hide();
+        $("#MailFlag").val("True");
+        var Status = $("#AcceptedBySalesperson option:selected").val();
+        if (Status == "Accepted") {
+            $("#div-Description").hide();            
+            return;
+        }        
+        if(Status="Pending") {
+            $("#div-Description").hide();
+            return;
+        }        
+    });
 </script>
-
-
 

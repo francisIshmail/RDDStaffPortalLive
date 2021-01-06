@@ -179,6 +179,11 @@ namespace RDDStaffPortal.DAL.Incentive
                             m++;
                         }
                     }
+                    else
+                    {
+                        
+                        return str;
+                    }
                     scope.Complete();
                 }
             }

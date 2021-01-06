@@ -1,18 +1,34 @@
 ﻿
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
 
+@Html.Hidden(string.Concat("hdnLoginUserId"))
+@Html.Hidden(string.Concat("hdnLoginUserMail"))
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
                 <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Compensation Plan</h4></div>
                 <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                    @*<button class="btn btn-info btn-sm" id="btnPrint">Print</button>*@
                     <button class="btn btn-info btn-sm" id="btnAdd">New</button>
                     <button class="btn btn-info btn-sm" id="btnSave">Save</button>
-                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
+                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>                    
                 </div>
             </div>
             <div class="rowmin" id="divKPIshow">
@@ -27,12 +43,7 @@
                                     <div class="form-group">
                                         <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
-                                </div>
-                                <div class="col-xl-2 col-md-2 ml-auto text-right">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
-                                    </div>
-                                </div>
+                                </div>                                
                             </div>
 
                             <div id="tblid" class="table-responsive">
@@ -40,14 +51,18 @@
                                     <div class="loader1"></div>
                                     <div id="IIInd" class="reddotTableBody">
                                         <div class="reddotTableRow odd-even-row">
-                                            <div class="reddotTableHead" hidden="hidden"><div>KPI Id </div></div>
-                                            <div class="reddotTableHead" hidden="hidden"><div>Designation Id </div></div>
-                                            <div class="reddotTableHead"><div>Designation </div></div>
-                                            <div class="reddotTableHead"><div>KPI Name </div></div>
-                                            <div class="reddotTableHead"><div>Retain %</div></div>
+                                            <div class="reddotTableHead"><div>Compensation Plan Id</div></div>
+                                            <div class="reddotTableHead" hidden="hidden"><div>Designation Id</div></div>
+                                            <div class="reddotTableHead"><div>Designation Name</div></div>
+                                            <div class="reddotTableHead"><div>Employee Name</div></div>
                                             <div class="reddotTableHead"><div>Period</div></div>
                                             <div class="reddotTableHead"><div>Year</div></div>
-                                            <div class="reddotTableHead"><div>T & C </div></div>
+                                            <div class="reddotTableHead"><div>Currency</div></div>
+                                            <div class="reddotTableHead"><div>Total Compensation</div></div>
+                                            <div class="reddotTableHead"><div>Total Split Revenue Percent</div></div>
+                                            <div class="reddotTableHead"><div>Total Split Gp Percent</div></div>
+                                            <div class="reddotTableHead"><div>Target Number</div></div>
+                                            <div class="reddotTableHead"><div>Aceepted By Salesperson</div></div>
                                             <div class="reddotTableHead"><div>CreatedOn </div></div>
                                             <div class="reddotTableHead"><div>CreatedBy </div></div>
                                             <div class="reddotTableHead"><div>LastUpdatedOn </div></div>
@@ -56,18 +71,22 @@
                                     </div>
                                     <div id="IIIbody" class="reddotTableBody">
                                         <div id="IIIst" class="reddotTableRow odd-even-row">
-                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>KPI Id</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Compensation Plan Id</div></div>
                                             <div class="reddotTableCell Abcd" hidden="hidden"><div>Designation Id</div></div>
-                                            <div class="reddotTableCell Abcd"><div>Designation</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>KPI Name</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>Retain %</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>Period</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Designation Name</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Employee Name</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Period</div></div>
                                             <div class="reddotTableCell Abcd"><div>Year</div></div>
-                                            <div class="reddotTableCell Abcd"><div>T & C</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Currency</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Total Compensation</div></div>                                            
+                                            <div class="reddotTableCell Abcd"><div>Total Split Revenue Percent</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Total Split Gp Percent</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Target Number</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Aceepted By Salesperson</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>CreatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div>CreatedBy</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>LastUpdatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div>LastUpdatedBy</div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +113,239 @@
 <script src="~/Scripts/RedDotUtility.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+
+    var tblhead1 = ['CompPlanId', 'DesigId', 'DesigName', 'EmployeeName', 'Period', 'Years', 'Currency', 'TotalCompensation', 'TotalSplitRevPercent', 'TotalSplitGpPercent', 'TargetNumber', 'AcceptedBySalesperson', 'CreatedOn', 'CreatedBy', 'LastUpdatedOn', 'LastUpdatedBy'];
+    var tblhide = [];
+    var tblhead2 = [];
+    var dateCond = ['CreatedOn', 'LastUpdatedOn'];
+    var arr = [];
+    var curPage = 1;
+    var me = getUrlVars()["CompPlanid"];
+    if (me != undefined) {        
+        //$("#btnAction").show();
+        GetMode(me);
+    } else {
+        //Getdata();
+    }
+
+    function viewmode(CompPlanid) {
+        $.post("/VIEWRDDCOMPPLAN", { CompPlanId: CompPlanid }, function (response) {
+            $("#tblid").hide();
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();
+            debugger
+            $(".txtcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
+            $(".dropcheck").each(function (index) {
+                if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                    $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+                }
+            });
+
+            $("#btnSave").show();
+            //$("#btnDelete").hide();
+            $("#btnCancel").hide();
+
+        })
+    }
+    function Editmode(CompPlanid) {
+        $.post("/ADDCOMPPLAN", { TEMPId: CompPlanid }, function (response) {
+            $("#tblid").hide();
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();
+            debugger
+
+            $("#btnSave").show();
+            //$("#btnDelete").hide();
+            $("#btnCancel").hide();
+
+        })
+    }
+
+    function GetMode(CompPlanid) {
+        var CompPlanid = CompPlanid;
+        $.post("/GETMODE", { CompPlanid: CompPlanid }, function (response) {
+            debugger
+            if (response.Table[0].UserType == "Employee") {
+                viewmode(CompPlanid);
+                return;
+            }
+            if (response.Table[0].UserType == "Manager") {
+                Editmode(CompPlanid);
+                return;
+            }
+            if (response.Table[0].UserType == "Invalid") {
+                RedDotAlert_Error("Invalid User");
+                return;
+            }
+        });
+    }
+
+
+    //#region Pageload table bind*/
+    function GetCompensationData() {
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        $('.loader1').show();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPENSATION", data, dateCond, tblhead1, tblhide, tblhead2);
+    }
+    //#endregion
+    //#region Next Button*/
+    $('.next').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage++;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (curPage > arr.data[0].TotalCount)
+            curPage = 0;
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPENSATION", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Prev Button*/
+    $('.prev').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage--;
+
+        if (curPage < 0)
+            curPage = (arr.data[0].TotalCount - 1);
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPENSATION", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Search Textbox*/
+    $("#Search-Forms").on("keyup", function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $(this).val().toLowerCase();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPENSATION", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    function GetSalesDetails(_Empid,_Period,_Year) {
+        $.post("/GETSALEDETAILS", { EmployeeId: _Empid, Period: _Period, Years: _Year }, function (data) {
+
+            var a = data;
+            if (a.Table.length == 0) {
+
+                //$('div#Ist').not(':first').remove();
+                //$("#Ist")[0].remove();
+                return;
+            }
+            else {
+                $('div#Ist').not(':first').remove();
+                $("#txtSplitREVpercent").val("0");
+                $("#txtSplitGPpercent").val("0");
+                $.each(a.Table, function (index, value) {
+                    var tr = $("#Ist").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.BU;
+                    tr.find(".Abcd")[1].children[0].textContent = value.RevenueTarget;
+                    tr.find(".Abcd")[2].children[0].textContent = value.GPTarget;
+                    $("#Ibody").append(tr);
+                });
+                $("#Ist")[0].remove();
+            }
+
+        });
+    }
+    function GetKpiDetail(_Desigid, _Period, _Year) {
+        $.post("/GETKPIDETAILS", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
+            debugger
+            var a = data;
+            if (a.Table.length == 0) {
+                $("#HdnRevSplit").val("");
+                $("#HdnGpSplit").val("");
+                //$('div#IIst').not(':first').remove();
+                //$("#IIst")[0].remove();
+                return;
+            }
+            else {
+                $('div#IIst').not(':first').remove();
+
+                $.each(a.Table, function (index, value) {
+                    var tr = $("#IIst").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.KPI_Parameter;
+                    //tr.find(".Abcd")[1].children[0].textContent = value.GPTarget;
+                    tr.find(".Abcd")[2].children[0].textContent = value.Split_Percentage;
+                    $("#IIbody").append(tr);
+                });
+                $("#IIst")[0].remove();
+                //var d = data.Table1[0].Split_Percentage;
+                //var d1 = data.Table2[0].Split_Percentage;
+                //$("#HdnRevSplit").val(d);
+                //$("#HdnGpSplit").val(d1);
+            }
+        });
+    }
+
+    function GetKpiTargets(_Desigid, _Period, _Year) {
+        $.post("/GETKPITARGET", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
+            debugger
+            var a = data;
+            if (a.Table.length == 0) {
+                $("#HdnRevSplit").val("");
+                $("#HdnGpSplit").val("");
+                //$('div#IIst').not(':first').remove();
+                //$("#IIst")[0].remove();
+                return;
+            }
+            else {
+                var d = data.Table[0].Split_Percentage;
+                var d1 = data.Table1[0].Split_Percentage;
+                $("#HdnRevSplit").val(d);
+                $("#HdnGpSplit").val(d1);
+            }
+        });
+    }
+
+    function GetLoginUserId() {
+        $.get("/GETLOGINUSERID", function (data) {
+            $("#hdnLoginUserId").val(data.EmployeeId); 
+            var Empid = $("#hdnLoginUserId").val();
+            GetLoginUserEmail(Empid);
+        });
+    }
+
+    function GetLoginUserEmail(Empid) {
+        $.post("/GETLOGINUSERMAIL", { Empid: Empid }, function (data) {
+            debugger
+            $("#hdnLoginUserMail").val(data.Table[0].Email);
+            //alert($("#hdnLoginUserMail").val());
+        });
+    }
+
+    $(document).ready(function () { 
+        GetLoginUserId();
+        GetCompensationData();
         $('.loader1').show();
         //GetKpiData();
         $('.loader1').hide();
@@ -108,8 +359,272 @@
         $.post("/ADDCOMPPLAN", { TEMPId: -1 }, function (response) {
             $("#idCard").html(response);
             RedDot_Button_New_HideShow();
-            //GetKPIdetails();
-            //GetKPIdetailsModal();
         })
+    });
+    $(document).on('click', '#btnCancel', function (e) {
+        e.preventDefault();
+        RedDot_Button_Init_HideShow();
+        $("#idCard").html("");
+        $("#divKPIshow").show();
+        $("#ContantsPayment").hide();
+        $("#btnNew").show();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('change', '#EmployeeId', function () {
+        var Empide = $(this).val();
+        $.post("/GETDESIGNATION", { Empide: Empide }, function (data) {
+            debugger
+            $("#DesigName").val(data.DesigName);
+            $("#DesigId").val(data.DesigId);
+            $("#Email").val(data.Email);
+            //$("#HdnCCMail").val("pratim.d@reddotdistribution.com");
+        });
+        var _Empid = $(this).val();
+        var _Desigid = $("#DesigId").val();
+        var _Period = $("#Period option:selected").val();
+        var _Year = $("#Years option:selected").val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetKpiDetail(_Desigid, _Period, _Year);
+            GetSalesDetails(_Empid, _Period, _Year);
+            GetKpiTargets(_Desigid, _Period, _Year);
+        }
+    });
+
+    $(document).on('change', '#Period', function () {
+        var _Empid = $("#EmployeeId option:selected").val();
+        var _Desigid = $("#DesigId").val();
+        var _Period = $(this).val();
+        var _Year = $("#Years option:selected").val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetKpiDetail(_Desigid, _Period, _Year);
+            GetSalesDetails(_Empid, _Period, _Year);
+            GetKpiTargets(_Desigid, _Period, _Year);
+            //GetSalesRevAndGpSplitPercent(_Desigid, _Period, _Year);
+        }
+        //var Obj = JSON.stringify({ EmployeeId: _Empid, Period: _Period, Year: _Year });
+
+    });
+    $(document).on('change', '#Years', function () {
+        var _Empid = $("#EmployeeId option:selected").val();
+        var _Desigid = $("#DesigId").val();
+        var _Period = $("#Period option:selected").val();
+        var _Year = $(this).val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetKpiDetail(_Desigid, _Period, _Year);
+            GetSalesDetails(_Empid, _Period, _Year);
+            GetKpiTargets(_Desigid, _Period, _Year);
+            //GetSalesRevAndGpSplitPercent(_Desigid, _Period, _Year);
+        }
+        //var Obj = JSON.stringify({ EmployeeId: _Empid, Period: _Period, Year: _Year });
+
+    });
+
+    $(document).on('keyup', '.text', function () {
+        var Sum = 0;
+        var exSum1;
+        var p = $(this).val();
+        var GpSplit = $("#HdnGpSplit").val();
+        if (parseFloat(GpSplit) < parseFloat(p)) {
+            $(this).val("0");
+        }
+        $(".OriginatorDet").each(function () {
+            var SplitGpPercent = $(this).find("[name^='txtSplitGPpercent']").val() || 0;
+            Sum = Sum + parseFloat(SplitGpPercent);
+            $("#txtTotalGP").val(Sum);
+            exSum1 = Sum - GpSplit;
+        });
+        if (Sum > GpSplit) {
+            var p1 = parseFloat(Sum) - parseFloat(p);
+            var d = GpSplit - p1;
+            $(this).val(GpSplit - p1);
+            RedDotAlert_Error("Sum cannot exceed" + " " + GpSplit);
+            var finsum1 = Sum - exSum1;
+            $("#txtTotalGP").val(finsum1);
+        }
+    });
+    $(document).on('keyup', '.text1', function () {
+        //var Sum = 0;
+        var Sum1 = 0;
+        var exSum;
+        var t = $(this).val() || 0;
+        var RevSplit = $("#HdnRevSplit").val();
+        if (t > RevSplit) {
+            $(this).val("0");
+        }
+        $(".OriginatorDet").each(function () {
+            var SplitRevPercent = $(this).find("[name^='txtSplitREVpercent']").val() || 0;
+            //Sum = Sum + parseFloat(SplitRevPercent);
+            Sum1 = Sum1 + parseFloat(SplitRevPercent);
+            $("#txtTotalREV").val(Sum1);
+            exSum = Sum1 - RevSplit;
+        });
+        if (Sum1 > RevSplit) {
+            var t1 = parseFloat(Sum1) - parseFloat(t);
+            var d = RevSplit - t1;
+            $(this).val(RevSplit - t1);
+            RedDotAlert_Error("Sum cannot exceed" + " " + RevSplit);
+            var finsum = Sum1 - exSum;
+            $("#txtTotalREV").val(finsum);
+        }
+    });
+    $(document).on('keyup', '.text2', function () {
+        var Sum = 0;
+        $(".OriginatorDet1").each(function () {
+            var TargetNum = $(this).find("[name^='txtTargetNo']").val() || 0;
+            Sum = Sum + parseFloat(TargetNum);
+            $("#txtTotalTarget").val(Sum);
+        });
+    });
+    $(document).on('click', '#btnSave', function () {
+        var RDD_CompPlan = {
+            CompPlanId: $("#CompPlanId").val(),
+            Years: $("#Years option:selected").val(),
+            Period: $("#Period option:selected").val(),
+            EmployeeId: $("#EmployeeId option:selected").val(),
+            EmployeeName: $("#EmployeeId option:selected").text(),
+            Email: $("#Email").val(),
+            DesigId: $("#DesigId").val(),
+            DesigName: $("#DesigName").val(),
+            Currency: $("#Currency option:selected").text(),
+            TotalCompensation: $.trim($("#TotalCompensation").val()),
+            EditFlag: $("#EditFlag").val(),
+
+            TotalSplitGpPercent: $.trim($("#txtTotalGP").val()),
+            TotalSplitRevPercent: $.trim($("#txtTotalREV").val()),
+            TargetNumber: $.trim($("#txtTotalTarget").val()),
+            AcceptedBySalesperson: $("#AcceptedBySalesperson option:selected").val(),
+            Description: $.trim($("#Description").val()),
+            RDD_BU_CompensationPlanList: [],
+            RDD_KPI_CompensationPlanList:[]
+        };
+        $(".OriginatorDet").each(function () {
+            var Currow = $(this).closest("#Ist");
+            var BU = $.trim(Currow.find(".Abcd").eq(0).text());
+            var RevTarget = $.trim(Currow.find(".Abcd").eq(1).text());
+            var GpTarget = $.trim(Currow.find(".Abcd").eq(2).text());            
+            var SplitGpPercent = $.trim($(this).find("[name^='txtSplitGPpercent']").val());
+            var SplitRevPercent = $.trim($(this).find("[name^='txtSplitREVpercent']").val());
+            if (SplitGpPercent != '' && SplitRevPercent != '' && SplitGpPercent != undefined && SplitRevPercent!=undefined) {
+                var RDD_BU_Compplan = {
+                    BU: BU,
+                    GPTarget: GpTarget,
+                    RevenueTarget: RevTarget,
+                    Rev_Split_Percentage: SplitRevPercent,
+                    GP_Split_Percentage: SplitGpPercent
+                };
+                RDD_CompPlan.RDD_BU_CompensationPlanList.push(RDD_BU_Compplan);
+            }
+        });
+        $(".OriginatorDet1").each(function () {
+            var Currow = $(this).closest("#IIst");
+            var KpiParameters = Currow.find(".Abcd").eq(0).text();
+            var KpiTarget = $(this).find("[name^='txtTargetNo']").val();
+            var SplitPercent = $.trim(Currow.find(".Abcd").eq(2).text());
+            if (KpiTarget != '' && KpiTarget != undefined)  {
+                var RDD_KPI_Compplan = {
+                    KPI_Parameter: KpiParameters,
+                    KPI_Target: KpiTarget,
+                    KPI_Split_Percentage: SplitPercent
+                };
+                RDD_CompPlan.RDD_KPI_CompensationPlanList.push(RDD_KPI_Compplan);
+            }
+        });
+        var ValidateFormCheck = ValidateForm(RDD_CompPlan);
+        if (ValidateFormCheck.formValid == false) {
+            RedDotAlert_Error(ValidateFormCheck.ErrorMessage);
+            return;
+        }
+        var data = JSON.stringify({ RDD_CompPlan: RDD_CompPlan });
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveCompensationPlan", "CompensationPlan")',
+            async: false,
+            cache: false,
+            data: data,
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                debugger
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    var Compid = data[0].Id;
+                    var MailFlag = $("#MailFlag").val();
+                    var Email1 = "mainak@reddotdistribution.com";
+                    var Email2 = "pratim.d@reddotdistribution.com";
+                    var Acceptstatus = $("#AcceptedBySalesperson option:selected").val();
+                    //window.location.href = '@Url.Action("Index", "CompensationPlan")';
+                    window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email1=" + Email1 + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";
+                }
+                else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#btnPrint', function () {
+        window.location.href = '@Url.Action("GenerateSamplePdf", "CompensationPlan")';
+    });
+
+    $("#IIIbody").on('dblclick', "#IIIst", function (e) {
+        e.preventDefault();
+        var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
+        $.post("/ADDCOMPPLAN", { TEMPId: TEMPId }, function (response) {
+            $("#idCard").html(response);
+            var _Empid = $("#EmployeeId option:selected").val();
+            var _Desigid = $("#DesigId").val();
+            var _Period = $("#Period option:selected").val();
+            var _Year = $("#Years option:selected").val();
+            GetKpiTargets(_Desigid, _Period, _Year);
+            RedDot_Button_New_HideShow();
+        })
+    });
+    function ValidateForm(RDD_CompPlan) {
+        var response = {
+            ErrorMessage: "",
+            formValid: false
+        };
+
+        if (RDD_CompPlan.EmployeeId == "0" || RDD_CompPlan.EmployeeId == "-1") {
+            response.ErrorMessage += "Employee,";
+        }
+
+        if (RDD_CompPlan.Years == "0" || RDD_CompPlan.Years == "-1") {
+            response.ErrorMessage += "Year,";
+        }
+
+        if (RDD_CompPlan.Period == "0" || RDD_CompPlan.Period == "-1") {
+            response.ErrorMessage += "Period,";
+        }
+        if (RDD_CompPlan.CurrCode == "0" || RDD_CompPlan.CurrCode == "-1") {
+            response.ErrorMessage += "Currency,";
+        }
+
+        if (RDD_CompPlan.TotalCompensation.length == 0) {
+            response.ErrorMessage += "Please Enter Total Compensation";
+        }
+
+        if (response.ErrorMessage.length == 0) {
+            response.formValid = true;
+        }
+        else {
+            response.ErrorMessage = "Enter Mandatory Fields " + response.ErrorMessage + "."
+        }
+
+        return response;
+    }
+    $(document).on("wheel", "input[type=number]", function (e) {
+        $(this).blur();
     });
 </script>

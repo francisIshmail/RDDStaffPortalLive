@@ -1,0 +1,586 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Incentive.RDD_GenerateComp
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Generate Compensation Plan</h4></div>
+                <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                    @*<button class="btn btn-info btn-sm" id="btnPrint">Print</button>*@
+                    <button class="btn btn-info btn-sm" id="btnAdd">New</button>
+                    <button class="btn btn-info btn-sm" id="btnSave">Save</button>
+                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+            <div class="rowmin" id="divKPIshow">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div id="idCard">
+
+                            </div>
+                            <div class="rowmin row mar-b10" id="tblid1">
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tblid" class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="IIInd" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead"><div>Comp Cal Id</div></div>
+                                            <div class="reddotTableHead" hidden="hidden"><div>Designation Id</div></div>
+                                            <div class="reddotTableHead"><div>Designation</div></div>
+                                            <div class="reddotTableHead"><div>Employee Name</div></div>
+                                            <div class="reddotTableHead"><div>Period</div></div>
+                                            <div class="reddotTableHead"><div>Year</div></div>
+                                            <div class="reddotTableHead"><div>Currency</div></div>
+                                            <div class="reddotTableHead"><div>Total Compensation</div></div>
+                                            <div class="reddotTableHead"><div>Total Compensation Earned</div></div>
+                                            <div class="reddotTableHead"><div>Total Deduction</div></div>
+                                            <div class="reddotTableHead"><div>Final Compensation Earned</div></div>
+                                            <div class="reddotTableHead"><div>CreatedOn </div></div>
+                                            <div class="reddotTableHead"><div>CreatedBy </div></div>                                          
+                                        </div>
+                                    </div>
+                                    <div id="IIIbody" class="reddotTableBody">
+                                        <div id="IIIst" class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableCell Abcd"><div>Compensation Calculation Id</div></div>
+                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>Designation Id</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Designation</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Employee Name</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Period</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Year</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Currency</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Total Compensation</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Total Compensation Earned</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Total Deduction</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Final Compensation Earned</div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div>CreatedBy</div></div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GetPartial">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script type="text/javascript">
+    var tblhead1 = ['Comp_Calc_Id', 'DesigId', 'DesigName', 'EmployeeName', 'Period', 'Years', 'Currency', 'TotalCompensation', 'Total_Comp_Earned', 'Total_Deduction', 'Final_Comp_Earned', 'CreatedOn', 'CreatedBy'];
+    var tblhide = [];
+    var tblhead2 = [];
+    var dateCond = ['CreatedOn', 'LastUpdatedOn'];
+    var arr = [];
+    var curPage = 1;
+
+    function GetCompensationCalculationData() {
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        $('.loader1').show();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPCAL", data, dateCond, tblhead1, tblhide, tblhead2);
+    }
+    //#region Next Button*/
+    $('.next').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage++;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (curPage > arr.data[0].TotalCount)
+            curPage = 0;
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPCAL", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Prev Button*/
+    $('.prev').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage--;
+
+        if (curPage < 0)
+            curPage = (arr.data[0].TotalCount - 1);
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPCAL", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Search Textbox*/
+    $("#Search-Forms").on("keyup", function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $(this).val().toLowerCase();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETCOMPCAL", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+
+    function GetCompensationAmount(Empide,Period,Year) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetCompensationAmountDetails", "GenerateComp")',
+            async: false,
+            cache: false,
+            data: JSON.stringify({ Empide: Empide, Period: Period, Year: Year }),
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                debugger
+                if (data.Table.length > 0) {
+                    $("#txtCurrency").val(data.Table[0].Currency);
+                    $("#txtCompAmount").val(data.Table[0].TotalCompensation);
+                }
+                else {
+                    $("#txtCurrency").val("");
+                    $("#txtCompAmount").val("");
+                }
+            }
+        });
+    }
+
+    function GetBUCompensationDetails(_Empid, _Period, _Year, arry, arry1) {
+        $.post("/GETBUCOMPDETAILS", { EmployeeId: _Empid, Period: _Period, Years: _Year }, function (data) {
+           debugger
+            var a = data;
+            if (a.Table.length == 0) {
+                $('div#Ist').not(':first').remove();
+                $("#Ist")[0].remove();
+                //$('div#Ist')[0].append('<tr><td class="reddotTableCell width15per Abcd"><div></div></td></tr>');
+                return;
+            }
+            else {
+
+                //$('div#Ist').not(':first').remove();
+                //$("#txtSplitREVpercent").val("0");
+                //$("#txtSplitGPpercent").val("0");
+                
+                var BuCompEarned = 0;
+                var KPICompEarned = 0;
+                $.each(a.Table, function (index, value) {                    
+                    var totalCompensation = arry1[0].TotalCompensation;
+                    $("#TotalCompensation").val(totalCompensation);
+                    var _Slabrange = arry;
+                    var Total = value.TotalTarget;
+                    var Achieved = value.TotalAcheived;
+                    var AchievedPercent = parseFloat((Achieved / Total) * 100);
+                    //var AchievedPercent = parseFloat(110);
+                    var IncentivePercent = "";
+                    var SplitPercent = value.SplitPercentage;
+                    for (var i = 0; i < _Slabrange.Table.length; i++) {
+                        if (AchievedPercent >= parseFloat(_Slabrange.Table[i].Achieved_Percentage_From) && AchievedPercent <= parseFloat(_Slabrange.Table[i].Achieved_Percentage_To)) {
+                            if (parseFloat(_Slabrange.Table[i].Incentive_Percentage) == -1.00) {
+                                IncentivePercent = AchievedPercent;
+                                break;
+                            }
+                            else {
+                                IncentivePercent = parseFloat(_Slabrange.Table[i].Incentive_Percentage);
+                                break;
+                            }                            
+                        }
+                        else {
+                            IncentivePercent = "";
+                        }
+                    }
+                    var Earned = (totalCompensation * SplitPercent * IncentivePercent)/10000;
+                    BuCompEarned += Earned;
+                    var tr = $("#Ist").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.BU;
+                    tr.find(".Abcd")[1].children[0].textContent = Earned;
+                    tr.find(".Abcd")[2].children[0].textContent = value.SplitPercentage;
+                    tr.find(".Abcd")[3].children[0].textContent = AchievedPercent;
+                    tr.find(".Abcd")[4].children[0].textContent = value.TotalAcheived;
+                    tr.find(".Abcd")[5].children[0].textContent = value.TotalTarget;
+                    tr.find(".Abcd")[6].children[0].textContent = value.M1;
+                    tr.find(".Abcd")[7].children[0].textContent = value.M2;
+                    tr.find(".Abcd")[8].children[0].textContent = value.M3;
+                    tr.find(".Abcd")[9].children[0].textContent = value.M4;
+                    tr.find(".Abcd")[10].children[0].textContent = value.M5;
+                    tr.find(".Abcd")[11].children[0].textContent = value.M6;
+
+                    $("#Ibody").append(tr);
+                });
+                $("#HdnBUCompensation").val(BuCompEarned);                
+                $("#Ist")[0].remove();
+
+
+                $('div#IIst').not(':first').remove();
+                $.each(a.Table1, function (index, value) {
+                    var totalCompensation = arry1[0].TotalCompensation;
+                    var _Slabrange = arry;
+                    var Total = value.TotalTarget;
+                    var Achieved = value.TotalAcheived;
+                    var AchievedPercent = parseFloat((Achieved / Total) * 100);
+                    var IncentivePercent = "";
+                    var SplitPercent = value.SplitPercentage;
+                    for (var i = 0; i < _Slabrange.Table.length; i++) {
+                        if (AchievedPercent >= parseFloat(_Slabrange.Table[i].Achieved_Percentage_From) && AchievedPercent <= parseFloat(_Slabrange.Table[i].Achieved_Percentage_To)) {
+                            if (parseFloat(_Slabrange.Table[i].Incentive_Percentage) == -1.00) {
+                                IncentivePercent = AchievedPercent;
+                                break;
+                            }
+                            else {
+                                IncentivePercent = parseFloat(_Slabrange.Table[i].Incentive_Percentage);
+                                break;
+                            }
+                        }
+                        else {
+                            IncentivePercent = "";
+                        }
+                    }
+                    var Earned = (totalCompensation * SplitPercent * IncentivePercent) / 10000;
+                    KPICompEarned += Earned;
+                    var tr = $("#IIst").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.KPIParameter;
+                    tr.find(".Abcd")[1].children[0].textContent = Earned;
+                    tr.find(".Abcd")[2].children[0].textContent = value.SplitPercentage;
+                    tr.find(".Abcd")[3].children[0].textContent = AchievedPercent;
+                    tr.find(".Abcd")[4].children[0].textContent = value.TotalAcheived;
+                    tr.find(".Abcd")[5].children[0].textContent = value.TotalTarget;
+                    tr.find(".Abcd")[6].children[0].textContent = value.M1;
+                    tr.find(".Abcd")[7].children[0].textContent = value.M2;
+                    tr.find(".Abcd")[8].children[0].textContent = value.M3;
+                    tr.find(".Abcd")[9].children[0].textContent = value.M4;
+                    tr.find(".Abcd")[10].children[0].textContent = value.M5;
+                    tr.find(".Abcd")[11].children[0].textContent = value.M6;
+                    $("#IIbody").append(tr);
+                });
+                $("#HdnKPICompensation").val(KPICompEarned);
+                $("#IIst")[0].remove();
+                var TotalCompEarned = BuCompEarned + KPICompEarned;
+                $("#Total_Comp_Earned").val(TotalCompEarned);
+            }
+
+        });
+    }
+
+    function GetKPITermsAndCondition(_Desigid, _Period, _Year) {
+        $.post("/GETKPITNC", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
+            debugger
+            var a = data;
+            if (a.Table.length == 0) {
+
+                //$('div#Ist').not(':first').remove();
+                //$("#Ist")[0].remove();
+                return;
+            }
+            else {
+                $('div#IVst').not(':first').remove();
+                //$("#txtSplitREVpercent").val("0");
+                //$("#txtSplitGPpercent").val("0");
+                $.each(a.Table, function (index, value) {
+                    var tr = $("#IVst").clone();
+                    tr.find(".Abcd")[0].children[0].textContent = value.TermsAndCondition;
+                    $("#IVbody").append(tr);
+                });
+                $("#IVst")[0].remove();
+            }
+        });
+    }
+
+    function GetTotalDeductableAmount(_Empid, _Period, _Year) {
+        $.post("/GETDEDUCTAMOUNT", { EmpId: _Empid, Period: _Period, Years: _Year }, function (data) {
+            var TotalCompEarned = $("#Total_Comp_Earned").val();
+            var TotalDeduct = data.Table[0].TotalDeduction;
+            $("#Total_Deduction").val(TotalDeduct);
+            var FinalCompEarned = parseFloat(TotalCompEarned - TotalDeduct);
+            $("#Final_Comp_Earned").val(FinalCompEarned);
+        });
+    }
+
+    $(document).ready(function () {
+        GetCompensationCalculationData();
+        $('.loader1').show();
+        //GetKpiData();
+        $('.loader1').hide();
+        $("#divKPIshow").show();
+        //GetKPIdetails();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('click', '#btnAdd', function (e) {
+        e.preventDefault();
+        $.post("/ADDGENCOMPPLAN", { TEMPId: -1 }, function (response) {
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();
+        })
+    });
+    $(document).on('click', '#btnCancel', function (e) {
+        e.preventDefault();
+        RedDot_Button_Init_HideShow();
+        $("#idCard").html("");
+        $("#divKPIshow").show();
+        $("#ContantsPayment").hide();
+        $("#btnNew").show();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('change', '#EmployeeId', function () {
+        $("#txtEmployeeName").val($("#EmployeeId option:selected").text());
+        var _Empid = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDesignationDetails", "GenerateComp")',
+            async: false,
+            cache: false,
+            data: JSON.stringify({ Empide: _Empid}),
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                $("#DesigName").val(data.DesigName);
+                $("#DesigId").val(data.DesigId);
+            }
+        });
+        var _Empid = $(this).val();
+        var _Period = $("#Period option:selected").val();
+        var _Year = $("#Years option:selected").val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetCompensationAmount(_Empid, _Period, _Year);
+        }
+    });
+    $(document).on('change', '#Period', function () {
+        $("#txtPeriod").val($(this).val());
+        var _Empid = $("#EmployeeId option:selected").val();
+        var _Period = $(this).val();
+        var _Year = $("#Years option:selected").val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetCompensationAmount(_Empid, _Period, _Year);
+        }
+    });
+    $(document).on('change', '#Years', function () {
+        $("#txtPeriod").val($(this).val());
+        var _Empid = $("#EmployeeId option:selected").val();
+        var _Period = $("#Period option:selected").val();
+        var _Year = $(this).val();
+        if (_Empid == 0 || _Empid == undefined || _Period == 0 || _Period == undefined || _Year == 0 || _Year == undefined) {
+            return;
+        }
+        else {
+            GetCompensationAmount(_Empid, _Period, _Year);
+        }
+    });
+    $(document).on('click', '#btnGenerate', function () {
+        var _Desigid = $("#DesigId").val();
+        var _Empid = $("#EmployeeId option:selected").val();
+        var _Period = $("#Period option:selected").val();
+        var _Year = $("#Years option:selected").val();
+        if (_Empid == "0") {
+            RedDotAlert_Warning("Please Select Employee");
+            return;
+        }
+        if (_Period == "0") {
+            RedDotAlert_Warning("Please Select Period");
+            return;
+        }
+        if (_Year == "0") {
+            RedDotAlert_Warning("Please Select Year");
+            return;
+        }
+        $.post("/GETINCENTIVESLAB", { Empid: _Empid, Period: _Period, Years: _Year }, function (data) {
+
+            var arry;
+            var a = data;
+            if (a.Table.length > 0) {
+                arry = a;
+                var arry1 = a.Table1;
+                GetBUCompensationDetails(_Empid, _Period, _Year, arry, arry1);
+            }
+            else {
+                RedDotAlert_Error("No Record Found");
+                return;
+            }
+        });
+        //var Slabdata = arry;
+
+        GetKPITermsAndCondition(_Desigid, _Period, _Year);
+
+        GetTotalDeductableAmount(_Empid, _Period, _Year);
+    });
+
+
+    $(document).on('click', '#btnSave', function () {
+        var RDD_GenComp = {
+            //CompPlanId: $("#CompPlanId").val(),
+            Years: $("#Years option:selected").val(),
+            Period: $("#Period option:selected").val(),
+            EmployeeId: $("#EmployeeId option:selected").val(),
+            EmployeeName: $("#EmployeeId option:selected").text(),
+            //Email: $("#Email").val(),
+            DesigId: $("#DesigId").val(),
+            DesigName: $("#DesigName").val(),
+            Currency: $("#txtCurrency").val(),
+            TotalCompensation: $.trim($("#TotalCompensation").val()),
+            EditFlag: $("#EditFlag").val(),
+
+            Total_Comp_Earned: $.trim($("#Total_Comp_Earned").val()),
+            Total_Deduction: $.trim($("#Total_Deduction").val()),
+            Final_Comp_Earned: $.trim($("#Final_Comp_Earned").val()),
+            RDD_BU_CompensationCalculationList: [],
+            RDD_KPI_CompensationCalculationList:[]
+        };
+        $(".OriginatorDet").each(function () {
+            var Currow = $(this).closest("#Ist");
+            var BU = $.trim(Currow.find(".Abcd").eq(0).text());
+            var Earned = $.trim(Currow.find(".Abcd").eq(1).text());
+            var Achieved_Percentage = $.trim(Currow.find(".Abcd").eq(3).text());
+            var TotalAcheived = $.trim(Currow.find(".Abcd").eq(4).text());
+            var TotalTarget = $.trim(Currow.find(".Abcd").eq(5).text());
+            var M1 = $.trim(Currow.find(".Abcd").eq(6).text());
+            var M2 = $.trim(Currow.find(".Abcd").eq(7).text());
+            var M3 = $.trim(Currow.find(".Abcd").eq(8).text());
+            var M4 = $.trim(Currow.find(".Abcd").eq(9).text());
+            var M5 = $.trim(Currow.find(".Abcd").eq(10).text());
+            var M6 = $.trim(Currow.find(".Abcd").eq(11).text());
+            var RDD_BU_GenComp = {
+                BU: BU,
+                Earned: Earned,
+                Achieved_Percentage: Achieved_Percentage,
+                TotalAcheived: TotalAcheived,
+                TotalTarget: TotalTarget,
+                M1: M1,
+                M2: M2,
+                M3: M3,
+                M4: M4,
+                M5: M5,
+                M6: M6
+            }
+            RDD_GenComp.RDD_BU_CompensationCalculationList.push(RDD_BU_GenComp);
+        });
+        $(".OriginatorDet1").each(function () {
+            var Currow = $(this).closest("#IIst");
+            var KPI_Parameter = $.trim(Currow.find(".Abcd").eq(0).text());
+            var Earned = $.trim(Currow.find(".Abcd").eq(1).text());
+            var Achieved_Percentage = $.trim(Currow.find(".Abcd").eq(3).text());
+            var TotalAcheived = $.trim(Currow.find(".Abcd").eq(4).text());
+            var TotalTarget = $.trim(Currow.find(".Abcd").eq(5).text());
+            var M1 = $.trim(Currow.find(".Abcd").eq(6).text());
+            var M2 = $.trim(Currow.find(".Abcd").eq(7).text());
+            var M3 = $.trim(Currow.find(".Abcd").eq(8).text());
+            var M4 = $.trim(Currow.find(".Abcd").eq(9).text());
+            var M5 = $.trim(Currow.find(".Abcd").eq(10).text());
+            var M6 = $.trim(Currow.find(".Abcd").eq(11).text());
+            var RDD_KPI_GenComp = {
+                KPI_Parameter: KPI_Parameter,
+                Earned: Earned,
+                Achieved_Percentage: Achieved_Percentage,
+                TotalAcheived: TotalAcheived,
+                TotalTarget: TotalTarget,
+                M1: M1,
+                M2: M2,
+                M3: M3,
+                M4: M4,
+                M5: M5,
+                M6: M6
+            };
+            RDD_GenComp.RDD_KPI_CompensationCalculationList.push(RDD_KPI_GenComp);
+        });
+        
+        var data = JSON.stringify({ RDD_GenComp: RDD_GenComp });
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveCompensationCalculation", "GenerateComp")',
+            async: false,
+            cache: false,
+            data: data,
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                debugger
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    var Compid = data[0].Id;
+                    var MailFlag = $("#MailFlag").val();
+                    var Email1 = "mainak@reddotdistribution.com";
+                    var Email2 = "pratim.d@reddotdistribution.com";
+                    var Acceptstatus = $("#AcceptedBySalesperson option:selected").val();
+                    window.location.href = '@Url.Action("Index", "GenerateComp")';
+                    //window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email1=" + Email1 + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";
+                }
+                else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+            }
+        });
+    });
+
+    $("#IIIbody").on('dblclick', "#IIIst", function (e) {
+        e.preventDefault();
+        var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
+        $.post("/ADDGENCOMPPLAN", { TEMPId: TEMPId }, function (response) {
+            $("#idCard").html(response);
+            var _Empid = $("#EmployeeId option:selected").val();
+            var _Desigid = $("#DesigId").val();
+            var _Period = $("#Period option:selected").val();
+            var _Year = $("#Years option:selected").val();
+            GetKPITermsAndCondition(_Desigid, _Period, _Year);
+            RedDot_Button_New_HideShow();
+            $("#btnSave").hide();
+            $("#EmployeeId").attr("disabled", true);
+            $("#Period").attr("disabled", true);
+            $("#Years").attr("disabled", true);
+            $("#btnGenerate").hide();
+        })
+    });
+</script>

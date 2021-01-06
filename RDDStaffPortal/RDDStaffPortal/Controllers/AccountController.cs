@@ -42,6 +42,10 @@ namespace RDDStaffPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var urlToRemove = Url.Action("Index", "Dashboard");
+                HttpResponse.RemoveOutputCacheItem(urlToRemove);
+
                 AccountService accountService = new AccountService();
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
@@ -60,12 +64,11 @@ namespace RDDStaffPortal.Controllers
                         }
                         ab = Convert.ToBase64String(file);
                     }
-                     Session["LoginName"] = ab;
+                    Session["LoginName"] = ab;
+                    if (!string.IsNullOrEmpty(ReturnUrl))                        return Redirect(ReturnUrl);                    else                        return RedirectToAction("Index", "Dashboard");
 
-                    var urlToRemove = Url.Action("Index", "Dashboard");
-                    HttpResponse.RemoveOutputCacheItem(urlToRemove);
 
-                    return RedirectToAction("Index", "Dashboard");
+                   // return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {

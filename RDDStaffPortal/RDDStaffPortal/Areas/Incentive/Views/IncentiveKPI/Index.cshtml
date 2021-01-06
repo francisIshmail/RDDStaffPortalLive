@@ -33,11 +33,7 @@
                                         <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
                                 </div>
-                                <div class="col-xl-2 col-md-2 ml-auto text-right">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
-                                    </div>
-                                </div>
+                               
                             </div>
 
                             <div id="tblid" class="table-responsive">
@@ -64,15 +60,15 @@
                                             <div class="reddotTableCell Abcd" hidden="hidden"><div>KPI Id</div></div>
                                             <div class="reddotTableCell Abcd" hidden="hidden"><div>Designation Id</div></div>
                                             <div class="reddotTableCell Abcd"><div>Designation</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>KPI Name</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>Retain %</div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>Period</div></div>
+                                            <div class="reddotTableCell Abcd"><div>KPI Name</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Retain %</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Period</div></div>
                                             <div class="reddotTableCell Abcd"><div>Year</div></div>
                                             <div class="reddotTableCell Abcd"><div>T & C</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>CreatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div>CreatedBy</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
-                                            <div class="reddotTableCellLeft Abcd"><div>LastUpdatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div>LastUpdatedBy</div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +150,7 @@
     var curPage = 1;
     //#region Pageload table bind*/
     function GetKpiData() {
-        debugger;
+      
         var value1 = $("#Search-Forms").val().toLowerCase();
         $('.loader1').show();
         var data = JSON.stringify({
@@ -163,7 +159,7 @@
             psearch: value1,
         });
         arr = RedDot_DivTable_Fill("III", "/GETKPI", data, dateCond, tblhead1, tblhide, tblhead2);
-        debugger;
+        
     }
     //#endregion
     //#region Next Button*/
@@ -380,36 +376,32 @@
     });
     
     $(document).on('keyup', '.text', function () {
-        //alert("hi
+       
         var Sum = 0;
         var t = $(this).val() || 0;
         if (t > 100) {
             $(this).val("0");
         }
         $(".OriginatorDet").each(function () {
-
             var SplitPercent = $(this).find("[name^='txtSplit']").val() || 0;
-            if (SplitPercent != '' && SplitPercent != 0) {
-                Sum = Sum + parseInt(SplitPercent);
-
+            var EarnOrDeduct = $(this).find("[name^='ddlEarnOrDeduct']").val();
+            if (EarnOrDeduct == "Earning") {
+                if (SplitPercent != '' && SplitPercent != 0) {
+                    Sum = Sum + parseInt(SplitPercent);                    
                 }
-        });
-        //var CVSP = $.trim($("#txtCVsplit").val()) || 0;
-        //var FSP = $.trim($("#txtForcstSplit").val()) || 0;
-        //var AtndSP = $.trim($("#txtAtndSplit").val()) || 0;
-        //var AbsntSP = $.trim($("#txtAbsntSplit").val()) || 0;
-        //var SadSP = $.trim($("#txtStckSplit").val()) || 0;
-        //var SrtSP = $.trim($("#txtRevSplit").val()) || 0;
-        //var SgpSP = $.trim($("#txtGptSplit").val()) || 0;
-        //sum = parseInt(CVSP) + parseInt(FSP) + parseInt(AtndSP) + parseInt(AbsntSP) + parseInt(SadSP) + parseInt(SrtSP) + parseInt(SgpSP);
+            }
+            else {
+                return;
+            }
+            $("#txtTotalPercent").val(Sum);
+        });        
         if (Sum > 100) {
             var t1 = parseInt(Sum) - parseInt(t);
             $(this).val(100-t1);
             RedDotAlert_Error("Sum cannot exceed 100");
         }
     });
-    debugger
-
+    
     $(document).on('click', '#btnSave', function () {
         var RDD_Incentive = {
             KPI_Id: $("#KPI_Id").val(),
@@ -456,10 +448,11 @@
                 debugger
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
+                    window.location.href = '@Url.Action("Index", "IncentiveKPI")';
                 } else {
                     RedDotAlert_Error(data[0].Responsemsg);
                 }
-                window.location.href = '@Url.Action("Index", "IncentiveKPI")';
+                
             }
         });
     });

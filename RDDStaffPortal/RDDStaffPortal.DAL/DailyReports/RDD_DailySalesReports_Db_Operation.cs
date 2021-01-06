@@ -275,7 +275,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                         new SqlParameter("@p_username",rDD_DailySales[0].LastUpdatedBy),
                         };
 
-                        ds1 = Com.ExecuteDataSet("RDD_DSR_SendMail_Finalsubmit", CommandType.StoredProcedure, parm);
+                        ds1 = Com.ExecuteDataSet("RDD_DSR_SendMail_Finalsubmit", CommandType.StoredProcedure, parm);    
 
                         string sendemail = ds1.Tables[0].Rows[0]["SendReport"].ToString();
                         string Reportemail = ds1.Tables[0].Rows[0]["ReportMust"].ToString();
@@ -284,9 +284,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                         html = html + " Visit Date  -  <b> " + Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " </b>  to  <b>  " + Convert.ToDateTime(rDD_DailySales[0].ToDate).ToString("dd/MMM/yyyy") + " </b>  <br/><br/>";
                         html = html + "Best Regards, <br/> Red Dot Distribution.";
                         string cc = ds1.Tables[0].Rows[0]["Self"].ToString();
-
-
-
+                                                
                         string Filename = ds1.Tables[0].Rows[0]["Country"].ToString() + "-" + rDD_DailySales[0].LastUpdatedBy + "-Visit Report.xls";
                         Attachment at = new Attachment(ms, Filename);
 
