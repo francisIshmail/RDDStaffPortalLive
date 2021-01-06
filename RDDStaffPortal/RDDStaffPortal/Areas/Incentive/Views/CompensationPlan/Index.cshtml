@@ -378,6 +378,7 @@
             $("#DesigName").val(data.DesigName);
             $("#DesigId").val(data.DesigId);
             $("#Email").val(data.Email);
+            //alert($("#Email").val());
             //$("#HdnCCMail").val("pratim.d@reddotdistribution.com");
         });
         var _Empid = $(this).val();
@@ -560,8 +561,8 @@
                     RedDotAlert_Success(data[0].Responsemsg);
                     var Compid = data[0].Id;
                     var MailFlag = $("#MailFlag").val();
-                    var Email1 = "mainak@reddotdistribution.com";
-                    var Email2 = "pratim.d@reddotdistribution.com";
+                    var Email1 = $("#Email").val;
+                    var Email2 = $("#hdnLoginUserMail").val(); 
                     var Acceptstatus = $("#AcceptedBySalesperson option:selected").val();
                     //window.location.href = '@Url.Action("Index", "CompensationPlan")';
                     window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email1=" + Email1 + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";

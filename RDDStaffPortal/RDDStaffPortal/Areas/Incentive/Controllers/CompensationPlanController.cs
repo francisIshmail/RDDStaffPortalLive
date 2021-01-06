@@ -376,6 +376,11 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                                 string Filename = EmployeeName + "-" + Period + "-" + Year + " " + "Comp Plan.pdf";
                                 Attachment at = new Attachment(new MemoryStream(bytes), Filename);
                                 string Subject = "Your compensation plan is set by your manager for" + " " + Period + "-" + Year;
+
+
+                                Tomail = "mainak@reddotdistribution.com";
+                                cc = "pratim.d@reddotdistribution.com";
+
                                 SendMail.SendMailWithAttachment(Tomail, cc, Subject, Html, true, at);
                             }
                             //Response.End();
@@ -400,6 +405,9 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                         Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
                     }
+
+                    Tomail = "pratim.d@reddotdistribution.com";
+                    cc = "mainak@reddotdistribution.com";
 
                     string Subject = EmployeeName + "accepted compensation plan for" + " " + Period + "-" + Year;
                     SendMail.Send(Tomail, cc, Subject, Html, true);
