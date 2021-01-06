@@ -48,7 +48,7 @@
                                                 @*@Html.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = Doc.DocPath })*@
                                                
 
-                                                @h.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = list.reportFilePath+""+ list.fileurl + "\\"+list.fileName1,Date1=System.DateTime.Now.ToString("MM-dd-yyyy") })
+                                                @h.ActionLink(string.Concat("Download File"), "Download", new { parentPartId = @i.reportFilePath+""+ @i.fileurl + "\\"+ @i.fileName1,Date1=System.DateTime.Now.ToString("MM-dd-yyyy") })
 
 
                                             </button>
