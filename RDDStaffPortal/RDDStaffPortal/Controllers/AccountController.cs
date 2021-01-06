@@ -123,7 +123,7 @@ namespace RDDStaffPortal.Controllers
                                                         "<br>" +
                                                         " Please click on below link to reset your password<br>" +
                                                         "<br>" +
-                                                        "URL Link: <a href = 'http://localhost:28975/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "' target = '_blank' > http://localhost:28975/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "</a> <br>" +
+                                                        "URL Link: <a href = 'https://app.reddotdistribution.com/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "' target = '_blank' > https://app.reddotdistribution.com/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "</a> <br>" +
                                                         "<br>" +
                                                         "This is one time password reset link and valid for 24 hours.<br>" +
                                                         "<br>" +
