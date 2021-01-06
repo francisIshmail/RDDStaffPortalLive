@@ -733,128 +733,39 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 if (dsdata.Tables.Count > 0)
                 {
                     DataTable dtDept = dsdata.Tables[0];
+                    DataRowCollection drc;
+                    drc = dtDept.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _Fdata.ChangeCount = !string.IsNullOrWhiteSpace(dr["ChangeCount"].ToString()) ? Convert.ToInt32(dr["ChangeCount"].ToString()) : 0;
+                        _Fdata.fid = !string.IsNullOrWhiteSpace(dr["fid"].ToString()) ? Convert.ToInt32(dr["fid"].ToString()) : 0;
+                        _Fdata.bdm = !string.IsNullOrWhiteSpace(dr["bdm"].ToString()) ? dr["bdm"].ToString() : "";
+                        _Fdata.quoteID = !string.IsNullOrWhiteSpace(dr["quoteID"].ToString()) ? dr["quoteID"].ToString() : "";
+                        _Fdata.enduser = !string.IsNullOrWhiteSpace(dr["enduser"].ToString()) ? dr["enduser"].ToString() : "";
+                        _Fdata.CardCode = !string.IsNullOrWhiteSpace(dr["resellerCode"].ToString()) ? dr["resellerCode"].ToString() : "";
+                        _Fdata.CardName = !string.IsNullOrWhiteSpace(dr["resellerName"].ToString()) ? dr["resellerName"].ToString() : "";
+                        _Fdata.Country = !string.IsNullOrWhiteSpace(dr["country"].ToString()) ? dr["country"].ToString() : "";
+                        _Fdata.BUName = !string.IsNullOrWhiteSpace(dr["BU"].ToString()) ? dr["BU"].ToString() : "";
+                        _Fdata.goodsDescr = !string.IsNullOrWhiteSpace(dr["goodsDescr"].ToString()) ? dr["goodsDescr"].ToString() : "";
+                        _Fdata.quoteDate = !string.IsNullOrWhiteSpace(dr["quoteDate"].ToString()) ?Convert.ToDateTime(dr["quoteDate"].ToString()) : System.DateTime.Now;
+                        _Fdata.expClosingDt = !string.IsNullOrWhiteSpace(dr["expClosingDt"].ToString()) ? Convert.ToDateTime(dr["expClosingDt"].ToString()) : System.DateTime.Now;
+                        _Fdata.DealStatus = !string.IsNullOrWhiteSpace(dr["dealStatus"].ToString()) ? dr["dealStatus"].ToString() : "";
+                        _Fdata.Cost = !string.IsNullOrWhiteSpace(dr["Cost"].ToString()) ? Convert.ToDecimal(dr["Cost"].ToString()) : 0;
+                        _Fdata.Landed = !string.IsNullOrWhiteSpace(dr["Landed"].ToString()) ? Convert.ToDecimal(dr["Landed"].ToString()) : 0;
+                        _Fdata.value = !string.IsNullOrWhiteSpace(dr["value"].ToString()) ? Convert.ToDecimal(dr["value"].ToString()) : 0;
+                        _Fdata.remarks= !string.IsNullOrWhiteSpace(dr["remarks"].ToString()) ? dr["remarks"].ToString() : "";
+                        _Fdata.Remarks2 = !string.IsNullOrWhiteSpace(dr["Remarks2"].ToString()) ? dr["Remarks2"].ToString() : "";
+                        _Fdata.Remarks3 = !string.IsNullOrWhiteSpace(dr["Remarks3"].ToString()) ? dr["Remarks3"].ToString() : "";
+                        _Fdata.orderBookedDate = !string.IsNullOrWhiteSpace(dr["orderBookedDate"].ToString()) ? Convert.ToDateTime(dr["orderBookedDate"].ToString()):DateTime.Now;
+                        _Fdata.InvoiceDt = !string.IsNullOrWhiteSpace(dr["InvoiceDt"].ToString()) ? Convert.ToDateTime(dr["InvoiceDt"].ToString()) : DateTime.Now;
+                        _Fdata.NextReminderDt = !string.IsNullOrWhiteSpace(dr["NextReminderDt"].ToString()) ? Convert.ToDateTime(dr["NextReminderDt"].ToString()) : DateTime.Now;
+                        _Fdata.Createddte = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : DateTime.Now;
+                        _Fdata.MarginUSD = !string.IsNullOrWhiteSpace(dr["MarginUSD"].ToString()) ?Convert.ToDecimal(dr["MarginUSD"].ToString()) : 0;
+                        _Fdata.UpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() :"";
+                        _Fdata.Updateddte = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : DateTime.Now;
 
-                    
-
-                        if (dtDept.Rows[0]["ChangeCount"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["ChangeCount"]))
-                    {
-                        _Fdata.ChangeCount = Convert.ToInt32(dtDept.Rows[0]["ChangeCount"]);
-                    }
-                    if (dtDept.Rows[0]["fid"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["fid"]))
-                    {
-                        _Fdata.fid = Convert.ToInt32(dtDept.Rows[0]["fid"]);
-                    }
-                    if (dtDept.Rows[0]["bdm"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["bdm"]))
-                    {
-                        _Fdata.bdm = dtDept.Rows[0]["bdm"].ToString();
-                    }
-                    if (dtDept.Rows[0]["quoteID"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["quoteID"]))
-                    {
-                        _Fdata.quoteID = dtDept.Rows[0]["quoteID"].ToString();
-                    }
-                    if (dtDept.Rows[0]["endUser"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["endUser"]))
-                    {
-                        _Fdata.enduser= dtDept.Rows[0]["endUser"].ToString();
-                    }
-
-                    if (dtDept.Rows[0]["resellerCode"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["resellerCode"]))
-                    {
-                        _Fdata.CardCode = dtDept.Rows[0]["resellerCode"].ToString();
-                    }
-                    if (dtDept.Rows[0]["resellerName"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["resellerName"]))
-                    {
-                        _Fdata.CardName = dtDept.Rows[0]["resellerName"].ToString();
-                    }
-
-
-                    if (dtDept.Rows[0]["country"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["country"]))
-                    {
-                        _Fdata.Country = dtDept.Rows[0]["country"].ToString();
-                    }
-                    if (dtDept.Rows[0]["BU"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["BU"]))
-                    {
-                        _Fdata.BUName = dtDept.Rows[0]["BU"].ToString();
-                    }
-                    if (dtDept.Rows[0]["goodsDescr"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["goodsDescr"]))
-                    {
-                        _Fdata .goodsDescr= dtDept.Rows[0]["goodsDescr"].ToString();
-                    }
-                    if (dtDept.Rows[0]["quoteDate"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["quoteDate"]))
-                    {
-                        _Fdata.quoteDate = Convert.ToDateTime(dtDept.Rows[0]["quoteDate"].ToString());
-                    }
-                    if (dtDept.Rows[0]["expClosingDt"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["expClosingDt"]))
-                    {
-                        _Fdata.expClosingDt = Convert.ToDateTime(dtDept.Rows[0]["expClosingDt"].ToString());
-                    }
-                    if (dtDept.Rows[0]["dealStatus"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["dealStatus"]))
-                    {
-                        _Fdata.DealStatus = dtDept.Rows[0]["dealStatus"].ToString();
-                    }
-                    if (dtDept.Rows[0]["Cost"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["Cost"]))
-                    {
-                        _Fdata.Cost = Convert.ToInt32(dtDept.Rows[0]["Cost"]);
-                    }
-                    if (dtDept.Rows[0]["Landed"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["Landed"]))
-                    {
-                        _Fdata.Landed = Convert.ToInt32(dtDept.Rows[0]["Landed"]);
-                    }
-                    if (dtDept.Rows[0]["value"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["value"]))
-                    {
-                        _Fdata.value = Convert.ToInt32(dtDept.Rows[0]["value"]);
-                    }
-                    if (dtDept.Rows[0]["remarks"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["remarks"]))
-                    {
-                        _Fdata.remarks = dtDept.Rows[0]["remarks"].ToString();
-                    }
-                    if (dtDept.Rows[0]["Remarks2"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["Remarks2"]))
-                    {
-                        _Fdata.Remarks2 = dtDept.Rows[0]["Remarks2"].ToString();
-                    }
-                    if (dtDept.Rows[0]["Remarks3"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["Remarks3"]))
-                    {
-                        _Fdata.Remarks3 = dtDept.Rows[0]["Remarks3"].ToString();
-                    }
-                    if (dtDept.Rows[0]["orderBookedDate"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["orderBookedDate"]))
-                    {
-                        _Fdata.orderBookedDate = Convert.ToDateTime(dtDept.Rows[0]["orderBookedDate"].ToString());
-                    }
-                    if (dtDept.Rows[0]["InvoiceDt"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["InvoiceDt"]))
-                    {
-                        _Fdata.InvoiceDt = Convert.ToDateTime(dtDept.Rows[0]["InvoiceDt"]);
-                    }
-                    if (dtDept.Rows[0]["NextReminderDt"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["NextReminderDt"]))
-                    {
-                        _Fdata.NextReminderDt = Convert.ToDateTime(dtDept.Rows[0]["NextReminderDt"].ToString());
-                    }
-                    
-
-
-                    if (dtDept.Rows[0]["CreatedOn"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["CreatedOn"]))
-                    {
-                        _Fdata.Createddte = Convert.ToDateTime(dtDept.Rows[0]["CreatedOn"].ToString());
-                    }
-                    if (dtDept.Rows[0]["MarginUSD"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["MarginUSD"]))
-                    {
-                        _Fdata.MarginUSD = Convert.ToInt32(dtDept.Rows[0]["MarginUSD"]);
-                    }
-                    if (dtDept.Rows[0]["Remarks3"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["Remarks3"]))
-                    {
-                        _Fdata.Remarks3 = dtDept.Rows[0]["Remarks3"].ToString();
-                    }
-                    if (dtDept.Rows[0]["LastUpdatedBy"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["LastUpdatedBy"]))
-                    {
-                        _Fdata.UpdatedBy = dtDept.Rows[0]["LastUpdatedBy"].ToString();
-                    }
-                    if (dtDept.Rows[0]["LastUpdatedOn"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["LastUpdatedOn"]))
-                    {
-                        _Fdata.Updateddte = Convert.ToDateTime(dtDept.Rows[0]["LastUpdatedOn"].ToString());
                     }
 
-                    //if (dtDept.Rows[0]["MarginUSD"] != null && !DBNull.Value.Equals(dtDept.Rows[0]["MarginUSD"]))
-                    //{
-                    //    _Fdata.marginper = Convert.ToInt32(dtDept.Rows[0]["MarginUSD"]);
-                    //}
 
 
                 }

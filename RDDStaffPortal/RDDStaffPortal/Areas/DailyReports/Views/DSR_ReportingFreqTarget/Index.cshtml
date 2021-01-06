@@ -115,9 +115,11 @@
         $("#btnsave").hide();
         $("#Ist").hide();
         $(".loader1").hide();
-         
+        var k2 = 0;
+        var fredrop = $("#dropFreqtyp").clone();
         $('#Country').on("change", function () {
             try {
+                k2 = 0;
                  
                 if ($("#Country").val() == null || $("#Country").val() =='0') {
                     $("#Ist").hide();
@@ -138,7 +140,17 @@
                         $("#Ist").show();
                         $("div#Ist").not(':first').remove();
 
-                      
+                      //  $("div#Ist:first").find("select").select2("destroy").select2();
+                        if ($("div#Ist:first").find("[id^='dropFreqtyp']").hasClass("select2-hidden-accessible")==true) {
+                           //$("div#Ist:first").find("[id^='dropFreqtyp']").select2('destroy')
+                           // $("div#Ist:first").find("[id^='dropFreqtyp']").removeAttr('data-select2-id')
+                            //$("div#Ist:first").find("[id^='dropFreqtyp']").attr('id', 'dropFreqtyp');
+                            //$("div#Ist:first").find("[id^='dropFreqtyp']").attr('name', 'dropFreqtyp');
+                            $("div#Ist:first").find(".Abcd div").eq(4).html('')
+                            
+                            $("div#Ist:first").find(".Abcd div").html(fredrop);
+                        }
+                       
                         
                        // $("div#Ist:first").find("select").select2('destroy');
                         if (data.Table != null && data.Table.length != 0) {
@@ -152,6 +164,7 @@
                                 $("#Ibody").append(tr);
                                 i++;
                             }
+                            k2 = i;
                             $("#Ist")[0].remove();
                         } else {
                             $("#Ist").hide();
@@ -176,12 +189,12 @@
                                     } else if (jQuery.inArray(t, tbldrop) !== -1) {
                                         if (t == 'FreqOfRpt') {
                                             $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('id', "dropFreqtyp" + i);
-                                            //$(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('data-select2-id', "dropFreqtyp" + i);
+                                          //$(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('data-select2-id', "dropFreqtyp" + i);
                                             $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('name', "dropFreqtyp" + i);
                                             //$(this).find(".Abcd").find("[id^='dropFreqtyp']").attr(
                                             //    "data-id", "dropFreqtyp" + i
                                             //);
-                                            //$(this).find(".Abcd").find("[id^='dropFreqtyp']").select2({ theme: "bootstrap", allowClear: true, placeholder: '--Select--' });
+                                            $("#dropFreqtyp" + i + "").select2({ theme: "bootstrap", allowClear: true, placeholder: '--Select--' });
                                             $(this).find(".Abcd").find("[id^='dropFreqtyp']").val(data.responseJSON.Table[i][tblhead1[k]]).trigger('change');
                                         } else if (t == 'SendReportTo') {
                                             $(this).find(".Abcd").find("[id^='dropSendReport']").attr('id', "dropSendReport" + i);
@@ -224,6 +237,8 @@
                                     window.fs_test = $('.multiselect-ui').fSelect();
                                     $(".multiselect-ui").fSelect('reload');
                                     $(".multiselect-ui").hide();
+                                    
+                                   
                                 });
                             })(jQuery);
                         });

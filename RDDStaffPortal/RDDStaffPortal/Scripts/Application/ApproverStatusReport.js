@@ -1,6 +1,6 @@
 ﻿var ApproverStatusReport = function () { };
 
-var tblhead1 = ['SRNO', 'OBJTYPE', 'DocumentName', 'DOC_ID', 'DOC_DATE', 'CARDNAME', 'DocTotal', 'ORIGINATOR', 'ORG_Remark', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_DATE'];
+var tblhead1 = ['SRNO', 'OBJTYPE', 'DocumentName', 'DOC_ID', 'Country','Refno', 'DOC_DATE', 'CARDNAME', 'DocTotal', 'ORIGINATOR', 'ORG_Remark', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_DATE'];
 var tblhide = [];
 var tblhead2 = [];
 var dateCond = ['DOC_DATE', 'APPROVAL_DATE'];
@@ -309,6 +309,7 @@ function FillOriginator() {
         $('#cbOriginator').append('<option value=' + found_names[i1]['Originator'] + ' selected="">' + found_names[i1]['OriginatorName']+'</option>');
        i1 ++;
     }
+    $('#cbOriginator').val('All')
     var found_names1 = $.grep(arr3.Table2, function (v) {
         return v.Action === k;
     });    
@@ -330,7 +331,7 @@ function Get_DocumentApprove_List() {
     if ($("#txtFrmDate").val() != '' && $("#txtToDate").val() != '')
         value1 = value1 + " And T1." + $("input[name='ApprovalStatus']:checked").attr("alt")+" BetWeen $" + GetSqlDateformat($("[id$=txtFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtToDate]").val())+"$"
 
-    if ($("#cbOriginator").val() != '')
+    if ($("#cbOriginator").val() != '' && $("#cbOriginator").val()!='All')
         value1 = value1 + " And ORIGINATOR=$" + $("#cbOriginator").val() + "$";
 
     if ($("#txtApprover").val() != '')

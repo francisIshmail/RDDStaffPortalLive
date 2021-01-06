@@ -2,7 +2,7 @@
 	initialize: function () {
 
 		$.fn.dataTable.ext.errorMode = 'none';
-        $("#btnAction").hide();
+        //$("#btnAction").hide();
 		IndexPV.Attachevent();
 	},
     Attachevent: function () {
@@ -52,6 +52,7 @@
         }
         //#endregion
         $('.loader1').hide();
+        $("#btnAction").hide();
         RedDot_Button_Init_HideShow();
         var me = getUrlVars()["PVId"];
 
@@ -101,10 +102,16 @@
         //#endregion
         //#region Next Button*/
         $('.next').bind('click', function () {
-            $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
+            $(".loader1").show();            
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }                
+            } else {
                 $(".loader1").hide();
-                return;
+                RedDotAlert_Error('No Record Found');
+               return
             }
             curPage++;
             var value1 = $("#Search-Forms").val().toLowerCase();
@@ -122,13 +129,18 @@
         $('.prev').bind('click', function () {
             $(".loader1").show();
             var value1 = $("#Search-Forms").val().toLowerCase();
-            if (arr.data[0].TotalCount < 50) {
-                $(".loader1").hide();
-                return;
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage < 0)
+                    curPage = (arr.data[0].TotalCount - 1);
+            } else {
+                curPage--;
             }
-            curPage--;
-            if (curPage < 0)
-                curPage = (arr.data[0].TotalCount - 1);
+            
             var data = JSON.stringify({
                 pagesize: 50,
                 pageno: curPage,
@@ -272,7 +284,7 @@
         $(document).on("click","#btnActionSave",function () {
             debugger;
             var k = 1;
-            var _LoginUser = $('#CreatedBy').val();
+            var _LoginUser = $('#LastUpdatedBy').val();
             $(".ApproverAction").each(function () {
                 var _ID = $(this).find(".Abcd [id^='txtID']").val();
                 var _Template_ID = $(this).find(".Abcd [id^='txtTemplate_ID']").val();
@@ -295,10 +307,22 @@
                         contentType: "Application/json",
                         success: function (value) {
                             debugger;
-                            var jData = value.Table;
-
-                            $('#ApprovalDecisionPopup').modal('hide');
-                            RedDotAlert_Success("Save Succesfully");
+                            var jData = value.Table1;
+                            if (jData.length > 0) {
+                                if (jData[0].Result == 'True') {
+                                    if (value.Table.length > 0) {
+                                        $(".required-label").text("[ " + value.Table[0].ApprovalStatus + " ]");
+                                        $("#ApprovalStatus").val(value.Table[0].ApprovalStatus);
+                                    }
+                                       
+                                    $('#ApprovalDecisionPopup').modal('hide');
+                                    RedDotAlert_Success("Save Succesfully");
+                                } else {
+                                    RedDotAlert_Error("Error Occur");
+                                }
+                                
+                            }
+                           
                             
                         },
                         error: function (response) {
@@ -336,7 +360,7 @@
                 cache: false,
                 type: "POST",
                 url: "/Get_Doc_ApproverList",
-                data: JSON.stringify({ ObjectType: _ObjType, DocKey: _DocKey, LoginUser: $('#CreatedBy').val() }),
+                data: JSON.stringify({ ObjectType: _ObjType, DocKey: _DocKey, LoginUser: $('#LastUpdatedBy').val() }),
                 dataType: 'Json',
                 contentType: "Application/json",
                 success: function (value) {
@@ -360,20 +384,26 @@
                     var count1 = 1;
                     var actiontblValue = ['ID', 'TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];
                     var doc = $("#DocStatus").val();
-                    if ($("#ViewMode").val() != "True" ) {
+                    $("#btnActionSave").show();
+                    if ($('#LastUpdatedBy').val().toLowerCase() == $('#CreatedBy').val().toLowerCase() && $("#VType").val() !='VType') {
                         $("#btnActionSave").hide();
                     }
-                    else if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
+                    else
+                        if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
                         $("#btnActionSave").hide();
                         $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision   [ You can not take action on Rejected-Closed/Paid-Closed vourcher ]");
                     } else {
                         $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision");
                     }
+
+                    
                     $(".ApproverAction").each(function () {
                         
-
+                        
                         if (jData[count1 - 1].Flag == 'Disable') {//|| $("#EditFlag").val() == "True"
-                           
+                            if (jData[count1 - 1][actiontblValue[3]].toLowerCase() == $('#LastUpdatedBy').val().toLowerCase()) {
+                                $("#btnActionSave").hide();
+                            }
                             $(this).find('.Abcd input[id^="txtID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').prop('disabled', true);
                             $(this).find('.Abcd input[id^="txtObjType"]').prop('disabled', true);
@@ -384,7 +414,7 @@
 
                         }
                         else {
-                           // $("#btnActionSave").removeAttr('disabled');
+                           
                             $(this).find('.Abcd input[id^="txtID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtTemplate_ID"]').removeAttr('disabled');
                             $(this).find('.Abcd input[id^="txtObjType"]').removeAttr('disabled');

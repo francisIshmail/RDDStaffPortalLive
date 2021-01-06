@@ -90,8 +90,8 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                     MemoryStream ms = new MemoryStream();
                     WebImage img = new WebImage(_comPath);
 
-                    if (img.Width > 400)
-                        img.Resize(400, 400);
+                    //if (img.Width > 400)
+                    //    img.Resize(400, 400);
                     img.Save(_comPath);
                     // end resize
                 }

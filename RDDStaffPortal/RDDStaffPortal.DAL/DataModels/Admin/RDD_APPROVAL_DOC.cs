@@ -10,6 +10,8 @@ namespace RDDStaffPortal.DAL.DataModels.Admin
 {
     public partial class RDD_APPROVAL_DOC
     {
+        public string Refno { get; set; }
+        public string Country { get; set; }
         public int SRNO { get; set; }
         public int ID { get; set; }
         public int TEMPLATE_ID { get; set; }

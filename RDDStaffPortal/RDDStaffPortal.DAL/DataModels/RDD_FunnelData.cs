@@ -54,8 +54,8 @@ namespace RDDStaffPortal.DAL.DataModels
         public string remarks { get; set; }
         public string Remarks2 { get; set; }
         public string Remarks3 { get; set; }
-        public int Cost { get; set; }
-        public int Landed { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Landed { get; set; }
 
         public decimal MarginUSD { get; set; }
 

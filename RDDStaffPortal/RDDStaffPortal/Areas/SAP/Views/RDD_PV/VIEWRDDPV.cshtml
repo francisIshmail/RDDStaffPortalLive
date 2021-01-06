@@ -8,7 +8,7 @@
 
 <div class="card-body smform-section">
     <div class="row">
-
+        @Html.HiddenFor(m=>m.LastUpdatedBy)
         @Html.HiddenFor(m => m.PVId)
         @Html.HiddenFor(m => m.IsDraft)
         @Html.HiddenFor(m => m.CreatedBy)

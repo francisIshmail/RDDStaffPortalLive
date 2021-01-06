@@ -372,9 +372,15 @@
 
         $('.next').bind('click', function () {
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+            } else {
                 $(".loader1").hide();
-                return;
+                RedDotAlert_Error('No Record Found');
+                return
             }
             curPage++;
             if (curPage > arr.data[0].TotalCount)
@@ -433,13 +439,17 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
-                $(".loader1").hide();
-                return;
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage < 0)
+                    curPage = (arr.data[0].TotalCount - 1);
+            } else {
+                curPage--;
             }
-            curPage--;
-            if (curPage < 0)
-                curPage = (arr.data[0].TotalCount - 1);
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/BackLogSheetReport",

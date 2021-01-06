@@ -1243,15 +1243,17 @@ debugger
 
                     $('.prev').bind('click', function () {
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
-                            $(".loader1").hide();
-
-                            return;
+                        if (arr.data.length > 0) {
+                            if (arr.data[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                            curPage--;
+                            if (curPage < 0)
+                                curPage = (arr.data[0].TotalCount - 1);
+                        } else {
+                            curPage--;
                         }
-
-                        curPage--;
-                        if (curPage < 0)
-                            curPage = (arr[0].TotalCount - 1);
                         var FStatus = '';
                         var FCountry = '';
                         var QutMonth = '';
@@ -1355,9 +1357,15 @@ debugger
                     $('.next').bind('click', function () {
 
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
+                        if (arr.data.length > 0) {
+                            if (arr.data[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                        } else {
                             $(".loader1").hide();
-                            return;
+                            RedDotAlert_Error('No Record Found');
+                            return
                         }
                         curPage++;
                         if (curPage > arr[0].TotalCount)
@@ -1980,12 +1988,12 @@ debugger
                     //  $("#CardName").removeAttr('checked');
 
                     var url = "/FunnelData/GetDataById?fid=" + fid;
-                    $("#NewDealPopUp").modal();
+                    $('.loader1').show();
                     $.ajax({
                         type: "GET",
                         url: url,
                         success: function (data) {
-
+                            debugger
 
 
                             $("#fid").val(data.fid);
@@ -2093,7 +2101,10 @@ debugger
                                     $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
                                 }
                             });
+                            $('.loader1').hide();
+                            $("#NewDealPopUp").modal();
                         }
+
                         
                     });
                 }
