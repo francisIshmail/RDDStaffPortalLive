@@ -137,7 +137,10 @@
                         debugger
                         $("#Ist").show();
                         $("div#Ist").not(':first').remove();
-                        $("div#Ist:first").find("select.select2-hidden-accessible").select2('destroy');
+
+                      
+                        
+                       // $("div#Ist:first").find("select").select2('destroy');
                         if (data.Table != null && data.Table.length != 0) {
                             $(".multiselect-ui").fSelect('destroy');
                             $("#btnsave").show();
@@ -159,6 +162,7 @@
                     }
                     , complete: function (data) {
                         if (data.responseJSON.Table != null) {
+                            
                             $(".multiselect-ui").val([]).trigger('change');
                             $(".multiselect-ui").val('').trigger('change');
                             var i = 0;
@@ -172,10 +176,13 @@
                                     } else if (jQuery.inArray(t, tbldrop) !== -1) {
                                         if (t == 'FreqOfRpt') {
                                             $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('id', "dropFreqtyp" + i);
-                                            $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('data-select2-id', "dropFreqtyp" + i);
+                                            //$(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('data-select2-id', "dropFreqtyp" + i);
                                             $(this).find(".Abcd").find("[id^='dropFreqtyp']").attr('name', "dropFreqtyp" + i);
-                                            $(this).find(".Abcd").find("#dropFreqtyp" + i).select2({ theme: "bootstrap", allowClear: true, placeholder: '--Select--' });
-                                            $(this).find(".Abcd").find("#dropFreqtyp" + i).val(data.responseJSON.Table[i][tblhead1[k]]).trigger('change');
+                                            //$(this).find(".Abcd").find("[id^='dropFreqtyp']").attr(
+                                            //    "data-id", "dropFreqtyp" + i
+                                            //);
+                                            //$(this).find(".Abcd").find("[id^='dropFreqtyp']").select2({ theme: "bootstrap", allowClear: true, placeholder: '--Select--' });
+                                            $(this).find(".Abcd").find("[id^='dropFreqtyp']").val(data.responseJSON.Table[i][tblhead1[k]]).trigger('change');
                                         } else if (t == 'SendReportTo') {
                                             $(this).find(".Abcd").find("[id^='dropSendReport']").attr('id', "dropSendReport" + i);
                                             var DropIst = data.responseJSON.Table[i][tblhead1[k]].split(',');

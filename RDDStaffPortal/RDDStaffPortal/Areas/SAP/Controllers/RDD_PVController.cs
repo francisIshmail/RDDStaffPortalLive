@@ -126,7 +126,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             fname = file.FileName;
                             fileName = Path.GetFileNameWithoutExtension(file.FileName);
                             _ext = System.IO.Path.GetExtension(fname).ToUpper();
-                            if ((_ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF") && type == "Header")
+                            if ((_ext != ".JPEG" && _ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF") && type == "Header")
                             {
                                 return Json("Error occurred. Error details: Only Image Or Pdf", JsonRequestBehavior.AllowGet);
                             }

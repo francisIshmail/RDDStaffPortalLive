@@ -110,7 +110,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                     outcls = Com.ExecuteNonQueryList("RDD_DSR_InsertUpdate", parm);
                     rDD_DSR.SaveFlag = outcls[0].Outtf;
                     rDD_DSR.ErrorMsg = outcls[0].Responsemsg;
-
+                    if(outcls[0].Outtf==true)
                     scope.Complete();
                 }
 

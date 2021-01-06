@@ -158,33 +158,33 @@
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id="div-Designation" class="form-group has-error1">
                                                     <label>Designation :</label>
-                                                    @Html.TextBoxFor(m => m.Designation, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.Designation, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div id="div-Email" class="form-group">
+                                                <div id="div-Email" class="form-group has-error1">
                                                     <label>Email :</label>
-                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id ="div-ContactNo"class="form-group has-error1">
                                                     <label>Phone :</label>
-                                                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
+                                                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
                                                     @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id ="div-BU"class="form-group has-error1">
                                                     <label>BU :</label>
-                                                    @Html.TextBoxFor(m => m.BU, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.BU, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.BU, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -719,18 +719,18 @@
             if (rDD_DailySales.PersonMet == "" || rDD_DailySales.PersonMet == null) {
                 response.ErrorMessage += "Enter Contact Person,";
             }
-            //if (rDD_DailySales.Designation == "") {
-            //    response.ErrorMessage += "Enter Designation,";
-            //}
-            //if (rDD_DailySales.Email == "") {
-            //    response.ErrorMessage += "Enter Email,";
-            //}
-            //if (rDD_DailySales.BU == "") {
-            //    response.ErrorMessage += "Enter BU,";
-            //}
-            //if (rDD_DailySales.ContactNo == "") {
-            //    response.ErrorMessage += "Enter Phone ,";
-            //}
+            if (rDD_DailySales.Designation == "") {
+                response.ErrorMessage += "Enter Designation,";
+            }
+            if (rDD_DailySales.Email == "") {
+                response.ErrorMessage += "Enter Email,";
+            }
+            if (rDD_DailySales.BU == "") {
+                response.ErrorMessage += "Enter BU,";
+            }
+            if (rDD_DailySales.ContactNo == "") {
+                response.ErrorMessage += "Enter Phone ,";
+            }
             if (rDD_DailySales.Discussion == "" || rDD_DailySales.Discussion == null) {
                 response.ErrorMessage += "Enter Discusssion ,";
             }
