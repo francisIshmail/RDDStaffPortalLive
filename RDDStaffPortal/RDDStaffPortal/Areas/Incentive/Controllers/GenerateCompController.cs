@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace RDDStaffPortal.Areas.Incentive.Controllers
 {
+    [Authorize]
     public class GenerateCompController : Controller
     {
         RDD_GenerateCompensation_DbOperation GenCompDbOp = new RDD_GenerateCompensation_DbOperation();
