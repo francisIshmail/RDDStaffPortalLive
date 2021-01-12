@@ -363,7 +363,8 @@
             data: JSON.stringify({ _KpiParam: KpiParam }),
             dataType: "json",
             success: function (data) {
-                if (data[0].Outtf == true) {
+                debugger
+                if (data[0].Responsemsg == "Record Saved Successfully") {
                     RedDotAlert_Success(data[0].Responsemsg);
                     $("#txtKpiParamModal").val("");
                     GetKPIdetails();

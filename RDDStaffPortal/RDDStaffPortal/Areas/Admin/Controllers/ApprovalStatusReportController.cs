@@ -115,9 +115,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                 throw ex;
             }
         }
-
-
-
+               
         public bool SendMailToSignatories(string PVID,string ObjectType)
         {
             bool result = false;
@@ -282,6 +280,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             return result;
 
         }
+
         [Route("GetApprovalFill")]
         public ActionResult Get_Approver()
         {

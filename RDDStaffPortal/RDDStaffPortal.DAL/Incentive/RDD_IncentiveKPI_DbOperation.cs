@@ -276,7 +276,7 @@ namespace RDDStaffPortal.DAL.Incentive
                     new SqlParameter("@Kpiname",_KpiParam),
                     new SqlParameter("@p_response",Errormsg)
                 };
-                Msg = cf.ExecuteNonQueryList("RDD_SaveKPIparameter", prm);
+                Msg = cf.ExecuteNonQueryList("RDD_SaveKPIparameter", prm);                
             }
             catch (Exception ex)
             {
