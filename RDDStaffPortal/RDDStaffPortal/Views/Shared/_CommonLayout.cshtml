@@ -190,7 +190,14 @@
             </div>
         </li>*@
 
-                        @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }|
+                        @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }
+
+
+                        <li class="nav-item">
+                            <a href="~/LMS/RDD_LeaveApproval/Index" >
+                                <i class="fas fa-user-circle menu-icon-c"></i> <p>LMS </p>
+                            </a>
+                        </li>|
 
                         @*<li class="nav-item">
             <a data-toggle="collapse" href="#Admin">
@@ -409,30 +416,30 @@
 
         </li>*@
                         @*<li class="nav-item">
-                            <a data-toggle="collapse" href="#TargetsForcos">
-                                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="TargetsForcos">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="@Url.Action("Index","CountryTarget" )">
-                                            <span class="sub-item">Country Target Quarterly</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="Report2.html">
-                                            <span class="sub-item">Monthly</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="Report2.html">
-                                            <span class="sub-item">Sales Person Target Quarterly</span>
-                                        </a>
-                                    </li>
+            <a data-toggle="collapse" href="#TargetsForcos">
+                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
+            </a>
+            <div class="collapse" id="TargetsForcos">
+                <ul class="nav nav-collapse">
+                    <li>
+                        <a href="@Url.Action("Index","CountryTarget" )">
+                            <span class="sub-item">Country Target Quarterly</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Report2.html">
+                            <span class="sub-item">Monthly</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Report2.html">
+                            <span class="sub-item">Sales Person Target Quarterly</span>
+                        </a>
+                    </li>
 
-                                </ul>
-                            </div>
-                        </li>*@
+                </ul>
+            </div>
+        </li>*@
                     </ul>
                 </div>
             </div>
