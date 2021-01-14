@@ -1278,6 +1278,43 @@ set_picker_start_end = (picker, when) => {
     picker.setStartDate(week_start);
     picker.setEndDate(week_end);
 }
+function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
+    debugger;
+    var nowMin = new Date(min1);
+    //nowMin.setDate(nowMin.getDate() - 1);
+    var dayMin = ("0" + nowMin.getDate()).slice(-2);
+    var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
+    var startMin = new Date(min1);
+
+    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+
+
+    var nowMax = new Date(max1);
+    nowMax.setDate(nowMax.getDate() + 1);
+    var dayMax = ("0" + nowMax.getDate()).slice(-2);
+    var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+    }
+
+    $('#' + id + '').daterangepicker({
+        startDate: start,
+        endDate: end,
+        maxDate: nowMax,
+         minDate: nowMin,        
+       // singleDatePicker: true,
+         autoApply:true
+       
+
+    }, cb);
+
+    cb(start, end);
+}
+
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
     var nowMin = new Date(min1);

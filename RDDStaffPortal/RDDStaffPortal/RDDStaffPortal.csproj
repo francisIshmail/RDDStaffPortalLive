@@ -186,7 +186,7 @@
     <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
-    <Compile Include="Areas\LMS\Controllers\RDD_LeaveAdjustmentController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveRequestController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveTypeController.cs" />
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
@@ -239,7 +239,10 @@
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\evo-calendar.css" />
+    <Content Include="Content\evo-calendar.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\Switch.css" />
     <Content Include="Content\timeout-dialog.css" />
     <Content Include="Images\nav-button.png" />
     <Content Include="img\bg\Background-001.JPG" />
@@ -731,8 +734,11 @@
     <Content Include="Scripts\datatables\js\jszip.min.js" />
     <Content Include="Scripts\datatables\js\pdfmake.min.js" />
     <Content Include="Scripts\datatables\js\vfs_fonts.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\dragdrop\jquery-ui-1.9.0.custom.min.js" />
     <Content Include="Scripts\dragdrop\main.css" />
+    <Content Include="Scripts\evo-calendar.js" />
+    <Content Include="Scripts\evo-calendar.min.js" />
     <Content Include="Scripts\holder.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
@@ -740,6 +746,7 @@
     <Content Include="Scripts\jquery.dd.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\LMS\LeaveManage.js" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.js" />
     <Content Include="Scripts\multiselect\multiselect.css" />
@@ -849,6 +856,9 @@
     <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveType\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveAdjustment\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\LMSTest.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveRequest\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveApproval\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -918,6 +928,7 @@
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
+    <Folder Include="excelFileUpload\LMS\" />
     <Folder Include="excelFileUpload\MarketingPlan\" />
     <Folder Include="PdfUploads\" />
   </ItemGroup>
