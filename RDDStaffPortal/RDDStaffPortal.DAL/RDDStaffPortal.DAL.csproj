@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.SAPbobsCOM">
-      <HintPath>..\..\..\..\proj files\Interop.SAPbobsCOM.dll</HintPath>
+      <HintPath>..\..\..\..\Users\Avijeet_RDD\Documents\Interop.SAPbobsCOM.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
@@ -120,7 +120,9 @@
     <Compile Include="DataModels\Incentive\RDD_IncentiveKPI.cs" />
     <Compile Include="DataModels\Incentive\RDD_IncentiveSlab.cs" />
     <Compile Include="DataModels\LMS\RDD_Holidays.cs" />
+    <Compile Include="DataModels\LMS\RDD_LeaveAdjustment.cs" />
     <Compile Include="DataModels\LMS\RDD_LeaveRequest.cs" />
+    <Compile Include="DataModels\LMS\RDD_LeaveType.cs" />
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
     <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
@@ -189,7 +191,9 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="LMS\RDD_Holidays_Db_Operation.cs" />
+    <Compile Include="LMS\RDD_LeaveAdjustment_Db_Operation.cs" />
     <Compile Include="LMS\RDD_LeaveRequest_Db_Operation.cs" />
+    <Compile Include="LMS\RDD_LeaveType_Db_Operation.cs" />
     <Compile Include="obj\Debug\DataModels\DailyReports\UserControl1.g.i.cs" />
     <Compile Include="MarketingPlan\MarketingPlanDbOperation.cs" />
     <Compile Include="MarketingPlan\MarketingPlanLines.cs" />
