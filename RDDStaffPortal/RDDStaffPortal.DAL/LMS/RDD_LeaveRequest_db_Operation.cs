@@ -376,9 +376,18 @@ namespace RDDStaffPortal.DAL.LMS
 
             return ds;
         }
-        public DataSet GetHolidayCountryWise(int EmployeeId)        {            DataSet ds = new DataSet();            SqlParameter[] prm =            {
+        public DataSet GetHolidayCountryWise(int EmployeeId)
+        {
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
                 new SqlParameter("@Type","GetHolidayCountrywise"),
-                new SqlParameter("@EmployeeId",EmployeeId)                           };            ds = com.ExecuteDataSet("RDD_GetWeeklyOffDay", CommandType.StoredProcedure, prm);            return ds;        }
+                new SqlParameter("@EmployeeId",EmployeeId)               
+
+            };
+            ds = com.ExecuteDataSet("RDD_GetWeeklyOffDay", CommandType.StoredProcedure, prm);
+            return ds;
+        }
 
     }
 }

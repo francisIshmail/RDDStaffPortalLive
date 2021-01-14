@@ -140,7 +140,7 @@ namespace RDDStaffPortal.DAL.LMS
                 }
                 SqlParameter[] parm2 =
                   {
-                    new SqlParameter("@Operation","Insert"),
+                    new SqlParameter("@Type","Insert"),
                     new SqlParameter("@LeaveRequestId",LeaveRequestId),
                     new SqlParameter("@EmployeeId",EmployeeId),
                     new SqlParameter("@LeaveTypeId",LeaveTypeId),
@@ -152,7 +152,7 @@ namespace RDDStaffPortal.DAL.LMS
                     new SqlParameter("@LoginId",CreatedBy),
                     new SqlParameter("@LoginOn",CreatedOn),
                 };
-                Msg = Convert.ToString(com.ExecuteScalar("RDD_LeaveLedgers", parm2, CommandType.StoredProcedure));
+                Msg = Convert.ToString(com.ExecuteScalar("RDD_LeaveLedgerEntry", parm2, CommandType.StoredProcedure));
             }
 
 
