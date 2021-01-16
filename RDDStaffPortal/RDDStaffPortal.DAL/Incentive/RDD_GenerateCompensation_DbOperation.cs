@@ -458,6 +458,7 @@ namespace RDDStaffPortal.DAL.Incentive
                                 RGENCOMP.Ptype = "";
                             }
                         }
+                        
                         while (RGENCOMP.RDD_BU_CompensationCalculationList.Count > m)
                         {
                             SqlParameter[] ParaDet1 = {
@@ -491,10 +492,11 @@ namespace RDDStaffPortal.DAL.Incentive
                             }
                             m++;
                         }
-
-                        while (RGENCOMP.RDD_KPI_CompensationCalculationList.Count > k)
+                        if (RGENCOMP.RDD_KPI_CompensationCalculationList != null)
                         {
-                            SqlParameter[] ParaDet1 = {
+                            while (RGENCOMP.RDD_KPI_CompensationCalculationList.Count > k)
+                            {
+                                SqlParameter[] ParaDet1 = {
                                 new SqlParameter("@p_typ",RGENCOMP.Ptype),
                                 new SqlParameter("@CompCalId",str[0].Id),
                                 new SqlParameter("@KPI_Parameter",RGENCOMP.RDD_KPI_CompensationCalculationList[k].KPI_Parameter),
@@ -510,21 +512,24 @@ namespace RDDStaffPortal.DAL.Incentive
                                 new SqlParameter("@M6",RGENCOMP.RDD_KPI_CompensationCalculationList[k].M6)
                             };
 
-                            var det1 = cf.ExecuteNonQuery("RDD_KPI_CompensationCalculation_Insert_Update_Delete", ParaDet1);
+                                var det1 = cf.ExecuteNonQuery("RDD_KPI_CompensationCalculation_Insert_Update_Delete", ParaDet1);
 
-                            if (det1 == false)
-                            {
-                                str.Clear();
-                                str.Add(new Outcls1
+                                if (det1 == false)
                                 {
-                                    Outtf = false,
-                                    Id = -1,
-                                    Responsemsg = "Error occured : KPI Compensation Calculation Details "
-                                });
-                                return str;
+                                    str.Clear();
+                                    str.Add(new Outcls1
+                                    {
+                                        Outtf = false,
+                                        Id = -1,
+                                        Responsemsg = "Error occured : KPI Compensation Calculation Details "
+                                    });
+                                    return str;
+                                }
+                                k++;
                             }
-                            k++;
                         }
+                                           
+                        
                     }
 
                     scope.Complete();

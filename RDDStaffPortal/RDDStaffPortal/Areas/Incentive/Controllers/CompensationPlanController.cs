@@ -20,6 +20,7 @@ using iTextSharp.text.pdf;
 using System.Text;
 using static RDDStaffPortal.DAL.CommonFunction;
 using System.Net.Mail;
+using System.Net;
 
 namespace RDDStaffPortal.Areas.Incentive.Controllers
 {
@@ -201,22 +202,25 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
             return Json(new { data = rDD_CompPlan_s }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GeneratePdf(int CompPlanid, string Email1, string Email2, string MailFlag, string Acceptstatus)
+        public ActionResult GeneratePdf(int CompPlanid, string Email2, string MailFlag, string Acceptstatus)
         {
             try
             {
                 DataSet ds;
+                DataSet ds2;
                 SqlParameter[] prm =
                 {
                      new SqlParameter("@Compplanid",CompPlanid)
                 };
                 ds = Com.ExecuteDataSet("RDD_CompensationPlanPDF", CommandType.StoredProcedure, prm);
-
+                int EmployeeId= Convert.ToInt32(ds.Tables[0].Rows[0]["EmployeeId"]);
                 var EmployeeName = ds.Tables[0].Rows[0]["EmployeeName"];
                 var Period = ds.Tables[0].Rows[0]["Period"];
                 var Year = ds.Tables[0].Rows[0]["Years"];
                 var Managername = ds.Tables[0].Rows[0]["CreatedBy"];
                 string Username = User.Identity.Name;
+                ds2 = CompPlanDbOp.GetLoginMail(EmployeeId);
+                string Email1=ds2.Tables[0].Rows[0]["Email"].ToString();
                 if (MailFlag == "False")
                 {
                     StringBuilder sb = new StringBuilder();
@@ -224,46 +228,47 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     #region html
                     sb.Append("<table width='100%' align='center' border='1'>");
                     sb.Append("<tr><td width='100%' colspan='6'>");
-                    sb.Append("<table width='70%' align='center' border='0'>");
+                    sb.Append("<table width='100%' align='center' border='0'>");
                     sb.Append("<tr width='100%' style='text-align: center;'> ");
-                    sb.Append("<td colspan = '6'> <img src='https://www.reddotdistribution.com/images/reddot%20logo%20black.png' alt='' border='0' width='150'/> </td>");
+                    sb.Append("<td colspan = '6' align='center'> <img src='https://www.reddotdistribution.com/images/reddot%20logo%20black.png' alt='' border='0' width='150' class='center'/> </td>");
                     sb.Append("</tr>");
                     sb.Append("<tr>");
                     sb.Append("<td colspan = '6' align = 'center'><span style = 'font-size:medium'> <b> <u> COMPENSATION PLAN </u> </b> </span> </td>");
                     sb.Append("</tr>");
+                    //sb.Append("<tr>");
+                    //sb.Append("<td colspan = '4' width = '70%'> &nbsp; </td>");
+                    //sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Date </span> </td>");
+                    //sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + DateTime.Now.ToString("dd-MM-yyyy") + @" </b> </span> </td>");
+                    //sb.Append("</tr>");
                     sb.Append("<tr>");
-                    sb.Append("<td width='100%' colspan='6'> &nbsp;<br /></td>");
+                    sb.Append("<td width = '17%'><span style = 'font-size:10px;font-family:calibri;'>Employee Name </span>   </td>");
+                    sb.Append("<td width = '26%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + ds.Tables[0].Rows[0]["EmployeeName"] + @" </b> </span> </td>");
+                    sb.Append("<td width = '12%'><span style = 'font-size:10px;font-family:calibri;'> Period </span> </td>");
+                    sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + ds.Tables[0].Rows[0]["Period"] + " " + "-" + " " + ds.Tables[0].Rows[0]["Years"] + @" </b> </span> </td>");
+                    sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Date </span> </td> ");
+                    sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + DateTime.Now.ToString("dd-MM-yyyy") + @" </b> </span> </td>");
                     sb.Append("</tr>");
-
-                    sb.Append("<tr style='font-size:10px;font-family:calibri;'>");
-                    sb.Append("<th width='20%' align='left'>Employee Name</th>");
-                    sb.Append("<th width='20%' align='left'>Period</th>");
-                    sb.Append("<th width='20%' align='left'>Date</th>");
-                    sb.Append("<th width='20%' align='left'>Designation</th>");
-                    sb.Append("<th width='20%' align='left'>Total Compensation</th>");
-                    sb.Append("</tr>");
-
                     sb.Append("<tr>");
-                    sb.Append("<td width='20%' align='left'>" + ds.Tables[0].Rows[0]["EmployeeName"] + @"</td>");
-                    sb.Append("<td width='20%' align='left'>" + ds.Tables[0].Rows[0]["Period"] + " " + "-" + " " + ds.Tables[0].Rows[0]["Years"] + @"</td>");
-                    sb.Append("<td width='20%' align='left'>" + DateTime.Now.ToString("dd-MM-yyyy") + @"</td>");
-                    sb.Append("<td width='20%' align='left'>" + ds.Tables[0].Rows[0]["DesigName"] + @"</td>");
-                    sb.Append("<td width='20%' align='left'>" + ds.Tables[0].Rows[0]["Currency"] + " " + ds.Tables[0].Rows[0]["TotalCompensation"] + @"</td>");
+                    sb.Append("<td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Designation </span> </td>");
+                    sb.Append("<td width = '30%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + ds.Tables[0].Rows[0]["DesigName"] + @" </b> </span> </td>");
+                    sb.Append("<td width = '5%' align='right'><span style = 'font-size:10px;font-family:calibri;'> </span> </td>");
+                    sb.Append("<td width = '6%'><span style = 'font-size:10px;font-family:calibri;'> </span> </td>");
+                    sb.Append("<td width = '22%'><span style = 'font-size:10px;font-family:calibri;'> Total Compensation </span> </td> ");
+                    sb.Append("<td width = '22%'><span style = 'font-size:10px;font-family:calibri;'> <b> " + ds.Tables[0].Rows[0]["Currency"] + " " + ds.Tables[0].Rows[0]["TotalCompensation"] + @" </b> </span> </td>");
                     sb.Append("</tr>");
 
                     sb.Append("<tr>");
                     sb.Append("<td width = '100%' colspan = '6'> &nbsp;<br/></td>");
                     sb.Append("</tr>");
-
                     sb.Append("<tr>");
                     sb.Append("<td width = '100%' colspan = '6'>");
-                    sb.Append("<table style='font - size: 16px;' width='100%' align='center' border='1'>");
+                    sb.Append("<table width = '100%' align = 'left' border = '1'>");
                     sb.Append("<tr>");
-                    sb.Append("<td width = '20%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> BU </b> </span>  </td> ");
-                    sb.Append("<td width = '20%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Revenue Target </b> </span> </td>");
-                    sb.Append("<td width = '20%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> GP Target </b> </span> </td>");
-                    sb.Append("<td width = '20%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Revenue Split Percent </b> </span> </td>");
-                    sb.Append("<td width = '20%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> GP Split Percent </b> </span> </td>");
+                    sb.Append("<td width = '20%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> BU </b> </span>  </td> ");
+                    sb.Append("<td width = '20%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Revenue Target </b> </span> </td>");
+                    sb.Append("<td width = '20%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> GP Target </b> </span> </td>");
+                    sb.Append("<td width = '20%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Revenue Split Percent </b> </span> </td>");
+                    sb.Append("<td width = '20%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> GP Split Percent </b> </span> </td>");
                     sb.Append("</tr>");
                     int i = 0;
                     int j = 0;
@@ -274,16 +279,16 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     while (ds.Tables[1].Rows.Count > i)
                     {
                         sb.Append("<tr>");
-                        sb.Append("<td width='20%' align='center' style='background: grey; color: white; padding: 4px;'>  <span style='font-size:10px;font-family:calibri;'>");
+                        sb.Append("<td width='20%' align='center' padding: 4px;'>  <span style='font-size:10px;font-family:calibri;'>");
                         sb.Append(ds.Tables[1].Rows[i]["BU"]);
                         sb.Append("</span></td>");
                         sb.Append("<td width='20%' align='right'>  <span style='font-size:10px;font-family:calibri;'>");
-                        sb.Append(ds.Tables[1].Rows[i]["RevenueTarget"]);
-                        total = total + Convert.ToDecimal(string.Format("{0:#,0.00}", ds.Tables[1].Rows[i]["RevenueTarget"].ToString()));
+                        sb.Append(string.Format("{0:#,0.00}", Convert.ToDecimal(ds.Tables[1].Rows[i]["RevenueTarget"])));
+                        total = total + Convert.ToDecimal(ds.Tables[1].Rows[i]["RevenueTarget"]);
                         sb.Append("</span></td>");
                         sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'>");
-                        sb.Append(ds.Tables[1].Rows[i]["GPTarget"]);
-                        total1 = total1 + Convert.ToDecimal(string.Format("{0:#,0.00}", ds.Tables[1].Rows[i]["GPTarget"].ToString()));
+                        sb.Append(string.Format("{0:#,0.00}", Convert.ToDecimal(ds.Tables[1].Rows[i]["GPTarget"])));
+                        total1 = total1 + Convert.ToDecimal(ds.Tables[1].Rows[i]["GPTarget"]);
                         sb.Append("</span></td>");
                         sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'>");
                         sb.Append(ds.Tables[1].Rows[i]["Rev_Split_Percentage"]);
@@ -294,8 +299,9 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                         sb.Append("</tr>");
                         i++;
                     }
+
                     sb.Append("<tr>");
-                    sb.Append("<td width='20%' align='right' style='background: grey; color: white; padding: 4px;'>  <span style='font-size:10px;font-family:calibri; align='right'  > <b> TOTAL ( " + ds.Tables[0].Rows[0]["Currency"] + " ) </b> </span> </td>");
+                    sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri; align='right'  > <b> TOTAL ( " + ds.Tables[0].Rows[0]["Currency"] + " ) </b> </span> </td>");
                     sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format("{0:#,0.00}", total) + " </b> </span> </td>");
                     sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format("{0:#,0.00}", total1) + " </b> </span> </td>");
                     sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + ds.Tables[0].Rows[0]["TotalSplitRevPercent"] + " </b> </span> </td>");
@@ -306,20 +312,19 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     sb.Append("<tr>");
                     sb.Append("<td width = '100%' colspan = '6'> &nbsp;<br/></td>");
                     sb.Append("</tr>");
-
                     sb.Append("<tr>");
                     sb.Append("<td width = '100%' colspan = '6'>");
-                    sb.Append("<table width = '100%' align = 'center' border = '1'>");
+                    sb.Append("<table width = '100%' align = 'left' border = '1'>");
                     sb.Append("<tr>");
-                    sb.Append("<td width = '50%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Parameter </b> </span>  </td> ");
-                    sb.Append("<td width = '25%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Target </b> </span> </td>");
-                    sb.Append("<td width = '25%' align = 'center' style='background: grey; color: white; padding: 4px;'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Split Percent </b> </span> </td>");
+                    sb.Append("<td width = '50%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Parameter </b> </span>  </td> ");
+                    sb.Append("<td width = '25%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Target </b> </span> </td>");
+                    sb.Append("<td width = '25%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> KPI Split Percent </b> </span> </td>");
                     sb.Append("</tr>");
 
                     while (ds.Tables[2].Rows.Count > j)
                     {
                         sb.Append("<tr>");
-                        sb.Append("<td width='50%' align='center' style='background: grey; color: white; padding: 4px;'>  <span style='font-size:10px;font-family:calibri;'>");
+                        sb.Append("<td width='50%' align='center' padding: 4px;'>  <span style='font-size:10px;font-family:calibri;'>");
                         sb.Append(ds.Tables[2].Rows[j]["KPI_Parameter"]);
                         sb.Append("</span></td>");
                         sb.Append("<td width='25%' align='right'>  <span style='font-size:10px;font-family:calibri;'>");
@@ -334,7 +339,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                         j++;
                     }
 
-                    sb.Append("<tr> <td width='50%' align='right' style='background: grey; color: white; padding: 4px;'>  <span style='font-size:10px;font-family:calibri;align='right'><b> TOTAL ( " + ds.Tables[0].Rows[0]["Currency"] + " ) </b> </span> </td>");
+                    sb.Append("<tr> <td width='50%' align='right' >  <span style='font-size:10px;font-family:calibri;align='right'><b> TOTAL ( " + ds.Tables[0].Rows[0]["Currency"] + " ) </b> </span> </td>");
                     sb.Append("<td width='25%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format("{0:#,0.00}", total3) + " </b> </span> </td>");
                     sb.Append("<td width='25%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format("{0:#,0.00}", total2) + " </b> </span> </td></tr>");
 
@@ -357,6 +362,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                             //Generate Invoice (Bill) Header.
 
                             //Export HTML String as PDF.
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                             StringReader sr = new StringReader(sb.ToString());
                             Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
                             HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
@@ -393,23 +399,25 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     string Tomail = Email2;
                     string cc = Email1;
                     var Html = "";
+                    string Subject = "";
                     if (Acceptstatus == "Accepted")
                     {
                         Html = "Dear" + Managername + ",<br/><br/>";
                         Html = "" + EmployeeName + " accepted compensation plan for <b> " + Period + "-" + Year + " </b> <br/><br/> ";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
+                        Subject = EmployeeName + " accepted compensation plan for" + " " + Period + "-" + Year;
                     }
                     else
                     {
                         Html = "" + EmployeeName + " requested you to change the compensation plan for <b> " + Period + "-" + Year + " </b>. Kindly click on the below link to take action. <br/> ";
                         Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
+                        Subject = EmployeeName + " requested to change the compensation plan for" + " " + Period + "-" + Year;
                     }
 
                     Tomail = "pratim.d@reddotdistribution.com";
                     cc = "mainak@reddotdistribution.com";
-
-                    string Subject = EmployeeName + "accepted compensation plan for" + " " + Period + "-" + Year;
+                   
                     SendMail.Send(Tomail, cc, Subject, Html, true);
                 }
 

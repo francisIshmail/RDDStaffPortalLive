@@ -256,7 +256,7 @@
 
             var a = data;
             if (a.Table.length == 0) {
-
+                RedDotAlert_Error("No Record Found");
                 //$('div#Ist').not(':first').remove();
                 //$("#Ist")[0].remove();
                 return;
@@ -279,11 +279,12 @@
     }
     function GetKpiDetail(_Desigid, _Period, _Year) {
         $.post("/GETKPIDETAILS", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
-            debugger
+            
             var a = data;
             if (a.Table.length == 0) {
                 $("#HdnRevSplit").val("");
                 $("#HdnGpSplit").val("");
+                
                 //$('div#IIst').not(':first').remove();
                 //$("#IIst")[0].remove();
                 return;
@@ -311,7 +312,7 @@
 
     function GetKpiTargets(_Desigid, _Period, _Year) {
         $.post("/GETKPITARGET", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
-            debugger
+            
             var a = data;
             if (a.Table.length == 0) {
                 $("#HdnRevSplit").val("");
@@ -376,7 +377,7 @@
     $(document).on('change', '#EmployeeId', function () {
         var Empide = $(this).val();
         $.post("/GETDESIGNATION", { Empide: Empide }, function (data) {
-            debugger
+            
             $("#DesigName").val(data.DesigName);
             $("#DesigId").val(data.DesigId);
             $("#Email").val(data.Email);
@@ -563,11 +564,11 @@
                     RedDotAlert_Success(data[0].Responsemsg);
                     var Compid = data[0].Id;
                     var MailFlag = $("#MailFlag").val();
-                    var Email1 = $("#Email").val;
+                    var Email1 = $("#Email").val();
                     var Email2 = $("#hdnLoginUserMail").val(); 
                     var Acceptstatus = $("#AcceptedBySalesperson option:selected").val();
                     //window.location.href = '@Url.Action("Index", "CompensationPlan")';
-                    window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email1=" + Email1 + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";
+                    window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";
                 }
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
