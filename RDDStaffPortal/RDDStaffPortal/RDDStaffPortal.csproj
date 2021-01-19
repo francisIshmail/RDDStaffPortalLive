@@ -186,6 +186,7 @@
     <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveAdjustmentController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveRequestController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveTypeController.cs" />
@@ -917,7 +918,6 @@
     <Folder Include="Areas\Incentive\Views\ViewCompensationPlan\" />
     <Folder Include="Areas\LMS\Models\" />
     <Folder Include="Areas\LMS\Views\RDD_LeaveLedger\" />
-    <Folder Include="Areas\LMS\Views\RDD_LeaveRequest\" />
     <Folder Include="Areas\LMS\Views\Shared\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LMSLayout.cshtml";
 }
 
-@Html.HiddenFor(m => m.LeaveLedgerId)
+@Html.Hidden(string.Concat("HdnLeaveLedgerId"))
 @Html.HiddenFor(m => m.EmployeeId)
 @Html.HiddenFor(m => m.LeaveTypeId)
 @Html.HiddenFor(m => m.DeptId)
@@ -85,38 +85,38 @@
             <div class="col-md-2">
 
                 <form>
+                    Country
                     @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control" })
                 </form>
             </div>
             <div class="col-md-2">
                 <form>
+                    Department
                     @Html.DropDownListFor(m => m.DeptId, Model.DepartmentList, new { @class = "form-control" })
                 </form>
             </div>
 
             <div class="col-md-4">
                 <form>
+                    Employee Name
                     @Html.DropDownListFor(m => m.FullName, Model.EmployeeList, new { @class = "form-control" })
                 </form>
             </div>
 
-            <div class="col-md-2">
+            @*<div class="col-md-2">
+                Date
                 <form>
                     <select name="calendar" class="custom-select">
                         <option selected>Select Month & Year </option>
 
                     </select>
                 </form>
-            </div>
+            </div>*@
 
-
-
-
-
-
-
-            <div class="col-md-2">
-                <div class="nav-masthead"><button type="button" class="btn btn-secondary ">Search Leave</button></div>
+            <div class="col-md-2.9" style="padding-top: 20px; padding-left: 10px;">
+                <div class="nav-masthead">
+                <button type="button" class="btn btn-secondary" id="btnsearch">Search Leave</button>
+                </div>
             </div>
         </div>
     </div>
@@ -251,15 +251,17 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Leave Type</label>
-                    @Html.DropDownListFor(m => m.LeaveName, Model.LeaveTypeList, new { @class = "form-control" })
+                    @*@Html.DropDownList("LeaveName", , new { @class = "form-control" })*@
+
                     @Html.HiddenFor(m => m.LeaveTypeId)
-                    @*<select class="form-control" id="exampleFormControlSelect1"></select>*@
+                    <select class="form-control" id="LeaveName"><option value="0">--Select--</option></select>
+
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Adjustment Type</label>
                     <select class="form-control" id="adjustmentType">
-                        <option value="true">Credit</option>
-                        <option value="false">Debit</option>
+                        <option value="Add">Add</option>
+                        <option value="Deduct">Deduct</option>
                     </select>
                 </div>
 
@@ -333,9 +335,24 @@
         //GetLeaveAdjustmentDetails();
         ShowLeaveAdjustment();
 
+        j("#btnsearch").on("click", function () {
+            var empid = j("#FullName").val();
+            GetLeaveAdjustmentDetailsBySearch(empid);
+
+
+           
+
+        });
+
+       
+        
         j('#adjustModal').on('hidden.bs.modal', function (e) {
 
-            
+
+            j("#btnUpdate").text("Save");
+            j("#btnUpdate").attr("id","btnSave");
+            //j("#random").show();
+
             j(this)
                 .find("input,textarea")
                 .val('')
@@ -344,7 +361,8 @@
                 .find("select")
                 .trigger('change')
                 .end()
-            
+            j("#FullNamepopup").val('0').trigger('change');
+            j("#LeaveName").val(0).trigger('change');
         });
         //j(document).on("click", ".close", function () {
         //    j("#adjustModal").modal('toggle');
@@ -358,7 +376,8 @@
             var Lvtyp = Currow.find('td:eq(7)').html();
             var noofdays = Currow.find('td:eq(3)').html();
             var remrks = Currow.find('td:eq(4)').html();
-            
+            var LvLedgerId = j(this).attr("data");
+            j("#HdnLeaveLedgerId").val(LvLedgerId);
             //j("#LeaveName").val(Lvtyp.trim()).trigger('change');
             j("#FullNamepopup").val(emp).trigger('change');
             j("#LeaveName").val(Lvtyp).trigger('change');
@@ -366,14 +385,31 @@
             j("#remkrs").val(remrks);
             j("#btnSave").text("Update");
             j("#btnSave").attr("id", "btnUpdate");
-            j(".add-new").attr("disabled", "disabled");
+            //j(".add-new").attr("disabled", "disabled");
         });
 
 
 
 
         j(document).on("click", "#btnSave", function () {
-        debugger
+            var Errmsg = "";
+            if (j("#FullNamepopup").val() == "0") {
+                Errmsg="Name,"
+            }
+            if (j("#LeaveName").val() == "0") {
+                Errmsg = Errmsg +"Leave Type,"
+            }
+            if (j("#noOfDays").val() == "") {
+                Errmsg = Errmsg+ "No of days,"
+            }
+            if (j("#remkrs").val() == "") {
+                Errmsg = Errmsg+"Remarks,"
+            }
+            if (Errmsg.length > 0) {
+                RedDotAlert_Error("Please Enter "+Errmsg);
+                return;
+                
+            }
             var rDD_LeaveAdjustment = {
                 EmployeeId: j("#FullNamepopup").val(),
                 LeaveTypeId: j("#LeaveName").val(),
@@ -389,10 +425,19 @@
                 dataType: "json",
                 data: JSON.stringify({ rDD_LeaveAdjustment: rDD_LeaveAdjustment }),
                 success: function (data) {
-
+                    debugger
                     if (data.Saveflag == true && data.LeaveLedgerId != -1) {
                         RedDotAlert_Success("Data saved successfully");
-                        window.location.href = '@Url.Action("Index", "RDD_LeaveAdjustment")';
+                        var empnm = j("#FullNamepopup option:selected").text();
+                        var noofdays = j("#noOfDays").val();
+                        var remrks = j("#remkrs").val();
+                        var leavename = j("#LeaveName option:selected").text();
+                        var crdr = j("#adjustmentType option:selected").val();
+                        var empid = j("#FullNamepopup").val();
+                        window.location.href = "/LMS/RDD_LeaveAdjustment/SendAdjustmentEmail?&EmpName=" + empnm + "&NoOfDays=" + noofdays + "&Description="
+                            + remrks + "&LeaveName=" + leavename + "&AddDeduct=" + crdr + "&EmpId=" + empid + "";
+
+
                         //var Empid = j("#EmployeeId option:selected").val();
                         //var Ccode = j("#Country option:selected").val();
                         //var deptid = j("#DeptId option:selected").val();
@@ -405,9 +450,40 @@
                     }
                 }
             });
-    });
+        });
+
+        j(document).on("change","#FullNamepopup", function () {
+            debugger
+            j.ajax({
+                async: false,                cache: false,
+                type: "Post",
+                url: "/LMS/RDD_LeaveAdjustment/GetCountryWiseLeaveType",
+                data: JSON.stringify({ EmployeeId: j(this).val() }),
+                dataType: 'Json',                contentType: "Application/json",
+
+               
+                success: function (data) {
+                    debugger
+                    j("#LeaveName").empty();
+                    j("#LeaveName").append('<option value = 0 selected = "" > -select-</option >');
+                    if (data.Table.length > 0) {
+                        var i = 0;
+
+                        while (data.Table.length > i) {
+                            j("#LeaveName").append('<option value = ' + data.Table[i].LeaveTypeId + ' selected = "" > ' + data.Table[i].LeaveName + '</option >');
+                            i++;
+                        }
+                        j("#LeaveName").val('0').trigger('change');
+
+                    }
+
+                }
+            });
+
+        });
 
     });
+
     //$('body').on('focusin', '.datepickerH', function () {
     //    $('.datepickerH').datetimepicker({
     //        format: 'DD/MM/YYYY',
@@ -417,21 +493,51 @@
     //    });
     //});
 
-    function GetLeaveAdjustmentDetailsBySearch(Empid,Countrycode,Deptid) {
+    //var SqlDate;
+    //function GetSqlDateformat(obj) {
+    //    try {
+    //        if (obj != undefined && obj != null) {
+    //            SqlDate = obj.toString().split('/')[1] + '/';
+    //            SqlDate += obj.toString().split('/')[0] + '/';
+    //            SqlDate += obj.toString().split('/')[2];
+    //            return SqlDate;
+    //        }
+    //    }
+    //    catch (ex) {
+    //        log(ex);
+    //    }
+    //}
+
+    //j('body').on('focusin', '.datepickerH', function () {
+    //    j('.datepickerH').datetimepicker({
+    //        format: 'DD/MM/YYYY',
+    //        showClose: true,
+    //        showClear: true,
+
+    //    });
+    //});
+
+    function GetLeaveAdjustmentDetailsBySearch(Empid) {
 
         j.ajax({
             type: "POST",
             url: '@Url.Action("GetLeaveAdjustment", "RDD_LeaveAdjustment")',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ Empid: Empid, Countrycode: Countrycode, Deptid: Deptid }),
+            data: JSON.stringify({ Empid: Empid}),
             datatype: "json",
             success: function (data) {
                 debugger
                 j("#usertable tbody").empty();
-                j.each(function (index, value) {
-                    j("#usertable tbody").append('<tr><td>'  + value.LeaveLedgerId + '</td><td>' + value.LeaveName + '</td><td>' + value.NoOfDays + '</td><td>' + value.Remarks + '<button class="btn edit" data-toggle="modal" data-target="#adjustModal" data="' + value.LeaveLedgerId + '"><i class="fa fa-edit"></i>' + '</td></tr>');
-                                        
-                });
+                var i = 0;
+                if (data.length == 0) {
+                    j('#usertable tbody').append('<tr data-no-results-found><td colspan="6">NO RESULTS FOUND</td></tr>');
+                    return
+                }
+                while (data.length > i) {
+                    j("#usertable tbody").append('<tr><td>' + data[i].LeaveLedgerId + '</td><td>' + data[i].FullName + '</td><td>' + data[i].LeaveName + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#adjustModal" data="' + data[i].LeaveLedgerId + '"><i class="fa fa-edit"></i>' + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td></tr>')
+                    i++;
+
+                }
             }
         });
 
@@ -450,13 +556,17 @@
 
                     j("#usertable tbody").append('<tr><td>' + data[i].LeaveLedgerId + '</td><td>' + data[i].FullName + '</td><td>' + data[i].LeaveName + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#adjustModal" data="' + data[i].LeaveLedgerId + '"><i class="fa fa-edit"></i>' + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td></tr>')
                         i++;
-                   
+
                 }
 
             }
         });
-        
+
     }
+    //j("#Country").on("change", function () {
+
+
+    //});
 
 </script>
 

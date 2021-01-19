@@ -101,11 +101,11 @@ namespace RDDStaffPortal.DAL.LMS
         public List<SelectListItem> GetCountryList()
         {
             List<SelectListItem> GetCountryListData = new List<SelectListItem>();
-            //GetCountryListData.Add(new SelectListItem()
-            //{
-            //    Text = "--Select--",
-            //    Value = "0"
-            //});
+            GetCountryListData.Add(new SelectListItem()
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
 
             try
             {
@@ -138,13 +138,13 @@ namespace RDDStaffPortal.DAL.LMS
         public List<SelectListItem> GetDeptList()
         {            
             List<SelectListItem> GetDepartmentListData = new List<SelectListItem>();
-           
-            //GetDepartmentListData.Add(new SelectListItem()
-            //{
-            //    Text = "--Select--",
-            //    Value = "0"
-            //});
-            
+
+            GetDepartmentListData.Add(new SelectListItem()
+            {
+                Text = "--Select--",
+                Value = "0"
+            });
+
             try
             {
                 SqlParameter[] parm ={
@@ -209,7 +209,7 @@ namespace RDDStaffPortal.DAL.LMS
             }
             return GetLeaveTypeListData;
         }
-        public List<RDD_LeaveAdjustment> GetAllData(int Empid, string Countrycode, int Deptid)
+        public List<RDD_LeaveAdjustment> GetAllData(int Empid)
         {
             List<RDD_LeaveAdjustment> rDD_LeaveAdjustment = new List<RDD_LeaveAdjustment>();
 
@@ -218,9 +218,8 @@ namespace RDDStaffPortal.DAL.LMS
                 SqlParameter[] Para =
                 {
                     new SqlParameter("@Type","Search"),
-                    new SqlParameter("@EmployeeId",Empid),
-                    new SqlParameter("@Country",Countrycode),
-                    new SqlParameter("@Deptid",Deptid)
+                    new SqlParameter("@EmployeeId",Empid)
+                    
                 };
                 DataSet dsModules = Com.ExecuteDataSet("RDD_LeaveLedger_Get", CommandType.StoredProcedure, Para);
                 if (dsModules.Tables.Count > 0)
@@ -234,17 +233,19 @@ namespace RDDStaffPortal.DAL.LMS
                             LeaveLedgerId = !string.IsNullOrWhiteSpace(dr["LeaveLedgerId"].ToString()) ? Convert.ToInt32(dr["LeaveLedgerId"].ToString()) : 0,
                             LeaveName = !string.IsNullOrWhiteSpace(dr["LeaveName"].ToString()) ? dr["LeaveName"].ToString() : "",
                             LeaveTypeId = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? Convert.ToInt32(dr["LeaveTypeId"].ToString()) : 0,
-                            NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? Convert.ToInt32(dr["NoOfDays"].ToString()) : 0,
+                            EmployeeId = !string.IsNullOrWhiteSpace(dr["EmployeeId"].ToString()) ? Convert.ToInt32(dr["EmployeeId"].ToString()) : 0,
+                            FullName = !string.IsNullOrWhiteSpace(dr["FullName"].ToString()) ? dr["FullName"].ToString() : "",
+                            NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? Convert.ToDecimal(dr["NoOfDays"].ToString()) : 0,
                             Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
-                            CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
-                            CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "",
-                            LastUpdatedOn = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : System.DateTime.Now,
-                            LastUpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() : "",
+                            //CreatedOn = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : System.DateTime.Now,
+                            //CreatedBy = !string.IsNullOrWhiteSpace(dr["CreatedBy"].ToString()) ? dr["CreatedBy"].ToString() : "",
+                            //LastUpdatedOn = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : System.DateTime.Now,
+                            //LastUpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() : "",
                         });
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 rDD_LeaveAdjustment.Add(new RDD_LeaveAdjustment()
                 {
@@ -305,6 +306,25 @@ namespace RDDStaffPortal.DAL.LMS
             }
             return rDD_LeaveAdjustment;
 
+        }
+        public DataSet CountryLeaveType(int EmployeeId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+               {
+                    new SqlParameter("@loginuserId",EmployeeId),
+                };
+                ds = Com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return ds;
+            
         }
     }
     

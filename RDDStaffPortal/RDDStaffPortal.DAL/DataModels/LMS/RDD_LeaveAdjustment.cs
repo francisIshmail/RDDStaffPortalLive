@@ -14,7 +14,7 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public List<SelectListItem> EmployeeList { get; set; }
         public List<SelectListItem> CountryList { get; set; }
         public List<SelectListItem> DepartmentList { get; set; }
-        public List<SelectListItem> LeaveTypeList { get; set; }
+        //public List<SelectListItem> LeaveTypeList { get; set; }
         public string LeaveName { get; set; }
         public string Country { get; set; }
         public string DeptId { get; set; }
@@ -24,7 +24,7 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public int EmployeeId { get; set; }
         public int LeaveTypeId { get; set; }
         //public string Types_ { get; set; }
-        public bool CreditDebit { get; set; }
+        public string CreditDebit { get; set; }
         public decimal NoOfDays { get; set; }
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }

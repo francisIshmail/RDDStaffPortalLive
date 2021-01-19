@@ -192,6 +192,7 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="LMS\RDD_Holidays_Db_Operation.cs" />
+    <Compile Include="LMS\RDD_LeaveAdjustment_Db_Operation.cs" />
     <Compile Include="LMS\RDD_LeaveApproval_Db_Operation.cs" />
     <Compile Include="LMS\RDD_LeaveRequest_Db_Operation.cs" />
     <Compile Include="LMS\RDD_LeaveType_Db_Operation.cs" />
