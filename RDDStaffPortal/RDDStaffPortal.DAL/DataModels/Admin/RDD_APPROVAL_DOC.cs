@@ -16,12 +16,13 @@ namespace RDDStaffPortal.DAL.DataModels.Admin
         public int ID { get; set; }
         public int TEMPLATE_ID { get; set; }
         public int OBJTYPE { get; set; }
-
+        public string Currency { get; set; }
         public string DocumentName { get; set; }
         public int DOC_ID { get; set; }
         public DateTime? DOC_DATE { get; set; }
         public string CARDCODE { get; set; }
         public string CARDNAME { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public decimal DocTotal { get; set; }
         public int SEQ_NO { get; set; }
         public string ORIGINATOR { get; set; }

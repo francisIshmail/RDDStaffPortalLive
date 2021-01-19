@@ -54,6 +54,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             return Json(EmpList, JsonRequestBehavior.AllowGet);
            
         }
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index() 
         {
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;

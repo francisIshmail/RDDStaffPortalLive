@@ -275,6 +275,7 @@
         var arr2 = "";
        
         $(document).on("change", "select[id^='VType']", function () {  
+            debugger
             arr1 = "";
             $('#VendorEmployee').val('');
             $("#VendorCode").val('');
@@ -313,7 +314,8 @@
             $(".creditlimit").hide();
             $("select[id ^= 'VType']").attr("disabled", true);
         }
-        $(document).on("change", "select[id^='DBName']", function () { 
+        $(document).on("change", "select[id^='DBName']", function () {
+            debugger
             arr1 = "";
             arr2 = "";
             debugger
@@ -496,10 +498,11 @@
             }
         }
 
+
         $('#VendorEmployee').autocomplete({
 
             source: function (request, response) {
-
+                debugger
                 try {
                     if (arr1 != "") {
                         debugger

@@ -423,17 +423,20 @@
                     $("#lblerror1").show();
                 }
             }
-            Isdraftmode();
+           
 
             
             if ($("#ActionType").val() == "DAILY") {
                 var nowMin1 = new Date($("#FromDate").val());
-                $("#hdnstartdate").val(nowMin1);
-                nowMin1.setDate(nowMin1.getDate() - 1);
                
+                nowMin1.setDate(nowMin1.getDate() - 7);
+                $("#hdnstartdate").val(nowMin1);
                 
                 $("#hdnenddate").val($("#ToDate").val());
-                RedDot_DateRange_Min_Max_Daily("reportrange", $("#FromDate").val(), $("#ToDate").val());
+                RedDot_DateRange_Min_Max_Daily("reportrange", $("#hdnstartdate").val(), $("#ToDate").val());
+                nowdate = $("#reportrange").data().startDate;
+                $("#hdnstartdate").val(nowdate);
+                
             } else if ($("#ActionType").val()=="WEEKLY") {
                 $("#hdnstartdate").val($("#FromDate").val());
                 var nowMin1 = new Date($("#ToDate").val());
@@ -443,6 +446,7 @@
                 nowdate = $("#reportrange").data().startDate;
                 nowdate.setDate(nowdate.getDate() - 7);
             }
+            Isdraftmode();
 
             $("#reportrange").on('show.daterangepicker', function (ev, picker) {
 
@@ -453,8 +457,10 @@
             $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
                 debugger
                 $(".loader1").show();
-                set_picker_start_end(picker, picker.startDate);
+                var new_date = new Date(picker.startDate.format('YYYY-MM-DD'));
                 $("#ActualVisitDate1").val(picker.startDate.format('DD/MM/YYYY'));
+                set_picker_start_end(picker, picker.startDate);
+                
                 if ($("#ActionType").val() != "DAILY") {
                     if (new Date($("#FromDate").val()) <= new Date(picker.startDate.format('YYYY-MM-DD'))) {
                         var new_date = new Date($("#FromDate").val());
@@ -488,6 +494,16 @@
                         $("#hdnenddate").val(nowMax);
 
                     }
+                } else {
+                  
+                    sdate = new_date;
+                    var startMin = moment(new_date, 'YYYY-MM-DD');
+                    startMin = new Date(startMin);
+                    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+                    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+                    $("#hdnstartdate").val(startMin);
+                    $("#hdnenddate").val(startMin);
+                    $('#reportrange span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear());
                 }
                 $.ajax({
                     url: '@Url.Action("GetRDD_DailySalesReports", "DSR_DailySales", new { area = "DailyReports" })',
@@ -712,6 +728,9 @@
             }
             if (rDD_DailySales.NextAction == "0" || rDD_DailySales.NextAction == "-1" || rDD_DailySales.NextAction == null) {
                 response.ErrorMessage += "Next Action,";
+            }
+            if (rDD_DailySales.CardCode == "0" || rDD_DailySales.CardCode == null || rDD_DailySales.CardCode == "") {
+                response.ErrorMessage += "Enter Compnay Name,";
             }
             if (rDD_DailySales.Company == "" || rDD_DailySales.Company == null) {
                 response.ErrorMessage += "Enter Compnay Name,";
@@ -1397,15 +1416,18 @@
                 }
             })
 
-            $("#btnDraftsave").on("click", function () {
+        $("#btnDraftsave").on("click", function () {
+                debugger
                 try {
                     $(".loader1").show();
                     var VisitType = 'D';
+                    var VisitDate = RedDot_setdtpkdate($("#hdnenddate").val());
                     if ($("#ActionType").val() == 'WEEKLY') {
                         VisitType = 'R';
-                    }
+                        VisitDate = RedDot_setdtpkdate($("#hdnstartdate").val());
+                    } 
                     var rDD_DailySales = {
-                        VisitDate: RedDot_setdtpkdate($("#hdnstartdate").val()),
+                        VisitDate: VisitDate ,
                         ToDate: RedDot_setdtpkdate($("#hdnenddate").val()),
                         VisitType: VisitType,
                         IsNewPartner: $("#IsNewPartner").val(),

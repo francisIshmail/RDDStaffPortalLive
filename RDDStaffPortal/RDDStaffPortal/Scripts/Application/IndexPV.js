@@ -30,7 +30,7 @@
           //  'PayRequestDate', 'BankCode', 'BankName', 'PayMethod', 'PayRefNo', 'PayDate', 'FilePath', 'ClosedDate', 'CAappStatus', 'CAappRemarks', 'CAapprovedBy', 'CAapprovedOn',
             //'CMappStatus', 'CMappRemarks', 'CMapprovedBy', 'CMapprovedOn', 'CFOappStatus', 'CFOappRemarks', 'CFOapprovedBy', 'CFOapprovedOn'];
         var tblhide = ['PVId'];
-        var tblhead2 = [];
+        var tblhead2 = ['RequestedAmt','ApprovedAmt'];
         var dateCond = ['PayRequestDate', 'PayDate', 'ClosedDate',  'CreatedOn'];
 
         $('.loader1').show();
@@ -70,7 +70,7 @@
         //#region Load Data
         function Getdata() {
             debugger
-            var value1 = $("#Search-Forms").val().toLowerCase();
+            var value1 = $("#txtPV").val().toLowerCase();
             var SearchCon = "";
             if ($("#txtFrmDate").val() != '' && $("#txtToDate").val() != '')
                 SearchCon = SearchCon + " And CreatedOn BetWeen $" + GetSqlDateformat($("[id$=txtFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtToDate]").val()) + "$"
@@ -114,7 +114,7 @@
                return
             }
             curPage++;
-            var value1 = $("#Search-Forms").val().toLowerCase();
+            var value1 = $("#txtPV").val().toLowerCase();
             if (curPage > arr.data[0].TotalCount)
                 curPage = 0;
             var data = JSON.stringify({
@@ -128,7 +128,7 @@
         //#region Prev Button*/
         $('.prev').bind('click', function () {
             $(".loader1").show();
-            var value1 = $("#Search-Forms").val().toLowerCase();
+            var value1 = $("#txtPV").val().toLowerCase();
             if (arr.data.length > 0) {
                 if (arr.data[0].TotalCount < 50) {
                     $(".loader1").hide();
@@ -164,7 +164,7 @@
                 }
                 $("select").val('').trigger('change');
             });
-            var value1 = $("#Search-Forms").val().toLowerCase();
+            var value1 = $("#txtPV").val().toLowerCase();
             var data = JSON.stringify({
                 pagesize: 50,
                 pageno: curPage,
@@ -175,7 +175,7 @@
         })
         //#endregion
        //#region Search Textbox*/
-        $("#Search-Forms").on("keyup", function () {
+        $("#txtPV").on("keyup", function () {
             $(".loader1").show();
             var value1 = $(this).val().toLowerCase();
             var data = JSON.stringify({
@@ -462,10 +462,10 @@
       
         function viewmode(PVId) {
             $.post("/VIEWRDDPV", { PVId: PVId }, function (response) {
-
+                debugger
                 $("#idCard").html(response);
                 RedDot_Button_New_HideShow();
-                debugger
+               
                 $(".txtcheck").each(function (index) {
                     if ($("#" + $(this).attr("id") + "").val() !== '') {
                         $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
@@ -496,8 +496,44 @@
                 $("#btnSave").hide();
                 $("#btnDelete").hide();
                 $("#btnCancel").text("Back");
+
+                VendorAging($("#DBName").val(), $("#VendorCode").val());
+                
                
             })
+        }
+
+
+        function VendorAging(DBName, BP) {
+            debugger
+            var V_AGE = ["0-30", "31-45", "46-60", "61-90", "91-120", "121+", "Balance"];
+            if ($("#VType").val() == "Vendor" && DBName !="" && BP!="") {
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/GetVendorAgeing",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        DBName: DBName,
+                        BP: BP
+                    }),
+                    success: function (data) {
+                        var arr3 = data;
+                        $("#txtbal").val(arr3.Table[0][V_AGE[6]] == null ? 0 : arr3.Table[0][V_AGE[6]]);
+                        $("#txt0").val(arr3.Table[0][V_AGE[0]] == null ? 0 : arr3.Table[0][V_AGE[0]])
+                        $("#txt31").val(arr3.Table[0][V_AGE[1]] == null ? 0 : arr3.Table[0][V_AGE[1]])
+                        $("#txt46").val(arr3.Table[0][V_AGE[2]] == null ? 0 : arr3.Table[0][V_AGE[2]])
+                        $("#txt61").val(arr3.Table[0][V_AGE[3]] == null ? 0 : arr3.Table[0][V_AGE[3]])
+                        $("#txt91").val(arr3.Table[0][V_AGE[4]] == null ? 0 : arr3.Table[0][V_AGE[4]])
+                        $("#txt121").val(arr3.Table[0][V_AGE[5]] == null ? 0 : arr3.Table[0][V_AGE[5]])
+
+
+
+                    }
+                });
+            }
         }
         //#region Edit PV*/
         $("#Ibody").on('dblclick', "#Ist", function (event) {
@@ -543,7 +579,7 @@
                     $("#Div1-Approval").show();
                     $("#Div1-ApprovedBy").show();
                 }
-                
+                VendorAging($("select[id^=DBName]").val(), $("#VendorCode").val());
                 //if ($("#Currency").val() !== '0') {
                 //    $("#div-Currency").removeClass('has-error1').addClass('has-success1');
                 //}

@@ -1,4 +1,5 @@
-﻿function Red_Dot_Model_Popup(ids, Modalid, data) {
+﻿
+function Red_Dot_Model_Popup(ids, Modalid, data) {
 
     function callback(value) {
         //do something
@@ -1145,6 +1146,54 @@ function applyAutoComplete2(ids, hdnid, url) {
     })
 }
 
+function applyAutoCompletedata(ids, hdnid, data) {
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+           
+                    $(hdnid).val(-1);
+            if (results.length > 0) {
+                        response($.map(results, function (item) {
+                            return {
+                                label: item.CodeName,
+                                value: item.CodeName,
+                                val1: item.Code
+
+                            };
+                        }))
+                    } else {
+
+                        response([{ label: 'No results found.', value: 'No results found.' }]);
+                    }
+                
+           
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+            }
+        },
+        minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+}
+
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
     var k = 1;
@@ -1454,8 +1503,10 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
 function RedDot_DivTable_Header_Fill(Ids,data) {
     if (data != null && data.length != 0) {
         var i = 0;
+       
         while (data.length > i) {
             var tr1 = $('#' + Ids + 'st').clone();
+            var tr = $('#' + Ids + 'st').closest();
             var k = 0;
             var l1 = tr1.find(".Abcd").length;
             while (l1 > k) {
@@ -1469,8 +1520,33 @@ function RedDot_DivTable_Header_Fill(Ids,data) {
         }
     }
 }
+
+function RedDot_DivTable_Header_Fill_Append(Ids, data) {
+    if (data != null && data.length != 0) {
+        var i = 0;
+        debugger
+        $('#' + Ids + 'nd').find(".reddotTableHead").addClass("Abc");
+        $('#' + Ids + 'st').find(".reddotTableCell").addClass("Abc");
+        $('div#' + Ids + 'st').not(':first').remove();
+        while (data.length > i) {
+            var t = data[i].toUpperCase().split("-");
+            var tr1 = $('#' + Ids + 'nd').closest();
+           var tr = $('#' + Ids + 'st').closest();
+
+            $('#' + Ids + 'nd').find(".reddotTableHead")[i + 1].children[0].textContent = t[1];
+            $('#' + Ids + 'nd').find(".reddotTableHead")[i + 1].children[1].textContent = t[0];
+            tr1.prevObject.find(".reddotTableHead").eq(0).removeClass("Abc");
+            tr1.prevObject.find(".reddotTableHead").eq(i+1).removeClass("Abc");
+            tr.prevObject.find(".reddotTableCell").eq(i).removeClass("Abc")
+           // tr.prevObject.find(".Abcd").eq(i+1).removeClass("Abc") 
+              
+            i++;
+        }
+    }
+}
 function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
-    debugger;
+    
+   
     var arr = [];
     $.ajax({
         async: false,
@@ -1481,7 +1557,7 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
         dataType: "json",
         data: data,
         success: function (data) {
-            debugger
+            
             $('#' + Ids + 'st').show();
             $('div#' + Ids + 'st').not(':first').remove();
             arr = data;
@@ -1497,7 +1573,12 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                         if (jQuery.inArray(t, dateCond) !== -1) {
 
                             tr.find(".Abcd")[k].children[0].textContent = RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
-                        } else {
+                        } else if (jQuery.inArray(t, tblhead2) !== -1) {
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            tr.find(".Abcd").eq(k).removeClass('reddotTableCell');
+                            tr.find(".Abcd").eq(k).addClass('reddotTableCellRight');
+                        }
+                        else {
                             tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                         }
                         if (jQuery.inArray(t, tblhide) !== -1) {
@@ -1523,6 +1604,129 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
     });
     return arr;
 }
+
+function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
+    
+
+    var arr = [];
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        url: url,
+        contentType: "application/json",
+        dataType: "json",
+        data: data,
+        success: function (data) {
+            
+            $('#' + Ids + 'st').show();
+            $('div#' + Ids + 'st').not(':first').remove();
+            arr = data;
+            
+            if (arr.Table != null && arr.Table.length != 0) {
+                var i = 0;
+                while (arr.Table.length > i) {
+                  
+                        var tr = $('#' + Ids + 'st').clone();
+                        var tr1 = $('#' + Ids + 'nd').closest();
+                        var k = 0;
+                        var l1 = tr.find(".Abcd").length;
+                        while (l1 > k) {
+                            var t = tblhead1[k];
+                            
+                            var i1 = 0;
+                                var found_names = $.grep(arr.Table1, function (v) {
+                                    return v.EmployeeId === arr.Table[i][tblhead2[0]];
+                                });
+                            while (i1 < found_names.length) {
+
+                              //  tr.find(".Abcd")[new Date(found_names[i1].FromDate).getDate()].children[0].textContent = found_names[i1].LeaveStatus;
+                              //  tr.find(".Abcd")[new Date(found_names[i1].ToDate).getDate()].children[0].textContent = found_names[i1].LeaveStatus;
+                                //<a href="#" data-toggle="popover" title="Annual Leave - Day 1" data-content="Some content inside the popover"><div class="grncircle"></div> </a>
+                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).addClass('fa fa-circle text-' + found_names[i1].leaveStatuscss);
+                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).addClass('fa fa-circle text-' + found_names[i1].leaveStatuscss);
+                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-target", "#LeaveModal" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId);
+                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("title", "Annual Leave");
+                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-toggle", "modal");
+                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-content", "Annual Leave test");
+                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-toggle", "modal");
+                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-target", "#LeaveModal" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId );
+                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("title", "Annual Leave");
+                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-content", "Annual Leave test");
+
+                                debugger
+
+                                
+                                i1++;
+                            }
+
+                                //if (jQuery.inArray(arr.Table[i][tblhead2[0]], arr.Table1[i][tblhead2[0]]) !== -1) {
+                                //    tr.find(".Abcd")[k].children[0].textContent = arr.Table1[i][tblhead2[k]];
+                                //    tr.find(".Abcd").eq(k).removeClass('reddotTableCell');
+                                //    tr.find(".Abcd").eq(k).addClass('reddotTableCellRight');
+                                //} 
+                             
+                            
+                                tr.find(".Abcd")[k].children[0].textContent = arr.Table[i][tblhead1[k]];
+                           
+                            //if (jQuery.inArray(t, tblhide) !== -1) {
+                            //    tr.find(".Abcd").eq(k).addClass("Abc")
+                            //    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+                            //} else {
+                            //   tr.find(".Abcd").eq(k).removeClass("Abc")
+                            //   // tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc")
+                            //}
+                            k++;
+                        }
+                        $('#' + Ids + 'body').append(tr);
+                    
+                    i++;
+                }
+             
+                $('#' + Ids + 'st')[0].remove();
+            } else {
+                $('#' + Ids + 'st').hide();
+                RedDotAlert_Error("No Record Found");
+            }
+            if (arr.Table1 != null && arr.Table1.length != 0) {
+                var i1 = 0;
+                while (arr.Table1.length > i1) {
+                    debugger
+                    //#region Modal
+                    $("#LeaveModal").append('<div id="LeaveModal' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '" ></div>');
+
+
+                    // console.log(found_names[i].RowNum + '_' + found_names[i].EmployeeId);
+                    $("#LeaveModal" + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId).html('<div class="modal fade"  id="Leave' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static" >' +
+
+                        '<div class="modal-dialog modal-lg">' +
+                        '<div class="modal-content" style="border-radius: 20px !important;">' +
+
+
+
+                        '<div class="modal-body"  >' +
+
+                        '<h1 style="font-weight: bold; color: #d71313;font-size: 3.4em;padding: 10px;width: 540px;font-family: system-ui;line-height: initial;">' + arr.Table1[i1].LeaveName + '</h1>' +
+                        '<p style="width: 540px;font-size: 30px; padding: 0 10px;color: black;font-family: system-ui;font-weight: 100;' +
+                        'line-height: initial;">' + arr.Table1[i1].LeaveName + '</p>' +
+                        '<p> <i class="fa fa-info-circle" style="margin-left: 10px;" aria-hidden="true"></i> For any suggestion and help reach out to us at <span style="color: #d71313; font-weight: 400; padding: 0 10px;">helpdesk@reddotdistribution.com</span></p>' +
+
+
+
+                        '</div > ' +
+                        ' </div > ' +
+                        '</div>')
+                    //#endregion
+                    i1++;
+                }
+            }
+        }, complete: function () {
+            $(".loader1").hide();
+        }
+    });
+    return arr;
+}
+
 
 function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
 

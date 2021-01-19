@@ -28,7 +28,9 @@ namespace RDDStaffPortal
             filters.Add(new HandleErrorAttribute());
           
             filters.Add(new AuthorizeAttribute() { Roles =str });//"Admin,HR,Funnel,Marketing,Reports,SAP,Targets" 
-            //filters.Add(new System.Web.Mvc.AuthorizeAttribute() );
+                                                                 //filters.Add(new System.Web.Mvc.AuthorizeAttribute() );
+
+           
 
         }
     }

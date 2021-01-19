@@ -129,6 +129,19 @@
 </style>
 <script>
     $(document).ready(function () {
+        (function ($) {
+            $(function () {
+
+                $(":input[type='search']").removeAttr("autocomplete");
+                $(":input[type='search']").attr("autocomplete", "off");
+                /// $(":input").attr("autocomplete", "nope");
+
+                $(":input[type='search']").attr("autocomplete", "nope");
+                $(":input[type='search']").val("");
+
+
+            });
+        })(jQuery);
         $('.scrollbar-inner').scrollbar();
 
 
@@ -155,8 +168,7 @@
                         '<div class="modal-dialog modal-lg">' +
                         '<div class="modal-content" style="border-radius: 20px !important;">' +
 
-                       // '<div class="modal-body">' +
-                        //src="data:image;base64Convert.ToBase64String(Model.Welcome_image)"
+                     
 
                         '<div class="modal-body"  style="background-image: url(data:image;base64,' + response.data[i].Welcome_image1 +'); ' +
                         'background-repeat:no-repeat;background-position:right center; min-height: 400px; border-radius: 20px;">' +
@@ -187,7 +199,7 @@
             }
 
         })
-        $(".close-modal-button,.close").on("click", function () {
+        $("[id^='btnCancel']").on("click", function () {
             debugger
             var t = $(this).attr("data-id");
             var rdd = {

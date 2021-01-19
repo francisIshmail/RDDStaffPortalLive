@@ -191,6 +191,7 @@
     <Compile Include="InitialSetup\RDD_WebReportsDBOperation.cs" />
     <Compile Include="InitialSetup\TestDbOperation.cs" />
     <Compile Include="LMS\RDD_Holidays_Db_Operation.cs" />
+    <Compile Include="LMS\RDD_LMS_Annual_Leave_Calendra_Db_Operation.cs" />
     <Compile Include="MarketingPlan\MarketingPlanDoc.cs" />
     <Compile Include="obj\Debug\DataModels\DailyReports\UserControl1.g.i.cs" />
     <Compile Include="MarketingPlan\MarketingPlanDbOperation.cs" />

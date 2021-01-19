@@ -15,6 +15,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         // GET: Admin/ApprovalTemplate
 
         RDD_Approval_TemplatesDBOperation rDD_Approval = new RDD_Approval_TemplatesDBOperation();
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index()
         {
             return View();

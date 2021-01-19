@@ -10,7 +10,7 @@ foreach (var list in RDD_R.GroupBy(x => x.typs).Select(x => x.First()).ToList())
             <div class="card">
                 <div class="card-header">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="Search-@list.typs-QuickLinks" placeholder="Search @list.typs - Quick Links">
+                        <input type="search" class="form-control" id="Search-@list.typs-QuickLinks" placeholder="Search @list.typs - Quick Links">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>

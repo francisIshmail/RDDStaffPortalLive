@@ -188,6 +188,7 @@
     <Compile Include="Areas\Incentive\Controllers\IncentiveSlabController.cs" />
     <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_AnnualLeaveCalenderController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
@@ -257,6 +258,7 @@
     <Content Include="js\new-daterangepicker\package.js" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
+    <Content Include="Scripts\Application\Calendarplanner.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -739,6 +741,7 @@
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\jquery.disable.autocomplete.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
@@ -853,6 +856,7 @@
     <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_AnnualLeaveCalender\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

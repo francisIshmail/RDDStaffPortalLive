@@ -32,7 +32,7 @@
 
                                             @*@Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm" })*@
                                                                                       
-                                            <input  id="EmpName" name="EmpName" class="form-control form-control-sm"/>
+                                            <input  id="EmpName" name="EmpName" class="form-control form-control-sm" type="search"/>
                                             <input id="hdnEmpName" type="hidden">
                                         </div>
                                     </div>
@@ -165,13 +165,16 @@
             </div>
         </div>
     </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script src="~/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>
     <script src="~/Scripts/RedDotUtility.js"></script>
     <script>
         $(document).ready(function () {
+           
             debugger
+            
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#loghistory .reddotTableRow").filter(function () {

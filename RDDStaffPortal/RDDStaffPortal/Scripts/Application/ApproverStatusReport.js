@@ -1,8 +1,8 @@
 ﻿var ApproverStatusReport = function () { };
 
-var tblhead1 = ['SRNO', 'OBJTYPE', 'DocumentName', 'DOC_ID', 'Country','Refno', 'DOC_DATE', 'CARDNAME', 'DocTotal', 'ORIGINATOR', 'ORG_Remark', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_DATE'];
+var tblhead1 = ['SRNO', 'OBJTYPE', 'DocumentName', 'DOC_ID', 'Country', 'Refno', 'DOC_DATE', 'CARDNAME','Currency', 'DocTotal', 'ORIGINATOR', 'ORG_Remark', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_DATE'];
 var tblhide = [];
-var tblhead2 = [];
+var tblhead2 = ['DocTotal'];
 var dateCond = ['DOC_DATE', 'APPROVAL_DATE'];
 var arr = [];
 var curPage = 1;
@@ -18,7 +18,8 @@ ApproverStatusReport.prototype = {
     },
 
     ControlInit: function () {
-      
+
+       
         debugger;
         var arr3 =""
         //$("select").not("#cbAction").select2({

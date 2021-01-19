@@ -391,7 +391,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             cmd.Parameters.Add("@p_CreatedBy", SqlDbType.VarChar, 255).Value = FunnelDataa.CreatedBy;
 
                             cmd.Parameters.Add("@p_CreatedOn", SqlDbType.Date).Value = FunnelDataa.Createddte;
-                            if (FunnelDataa.Updateddte.Year < (DateTime.Now.Year - 1))
+                            if (FunnelDataa.Updateddte == DateTime.MinValue)
                             {
                                 cmd.Parameters.Add("@p_LastUpdatedOn", SqlDbType.Date).Value = DBNull.Value;
                             }
@@ -406,14 +406,15 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             else {
                                 cmd.Parameters.Add("@p_LastUpdatedBy", SqlDbType.VarChar, 255).Value = FunnelDataa.CreatedBy;
                             }
-                            if (FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1))//FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1)
+                            if (FunnelDataa.NextReminderDt == DateTime.MinValue)//FunnelDataa.NextReminderDt.Year < (DateTime.Now.Year - 1)
                             {
                                 cmd.Parameters.Add("@p_NextReminderDt", SqlDbType.Date).Value = DBNull.Value;
                             }
-                            else {
+                            else
+                            {
                                 cmd.Parameters.Add("@p_NextReminderDt", SqlDbType.Date).Value = FunnelDataa.NextReminderDt;
                             }
-                           
+
                             cmd.Parameters.Add("@p_quoteDate", SqlDbType.Date).Value = FunnelDataa.quoteDate;
                             cmd.Parameters.Add("@p_quoteMonth", SqlDbType.Int).Value = FunnelDataa.quoteDate.Month;
                             cmd.Parameters.Add("@p_quoteYear", SqlDbType.Int).Value = FunnelDataa.quoteDate.Year;
@@ -436,7 +437,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
                             cmd.Parameters.Add("@p_expclosingMonthMMM", SqlDbType.VarChar, 255).Value = FunnelDataa.expClosingDt.ToString("MMM");
 
-                            if (FunnelDataa.orderBookedDate.Year < (DateTime.Now.Year - 1))
+                            if (FunnelDataa.orderBookedDate == DateTime.MinValue)
                             {
                                 cmd.Parameters.Add("@p_orderBookedDate", SqlDbType.Date).Value = DBNull.Value;
                             }
@@ -444,7 +445,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                             {
                                 cmd.Parameters.Add("@p_orderBookedDate", SqlDbType.Date).Value = FunnelDataa.orderBookedDate;
                             }
-                            if (FunnelDataa.InvoiceDt.Year < (DateTime.Now.Year - 1))
+                            if (FunnelDataa.InvoiceDt == DateTime.MinValue)
                             {
                                 cmd.Parameters.Add("@p_InvoiceDt", SqlDbType.Date).Value = DBNull.Value;
                             }
@@ -455,7 +456,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
 
 
-                           
+
 
 
 
@@ -637,29 +638,14 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return _BUList;
         }
 
-        public List<RDD_FunnelData> FillCustomer(string Country)
+        public DataSet FillCustomer(string Country)
         {
-            List<RDD_FunnelData> _CustomerList = new List<RDD_FunnelData>();
+            DataSet _CustomerList = null;
             try
             {
                 SqlParameter[] parm = { new SqlParameter("@Country", Country) };
-                DataSet dsModules = Com.ExecuteDataSet("getFunnelCustomerListNF", CommandType.StoredProcedure, parm);
-                if (dsModules.Tables.Count > 0)
-                {
-                    DataTable dtModule = dsModules.Tables[0];
-                    DataRowCollection drc = dtModule.Rows;
-                    foreach (DataRow dr in drc)
-                    {
-                        _CustomerList.Add(new RDD_FunnelData()
-                        {
-                            CardCode = !string.IsNullOrWhiteSpace(dr["CardCode"].ToString()) ? dr["CardCode"].ToString() : "",
-                            CardName = !string.IsNullOrWhiteSpace(dr["CardName"].ToString()) ? dr["CardName"].ToString() : "",
-
-
-                        });
-                    }
-
-                }
+                _CustomerList = Com.ExecuteDataSet("getFunnelCustomerListNF", CommandType.StoredProcedure, parm);
+               
 
             }
             catch (Exception ex)
@@ -670,10 +656,41 @@ namespace RDDStaffPortal.DAL.InitialSetup
             return _CustomerList;
         }
 
+        //public List<RDD_FunnelData> FillCustomer(string Country)
+        //{
+        //    List<RDD_FunnelData> _CustomerList = new List<RDD_FunnelData>();
+        //    try
+        //    {
+        //        SqlParameter[] parm = { new SqlParameter("@Country", Country) };
+        //        DataSet dsModules = Com.ExecuteDataSet("getFunnelCustomerListNF", CommandType.StoredProcedure, parm);
+        //        if (dsModules.Tables.Count > 0)
+        //        {
+        //            DataTable dtModule = dsModules.Tables[0];
+        //            DataRowCollection drc = dtModule.Rows;
+        //            foreach (DataRow dr in drc)
+        //            {
+        //                _CustomerList.Add(new RDD_FunnelData()
+        //                {
+        //                    CardCode = !string.IsNullOrWhiteSpace(dr["CardCode"].ToString()) ? dr["CardCode"].ToString() : "",
+        //                    CardName = !string.IsNullOrWhiteSpace(dr["CardName"].ToString()) ? dr["CardName"].ToString() : "",
 
-        public List<RDD_FunnelData> FillBU(string Country, string username)
+
+        //                });
+        //            }
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _CustomerList = null;
+        //    }
+
+        //    return _CustomerList;
+        //}
+        public DataSet FillBU(string Country, string username)
         {
-            List<RDD_FunnelData> _BUList = new List<RDD_FunnelData>();
+            DataSet _BUList = null;
             try
             {
                 SqlParameter[] Para = {
@@ -682,23 +699,8 @@ namespace RDDStaffPortal.DAL.InitialSetup
                 new SqlParameter("@p_Countryname", Country),
                     new SqlParameter("@p_Empname", username),
                     };
-                DataSet dsModules = Com.ExecuteDataSet("RDD_GetFunnelBUList", CommandType.StoredProcedure, Para);
-                if (dsModules.Tables.Count > 0)
-                {
-                    DataTable dtModule = dsModules.Tables[0];
-                    DataRowCollection drc = dtModule.Rows;
-                    foreach (DataRow dr in drc)
-                    {
-                        _BUList.Add(new RDD_FunnelData()
-                        {
-
-                            BUName = !string.IsNullOrWhiteSpace(dr["ItmsGrpNam"].ToString()) ? dr["ItmsGrpNam"].ToString() : "",
-
-
-                        });
-                    }
-
-                }
+                _BUList = Com.ExecuteDataSet("RDD_GetFunnelBUList", CommandType.StoredProcedure, Para);
+               
 
             }
             catch (Exception ex)
@@ -708,6 +710,44 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
             return _BUList;
         }
+
+        //public List<RDD_FunnelData> FillBU(string Country, string username)
+        //{
+        //    List<RDD_FunnelData> _BUList = new List<RDD_FunnelData>();
+        //    try
+        //    {
+        //        SqlParameter[] Para = {
+
+
+        //        new SqlParameter("@p_Countryname", Country),
+        //            new SqlParameter("@p_Empname", username),
+        //            };
+        //        DataSet dsModules = Com.ExecuteDataSet("RDD_GetFunnelBUList", CommandType.StoredProcedure, Para);
+        //        if (dsModules.Tables.Count > 0)
+        //        {
+        //            DataTable dtModule = dsModules.Tables[0];
+        //            DataRowCollection drc = dtModule.Rows;
+        //            foreach (DataRow dr in drc)
+        //            {
+        //                _BUList.Add(new RDD_FunnelData()
+        //                {
+
+        //                    BUName = !string.IsNullOrWhiteSpace(dr["ItmsGrpNam"].ToString()) ? dr["ItmsGrpNam"].ToString() : "",
+
+
+        //                });
+        //            }
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _BUList = null;
+        //    }
+
+        //    return _BUList;
+        //}
 
 
 
@@ -756,13 +796,13 @@ namespace RDDStaffPortal.DAL.InitialSetup
                         _Fdata.remarks= !string.IsNullOrWhiteSpace(dr["remarks"].ToString()) ? dr["remarks"].ToString() : "";
                         _Fdata.Remarks2 = !string.IsNullOrWhiteSpace(dr["Remarks2"].ToString()) ? dr["Remarks2"].ToString() : "";
                         _Fdata.Remarks3 = !string.IsNullOrWhiteSpace(dr["Remarks3"].ToString()) ? dr["Remarks3"].ToString() : "";
-                        _Fdata.orderBookedDate = !string.IsNullOrWhiteSpace(dr["orderBookedDate"].ToString()) ? Convert.ToDateTime(dr["orderBookedDate"].ToString()):DateTime.Now;
-                        _Fdata.InvoiceDt = !string.IsNullOrWhiteSpace(dr["InvoiceDt"].ToString()) ? Convert.ToDateTime(dr["InvoiceDt"].ToString()) : DateTime.Now;
-                        _Fdata.NextReminderDt = !string.IsNullOrWhiteSpace(dr["NextReminderDt"].ToString()) ? Convert.ToDateTime(dr["NextReminderDt"].ToString()) : DateTime.Now;
+                        _Fdata.orderBookedDate = !string.IsNullOrWhiteSpace(dr["orderBookedDate"].ToString()) ? (DateTime?)Convert.ToDateTime(dr["orderBookedDate"].ToString()): (DateTime?)null;
+                        _Fdata.InvoiceDt = !string.IsNullOrWhiteSpace(dr["InvoiceDt"].ToString()) ? (DateTime?)Convert.ToDateTime(dr["InvoiceDt"].ToString()) : (DateTime?)null;
+                        _Fdata.NextReminderDt = !string.IsNullOrWhiteSpace(dr["NextReminderDt"].ToString()) ? (DateTime?)Convert.ToDateTime(dr["NextReminderDt"].ToString()) : (DateTime?)null;
                         _Fdata.Createddte = !string.IsNullOrWhiteSpace(dr["CreatedOn"].ToString()) ? Convert.ToDateTime(dr["CreatedOn"].ToString()) : DateTime.Now;
                         _Fdata.MarginUSD = !string.IsNullOrWhiteSpace(dr["MarginUSD"].ToString()) ?Convert.ToDecimal(dr["MarginUSD"].ToString()) : 0;
                         _Fdata.UpdatedBy = !string.IsNullOrWhiteSpace(dr["LastUpdatedBy"].ToString()) ? dr["LastUpdatedBy"].ToString() :"";
-                        _Fdata.Updateddte = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : DateTime.Now;
+                        _Fdata.Updateddte = !string.IsNullOrWhiteSpace(dr["LastUpdatedOn"].ToString()) ? (DateTime?)Convert.ToDateTime(dr["LastUpdatedOn"].ToString()) : (DateTime?)null;
 
                     }
 

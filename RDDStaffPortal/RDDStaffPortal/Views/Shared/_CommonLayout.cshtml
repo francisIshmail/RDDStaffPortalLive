@@ -147,302 +147,305 @@
                     <ul class="nav nav-primary">
                         <li class="nav-item active">
                             @*<a data-toggle="collapse"  href="@Url.Action("Index","Dashboard" )"  class="collapsed" aria-expanded="false">
-                <i class="fas fa-home"></i>   <p>Dashboard</p>
-            </a>*@
+                                    <i class="fas fa-home"></i>   <p>Dashboard</p>
+                                </a>*@
 
                             <a href="/Dashboard/Index">
-                                <i class="fas fa-home"></i>   <p>Dashboard</p>
+                                <i class="fas fa-home"></i>
+                                <p>Dashboard</p>
                             </a>
 
                         </li>
                         <li class="nav-section"> </li>
                         @*<li class="nav-item">
-            <a data-toggle="collapse" href="#Admin">
-                <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="Admin">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="#">
-                            <span class="sub-item">All Admin Setups</span>
-                        </a>
-                    </li>
+                                <a data-toggle="collapse" href="#Admin">
+                                    <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Admin">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub-item">All Admin Setups</span>
+                                            </a>
+                                        </li>
 
-                </ul>
-            </div>
-        </li>*@
+                                    </ul>
+                                </div>
+                            </li>*@
 
 
 
                         @*<li class="nav-item">
-            <a data-toggle="collapse" href="#Admin">
-                <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="Admin">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a  href="/Admin/Menus/Index">Menu Master</a>
-                    </li>
-                    <li>
-                        <a  href="/Admin/Users/Index">User</a>
-                    </li>
-                </ul>
-            </div>
-        </li>*@
+                                <a data-toggle="collapse" href="#Admin">
+                                    <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Admin">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a  href="/Admin/Menus/Index">Menu Master</a>
+                                        </li>
+                                        <li>
+                                            <a  href="/Admin/Users/Index">User</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>*@
 
                         @{ Html.RenderAction("GetMenuTreeMenu", "Account", new { area = "" }); }
                         <li class="nav-item">
                             <a href="https://reddotdistribution.atlassian.net/servicedesk/customer/portal/2" target="_blank">
-                                <i class="fas fa-question-circle menu-icon-c"></i> <p>IT Support </p>
+                                <i class="fas fa-question-circle menu-icon-c"></i>
+                                <p>IT Support </p>
                             </a>
-                        </li>|
+                        </li>
                         <li class="nav-item">
                             <a href="http://192.168.80.25:98/Login.aspx" target="_blank">
-                                <i class="fas fa-info-circle menu-icon-c"></i> <p>Go to Old Intranet</p>
+                                <i class="fas fa-info-circle menu-icon-c"></i>
+                                <p>Go to Old Intranet</p>
                             </a>
                         </li>|
 
                         @*<li class="nav-item">
-            <a data-toggle="collapse" href="#Admin">
-                <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="Admin">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="#">
-                            <span class="sub-item">All Admin Setups</span>
-                        </a>
-                    </li>
+                                <a data-toggle="collapse" href="#Admin">
+                                    <i class="fas fa-user menu-icon-c"></i> <p>Admin</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Admin">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="#">
+                                                <span class="sub-item">All Admin Setups</span>
+                                            </a>
+                                        </li>
 
-                </ul>
-            </div>
-        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#HR">
-                <i class="fas fa-user-tie menu-icon-c"></i> <p>HR</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="HR">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Employee Master</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Apply Leaves</span>
-                        </a>
-                    </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#HR">
+                                    <i class="fas fa-user-tie menu-icon-c"></i> <p>HR</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="HR">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Employee Master</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Apply Leaves</span>
+                                            </a>
+                                        </li>
 
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Apply Loans</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Assets List</span>
-                        </a>
-                    </li>
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Apply Loans</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Assets List</span>
+                                            </a>
+                                        </li>
 
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Indent and Setups</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Indent and Setups</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#Sales">
-                <i class="fas fa-chart-bar menu-icon-c"></i> <p>Sales</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="Sales">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">SOR</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Sales Reports</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#Sales">
+                                    <i class="fas fa-chart-bar menu-icon-c"></i> <p>Sales</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Sales">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">SOR</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Sales Reports</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#Finance">
-                <i class="fas fa-money-bill-alt menu-icon-c"></i> <p>Finance</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="Finance">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">PV</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Customers Status</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#Finance">
+                                    <i class="fas fa-money-bill-alt menu-icon-c"></i> <p>Finance</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Finance">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">PV</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Customers Status</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#Logistick">
-                <i class="fas fa-shipping-fast menu-icon-c"></i> <p>Logistick</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="Logistick">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">PO</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Logistic Reports</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Order Tracking</span>
-                        </a>
-                    </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#Logistick">
+                                    <i class="fas fa-shipping-fast menu-icon-c"></i> <p>Logistick</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Logistick">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">PO</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Logistic Reports</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Order Tracking</span>
+                                            </a>
+                                        </li>
 
-                </ul>
-            </div>
-        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#Marketing">
-                <i class="fas fa-bullhorn menu-icon-c"></i> <p>Marketing</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="Marketing">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Marketing Plan List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">New Plan</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Setup</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#Marketing">
+                                    <i class="fas fa-bullhorn menu-icon-c"></i> <p>Marketing</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Marketing">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Marketing Plan List</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">New Plan</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Setup</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#DailyReport">
-                <i class="fas fa-file-alt menu-icon-c"></i> <p>Daily Report</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="DailyReport">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Submit Report</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">View Report</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">View Score Card</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#DailyReport">
+                                    <i class="fas fa-file-alt menu-icon-c"></i> <p>Daily Report</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="DailyReport">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Submit Report</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">View Report</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">View Score Card</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
 
-        </li>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#TargetsForcos">
-                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="TargetsForcos">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Country Target Quarterly</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Monthly</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Sales Person Target Quarterly</span>
-                        </a>
-                    </li>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#TargetsForcos">
+                                    <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="TargetsForcos">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Country Target Quarterly</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Monthly</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Sales Person Target Quarterly</span>
+                                            </a>
+                                        </li>
 
-                </ul>
-            </div>
-        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-        <li class="nav-item">
-            <a data-toggle="collapse" href="#Report">
-                <i class="fas fa-file-alt menu-icon-c"></i> <p>Report</p> <span class="caret"></span>
-            </a>
-            <div class="collapse" id="Report">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="Report1.html">
-                            <span class="sub-item">Report 1</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Report 2</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#Report">
+                                    <i class="fas fa-file-alt menu-icon-c"></i> <p>Report</p> <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="Report">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="Report1.html">
+                                                <span class="sub-item">Report 1</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Report 2</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
 
-        </li>*@
+                            </li>*@
                         @*<li class="nav-item">
-            <a data-toggle="collapse" href="#TargetsForcos">
-                <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
-            </a>
-            <div class="collapse" id="TargetsForcos">
-                <ul class="nav nav-collapse">
-                    <li>
-                        <a href="@Url.Action("Index","CountryTarget" )">
-                            <span class="sub-item">Country Target Quarterly</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Monthly</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Report2.html">
-                            <span class="sub-item">Sales Person Target Quarterly</span>
-                        </a>
-                    </li>
+                                <a data-toggle="collapse" href="#TargetsForcos">
+                                    <i class="fas fa-crosshairs menu-icon-c"></i> <p>Targets & Forcost</p><span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="TargetsForcos">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("Index","CountryTarget" )">
+                                                <span class="sub-item">Country Target Quarterly</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Monthly</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="Report2.html">
+                                                <span class="sub-item">Sales Person Target Quarterly</span>
+                                            </a>
+                                        </li>
 
-                </ul>
-            </div>
-        </li>*@
+                                    </ul>
+                                </div>
+                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -602,11 +605,11 @@
             </div>
         </div>
     </div>
-  
+
     @*<div id="dialogID">
-        Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
-        Do you want to stay signed in?
-    </div>*@
+            Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
+            Do you want to stay signed in?
+        </div>*@
 
     <!--   Core JS Files   -->
 
@@ -671,7 +674,7 @@
 
     @*<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
     @*<script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
-    <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>*@
+        <script type="text/javascript" src="~/Scripts/VoiceRec/controller.js"></script>*@
     @*voice recogngition*@
     @*<script type="text/javascript" src="~/Scripts/VoiceRec/jquery.min.js"></script>
         <script type="text/javascript" src="~/Scripts/VoiceRec/speechRecognition.js"></script>
@@ -690,12 +693,32 @@
 
     <script src="~/Scripts/multiselect/multiselect.js"></script>
 
+    
+
     <script type="text/javascript">
+
 
         $(document).ready(function () {
             debugger
+           
 
-            
+            (function ($) {
+                $(function () {
+                   
+                    $(":input[type='search']").removeAttr("autocomplete");
+                    $(":input[type='search']").attr("autocomplete", "off");
+                   /// $(":input").attr("autocomplete", "nope");
+                  
+                    $(":input[type='search']").attr("autocomplete", "nope");
+                    $(":input[type='search']").val("");
+                  
+
+                });
+            })(jQuery);
+
+
+
+
             var user = $("#hdnuser").val();
             if (user != "") {
 
@@ -932,9 +955,9 @@
     }
 
     <link href="~/Content/timeout-dialog.css" rel="stylesheet" />
-        <script src="~/Scripts/timeout-dialog.js"></script>
+    <script src="~/Scripts/timeout-dialog.js"></script>
 
-        <script>
+    <script>
              $(function () {
             Timer();
             });
@@ -955,26 +978,26 @@
 
             //$(document).on('mousemove keypress :not(#timeout-dialog)', function () {
             //    clearTimeout();
-            //    Timer(); 
-                
+            //    Timer();
+
             //});
 
         }
-        </script>
-        <style>
-            .demo-scrollbar {
-                height: 300px;
-            }
-            .ui-autocomplete {
-                max-height: 100px;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-            
-            .colHide {
-                display: none;
-            }
-        
+    </script>
+    <style>
+        .demo-scrollbar {
+            height: 300px;
+        }
+
+        .ui-autocomplete {
+            max-height: 100px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .colHide {
+            display: none;
+        }
     </style>
 
 </body>
