@@ -1145,6 +1145,81 @@ function applyAutoComplete2(ids, hdnid, url) {
         }
     })
 }
+function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
+    debugger
+    var found_names;
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
+
+                    };
+                }))
+            } else {
+
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
+
+
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+                found_names = $.grep(data, function (v) {
+                    return v.Code != $(hdnid).val();
+                });
+                applyAutoCompletedata_Hidden(ids1, hdnid1, found_names);
+                
+            }
+        },
+        minLength: 1
+    });
+    function ReturnFilterdata(found_names) {
+        return found_names;
+    }
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+   
+   
+}
+
+function applyAutoCompletedata_Hidden(ids, hdnid, data) {
+    var found_names;
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
 
 ////function applyAutoCompletedata(ids, hdnid, data) {
 ////    $(ids).autocomplete({
@@ -1364,6 +1439,43 @@ set_picker_start_end = (picker, when) => {
     picker.setStartDate(week_start);
     picker.setEndDate(week_end);
 }
+function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
+    debugger;
+    var nowMin = new Date(min1);
+    //nowMin.setDate(nowMin.getDate() - 1);
+    var dayMin = ("0" + nowMin.getDate()).slice(-2);
+    var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
+    var startMin = new Date(min1);
+
+    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+
+
+    var nowMax = new Date(max1);
+    nowMax.setDate(nowMax.getDate() + 1);
+    var dayMax = ("0" + nowMax.getDate()).slice(-2);
+    var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+    }
+
+    $('#' + id + '').daterangepicker({
+        startDate: start,
+        endDate: end,
+        maxDate: nowMax,
+         minDate: nowMin,        
+       // singleDatePicker: true,
+         autoApply:true
+       
+
+    }, cb);
+
+    cb(start, end);
+}
+
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
     var nowMin = new Date(min1);

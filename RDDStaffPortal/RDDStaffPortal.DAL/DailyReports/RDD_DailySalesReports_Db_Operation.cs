@@ -341,7 +341,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                         else
                         {
                             outcls[0].Outtf = false;
-                            outcls[0].Responsemsg = "Please Configure Daily Sales Reports";
+                            outcls[0].Responsemsg = "Reporting Frequency is not configured, please contact IT team.";
 
                         }
 

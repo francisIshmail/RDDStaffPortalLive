@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -478,10 +478,41 @@ namespace RDDStaffPortal.DAL
             return numrows.Value;
         }
         #endregion
+          
+        public object ExecuteScalar(string sql, SqlParameter[] p, CommandType _CommandType)
+        {
+            SqlConnection con = new SqlConnection(Conn);
+            object retval = null;
+            con.Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = _CommandType;
+                cmd.CommandTimeout = 0;
+                if (p != null)
+                {
+                    for (int i = 0; i <= p.Length - 1; i++)
+                    {
+                        cmd.Parameters.Add(p[i]);
+                    }
+                }
+                retval = cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+            return retval;
+        }
        
 
     }
 
 
 }
+
 
