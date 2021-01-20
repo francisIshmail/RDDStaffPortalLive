@@ -2,17 +2,23 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LMSLayout.cshtml";
-   // Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    // Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
 
-    
+
 @*<div class="main-panel">
     <div class="container">*@
-       
-        <div class="container-fluid">
-            <div class="chartarea row">
-                <div class="col-12">
-                    <h2><strong>Annual Leave Calender </strong></h2>
+<div class="container-fluid">
+    <div class="row">
+
+
+        <main role="main" class="col-md-12 mx-auto col-lg-12 pt-5 px-4">
+
+            <div class="card mt-3 mb-3 box-shadow">
+                <div class="card-header">
+                    <div class="lftside-hding">
+                        <h4 class="my-0 font-weight-bold">Leave Planner</h4>
+                    </div>
                     <div class="btnarea"><a href="#" class="previous round"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></a><strong id="calendarid" style="vertical-align: super;"> January 2021 </strong><a href="#" class="next round next1"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></a></div>
                     <p></p>
                     <div class="table-responsive">
@@ -105,10 +111,11 @@
 
                 </div>
             </div>
-        </div>
+        </main>
+    </div>
 
-    @*</div>
-</div>*@
+</div>
+@*     </div>*@
 <div id="LeaveModal"></div>
 
 
@@ -124,7 +131,7 @@
 
 
 
-      
+
     });
 </script>
 <style>
@@ -132,16 +139,16 @@
         display: none !important;
     }
 
-   
-    .reddotTableHead  {
+
+    .reddotTableHead {
         background: transparent;
         color: black;
     }
 
-    .reddotTableHead.headz {
-        background: white;
-        /* border: 1px solid rgb(198, 232, 248); */
-    }
+        .reddotTableHead.headz {
+            background: white;
+            /* border: 1px solid rgb(198, 232, 248); */
+        }
 
     .reddotTableCell {
         border-radius: 0px !important;
@@ -163,7 +170,5 @@
         right: 0;
         top: 0;
     }
-
-
-            </style>
+</style>
 

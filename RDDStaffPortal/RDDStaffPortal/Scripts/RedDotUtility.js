@@ -1204,6 +1204,7 @@ function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
    
 }
 
+
 function applyAutoCompletedata_Hidden(ids, hdnid, data) {
     var found_names;
     $(ids).autocomplete({
@@ -1221,53 +1222,41 @@ function applyAutoCompletedata_Hidden(ids, hdnid, data) {
                         value: item.CodeName,
                         val1: item.Code
 
-////function applyAutoCompletedata(ids, hdnid, data) {
-////    $(ids).autocomplete({
-////        source: function (request, response) {
-////            var k = $(ids).val().toLowerCase();
-////            var results = data.filter(function (elem) {
-////                return elem.CodeName.toLowerCase().indexOf(k) > -1;
-////            });
-           
-////                    $(hdnid).val(-1);
-////            if (results.length > 0) {
-////                        response($.map(results, function (item) {
-////                            return {
-////                                label: item.CodeName,
-////                                value: item.CodeName,
-////                                val1: item.Code
+                    };
+                }))
+            } else {
 
-////                            };
-////                        }))
-////                    } else {
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
 
-////                        response([{ label: 'No results found.', value: 'No results found.' }]);
-////                    }
-                
-           
-////        },
-////        // autoFocus: true,
-////        select: function (event, u) {
-////            event.preventDefault();
-////            debugger
-////            var v = u.item.val1;
-////            if (u.item.val1 == -1 || u.item.val1 == '') {
-////                $(hdnid).val(-1);
-////                return false;
-////            } else {
-////                $(ids).val(u.item.value);
-////                $(hdnid).val(u.item.val1);
 
-////            }
-////        },
-////        minLength: 1
-////    });
-////    $(ids).on("change", function () {
-////        if ($(hdnid).val() == -1) {
-////            $(this).val('');
-////        }
-////    })
-////}
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+
+            }
+        },
+        minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+
+
+}
+
 
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
