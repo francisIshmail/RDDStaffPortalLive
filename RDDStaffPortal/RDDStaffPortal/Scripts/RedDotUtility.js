@@ -1146,53 +1146,53 @@ function applyAutoComplete2(ids, hdnid, url) {
     })
 }
 
-function applyAutoCompletedata(ids, hdnid, data) {
-    $(ids).autocomplete({
-        source: function (request, response) {
-            var k = $(ids).val().toLowerCase();
-            var results = data.filter(function (elem) {
-                return elem.CodeName.toLowerCase().indexOf(k) > -1;
-            });
+////function applyAutoCompletedata(ids, hdnid, data) {
+////    $(ids).autocomplete({
+////        source: function (request, response) {
+////            var k = $(ids).val().toLowerCase();
+////            var results = data.filter(function (elem) {
+////                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+////            });
            
-                    $(hdnid).val(-1);
-            if (results.length > 0) {
-                        response($.map(results, function (item) {
-                            return {
-                                label: item.CodeName,
-                                value: item.CodeName,
-                                val1: item.Code
+////                    $(hdnid).val(-1);
+////            if (results.length > 0) {
+////                        response($.map(results, function (item) {
+////                            return {
+////                                label: item.CodeName,
+////                                value: item.CodeName,
+////                                val1: item.Code
 
-                            };
-                        }))
-                    } else {
+////                            };
+////                        }))
+////                    } else {
 
-                        response([{ label: 'No results found.', value: 'No results found.' }]);
-                    }
+////                        response([{ label: 'No results found.', value: 'No results found.' }]);
+////                    }
                 
            
-        },
-        // autoFocus: true,
-        select: function (event, u) {
-            event.preventDefault();
-            debugger
-            var v = u.item.val1;
-            if (u.item.val1 == -1 || u.item.val1 == '') {
-                $(hdnid).val(-1);
-                return false;
-            } else {
-                $(ids).val(u.item.value);
-                $(hdnid).val(u.item.val1);
+////        },
+////        // autoFocus: true,
+////        select: function (event, u) {
+////            event.preventDefault();
+////            debugger
+////            var v = u.item.val1;
+////            if (u.item.val1 == -1 || u.item.val1 == '') {
+////                $(hdnid).val(-1);
+////                return false;
+////            } else {
+////                $(ids).val(u.item.value);
+////                $(hdnid).val(u.item.val1);
 
-            }
-        },
-        minLength: 1
-    });
-    $(ids).on("change", function () {
-        if ($(hdnid).val() == -1) {
-            $(this).val('');
-        }
-    })
-}
+////            }
+////        },
+////        minLength: 1
+////    });
+////    $(ids).on("change", function () {
+////        if ($(hdnid).val() == -1) {
+////            $(this).val('');
+////        }
+////    })
+////}
 
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
@@ -1638,44 +1638,31 @@ function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide,
                                 var found_names = $.grep(arr.Table1, function (v) {
                                     return v.EmployeeId === arr.Table[i][tblhead2[0]];
                                 });
-                            while (i1 < found_names.length) {
+                            while (i1 < found_names.length) {                                                            
+                                var date = parseInt(new Date(found_names[i1].ToDate).getDate());
+                                var date1 = parseInt(new Date(found_names[i1].FromDate).getDate());                               
+                                while (date >= date1) {
+                                    var $dayNode = document.createElement('button');
+                                    $dayNode.classList.add('fa', 'fa-circle', 'text-' + found_names[i1].leaveStatuscss);
+                                    $dayNode.setAttribute("data-toggle", "modal");
+                                    $dayNode.setAttribute("data-target", "#Leave" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId);
+                                    $dayNode.setAttribute("title", "Annual Leave");
 
-                              //  tr.find(".Abcd")[new Date(found_names[i1].FromDate).getDate()].children[0].textContent = found_names[i1].LeaveStatus;
-                              //  tr.find(".Abcd")[new Date(found_names[i1].ToDate).getDate()].children[0].textContent = found_names[i1].LeaveStatus;
-                                //<a href="#" data-toggle="popover" title="Annual Leave - Day 1" data-content="Some content inside the popover"><div class="grncircle"></div> </a>
-                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).addClass('fa fa-circle text-' + found_names[i1].leaveStatuscss);
-                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).addClass('fa fa-circle text-' + found_names[i1].leaveStatuscss);
-                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-target", "#LeaveModal" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId);
-                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("title", "Annual Leave");
-                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-toggle", "modal");
-                                tr.find(".Abcde").eq(new Date(found_names[i1].FromDate).getDate()).attr("data-content", "Annual Leave test");
-                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-toggle", "modal");
-                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-target", "#LeaveModal" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId );
-                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("title", "Annual Leave");
-                                tr.find(".Abcde").eq(new Date(found_names[i1].ToDate).getDate()).attr("data-content", "Annual Leave test");
+                                    tr.find(".Abcde").eq(date1).empty();
+                                    tr.find(".Abcde").eq(date1).append($dayNode);
+                                    date1 = parseInt(date1) + 1;
 
-                                debugger
-
+                                }                                                            
                                 
                                 i1++;
                             }
 
-                                //if (jQuery.inArray(arr.Table[i][tblhead2[0]], arr.Table1[i][tblhead2[0]]) !== -1) {
-                                //    tr.find(".Abcd")[k].children[0].textContent = arr.Table1[i][tblhead2[k]];
-                                //    tr.find(".Abcd").eq(k).removeClass('reddotTableCell');
-                                //    tr.find(".Abcd").eq(k).addClass('reddotTableCellRight');
-                                //} 
+                                
                              
                             
                                 tr.find(".Abcd")[k].children[0].textContent = arr.Table[i][tblhead1[k]];
                            
-                            //if (jQuery.inArray(t, tblhide) !== -1) {
-                            //    tr.find(".Abcd").eq(k).addClass("Abc")
-                            //    tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
-                            //} else {
-                            //   tr.find(".Abcd").eq(k).removeClass("Abc")
-                            //   // tr1.prevObject.find(".reddotTableHead").eq(k).removeClass("Abc")
-                            //}
+                           
                             k++;
                         }
                         $('#' + Ids + 'body').append(tr);
@@ -1697,22 +1684,29 @@ function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide,
 
 
                     // console.log(found_names[i].RowNum + '_' + found_names[i].EmployeeId);
-                    $("#LeaveModal" + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId).html('<div class="modal fade"  id="Leave' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static" >' +
+                    $("#LeaveModal" + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId).html('<div class="modal fade"  id="Leave' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static" >' +
 
-                        '<div class="modal-dialog modal-lg">' +
-                        '<div class="modal-content" style="border-radius: 20px !important;">' +
+                        '<div class="modal-dialog modal-sm">' +
+                        '<div class="modal-content" >' +
 
-
+                        '<div class="modal-header">'+
+                        ' <h5 class="modal-title" id="exampleModalLongTitle">' + arr.Table1[i1].LeaveName + ' </h5>'+
+                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">'+
+                                '<span aria-hidden="true">&times;</span>'+
+                            '</button>'+
+                        '</div>'+
 
                         '<div class="modal-body"  >' +
-
-                        '<h1 style="font-weight: bold; color: #d71313;font-size: 3.4em;padding: 10px;width: 540px;font-family: system-ui;line-height: initial;">' + arr.Table1[i1].LeaveName + '</h1>' +
-                        '<p style="width: 540px;font-size: 30px; padding: 0 10px;color: black;font-family: system-ui;font-weight: 100;' +
-                        'line-height: initial;">' + arr.Table1[i1].LeaveName + '</p>' +
-                        '<p> <i class="fa fa-info-circle" style="margin-left: 10px;" aria-hidden="true"></i> For any suggestion and help reach out to us at <span style="color: #d71313; font-weight: 400; padding: 0 10px;">helpdesk@reddotdistribution.com</span></p>' +
-
-
-
+                        '<p>' + arr.Table1[i1].LeaveName + '</p>' +
+                        '<p>' + arr.Table1[i1].Reason + '</p>' +
+                        '<p>' + arr.Table1[i1].FullName + '</p>' +
+                        '<p>' + arr.Table1[i1].DesigName + '</p>' +
+                        '<p>' + arr.Table1[i1].FromDate + '</p>' +
+                        '<p>' + arr.Table1[i1].ToDate + '</p>' +
+                       
+                       
+                       
+                        '</div > ' +
                         '</div > ' +
                         ' </div > ' +
                         '</div>')

@@ -172,9 +172,16 @@
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
 
         })
+        $(document).on("click", ".fa-circle", function (e) {
+           
+            var t = $(this).attr("data-target");
+           
+          $(t).modal('show');
+            
+        })
 
 
-
+       
        
     }
 }

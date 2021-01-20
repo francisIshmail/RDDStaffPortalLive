@@ -322,8 +322,8 @@ namespace RDDStaffPortal.DAL.DailyReports
                             Attachment at = new Attachment(ms, Filename);
                             string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
 
-                            Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
-                            cc = "nikhilesh@reddotdistribution.com";
+                            //Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
+                            //cc = "nikhilesh@reddotdistribution.com";
 
                             if (SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at) == "Mail Sent Succcessfully")
                             {

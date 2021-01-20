@@ -2,11 +2,13 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LMSLayout.cshtml";
+   // Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
 
-<div class="main-panel">
-    <div class="container">
-
+    
+@*<div class="main-panel">
+    <div class="container">*@
+       
         <div class="container-fluid">
             <div class="chartarea row">
                 <div class="col-12">
@@ -100,12 +102,16 @@
                             </nav>
                         </div>
                     </div>
-                    <div id="LeaveModal"></div>
+
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+    @*</div>
+</div>*@
+<div id="LeaveModal"></div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
@@ -118,27 +124,7 @@
 
 
 
-        //var value1 = '';
-        //$('.loader1').show();
-        //var data = JSON.stringify({
-        //    pagesize: 50,
-        //    pageno: 1,
-        //    psearch: value1,
-        //});
-
-        //$.ajax({
-        //    async: false,
-        //    cache: false,
-        //    type: "POST",
-        //    url: "/GetAnnualLeaveCalendra",
-        //    data: data,
-        //    dataType: 'Json',
-        //    contentType: "application/json; charset=utf-8",
-
-        //    success: function (value) {
-        //        debugger
-        //    }
-        //});
+      
     });
 </script>
 <style>
