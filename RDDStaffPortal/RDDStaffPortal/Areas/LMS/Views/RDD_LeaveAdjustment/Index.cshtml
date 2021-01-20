@@ -1,0 +1,573 @@
+﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_LeaveAdjustment
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LMSLayout.cshtml";
+}
+
+@Html.Hidden(string.Concat("HdnLeaveLedgerId"))
+@Html.HiddenFor(m => m.EmployeeId)
+@Html.HiddenFor(m => m.LeaveTypeId)
+@Html.HiddenFor(m => m.DeptId)
+
+@*<nav class="p-0 navbar navbar-expand-md fixed-top navbar-dark bg-white border-bottom box-shadow">
+        <div class="nav-masthead px-3"><a class="navbar-brand" href="#">Logo</a></div>
+        <button class="navbar-toggler p-3 border-0" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse p3" id="navbarsExampleDefault">
+            <ul class="navbar-nav col-9 justify-content-center">
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="dashboard.html">
+                        Dashboard <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="p-3 nav-item active">
+                    <a class="nav-link text-dark font-weight-normal" href="wallchart.html">Wall Chart</a>
+                </li>
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="my-leaves.html">My Leaves</a>
+                </li>
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="#">Reports</a>
+                </li>
+            </ul>
+
+            <div class="nav-masthead justify-content-end px-2">
+                <div class="icons">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Links
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#">Links</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mrgin icons">
+                    <a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">
+                        <span data-feather="help-circle"></span>
+                    </a>
+                </div>
+                <div class="mrgin icons">
+                    <span data-feather="settings"></span>
+                </div>
+                <div class="mrgin bellicon">
+                    <div class="rounded-circle red"><span>7</span></div>
+                    <i class="fas fa-bell"></i>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="p-2 nav-item dropdown">
+                        <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <img class="propic rounded-circle" src="images/profile-pic.jpg"
+                                 alt="profile" />
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="#">Your Profile</a>
+                            <a class="dropdown-item" href="#">Login</a>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>*@
+
+
+<div class="p-0 dropdown-header py-3 pt-md-5 pb-md-4 mx-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+
+                <form>
+                    Country
+                    @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control" })
+                </form>
+            </div>
+            <div class="col-md-2">
+                <form>
+                    Department
+                    @Html.DropDownListFor(m => m.DeptId, Model.DepartmentList, new { @class = "form-control" })
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <form>
+                    Employee Name
+                    @Html.DropDownListFor(m => m.FullName, Model.EmployeeList, new { @class = "form-control" })
+                </form>
+            </div>
+
+            @*<div class="col-md-2">
+                Date
+                <form>
+                    <select name="calendar" class="custom-select">
+                        <option selected>Select Month & Year </option>
+
+                    </select>
+                </form>
+            </div>*@
+
+            <div class="col-md-2.9" style="padding-top: 20px; padding-left: 10px;">
+                <div class="nav-masthead">
+                <button type="button" class="btn btn-secondary" id="btnsearch">Search Leave</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container theme-showcase">
+
+    <div id="holder" class="row">
+
+        <div class="container">
+
+            <div class="card mt-3 mb-3 box-shadow">
+                <div class="card-header">
+                    <div class="lftside-hding">
+                        <h4 class="my-0 font-weight-bold">Leave Adjustment </h4>
+                    </div>
+                    <div class="rgtside-btn">
+                        <div class="nav-masthead">
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Add Ajustment </button> -->
+                            <!-- Button Add Ajustment -->
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#adjustModal">
+                                Add Ajustment
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="text-align:center">
+                        <table class="table" id="usertable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee Name</th>
+                                    <th>Leave Type</th>
+                                    <th>No Of Days</th>
+                                    <th style="width:30%">Description</th>
+                                    <th>Edit</th>
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+        <div id="edit" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Update Data</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input id="fn" type="text" class="form-control" name="fname" placeholder="Leave Type">
+                        <input id="ln" type="text" class="form-control" name="fname" placeholder="No Of Days">
+                        <input id="mn" type="text" class="form-control" name="fname" placeholder="Description">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="up" class="btn btn-warning" data-dismiss="modal">Update</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="delete" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Delete Data</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Are you sure you want to delete this data?</strong>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="del" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+<!-- Leave AdjustmentModal -->
+<div class="modal fade" id="adjustModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Leave Adjustment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Employee</label>
+                    @Html.DropDownList(string.Concat("FullName","popup"), Model.EmployeeList, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.EmployeeId)
+                    @*<select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>*@
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Leave Type</label>
+                    @*@Html.DropDownList("LeaveName", , new { @class = "form-control" })*@
+
+                    @Html.HiddenFor(m => m.LeaveTypeId)
+                    <select class="form-control" id="LeaveName"><option value="0">--Select--</option></select>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Adjustment Type</label>
+                    <select class="form-control" id="adjustmentType">
+                        <option value="Add">Add</option>
+                        <option value="Deduct">Deduct</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="noOfDays">Adjustment Days</label>
+                    <input type="text" class="form-control" id="noOfDays" placeholder="Enter number of days to be adjusted">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Reason For Change(Remarks)</label>
+                    <textarea class="form-control" id="remkrs" rows="3"></textarea>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<!--  Bootstrap core JavaScript
+=================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+    WebFont.load({
+        google: {
+            families: ['PT+Sans:400,400i,700,700i', 'Lato:100,100i,300,300i,400,400i,700,700i,900,900i', 'Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i']
+        }
+    });
+</script>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/holder.min.js"></script>
+<script src="js/offcanvas.js"></script>
+
+
+
+
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>*@
+
+@*<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+@*<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+
+<script type="text/javascript">
+
+
+    var j = $.noConflict();
+
+    j(document).ready(function () {
+        //GetLeaveAdjustmentDetails();
+        ShowLeaveAdjustment();
+
+        j("#btnsearch").on("click", function () {
+            var empid = j("#FullName").val();
+            GetLeaveAdjustmentDetailsBySearch(empid);
+
+
+           
+
+        });
+
+       
+        
+        j('#adjustModal').on('hidden.bs.modal', function (e) {
+
+
+            j("#btnUpdate").text("Save");
+            j("#btnUpdate").attr("id","btnSave");
+            //j("#random").show();
+
+            j(this)
+                .find("input,textarea")
+                .val('')
+                .end()
+            j(this)
+                .find("select")
+                .trigger('change')
+                .end()
+            j("#FullNamepopup").val('0').trigger('change');
+            j("#LeaveName").val(0).trigger('change');
+        });
+        //j(document).on("click", ".close", function () {
+        //    j("#adjustModal").modal('toggle');
+        //    j('.modal-backdrop').remove();
+        //});
+
+        j(document).on("click", ".edit", function () {
+            //j("#adjustModal").modal('show');
+            var Currow = j(this).closest("tr");
+            var emp = Currow.find('td:eq(6)').html();
+            var Lvtyp = Currow.find('td:eq(7)').html();
+            var noofdays = Currow.find('td:eq(3)').html();
+            var remrks = Currow.find('td:eq(4)').html();
+            var LvLedgerId = j(this).attr("data");
+            j("#HdnLeaveLedgerId").val(LvLedgerId);
+            //j("#LeaveName").val(Lvtyp.trim()).trigger('change');
+            j("#FullNamepopup").val(emp).trigger('change');
+            j("#LeaveName").val(Lvtyp).trigger('change');
+            j("#noOfDays").val(noofdays);
+            j("#remkrs").val(remrks);
+            j("#btnSave").text("Update");
+            j("#btnSave").attr("id", "btnUpdate");
+            //j(".add-new").attr("disabled", "disabled");
+        });
+
+
+
+
+        j(document).on("click", "#btnSave", function () {
+            var Errmsg = "";
+            if (j("#FullNamepopup").val() == "0") {
+                Errmsg="Name,"
+            }
+            if (j("#LeaveName").val() == "0") {
+                Errmsg = Errmsg +"Leave Type,"
+            }
+            if (j("#noOfDays").val() == "") {
+                Errmsg = Errmsg+ "No of days,"
+            }
+            if (j("#remkrs").val() == "") {
+                Errmsg = Errmsg+"Remarks,"
+            }
+            if (Errmsg.length > 0) {
+                RedDotAlert_Error("Please Enter "+Errmsg);
+                return;
+                
+            }
+            var rDD_LeaveAdjustment = {
+                EmployeeId: j("#FullNamepopup").val(),
+                LeaveTypeId: j("#LeaveName").val(),
+                CreditDebit: j("#adjustmentType").val(),
+                NoOfDays: j("#noOfDays").val(),
+                Remarks: j("#remkrs").val(),
+
+        }
+        j.ajax({
+                type: "POST",
+                url: "/SaveLeaveAdjustment",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({ rDD_LeaveAdjustment: rDD_LeaveAdjustment }),
+                success: function (data) {
+                    debugger
+                    if (data.Saveflag == true && data.LeaveLedgerId != -1) {
+                        RedDotAlert_Success("Data saved successfully");
+                        var empnm = j("#FullNamepopup option:selected").text();
+                        var noofdays = j("#noOfDays").val();
+                        var remrks = j("#remkrs").val();
+                        var leavename = j("#LeaveName option:selected").text();
+                        var crdr = j("#adjustmentType option:selected").val();
+                        var empid = j("#FullNamepopup").val();
+                        window.location.href = "/LMS/RDD_LeaveAdjustment/SendAdjustmentEmail?&EmpName=" + empnm + "&NoOfDays=" + noofdays + "&Description="
+                            + remrks + "&LeaveName=" + leavename + "&AddDeduct=" + crdr + "&EmpId=" + empid + "";
+
+
+                        //var Empid = j("#EmployeeId option:selected").val();
+                        //var Ccode = j("#Country option:selected").val();
+                        //var deptid = j("#DeptId option:selected").val();
+                        //GetLeaveAdjustmentDetailsBySearch(Empid, Ccode, deptid);
+
+                    }
+                    else {
+                        RedDotAlert_Error(data.ErrorMsg)
+                        //alert("Data not saved");
+                    }
+                }
+            });
+        });
+
+        j(document).on("change","#FullNamepopup", function () {
+            debugger
+            j.ajax({
+                async: false,                cache: false,
+                type: "Post",
+                url: "/LMS/RDD_LeaveAdjustment/GetCountryWiseLeaveType",
+                data: JSON.stringify({ EmployeeId: j(this).val() }),
+                dataType: 'Json',                contentType: "Application/json",
+
+               
+                success: function (data) {
+                    debugger
+                    j("#LeaveName").empty();
+                    j("#LeaveName").append('<option value = 0 selected = "" > -select-</option >');
+                    if (data.Table.length > 0) {
+                        var i = 0;
+
+                        while (data.Table.length > i) {
+                            j("#LeaveName").append('<option value = ' + data.Table[i].LeaveTypeId + ' selected = "" > ' + data.Table[i].LeaveName + '</option >');
+                            i++;
+                        }
+                        j("#LeaveName").val('0').trigger('change');
+
+                    }
+
+                }
+            });
+
+        });
+
+    });
+
+    //$('body').on('focusin', '.datepickerH', function () {
+    //    $('.datepickerH').datetimepicker({
+    //        format: 'DD/MM/YYYY',
+    //        showClose: true,
+    //        showClear: true,
+
+    //    });
+    //});
+
+    //var SqlDate;
+    //function GetSqlDateformat(obj) {
+    //    try {
+    //        if (obj != undefined && obj != null) {
+    //            SqlDate = obj.toString().split('/')[1] + '/';
+    //            SqlDate += obj.toString().split('/')[0] + '/';
+    //            SqlDate += obj.toString().split('/')[2];
+    //            return SqlDate;
+    //        }
+    //    }
+    //    catch (ex) {
+    //        log(ex);
+    //    }
+    //}
+
+    //j('body').on('focusin', '.datepickerH', function () {
+    //    j('.datepickerH').datetimepicker({
+    //        format: 'DD/MM/YYYY',
+    //        showClose: true,
+    //        showClear: true,
+
+    //    });
+    //});
+
+    function GetLeaveAdjustmentDetailsBySearch(Empid) {
+
+        j.ajax({
+            type: "POST",
+            url: '@Url.Action("GetLeaveAdjustment", "RDD_LeaveAdjustment")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ Empid: Empid}),
+            datatype: "json",
+            success: function (data) {
+                debugger
+                j("#usertable tbody").empty();
+                var i = 0;
+                if (data.length == 0) {
+                    j('#usertable tbody').append('<tr data-no-results-found><td colspan="6">NO RESULTS FOUND</td></tr>');
+                    return
+                }
+                while (data.length > i) {
+                    j("#usertable tbody").append('<tr><td>' + data[i].LeaveLedgerId + '</td><td>' + data[i].FullName + '</td><td>' + data[i].LeaveName + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#adjustModal" data="' + data[i].LeaveLedgerId + '"><i class="fa fa-edit"></i>' + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td></tr>')
+                    i++;
+
+                }
+            }
+        });
+
+    }
+    function ShowLeaveAdjustment() {
+
+        j.ajax({
+            type: "POST",
+            url: '@Url.Action("ShowLeaveAdjustmentList", "RDD_LeaveAdjustment")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                j("#usertable tbody").empty();
+                var i = 0;
+                while (data.length > i) {
+
+                    j("#usertable tbody").append('<tr><td>' + data[i].LeaveLedgerId + '</td><td>' + data[i].FullName + '</td><td>' + data[i].LeaveName + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#adjustModal" data="' + data[i].LeaveLedgerId + '"><i class="fa fa-edit"></i>' + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td></tr>')
+                        i++;
+
+                }
+
+            }
+        });
+
+    }
+    //j("#Country").on("change", function () {
+
+
+    //});
+
+</script>
+
+

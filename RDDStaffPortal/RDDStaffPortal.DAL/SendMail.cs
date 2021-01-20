@@ -318,8 +318,10 @@ namespace RDDStaffPortal.DAL
                         objMailMessage.To.Add(ToEmailArray[i]);
                 }
                 //--for test
+
                 //objMailMessage.To.Clear();
                 //objMailMessage.To.Add("pramod@reddotdistribution.com");
+
                 if (!string.IsNullOrEmpty(cc))
                 {
                     string[] CCEmailArray = cc.Split(';');
@@ -353,6 +355,7 @@ namespace RDDStaffPortal.DAL
                 //objMailMessage.Attachments.Add(atchFile);
 
                 objSMTPClient.Send(objMailMessage);  //open later sending mails 
+
 
                 strMessage = "Mail Sent Successfully";
             }
