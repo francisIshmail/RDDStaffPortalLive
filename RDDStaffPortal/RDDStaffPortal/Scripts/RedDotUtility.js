@@ -1256,7 +1256,8 @@ function applyAutoCompletedata_Hidden(ids, hdnid, data) {
 
 }
 
-function applyAutoCompletedata(ids, hdnid, data) {
+function applyAutoCompletedata1(ids, hdnid, data) {
+    debugger;
     $(ids).autocomplete({
         source: function (request, response) {
             var k = $(ids).val().toLowerCase();

@@ -496,6 +496,7 @@
         
         
         if ($("#HR").val() != "True") {
+            debugger;
             var results = k1.filter(function (elem) {
                 return elem.Code == $("#EmployeeIde").val();
             });
@@ -511,6 +512,7 @@
           
 
         } else {
+            debugger;
             applyAutoCompletedata("#EmployeeIdPopup", "#EmployeeIde", "#BackUp", "#hdnBackUp", k1);
             
         }

@@ -55,9 +55,29 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
 
         }
 
-        public ActionResult SendAdjustmentEmail(int EmpId, string EmpName, decimal NoOfDays, string Description, string LeaveName, string AddDeduct)        {            try            {                DataSet ds1 = new DataSet();                SqlParameter[] prm1 =               {                   new SqlParameter("@LoginUserId",EmpId)                };                ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);                var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();                var Email2 = "";                var HrMail = "hr@reddotdistribution.com";                if (ds1.Tables[1].Rows.Count > 0)                {                    Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();                }                var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();                var Tomail = Email3;                var cc = Email1 + "," + Email2 + "," + HrMail;
-                string Subject = "Your Leave Adjustment Request";                var Html = "Dear " + EmpName + ",<br/><br/>";
-                if (AddDeduct == "true")
+        public ActionResult SendAdjustmentEmail(int EmpId, string EmpName, decimal NoOfDays, string Description, string LeaveName, string AddDeduct)
+        {
+            try
+            {
+                DataSet ds1 = new DataSet();
+                SqlParameter[] prm1 =
+               {
+                   new SqlParameter("@LoginUserId",EmpId)
+                };
+                ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
+                var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
+                var Email2 = "";
+                var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
+                if (ds1.Tables[1].Rows.Count > 0)
+                {
+                    Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
+                }
+                var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
+                var Tomail = Email3;
+                var cc = Email1 + ";" + Email2 + ";" + HrMail;
+                string Subject = "Your Leave Adjustment Request";
+                var Html = "Dear " + EmpName + ",<br/><br/>";
+                if (AddDeduct.Trim().ToUpper() == "ADD")
                 {
                     Html = Html + "Your" + " " + "adjustment of" + " " + NoOfDays + " " + "days is added to your applied" + " " + LeaveName + " " + "leave" + ". <br/>Description: " + Description + "<br/><br/>";
                 }
@@ -66,11 +86,38 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     Html = Html + "Your" + " " + "adjustment of" + " " + NoOfDays + " " + "days has been deducted from your applied" + " " + LeaveName + " " + "leave" + ". <br/>Description: " + Description + "<br/><br/>";
                 }
 
-                Html = Html + "Best Regards, <br/> Red Dot Distribution";                Tomail = "avijeet@reddotdistribution.com";                cc = "pratim.d@reddotdistribution.com" + "," + "mainak@reddotdistribution.com";                SendMail.Send(Tomail, cc, Subject, Html, true);            }            catch (Exception ex)            {                throw ex;            }            return RedirectToAction("Index", "RDD_LeaveAdjustment");        }
+                Html = Html + "Best Regards, <br/> Red Dot Distribution";
+                //Tomail = "avijeet@reddotdistribution.com";
+                //cc = "pratim.d@reddotdistribution.com" + "," + "mainak@reddotdistribution.com";
+                SendMail.Send(Tomail, cc, Subject, Html, true);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("Index", "RDD_LeaveAdjustment");
+        }
       
         public ActionResult GetCountryWiseLeaveType(int EmployeeId)
         {
-            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveAdjustment_TemplatesDb.CountryLeaveType(EmployeeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveAdjustment_TemplatesDb.CountryLeaveType(EmployeeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

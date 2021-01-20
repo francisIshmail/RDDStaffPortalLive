@@ -100,7 +100,23 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         public ActionResult GetAnnualLeaveBalance(int EmployeeId)
         {
             // return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId,LeaveTypeId) }, JsonRequestBehavior.AllowGet);
-            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveApproval_TemplatesDb.GetAnnualLeaveBalance(EmployeeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveApproval_TemplatesDb.GetAnnualLeaveBalance(EmployeeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public JsonResult UploadDoc(string EmployeeId)
@@ -180,7 +196,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
                 var Email2 = "";
-                var HrMail = "hr@reddotdistribution.com";
+                var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
                     Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
@@ -200,8 +216,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
 
                 }
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                Tomail = "mainak@reddotdistribution.com";
-                cc = "pratim.d@reddotdistribution.com"+","+"mainakg81@gmail.com";
+                //Tomail = "mainak@reddotdistribution.com";
+                //cc = "pratim.d@reddotdistribution.com"+","+"mainakg81@gmail.com";
                 SendMail.Send(Tomail, cc, Subject, Html, true);
 
             }
@@ -223,7 +239,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
                 var Email2 = "";
-                var HrMail = "hr@reddotdistribution.com";
+                var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
                     Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
@@ -244,8 +260,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 }
                
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                Tomail = "mainak@reddotdistribution.com";
-                cc = "pratim.d@reddotdistribution.com" + "," + "mainakg81@gmail.com";
+               // Tomail = "mainak@reddotdistribution.com";
+               // cc = "pratim.d@reddotdistribution.com" + "," + "mainakg81@gmail.com";
                 SendMail.Send(Tomail, cc, Subject, Html, true);
 
             }

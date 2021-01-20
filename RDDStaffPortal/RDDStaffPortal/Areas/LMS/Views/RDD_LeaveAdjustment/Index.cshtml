@@ -278,8 +278,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
             </div>
         </div>
     </div>
@@ -455,11 +455,13 @@
         j(document).on("change","#FullNamepopup", function () {
             debugger
             j.ajax({
-                async: false,                cache: false,
+                async: false,
+                cache: false,
                 type: "Post",
                 url: "/LMS/RDD_LeaveAdjustment/GetCountryWiseLeaveType",
                 data: JSON.stringify({ EmployeeId: j(this).val() }),
-                dataType: 'Json',                contentType: "Application/json",
+                dataType: 'Json',
+                contentType: "Application/json",
 
                
                 success: function (data) {

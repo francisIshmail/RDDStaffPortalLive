@@ -87,13 +87,27 @@
                     <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveApproval/Index">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="p-3 nav-item">
-                    <a class="nav-link text-dark font-weight-normal" href="#">Wall Chart</a>
-                </li>
-                <li class="p-3 nav-item active">
-                    <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveRequest/Index">My Leaves</a>
+                    <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_AnnualLeaveCalender/Index">Planner</a>
                 </li>
                 <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveRequest/Index">My Leaves</a>
+                </li>
+
+                @if (User.IsInRole("HR"))
+                {
+                    <li class="p-3 nav-item">
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveType/Index">Leave Type</a>
+                    </li>
+
+                    <li class="p-3 nav-item">
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveAdjustment/Index">Adjustment</a>
+                    </li>
+                }
+                <li class="p-3 nav-item">
                     <a class="nav-link text-dark font-weight-normal" href="#">Reports</a>
+                </li>
+                <li class="p-3 nav-item">
+                    <a class="nav-link text-dark font-weight-normal" href="~/Dashboard/Index">Main Dashboard</a>
                 </li>
             </ul>
         </div>

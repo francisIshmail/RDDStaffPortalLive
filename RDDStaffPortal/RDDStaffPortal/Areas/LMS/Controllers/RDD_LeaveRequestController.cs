@@ -106,16 +106,14 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                         var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                         var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
                         var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
-                        var HrMail = "hr@reddotdistribution.com";
+                        var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                         var Tomail = Email1;
                         var cc = Email3 + "," + Email2 + "," + HrMail + "," + backupmail;
                         string Subject = "Leave Approval Request";
 
                         if (ds.Tables[0].Rows[0]["AttachmentUrl"] != null && !DBNull.Value.Equals(ds.Tables[0].Rows[0]["AttachmentUrl"]))
                         {
-
                             attachmentPath = System.IO.Path.Combine(Server.MapPath(ds.Tables[0].Rows[0]["AttachmentUrl"].ToString()));
-
                         }
 
                         var Html = "Dear " + L1ManagerName + ",<br/><br/>";
@@ -128,7 +126,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + " and it is pending for approval by you.<br/><br/>";
                         }
                         Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                        Tomail = "mainak@reddotdistribution.com";
+                       // Tomail = "mainak@reddotdistribution.com";
                         cc = backupmail;
 
                         //SendMail.Send(Tomail, cc, Subject, Html, true);
@@ -166,17 +164,68 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         public ActionResult GetLeaveBalance(int EmployeeId,int LeaveTypeId)
         {
             // return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId,LeaveTypeId) }, JsonRequestBehavior.AllowGet);
-            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId, LeaveTypeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId, LeaveTypeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         [Route("GetAnnualLeaveBalance")]
         public ActionResult GetAnnualLeaveBalance(int EmployeeId)
         {
             // return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId,LeaveTypeId) }, JsonRequestBehavior.AllowGet);
-            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveRequest_TemplatesDb.GetAnnualLeaveBalance(EmployeeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveRequest_TemplatesDb.GetAnnualLeaveBalance(EmployeeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
-        public ActionResult GetCountryWiseLeaveType(int EmployeeId)        {            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveRequest_TemplatesDb.CountryLeaveType(EmployeeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }        }
+        public ActionResult GetCountryWiseLeaveType(int EmployeeId)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveRequest_TemplatesDb.CountryLeaveType(EmployeeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         [HttpPost]
         public JsonResult UploadDoc(string EmployeeId)
@@ -271,8 +320,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 var LeaveName= ds.Tables[0].Rows[0]["LeaveName"];
                 var Fromdate = ds.Tables[0].Rows[0]["FromDate"];
                 var Todate = ds.Tables[0].Rows[0]["ToDate"];
-                //var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"];
-                var AttachmentPath = "~/excelFileUpload/PV/TZ000077_vineet/SampleExcel (4)22102020101026";
+                var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"].ToString();
+                //var AttachmentPath = "~/excelFileUpload/PV/TZ000077_vineet/SampleExcel (4)22102020101026";
                 var L1ManagerName= ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
                 var Email2 = "";                
@@ -283,7 +332,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 var EmployeeName= ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                 var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
                 var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
-                var HrMail = "hr@reddotdistribution.com";
+                var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 var Tomail = Email1;
                 var cc = Email3 + "," + Email2+","+HrMail+","+ backupmail;
                 string Subject = "Leave Approval Request";
@@ -310,7 +359,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + " and it is pending for approval by you.<br/><br/>";
                 }                
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                Tomail = "mainak@reddotdistribution.com";
+                //Tomail = "mainak@reddotdistribution.com";
                 cc = backupmail;
                 
                 //SendMail.Send(Tomail, cc, Subject, Html, true);
