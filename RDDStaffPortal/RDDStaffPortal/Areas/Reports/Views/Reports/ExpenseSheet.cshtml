@@ -86,7 +86,7 @@
 
                                 <div class="col-xl-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                        <input type="search" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
                                     </div>
                                 </div>
 
@@ -496,9 +496,16 @@
         })
 
         $('.next').bind('click', function () {
-            if (arr.data[0].TotalCount < 50) {
+            $(".loader1").show();
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+            } else {
                 $(".loader1").hide();
-                return;
+                RedDotAlert_Error('No Record Found');
+                return
             }
 
             curPage++;
@@ -566,13 +573,17 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
-                $(".loader1").hide();
-                return;
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage < 0)
+                    curPage = (arr.data[0].TotalCount - 1);
+            } else {
+                curPage--;
             }
-            curPage--;
-            if (curPage < 0)
-                curPage = (arr.data[0].TotalCount - 1);
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/ExpenseSheetReport",

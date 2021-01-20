@@ -318,8 +318,10 @@ namespace RDDStaffPortal.DAL
                         objMailMessage.To.Add(ToEmailArray[i]);
                 }
                 //--for test
-                objMailMessage.To.Clear();
-                objMailMessage.To.Add("mainak@reddotdistribution.com");
+
+                //objMailMessage.To.Clear();
+                //objMailMessage.To.Add("pramod@reddotdistribution.com");
+
                 if (!string.IsNullOrEmpty(cc))
                 {
                     string[] CCEmailArray = cc.Split(';');
@@ -330,7 +332,7 @@ namespace RDDStaffPortal.DAL
                     }
                 }
                 //--for test
-                objMailMessage.CC.Clear();
+                //objMailMessage.CC.Clear();
                 //objMailMessage.CC.Add("nikhilesh@reddotdistribution.com");
                 //objMailMessage.CC.Add("pramod@reddotdistribution.com");
 
@@ -352,7 +354,8 @@ namespace RDDStaffPortal.DAL
                 //Attachment atchFile = new Attachment(AttachmentFilePath);
                 //objMailMessage.Attachments.Add(atchFile);
 
-               objSMTPClient.Send(objMailMessage);  //open later sending mails 
+                objSMTPClient.Send(objMailMessage);  //open later sending mails 
+
 
                 strMessage = "Mail Sent Successfully";
             }

@@ -99,20 +99,25 @@
 
 				}
 			})
-			debugger
-			if ($(this).find(".card-category").text() == "Total Receivable") {
-				$(this).find(".card-title").text("$ " + RedDot_NumberFormat(SecCards[0].TotalRece));
-			} else if ($(this).find(".card-category").text() == "Total Payable") {
-				$(this).find(".card-title").text("$ " + RedDot_NumberFormat(SecCards[0].TotalPay));
+			
+			if (SecCards.length > 0) {
+				if ($(this).find(".card-category").text() == "Total Receivable") {
+					$(this).find(".card-title").text(" " + RedDot_NumberFormat(SecCards[0].TotalRece));
+				} else if ($(this).find(".card-category").text() == "Total Payable") {
+					$(this).find(".card-title").text(" " + RedDot_NumberFormat(SecCards[0].TotalPay));
 
+				} else {
+					$(this).find(".card-title").text(" " + RedDot_NumberFormat(SecCards[0].BankBalance));
+				}
 			} else {
-				$(this).find(".card-title").text("$ " + RedDot_NumberFormat(SecCards[0].BankBalance));
+				$(this).find(".card-title").text(" " + RedDot_NumberFormat(0));
             }
+			
 
 			var tblhead1 = ['Country', 'days_0_30', 'days_31_37', 'days_38_45', 'days_46_60', 'days_61_90', 'days_91_120', 'days_121_150', 'days_151_180', 'days_181plus'];
 			var ids = $(this).find("#hdnDashid").val();
 			var arr = [];
-			debugger
+			
 			if (ids !== 'DASH021') {
 				var tr2 = $('#' + ids + '-Model');
 				$.ajax({
@@ -153,7 +158,7 @@
 							tr2.find("#Ist")[0].remove();
 						} else {
 							tr2.find("#Ist").hide();
-							RedDotAlert_Error("No Record Found");
+							//RedDotAlert_Error("No Record Found");
 						}
 					}
 					, complete: function () {
@@ -415,7 +420,7 @@
 						tr2.find("#Ist")[0].remove();
 					} else {
 						tr2.find("#Ist").hide();
-						RedDotAlert_Error("No Record Found");
+						//RedDotAlert_Error("No Record Found");
 					}
 				}
 				, complete: function () {
@@ -760,7 +765,7 @@
 					$('.close').trigger("click");
 
 				} else {
-					RedDotAlert_Error('Error Occur');
+				//	RedDotAlert_Error('Error Occur');
 				}
 
 			});

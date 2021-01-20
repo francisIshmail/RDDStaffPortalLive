@@ -17,6 +17,7 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DataTable = System.Data.DataTable;
 using Antlr.Runtime;
 using Newtonsoft.Json;
+using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -316,7 +317,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             List<RDD_EmployeeRegistration> CurrencyList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
-                for (int i = 0; i < ds.Tables[11].Rows.Count; i++)
+                for (
+                    
+                    
+                    int i = 0; i < ds.Tables[11].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration CurrencyLst = new RDD_EmployeeRegistration();
                     CurrencyLst.Currency = (ds.Tables[11].Rows[i]["Currency"]).ToString();
@@ -381,12 +385,20 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 RDD_EmployeeRegistration objemp = EmpDbOp.Edit(EmployeeId);
                 var itemToRemove = ManagerListL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.ManagerId);
                 if (itemToRemove != null)
-                    ManagerListL2.Remove(itemToRemove);
-                ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+                {
+                    if (itemToRemove.ManagerId != 0)
+                        ManagerListL2.Remove(itemToRemove);
+                    ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
+                }
+                
 
                 var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
                 if (itemToRemove1 != null)
-                    ManagerListHRL2.Remove(itemToRemove1);
+                {
+                    if (itemToRemove1.Local_HR != 0)
+                        ManagerListHRL2.Remove(itemToRemove1);
+                }
+                
 
                 ViewBag.ManagerListHR2 = new SelectList(ManagerListHRL2, "ManagerIdL2", "Managername");
                 //  Session["FILE"] = objemp.ImagePath;
@@ -474,7 +486,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
-                    string result = string.Empty;
+            // string result = string.Empty;
+            List<Outcls1> result = new List<Outcls1>();
             try
             {
                
@@ -584,7 +597,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             catch (Exception ex)
             {
-                result = "Error occured :" + ex.Message;
+                //result = "Error occured :" + ex.Message;
+                result.Clear();
+                result.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -842,7 +862,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         }
 
-
+        //[Route("LMSTEST")]
         public ActionResult LMSTest()
         {
             return View();

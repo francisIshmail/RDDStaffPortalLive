@@ -199,7 +199,7 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
                         }
 
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                         rDD.FromDate = System.DateTime.Now;
@@ -468,6 +468,7 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
                             }
                         }
                     }
+
                     //
                     DataColumn newColumn3 = new DataColumn("CreatedOn", typeof(System.DateTime));
                     newColumn3.DefaultValue = System.DateTime.Now;

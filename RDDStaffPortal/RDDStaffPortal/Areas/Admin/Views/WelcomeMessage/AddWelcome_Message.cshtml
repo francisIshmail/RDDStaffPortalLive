@@ -1,0 +1,138 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Admin.RDD_Welcome_Message
+
+
+
+@Html.HiddenFor(m => m.Welcome_image1)
+@Html.HiddenFor(m => m.Welcome_image)
+@Html.HiddenFor(m=>m.imgbool,false)
+<div class="row">
+    @Html.HiddenFor(m => m.EditFlag)
+    @Html.HiddenFor(m => m.Welcome_id)
+    @Html.HiddenFor(m => m.IsActive)
+    <div class="col-md-6 col-lg-6">
+        <div class="row rowmin">
+            <div class="col-md-8 col-lg-8">
+                <div id="div-ObjType" class="form-group form-inline has-error1">
+                    <label for="Database" class="col-md-1 col-form-label width120px">Image :</label>
+                    <div class="col-md-8 p-0">
+                        @*@Html.TextBoxFor(m => m.Welcome_image, "", new { @class = "", @type = "File" })*@
+                        <input type="image" id="my_image" class="img-upload-preview avatar-img" width="170" src="data:image;base64,@Convert.ToBase64String(Model.Welcome_image)" alt="preview">
+
+                        <input type="file" class="form-control form-control-file" id="my_file" style="display: none;" name="my_file" accept="image/*" required="">
+                        <input id="Photo_imghdn" type="hidden" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row rowmin">
+            <div class="col-md-8 col-lg-8">
+                <div id="div-Description" class="form-group form-inline has-error1">
+                    <label for="Database" class="col-md-1 col-form-label width120px">Message :</label>
+                    <div class="col-md-8 p-0">
+                        @Html.TextBoxFor(m => m.Welcome_title, new { @class = "form-control form-control-sm txtcheck", @maxlength = "50" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row rowmin">
+            <div class="col-md-8 col-lg-8">
+                <div id="div-Description" class="form-group form-inline has-error1">
+                    <label for="Database" class="col-md-1 col-form-label width120px">Message :</label>
+                    <div class="col-md-8 p-0">
+                        @Html.TextAreaFor(m => m.Welcome_Message, new { @class = "form-control form-control-sm txtcheck", @maxlength = "510", style = "width: 725px;" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row rowmin">
+            <div class="col-md-8 col-lg-8">
+                <div id="div-Description" class="form-group form-inline has-error1">
+                    <label for="Database" class="col-md-1 col-form-label width120px">Status :</label>
+                    <div class="col-md-8 p-0">
+                        <div class="input-group">
+                            <label class="switch">
+                                <input type="checkbox" id="chkIsDefaultMenu" value="true" checked><div></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        function readURL(input) {
+            debugger;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("input[type='image']").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("input[id='my_file']").on("change", function () {
+            debugger;
+            readURL(this);
+            var data = new FormData();
+            var files = $("input[id = 'my_file']").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+            $.ajax({
+                url: "/Admin/WelcomeMessage/Uploadfile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    debugger
+                    if (response == "InvalidError") {
+                        $("#imgbool").val(false);
+                        RedDotAlert_Error("Invalid Image Formate Supported Formate .jpeg/.jpg/.png /.bmp");
+                    }
+                    else {
+                        debugger;
+                        $("#imgbool").val(true);
+                        $("input[type='my_image']").val(response);
+                        $('input[name="Photo_imghdn"]').val('/Images/' + response);
+                    }
+
+                },
+                error: function (er) {
+                    RedDotAlert_Error(er);
+                }
+            });
+
+        })
+        $("input[type='image']").click(function () {
+            debugger
+            $("input[id='my_file']").click();
+
+        });
+        $("input[type='checkbox']").on("click", function () {
+            if ($("#chkIsDefaultMenu").val() == 'true') {
+                $("#chkIsDefaultMenu").val('false');
+                $("#chkIsDefaultMenu").removeAttr('checked');
+            } else {
+                $("#chkIsDefaultMenu").attr('checked', 'checked');
+                $("#chkIsDefaultMenu").val('true')
+            }
+
+        }
+        )
+    });
+</script>

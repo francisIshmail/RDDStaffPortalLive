@@ -50,6 +50,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             if (PVId != -1)
             {
                 PV = _RDDPVOp.GetData(User.Identity.Name, PVId, PV);
+                PV.LastUpdatedBy = User.Identity.Name;
                 PV.EditFlag = true;
             }
             else
@@ -82,7 +83,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
             PV = _RDDPVOp.GetData(User.Identity.Name, PVId, PV);
             PV.EditFlag = true;
-            PV.CreatedBy = User.Identity.Name;
+            PV.LastUpdatedBy = User.Identity.Name;
 
             return PartialView("~/Areas/SAP/Views/RDD_PV/VIEWRDDPV.cshtml", PV);
         }
@@ -126,7 +127,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                             fname = file.FileName;
                             fileName = Path.GetFileNameWithoutExtension(file.FileName);
                             _ext = System.IO.Path.GetExtension(fname).ToUpper();
-                            if ((_ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF") && type == "Header")
+                            if ((_ext != ".JPEG" && _ext != ".JPG" && _ext != ".PNG" && _ext != ".GIF" && _ext != ".PDF") && type == "Header")
                             {
                                 return Json("Error occurred. Error details: Only Image Or Pdf", JsonRequestBehavior.AllowGet);
                             }
@@ -159,6 +160,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
             RDDPV.CreatedBy = User.Identity.Name;
             RDDPV.CreatedOn = System.DateTime.Now;
+            RDDPV.LastUpdatedBy = "";
             if (RDDPV.EditFlag == true)
             {
                 RDDPV.LastUpdatedBy = User.Identity.Name;
@@ -321,7 +323,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                     sb.Append(ds.Tables[3].Rows[i]["Description"]);
                     sb.Append("</span></td>");
                     sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'>");
-                    sb.Append(ds.Tables[3].Rows[i]["AMount"]);
+                    sb.Append(string.Format("{0:#,0.00}", ds.Tables[3].Rows[i]["AMount"]));
                     total = total + Convert.ToDecimal(ds.Tables[3].Rows[i]["Amount"].ToString());
                     sb.Append("</span></td>");
                     sb.Append("</tr>");

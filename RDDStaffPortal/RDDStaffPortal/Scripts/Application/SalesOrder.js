@@ -43,7 +43,7 @@ SalesOrder.prototype = {
 
 
         RedDot_NewDate("#txtPostingDate");
-
+        $('#chooseFile').change(handleFile);
         this.BindGrid();
         this.BindGrid1();
     },
@@ -282,6 +282,13 @@ SalesOrder.prototype = {
 
     ClickEvent: function () {
 
+        $('#btnGetTemplate').click(function () {
+            debugger;
+            var templeteFileCSV = '../excelFileUpload/Template/SalesOrder_Itens.xlsx'; /// <reference path="../Template/SalesOrder_Items.xlsx" />
+
+            window.open(templeteFileCSV, '_blank');
+        });
+
         $("[id$=btnPopShow]").click(function () {
             debugger;
             var id = $('.tab-content .active').attr('id');
@@ -393,6 +400,47 @@ SalesOrder.prototype = {
             }
 
             $('#uxTrowindex').val('');
+        });
+
+        $('#IIIbody').on('click', "[id$=PGrid_Edit]", function (event) {
+            debugger;
+            var tr = $(this).closest("#IIIst");
+
+           // 'SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+
+            $("[id$=uxProwindex]").val(tr.find(".Abcd").eq(0).text());
+            $("[id$=cbPPaymentMethod]").val(tr.find(".Abcd").eq(2).text()).trigger('change');
+
+            $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(4).text());
+            $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(5).text());
+            $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(6).text()).trigger('change');
+            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(8).text());
+            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(9).text());           
+            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(10).text());
+            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(11).text());
+                      
+
+            $("[id$=btn_PAddRow]").text("Update");
+            $('#PaymentModalPopPup').modal('show');
+        });
+
+        $('#IIIbody').on('click', "[id$=PGrid_Delete]", function (event) {
+            debugger;
+            var tr = $(this).closest("#IIIst");
+            var Row_Index = tr.find(".Abcd").eq(0).text();
+
+            PayTermDetails.splice(Row_Index - 1, 1);
+            tr.remove()
+
+            var k = 1;
+            $(".PayDetail").each(function () {
+
+                $(this).find(".Abcd").eq(0).text(k);
+                k++;
+
+            });           
+
+            $('#uxProwindex').val('');
         });
 
         $("[id$=btn_PCancel]").click(function () {
@@ -618,7 +666,7 @@ SalesOrder.prototype = {
                                 $("#cbPCurency").append($("<option></option>").val(ddlCurrency[i].Code).html(ddlCurrency[i].Descr));
                             }
 
-                            $("[id$=cbDocCur]").val('USD').trigger();
+                            //$("[id$=cbDocCur]").val('USD').trigger();
                         },
                         error: function (response) {
                             alert(response.responseText);
@@ -845,8 +893,13 @@ SalesOrder.prototype = {
                         success: function (value) {
                             debugger;
                             var jData = value.Table;
-                            var QtyInWhs = jData[0].OnHand;
-                            var QtyAvl = jData[0].ActalQty;
+                            var QtyInWhs = 0;
+                            var QtyAvl = 0;
+                            if (jData.length > 0) {
+                                 QtyInWhs = jData[0].OnHand;
+                                 QtyAvl = jData[0].ActalQty;
+                            }
+                            
 
                             $("[id$=txtQtyWhs]").val(QtyInWhs);
                             $("[id$=txtQtAval]").val(QtyAvl);
@@ -884,9 +937,12 @@ SalesOrder.prototype = {
                         success: function (value) {
                             debugger;
                             var jData = value.Table;
-                            var TaxRate = jData[0].rate;
-
+                            var TaxRate = 0;
+                            if (jData.length > 0) {
+                                TaxRate = jData[0].Rate;                               
+                            }
                             $("[id$=txtTaxRate]").val(TaxRate);
+                           
 
                         },
                         error: function (response) {
@@ -1521,6 +1577,7 @@ SalesOrder.prototype = {
 
         });
 
+
         $("#IIbody").on('dblclick', "#IIst", function (event) {
             debugger;
             _SO_ID = $(this).closest("IIst").prevObject.find(".Abcd").eq(1).text();
@@ -1552,7 +1609,7 @@ SalesOrder.prototype = {
                         contentType: "Application/json",
 
                         success: function (value) {
-                            //debugger;
+                            debugger;
                             var jData = value
 
                             var ddlRDDProject = jData.Table;
@@ -1597,13 +1654,15 @@ SalesOrder.prototype = {
                         }
                     });
 
+                    Get_SOR_List();
+
                 }
             }
             catch (Error) {
                 alert(Error);
             }
 
-            Get_SOR_List();
+           
         });
 
         $("[id$=txtSerCardName]").autocomplete({
@@ -2287,7 +2346,7 @@ function Get_SOR_List() {
         else {
             var ToDate = new Date();
             var FromDate = ToDate.setDate(ToDate.getDate() - 30);
-            value1 = " And T0.PostingDate BetWeen $" + GetSqlDateformat(FromDate) + "$ And $" + GetSqlDateformat(ToDate) + "$"
+            value1 = " And T0.PostingDate BetWeen $" + RedDot_setdtpkdateFind(FromDate) + "$ And $" + RedDot_setdtpkdateFind(ToDate) + "$"
         }
 
         if ($("#txtSerCardCode").val() != '')
@@ -2364,10 +2423,10 @@ function getId(dbName, e) {
                 $("[id$=txtDocStatus]").val(SO_Header[0].docstatus);
                 $("[id$=txtApprvBy]").val(SO_Header[0].aprovedby);
                 $("[id$=txtCreatedBy]").val(SO_Header[0].createdby);
-                $("[id$=cbRDDProject]").val(SO_Header[0].rdd_project);
-                $("[id$=cbBusinessType]").val(SO_Header[0].businestype);
-                $("[id$=cbInvPayTerm]").val(SO_Header[0].invpayterms);
-                $("[id$=cbCustPayTerm]").val(SO_Header[0].custpayterms);
+                $("[id$=cbRDDProject]").val(SO_Header[0].rdd_project).trigger('change');
+                $("[id$=cbBusinessType]").val(SO_Header[0].businestype).trigger('change');
+                $("[id$=cbInvPayTerm]").val(SO_Header[0].invpayterms).trigger('change');
+                $("[id$=cbCustPayTerm]").val(SO_Header[0].custpayterms).trigger('change');
                 $("[id$=txt_ForworderDet]").val(SO_Header[0].forwarder);
                 $("[id$=cbSalesEmp]").val(SO_Header[0].salesemp);
 
@@ -2499,5 +2558,38 @@ function getId(dbName, e) {
 
     } catch (n) {
         alert(n)
+    }
+}
+
+function handleFile(e) {
+    debugger;
+   // alert("Hidssafsfdsdfs");
+    //Get the files from Upload control
+    var files = e.target.files;
+    var i, f;
+    ////Loop through files
+    for (i = 0, f = files[i]; i != files.length; ++i) {
+        var reader = new FileReader();
+        var name = f.name;
+        reader.onload = function (e) {
+            var data = e.target.result;
+            debugger;
+            var result;
+            var workbook =XLSX.read(data, { type: 'binary' });
+           // var workbook = XLSX.read(data, { type: 'binary' });
+            
+            var sheet_name_list = workbook.SheetNames;
+            sheet_name_list.forEach(function (y) { /* iterate through sheets */
+                //Convert the cell value to Json
+                var roa = XLSX.utils.sheet_to_json(workbook.Sheets[y]);
+                if (roa.length > 0) {
+                    result = roa;
+                }
+            });
+            //Get the first column first cell value
+            alert(result[0].Column1);
+           // Get_DataFromExcel(result);
+        };
+        reader.readAsArrayBuffer(f);
     }
 }

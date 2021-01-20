@@ -1,33 +1,16 @@
 ﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_Holidays
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Red Dot Distribution :: Technology with a Difference</title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="img/reddot.ico" type="image/x-icon" />
 
-    <!-- Fonts and icons -->
-    <script src="js/plugin/webfont/webfont.min.js"></script>
-
-
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/atlantis.min.css">
-    <link rel="stylesheet" href="css/fonts.min.css">
-
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="css/reddot.css">
-
-</head>
-<body>
+@Html.HiddenFor(m =>m.HR)
+@Html.HiddenFor(m => m.Editflag, false)
+@Html.HiddenFor(m => m.HolidayId)
+<div class="main-panel">
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
@@ -42,126 +25,352 @@
 
                                     <div class="form-group">
                                         <!-- <label for="email2" class="width100px">Country :</label> -->
-                                        <div class="input-group width200px">
-                                            <select class="form-control" id="defaultSelect">
-                                                <option>-- Select Country --</option>
-                                                <option>India</option>
-                                                <option>Tanzania</option>
+                                        <div class="input-group width200px" id="country">
+                                            @*<select class="form-control" id="defaultSelect">
+                    <option>-- Select Country --</option>
 
-                                            </select>
-
+                </select>*@
+                                            @Html.DropDownListFor(m => m.CountryCode, Model.CountryList, new { @class = "form-control" })
                                         </div>
                                     </div>
 
 
-
-
                                     <div class="form-group">
                                         <label for="email2" class="width100px"></label>
-                                        <div class="mar-t7"><button type="button" class="btn btn-success submitbtn add-new">Submit</button></div>
+                                        <div class="mar-t7"><button type="button" class="btn btn-info submitbtn add-new">Search</button></div>
 
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label for="email2" class="width100px">Search</label>
-                                        <input type="text" class="form-control width180px"  id="myWidgets">
-                                    </div> -->
+                                    @*<div class="form-group">
+            <label for="email2" class="width100px">Search</label>
+            <input type="text" class="form-control width180px"  id="myWidgets">
+        </div>*@
+                                    @if (Model.HR == true)
+                                    {
+                                        <div class="input-group-append">
+                                            <span style="
+												position: absolute;
+												right: 0;
+												bottom: 0px;"
+                                                  class="input-group-text  btn-secondary text-white" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus mr-1"></i>Add Holiday</span>
+                                        </div>
+                                    }
+
 
                                 </div>
 
                             </div>
                             <div class="row">
-                                <table class="table table-bordered">
-                                    <thead>
+
+                                <table class="table table-bordered" id="usertable">
+                                    <thead style=" background: lavenderblush;">
                                         <tr>
-                                            <th class="width180px">Holiday</th>
-
-                                            <th class="width180px">Date</th>
-
+                                            <th class="width100px">Holiday</th>
+                                            <th class="width100px">Date</th>
+                                            @if (Model.HR == true)
+                                            {
+                                                <th class="width50px">Action</th>
+                                            }
 
                                         </tr>
                                     </thead>
-                                    <tbody id="userTable">
-                                        <tr>
-                                            <td>Republic Day</td>
-                                            <td>Tue, 26 Jan, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Good Friday</td>
-                                            <td>Tue, 26 Jan, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ambedkar Jayanti</td>
-                                            <td>Tue, 26 Jan, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Rama Navami
-                                            </td>
-                                            <td>Tue, 26 Jan, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Eid al-Fitr
-                                            </td>
-                                            <td> 12–13 May 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Eid al-Adha
-                                            </td>
-                                            <td>Wed, 21 Jul, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Indian Independence Day
-                                            </td>
-                                            <td>Sun, 15 Aug, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Gandhi Jayanti
-                                            </td>
-                                            <td>Sat, 2 Oct, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dussehra</td>
-                                            <td>Fri, 15 Oct, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prophet's Birthday</td>
-                                            <td>18–19 Oct 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diwali</td>
-                                            <td>Thu, 4 Nov, 2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Christmas Day
-                                            </td>
-                                            <td>Sat, 25 Dec, 2021</td>
-                                        </tr>
-
-
-
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
-
-
-
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
-
-
         </div>
     </div>
-</body>
-</html>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Holiday</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email2" class="width100px" readonly="readonly" >Country Code</label>
+
+                    @Html.TextBox(string.Concat("hdnCountryCode"), "", new { htmlAttributes = new { @class = "form-control" },@readonly = true })
+
+                </div>
+                <div class="form-group">
+                    <label for="email2" class="width100px">Holiday Title :</label>
+                    @Html.TextBoxFor(m => m.HolidayName, new { @class = "form-control form-control-sm txtcheck" })
+                    @Html.HiddenFor(m => m.HolidayId)
+                </div>
+                <div class="form-group">
+                    <label for="email2" class="width100px">Date :</label>
+                    @*<input type="text" class="form-control datepickerH" id="holidaydate">*@
+                    @Html.TextBoxFor(m => m.HolidayDate, new { @class = "form-control form-control-sm datepickerH txtcheck" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success " id="btnSave">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script type="text/javascript">
+
+    var SqlDate;
+    function GetSqlDateformat(obj) {
+        try {
+            if (obj != undefined && obj != null) {
+                SqlDate = obj.toString().split('/')[1] + '/';
+                SqlDate += obj.toString().split('/')[0] + '/';
+                SqlDate += obj.toString().split('/')[2];
+                return SqlDate;
+            }
+        }
+        catch (ex) {
+            log(ex);
+        }
+    }
+    var data1 = "";
+    function GetHolidayDetails() {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetHoliday", "RDD_Holidays")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                data1 = data;
+                var k = $("#CountryCode").val();
+                var found_names = $.grep(data1, function (v) {
+                    return v.CountryCode === k;
+                });
+                $("#usertable tbody").empty();
+               
+                $.each(found_names, function (index, value) {
+                    if ($("#HR").val() !== 'True') {
+                        $("#usertable tbody").append('<tr><td>' + value.HolidayName + '</td><td>' + RdotdatefrmtRes1(value.HolidayDate) + '</td></tr>');
+                    } else {
+                        $("#usertable tbody").append('<tr><td>' + value.HolidayName + '</td><td>' + RdotdatefrmtRes1(value.HolidayDate) + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#exampleModal" data="' + value.HolidayId + '"><i class="fa fa-edit"></i>' + '<button class="btn dlt" data="' + value.HolidayId + '"><i class="fa fa-trash"></i>' + '</td></tr>');
+                    }
+                    
+                });
+
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        GetHolidayDetails();
+        $("#hdnCountryCode").val($("#CountryCode option:selected").text());
+        $("#CountryCode").on("change",  function () {
+            var k = $(this).val();
+            var found_names = $.grep(data1, function (v) {
+                return v.CountryCode === k;
+            });
+            $("#usertable tbody").empty();
+
+            $("#hdnCountryCode").val($("#CountryCode option:selected").text());
+            $.each(found_names, function (index, value) {
+                if ($("#HR").val() !== 'True') {
+                    $("#usertable tbody").append('<tr><td>' + value.HolidayName + '</td><td>' + RdotdatefrmtRes1(value.HolidayDate) + '</td></tr>');
+                } else {
+                    $("#usertable tbody").append('<tr><td>' + value.HolidayName + '</td><td>' + RdotdatefrmtRes1(value.HolidayDate) + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#exampleModal" data="' + value.HolidayId + '"><i class="fa fa-edit"></i>' + '<button class="btn dlt" data="' + value.HolidayId + '"><i class="fa fa-trash"></i>' + '</td></tr>');
+                }
+                //$("#usertable tbody").append('<tr><td>' + value.HolidayName + '</td><td>' + RdotdatefrmtRes1(value.HolidayDate) + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#exampleModal" data="' + value.HolidayId + '"><i class="fa fa-edit"></i>' + '<button class="btn dlt" data="' + value.HolidayId + '"><i class="fa fa-trash"></i>' + '</td></tr>');
+            });
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+        // Append table with add row form on add new button click
+        $(".add-new").click(function () {
+            $(this).attr("disabled", "disabled");
+            var index = $("table tbody tr:last-child").index();
+            var row = '<tr>' +
+                '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+                '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+                '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+                '<td><select class="form-control" id="defaultSelect"><option>-- Catagory --</option><option>Catagory</option><option>Catagory</option><option>Catagory</option><option>Catagory</option><option>Catagory</option></select></td>' +
+                '<td><div><input type="checkbox" checked data-toggle="toggle" data-onstyle="primary"></div></td>' +
+                '<td>' + actions + '</td>' +
+                '</tr>';
+            $("table").append(row);
+            $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+
+
+        // Add row on add button click
+        $(document).on("click", ".add", function () {
+            var empty = false;
+            var input = $(this).parents("tr").find('input[type="text"]');
+            input.each(function () {
+                if (!$(this).val()) {
+                    $(this).addClass("error");
+                    empty = true;
+                } else {
+                    $(this).removeClass("error");
+                }
+            })
+
+            $(this).parents("tr").find(".error").first().focus();
+            if (!empty) {
+                input.each(function () {
+                    $(this).parent("td").html($(this).val());
+                });
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").removeAttr("disabled");
+            }
+        });
+        // Edit row on edit button click
+        $(document).on("click", ".edit", function () {
+            var Currow = $(this).closest("tr");
+            var Holidaynm = Currow.find('td:eq(0)').html();
+            var Holidaydt = Currow.find('td:eq(1)').html();
+            $("#HolidayName").val(Holidaynm);
+            $("#HolidayDate").val(Holidaydt);
+            var HolidayIde = $(this).attr("data");
+            $("#HolidayId").val(HolidayIde);
+            $("#btnSave").text("Update");
+            $("#btnSave").attr("id", "btnUpdate");
+            $(".add-new").attr("disabled", "disabled");
+
+        });
+        // Update row on update button click
+        $(document).on("click", "#btnUpdate", function () {
+            //var tr = $(this).closest("tr");
+            //var _holidaytitle = tr.find("holidaytitle").val();
+            //var _holidaydate = tr.find("holidaydate").val();
+            var rDD_holiday = {
+                HolidayId: $("#HolidayId").val(),
+                HolidayName: $("#HolidayName").val(),
+                HolidayDate: RedDot_setdtpkdate($("#HolidayDate").val()),
+                CountryCode: $("#CountryCode").val(),
+                Editflag:true
+            };
+            $.ajax({
+                type: "POST",
+                url: "/SaveHolidays",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ rDD_holiday: rDD_holiday }),
+                dataType: "json",
+                success: function (data) {
+                    debugger
+                    if (data.Saveflag == true) {
+                        //alert("Record updated Successfully");
+                        RedDotAlert_Success(data.ErrorMsg);
+                        window.location.href = '@Url.Action("Index", "RDD_Holidays")';
+                        GetHolidays_List();
+                    }
+                    else {
+                        RedDotAlert_Error(data.ErrorMsg);
+                    }
+                }
+            });
+        });
+        // Delete row on delete button click
+        $(document).on("click", ".dlt", function () {
+            debugger
+            $(this).parents("tr").remove();
+            $(".add-new").removeAttr("disabled");
+            //var HolidayId = $("#HolidayId").val();
+            var HolidayId = $(this).attr("data");
+            DeleteFlag = true;
+            $.ajax({
+                    type: "POST",
+                    url: "/DeleteHolidays",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({ HolidayId: HolidayId }),
+                    success: function (data) {
+                        debugger
+                        if (data.DeleteFlag == true) {
+                            RedDotAlert_Success(data.ErrorMsg);
+                            window.location.href = '@Url.Action("Index", "RDD_Holidays")';
+                            //GetHolidays_List();
+                        }
+                        else {
+                            RedDotAlert_Error(Data.ErrorMsg)
+                            //alert(data.data.ErrorMsg);
+                        }
+                    }
+                });
+            
+            });
+            
+            //debugger
+                @*if (data.DeleteFlag == true) {
+                    //alert("Record updated Successfully");
+                    RedDotAlert_Success(data.ErrorMsg);
+                    window.location.href = '@Url.Action("Index", "RDD_Holidays")';
+                    GetHolidays_List();
+                }
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }*@
+            
+        
+            //var rDD_Holiday = {
+
+
+            //    HolidayId: $("#HolidayId").val(),
+            //var Holidayid = $("#HolidayId").val();
+            //DeleteFlag = true;
+            
+
+            //$(".add-new").removeAttr("disabled");
+            
+        
+
+        $('body').on('focusin', '.datepickerH', function () {
+            $('.datepickerH').datetimepicker({
+                format: 'DD/MM/YYYY',
+                showClose: true,
+                showClear: true,
+
+            });
+        });
+        RedDot_NewDate(".datepickerH");
+        $(document).on("click", "#btnSave", function () {
+            var rDD_holiday = {
+                HolidayName: $("#HolidayName").val(),
+                HolidayDate: RedDot_setdtpkdate($("#HolidayDate").val()),
+                CountryCode: $("#CountryCode").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/SaveHolidays",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({ rDD_holiday: rDD_holiday }),
+                success: function (data) {
+                    debugger
+                    if (data.Saveflag == true) {
+                        RedDotAlert_Success(data.ErrorMsg);
+                        window.location.href = '@Url.Action("Index", "RDD_Holidays")';
+                        GetHolidays_List();
+                    }
+                    else {
+                        //RedDotAlert_Error(Data.ErrorMsg)
+                        alert(data.data.ErrorMsg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+

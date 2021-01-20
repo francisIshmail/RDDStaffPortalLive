@@ -164,6 +164,7 @@
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WelcomeMessageController.cs" />
     <Compile Include="Areas\Admin\Models\Departments.cs" />
     <Compile Include="Areas\Admin\Models\Designations.cs" />
     <Compile Include="Areas\Admin\Models\EmploymentStatus.cs" />
@@ -171,6 +172,8 @@
     <Compile Include="Areas\Admin\Models\JobGrade.cs" />
     <Compile Include="Areas\Admin\Models\Menus.cs" />
     <Compile Include="Areas\Admin\Models\Modules.cs" />
+    <Compile Include="Areas\CollectionForecast\CollectionForecastAreaRegistration.cs" />
+    <Compile Include="Areas\CollectionForecast\Controllers\CollectionForecastController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_DailySalesController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_CallStatusController.cs" />
     <Compile Include="Areas\DailyReports\Controllers\DSR_NextActionController.cs" />
@@ -185,6 +188,7 @@
     <Compile Include="Areas\Incentive\Controllers\IncentiveSlabController.cs" />
     <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_AnnualLeaveCalenderController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveAdjustmentController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
@@ -226,6 +230,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomAuthenticationFilter.cs" />
+    <Compile Include="Infrastructure\CustomRoleRequirement.cs" />
     <Compile Include="Infrastructure\MyCustomHandleErrorAttribute.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Modules.cs" />
@@ -365,6 +370,7 @@
     <Content Include="LMSFileUpload\LRQ\_vineet\msweb-brand09012021120132.PNG" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
+    <Content Include="Scripts\Application\Calendarplanner.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -850,6 +856,7 @@
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\jquery.disable.autocomplete.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\LMS\LeaveManage.js" />
@@ -961,11 +968,20 @@
     <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
     <Content Include="Areas\LMS\Views\web.config" />
     <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
+
     <Content Include="Areas\LMS\Views\RDD_LeaveType\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveAdjustment\Index.cshtml" />
     <Content Include="Areas\HR\Views\Employees\LMSTest.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveRequest\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveApproval\Index.cshtml" />
+
+    <Content Include="Areas\CollectionForecast\Views\web.config" />
+    <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
+    <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
+    <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_AnnualLeaveCalender\Index.cshtml" />
+
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1014,6 +1030,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CollectionForecast\Data\" />
+    <Folder Include="Areas\CollectionForecast\Views\Shared\" />
     <Folder Include="Areas\DailyReports\Data\" />
     <Folder Include="Areas\DailyReports\Views\Shared\" />
     <Folder Include="Areas\Funnel\Views\Shared\" />
@@ -1088,9 +1106,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28986/</IISUrl>
+          <IISUrl>http://localhost:28989/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28986/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28989/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

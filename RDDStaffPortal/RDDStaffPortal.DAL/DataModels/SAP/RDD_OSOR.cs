@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
 {
     public partial class RDD_OSOR
     {
+        public string Errormsg { get; set; }
         public Int32 SO_ID { get; set; }
         public Int32 Doc_Object { get; set; }
         public Int32 Base_Obj { get; set; }

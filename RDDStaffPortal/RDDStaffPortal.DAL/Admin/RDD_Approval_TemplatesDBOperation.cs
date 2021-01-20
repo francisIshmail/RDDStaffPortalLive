@@ -502,7 +502,10 @@ namespace RDDStaffPortal.DAL.Admin
                             APPROVAL_DATE = string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString())
                 ? (DateTime?)null
                 : (DateTime?)Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()),
-                           // dr["APPROVAL_DATE"].ToString()//!string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString()) ? Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()) : null,
+                            Country= !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "",
+                            Currency = !string.IsNullOrWhiteSpace(dr["Currency"].ToString()) ? dr["Currency"].ToString() : "",
+                            Refno = !string.IsNullOrWhiteSpace(dr["Refno"].ToString()) ? dr["Refno"].ToString() : "",
+                            // dr["APPROVAL_DATE"].ToString()//!string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString()) ? Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()) : null,
 
 
                         });

@@ -88,9 +88,6 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                 if (DS.Tables.Count > 0)
                 {
-                    
-                    
-                       SendMailToSignatories(DocKey,ObjectType);
                     #region mailsending
                     if (ObjectType == "18")
                     {
@@ -100,6 +97,8 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                         };
                         Com.ExecuteNonQuery("PV_SendApprovalRequestEmail", sqlPar_);
+
+                        SendMailToSignatories(DocKey, ObjectType);
                     }
                     
                     #endregion
@@ -240,7 +239,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                         #endregion
 
-                        //signatoryEmail = "chetan@reddotdistribution.com; pramod@reddotdistribution.com";
+                        //signatoryEmail = "nikhilesh@reddotdistribution.com; pramod@reddotdistribution.com";
                         //CFOEmail = "pramod@reddotdistribution.com";
                         try
                         {
@@ -257,7 +256,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                             }
                             html = html.Replace('\'', '\"');
                             // Db.constr = myGlobal.getAppSettingsDataForKey("tejSAP");
-                            html = "";
+                            //html = "";
                             Com.ExecuteNonQuery(" Insert into PVSendMailLog(PVId,SignatoriesEmail,CFOmail,html,SendMailResponse) Values (" + PVID + ",'" + signatoryEmail + "','" + CFOEmail + "','" + html + "','" + sendmailresponse + "') ");
                         }
                         catch (Exception ex)

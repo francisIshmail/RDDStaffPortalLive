@@ -97,7 +97,7 @@
                                 <div class="form-group form-inline">
                                     <label for="Database" class="col-md-5 col-form-label p-0">Status :</label>
                                     <div class="col-md-7 p-0">
-                                        @Html.DropDownListFor(m => m.DealStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
+                                        @Html.DropDownListFor(m => m.FStatus, ViewBag.StatusList as SelectList, "-Select-", new { @class = "multiselect-ui form-control", @multiple = "multiple" })
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
 
                                 <div class="col-xl-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" id="searchcutomer">
+                                        <input type="search" class="form-control form-control-sm" id="searchcutomer">
                                     </div>
                                 </div>
 
@@ -190,13 +190,14 @@
                                             <div class="reddotTableHead"><div>Reseller</div></div>
                                             <div class="reddotTableHead"><div>Country</div></div>
                                             <div class="reddotTableHead"><div>BU</div></div>
-                                            <div class="reddotTableHead"><div>Goods Desc</div></div>
+                                            <div class="reddotTableHead"><div>Goods Description</div></div>
                                             <div class="reddotTableHead"><div>Quote Dt</div></div>
                                             <div class="reddotTableHead"><div>Close Dt</div></div>
                                             <div class="reddotTableHead"><div>Deal Status</div></div>
 
-                                            <div class="reddotTableHead"><div>Landed</div></div>
+
                                             <div class="reddotTableHead"><div>Cost</div></div>
+                                            <div class="reddotTableHead"><div>Landed</div></div>
                                             <div class="reddotTableHead"><div>Value</div></div>
                                             <div class="reddotTableHead"><div>Action</div></div>
 
@@ -255,12 +256,14 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content width">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Funnel Deal</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Funnel Deal  </h5>
+                <h5 id="lblerror" class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div class="loader2"></div>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row">
@@ -273,7 +276,7 @@
                                             @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control dropcheck" })
                                             @*<select id="basic1" name="basic" class="form-control">
 
-                                                </select>*@
+                                    </select>*@
                                             <input type="hidden" id="fid" />
                                         </div>
                                     </div>
@@ -516,8 +519,8 @@
                                     <div class="col-md-7 p-0">
                                         @Html.DropDownList("DealStatus", ViewBag.StatusList as SelectList, new { @id = "DealStatus", @class = "form-control form-control-sm" })
                                         @*(List<SelectListItem>
-                                            )ViewBag.StatusList*@
-                                            @*<input type="text" class="form-control form-control-sm" id="">*@
+                                )ViewBag.StatusList*@
+                                        @*<input type="text" class="form-control form-control-sm" id="">*@
                                     </div>
                                 </div>
                             </div>
@@ -572,7 +575,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-sm" id="btnSaveFunnel">Save</button>
-
+               
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
 
             </div>
@@ -652,8 +655,8 @@
     <div>
         <div>
             <script type="text/javascript">
-                var tblhead1 = ["fid", "bdm", "quoteID", "enduser", "CardName", "Country", "BUName", "goodsDescr", "quoteDate", "expClosingDt", "DealStatus", "Landed", "Cost", "value", "Action"];
-                var tblhide = ["bdm", "enduser"];
+                var tblhead1 = ["fid", "bdm", "quoteID", "enduser", "CardName", "Country", "BUName", "goodsDescr", "quoteDate", "expClosingDt", "DealStatus", "Cost", "Landed", "value", "Action"];
+                var tblhide = ["bdm", "enduser","fid"];
                 var dateCond = ["quoteDate", "expClosingDt"];
                 var curPage = 1;
 
@@ -718,17 +721,18 @@
                             dataType: "JSON",
                             data: { Country: Country },
                             success: function (FunnelListCust) {
+                                debugger
                                 $("#CardName").html("");
 
                                 $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+                                $.each(FunnelListCust.Table, function (i, RDD_FunnelData) {
                                     $("#CardName").append(
                                         $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
 
 
                                 });
-                                $('.loader1').hide();
+                                $('.loader').hide();
                             }, complete: function () {
                                 $("#CardName").val($("#hdnCardName").val());
                                 $(".multiselect-ui").fSelect('reload');
@@ -749,6 +753,17 @@
 
                    
                     $("#newDealPopUp").click(function () {
+
+                        $(".txtcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+                        $(".dropcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '0') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
 
                         // if ($("#fid").val() == "") {
                         //$("#quoteDate").datetimepicker({
@@ -779,7 +794,7 @@
 
                         $("#Landed").val('');
 
-                        $("#DealStatus").val('OPEN');
+                        $("select#DealStatus").val('OPEN').trigger("change");
 
 
                         $("#divhdnchk").hide();
@@ -812,8 +827,24 @@
                             defaultDate: new Date(),
                             format: 'DD/MM/YYYY',
                         });
-
+                        $("#btnSaveFunnel").show();
+                        $("#lblerror").html('');
                         // $(".selected").removeAttr('checked');
+
+
+
+                        $(".txtcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+                        $(".dropcheck").each(function (index) {
+                            if ($("#" + $(this).attr("id") + "").val() == '0') {
+                                $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+                            }
+                        });
+
+
                         $(this)
                             .find("input,textarea,select")
                             .val('')
@@ -857,10 +888,10 @@
                     $("#Cost").keyup(function () {
                         $("#value").val($("#Cost").val());
                     })
-
+                    $('.loader2').hide();
                     $('#Country').on("change", function () {
-
-
+                        var t = true;
+                        $('.loader2').show();
                         //$("#lblchk").show();
 
                         var Country = $('#Country').val();
@@ -881,6 +912,8 @@
 
 
                             $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
+                            $('.loader2').hide();
+                            t = false;
                             return;
                         }
                         $("#divhdnchk").show();
@@ -893,9 +926,9 @@
                             data: { Country: Country },
 
                             success: function (QuoteID) {
-
+debugger
                                 $("#lblQuoteID").text(QuoteID);
-
+                                t = false;
                                 //lblQuoteID.text()
                                 //   $('.multiselect-ui').fSelect('reload');
                             }
@@ -911,7 +944,7 @@
                             dataType: "JSON",
                             data: { Country: Country },
                             success: function (FunnelListCust) {
-
+                               
                                 // $('.test').fSelect('destroy');
                                 //   $("#CardName").html("");
                                 $('#CardName')
@@ -921,7 +954,7 @@
 
                                 $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+                                $.each(FunnelListCust.Table, function (i, RDD_FunnelData) {
 
                                     $("#CardName").append(
                                         $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
@@ -957,35 +990,38 @@
 
                                     });
                                 })(jQuery);
-
+                                
                             },
 
                             complete: function () {
                                 $(".multiselect-ui").hide();
                                 $(".multiselect-ui").fSelect('reload');
+                                t = false;
 
                             }
                         });
 
                         $.ajax({
+                            async: false,
+                            cache: false,
                             url: '/FunnelData/FillBU',
                             type: "GET",
                             dataType: "JSON",
                             data: { Country: Country },
 
                             success: function (FunnelListBU) {
-
+                                debugger
 
                                 $("#ItmsGrpNam").html("");
                                 $("#BUName").empty();
-                                $("#hdnBUName").empty();
+                              //  $("#hdnBUName").empty();
 
 
                                 $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListBU, function (i, RDD_FunnelData) {
+                                $.each(FunnelListBU.Table, function (i, RDD_FunnelData) {
                                     $("#BUName").append(
-                                        $('<option></option>').val(RDD_FunnelData.BUName).html(RDD_FunnelData.BUName));
+                                        $('<option></option>').val(RDD_FunnelData.ItmsGrpNam).html(RDD_FunnelData.ItmsGrpNam));
                                 });
                             },
                             complete: function () {
@@ -997,13 +1033,22 @@
                                     allowClear: true,
                                     placeholder: '--Select--'
                                 });
+                                t = false;
+                                
+                                    if ($("#BUName").val() !== '0') {
+                                        $("#div-BUName").removeClass('has-error1').addClass('has-success1');
+                                    }
+                               
+
 
 
                             }
                         });
 
-
-
+                        if (t == false) {
+                            $('.loader2').hide();
+                        }
+                       
 
                     })
 
@@ -1210,15 +1255,17 @@
 
                     $('.prev').bind('click', function () {
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
-                            $(".loader1").hide();
-
-                            return;
+                        if (arr.length > 0) {
+                            if (arr[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                            curPage--;
+                            if (curPage < 0)
+                                curPage = (arr[0].TotalCount - 1);
+                        } else {
+                            curPage--;
                         }
-
-                        curPage--;
-                        if (curPage < 0)
-                            curPage = (arr[0].TotalCount - 1);
                         var FStatus = '';
                         var FCountry = '';
                         var QutMonth = '';
@@ -1322,9 +1369,15 @@
                     $('.next').bind('click', function () {
 
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
+                        if (arr.length > 0) {
+                            if (arr[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                        } else {
                             $(".loader1").hide();
-                            return;
+                            RedDotAlert_Error('No Record Found');
+                            return
                         }
                         curPage++;
                         if (curPage > arr[0].TotalCount)
@@ -1947,15 +2000,18 @@
                     //  $("#CardName").removeAttr('checked');
 
                     var url = "/FunnelData/GetDataById?fid=" + fid;
-                    $("#NewDealPopUp").modal();
+                    $('.loader1').show();
                     $.ajax({
+                        async: false,
+                        cache: false,
                         type: "GET",
                         url: url,
                         success: function (data) {
-
+                            debugger
 
 
                             $("#fid").val(data.fid);
+                            $("#hdnBUName").val(data.BUName);
 
                             $("#Country").val(data.Country).trigger('change');
 
@@ -1963,7 +2019,7 @@
 
                             $("#hdnChangeCount").val(data.ChangeCount);
 
-                            $("#hdnBUName").val(data.BUName);
+
 
                             $("#bdm").val(data.bdm);
 
@@ -2003,10 +2059,22 @@
 
 
                             $("#value").val(data.value);
-                            $("#DealStatus").val(data.DealStatus);
+                            $("select#DealStatus").val(data.DealStatus).trigger("change");
+                            if (data.DealStatus!=="OPEN") {
+                                $("#btnSaveFunnel").hide();
+                                $("#lblerror").html(' [ Only Open Deal can changes. ]');
+                            }
+                           
                             $("#expClosingDt").val(RdotdatefrmtRes1(data.expClosingDt));
+                            
                             $("#orderBookedDate").val(RdotdatefrmtRes1(data.orderBookedDate));
+                            if ($("#orderBookedDate").val() == "01-Jan-1") {
+                                $("#orderBookedDate").val('');
+                            }
                             $("#InvoiceDt").val(RdotdatefrmtRes1(data.InvoiceDt));
+                            if ($("#InvoiceDt").val() == "01-Jan-1") {
+                                $("#InvoiceDt").val('');
+                            }
                             if ($("#hdnChangeCount").val() == '1') {
                                 $("#Remarks2").attr("disabled", false);
                                 $('#remarks').attr('disabled', 'disabled');
@@ -2035,7 +2103,8 @@
                                 var landed = $('#Landed').val();
                                 var mardol = totalsell - landed;
                                 var marper = (mardol / landed) * 100;
-                                $('#marginper').val(marper);
+                                debugger
+                                $('#marginper').val(marper.toFixed(2));
 
 
                             }
@@ -2051,98 +2120,229 @@
                                     $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
                                 }
                             });
+                            $('.loader1').hide();
+                            $("#NewDealPopUp").modal();
                         }
+
                         
                     });
                 }
 
-                $('#btnSaveFunnel').on("click", function () {
-
+                $('#btnSaveFunnel').on("click", function (e) {
+                    e.preventDefault();
 
                     var res = validate();
+                  
 
                     if (res == false) {
                         return false;
                     };
 
-                    var FunnelDataa = {};
-                    var CardName = "";
-                    var CardCodeName = "";
-                    $("#CardName option:selected").each(function () {
-                        CardName += $(this).text() + ",";
-                    });
-                    $("#CardName option:selected").each(function () {
-                        CardCodeName += $(this).val() + ",";
-                    });
-
-
-                    // hdnChangeCount
-                    FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
-                    FunnelDataa["fid"] = $("#fid").val();
-                    FunnelDataa["Country"] = $("#Country").val();
-                    FunnelDataa["BUName"] = $("#BUName").val();
-                    FunnelDataa["bdm"] = $("#bdm").val();
-
-                    //FunnelDataa["CardCode"] = $("#CardName").val();
-                    //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
-                    FunnelDataa["CardCode"] = CardCodeName;
-                    FunnelDataa["CardName"] = CardName;
-                    FunnelDataa["quoteID"] = $("#lblQuoteID").text();
-
-                    FunnelDataa["enduser"] = $("#enduser").val();
-                    FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
-                    FunnelDataa["remarks"] = $("#remarks").val();
-                    FunnelDataa["Remarks2"] = $("#Remarks2").val();
-                    FunnelDataa["Remarks3"] = $("#Remarks3").val();
-                    FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
-                    FunnelDataa["Createddte"] = $("#Createddte").val();
-                    FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
-                    FunnelDataa["Updateddte"] = $("#Updateddte").val();
-                    FunnelDataa["NextReminderDt"] = $("#NextReminderDt").val();
-                    FunnelDataa["quoteDate"] = $("#quoteDate").val();
-                    FunnelDataa["Cost"] = $("#Cost").val();
-                    FunnelDataa["Landed"] = $("#Landed").val();
-                    FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
-
-                    FunnelDataa["value"] = $("#value").val();
-                    FunnelDataa["DealStatus"] = $("#DealStatus").val();
-                    FunnelDataa["expClosingDt"] = $("#expClosingDt").val();
-                    FunnelDataa["orderBookedDate"] = $("#orderBookedDate").val();
-                    FunnelDataa["InvoiceDt"] = $("#InvoiceDt").val();
+                    if (res == 'Reminder') {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: false,
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Are you sure?',
+                            text: "You have not set the next reminder date!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, You want to Save Funnel Deal ?',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
 
 
 
-                    $.ajax({
 
-                        type: "POST",
-                        url: "/FunnelData/SaveFunlData",
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+                                var FunnelDataa = {};
+                                var CardName = "";
+                                var CardCodeName = "";
+                                $("#CardName option:selected").each(function () {
+                                    CardName += $(this).text() + ",";
+                                });
+                                $("#CardName option:selected").each(function () {
+                                    CardCodeName += $(this).val() + ",";
+                                });
 
-                        success: function (result) {
+
+                                // hdnChangeCount
+                                FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
+                                FunnelDataa["fid"] = $("#fid").val();
+                                FunnelDataa["Country"] = $("#Country").val();
+                                FunnelDataa["BUName"] = $("#BUName").val();
+                                FunnelDataa["bdm"] = $("#bdm").val();
+
+                                //FunnelDataa["CardCode"] = $("#CardName").val();
+                                //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
+                                FunnelDataa["CardCode"] = CardCodeName;
+                                FunnelDataa["CardName"] = CardName;
+                                FunnelDataa["quoteID"] = $("#lblQuoteID").text();
+
+                                FunnelDataa["enduser"] = $("#enduser").val();
+                                FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
+                                FunnelDataa["remarks"] = $("#remarks").val();
+                                FunnelDataa["Remarks2"] = $("#Remarks2").val();
+                                FunnelDataa["Remarks3"] = $("#Remarks3").val();
+                                FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
+                                FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
+                                FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
+                                FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
+                                if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
+                                    FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
+                                }
+
+                                FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
+                                FunnelDataa["Cost"] = $("#Cost").val();
+                                FunnelDataa["Landed"] = $("#Landed").val();
+                                FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
+
+                                FunnelDataa["value"] = $("#value").val();
+                                FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
+                                FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
+                                FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
+                                FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
 
 
-                            if (result == "saved successfully") {
 
-                                RdotAlertSucesstxt(result);
-                                ClearControl();
-                                getdatalistaftersuccess();
+                                $.ajax({
+
+                                    type: "POST",
+                                    url: "/FunnelData/SaveFunlData",
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+
+                                    success: function (result) {
+
+
+                                        if (result == "saved successfully") {
+
+                                            RdotAlertSucesstxt(result);
+                                            ClearControl();
+                                            getdatalistaftersuccess();
+                                            $("#NewDealPopUp").modal('hide');
+                                        }
+
+                                        else if (result == "updated successfully.") {
+                                            RdotAlertSucesstxt(result);
+                                            getdatalistaftersuccess();
+                                            $("#NewDealPopUp").modal('hide');
+                                        } else {
+                                            RdotAlerterr(result);
+                                        }
+
+
+                                    },
+                                    error: function (result) {
+                                        console.log(result);
+                                    }
+
+                                });
+                            } else if (
+                                // Read more about handling dismissals
+
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    'Your Data is safe :)',
+                                    'error'
+                                )
 
                             }
+                        })
+                    }
+                    else {
+                        var FunnelDataa = {};
+                        var CardName = "";
+                        var CardCodeName = "";
+                        $("#CardName option:selected").each(function () {
+                            CardName += $(this).text() + ",";
+                        });
+                        $("#CardName option:selected").each(function () {
+                            CardCodeName += $(this).val() + ",";
+                        });
 
-                            else if (result == "updated successfully.") {
-                                RdotAlertSucesstxt(result);
-                                getdatalistaftersuccess();
-                            }
-                            $("#NewDealPopUp").modal('hide');
 
-                        },
-                        error: function (result) {
-                            console.log(result);
+                        // hdnChangeCount
+                        FunnelDataa["ChangeCount"] = $("#hdnChangeCount").val();
+                        FunnelDataa["fid"] = $("#fid").val();
+                        FunnelDataa["Country"] = $("#Country").val();
+                        FunnelDataa["BUName"] = $("#BUName").val();
+                        FunnelDataa["bdm"] = $("#bdm").val();
+
+                        //FunnelDataa["CardCode"] = $("#CardName").val();
+                        //FunnelDataa["CardName"] = $("#CardName  Option:selected").text();
+                        FunnelDataa["CardCode"] = CardCodeName;
+                        FunnelDataa["CardName"] = CardName;
+                        FunnelDataa["quoteID"] = $("#lblQuoteID").text();
+
+                        FunnelDataa["enduser"] = $("#enduser").val();
+                        FunnelDataa["goodsDescr"] = $("#goodsDescr").val();
+                        FunnelDataa["remarks"] = $("#remarks").val();
+                        FunnelDataa["Remarks2"] = $("#Remarks2").val();
+                        FunnelDataa["Remarks3"] = $("#Remarks3").val();
+                        FunnelDataa["lblCreatedBy"] = $("#lblCreatedBy").text();
+                        FunnelDataa["Createddte"] = RedDot_setdtpkdate($("#Createddte").val());
+                        FunnelDataa["lblUpdatedBy"] = $("#lblUpdatedBy").text();
+                        FunnelDataa["Updateddte"] = RedDot_setdtpkdate($("#Updateddte").val());
+                        if ($("#NextReminderDt").val() !== '' && $("#NextReminderDt").val() !== undefined) {
+                            FunnelDataa["NextReminderDt"] = RedDot_setdtpkdate($("#NextReminderDt").val());
                         }
 
-                    });
+                        FunnelDataa["quoteDate"] = RedDot_setdtpkdate($("#quoteDate").val());
+                        FunnelDataa["Cost"] = $("#Cost").val();
+                        FunnelDataa["Landed"] = $("#Landed").val();
+                        FunnelDataa["MarginUSD"] = $("#MarginUSD").val();
+
+                        FunnelDataa["value"] = $("#value").val();
+                        FunnelDataa["DealStatus"] = $("#DealStatus  option:selected").val();
+                        FunnelDataa["expClosingDt"] = RedDot_setdtpkdate($("#expClosingDt").val());
+                        FunnelDataa["orderBookedDate"] = RedDot_setdtpkdate($("#orderBookedDate").val());
+                        FunnelDataa["InvoiceDt"] = RedDot_setdtpkdate($("#InvoiceDt").val());
+
+
+
+                        $.ajax({
+
+                            type: "POST",
+                            url: "/FunnelData/SaveFunlData",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({ FunnelDataa: FunnelDataa }),
+
+                            success: function (result) {
+
+
+                                if (result == "saved successfully") {
+
+                                    RdotAlertSucesstxt(result);
+                                    ClearControl();
+                                    getdatalistaftersuccess();
+                                    $("#NewDealPopUp").modal('hide');
+                                }
+
+                                else if (result == "updated successfully.") {
+                                    RdotAlertSucesstxt(result);
+                                    getdatalistaftersuccess();
+                                    $("#NewDealPopUp").modal('hide');
+                                } else {
+                                    RdotAlerterr(result);
+                                }
+
+
+                            },
+                            error: function (result) {
+                                console.log(result);
+                            }
+
+                        });
+                    }
 
                 });
                 
@@ -2395,7 +2595,7 @@
 
                     var landed = $("#Landed").val();
                     var cost = $("#Cost").val();
-                    var status = $("#DealStatus").val();
+                    var status = $("#DealStatus option:selected").val();
 
 
                     if (landed != "") {
@@ -2419,9 +2619,19 @@
                         RdotAlerterrtxt('Total Sell Amount must be greater than or equal to Landed');
                         return ValFlag = false;
                     }
+                    debugger
+                    if ($("#NextReminderDt").val() != '') {
+                        if (new Date(RedDot_setdtpkdate($("#NextReminderDt").val())) < new Date(RedDot_setdtpkdate($("#quoteDate").val()))) {
+                            RdotAlerterrtxt('Reminder Date must be greater than quote date');
+                            //  $("#expClosingDt").focus();
+                            $("#NextReminderDt").val('');
+                            return ValFlag = false;
+                        }
+                    }
+                   
 
-                    if ($("#DealStatus").val() != "OPEN" || $("#DealStatus").val() != "LOST-CLOSED") {
-                        if ($("#expClosingDt").val() > $("#InvoiceDt").val()) {
+                    if ($("#DealStatus  option:selected").val() != "OPEN" || $("#DealStatus  option:selected").val() != "LOST-CLOSED") {
+                        if (new Date(RedDot_setdtpkdate($("#expClosingDt").val())) > new Date(RedDot_setdtpkdate($("#InvoiceDt").val()))) {
                             RdotAlerterrtxt('Invoice  Date must be greater than Closing Date');
                             // $("#InvoiceDt").focus();
                             $("#InvoiceDt").val('');
@@ -2429,13 +2639,13 @@
                         }
 
 
-                        if ($("#quoteDate").val() > $("#expClosingDt").val()) {
+                        if (new Date(RedDot_setdtpkdate($("#quoteDate").val())) > new Date(RedDot_setdtpkdate($("#expClosingDt").val()))) {
                             RdotAlerterrtxt('Expected Closing Date must be greater than quote date');
                             //  $("#expClosingDt").focus();
                             $("#expClosingDt").val('');
                             return ValFlag = false;
                         }
-                        if ($("#expClosingDt").val() > $("#orderBookedDate").val()) {
+                        if (new Date(RedDot_setdtpkdate($("#expClosingDt").val())) > new Date(RedDot_setdtpkdate($("#orderBookedDate").val()))) {
                             RdotAlerterrtxt('Order Date must be greater than Closing date');
                             // $("#orderBookedDate").focus();
                             $("#orderBookedDate").val('');
@@ -2458,36 +2668,37 @@
 
 
 
-
+                    debugger
                     if ((status) == "WON-R OPG" || status == "WON OPG") {
 
                         var closingDt = $("#expClosingDt").val();
                         var ordedate = $("#orderBookedDate").val();
 
-                        if (closingDt.val() == "") {
+                        if (closingDt == "") {
                             RdotAlerterrtxt('Please enter Closing Date');
                             $("#expClosingDt").focus();
                             return ValFlag = false;
                         }
-                        if (ordedate.val() == "") {
+                        if (ordedate == "") {
                             RdotAlerterrtxt('Please enter Order Date');
                             $("#ordedate").focus();
                             return ValFlag = false;
                         }
-                        if (InvoiceDt.val() == "") {
+                        if (InvoiceDt == "") {
                             RdotAlerterrtxt('Please enter Invoice Date');
                             $("#ordedate").focus();
                             return ValFlag = false;
                         }
 
-                        if (OrderDt > closingDt) {
+                        if (new Date(RedDot_setdtpkdate(ordedate)) < new Date(RedDot_setdtpkdate(closingDt))) {
+                            debugger
                             RdotAlerterrtxt('Order date must be greater than  Closing Date');
                             $("#closingDt").focus();
                             return ValFlag = false;
                         }
                     }
 
-                    else if ($("#status option:selected") == "LOST-CLOSED") {
+                    else if ($("#DealStatus option:selected").val() == "LOST-CLOSED") {
 
 
                         if ($("#orderBookedDate").val() != "") {
@@ -2505,9 +2716,11 @@
 
 
                     }
-
-                    if ($("#NextReminderDt") == "" && $("#status") == "OPEN") {
-                        return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                debugger
+                    if ($("#NextReminderDt").val() == "" && $("#DealStatus option:selected").val() == "OPEN") {
+                      //  return RdotAlerterrtxt('You have not set the next reminder date. Are you sure, You want to Save Funnel Deal ?');
+                       return ValFlag = 'Reminder';
+                        
                     }
 
                 }
@@ -2537,7 +2750,7 @@
                     $("#Landed").val('');
                     $("#MarginUSD").val('');
                     $("#value").val('');
-                    $("#DealStatus").val("0").trigger("change");
+                    $("select#DealStatus").val("0").trigger("change");
                     $("#expClosingDt").val('');
                     $("#orderBookedDate").val('');
                     $("#InvoiceDt").val('');
@@ -2599,9 +2812,13 @@
                         return false;
                     }
                 }
+                $("#Landed").on("focusout", function () {
+                    calculateMarginAndPercent();
+                })
 
                 // Function to calculate Margin $ if Margin % is entered
                 function calculateMargin() {
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2618,7 +2835,7 @@
 
                 // Function to calculate Margin % if Margin $ is entered
                 function calculateMarginPercent() {
-
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2635,6 +2852,7 @@
 
                 // Function to calculate Margin % & Margin $ if Landed is changed after calculation
                 function calculateMarginAndPercent() {
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2651,7 +2869,7 @@
 
                 // Function to calculate Margin % & Margin $ if Landed and Total Sell Amount is Entered
                 function calcMarginAndPercentBasedOnTotalSell() {
-
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;

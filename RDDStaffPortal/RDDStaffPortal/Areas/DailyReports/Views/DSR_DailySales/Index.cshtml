@@ -158,33 +158,33 @@
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id="div-Designation" class="form-group has-error1">
                                                     <label>Designation :</label>
-                                                    @Html.TextBoxFor(m => m.Designation, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.Designation, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div id="div-Email" class="form-group">
+                                                <div id="div-Email" class="form-group has-error1">
                                                     <label>Email :</label>
-                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id ="div-ContactNo"class="form-group has-error1">
                                                     <label>Phone :</label>
-                                                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
+                                                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
                                                     @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <div class="form-group">
+                                                <div id ="div-BU"class="form-group has-error1">
                                                     <label>BU :</label>
-                                                    @Html.TextBoxFor(m => m.BU, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                                    @Html.TextBoxFor(m => m.BU, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                                     @Html.ValidationMessageFor(model => model.BU, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -423,16 +423,20 @@
                     $("#lblerror1").show();
                 }
             }
-            Isdraftmode();
+           
 
             
             if ($("#ActionType").val() == "DAILY") {
                 var nowMin1 = new Date($("#FromDate").val());
-                nowMin1.setDate(nowMin1.getDate() - 1);
+               
+                nowMin1.setDate(nowMin1.getDate() - 7);
                 $("#hdnstartdate").val(nowMin1);
                 
                 $("#hdnenddate").val($("#ToDate").val());
-                RedDot_DateRange_Min_Max_Daily("reportrange", $("#FromDate").val(), $("#ToDate").val());
+                RedDot_DateRange_Min_Max_Daily("reportrange", $("#hdnstartdate").val(), $("#ToDate").val());
+                nowdate = $("#reportrange").data().startDate;
+                $("#hdnstartdate").val(nowdate);
+                
             } else if ($("#ActionType").val()=="WEEKLY") {
                 $("#hdnstartdate").val($("#FromDate").val());
                 var nowMin1 = new Date($("#ToDate").val());
@@ -442,6 +446,7 @@
                 nowdate = $("#reportrange").data().startDate;
                 nowdate.setDate(nowdate.getDate() - 7);
             }
+            Isdraftmode();
 
             $("#reportrange").on('show.daterangepicker', function (ev, picker) {
 
@@ -452,8 +457,10 @@
             $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
                 debugger
                 $(".loader1").show();
-                set_picker_start_end(picker, picker.startDate);
+                var new_date = new Date(picker.startDate.format('YYYY-MM-DD'));
                 $("#ActualVisitDate1").val(picker.startDate.format('DD/MM/YYYY'));
+                set_picker_start_end(picker, picker.startDate);
+                
                 if ($("#ActionType").val() != "DAILY") {
                     if (new Date($("#FromDate").val()) <= new Date(picker.startDate.format('YYYY-MM-DD'))) {
                         var new_date = new Date($("#FromDate").val());
@@ -487,6 +494,16 @@
                         $("#hdnenddate").val(nowMax);
 
                     }
+                } else {
+                  
+                    sdate = new_date;
+                    var startMin = moment(new_date, 'YYYY-MM-DD');
+                    startMin = new Date(startMin);
+                    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+                    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+                    $("#hdnstartdate").val(startMin);
+                    $("#hdnenddate").val(startMin);
+                    $('#reportrange span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear());
                 }
                 $.ajax({
                     url: '@Url.Action("GetRDD_DailySalesReports", "DSR_DailySales", new { area = "DailyReports" })',
@@ -712,24 +729,27 @@
             if (rDD_DailySales.NextAction == "0" || rDD_DailySales.NextAction == "-1" || rDD_DailySales.NextAction == null) {
                 response.ErrorMessage += "Next Action,";
             }
+            if (rDD_DailySales.CardCode == "0" || rDD_DailySales.CardCode == null || rDD_DailySales.CardCode == "") {
+                response.ErrorMessage += "Enter Compnay Name,";
+            }
             if (rDD_DailySales.Company == "" || rDD_DailySales.Company == null) {
                 response.ErrorMessage += "Enter Compnay Name,";
             }
             if (rDD_DailySales.PersonMet == "" || rDD_DailySales.PersonMet == null) {
                 response.ErrorMessage += "Enter Contact Person,";
             }
-            //if (rDD_DailySales.Designation == "") {
-            //    response.ErrorMessage += "Enter Designation,";
-            //}
-            //if (rDD_DailySales.Email == "") {
-            //    response.ErrorMessage += "Enter Email,";
-            //}
-            //if (rDD_DailySales.BU == "") {
-            //    response.ErrorMessage += "Enter BU,";
-            //}
-            //if (rDD_DailySales.ContactNo == "") {
-            //    response.ErrorMessage += "Enter Phone ,";
-            //}
+            if (rDD_DailySales.Designation == "") {
+                response.ErrorMessage += "Enter Designation,";
+            }
+            if (rDD_DailySales.Email == "") {
+                response.ErrorMessage += "Enter Email,";
+            }
+            if (rDD_DailySales.BU == "") {
+                response.ErrorMessage += "Enter BU,";
+            }
+            if (rDD_DailySales.ContactNo == "") {
+                response.ErrorMessage += "Enter Phone ,";
+            }
             if (rDD_DailySales.Discussion == "" || rDD_DailySales.Discussion == null) {
                 response.ErrorMessage += "Enter Discusssion ,";
             }
@@ -846,7 +866,7 @@
                 text: "You won't be able to revert this!",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, submit repor it!',
+                confirmButtonText: 'Yes, submit report !',
                 cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
@@ -942,7 +962,7 @@
                     }
                     swalWithBootstrapButtons.fire(
                         'Saved!',
-                        'Your Code has been saved.',
+                        'Your Data has been saved.',
                         'success'
                     )
 
@@ -952,7 +972,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }
@@ -1303,7 +1323,7 @@
                     });
                     swalWithBootstrapButtons.fire(
                         'Deleted!',
-                        'Your Code has been deleted.',
+                        'Your Data has been deleted.',
                         'success'
                     )
 
@@ -1313,7 +1333,7 @@
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelled',
-                        'Your Code is safe :)',
+                        'Your Data is safe :)',
                         'error'
                     )
                 }
@@ -1396,15 +1416,18 @@
                 }
             })
 
-            $("#btnDraftsave").on("click", function () {
+        $("#btnDraftsave").on("click", function () {
+                debugger
                 try {
                     $(".loader1").show();
                     var VisitType = 'D';
+                    var VisitDate = RedDot_setdtpkdate($("#hdnenddate").val());
                     if ($("#ActionType").val() == 'WEEKLY') {
                         VisitType = 'R';
-                    }
+                        VisitDate = RedDot_setdtpkdate($("#hdnstartdate").val());
+                    } 
                     var rDD_DailySales = {
-                        VisitDate: RedDot_setdtpkdate($("#hdnstartdate").val()),
+                        VisitDate: VisitDate ,
                         ToDate: RedDot_setdtpkdate($("#hdnenddate").val()),
                         VisitType: VisitType,
                         IsNewPartner: $("#IsNewPartner").val(),

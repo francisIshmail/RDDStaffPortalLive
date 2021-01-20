@@ -24,7 +24,7 @@
                                 <div class="rowmin row mar-b10" id="tblid1">
                                     <div class="col-xl-4 col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                            <input type="search" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                         </div>
                                     </div>
                                     <div class="col-xl-2 col-md-2 ml-auto text-right">
@@ -104,11 +104,16 @@
     $('.next').bind('click', function (e) {
         e.preventDefault();
         $(".loader1").show();
-        if (arr.data[0].TotalCount < 50) {
+        if (arr.data.length > 0) {
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
+        } else {
             $(".loader1").hide();
-            return;
+            RedDotAlert_Error('No Record Found');
+            return
         }
-        curPage++;
         var value1 = $("#Search-Forms").val().toLowerCase();
         if (curPage > arr.data[0].TotalCount)
             curPage = 0;
@@ -125,14 +130,17 @@
         e.preventDefault();
         $(".loader1").show();
         var value1 = $("#Search-Forms").val().toLowerCase();
-        if (arr.data[0].TotalCount < 50) {
-            $(".loader1").hide();
-            return;
+        if (arr.data.length > 0) {
+            if (arr.data[0].TotalCount < 50) {
+                $(".loader1").hide();
+                return;
+            }
+            curPage--;
+            if (curPage < 0)
+                curPage = (arr.data[0].TotalCount - 1);
+        } else {
+            curPage--;
         }
-        curPage--;
-
-        if (curPage < 0)
-            curPage = (arr.data[0].TotalCount - 1);
         var data = JSON.stringify({
             pagesize: 50,
             pageno: curPage,

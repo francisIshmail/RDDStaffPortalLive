@@ -54,8 +54,8 @@ namespace RDDStaffPortal.DAL.DataModels
         public string remarks { get; set; }
         public string Remarks2 { get; set; }
         public string Remarks3 { get; set; }
-        public int Cost { get; set; }
-        public int Landed { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Landed { get; set; }
 
         public decimal MarginUSD { get; set; }
 
@@ -76,15 +76,15 @@ namespace RDDStaffPortal.DAL.DataModels
         public string ItmsGrpNam { get; set; }
 
         public DateTime Createddte { get; set; }
-        public DateTime Updateddte { get; set; }
+        public DateTime? Updateddte { get; set; }
 
-        public DateTime NextReminderDt { get; set; }
+        public DateTime? NextReminderDt { get; set; }
         public DateTime quoteDate { get; set; }
         public string DealStatus { get; set; }
 
         public DateTime expClosingDt { get; set; }
-        public DateTime orderBookedDate { get; set; }
-        public DateTime InvoiceDt { get; set; }
+        public DateTime? orderBookedDate { get; set; }
+        public DateTime? InvoiceDt { get; set; }
 
         public int marginper { get; set; }
 
