@@ -96,6 +96,13 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
 
             return Json(rDD_LeaveApproval_TemplatesDb.DeleteLeaveRequest(LeaveRequestId), JsonRequestBehavior.AllowGet);
         }
+        [Route("GetAnnualLeaveBalances")]
+        public ActionResult GetAnnualLeaveBalance(int EmployeeId)
+        {
+            // return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetLeaveBalance(EmployeeId,LeaveTypeId) }, JsonRequestBehavior.AllowGet);
+            ContentResult retVal = null;            DataSet DS;            try            {                DS = rDD_LeaveApproval_TemplatesDb.GetAnnualLeaveBalance(EmployeeId);                if (DS.Tables.Count > 0)                {                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");                }                return retVal;            }            catch (Exception ex)            {                throw ex;            }
+        }
+
         public JsonResult UploadDoc(string EmployeeId)
         {
             string fname = "";
@@ -173,13 +180,14 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
                 var Email2 = "";
+                var HrMail = "hr@reddotdistribution.com";
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
                     Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
                 }
                 var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var Tomail = Email3;
-                var cc = Email1 + "," + Email2; ;
+                var cc = Email1 + "," + Email2+","+HrMail; 
                 string Subject = "Your Leave Request Is Approved";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
@@ -215,13 +223,14 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
                 var Email2 = "";
+                var HrMail = "hr@reddotdistribution.com";
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
                     Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
                 }
                 var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var Tomail = Email3;
-                var cc = Email1 + "," + Email2; ;
+                var cc = Email1 + "," + Email2+","+HrMail; 
                 string Subject = "Your Leave Request is Rejected";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if(String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))

@@ -257,16 +257,16 @@ namespace RDDStaffPortal.DAL.LMS
                 throw ex;
             }
         }
-        public List<SelectListItem> GetLeaveTypeName(int loginuserId)
+        public List<Rdd_comonDrop> GetEmployeeModal()
         {
-            List<SelectListItem> leavetypeLists = new List<SelectListItem>();
+            List<Rdd_comonDrop> employeeLists = new List<Rdd_comonDrop>();
             try
             {
                 SqlParameter[] parm =
                 {
-                    new SqlParameter("@loginuserId",loginuserId)
+                    new SqlParameter("@Type","GetEmployeeNameForModal")
                 };
-                DataSet ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, parm);
+                DataSet ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, parm);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -274,19 +274,86 @@ namespace RDDStaffPortal.DAL.LMS
                     DataRowCollection drc = dt.Rows;
                     foreach (DataRow dr in drc)
                     {
-                        leavetypeLists.Add(new SelectListItem()
+                        employeeLists.Add(new Rdd_comonDrop()
                         {
-                            Value = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? dr["LeaveTypeId"].ToString() : "0",
-                            Text = !string.IsNullOrWhiteSpace(dr["LeaveName"].ToString()) ? dr["LeaveName"].ToString() : "0",
+                            Code = !string.IsNullOrWhiteSpace(dr["EmployeeIde"].ToString()) ? dr["EmployeeIde"].ToString() : "0",
+                            CodeName = !string.IsNullOrWhiteSpace(dr["Fullname"].ToString()) ? dr["Fullname"].ToString() : "0",
                         });
                     }
                 }
-                return leavetypeLists;
+                return employeeLists;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+        public List<SelectListItem> GetEmployeeAutoComplete(string name ,int EmployeeId)
+        {
+            List<SelectListItem> employeeLists = new List<SelectListItem>();
+            try
+            {
+                SqlParameter[] parm =
+                {
+                    new SqlParameter("@Type","GetEmployeeNameAutoCheck"),
+                    new SqlParameter("@Name",name),
+                    new SqlParameter("@EmployeeId",EmployeeId),
+                };
+                DataSet ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, parm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    DataRowCollection drc = dt.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        employeeLists.Add(new SelectListItem()
+                        {
+                            Value = !string.IsNullOrWhiteSpace(dr["EmployeeIde"].ToString()) ? dr["EmployeeIde"].ToString() : "0",
+                            Text = !string.IsNullOrWhiteSpace(dr["Fullname"].ToString()) ? dr["Fullname"].ToString() : "0",
+                        });
+                    }
+                }
+                return employeeLists;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //public List<SelectListItem> GetLeaveTypeName(int loginuserId)
+        //{
+        //    List<SelectListItem> leavetypeLists = new List<SelectListItem>();
+        //    try
+        //    {
+        //        SqlParameter[] parm =
+        //        {
+        //            new SqlParameter("@loginuserId",loginuserId)
+        //        };
+        //        DataSet ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, parm);
+
+        //        if (ds.Tables.Count > 0)
+        //        {
+        //            DataTable dt = ds.Tables[0];
+        //            DataRowCollection drc = dt.Rows;
+        //            foreach (DataRow dr in drc)
+        //            {
+        //                leavetypeLists.Add(new SelectListItem()
+        //                {
+        //                    Value = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? dr["LeaveTypeId"].ToString() : "0",
+        //                    Text = !string.IsNullOrWhiteSpace(dr["LeaveName"].ToString()) ? dr["LeaveName"].ToString() : "0",
+        //                });
+        //            }
+        //        }
+        //        return leavetypeLists;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+        public DataSet CountryLeaveType(int EmployeeId)        {            DataSet ds = null;            try            {                SqlParameter[] Para =               {                    new SqlParameter("@loginuserId",EmployeeId),                };                ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, Para);            }            catch (Exception)            {                throw;            }            return ds;
+
         }
         public List<GetWeeklyOff> GetWeeklyOffDay(int EmployeeId)
         {
@@ -388,6 +455,37 @@ namespace RDDStaffPortal.DAL.LMS
             ds = com.ExecuteDataSet("RDD_GetWeeklyOffDay", CommandType.StoredProcedure, prm);
             return ds;
         }
+        public DataSet GetLeaveBalance(int EmployeeId,int LeaveTypeId)
+        {
+            DataSet ds = new DataSet();
+            DataSet ds1 = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","Show"),
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@LeaveTypeId",LeaveTypeId)
+
+            };
+          
+            ds = com.ExecuteDataSet("RDD_LeaveLedgerEntry", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+        public DataSet GetAnnualLeaveBalance(int EmployeeId)
+        {
+            DataSet ds = new DataSet();
+           
+            SqlParameter[] prm =
+            {
+               
+                new SqlParameter("@p_EmployeeId",EmployeeId),
+               
+
+            };
+
+            ds = com.ExecuteDataSet("RDD_LMS_GetLeaveSummary", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+
 
     }
 }

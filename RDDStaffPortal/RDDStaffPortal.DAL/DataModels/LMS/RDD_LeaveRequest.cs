@@ -11,6 +11,10 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
     {
         public int LeaveRequestId { get; set; }
         public int EmployeeId { get; set; }
+        public int EmployeeIde { get; set; }
+        public int backupid { get; set; }
+        public int backup2id { get; set; }
+        public string Fullname { get; set; }
         public int LeaveTypeId { get; set; }
         public string Reason { get; set; }
         public DateTime? FromDate { get; set; }
@@ -26,6 +30,7 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public string LastUpdatedBy { get; set; }
         public DateTime? LastUpdatedOn { get; set; }
         public List<SelectListItem> EmployeeLists { get; set; }
+        public List<SelectListItem> EmployeeListsModal { get; set; }
         public List<LeaveRequestDetails> LeaveRequestDetailsList { get; set; }
         public List<SelectListItem> LeaveTypeList { get; set; }
         public List<GetWeeklyOff> WeeklyOffDays { get; set; }
@@ -46,6 +51,19 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public int EmployeeId { get; set; }
         public string EmployeeName{ get; set; }
     }
+    public partial class EmployeeListsModal
+    {
+        public int EmployeeIde { get; set; }
+        public string EmployeeName { get; set; }
+    }
+    public class Rdd_comonDrop
+    {
+        public string Code { get; set; }
+        public string CodeName { get; set; }
+
+        
+    }
+
     public partial class LeaveTypeList
     {
         public int LeaveTypeId { get; set; }

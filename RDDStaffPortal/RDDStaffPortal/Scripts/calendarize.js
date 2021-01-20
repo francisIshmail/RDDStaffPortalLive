@@ -74,7 +74,7 @@ function Calendarize() {
         buildYearCalendar: function (el, year, holidayList,day) {
 			var _this = this;
 			var months = _this.getMonthsInYear(year);
-            debugger
+           
 			var opts = {
 				showMonth: true,
 				showDaysOfWeek: true,
@@ -185,7 +185,7 @@ function Calendarize() {
                 }
                 let dte = _date + "/" + _Month + "/" + (c.getYear() + 1900);
                
-                debugger
+                
                 var imp =getImportance(dte,holidayList);
 if(imp !== undefined && imp !== null) {
    console.log("imp=" + imp + " dte=" + dte );

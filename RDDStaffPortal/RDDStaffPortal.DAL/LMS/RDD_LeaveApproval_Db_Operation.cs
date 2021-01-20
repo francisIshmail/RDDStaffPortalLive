@@ -131,13 +131,9 @@ namespace RDDStaffPortal.DAL.LMS
                 if (ButtonFlag == "Approve")
                 {
                     Type = "ApprovedLeave";
-                    DebitorCredit = "1";
+                    DebitorCredit = "Deduct";
                 }
-                else
-                {
-                    Type = "RejectedLeave";
-                    DebitorCredit = "0";
-                }
+               
                 SqlParameter[] parm2 =
                   {
                     new SqlParameter("@Type","Insert"),
@@ -257,6 +253,22 @@ namespace RDDStaffPortal.DAL.LMS
                 throw ex;
             }
         }
+        public DataSet GetAnnualLeaveBalance(int EmployeeId)
+        {
+            DataSet ds = new DataSet();
+
+            SqlParameter[] prm =
+            {
+
+                new SqlParameter("@p_EmployeeId",EmployeeId),
+
+
+            };
+
+            ds = com.ExecuteDataSet("RDD_LMS_GetLeaveSummary", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+
         public int GetEmployeeIdByLoginName(string LoginName)
         {
             int EmployeeId = 0;

@@ -319,7 +319,7 @@ namespace RDDStaffPortal.DAL
                 }
                 //--for test
                 objMailMessage.To.Clear();
-                objMailMessage.To.Add("nikhilesh@reddotdistribution.com");
+                objMailMessage.To.Add("mainak@reddotdistribution.com");
                 if (!string.IsNullOrEmpty(cc))
                 {
                     string[] CCEmailArray = cc.Split(';');
@@ -352,7 +352,7 @@ namespace RDDStaffPortal.DAL
                 //Attachment atchFile = new Attachment(AttachmentFilePath);
                 //objMailMessage.Attachments.Add(atchFile);
 
-               // objSMTPClient.Send(objMailMessage);  //open later sending mails 
+               objSMTPClient.Send(objMailMessage);  //open later sending mails 
 
                 strMessage = "Mail Sent Successfully";
             }

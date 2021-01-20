@@ -50,13 +50,10 @@
                 </div>
                 <div class="card-body">
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><span>3 days taken</span></div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><span>1 day booked </span></div>
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span>
-                                16 days
-                                remaining
-                            </span>
+                        <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" id="divtaken"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" id="divbooked"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 40%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"id="divremaining">
+                            
                         </div>
                     </div>
                 </div>
@@ -305,6 +302,42 @@
         }
 
     }
+    function GetDashboardData(EmployeeId) {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            url: "/GetAnnualLeaveBalances",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ EmployeeId: EmployeeId }),
+            success: function (data) {
+               
+                debugger
+                var TotaltakenLv;
+                var TotalBookedLeave;
+                //$("#HdnLeaveBalance").val(data.Table[0].Balance);
+
+                if (data.Table1[0].TotalTakenLeave == null) {
+                    TotaltakenLv = 0;
+                }
+                else {
+                    TotaltakenLv = data.Table1[0].TotalTakenLeave;
+                }
+                if (data.Table2[0].TotalBookedLeave == null) {
+                    TotalBookedLeave = 0;
+                }
+                else {
+                    TotalBookedLeave = data.Table2[0].TotalBookedLeave;
+                }
+                var RemToTake = data.Table[0].Balance - data.Table1[0].TotalTakenLeave;
+                var RemToBook = data.Table[0].Balance - data.Table2[0].TotalBookedLeave;
+                $("#divtaken").append('<span>' + TotaltakenLv + " " + "days taken" + '</span>');
+                $("#divbooked").append('<span>' + TotalBookedLeave + " " + "days booked" + '</span>');
+                $("#divremaining").append('<span>' + data.Table[0].Balance + " " + " balance leave " + '</span>');
+            }
+        });
+    }
 
 
 
@@ -345,7 +378,7 @@
                     $.each(data.Table, function (index, value) {
 
 
-                        $("#tblApproval tbody").append('<tr><td style="display:none;">' + value.EmployeeId + '</td><td>' + value.EmployeeName + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + '<button type="button" id="btnLeaveRqApprove" class="btn btn-primary btn-lg " style="font-size:14px;padding:8px 10px" data-LeaveRequestId="' + value.LeaveRequestId + '">Approve</button>' + '<button class="btn dlt bg-white text-danger"style="font-size:14px;padding:8px 10px;font-weight:700px" id="btnLeaveRqDecline" data-LeaveRequestId="' + value.LeaveRequestId + '">Decline</button>' + '</td><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveTypeId + '</td></tr>');
+                        $("#tblApproval tbody").append('<tr><td style="display:none;">' + value.EmployeeId + '</td><td>' + value.EmployeeName + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + '<button type="button" id="btnLeaveRqApprove" class="btn btn-primary btn-lg " style="font-size:14px;padding:8px 10px" data-LeaveRequestId="' + value.LeaveRequestId + '">Approve</button>' + '<button class="btn dlt  bg-white text-danger"style="font-size:14px;padding:8px 10px;font-weight:700px" id="btnLeaveRqDecline" data-LeaveRequestId="' + value.LeaveRequestId + '">Decline</button>' + '</td><td style="display:none;">' + value.LeaveRequestId + '</td><td style="display:none;">' + value.LeaveTypeId + '</td></tr>');
 
                     });
                     $("#Aprovalsection").show();
@@ -367,11 +400,11 @@
             success: function (data) {
                 $.each(data.Table, function (index, value) {
                     if ((value.LeaveStatus == "Approved") || (value.LeaveStatus == "Rejected") || (value.LeaveStatus == "Cancelled")) {
-                        $("#tblShow tbody").append('<tr><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + value.LeaveStatus + '</td><td>' + '<button type="button" class="btn btn-primary btn-lg edit disabled" style="font-size:14px;padding:8px 10px" data-toggle="modal" data-target="#exampleModal" disabled>Edit</button>' + '</td><td>' + '<button class="btn dlt bg-white text-danger" style="font-size:14px;padding:8px 10px" disabled>Cancel</button>' + '</td><td>' +'</td></tr>')
+                        $("#tblShow tbody").append('<tr><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + value.LeaveStatus + '</td><td>' + '<button type="button" class="btn btn-primary btn-lg edit disabled" style="font-size:14px;padding:8px 10px" data-toggle="modal" data-target="#exampleModal" disabled>Edit</button>' + '</td><td>' + '<button class="btn dlt dlts bg-white text-danger" style="font-size:14px;padding:8px 10px" disabled>Cancel</button>' + '</td><td>' +'</td></tr>')
 
                     }
                     else {
-                        $("#tblShow tbody").append('<tr><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + value.LeaveStatus + '</td><td>' + '<button type="button"class="btn btn-primary btn-lg edit" style="font-size:14px;padding:8px 10px"  data-toggle="modal" data-target="#exampleModal">Edit</button>' + '</td><td>' + '<button class="btn dlt bg-white text-danger" style="font-size:14px;padding:8px 10px;font-weight:700">Cancel</button>' + '</td></tr>')
+                        $("#tblShow tbody").append('<tr><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + value.LeaveStatus + '</td><td>' + '<button type="button"class="btn btn-primary btn-lg edit" style="font-size:14px;padding:8px 10px"  data-toggle="modal" data-target="#exampleModal">Edit</button>' + '</td><td>' + '<button class="btn dlt dlts bg-white text-danger" style="font-size:14px;padding:8px 10px;font-weight:700">Cancel</button>' + '</td></tr>')
 
                     }
                     //$("#tblShow tbody").append('<tr><td style="display:none;">' + value.LeaveRequestId + '</td><td>' + value.LeaveName + '</td><td>' + DateToStringformat(value.FromDate) + '</td><td>' + DateToStringformat(value.ToDate) + '</td><td>' + value.NoOfDays + '</td><td>' + value.LeaveStatus + '</td><td>' + '<button class="btn edit" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit"></i>' + '</td><td>' + '<button class="btn dlt"><i class="fa fa-trash"></i>' + '</td></tr>')
@@ -463,6 +496,7 @@
         $(".loader1").hide();
         NextsevenDays();
         var Loginuserid = $("#EmployeeId").val();
+        GetDashboardData(Loginuserid);        
         GetLeaveRequestList(Loginuserid);
         GetApprovalList();
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
@@ -521,7 +555,7 @@
                 var html = '<tr class="dttype"><td style="width:50%; float:left">';
                 html += '<div id="divLvDates">' + months + '' + date1 + '</div>';
                 html += '</td><td style="width:50%; float:right">';
-                html += '<select name="daytime" class="custom-select DayType" id="ddlDayType"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
+                html += '<select name="daytime" class="custom-select DayType" id="ddlDayType" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
                 html += '</td></tr>';
 
                 if (LeaveRule == "WorkingDays") {
@@ -596,18 +630,46 @@
         var Lvrqid = $(this).attr("data-LeaveRequestId");
         var LvTypeid = currow.find("td:eq(8)").html();
         var ButtonFlag = "Approve";
-        $.post('/LEAVELEDGERENTRY', { LeaveRequestId: Lvrqid, EmployeeId: loginUserId, LeaveTypeId: LvTypeid, NoOfDays: noOfDays, ButtonFlag: ButtonFlag }, function (data) {
-            if (data == "success") {
-                $.post('/LEAVEAPPROVE', { LeaveRequestId: Lvrqid }, function (response) {
-                    debugger;
-                    RedDotAlert_Success(response);
-                    window.location.href = "/LMS/RDD_LeaveApproval/SendApprovedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "";
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure You want to Approve?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Approve it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.post('/LEAVELEDGERENTRY', { LeaveRequestId: Lvrqid, EmployeeId: loginUserId, LeaveTypeId: LvTypeid, NoOfDays: noOfDays, ButtonFlag: ButtonFlag }, function (data) {
+                    if (data == "success") {
+                        $.post('/LEAVEAPPROVE', { LeaveRequestId: Lvrqid }, function (response) {
+                            debugger;
+                            RedDotAlert_Success(response);
+                            window.location.href = "/LMS/RDD_LeaveApproval/SendApprovedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "";
+                        });
+                    }
+                    else {
+                        RedDotAlert_Error(data);
+                    }
                 });
             }
-            else {
-                RedDotAlert_Error(data);
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
             }
-        });
+        })
+
     });
     $(document).on('click', '#btnLeaveRqDecline', function () {
         var currow = $(this).closest("tr");
@@ -620,20 +682,42 @@
         var Lvrqid = $(this).attr("data-LeaveRequestId");
         var LvTypeid = currow.find("td:eq(8)").html();
         var ButtonFlag = "Decline";
-        $.post('/LEAVELEDGERENTRY', { LeaveRequestId: Lvrqid, EmployeeId: loginUserId, LeaveTypeId: LvTypeid, NoOfDays: noOfDays, ButtonFlag: ButtonFlag }, function (data) {
-            if (data == "success") {
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure You want to decline?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, decline it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
                 $.post('/LEAVEDECLINE', { LeaveRequestId: Lvrqid }, function (data) {
                     RedDotAlert_Success(data);
                     window.location.href = "/LMS/RDD_LeaveApproval/SendRejectedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "";
                 });
+               
             }
-            else {
-                RedDotAlert_Error(data);
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
             }
-        });
+        })
+
     });
     var lvrquestId;
-    $(document).on('click', '.dlt', function () {
+    $(document).on('click', '.dlts', function () {
         var currow = $(this).closest("tr");
         var Lvrqid = currow.find("td:eq(0)").html();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -675,7 +759,7 @@
         var currow = $(this).closest("tr");
         var Lvrqid = currow.find("td:eq(0)").html();
         lvrquestId = Lvrqid;
-       
+
         $.post('/LEAVEDETAILS', { LeaveRequestId: Lvrqid }, function (data) {
             debugger
             $("#Reason").val(data.Table[0].Reason);
@@ -710,7 +794,7 @@
                 var html = '<tr class="dttype"><td style="width:50%; float:left">';
                 html += html += '<div id="divLvDates">' + data.Table1[i].LeaveDate + '</div>';
                 html += '</td><td style="width:50%; float:right">';
-                html += '<select name="daytime" class="custom-select" id="ddlDayType'+i+'"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
+                html += '<select name="daytime" class="custom-select" id="ddlDayType'+i+'" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
                 html += '</td></tr>';
                 $("#divDates").append(html);
                 $("#ddlDayType" + i + "").val(data.Table1[i].LeaveDay).trigger('change');
