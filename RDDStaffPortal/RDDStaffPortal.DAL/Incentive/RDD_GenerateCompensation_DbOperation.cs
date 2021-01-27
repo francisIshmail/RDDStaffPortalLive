@@ -104,7 +104,7 @@ namespace RDDStaffPortal.DAL.Incentive
                 }
                 SqlParameter[] parm1 =
                 {
-                    //new SqlParameter("@p_username",username),
+                    new SqlParameter("@p_username",username),
                     new SqlParameter("@p_type","GetEmployee")
                 };
                 DataSet dsModules1 = cf.ExecuteDataSet("RDD_Get_Compplan_Employee", CommandType.StoredProcedure, parm1);

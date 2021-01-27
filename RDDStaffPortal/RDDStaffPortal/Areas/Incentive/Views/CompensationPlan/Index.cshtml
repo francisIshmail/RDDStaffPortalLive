@@ -7,6 +7,8 @@
 
 @Html.Hidden(string.Concat("hdnLoginUserId"))
 @Html.Hidden(string.Concat("hdnLoginUserMail"))
+@Html.Hidden(string.Concat("hdnLoginEmployeeStatus"))
+
 <style>
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -28,7 +30,7 @@
                     @*<button class="btn btn-info btn-sm" id="btnPrint">Print</button>*@
                     <button class="btn btn-info btn-sm" id="btnAdd">New</button>
                     <button class="btn btn-info btn-sm" id="btnSave">Save</button>
-                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>                    
+                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
                 </div>
             </div>
             <div class="rowmin" id="divKPIshow">
@@ -43,7 +45,7 @@
                                     <div class="form-group">
                                         <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                             <div id="tblid" class="table-responsive">
@@ -78,7 +80,7 @@
                                             <div class="reddotTableCell Abcd"><div>Period</div></div>
                                             <div class="reddotTableCell Abcd"><div>Year</div></div>
                                             <div class="reddotTableCell Abcd"><div>Currency</div></div>
-                                            <div class="reddotTableCell Abcd"><div>Total Compensation</div></div>                                            
+                                            <div class="reddotTableCell Abcd"><div>Total Compensation</div></div>
                                             <div class="reddotTableCell Abcd"><div>Total Split Revenue Percent</div></div>
                                             <div class="reddotTableCell Abcd"><div>Total Split Gp Percent</div></div>
                                             <div class="reddotTableCell Abcd"><div>Target Number</div></div>
@@ -121,7 +123,7 @@
     var arr = [];
     var curPage = 1;
     var me = getUrlVars()["CompPlanid"];
-    if (me != undefined) {        
+    if (me != undefined) {
         //$("#btnAction").show();
         GetMode(me);
     } else {
@@ -279,12 +281,12 @@
     }
     function GetKpiDetail(_Desigid, _Period, _Year) {
         $.post("/GETKPIDETAILS", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
-            
+
             var a = data;
             if (a.Table.length == 0) {
                 $("#HdnRevSplit").val("");
                 $("#HdnGpSplit").val("");
-                
+
                 //$('div#IIst').not(':first').remove();
                 //$("#IIst")[0].remove();
                 return;
@@ -312,7 +314,7 @@
 
     function GetKpiTargets(_Desigid, _Period, _Year) {
         $.post("/GETKPITARGET", { DesigId: _Desigid, Period: _Period, Years: _Year }, function (data) {
-            
+
             var a = data;
             if (a.Table.length == 0) {
                 $("#HdnRevSplit").val("");
@@ -332,7 +334,7 @@
 
     function GetLoginUserId() {
         $.get("/GETLOGINUSERID", function (data) {
-            $("#hdnLoginUserId").val(data.EmployeeId); 
+            $("#hdnLoginUserId").val(data.EmployeeId);
             var Empid = $("#hdnLoginUserId").val();
             GetLoginUserEmail(Empid);
         });
@@ -346,8 +348,16 @@
         });
     }
 
-    $(document).ready(function () { 
+    function GetEmployeeStatus(Empid) {
+        $.post("/GETEMPSTATUS", { }, function (response) {
+            debugger
+            $("#hdnLoginEmployeeStatus").val(response.Table[0].UserType);           
+        });
+    }
+
+    $(document).ready(function () {
         GetLoginUserId();
+        //GetEmployeeStatus();        
         GetCompensationData();
         $('.loader1').show();
         //GetKpiData();
@@ -377,7 +387,7 @@
     $(document).on('change', '#EmployeeId', function () {
         var Empide = $(this).val();
         $.post("/GETDESIGNATION", { Empide: Empide }, function (data) {
-            
+
             $("#DesigName").val(data.DesigName);
             $("#DesigId").val(data.DesigId);
             $("#Email").val(data.Email);
@@ -515,7 +525,7 @@
             var Currow = $(this).closest("#Ist");
             var BU = $.trim(Currow.find(".Abcd").eq(0).text());
             var RevTarget = $.trim(Currow.find(".Abcd").eq(1).text());
-            var GpTarget = $.trim(Currow.find(".Abcd").eq(2).text());            
+            var GpTarget = $.trim(Currow.find(".Abcd").eq(2).text());
             var SplitGpPercent = $.trim($(this).find("[name^='txtSplitGPpercent']").val());
             var SplitRevPercent = $.trim($(this).find("[name^='txtSplitREVpercent']").val());
             if (SplitGpPercent != '' && SplitRevPercent != '' && SplitGpPercent != undefined && SplitRevPercent!=undefined) {
@@ -565,7 +575,7 @@
                     var Compid = data[0].Id;
                     var MailFlag = $("#MailFlag").val();
                     var Email1 = $("#Email").val();
-                    var Email2 = $("#hdnLoginUserMail").val(); 
+                    var Email2 = $("#hdnLoginUserMail").val();
                     var Acceptstatus = $("#AcceptedBySalesperson option:selected").val();
                     //window.location.href = '@Url.Action("Index", "CompensationPlan")';
                     window.location.href = "/Incentive/CompensationPlan/GeneratePdf?CompPlanid=" + data[0].Id + "&Email2=" + Email2 + "&MailFlag=" + MailFlag + "&Acceptstatus=" + Acceptstatus + "";

@@ -80,6 +80,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                 throw ex;
             }
         }
+        
         [Route("ADDCOMPPLAN")]
         public ActionResult ADDCompensationPlan(int TEMPId = -1)
         {
@@ -90,13 +91,15 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
 
             if (TEMPId != -1)
             {
-                RDD_CompPlan = CompPlanDbOp.GetData(User.Identity.Name, TEMPId, CompPlanDbOp.GetDropList(User.Identity.Name, "E"));
+                bool ClickFlag = true;
+                RDD_CompPlan = CompPlanDbOp.GetData(User.Identity.Name, TEMPId, CompPlanDbOp.GetDropList(User.Identity.Name, "E", ClickFlag));
                 RDD_CompPlan.EditFlag = true;
             }
             else
             {
                 RDD_CompPlan.EditFlag = false;
-                RDD_CompPlan = CompPlanDbOp.GetDropList(User.Identity.Name, "N");
+                bool ClickFlag = false;
+                RDD_CompPlan = CompPlanDbOp.GetDropList(User.Identity.Name, "N", ClickFlag);
             }
             return PartialView("~/Areas/Incentive/Views/CompensationPlan/ADDCompensationPlan.cshtml", RDD_CompPlan);
         }
@@ -107,8 +110,8 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
             //PV = _RDDPVOp.GetDropList(User.Identity.Name);
 
             Compplan.IsDraft = true;
-
-            Compplan = CompPlanDbOp.GetData(User.Identity.Name, CompPlanId, CompPlanDbOp.GetDropList(User.Identity.Name, "E"));
+            bool ClickFlag = true;
+            Compplan = CompPlanDbOp.GetData(User.Identity.Name, CompPlanId, CompPlanDbOp.GetDropList(User.Identity.Name, "E", ClickFlag));
             Compplan.EditFlag = true;
             Compplan.CreatedBy = User.Identity.Name;
 

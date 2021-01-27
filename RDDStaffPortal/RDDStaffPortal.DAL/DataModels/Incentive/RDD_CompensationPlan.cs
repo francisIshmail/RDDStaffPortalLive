@@ -31,6 +31,7 @@ namespace RDDStaffPortal.DAL.DataModels.Incentive
         public DateTime? LastUpdatedOn { get; set; }
         public bool EditFlag { get; set; }
         public bool MailFlag { get; set; }
+        public bool ClickFlag { get; set; }
         public bool SaveFlag { get; set; }
         public bool IsDraft { get; set; }
         public string ErrorMsg { get; set; }

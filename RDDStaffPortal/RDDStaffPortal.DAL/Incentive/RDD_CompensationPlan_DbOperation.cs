@@ -45,7 +45,7 @@ namespace RDDStaffPortal.DAL.Incentive
             return ds;
         }
 
-        public RDD_CompensationPlan GetDropList(string username, string Eflag)
+        public RDD_CompensationPlan GetDropList(string username, string Eflag, bool ClickFlag)
         {
             RDD_CompensationPlan RDD_CompPlan = new RDD_CompensationPlan();
             List<SelectListItem> DesignationList = new List<SelectListItem>();
@@ -129,39 +129,79 @@ namespace RDDStaffPortal.DAL.Incentive
                         });
                     }
                 }
-                SqlParameter[] parm1 =
+                if (ClickFlag != true)
                 {
-                    new SqlParameter("@p_username",username),
-                    new SqlParameter("@p_type","GetEmployee")
-                };
-                DataSet dsModules1 = cf.ExecuteDataSet("RDD_GetEmployeeDetails", CommandType.StoredProcedure, parm1);
-                if (dsModules1.Tables.Count > 0)
-                {
-                    DataTable dtModule1;
-                    DataRowCollection drc1;
-                    dtModule1 = dsModules1.Tables[0];
-                    try
+                    SqlParameter[] parm1 =
                     {
-                        drc1 = dtModule1.Rows;
-                        foreach (DataRow dr in drc1)
+                        new SqlParameter("@p_username",username),
+                        new SqlParameter("@p_type","GetEmployee")
+                    };
+                    DataSet dsModules1 = cf.ExecuteDataSet("RDD_GetEmployeeDetails", CommandType.StoredProcedure, parm1);
+                    if (dsModules1.Tables.Count > 0)
+                    {
+                        DataTable dtModule1;
+                        DataRowCollection drc1;
+                        dtModule1 = dsModules1.Tables[0];
+                        try
+                        {
+                            drc1 = dtModule1.Rows;
+                            foreach (DataRow dr in drc1)
+                            {
+                                EmployeeList.Add(new SelectListItem()
+                                {
+                                    Text = !string.IsNullOrWhiteSpace(dr["EmployeeName"].ToString()) ? dr["EmployeeName"].ToString() : "",
+                                    Value = !string.IsNullOrWhiteSpace(dr["EmployeeId"].ToString()) ? dr["EmployeeId"].ToString() : "",
+                                });
+
+                            }
+                        }
+                        catch (Exception)
                         {
                             EmployeeList.Add(new SelectListItem()
                             {
-                                Text = !string.IsNullOrWhiteSpace(dr["EmployeeName"].ToString()) ? dr["EmployeeName"].ToString() : "",
-                                Value = !string.IsNullOrWhiteSpace(dr["EmployeeId"].ToString()) ? dr["EmployeeId"].ToString() : "",
+                                Text = "Error",
+                                Value = "-1",
                             });
-
                         }
                     }
-                    catch (Exception)
-                    {
-                        EmployeeList.Add(new SelectListItem()
-                        {
-                            Text = "Error",
-                            Value = "-1",
-                        });
-                    }                    
                 }
+                else
+                {
+                    SqlParameter[] parm1 =
+                    {
+                        new SqlParameter("@p_username",username),
+                        new SqlParameter("@p_type","GetEmployeeClick")
+                    };
+                    DataSet dsModules1 = cf.ExecuteDataSet("RDD_GetEmployeeDetails", CommandType.StoredProcedure, parm1);
+                    if (dsModules1.Tables.Count > 0)
+                    {
+                        DataTable dtModule1;
+                        DataRowCollection drc1;
+                        dtModule1 = dsModules1.Tables[0];
+                        try
+                        {
+                            drc1 = dtModule1.Rows;
+                            foreach (DataRow dr in drc1)
+                            {
+                                EmployeeList.Add(new SelectListItem()
+                                {
+                                    Text = !string.IsNullOrWhiteSpace(dr["EmployeeName"].ToString()) ? dr["EmployeeName"].ToString() : "",
+                                    Value = !string.IsNullOrWhiteSpace(dr["EmployeeId"].ToString()) ? dr["EmployeeId"].ToString() : "",
+                                });
+
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            EmployeeList.Add(new SelectListItem()
+                            {
+                                Text = "Error",
+                                Value = "-1",
+                            });
+                        }
+                    }
+                }
+
                 SqlParameter[] parm2 =
                 {
                    
@@ -451,7 +491,7 @@ namespace RDDStaffPortal.DAL.Incentive
             try
             {
                 SqlParameter[] Para = {
-                    new SqlParameter("@p_UserName",UserName),
+                    new SqlParameter("@p_UserName",UserName),                    
                     new SqlParameter("@p_Search", psearch),
                     new SqlParameter("@p_PageNo", pageno),
                     new SqlParameter("@p_PageSize",pagesize),

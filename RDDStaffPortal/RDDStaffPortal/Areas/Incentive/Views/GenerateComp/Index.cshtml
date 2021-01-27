@@ -302,8 +302,21 @@
                 });
                 $("#HdnKPICompensation").val(KPICompEarned);
                 $("#IIst")[0].remove();
+                var PrevDeductAmount;
+                if (a.Table2[0].Total_Deduction != null || a.Table2[0].Total_Deduction != undefined) {
+                    PrevDeductAmount = a.Table2[0].Total_Deduction;
+                }
+                else {
+                    PrevDeductAmount = 0;
+                }
+                //var PrevDeductAmount = 10.2;
+                var RetainPercent = $("#HdnRetainPercent").val();
                 var TotalCompEarned = BuCompEarned + KPICompEarned;
+                var TotalDeductable = parseFloat(TotalCompEarned * RetainPercent / 100);
+                var FinalCompEarn = TotalCompEarned - TotalDeductable - PrevDeductAmount;
+                $("#Total_Deduction").val(TotalDeductable);
                 $("#Total_Comp_Earned").val(TotalCompEarned);
+                $("#Final_Comp_Earned").val(FinalCompEarn);
             }
 
         });
@@ -326,22 +339,23 @@
                 $.each(a.Table, function (index, value) {
                     var tr = $("#IVst").clone();
                     tr.find(".Abcd")[0].children[0].textContent = value.TermsAndCondition;
+                    $("#HdnRetainPercent").val(value.Retain_Percentage);                    
                     $("#IVbody").append(tr);
                 });
-                $("#IVst")[0].remove();
+                $("#IVst")[0].remove();                
             }
         });
     }
 
-    function GetTotalDeductableAmount(_Empid, _Period, _Year) {
-        $.post("/GETDEDUCTAMOUNT", { EmpId: _Empid, Period: _Period, Years: _Year }, function (data) {
-            var TotalCompEarned = $("#Total_Comp_Earned").val();
-            var TotalDeduct = data.Table[0].TotalDeduction;
-            $("#Total_Deduction").val(TotalDeduct);
-            var FinalCompEarned = parseFloat(TotalCompEarned - TotalDeduct);
-            $("#Final_Comp_Earned").val(FinalCompEarned);
-        });
-    }
+    //function GetTotalDeductableAmount(_Empid, _Period, _Year) {
+    //    $.post("/GETDEDUCTAMOUNT", { EmpId: _Empid, Period: _Period, Years: _Year }, function (data) {
+    //        var TotalCompEarned = $("#Total_Comp_Earned").val();
+    //        var TotalDeduct = data.Table[0].TotalDeduction;
+    //        $("#Total_Deduction").val(TotalDeduct);
+    //        var FinalCompEarned = parseFloat(TotalCompEarned - TotalDeduct);
+    //        $("#Final_Comp_Earned").val(FinalCompEarned);
+    //    });
+    //}
 
     $(document).ready(function () {
         GetCompensationCalculationData();
@@ -437,6 +451,7 @@
             RedDotAlert_Warning("Please Select Year");
             return;
         }
+        GetKPITermsAndCondition(_Desigid, _Period, _Year);
         $.post("/GETINCENTIVESLAB", { Empid: _Empid, Period: _Period, Years: _Year }, function (data) {
 
             var arry;
@@ -453,9 +468,9 @@
         });
         //var Slabdata = arry;
 
-        GetKPITermsAndCondition(_Desigid, _Period, _Year);
+        
 
-        GetTotalDeductableAmount(_Empid, _Period, _Year);
+        //GetTotalDeductableAmount(_Empid, _Period, _Year);
     });
 
 
@@ -581,6 +596,6 @@
             $("#Period").attr("disabled", true);
             $("#Years").attr("disabled", true);
             $("#btnGenerate").hide();
-        })
+        });
     });
 </script>
