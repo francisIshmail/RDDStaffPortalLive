@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -323,7 +324,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                     sb.Append(ds.Tables[3].Rows[i]["Description"]);
                     sb.Append("</span></td>");
                     sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'>");
-                    sb.Append(string.Format("{0:#,0.00}", ds.Tables[3].Rows[i]["AMount"]));
+                    sb.Append(string.Format(CultureInfo.InvariantCulture,"{0:##,#.00}", ds.Tables[3].Rows[i]["AMount"]));
                     total = total + Convert.ToDecimal(ds.Tables[3].Rows[i]["Amount"].ToString());
                     sb.Append("</span></td>");
                     sb.Append("</tr>");
@@ -332,7 +333,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
 
                 sb.Append("<tr> <td width='8%' >  <span style='font-size:10px;font-family:calibri;'>  &nbsp; </span> </td>   <td width='72%' align='right'  >  <span style='font-size:10px;font-family:calibri;'> <b> TOTAL ( " + ds.Tables[2].Rows[0]["Currency"] + " ) </b> </span> </td>");
-                sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format("{0:#,0.00}", total) + " </b> </span> </td>  </tr>");
+                sb.Append("<td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> " + string.Format(CultureInfo.InvariantCulture, "{0:##,#.00}",total) + " </b> </span> </td>  </tr>");
                 sb.Append("</table>");
                 sb.Append("</td></tr>");
                 //  sb.Append("</table>");

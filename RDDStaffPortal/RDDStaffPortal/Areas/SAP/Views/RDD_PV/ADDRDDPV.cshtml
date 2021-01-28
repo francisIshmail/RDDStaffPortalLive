@@ -110,7 +110,7 @@
             <div id="div-RequestedAmt" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Requested Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.RequestedAmt, "{0:#,0.00}", new { @class = "form-control form-control-sm txtcheck txtmax number", @data_val = "true", @data_val_length = "Request Amt cannot be longer than 13 characters.", @data_val_length_max = "13" })
+                    @Html.TextBoxFor(m => m.RequestedAmt, "", new { @class = "form-control form-control-sm txtcheck txtmax number", @data_val = "true", @data_val_length = "Request Amt cannot be longer than 13 characters.", @data_val_length_max = "13" })
                 </div>
             </div>
         </div>
@@ -147,7 +147,7 @@
             <div id="div-ApprovedAmt" class="form-group form-inline has-error1">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.ApprovedAmt, "{0:#,0.00}", new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Approve Amt cannot be longer than 13 characters.", @data_val_length_max = "13", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ApprovedAmt, "", new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Approve Amt cannot be longer than 13 characters.", @data_val_length_max = "13", @readonly = "true" })
                 </div>
             </div>
         </div>
@@ -291,7 +291,7 @@
                                        @Html.Hidden(string.Concat("hdnDate1", count), Model.RDD_PVLinesDetails[count - 1].Date.ToString())
                                        </div> </div>
                                 <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("Description", count), Model.RDD_PVLinesDetails[count-1].Description.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
-                                <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count),  Model.RDD_PVLinesDetails[count - 1].Amount.ToString("#,##0.00#") , new { @class = "form-control form-control-sm number" })</div> </div>
+                                <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count),  Model.RDD_PVLinesDetails[count - 1].Amount.ToString() , new { @class = "form-control form-control-sm number" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Remarks", count), Model.RDD_PVLinesDetails[count-1].Remarks.ToString(), new { @class = "form-control form-control-sm" })</div> </div>
                                 <div class="reddotTableCell text-left Abcd"><div><a class="fas fa-eye fa-2x" href="" target="_blank"></a> <label id="lblDocname">Document Name</label>@Html.Hidden(string.Concat("hdnFileURLInput", count), "")</div></div>
                                 <div class="reddotTableCell Abcd">

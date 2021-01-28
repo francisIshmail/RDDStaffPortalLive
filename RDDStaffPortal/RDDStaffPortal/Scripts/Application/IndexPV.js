@@ -465,7 +465,8 @@
                 debugger
                 $("#idCard").html(response);
                 RedDot_Button_New_HideShow();
-               
+                $("#RequestedAmt").val($("#RequestedAmt").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $("#ApprovedAmt").val($("#ApprovedAmt").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $(".txtcheck").each(function (index) {
                     if ($("#" + $(this).attr("id") + "").val() !== '') {
                         $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
@@ -542,6 +543,8 @@
             $.post("/ADDRDDPV", { PVId: PVId }, function (response) {
                 
                 $("#idCard").html(response);
+                $("#RequestedAmt").val($("#RequestedAmt").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $("#ApprovedAmt").val($("#ApprovedAmt").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 RedDot_Button_Edit_HideShow();
                 debugger
                 $(".txtcheck").each(function (index) {

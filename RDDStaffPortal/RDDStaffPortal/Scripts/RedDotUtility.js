@@ -1221,53 +1221,40 @@ function applyAutoCompletedata_Hidden(ids, hdnid, data) {
                         value: item.CodeName,
                         val1: item.Code
 
-////function applyAutoCompletedata(ids, hdnid, data) {
-////    $(ids).autocomplete({
-////        source: function (request, response) {
-////            var k = $(ids).val().toLowerCase();
-////            var results = data.filter(function (elem) {
-////                return elem.CodeName.toLowerCase().indexOf(k) > -1;
-////            });
-           
-////                    $(hdnid).val(-1);
-////            if (results.length > 0) {
-////                        response($.map(results, function (item) {
-////                            return {
-////                                label: item.CodeName,
-////                                value: item.CodeName,
-////                                val1: item.Code
+                    };
+                }))
+            } else {
 
-////                            };
-////                        }))
-////                    } else {
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
 
-////                        response([{ label: 'No results found.', value: 'No results found.' }]);
-////                    }
-                
-           
-////        },
-////        // autoFocus: true,
-////        select: function (event, u) {
-////            event.preventDefault();
-////            debugger
-////            var v = u.item.val1;
-////            if (u.item.val1 == -1 || u.item.val1 == '') {
-////                $(hdnid).val(-1);
-////                return false;
-////            } else {
-////                $(ids).val(u.item.value);
-////                $(hdnid).val(u.item.val1);
 
-////            }
-////        },
-////        minLength: 1
-////    });
-////    $(ids).on("change", function () {
-////        if ($(hdnid).val() == -1) {
-////            $(this).val('');
-////        }
-////    })
-////}
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+
+            }
+        },
+        minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+
+
+}
 
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
@@ -1479,7 +1466,7 @@ function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
     var nowMin = new Date(min1);
-    nowMin.setDate(nowMin.getDate() - 1);
+    nowMin.setDate(nowMin.getDate() - 7);
     var dayMin = ("0" + nowMin.getDate()).slice(-2);
     var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
     var startMin = new Date(min1);
