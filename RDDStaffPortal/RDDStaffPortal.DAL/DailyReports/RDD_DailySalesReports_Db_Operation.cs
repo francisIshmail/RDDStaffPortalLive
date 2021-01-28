@@ -310,8 +310,8 @@ namespace RDDStaffPortal.DAL.DailyReports
                         string sendemail = ds1.Tables[0].Rows[0]["SendReport"].ToString()==""?",": ds1.Tables[0].Rows[0]["SendReport"].ToString();
                         string Reportemail = ds1.Tables[0].Rows[0]["ReportMust"].ToString()==""?",": ds1.Tables[0].Rows[0]["ReportMust"].ToString();
                         string Tomail = sendemail.Substring(0, sendemail.Length - 1) + "," + Reportemail.Substring(0, Reportemail.Length - 1);
-                        
-                        if (Tomail!=",")
+
+                        if (Tomail != ",")
                         {
                             string html = " Dear " + Tomail + ", <br/><br/>  Please find attached <b> " + rDD_DailySales[0].LastUpdatedBy + " </b>'s customer visit report. <br/> ";
                             html = html + " Visit Date  -  <b> " + Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " </b>  to  <b>  " + Convert.ToDateTime(rDD_DailySales[0].ToDate).ToString("dd/MMM/yyyy") + " </b>  <br/><br/>";
@@ -325,14 +325,17 @@ namespace RDDStaffPortal.DAL.DailyReports
                             //Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
                             //cc = "nikhilesh@reddotdistribution.com";
 
-                            if (SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at) == "Mail Sent Succcessfully")
+                            if (System.Configuration.ConfigurationManager.AppSettings["SendDailyReportFromPortal"].ToString() == "1")
                             {
-                                SqlParameter[] parm1 ={
-                        new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
-                        new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
-                        new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
-                        };
-                                ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                                if (SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at) == "Mail Sent Succcessfully")
+                                {
+                                    SqlParameter[] parm1 ={
+                                new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
+                                new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
+                                new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
+                                };
+                                    ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                                }
                             }
 
                             scope.Complete();
