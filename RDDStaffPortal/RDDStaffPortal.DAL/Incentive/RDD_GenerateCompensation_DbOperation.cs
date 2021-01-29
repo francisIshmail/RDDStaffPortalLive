@@ -17,7 +17,16 @@ namespace RDDStaffPortal.DAL.Incentive
     public class RDD_GenerateCompensation_DbOperation
     {
         CommonFunction cf = new CommonFunction();
-
+        public DataSet GetLoginUserType(string Loginusername)
+        {
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@p_LoggedInUser",Loginusername)
+            };
+            ds = cf.ExecuteDataSet("RDD_CompPlan_GetPlanAccessByLoginUser", CommandType.StoredProcedure, prm);
+            return ds;
+        }
         public RDD_GenerateComp GetDropList(string username, string Eflag)
         {
             RDD_GenerateComp RDD_GenComp = new RDD_GenerateComp();

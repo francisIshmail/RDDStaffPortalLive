@@ -259,7 +259,8 @@
             var a = data;
             if (a.Table.length == 0) {
                 RedDotAlert_Error("No Record Found");
-                //$('div#Ist').not(':first').remove();
+                $("#Ist").show();
+                $('div#Ist').not(':first').remove();
                 //$("#Ist")[0].remove();
                 return;
             }
@@ -286,8 +287,8 @@
             if (a.Table.length == 0) {
                 $("#HdnRevSplit").val("");
                 $("#HdnGpSplit").val("");
-
-                //$('div#IIst').not(':first').remove();
+                $("#IIst").show();
+                $('div#IIst').not(':first').remove();
                 //$("#IIst")[0].remove();
                 return;
             }
@@ -348,7 +349,7 @@
         });
     }
 
-    function GetEmployeeStatus(Empid) {
+    function GetEmployeeStatus() {
         $.post("/GETEMPSTATUS", { }, function (response) {
             debugger
             $("#hdnLoginEmployeeStatus").val(response.Table[0].UserType);           
@@ -356,10 +357,12 @@
     }
 
     $(document).ready(function () {
+        $('.loader1').show();
         GetLoginUserId();
         //GetEmployeeStatus();        
         GetCompensationData();
-        $('.loader1').show();
+        GetEmployeeStatus();
+        
         //GetKpiData();
         $('.loader1').hide();
         $("#divKPIshow").show();
@@ -368,11 +371,18 @@
         $("#btnCancel").hide();
     });
     $(document).on('click', '#btnAdd', function (e) {
-        e.preventDefault();
+        e.preventDefault();        
         $.post("/ADDCOMPPLAN", { TEMPId: -1 }, function (response) {
             $("#idCard").html(response);
             RedDot_Button_New_HideShow();
-        })
+            var EmpStatus = $("#hdnLoginEmployeeStatus").val();
+            if (EmpStatus == "Employee") {
+                $("#btnSave").hide();
+            }
+            else {
+                $("#btnSave").show();
+            }
+        });
     });
     $(document).on('click', '#btnCancel', function (e) {
         e.preventDefault();
@@ -587,9 +597,9 @@
         });
     });
 
-    $(document).on('click', '#btnPrint', function () {
-        window.location.href = '@Url.Action("GenerateSamplePdf", "CompensationPlan")';
-    });
+    @*$(document).on('click', '#btnPrint', function () {
+        window.location.href = '@Url.Action("GeneratePdf", "CompensationPlan")';
+    });*@
 
     $("#IIIbody").on('dblclick', "#IIIst", function (e) {
         e.preventDefault();
@@ -601,8 +611,15 @@
             var _Period = $("#Period option:selected").val();
             var _Year = $("#Years option:selected").val();
             GetKpiTargets(_Desigid, _Period, _Year);
+            var EmpStatus = $("#hdnLoginEmployeeStatus").val();
+            if (EmpStatus == "Employee") {
+                $("#btnSave").hide();
+            }
+            else {
+                $("#btnSave").show();
+            }
             RedDot_Button_New_HideShow();
-        })
+        });
     });
     function ValidateForm(RDD_CompPlan) {
         var response = {

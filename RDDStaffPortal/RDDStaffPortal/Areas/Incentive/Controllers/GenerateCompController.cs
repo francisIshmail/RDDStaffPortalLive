@@ -19,6 +19,26 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
         {            
             return View();            
         }
+        
+        public ActionResult GetLoginUserType()
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            try
+            {
+                string Loginusername = User.Identity.Name;
+                ds = GenCompDbOp.GetLoginUserType(Loginusername);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [Route("ADDGENCOMPPLAN")]
         public ActionResult ADDGenerateCompensationPlan(int TEMPId = -1)
         {

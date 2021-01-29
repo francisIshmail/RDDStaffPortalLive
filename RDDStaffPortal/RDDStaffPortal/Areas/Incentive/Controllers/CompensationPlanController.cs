@@ -80,7 +80,26 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                 throw ex;
             }
         }
-        
+        [Route("GETEMPSTATUS")]
+        public ActionResult GetLoginUserType()
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            try
+            {
+                string Loginusername = User.Identity.Name;
+                ds = CompPlanDbOp.GetLoginUserType(Loginusername);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [Route("ADDCOMPPLAN")]
         public ActionResult ADDCompensationPlan(int TEMPId = -1)
         {
@@ -211,19 +230,26 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
             {
                 DataSet ds;
                 DataSet ds2;
+                DataSet ds3;
                 SqlParameter[] prm =
                 {
                      new SqlParameter("@Compplanid",CompPlanid)
                 };
+                //string MailFlag = "False";
+                //string Email2 = "pratim.d@reddotdistribution.com";
+                //string Acceptstatus="";
                 ds = Com.ExecuteDataSet("RDD_CompensationPlanPDF", CommandType.StoredProcedure, prm);
                 int EmployeeId= Convert.ToInt32(ds.Tables[0].Rows[0]["EmployeeId"]);
+                int Desigid= Convert.ToInt32(ds.Tables[0].Rows[0]["DesigId"]);
                 var EmployeeName = ds.Tables[0].Rows[0]["EmployeeName"];
-                var Period = ds.Tables[0].Rows[0]["Period"];
-                var Year = ds.Tables[0].Rows[0]["Years"];
+                string Period = ds.Tables[0].Rows[0]["Period"].ToString();
+                int Year = Convert.ToInt32(ds.Tables[0].Rows[0]["Years"]);
                 var Managername = ds.Tables[0].Rows[0]["CreatedBy"];
                 string Username = User.Identity.Name;
                 ds2 = CompPlanDbOp.GetLoginMail(EmployeeId);
+                ds3 = CompPlanDbOp.GetKpiTncs(Desigid, Period, Year);   
                 string Email1=ds2.Tables[0].Rows[0]["Email"].ToString();
+                string TnC = ds3.Tables[0].Rows[0]["TermsAndCondition"].ToString();
                 if (MailFlag == "False")
                 {
                     StringBuilder sb = new StringBuilder();
@@ -355,6 +381,16 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     sb.Append("<td width = '15%'> <span style = 'font-size:10px;font-family:calibri;'> &nbsp;</span></td>");
 
                     sb.Append("</tr></table></tr></td>");
+                    sb.Append("<tr><td width='100%' colspan='6'>");
+                    sb.Append("<br/><br/><br/><br/>");
+                    sb.Append("<table width='100%' align='center' border='0'>");
+                    sb.Append("<tr width='100%'> ");
+                    sb.Append("<td width = '100%'><span style = 'font-size:12px;font-family:calibri;'><b><u>Terms & Condition:</u></b></span> </td>");                    
+                    sb.Append("</tr>");
+                    sb.Append("<tr width='100%'> ");                    
+                    sb.Append("<td width = '100%'><span style = 'font-size:12px;font-family:calibri;'> <b> " + TnC + " </b> </span> </td>");
+                    sb.Append("</tr>");
+                    sb.Append("</table>");
                     sb.Append("</table>");
                     #endregion
 

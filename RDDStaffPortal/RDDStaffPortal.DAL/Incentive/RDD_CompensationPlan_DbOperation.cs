@@ -37,6 +37,19 @@ namespace RDDStaffPortal.DAL.Incentive
             return ds;
         }
 
+        public DataSet GetKpiTncs(int DesigId, string Period, int Years)
+        {
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Desigid",DesigId),
+                new SqlParameter("@Year",Years),
+                new SqlParameter("@Period",Period)
+            };
+            ds = cf.ExecuteDataSet("RDD_GetKPITnC", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+
         public DataSet FillDropdown()
         {
             DataSet ds = new DataSet();
@@ -298,6 +311,17 @@ namespace RDDStaffPortal.DAL.Incentive
                 new SqlParameter("@p_LoggedInUser",Loginusername)                
             };
             ds = cf.ExecuteDataSet("RDD_CompPlan_GetPlanAccessByUser", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+
+        public DataSet GetLoginUserType(string Loginusername)
+        {
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@p_LoggedInUser",Loginusername)
+            };
+            ds = cf.ExecuteDataSet("RDD_CompPlan_GetPlanAccessByLoginUser", CommandType.StoredProcedure, prm);
             return ds;
         }
 
