@@ -43,7 +43,7 @@ namespace RDDStaffPortal.DAL.LMS
             ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, prm);
             return ds;
         }
-        public string UpdateAcceptStatus(int LeaveRequestId)
+        public string UpdateAcceptStatus(int LeaveRequestId,string ApproverRemarks)
         {
             string Msg = "";
             try
@@ -51,7 +51,8 @@ namespace RDDStaffPortal.DAL.LMS
                 SqlParameter[] parm = new SqlParameter[]
                 {
                         new SqlParameter("@Type","Approve"),
-                        new SqlParameter("@LeaveRequestId",LeaveRequestId)
+                        new SqlParameter("@LeaveRequestId",LeaveRequestId),
+                        new SqlParameter("@ApproverRemarks",ApproverRemarks)
                 };                
                 Msg = Convert.ToString(com.ExecuteScalar("RDD_ApprovalStatus", parm,CommandType.StoredProcedure));
                 
@@ -62,7 +63,7 @@ namespace RDDStaffPortal.DAL.LMS
             }
             return Msg;
         }
-        public string UpdateRejectStatus(int LeaveRequestId)
+        public string UpdateRejectStatus(int LeaveRequestId, string ApproverRemarks)
         {
             string Msg = "";
             try
@@ -70,7 +71,8 @@ namespace RDDStaffPortal.DAL.LMS
                 SqlParameter[] parm = new SqlParameter[]
                 {
                         new SqlParameter("@Type","Decline"),
-                        new SqlParameter("@LeaveRequestId",LeaveRequestId)
+                        new SqlParameter("@LeaveRequestId",LeaveRequestId),
+                        new SqlParameter("@ApproverRemarks",ApproverRemarks)
                 };
                 Msg = Convert.ToString(com.ExecuteScalar("RDD_ApprovalStatus", parm, CommandType.StoredProcedure));
 
@@ -252,6 +254,33 @@ namespace RDDStaffPortal.DAL.LMS
             {
                 throw ex;
             }
+        }
+        public DataSet GetHolidayCountryWise(int EmployeeId)
+        {
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","GetHolidayCountrywise"),
+                new SqlParameter("@EmployeeId",EmployeeId)
+
+            };
+            ds = com.ExecuteDataSet("RDD_GetWeeklyOffDay", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+        public DataSet GetLeaveBalance(int EmployeeId, int LeaveTypeId)
+        {
+            DataSet ds = new DataSet();
+            DataSet ds1 = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","Show"),
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@LeaveTypeId",LeaveTypeId)
+
+            };
+
+            ds = com.ExecuteDataSet("RDD_LeaveLedgerEntry", CommandType.StoredProcedure, prm);
+            return ds;
         }
         public DataSet GetAnnualLeaveBalance(int EmployeeId)
         {

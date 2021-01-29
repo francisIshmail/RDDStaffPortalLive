@@ -135,8 +135,8 @@ function Calendarize() {
 					}
 				}
 			}
-
-			$monthNode.classList.add('month');
+            
+            $monthNode.classList.add('month','calendermonth');
 
 			// Add a Title to the month
 			if (opts.showMonth) {
@@ -186,7 +186,8 @@ function Calendarize() {
                 let dte = _date + "/" + _Month + "/" + (c.getYear() + 1900);
                
                 
-                var imp =getImportance(dte,holidayList);
+                var imp = getImportance(dte, holidayList);
+                debugger
 if(imp !== undefined && imp !== null) {
    console.log("imp=" + imp + " dte=" + dte );
    $dayNode.classList.add('importance');

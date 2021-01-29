@@ -42,7 +42,9 @@ namespace RDDStaffPortal.DAL.LMS
                         new SqlParameter("@NoOfDays",rDD_LeaveRequest.NoOfDays),
                         new SqlParameter("@LeaveStatus",rDD_LeaveRequest.LeaveStatus),
                         new SqlParameter("@ApproverRemarks",rDD_LeaveRequest.ApproverRemarks),
-                        new SqlParameter("@IsPrivateLeave",rDD_LeaveRequest.IsPrivateLeave),                       
+                        new SqlParameter("@IsPrivateLeave",rDD_LeaveRequest.IsPrivateLeave),
+                        new SqlParameter("@Backup1Id",rDD_LeaveRequest.backupid),
+                        new SqlParameter("@Backup2Id",rDD_LeaveRequest.backup2id),
                         new SqlParameter("@AttachmentUrl",rDD_LeaveRequest.AttachmentUrl),
                         new SqlParameter("@LoginId",rDD_LeaveRequest.CreatedBy),
                         new SqlParameter("@LoginDate",rDD_LeaveRequest.CreatedOn),                        
@@ -352,7 +354,23 @@ namespace RDDStaffPortal.DAL.LMS
         //        throw ex;
         //    }
         //}
-        public DataSet CountryLeaveType(int EmployeeId)        {            DataSet ds = null;            try            {                SqlParameter[] Para =               {                    new SqlParameter("@loginuserId",EmployeeId),                };                ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, Para);            }            catch (Exception)            {                throw;            }            return ds;
+        public DataSet CountryLeaveType(int EmployeeId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+               {
+                    new SqlParameter("@loginuserId",EmployeeId),
+                };
+                ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return ds;
 
         }
         public List<GetWeeklyOff> GetWeeklyOffDay(int EmployeeId)

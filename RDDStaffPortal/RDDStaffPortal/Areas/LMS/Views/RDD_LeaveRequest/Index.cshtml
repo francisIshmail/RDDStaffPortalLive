@@ -16,14 +16,16 @@
 <style>
     .ui-autocomplete {
         z-index: 5000;
+
     }
+
 </style>
 <div class="p-0 dropdown-header py-3 pt-md-5 pb-md-4 mx-auto">
     <div class="container-fluid">
         <div class="row">
             <div class="loader1"></div>
             <div class="col-md-3">
-
+                @Html.Hidden(string.Concat("hdnweeklyoffdaycount"), Model.WeeklyOffDays.Count)
                 @while (Model.WeeklyOffDays.Count > i)
                 {
                     <div>@Html.Hidden(string.Concat("Weeklyoff"), Model.WeeklyOffDays[i].WeeklyOff)</div>
@@ -39,28 +41,27 @@
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.EmployeeId, Model.EmployeeLists, new { @class = "form-control", @disabled = "disabled" })
+                        @Html.DropDownListFor(m => m.EmployeeId, Model.EmployeeLists, new { @class = "form-control emplnameapplyleave", @disabled = "disabled" })
 
                     }
                 </form>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-9 row">
+               <div class="col-md-10"> 
                 <form>
-                    <div class="btnarea"><a href="#" class="previous round">&#8249;</a><strong id="calendarid"> 2021 </strong><a href="#" class="next round next1">&#8250;</a></div>
-
-
-
+                    <div class="btnarea" style="font-size: 23px;padding: 7px;"><a href="#" class="previous round"><i class="fas fa-arrow-circle-left"></i></a><strong id="calendarid"> 2021 </strong><a href="#" class="next round next1"><i class="fas fa-arrow-circle-right"></i></a></div>
                 </form>
-            </div>
-            <div class="col-md-3">
+                </div>
+               <div class="col-md-2 text-right"> 
+                
                 <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModal">Apply Leave</button>
-
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="background-color:#EDF2F7">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
             <div class="row">
@@ -79,14 +80,14 @@
                 </div>
             </div>
             <div class="card mt-3 mb-3 box-shadow">
-                <div class="card-header">
+                @*<div class="card-header">
                     <h4 class="my-0 font-weight-bold">Options </h4>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mt-0 mb-4">
                         <li><a href="#"><strong class="blu">Add to regilar calendar </strong></a></li>
                     </ul>
-                </div>
+                </div>*@
             </div>
             
         </div>
@@ -312,109 +313,154 @@
             log(ex);
         }
     }
-    $(document).ready(function () {
-        var seletedDate = moment(new Date());
-        var day = getWeeklyoffDayNo();
-        function loadCalender() {
-            //var xhttp = new XMLHttpRequest();
-            // xhttp.open("GET", "http://localhost:8888/calendar_details.json", false);
-            //xhttp.open("GET", "https://gist.github.com/vaibhavkk/a485a779c09ec9012a1f63d7a3c10432.js",false)
-            var HolidayDetails;
-            var EmpId = $("#EmployeeId option:selected").val();
-            $.ajax({
 
-                async: false,
-                cache: false,
-                type: "POST",
-                url: '/GETHOLIDAY',
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({ EmployeeId: EmpId }),
-                success: function (data) {
-
-
-                    var d = new Date();
-                    var getyear = d.getFullYear();
-                    HolidayDetails = data.Table;
-
-
-
-                    //for (var i = 0; i < data.Table.length; i++) {
-                    //    var getm = DateToStringformat(data.Table[i].HolidayDate);
-                    //    var Name = data.Table[i].HolidayName;
-                    //    var HolidayListDetails = getm + '":"' + Name;
-                    //    HolidayDetails.push(HolidayListDetails);
-                    //}
-
-                }
-
-            });
-
-            return HolidayDetails;
-
-
-
+    function getImportancedatepicker(selectedDate, HolidayList) {
+        debugger
+        var found_names = $.grep(HolidayList, function (v) {
+            return DateToStringformat(v.HolidayDate) === DateToStringformat(selectedDate) ;
+        });
+        var rep = undefined;
+        if (found_names.length > 0) {
+            rep = found_names[0].HolidayName;
         }
-        $(document).on('click', '.next1', function () {
-            debugger
-            var lastDayOfNextMonth = moment(seletedDate.add(12, "M")).endOf('month');
-            seletedDate = lastDayOfNextMonth;
-            // Update selected date
-            var seletedDate1 = lastDayOfNextMonth.startOf("month").format('MMMM');
-            //alert(seletedDate1);
-            $("#calendarid").html(seletedDate.year());
 
-            $("#calendar").html("");
+        return rep;
+    }
+    $(document).ready(function () {
+        //var seletedDate = moment(new Date());
+        //var day = getWeeklyoffDayNo();
+        //function loadCalender() {
+        //    //var xhttp = new XMLHttpRequest();
+        //    // xhttp.open("GET", "http://localhost:8888/calendar_details.json", false);
+        //    //xhttp.open("GET", "https://gist.github.com/vaibhavkk/a485a779c09ec9012a1f63d7a3c10432.js",false)
+        //    var HolidayDetails;
+        //    var EmpId = $("#EmployeeId option:selected").val();
+        //    $.ajax({
 
-            var $calendar = document.getElementById("calendar");
-            var currentYear = seletedDate.year();
-            var calendarize = new Calendarize();
-            var holidayList = loadCalender();
-            debugger
-            calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+        //        async: false,
+        //        cache: false,
+        //        type: "POST",
+        //        url: '/GETHOLIDAY',
+        //        contentType: "application/json",
+        //        dataType: "json",
+        //        data: JSON.stringify({ EmployeeId: EmpId }),
+        //        success: function (data) {
+                   
+
+        //            var d = new Date();
+        //            var getyear = d.getFullYear();
+        //            HolidayDetails = data.Table;
+        //            debugger
+
+
+        //            //for (var i = 0; i < data.Table.length; i++) {
+        //            //    var getm = DateToStringformat(data.Table[i].HolidayDate);
+        //            //    var Name = data.Table[i].HolidayName;
+        //            //    var HolidayListDetails = getm + '":"' + Name;
+        //            //    HolidayDetails.push(HolidayListDetails);
+        //            //}
+
+        //        }
+
+        //    });
+
+        //    return HolidayDetails;
+
+
+
+        //}
+        //$(document).on('click', '.next1', function () {
+        //    debugger
+        //    var lastDayOfNextMonth = moment(seletedDate.add(12, "M")).endOf('month');
+        //    seletedDate = lastDayOfNextMonth;
+        //    // Update selected date
+        //    var seletedDate1 = lastDayOfNextMonth.startOf("month").format('MMMM');
+        //    //alert(seletedDate1);
+        //    $("#calendarid").html(seletedDate.year());
+
+        //    $("#calendar").html("");
+
+        //    var $calendar = document.getElementById("calendar");
+        //    var currentYear = seletedDate.year();
+        //    var calendarize = new Calendarize();
+        //    var holidayList = loadCalender();
+        //    debugger
+        //    calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+
+        //});
+
+        //$(document).on('click', '.previous', function () {
+        //    debugger
+        //    var lastDayOfPreviousMonth = moment(seletedDate.add(-12, "M")).endOf('month');
+        //    seletedDate = lastDayOfPreviousMonth;
+        //    var seletedDate1 = lastDayOfPreviousMonth.startOf("month").format('MMMM');
+        //    // alert(seletedDate1);
+        //    $("#calendarid").html(seletedDate.year());
+
+
+
+        //    $("#calendar").html("");
+        //    var $calendar = document.getElementById("calendar");
+        //    var currentYear = seletedDate.year();
+        //    var calendarize = new Calendarize();
+        //    var holidayList = loadCalender();
+        //    calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+
+
+        //})
+
+        //var $calendar = document.getElementById("calendar");
+        //var currentYear = seletedDate.year();
+        //var calendarize = new Calendarize();
+        //var holidayList = loadCalender();
+
+        //debugger
+        //calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+    })
+    function loadCalender(EmpId) {
+        //var xhttp = new XMLHttpRequest();
+        // xhttp.open("GET", "http://localhost:8888/calendar_details.json", false);
+        //xhttp.open("GET", "https://gist.github.com/vaibhavkk/a485a779c09ec9012a1f63d7a3c10432.js",false)
+        var HolidayDetails;
+        //var EmpId = $("#EmployeeId option:selected").val();
+        $.ajax({
+
+            async: false,
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("GetHolidayCountryWise", "RDD_LeaveRequest")',
+            //contentType: "application/json",
+            dataType: "json",
+            data:{ EmployeeId: EmpId },
+            success: function (data) {
+                debugger
+
+                var d = new Date();
+                var getyear = d.getFullYear();
+                HolidayDetails = data.Table;
+                debugger               
+
+            }
 
         });
 
-        $(document).on('click', '.previous', function () {
-            debugger
-            var lastDayOfPreviousMonth = moment(seletedDate.add(-12, "M")).endOf('month');
-            seletedDate = lastDayOfPreviousMonth;
-            var seletedDate1 = lastDayOfPreviousMonth.startOf("month").format('MMMM');
-            // alert(seletedDate1);
-            $("#calendarid").html(seletedDate.year());
+        return HolidayDetails;
 
 
 
-            $("#calendar").html("");
-            var $calendar = document.getElementById("calendar");
-            var currentYear = seletedDate.year();
-            var calendarize = new Calendarize();
-            var holidayList = loadCalender();
-            calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
-
-
-        })
-
-        var $calendar = document.getElementById("calendar");
-        var currentYear = seletedDate.year();
-        var calendarize = new Calendarize();
-        var holidayList = loadCalender();
-
-        debugger
-        calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
-    })
+    }
 
     function GetLeaveBalance(Empid, Leavetypeid) {
         $.ajax({
             async: false,
             cache: false,
             type: "POST",
-            url: "/GetLeaveBalance",
-            contentType: "application/json",
+            url: '@Url.Action("GetLeaveBalance", "RDD_LeaveRequest")',
+            //contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({ EmployeeId: Empid, LeaveTypeId: Leavetypeid }),
+            data:{ EmployeeId: Empid, LeaveTypeId: Leavetypeid },
             success: function (data) {
-                debugger
+                
                 $("#HdnLeaveBalance").val(data.Table[0].Balance);
 
             },
@@ -469,15 +515,75 @@
 
         });
     }
-    $(document).on('change', '#EmployeeId', function () {
-        
-        changeEmpid = $(this).val();
-        GetDashboardData(changeEmpid);
-    });
+    
     $(document).ready(function () {
+        
         var loginEmpid;
         var changeEmpid;
         var Empides;
+        var seletedDate = moment(new Date());
+        var day = getWeeklyoffDayNo();
+       
+        var holidayList = loadCalender($("#EmployeeId").val());
+        $(document).on('change', '#EmployeeId', function () {
+
+            changeEmpid = $(this).val();
+            GetDashboardData(changeEmpid);
+            //loadCalender(changeEmpid);
+            $("#calendar").html("");
+            var $calendar = document.getElementById("calendar");
+            var currentYear = seletedDate.year();
+            var calendarize = new Calendarize();
+            var holidayList = loadCalender(changeEmpid);
+            calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+        });
+        $(document).on('click', '.next1', function () {
+            debugger
+            var lastDayOfNextMonth = moment(seletedDate.add(12, "M")).endOf('month');
+            seletedDate = lastDayOfNextMonth;
+            // Update selected date
+            var seletedDate1 = lastDayOfNextMonth.startOf("month").format('MMMM');
+            //alert(seletedDate1);
+            $("#calendarid").html(seletedDate.year());
+
+            $("#calendar").html("");
+            
+            var $calendar = document.getElementById("calendar");
+            var currentYear = seletedDate.year();
+            var calendarize = new Calendarize();
+            var holidayList = loadCalender($("#EmployeeId").val());
+            debugger
+            calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+
+        });
+
+        $(document).on('click', '.previous', function () {
+            debugger
+            var lastDayOfPreviousMonth = moment(seletedDate.add(-12, "M")).endOf('month');
+            seletedDate = lastDayOfPreviousMonth;
+            var seletedDate1 = lastDayOfPreviousMonth.startOf("month").format('MMMM');
+            // alert(seletedDate1);
+            $("#calendarid").html(seletedDate.year());
+
+
+
+            $("#calendar").html("");
+            var $calendar = document.getElementById("calendar");
+            var currentYear = seletedDate.year();
+            var calendarize = new Calendarize();
+            var holidayList = loadCalender($("#EmployeeId").val());
+            calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
+
+
+        })
+
+        var $calendar = document.getElementById("calendar");
+        var currentYear = seletedDate.year();
+        var calendarize = new Calendarize();
+        
+
+        
+        calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
         
         loginEmpid = $("#EmployeeId").val();
         //if (loginEmpid != '' || loginEmpid != undefined) {
@@ -487,7 +593,8 @@
         //    Empides = changeEmpid;
         //}
         GetDashboardData(loginEmpid);
-        $("#backup1").attr("autocomplete", "on");
+        //$("#backup1").attr("autocomplete", "on");
+        //$("#backup2").attr("autocomplete", "on");
         $(".loader1").hide();     
         var dayNo = getWeeklyoffDayNo();
         var k1 = Getdate1();
@@ -500,10 +607,16 @@
             var results = k1.filter(function (elem) {
                 return elem.Code == $("#EmployeeIde").val();
             });
-            $("#EmployeeIdPopup").val(results[0].CodeName);
-           results = k1.filter(function (elem) {
+            if (results.length > 0) {
+                $("#EmployeeIdPopup").val(results[0].CodeName);               
+            }
+            results = k1.filter(function (elem) {
+
                 return elem.Code !== $("#EmployeeIde").val();
             });
+            
+            var EmployeeId = $("#EmployeeIde").val();
+            GetLeaveTypeList(EmployeeId);
             //GetEmployeeWeeklyOff();
             applyAutoCompletedata("#BackUp", "#hdnBackUp", "#BackUp2", "#hdnBackUp2", results);
             
@@ -513,96 +626,22 @@
 
         } else {
             debugger;
-            applyAutoCompletedata("#EmployeeIdPopup", "#EmployeeIde", "#BackUp", "#hdnBackUp", k1);
+            applyAutoCompletedataHR("#EmployeeIdPopup", "#EmployeeIde", "#BackUp", "#hdnBackUp", "#BackUp2","#hdnBackUp2", k1);
             
         }
        
        
-        //applyAutoCompletedata("#BackUp", "#hdnBackUp", "#BackUp2", "#hdnBackUp2", k1);
-        debugger
-        //$("#EmployeeIde").autocomplete({
-        //    // This shows the min length of charcters that must be typed before the autocomplete looks for a match.
-        //    //minLength: 2,
-        //    source: function (request, response) {
-        //        var k = $("#EmployeeIde").val().toLowerCase();
-        //        var results = k1.filter(function (elem) {
-        //            return elem.Text.toLowerCase().indexOf(k) > -1;
-        //        });
-        //        if (results.length > 0) {
-        //            response($.map(results, function (value, key) {
-        //                return {
-        //                    label: value.Text,
-        //                    value: value.Value
-        //                }
-        //            }));
-
-        //        }
-        //    },
-        //    focus: function (event, ui) {
-        //        $("#EmployeeIde").val(ui.item.Text);
-        //        return false;
-        //    },
-        //    // Once a value in the drop down list is selected, do the following:
-        //    select: function (event, ui) {
-        //        // place the person.given_name value into the textfield called 'select_origin'...
-        //        $("#EmployeeIde").val(ui.item.Text);
-        //        // and place the person.id into the hidden textfield called 'link_origin_id'. 
-        //        $("#hdnEmployeeIde").val(ui.item.Value);
-        //        return false;
-        //    }
-
-        //});
-        //var found_names = $.grep(k1, function (v) {
-        //    return v.Code != $("#hdnEmployeeIde").val();
-        //});
-        //if (found_names.length > 0) {
-        //    applyAutoCompletedata("#BackUp", "#hdnBackUp", found_names);
-        //}
-        
-
-        //$("#BackUp").autocomplete({
-        //    // This shows the min length of charcters that must be typed before the autocomplete looks for a match.
-        //    //minLength: 2,
-        //    source: function (request, response) {
-        //        var k = $("#BackUp").val().toLowerCase();
-        //        var results = found_names.filter(function (elem) {
-        //            return elem.Text.toLowerCase().indexOf(k) > -1;
-        //        });
-        //        if (results.length > 0) {
-        //            response($.map(results, function (value, key) {
-        //                return {
-        //                    label: value.Text,
-        //                    value: value.Value
-        //                }
-        //            }));
-
-        //        }
-        //    },
-        //     focus: function (event, ui) {
-        //         $("#BackUp").val(ui.item.Text);
-        //        return false;
-        //    },
-        //    // Once a value in the drop down list is selected, do the following:
-        //    select: function (event, ui) {
-        //        // place the person.given_name value into the textfield called 'select_origin'...
-        //        $("#BackUp").val(ui.item.Text);
-        //        // and place the person.id into the hidden textfield called 'link_origin_id'. 
-        //        $("#hdnBackUp").val(ui.item.Value);
-        //        return false;
-        //    }
-
-        //});
+       
         $(document).on('change', '#LeaveTypeIde', function () {          
             $("#LeaveTypeId").val($(this).val());
         });
-        $(document).on("focusout", "#EmployeeIdPopup", function () {
-            debugger
+        function GetLeaveTypeList(EmployeeId) {
             $.ajax({
                 async: false,
                 cache: false,
                 type: "Post",
                 url: "/LMS/RDD_LeaveRequest/GetCountryWiseLeaveType",
-                data: JSON.stringify({ EmployeeId:$("#EmployeeIde").val() }),
+                data: JSON.stringify({ EmployeeId: EmployeeId}),
                 dataType: 'Json',
                 contentType: "Application/json",
 
@@ -623,7 +662,37 @@
 
                 }
             });
-
+        }
+        //$(document).on("focusout", "#EmployeeIdPopup", function () {
+        //    debugger
+        //    var EmployeeId = $("#EmployeeIde").val();
+          
+        //});
+        $(document).on("focusout", "#EmployeeIdPopup", function () {
+            debugger
+            $("#Leavedtls").empty();
+            $("#divDates").empty();
+            $("#random").show();
+            var EmployeeId = $("#EmployeeIde").val();
+            GetLeaveTypeList(EmployeeId);
+            holidayList = loadCalender(EmployeeId);
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "Post",
+                url: "/LMS/RDD_LeaveRequest/GetWeeklyOff",
+                data: JSON.stringify({ EmployeeId: EmployeeId}),
+                dataType: 'Json',
+                contentType: "Application/json",
+                success: function (data) {
+                    arr = data;
+                    $("#Weeklyoff").val(arr.data[0].WeeklyOff);
+                    $("#LeaveRule").val(arr.data[0].LeaveRules);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         });
        
         $('#exampleModal').on('hidden.bs.modal', function (e) {
@@ -631,11 +700,19 @@
             $("#Leavedtls").empty();
             $("#divDates").empty();
             $("#random").show();
-
-            $(this)
-                .find("input,textarea")
-                .val('')
-                .end()
+            if ($("#HR").val() == "True") {
+                $("#EmployeeIdPopup").val('');
+                $("#EmployeeIde").val('0');
+            }
+            $("#Reason").val('');
+            $("#BackUp").val('');
+            $("#BackUp2").val('');
+            $("#hdnBackUp").val('0');
+            $("#hdnBackUp2").val('0');
+            ////$(this)
+            ////    .find("input,textarea")
+            //    .val('')
+            //    .end()
             $(this)
                 .find("select")
                 .trigger('change')
@@ -652,6 +729,8 @@
         
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
             var currentleave;
+            var count=0;
+            var weeklyoffdaycount = $("#hdnweeklyoffdaycount").val();
             $("#random").hide();
             $("#Leavedtls").empty();
             var d = new Date();
@@ -710,8 +789,15 @@
                 html += '</td></tr>';
 
                 if (LeaveRule == "WorkingDays") {
-                    if (weekday[arr2[i].getDay()] != weeklyoff) {
+                    var imp = getImportancedatepicker(arr2[i], holidayList);                    
+                    
+                    if (weekday[arr2[i].getDay()] != weeklyoff && (imp == undefined && imp == null)) {
                         $("#divDates").append(html);
+                        
+                    }
+                    else {
+                        //$("#divDates").append("");
+                        count++;
                     }
                 }
                 else {
@@ -742,8 +828,15 @@
                 }
             }
             else {
-                var remainleave = (currentleave - days);
-                var Header = '<h5><label id="lblDays">' + days + '</label> days of annual leave</h5>';
+                if (count > 0) {
+                    var remainleave = (currentleave - days + parseFloat(weeklyoffdaycount));
+                    var leave = days - weeklyoffdaycount;
+                }
+                else {
+                    var remainleave = (currentleave - days);
+                    var leave = days;
+                }
+                var Header = '<h5><label id="lblDays">' + leave + '</label> days of annual leave</h5>';
                 Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
                 $("#Hdndays").val(days);
                 $("#HdnRemainLeave").val(remainleave);
@@ -947,13 +1040,18 @@
             }
         });
 
-    });
+    }); 
 
 
     $(document).on('click', '#Btn_Submit', function () {
         $(".loader1").show();
         if ($('#Reason').val().length == 0) {
             RedDotAlert_Error("Please Enter a valid reason");
+            $(".loader1").hide();
+            return false;
+        }
+        if ($('#BackUp').val().length == 0) {
+            RedDotAlert_Error("Please choose a backup name");
             $(".loader1").hide();
             return false;
         }
@@ -1031,15 +1129,15 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('.day').on('click', function () {
-            $('#exampleModal').modal('toggle');
-        });
-        //$('.lvbtn').on('click', function () {
-        //    $('#myModal2').modal('toggle');
-        //});
+    //$(document).ready(function () {
+    //    $('.day').on('click', function () {
+    //        $('#exampleModal').modal('toggle');
+    //    });
+    //    //$('.lvbtn').on('click', function () {
+    //    //    $('#myModal2').modal('toggle');
+    //    //});
 
-    });
+    //});
 </script>
 
 <script>

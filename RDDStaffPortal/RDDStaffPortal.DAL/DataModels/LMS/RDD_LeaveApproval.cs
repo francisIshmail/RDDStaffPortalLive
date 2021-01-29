@@ -12,7 +12,9 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public int LeaveRequestApprovalId { get; set; }
         public Int32 EmployeeId { get; set; }
         public int LeaveTypeId { get; set; }
-        public int LeaveRequestId { get; set; }
+        public int LeaveRequestId { get; set; }  
+        public int BackUp1Id { get; set; }
+        public int BackUp2Id { get; set; }
         public string EmployeeName { get; set; }
         public string LeaveName { get; set; }
         public DateTime? FromDate { get; set; }
