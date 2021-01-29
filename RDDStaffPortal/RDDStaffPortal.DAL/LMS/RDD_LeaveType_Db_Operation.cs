@@ -96,8 +96,10 @@ namespace RDDStaffPortal.DAL.LMS
         public List<SelectListItem> GetCountryList()
         {
             List<SelectListItem> GetCountryListData = new List<SelectListItem>();
+            GetCountryListData.Add(new SelectListItem()            {                Text = "--Select--",                Value = "0"            });
             try
             {
+
                 SqlParameter[] parm ={
                         //new SqlParameter("@Username",UserName),
                          new SqlParameter("@Type","COUNTRY")  };

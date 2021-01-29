@@ -968,20 +968,18 @@
     <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
     <Content Include="Areas\LMS\Views\web.config" />
     <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
-
     <Content Include="Areas\LMS\Views\RDD_LeaveType\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveAdjustment\Index.cshtml" />
     <Content Include="Areas\HR\Views\Employees\LMSTest.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveRequest\Index.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LeaveApproval\Index.cshtml" />
-
     <Content Include="Areas\CollectionForecast\Views\web.config" />
     <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
     <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_AnnualLeaveCalender\Index.cshtml" />
-
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

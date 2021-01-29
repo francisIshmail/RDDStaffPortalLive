@@ -49,6 +49,7 @@
                                             <table class="table" , id="usertable">
                                                 <thead class="thead-light">
                                                     <tr>
+                                                        @*<th scope="col">Country </th>*@
                                                         <th scope="col">Leave Types </th>
                                                         <th scope="col">Accrual Rule </th>
                                                         <th scope="col">Accrual Days </th>
@@ -193,8 +194,8 @@
                         <div class="modal-body">
                             <form name="modal-form" method="post" action="">
                                 <div class="form-group">
-                                    @*<label for="country">Country: <i class="fas fa-star"></i></label>
-                                        <select class="form-control" id="country"></select>*@
+                                    <label for="country">Country: <i class="fas fa-star"></i></label>
+                                        @*<select class="form-control" id="country"></select>*@
                                     @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control" })
 
                                 </div>
@@ -475,7 +476,8 @@
         });
 
         j(document).on("click", "#Save", function () {
-            debugger
+            var Errmsg = "";            if (j("#Country").val() == "0") {                Errmsg = Errmsg + "Select Country "            }            else if (j("#LeaveName").val() == "") {                Errmsg = Errmsg + "Enter the leave name "            }            else if (j("#AccruedDays").val() == "0") {                Errmsg = Errmsg + "Enter Accrual Days "            }            else if (j("#Accrule option:selected").text() == "") {                Errmsg = Errmsg + "Enter Accrual Rule "            }            //else if (j("#AllowMaximumNegativeLeaveDays").val() == "0") {            //    Errmsg = Errmsg +"Enter AllowMaximumLeaveDays Field "            //}            //else if (j("#MaximumLeavecarryForwardToNextYear").val() == "0") {            //    Errmsg = Errmsg +"Enter MaximumLeavecarryForwardToNextYear's Field "            //}            if (Errmsg.length > 0) {                RedDotAlert_Error("Please " + Errmsg);                return;            }
+            
             var rDD_LeaveType = {
                 Country: j("#Country").val(),
                 LeaveName: j("#LeaveName").val(),
