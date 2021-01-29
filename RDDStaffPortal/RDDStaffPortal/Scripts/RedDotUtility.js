@@ -1207,7 +1207,6 @@ function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
 }
 
 
-
 function applyAutoCompletedataHR(ids, hdnid, ids1, hdnid1, ids2, hdnid2, data) {
     debugger
     var found_names;
@@ -1322,7 +1321,6 @@ function applyAutoCompletedata_Hidden(ids, hdnid, data) {
 
 
 }
-
 
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
@@ -1545,7 +1543,7 @@ function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
     var nowMin = new Date(min1);
-    nowMin.setDate(nowMin.getDate() - 1);
+    nowMin.setDate(nowMin.getDate() - 7);
     var dayMin = ("0" + nowMin.getDate()).slice(-2);
     var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
     var startMin = new Date(min1);

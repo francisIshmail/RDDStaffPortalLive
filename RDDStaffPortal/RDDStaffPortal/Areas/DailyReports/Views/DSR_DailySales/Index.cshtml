@@ -429,13 +429,14 @@
             if ($("#ActionType").val() == "DAILY") {
                 var nowMin1 = new Date($("#FromDate").val());
                
-                nowMin1.setDate(nowMin1.getDate() - 7);
-                $("#hdnstartdate").val(nowMin1);
+               // nowMin1.setDate(nowMin1.getDate() - 7);
+              //  $("#hdnstartdate").val(nowMin1);
                 
                 $("#hdnenddate").val($("#ToDate").val());
-                RedDot_DateRange_Min_Max_Daily("reportrange", $("#hdnstartdate").val(), $("#ToDate").val());
+                RedDot_DateRange_Min_Max_Daily("reportrange", $("#FromDate").val(), $("#ToDate").val());
                 nowdate = $("#reportrange").data().startDate;
                 $("#hdnstartdate").val(nowdate);
+                nowdate.setDate(nowdate.getDate() - 7);
                 
             } else if ($("#ActionType").val()=="WEEKLY") {
                 $("#hdnstartdate").val($("#FromDate").val());

@@ -2,10 +2,12 @@
 	initialize: function () {
 
 		$.fn.dataTable.ext.errorMode = 'none';
-
+        
 		OperationPV.Attachevent();
 	},
-	Attachevent: function () {
+    Attachevent: function () {
+       
+        
         tblDetails = ['LineRefNo', 'Date1', 'Description', 'Amount', 'Remarks', 'FilePathInput', 'hdnFilePathInput'];
         //#region  Add Row
         var t = false;
@@ -78,6 +80,7 @@
             /*Edit Mode Table show Date(DD-MM-yyyy) & file path*/
             $(".PVLines").each(function () {
                 if ($(".PVLines").length != k1) {
+                    debugger
                     $(this).find("[name^='Date1']").val(RedDot_DateTblEdit($(this).find("[name^='hdnDate1']").val()));
                     var k = $(this).find("[name^='hdnFilePathInput']").val().split("/").length;
                     $(this).find(".fa-eye").attr("href", $(this).find("input[id ^= 'hdnFilePathInput']").val());
@@ -85,7 +88,7 @@
                     var str=$(this).find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1];
                     if (str.length > 15)
                         str = str.substring(0, 15)+"...";
-
+                    $(this).find("input[id ^='Amount']").val($(this).find("input[id ^='Amount']").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $(this).find("#lblDocname").text(str);
                     $(this).find("input[id ^= 'FilePathInput']").attr("title", $(this).find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1]);
                 }
