@@ -1874,23 +1874,23 @@ function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide,
                         //'</div>'+
 
                         '<div class="modal-body"  >' +
-                        '<h5 class="custom-pop-hd">' + arr.Table1[i1].LeaveName + '</h5>'+
-                        '<div class="days-lv"><strong>' + arr.Table1[i1].FromDate + ' to ' + arr.Table1[i1].ToDate + '</strong> </div>'+
-                        '<div class= "leave-reason" > ' + arr.Table1[i1].Reason + '</div > '+
-                        '<div class= "leave-reason" > ' + arr.Table1[i1].LeaveStatus + '</div > ' +
 
-                    '<div style = "display: flex;" class= "bg-sec" > '+
-                        
-                        '<div>'+
-                        '<div class= "emp-cir" >' + d[0].slice(0, 1) + '' + d[d.length - 1].slice(0, 1) + '</div > '+
-                         '</div>'+
+                        '<div style = "display: flex;" class= "bg-sec" > ' +
                         '<div>' +
-                        ' <div class= "emp-size" > ' + arr.Table1[i1].FullName + '' +
-                        
-               ' </div > '+
-                        ' <div class= "depart-size" > ' + arr.Table1[i1].DesigName + '</div > '+
-                          '  </div > '+
-                      '  </div > '+
+                        '<div class= "emp-cir" >' + d[0].slice(0, 1) + '' + d[d.length - 1].slice(0, 1) + '</div > ' +
+                        '</div>' +
+                        '<div>' +
+                        ' <div class= "emp-size" > ' + arr.Table1[i1].FullName + '' + ' </div > ' +
+                        ' <div class= "depart-size" > ' + arr.Table1[i1].DesigName + '</div > ' +
+                        '  </div > ' +
+                        '  </div > ' +
+
+                        '<h5 class="custom-pop-hd"><strong>' + arr.Table1[i1].LeaveName + '</strong></h5>'+
+                        '<div class="days-lv"><strong>  Date  &nbsp;&nbsp;  :-  ' + arr.Table1[i1].FromDate + ' to ' + arr.Table1[i1].ToDate + '</strong> </div>'+
+                        '<div class= "leave-reason" > <b> Reason &nbsp; :- <b/> ' + arr.Table1[i1].Reason + '</div > '+
+                        '<div class= "leave-reason" > <b> Status &nbsp;&nbsp; :- <b/>' + arr.Table1[i1].LeaveStatus + '</div > ' +
+
+
                         ' </div > ' +
                       '  <div class= "d-grid gap-2" > '+
                  //'   <button class= "btn btn-primary b-cus v-detail" type = "button" > View Details</button > '+
