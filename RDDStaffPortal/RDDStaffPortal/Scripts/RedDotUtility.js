@@ -1778,6 +1778,7 @@ function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide,
                 var i1 = 0;
                 while (arr.Table1.length > i1) {
                     debugger
+                    var d = arr.Table1[i1].FullName.split(' ');
                     //#region Modal
                     $("#LeaveModal").append('<div id="LeaveModal' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '" ></div>');
 
@@ -1788,20 +1789,42 @@ function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide,
                         '<div class="modal-dialog modal-sm">' +
                         '<div class="modal-content" >' +
 
-                        '<div class="modal-header">'+
-                        ' <h5 class="modal-title" id="exampleModalLongTitle">' + arr.Table1[i1].LeaveName + ' </h5>'+
-                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">'+
-                                '<span aria-hidden="true">&times;</span>'+
-                            '</button>'+
-                        '</div>'+
+                        //'<div class="modal-header">'+
+                        //' <h5 class="modal-title" id="exampleModalLongTitle">' + arr.Table1[i1].LeaveName + ' </h5>'+
+                        //    '<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">'+
+                        //        '<span aria-hidden="true">&times;</span>'+
+                        //    '</button>'+
+                        //'</div>'+
 
                         '<div class="modal-body"  >' +
-                        '<p>' + arr.Table1[i1].LeaveName + '</p>' +
-                        '<p>' + arr.Table1[i1].Reason + '</p>' +
-                        '<p>' + arr.Table1[i1].FullName + '</p>' +
-                        '<p>' + arr.Table1[i1].DesigName + '</p>' +
-                        '<p>' + arr.Table1[i1].FromDate + '</p>' +
-                        '<p>' + arr.Table1[i1].ToDate + '</p>' +
+                        '<h5 class="custom-pop-hd">' + arr.Table1[i1].LeaveName + '</h5>'+
+                        '<div class="days-lv"><strong>' + arr.Table1[i1].FromDate + ' to ' + arr.Table1[i1].ToDate + '</strong> </div>'+
+                        '<div class= "leave-reason" > ' + arr.Table1[i1].Reason + '</div > '+
+                        '<div class= "leave-reason" > ' + arr.Table1[i1].LeaveStatus + '</div > ' +
+
+                    '<div style = "display: flex;" class= "bg-sec" > '+
+                        
+                        '<div>'+
+                        '<div class= "emp-cir" >' + d[0].slice(0, 1) + '' + d[d.length - 1].slice(0, 1) + '</div > '+
+                         '</div>'+
+                        '<div>' +
+                        ' <div class= "emp-size" > ' + arr.Table1[i1].FullName + '' +
+                        
+               ' </div > '+
+                        ' <div class= "depart-size" > ' + arr.Table1[i1].DesigName + '</div > '+
+                          '  </div > '+
+                      '  </div > '+
+                        ' </div > ' +
+                      '  <div class= "d-grid gap-2" > '+
+                 //'   <button class= "btn btn-primary b-cus v-detail" type = "button" > View Details</button > '+
+                  '  <button class= "btn text-secondary btn-white b-cus" type = "button" data-dismiss="modal" > Cancel</button > '+
+                       ' </div > '+
+                        //'<p>' + arr.Table1[i1].LeaveName + '</p>' +
+                        //'<p>' + 'arr.Table1[i1].Reason + '</p>' +
+                        //'<p>' + arr.Table1[i1].FullName + '</p>' +
+                        //'<p>' + arr.Table1[i1].DesigName + '</p>' +
+                        //'<p>' + arr.Table1[i1].FromDate + '</p>' +
+                        //'<p>' + arr.Table1[i1].ToDate + '</p>' +
                        
                        
                        

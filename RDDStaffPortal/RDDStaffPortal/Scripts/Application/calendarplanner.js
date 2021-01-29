@@ -10,6 +10,7 @@
        
     },
     Attachevent: function () {
+        GetCountryFill('Country', $("#Country").val(), $("#DeptId").val(),"Country");
         var tblhead1 = ["FullName"];
         var tblhide = [];
         var tblhead2 = ['EmployeeId'];
@@ -38,6 +39,36 @@
         var curPage = 1;
         var arr = "";
         Getdata();
+       
+        function GetCountryFill(ptype,country,dept,Dropid) {
+            //Deptartment/Country/Employee
+            var data = JSON.stringify({
+                ptype: ptype,
+                CountryCode: country,
+                deptid: dept,
+                
+            });
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: "/GetAnnualLeaveCalendra_Dropwdown_Fill",
+                contentType: "application/json",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    debugger
+                    var data = data.Table;
+                    if (data.length > 0) {
+                        $('#'+Dropid+'').empty();
+                        $('#' + Dropid + '').append($("<option>").text('-Select-').attr('value', '0'));
+                        $.each(data, function (index, value) {
+                            $('#' + Dropid + '').append($("<option>").text(value.CodeName).attr('value',value.Code))
+                        })
+                    }
+                }   });
+
+        }
         //#region Load Data
         function Getdata() {
             var value1 = '';
@@ -47,7 +78,10 @@
                 pageno: 1,
                 psearch: value1,
                 fromdate: firstDay,
-                todate:lastDay
+                todate: lastDay,
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
             });
 
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
@@ -83,7 +117,10 @@
                 pageno: curPage,
                 psearch: value1,
                 fromdate: firstDay,
-                todate: lastDay
+                todate: lastDay,                
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
             });
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
         });
@@ -113,11 +150,42 @@
                 pageno: curPage,
                 psearch: value1,
                 fromdate: firstDay,
-                todate: lastDay
+                todate: lastDay,
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
             });
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
         });
         //#endregion
+
+        $(document).on('change', "#Country", function () {
+            $('#DeptId').empty();
+            $('#DeptId').append($("<option>").text('-Select-').attr('value', '0'));
+            $('#FullName').empty();
+            $('#FullName').append($("<option>").text('-Select-').attr('value', '0'));
+            
+            //$("#DeptId").select2('destroy');
+            GetCountryFill('Deptartment', $("#Country").val(), $("#DeptId").val(), "DeptId");
+            //$('#DeptId').select2({
+
+            //    theme: "bootstrap",
+            //    allowClear: true,
+            //    placeholder: '--Select--'
+            //});
+        })
+        $(document).on('change', "#DeptId", function () {
+            $('#FullName').empty();
+            $('#FullName').append($("<option>").text('-Select-').attr('value', '0'));
+           // $("#FullName").select2('destroy');
+            GetCountryFill('Employee', $("#Country").val(), $("#DeptId").val(), "FullName");
+            //$('#FullName').select2({
+
+            //    theme: "bootstrap",
+            //    allowClear: true,
+            //    placeholder: '--Select--'
+            //});
+        })
 
         $(document).on('click','.next1',function () {
             debugger
@@ -141,7 +209,10 @@
                 pageno: curPage,
                 psearch: value1,
                 fromdate: firstDay,
-                todate: lastDay
+                todate: lastDay,
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
             });
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
 
@@ -167,7 +238,10 @@
                 pageno: curPage,
                 psearch: value1,
                 fromdate: firstDay,
-                todate: lastDay
+                todate: lastDay,
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
             });
             arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
 
@@ -180,7 +254,41 @@
             
         })
 
+        //$('#Country').select2({
 
+        //    theme: "bootstrap",
+        //    allowClear: true,
+        //    placeholder: '--Select--'
+        //});
+
+        $(document).on("click", "#btnsearch", function () {
+            debugger
+            var lastDayOfPreviousMonth = moment(seletedDate).endOf('month');
+            seletedDate = lastDayOfPreviousMonth;
+            var seletedDate1 = lastDayOfPreviousMonth.startOf("month").format('MMMM');
+            // alert(seletedDate1);
+            $("#calendarid").html(seletedDate1 + " " + seletedDate.year());
+            var dayt = getDaysArray(seletedDate.year(), seletedDate.month()+1);
+
+
+            RedDot_DivTable_Header_Fill_Append("I", dayt);
+            firstDay = new Date(seletedDate.year(), seletedDate.month(), 1);
+            lastDay = new Date(seletedDate.year(), seletedDate.month() + 1, 0);
+            curPage = 0;
+            value1 = '';
+            var data = JSON.stringify({
+                pagesize: 20,
+                pageno: curPage,
+                psearch: value1,
+                fromdate: firstDay,
+                todate: lastDay,
+                country: $("#Country").val() == null ? '0' : $("#Country").val(),
+                deptid: $("#DeptId").val() == null ? '0' : $("#DeptId").val(),
+                empid: $("#FullName").val() == null ? '0' : $("#FullName").val()
+            });
+            arr = RedDot_DivTable_Fill_Table("I", "/GetAnnualLeaveCalendra", data, dateCond, tblhead1, tblhide, tblhead2);
+
+        })
        
        
     }
