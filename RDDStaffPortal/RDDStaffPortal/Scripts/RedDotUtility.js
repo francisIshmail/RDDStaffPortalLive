@@ -1186,6 +1186,8 @@ function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
                 found_names = $.grep(data, function (v) {
                     return v.Code != $(hdnid).val();
                 });
+                $(ids1).val('');
+                $(hdnid1).val('-1');
                 applyAutoCompletedata_Hidden(ids1, hdnid1, found_names);
                 
             }
@@ -1205,8 +1207,72 @@ function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
 }
 
 
+
+function applyAutoCompletedataHR(ids, hdnid, ids1, hdnid1, ids2, hdnid2, data) {
+    debugger
+    var found_names;
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
+
+                    };
+                }))
+            } else {
+
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
+
+
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+                found_names = $.grep(data, function (v) {
+                    return v.Code != $(hdnid).val();
+                });
+                $(ids1).val('');
+                $(hdnid1).val('-1');
+                applyAutoCompletedata(ids1, hdnid1,ids2, hdnid2, found_names);
+
+            }
+        },
+        minLength: 1
+    });
+    function ReturnFilterdata(found_names) {
+        return found_names;
+    }
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+
+
+}
+
+
 function applyAutoCompletedata_Hidden(ids, hdnid, data) {
     var found_names;
+    debugger
     $(ids).autocomplete({
         source: function (request, response) {
             var k = $(ids).val().toLowerCase();
@@ -1430,6 +1496,7 @@ set_picker_start_end = (picker, when) => {
 }
 function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
     debugger;
+   
     var nowMin = new Date(min1);
     //nowMin.setDate(nowMin.getDate() - 1);
     var dayMin = ("0" + nowMin.getDate()).slice(-2);
@@ -1457,13 +1524,23 @@ function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
         maxDate: nowMax,
          minDate: nowMin,        
        // singleDatePicker: true,
-         autoApply:true
+        autoApply: true,
+        //isCustomDate: function (dte) {
+        //    var imp = getImportance(dte, Holidaylist);
+        //    if (imp !== undefined && imp !== null) {
+        //        console.log("imp=" + imp + " dte=" + dte);
+        //        //$dayNode.classList.add('importance');
+        //        //$dayNode.setAttribute("title", imp);
+
+        //    }
+        //}
        
 
     }, cb);
 
     cb(start, end);
 }
+
 
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
@@ -1871,5 +1948,17 @@ function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
         });
 
     })
+    
+}
+function getImportance(selectedDate, HolidayList) {
 
+    var found_names = $.grep(HolidayList, function (v) {
+        return DateToStringformat(v.HolidayDate) === selectedDate;
+    });
+    var rep = undefined;
+    if (found_names.length > 0) {
+        rep = found_names[0].HolidayName;
+    }
+
+    return rep;
 }
