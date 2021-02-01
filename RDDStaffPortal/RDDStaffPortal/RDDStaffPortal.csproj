@@ -194,6 +194,7 @@
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveRequestController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveTypeController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LMSReportController.cs" />
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
@@ -979,6 +980,9 @@
     <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_AnnualLeaveCalender\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\LMS\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LMSReport\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1040,7 +1044,6 @@
     <Folder Include="Areas\Incentive\Views\ViewCompensationPlan\" />
     <Folder Include="Areas\LMS\Models\" />
     <Folder Include="Areas\LMS\Views\RDD_LeaveLedger\" />
-    <Folder Include="Areas\LMS\Views\Shared\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
