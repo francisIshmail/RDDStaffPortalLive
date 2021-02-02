@@ -5,6 +5,7 @@
 }
 <div class="main-panel">
     <div class="container">
+        @*<div class="loader1"></div>*@
         <div class="page-inner">
             <div class="page-header">
                 <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Incentive Slab</h4></div>
@@ -26,7 +27,7 @@
                                     <div class="form-group">
                                         <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                             <div id="tblid" class="table-responsive">
@@ -164,11 +165,11 @@
         $("#btnCancel").show();
     });
     $(document).on('click', '#btnAdd', function (e) {
-        e.preventDefault();
-
+        e.preventDefault();        
         $.post("/ADDSLAB", { TEMPId: -1 }, function (response) {
             debugger
             $("#idCard").html(response);
+            $(".loader1").hide();
             RedDot_Button_New_HideShow();
             //GetKPIdetails();
             //GetKPIdetailsModal();
@@ -275,6 +276,7 @@
         var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
         $.post("/ADDSLAB", { TEMPId: TEMPId }, function (response) {
             $("#idCard").html(response);
+            $(".loader1").hide();
             RedDot_Button_New_HideShow();
         })
     });

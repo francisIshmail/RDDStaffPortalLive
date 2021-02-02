@@ -171,6 +171,7 @@
         e.preventDefault();
         $.post("/ADDTNC", { TEMPId: -1 }, function (response) {
             $("#idCard").html(response);
+            $('.loader1').hide();
             RedDot_Button_New_HideShow();            
         });
     });
@@ -265,6 +266,7 @@
         var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
         $.post("/ADDTNC", { TEMPId: TEMPId }, function (response) {
             $("#idCard").html(response);
+            $('.loader1').hide();
             RedDot_Button_New_HideShow();
         });
     });

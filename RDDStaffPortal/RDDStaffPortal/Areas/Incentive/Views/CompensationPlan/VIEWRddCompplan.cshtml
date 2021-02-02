@@ -262,10 +262,13 @@
             $("#div-Description").hide();            
             return;
         }        
-        if(Status="Pending") {
+        if (Status == "Pending") {
             $("#div-Description").hide();
             return;
-        }        
+        }
+        else {
+            $("#div-Description").show();
+        }
     });
 </script>
 

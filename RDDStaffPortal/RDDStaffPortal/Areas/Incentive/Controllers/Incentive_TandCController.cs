@@ -12,6 +12,7 @@ using RDDStaffPortal.DAL;
 
 namespace RDDStaffPortal.Areas.Incentive.Controllers
 {
+    [Authorize]
     public class Incentive_TandCController : Controller
     {
         RDD_IncentiveTNC_DbOperation ItncDbOp = new RDD_IncentiveTNC_DbOperation();

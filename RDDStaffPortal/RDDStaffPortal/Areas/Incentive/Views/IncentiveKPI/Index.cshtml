@@ -20,6 +20,7 @@
                     <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
                 </div>
             </div>
+            <div class="loader1"></div>
             <div class="rowmin" id="divKPIshow">
                 <div class="col-md-12">
                     <div class="card full-height">
@@ -33,12 +34,11 @@
                                         <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
                                 </div>
-                               
+
                             </div>
 
                             <div id="tblid" class="table-responsive">
                                 <div class="reddotTable sm-form mar-t0">
-                                    <div class="loader1"></div>
                                     <div id="IIInd" class="reddotTableBody">
                                         <div class="reddotTableRow odd-even-row">
                                             <div class="reddotTableHead" hidden="hidden"><div>KPI Id </div></div>
@@ -48,7 +48,6 @@
                                             <div class="reddotTableHead"><div>Retain %</div></div>
                                             <div class="reddotTableHead"><div>Period</div></div>
                                             <div class="reddotTableHead"><div>Year</div></div>
-                                            <div class="reddotTableHead"><div>T & C </div></div>
                                             <div class="reddotTableHead"><div>CreatedOn </div></div>
                                             <div class="reddotTableHead"><div>CreatedBy </div></div>
                                             <div class="reddotTableHead"><div>LastUpdatedOn </div></div>
@@ -64,7 +63,6 @@
                                             <div class="reddotTableCell Abcd"><div>Retain %</div></div>
                                             <div class="reddotTableCell Abcd"><div>Period</div></div>
                                             <div class="reddotTableCell Abcd"><div>Year</div></div>
-                                            <div class="reddotTableCell Abcd"><div>T & C</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
                                             <div class="reddotTableCell Abcd"><div>CreatedBy</div></div>
                                             <div class="reddotTableCell Abcd"><div></div></div>
@@ -142,7 +140,8 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
 <script type="text/javascript">
-    var tblhead1 = ['KPI_Id','DesigId','DesigName', 'KPIname', 'Retain_Percentage', 'Period', 'Years', 'TermsAndCondition', 'CreatedOn', 'CreatedBy', 'LastUpdatedOn', 'LastUpdatedBy'];
+
+    var tblhead1 = ['KPI_Id','DesigId','DesigName', 'KPIname', 'Retain_Percentage', 'Period', 'Years', 'CreatedOn', 'CreatedBy', 'LastUpdatedOn', 'LastUpdatedBy'];
     var tblhide = [];
     var tblhead2 = [];
     var dateCond = ['CreatedOn', 'LastUpdatedOn'];
@@ -333,6 +332,7 @@
         $.post("/ADDKPI", { TEMPId: -1 }, function (response) {
 
             $("#idCard").html(response);
+            $('.loader1').hide();
             RedDot_Button_New_HideShow();
             GetKPIdetails();
             GetKPIdetailsModal();
@@ -413,7 +413,6 @@
             KPIname: $.trim($("#KPIname").val()),
             EditFlag: $("#EditFlag").val(),
             Retain_Percentage: $.trim($("#Retain_Percentage").val()),
-            TermsAndCondition: $.trim($("#TermsAndCondition").val()),
             Total_Percentage: $.trim($("#txtTotal").val()),
             RDD_IncentiveKPI_ParameterList: []
         };
@@ -422,11 +421,11 @@
             var KpiParameters = Currow.find(".Abcd").eq(0).text();
             var SplitPercent = $(this).find("[name^='txtSplit']").val();
             var EarnOrDeduct = $(this).find("[name^='ddlEarnOrDeduct']").val();
-            if (SplitPercent != '' && EarnOrDeduct != '' && SplitPercent!= undefined && EarnOrDeduct!=undefined) {
+            if (SplitPercent != '' && EarnOrDeduct != '' && SplitPercent != undefined && EarnOrDeduct != undefined) {
                 var RDD_IncentiveKPI_Parameter = {
                     KPI_Parameter: KpiParameters,
                     Split_Percentage: SplitPercent,
-                    KPIType:EarnOrDeduct
+                    KPIType: EarnOrDeduct
                 };
                 RDD_Incentive.RDD_IncentiveKPI_ParameterList.push(RDD_IncentiveKPI_Parameter);
             }
@@ -448,14 +447,16 @@
             contentType: "Application/json",
             success: function (data) {
                 debugger
-                $('.loader1').hide();
+
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
+                    $('.loader1').hide();
                     window.location.href = '@Url.Action("Index", "IncentiveKPI")';
                 } else {
                     RedDotAlert_Error(data[0].Responsemsg);
+                    $('.loader1').hide();
                 }
-                
+
             }
         });
     });
@@ -465,6 +466,7 @@
         var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
         $.post("/ADDKPI", { TEMPId: TEMPId }, function (response) {
             $("#idCard").html(response);
+            $('.loader1').hide();
             RedDot_Button_New_HideShow();
         })
     });
@@ -492,10 +494,7 @@
         if (RDD_Incentive.Retain_Percentage.length == 0) {
             response.ErrorMessage += "Please Enter Retain %";
         }
-        if (RDD_Incentive.TermsAndCondition.length == 0) {
-            response.ErrorMessage += "Please Enter T&C";
-        }
-
+        
         if (response.ErrorMessage.length == 0) {
             response.formValid = true;
         }
