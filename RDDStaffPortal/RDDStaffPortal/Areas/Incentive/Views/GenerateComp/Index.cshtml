@@ -345,10 +345,11 @@
                 $('div#IVst').not(':first').remove();
                 //$("#txtSplitREVpercent").val("0");
                 //$("#txtSplitGPpercent").val("0");
-                $.each(a.Table, function (index, value) {
+                $("#HdnRetainPercent").val(a.Table[0].Retain_Percentage);
+                $.each(a.Table1, function (index, value) {
                     var tr = $("#IVst").clone();
-                    tr.find(".Abcd")[0].children[0].textContent = value.TermsAndCondition;
-                    $("#HdnRetainPercent").val(value.Retain_Percentage);
+                    tr.find(".Abcd")[0].children[0].textContent = value.TnC;
+                    //$("#HdnRetainPercent").val(value.Retain_Percentage);
                     $("#IVbody").append(tr);
                 });
                 $("#IVst")[0].remove();
@@ -381,7 +382,7 @@
         $('.loader1').show();
         GetCompensationCalculationData();
         GetEmployeeStatus(); 
-        alert($("#hdnLoginEmployeeStatus").val());
+        
         //GetKpiData();
         $('.loader1').hide();
         $("#divKPIshow").show();

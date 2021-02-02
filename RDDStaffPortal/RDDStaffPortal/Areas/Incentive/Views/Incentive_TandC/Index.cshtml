@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-6 col-lg-6 p-0"><h4 class="page-title">Terms And Condition Setup</h4></div>
+                <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
+                    <button class="btn btn-info btn-sm" id="btnAdd">New</button>
+                    <button class="btn btn-info btn-sm" id="btnSave">Save</button>
+                    <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+            <div class="rowmin" id="divKPIshow">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                            <div id="idCard">
+
+                            </div>
+                            <div class="rowmin row mar-b10" id="tblid1">
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="tblid" class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="IIInd" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead" hidden="hidden"><div>Id </div></div>
+                                            <div class="reddotTableHead" hidden="hidden"><div>Designation Id </div></div>
+                                            <div class="reddotTableHead"><div>Designation </div></div>
+                                            <div class="reddotTableHead"><div>Period</div></div>
+                                            <div class="reddotTableHead"><div>Year</div></div>                                            
+                                            <div class="reddotTableHead"><div>CreatedOn </div></div>
+                                            <div class="reddotTableHead"><div>CreatedBy </div></div>
+                                            <div class="reddotTableHead"><div>LastUpdatedOn </div></div>
+                                            <div class="reddotTableHead"><div>LastUpdatedBy </div></div>
+                                        </div>
+                                    </div>
+                                    <div id="IIIbody" class="reddotTableBody">
+                                        <div id="IIIst" class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>Id</div></div>
+                                            <div class="reddotTableCell Abcd" hidden="hidden"><div>Designation Id</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Designation</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Period</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Year</div></div>                                            
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div>CreatedBy</div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div>LastUpdatedBy</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GetPartial">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script type="text/javascript">
+    var tblhead1 = ['TnCId', 'DesigId', 'DesigName', 'Period', 'Years', 'CreatedOn', 'CreatedBy', 'LastUpdatedOn', 'LastUpdatedBy'];
+    var tblhide = [];
+    var tblhead2 = [];
+    var dateCond = ['CreatedOn', 'LastUpdatedOn'];
+    var arr = [];
+    var curPage = 1;
+    function GetTncData() {
+        debugger;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        $('.loader1').show();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETTNC", data, dateCond, tblhead1, tblhide, tblhead2);
+        debugger;
+    }
+    //#region Next Button*/
+    $('.next').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage++;
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (curPage > arr.data[0].TotalCount)
+            curPage = 0;
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETTNC", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Prev Button*/
+    $('.prev').bind('click', function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $("#Search-Forms").val().toLowerCase();
+        if (arr.data[0].TotalCount < 50) {
+            $(".loader1").hide();
+            return;
+        }
+        curPage--;
+
+        if (curPage < 0)
+            curPage = (arr.data[0].TotalCount - 1);
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETTNC", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    //#region Search Textbox*/
+    $("#Search-Forms").on("keyup", function (e) {
+        e.preventDefault();
+        $(".loader1").show();
+        var value1 = $(this).val().toLowerCase();
+        var data = JSON.stringify({
+            pagesize: 50,
+            pageno: curPage,
+            psearch: value1,
+        });
+        arr = RedDot_DivTable_Fill("III", "/GETTNC", data, dateCond, tblhead1, tblhide, tblhead2);
+    });
+    //#endregion
+    $(document).ready(function () {
+        $('.loader1').show();
+        GetTncData();
+        $('.loader1').hide();
+        $("#divKPIshow").show();
+        //GetKPIdetails();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    $(document).on('click', '#btnAdd', function (e) {
+        e.preventDefault();
+        $.post("/ADDTNC", { TEMPId: -1 }, function (response) {
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();            
+        });
+    });
+    $(document).on('click', '#btnCancel', function (e) {
+        e.preventDefault();
+        RedDot_Button_Init_HideShow();
+        $("#idCard").html("");
+        $("#divKPIshow").show();
+        $("#ContantsPayment").hide();
+        $("#btnNew").show();
+        $("#btnSave").hide();
+        $("#btnCancel").hide();
+    });
+    var tblDetails = ['HdnSrno', 'txtTermsAndCondition'];
+    $(document).on("focusout", "#IIst input[id^='txtTermsAndCondition']", function (e) {
+        e.preventDefault();
+        var m = $(".OriginatorDet").length;
+        var tr = $("#IIst").clone(true);
+        var tr2 = $(this).closest("#IIst");
+        var Hdnsrno = tr2.find("input[id^='HdnSrno']").val();
+        var TnC = tr2.find("input[id^='txtTermsAndCondition']").val();        
+        if (TnC == '') {
+            RedDotAlert_Warning("Please Fill The Field");
+            return;
+        }
+        //tr.find("input[id^='AchivePercentFrom']").val('');
+        //tr.find("input[id^='AchivePercentTo']").val('');
+        //tr.find("input[id^='IncentivePercent']").val('');
+        if (m > parseInt(Hdnsrno)) {
+            return;
+        }
+        var count1 = parseInt(Hdnsrno) + 1;
+        tr.find("input[id^='HdnSrno']").val(count1);
+        RedDot_Table_Attribute(tr, tblDetails, count1, ".OriginatorDet", "hdncount");
+        $("#IIbody").append(tr);
+    });
+    var counter = 0;
+
+    $(document).on('click', '.ibtnDel', function (e) {
+        e.preventDefault();
+        var count2 = parseInt($("#hdncount").val());
+        var tr = $(this).closest("#IIst");
+        var m = tr.find("input[id^='HdnSrno']").val();
+        if (count2 == 1 || m == count2) {
+            return;
+        }
+        RedDot_Table_DeleteActivity(tr, tblDetails, ".OriginatorDet", "hdncount");
+    });
+    $(document).on('click', '#btnSave', function () {
+        var RDD_IncentiveTNC = {
+            TnCId: $("#TnCId").val(),
+            DesignationId: $("#DesigId option:selected").val(),
+            Years: $("#Years option:selected").val(),
+            Period: $("#Period option:selected").val(),
+            EditFlag: $("#EditFlag").val(),
+            RDD_IncentiveTermsAndConditionTransList: []
+        };
+        $(".OriginatorDet").each(function () {
+            var Currow = $(this).closest("#IIst");
+            var TnC = $(this).find("[name^='txtTermsAndCondition']").val();            
+            if (TnC != '' && TnC != undefined) {
+                var RDD_IncentiveTNCTrans = {
+                    TnC: TnC                    
+                };
+                RDD_IncentiveTNC.RDD_IncentiveTermsAndConditionTransList.push(RDD_IncentiveTNCTrans);
+            }
+        });
+        var data = JSON.stringify({ RDD_IncentiveTNC: RDD_IncentiveTNC });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveIncentiveTNC", "Incentive_TandC")',
+            async: false,
+            cache: false,
+            data: data,
+            dataType: "Json",
+            contentType: "Application/json",
+            success: function (data) {
+                debugger
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    window.location.href = '@Url.Action("Index", "Incentive_TandC")';
+                } else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+            }
+        });
+    });
+    $("#IIIbody").on('dblclick', "#IIIst", function (e) {
+        e.preventDefault();
+        var TEMPId = $(this).closest("IIIst").prevObject.find(".Abcd").eq(0).text();
+        $.post("/ADDTNC", { TEMPId: TEMPId }, function (response) {
+            $("#idCard").html(response);
+            RedDot_Button_New_HideShow();
+        });
+    });
+</script>

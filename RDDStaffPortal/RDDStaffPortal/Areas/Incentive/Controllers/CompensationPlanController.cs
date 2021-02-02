@@ -224,7 +224,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
             return Json(new { data = rDD_CompPlan_s }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GeneratePdf(int CompPlanid, string Email2, string MailFlag, string Acceptstatus)
+        public ActionResult GeneratePdf(/*int CompPlanid, string Email2, string MailFlag, string Acceptstatus*/)
         {
             try
             {
@@ -233,11 +233,11 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                 DataSet ds3;
                 SqlParameter[] prm =
                 {
-                     new SqlParameter("@Compplanid",CompPlanid)
+                     new SqlParameter("@Compplanid",1)
                 };
-                //string MailFlag = "False";
-                //string Email2 = "pratim.d@reddotdistribution.com";
-                //string Acceptstatus="";
+                string MailFlag = "False";
+                string Email2 = "pratim.d@reddotdistribution.com";
+                string Acceptstatus = "";
                 ds = Com.ExecuteDataSet("RDD_CompensationPlanPDF", CommandType.StoredProcedure, prm);
                 int EmployeeId= Convert.ToInt32(ds.Tables[0].Rows[0]["EmployeeId"]);
                 int Desigid= Convert.ToInt32(ds.Tables[0].Rows[0]["DesigId"]);
@@ -249,7 +249,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                 ds2 = CompPlanDbOp.GetLoginMail(EmployeeId);
                 ds3 = CompPlanDbOp.GetKpiTncs(Desigid, Period, Year);   
                 string Email1=ds2.Tables[0].Rows[0]["Email"].ToString();
-                string TnC = ds3.Tables[0].Rows[0]["TermsAndCondition"].ToString();
+                //string TnC = ds3.Tables[1].Rows[0]["TnC"].ToString();
                 if (MailFlag == "False")
                 {
                     StringBuilder sb = new StringBuilder();
@@ -301,6 +301,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     sb.Append("</tr>");
                     int i = 0;
                     int j = 0;
+                    int k = 0;
                     decimal total = 0;
                     decimal total1 = 0;
                     decimal total2 = 0;
@@ -387,9 +388,15 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     sb.Append("<tr width='100%'> ");
                     sb.Append("<td width = '100%'><span style = 'font-size:12px;font-family:calibri;'><b><u>Terms & Condition:</u></b></span> </td>");                    
                     sb.Append("</tr>");
-                    sb.Append("<tr width='100%'> ");                    
-                    sb.Append("<td width = '100%'><span style = 'font-size:12px;font-family:calibri;'> <b> " + TnC + " </b> </span> </td>");
-                    sb.Append("</tr>");
+                    while (ds3.Tables[1].Rows.Count > k)
+                    {
+                        sb.Append("<tr width='100%'> ");
+                        sb.Append("<td width = '100%'><span style = 'font-size:10px;font-family:calibri;'> <b> ");
+                        sb.Append(ds3.Tables[1].Rows[k]["TnC"]);
+                        sb.Append("</b></span></td>");
+                        sb.Append("</tr>");
+                        k++;
+                    }                   
                     sb.Append("</table>");
                     sb.Append("</table>");
                     #endregion
@@ -416,7 +423,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                                 string Tomail = Email1;
                                 string cc = Email2;
                                 var Html = " Dear " + EmployeeName + ", <br/><br/>  Your compensation plan for <b> " + Period + "-" + Year + " </b> is set by your line manager. Kindly click on below link to take action. <br/> ";
-                                Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
+                                Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + 1 + "" + "<br/><br/>";
                                 Html = Html + "Best Regards, <br/> Red Dot Distribution.";
                                 string Filename = EmployeeName + "-" + Period + "-" + Year + " " + "Comp Plan.pdf";
                                 Attachment at = new Attachment(new MemoryStream(bytes), Filename);
@@ -449,7 +456,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                     else
                     {
                         Html = "" + EmployeeName + " requested you to change the compensation plan for <b> " + Period + "-" + Year + " </b>. Kindly click on the below link to take action. <br/> ";
-                        Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
+                        Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + 1 + "" + "<br/><br/>";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
                         Subject = EmployeeName + " requested to change the compensation plan for" + " " + Period + "-" + Year;
                     }

@@ -333,10 +333,10 @@
         $.post("/ADDKPI", { TEMPId: -1 }, function (response) {
 
             $("#idCard").html(response);
-                    RedDot_Button_New_HideShow();
+            RedDot_Button_New_HideShow();
             GetKPIdetails();
             GetKPIdetailsModal();
-                })
+        });
     });
     $(document).on('click', '#btnCancel', function (e) {
         e.preventDefault();

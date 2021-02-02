@@ -1,0 +1,138 @@
+﻿@model RDDStaffPortal.DAL.DataModels.Incentive.RDD_IncentiveTNC
+@{
+    var count = 1;
+}
+@Html.HiddenFor(m => m.EditFlag, true)
+@Html.HiddenFor(m => m.TnCId)
+
+<div class="card-body smform-section">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div id="div-DesigId" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Designation  :</label>
+                <div class="col-md-7 p-0">
+
+                    @Html.DropDownListFor(m => m.DesigId, Model.DesignationNameList, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Period" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Period  :</label>
+                <div class="col-md-7 p-0">
+                    @Html.DropDownListFor(m => m.Period, new List<SelectListItem> { new SelectListItem { Text = "--- Select Period ---", Value = "0" },
+                                 new SelectListItem { Text = "H1", Value = "H1" },
+                                 new SelectListItem { Text = "H2", Value = "H2" }
+                                  }, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div id="div-Years" class="form-group form-inline has-error1">
+                <label for="Database" class="col-md-3 col-form-label p-0">Year  :</label>
+                <div class="col-md-7 p-0">
+
+                    @Html.DropDownListFor(m => m.Years, Model.YearList, new { @class = "form-control form-control-sm dropcheck" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+        <div class="quick-scroll scrollbar-inner">
+            <div class="reddotTable sm-form m-0">
+                <div class="reddotTable sm-form mar-t0">
+                    <div id="IInd" class="reddotTableBody">
+                        <div class="reddotTableRow odd-even-row">
+                            <div class="reddotTableHead width90per"><div>Terms And Conditions</div></div>
+                            <div class="reddotTableHead width10per"><div>Action </div></div>
+                        </div>
+                    </div>
+                    <div id="IIbody" class="reddotTableBody">
+                        @if (Model.RDD_IncentiveTermsAndConditionTransList != null)
+                        {
+                            for (int i = 0; i < Model.RDD_IncentiveTermsAndConditionTransList.Count(); i++)
+                            {
+                                <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                                    <div class="reddotTableCell width90per Abcd">
+                                        <div>
+                                            @Html.TextBox(string.Concat("txtTermsAndCondition", count), Model.RDD_IncentiveTermsAndConditionTransList[count - 1].TnC, new { @class = "form-control form-control-sm inputs" })
+                                            @Html.Hidden(string.Concat("HdnSrno", count), count)
+
+                                        </div>
+                                    </div>
+
+                                    <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                                </div>
+                                count++;
+                            }
+                        }
+
+                        <div id="IIst" class="reddotTableRow odd-even-row OriginatorDet">
+                            <div class="reddotTableCell width90per Abcd"><div>@Html.Hidden(string.Concat("HdnSrno", count), count) @Html.TextBox(string.Concat("txtTermsAndCondition", count), "", new { @class = "form-control form-control-sm inputs" })</div></div>
+
+                            <div class='reddotTableCell width10per'><div><button type='button' title='' class='btn btn-danger delete btn-sm ibtnDel' data-original-title='Delete' id='btntblDel'> <i class='fas fa-trash'></i></button></div></div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden(string.Concat("hdncount"), count)
+            </div>
+        </div>
+    </div>
+    <br />
+    @*<div class="row">
+            <b>**Note**     INCENTIVE % WILLL BE  '-1'  IF SALES PERSON WILL GET INCENTIVE WHAT THEY HAVE ACHIVED</b>
+        </div>*@
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script type="text/javascript">
+    if ($("#EditFlag").val() == "True") {
+        $(".txtcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+        $(".dropcheck").each(function (index) {
+            if ($("#" + $(this).attr("id") + "").val() !== '0') {
+                $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+            }
+        });
+        $(".OriginatorDet").each(function () {
+
+            var HdnEarnOrDeduct = $(this).find("[name^='HdnddlEarnOrDeduct']").val();
+            $(this).find("[name^='ddlEarnOrDeduct']").val(HdnEarnOrDeduct).trigger('change');
+        });
+    }
+    $(".txtcheck").blur(function () {
+
+
+        if ($(this).val() !== '') {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+        }
+        else {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+            $(this).val('');
+
+        }
+    });
+    $(".dropcheck").blur(function () {
+
+
+        if ($(this).val() !== '0') {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
+
+        }
+        else {
+            $("#div-" + $(this).attr("id") + "").removeClass('has-success1').addClass('has-error1');
+            $(this).val('0').trigger('change');
+
+        }
+    });
+</script>

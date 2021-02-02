@@ -126,6 +126,7 @@
     <Compile Include="DataModels\Incentive\RDD_GenerateComp.cs" />
     <Compile Include="DataModels\Incentive\RDD_IncentiveKPI.cs" />
     <Compile Include="DataModels\Incentive\RDD_IncentiveSlab.cs" />
+    <Compile Include="DataModels\Incentive\RDD_IncentiveTNC.cs" />
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
     <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Incentive\RDD_GenerateCompensation_DbOperation.cs" />
     <Compile Include="Incentive\RDD_IncentiveKPI_DbOperation.cs" />
     <Compile Include="Incentive\RDD_IncentiveSlab_DbOperation.cs" />
+    <Compile Include="Incentive\RDD_IncentiveTNC_DbOperation.cs" />
     <Compile Include="InitialSetup\DashBoardDbOperation.cs" />
     <Compile Include="InitialSetup\DepartmentsDbOperation.cs" />
     <Compile Include="InitialSetup\DesignationDbOperation.cs" />
