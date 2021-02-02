@@ -510,6 +510,7 @@
         });
     });
     $(document).on('click', '#btnSave', function () {
+        $('.loader1').show();
         var RDD_CompPlan = {
             CompPlanId: $("#CompPlanId").val(),
             Years: $("#Years option:selected").val(),
@@ -578,8 +579,8 @@
             data: data,
             dataType: "Json",
             contentType: "Application/json",
-            success: function (data) {
-                debugger
+            success: function (data) {                
+                $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
                     var Compid = data[0].Id;
@@ -597,9 +598,9 @@
         });
     });
 
-    $(document).on('click', '#btnPrint', function () {
+    @*$(document).on('click', '#btnPrint', function () {
         window.location.href = '@Url.Action("GeneratePdf", "CompensationPlan")';
-    });
+    });*@
 
     $("#IIIbody").on('dblclick', "#IIIst", function (e) {
         e.preventDefault();

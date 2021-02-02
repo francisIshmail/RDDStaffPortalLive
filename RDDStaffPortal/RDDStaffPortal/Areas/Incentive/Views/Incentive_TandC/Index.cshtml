@@ -220,6 +220,7 @@
         RedDot_Table_DeleteActivity(tr, tblDetails, ".OriginatorDet", "hdncount");
     });
     $(document).on('click', '#btnSave', function () {
+        $('.loader1').show();
         var RDD_IncentiveTNC = {
             TnCId: $("#TnCId").val(),
             DesignationId: $("#DesigId option:selected").val(),
@@ -249,6 +250,7 @@
             contentType: "Application/json",
             success: function (data) {
                 debugger
+                $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
                     window.location.href = '@Url.Action("Index", "Incentive_TandC")';
