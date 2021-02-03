@@ -497,6 +497,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.JobBandId = EmpData.JobBandId;
                 rdd_empreg.JobGradeId = EmpData.JobGradeId;
                 rdd_empreg.ManagerIdL2 = EmpData.ManagerIdL2;
+                rdd_empreg.Emergency_Contact_Relation = EmpData.Emergency_Contact_Relation;
+                rdd_empreg.Emergency_Contact_Name = EmpData.Emergency_Contact_Name;
 
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
                 rdd_empreg.About = EmpData.About;

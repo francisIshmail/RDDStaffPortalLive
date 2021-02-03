@@ -46,7 +46,8 @@ namespace RDDStaffPortal.Areas.HR.Models
         public int ManagerIdL2 { get; set; }
         public int JobBandId { get; set; }
         public string JobBandName { get; set; }
-
+        public string Emergency_Contact_Name { get; set; }
+        public string Emergency_Contact_Relation { get; set; }
         public int JobGradeId { get; set; }
         public string JobGradeName { get; set; }
         public string About { get; set; }

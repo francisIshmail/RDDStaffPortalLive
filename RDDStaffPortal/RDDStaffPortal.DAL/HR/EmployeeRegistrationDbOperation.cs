@@ -66,6 +66,9 @@ namespace RDDStaffPortal.DAL.HR
                                         new SqlParameter("@p_DesigId",EmpData.DesigId),
                             new SqlParameter("@p_DeptId",EmpData.DeptId),
                              new SqlParameter("@p_Emergency_Contact",EmpData.Emergency_Contact),
+                              new SqlParameter("@p_Emergency_Contact_Name",EmpData.Emergency_Contact_Name),
+                            new SqlParameter("@p_Emergency_Contact_Relation",EmpData.Emergency_Contact_Relation),
+
                               new SqlParameter("@p_passport_no",EmpData.passport_no),
                                new SqlParameter("@p_CreatedBy",EmpData.CreatedBy),
                                 new SqlParameter("@p_EmployeeNo",EmpData.EmployeeNo),
@@ -218,6 +221,8 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.EmployeeId = Convert.ToInt32(DS.Tables[0].Rows[0]["EmployeeId"]);
                         }
+                        emp.Emergency_Contact_Name = (DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString()==null && DBNull.Value.Equals(DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString())) ? "": DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString();
+                        emp.Emergency_Contact_Relation = (DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString()==null && DBNull.Value.Equals(DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString())) ? "": DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString();
 
                         if (DS.Tables[0].Rows[0]["Id"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Id"]))
                         {

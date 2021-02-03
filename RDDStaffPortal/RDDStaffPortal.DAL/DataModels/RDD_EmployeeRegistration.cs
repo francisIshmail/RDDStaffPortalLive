@@ -90,6 +90,8 @@ namespace RDDStaffPortal.DAL.DataModels
         public string IsUserInRoleHR { get; set; }
         public string IsUserInRoleHeadOfFinance { get; set; }
         public string Emergency_Contact { get; set; }
+        public string Emergency_Contact_Name { get; set; }
+        public string Emergency_Contact_Relation { get; set; }
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
 

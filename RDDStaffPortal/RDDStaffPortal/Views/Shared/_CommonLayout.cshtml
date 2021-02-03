@@ -195,7 +195,7 @@
 
 
                         <li class="nav-item">
-                            <a href="~/LMS/RDD_LeaveApproval/Index" >
+                            <a href="~/LMS/RDD_LeaveApproval/Index">
                                 <i class="fas fa-user-circle menu-icon-c"></i> <p>LMS </p>
                         <li class="nav-item">
                             <a href="https://reddotdistribution.atlassian.net/servicedesk/customer/portal/2" target="_blank">
@@ -699,25 +699,25 @@
 
     <script src="~/Scripts/multiselect/multiselect.js"></script>
 
-    
+
 
     <script type="text/javascript">
 
 
         $(document).ready(function () {
             debugger
-           
+
 
             (function ($) {
                 $(function () {
-                   
+
                     $(":input[type='search']").removeAttr("autocomplete");
                     $(":input[type='search']").attr("autocomplete", "off");
                    /// $(":input").attr("autocomplete", "nope");
-                  
+
                     $(":input[type='search']").attr("autocomplete", "nope");
                     $(":input[type='search']").val("");
-                  
+
 
                 });
             })(jQuery);
@@ -989,6 +989,25 @@
             //});
 
         }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+
+            $(".wmd-view-topscroll").scroll(function () {
+                $(".wmd-view")
+                    .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+            });
+
+            $(".wmd-view").scroll(function () {
+                $(".wmd-view-topscroll")
+                    .scrollLeft($(".wmd-view").scrollLeft());
+            });
+
+        });
+
+        $(window).load(function () {
+            $('.scroll-div').css('width', $('.dynamic-div').outerWidth());
+        });
     </script>
     <style>
         .demo-scrollbar {
