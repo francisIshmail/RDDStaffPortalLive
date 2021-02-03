@@ -11,6 +11,7 @@ using System.Data;
 
 namespace RDDStaffPortal.Areas.LMS.Controllers
 {
+    [Authorize]
     public class RDD_LeaveTypeController : Controller
     {
         RDD_LeaveType_Db_Operation rDD_LeaveType_TemplatesDb = new RDD_LeaveType_Db_Operation();

@@ -43,7 +43,7 @@ namespace RDDStaffPortal.DAL.LMS
             ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, prm);
             return ds;
         }
-        public string UpdateAcceptStatus(int LeaveRequestId,string ApproverRemarks)
+        public string UpdateAcceptStatus(int LeaveRequestId,string ApproverRemarks,string LoggedInUser)
         {
             string Msg = "";
             try
@@ -52,7 +52,8 @@ namespace RDDStaffPortal.DAL.LMS
                 {
                         new SqlParameter("@Type","Approve"),
                         new SqlParameter("@LeaveRequestId",LeaveRequestId),
-                        new SqlParameter("@ApproverRemarks",ApproverRemarks)
+                        new SqlParameter("@ApproverRemarks",ApproverRemarks),
+                        new SqlParameter("@LoggedInUser",LoggedInUser)
                 };                
                 Msg = Convert.ToString(com.ExecuteScalar("RDD_ApprovalStatus", parm,CommandType.StoredProcedure));
                 
@@ -63,7 +64,7 @@ namespace RDDStaffPortal.DAL.LMS
             }
             return Msg;
         }
-        public string UpdateRejectStatus(int LeaveRequestId, string ApproverRemarks)
+        public string UpdateRejectStatus(int LeaveRequestId, string ApproverRemarks,string LoggedInUser)
         {
             string Msg = "";
             try
@@ -72,7 +73,8 @@ namespace RDDStaffPortal.DAL.LMS
                 {
                         new SqlParameter("@Type","Decline"),
                         new SqlParameter("@LeaveRequestId",LeaveRequestId),
-                        new SqlParameter("@ApproverRemarks",ApproverRemarks)
+                        new SqlParameter("@ApproverRemarks",ApproverRemarks),
+                        new SqlParameter("@LoggedInUser",LoggedInUser)
                 };
                 Msg = Convert.ToString(com.ExecuteScalar("RDD_ApprovalStatus", parm, CommandType.StoredProcedure));
 

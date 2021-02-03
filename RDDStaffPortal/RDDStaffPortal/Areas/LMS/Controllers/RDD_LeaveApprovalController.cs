@@ -77,12 +77,12 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         [Route("LEAVEAPPROVE")]
         public ActionResult ApprovalRequest(int LeaveRequestId,string ApproverRemarks)
         {
-            return Json(rDD_LeaveApproval_TemplatesDb.UpdateAcceptStatus(LeaveRequestId, ApproverRemarks), JsonRequestBehavior.AllowGet);
+            return Json(rDD_LeaveApproval_TemplatesDb.UpdateAcceptStatus(LeaveRequestId, ApproverRemarks, User.Identity.Name ), JsonRequestBehavior.AllowGet);
         }
         [Route("LEAVEDECLINE")]
         public ActionResult DeclineRequest(int LeaveRequestId, string ApproverRemarks)
         {
-            return Json(rDD_LeaveApproval_TemplatesDb.UpdateRejectStatus(LeaveRequestId, ApproverRemarks), JsonRequestBehavior.AllowGet);
+            return Json(rDD_LeaveApproval_TemplatesDb.UpdateRejectStatus(LeaveRequestId, ApproverRemarks,User.Identity.Name), JsonRequestBehavior.AllowGet);
         }
         [Route("LEAVEDETAILS")]
         public ActionResult GetApprovalData(int LeaveRequestId)
@@ -270,10 +270,10 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     Html = Html + "Your" + " " + LeaveName + " " + "application from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + "  is approved by your manager.<br/><br/>";
 
                 }
-                Html = Html + "Remarks:" + Comments + ",<br/><br/>";
+                Html = Html + "Remarks : " + Comments + ",<br/><br/>";
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                Tomail = "mainak@reddotdistribution.com";
-                cc = "pratim.d@reddotdistribution.com"+","+"mainakg81@gmail.com";
+               // Tomail = "mainak@reddotdistribution.com";
+               // cc = "pratim.d@reddotdistribution.com"+","+"mainakg81@gmail.com";
                 SendMail.Send(Tomail, cc, Subject, Html, true);
 
             }
@@ -330,7 +330,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     Html = Html + "Your" + " " + LeaveName + " " + "leave application from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + "  is rejected by your manager.<br/><br/>";
 
                 }
-                Html = Html + "Remarks:" + Comments + ",<br/><br/>";
+                Html = Html + "Remarks : " + Comments + ",<br/><br/>";
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
                // Tomail = "mainak@reddotdistribution.com";
                // cc = "pratim.d@reddotdistribution.com" + "," + "mainakg81@gmail.com";
