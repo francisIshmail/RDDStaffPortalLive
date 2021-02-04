@@ -48,6 +48,68 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 throw ex;
             }
         }
+        public ActionResult ShowMyLeaveDetailsLeaveTypewise( int EmployeeId,int LeaveTypeId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string Username = User.Identity.Name;
+            try
+            {
+                ds = rDD_LeaveApproval_TemplatesDb.ShowMyLeaveDetailsLeaveTypewise(EmployeeId, LeaveTypeId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult ShowMyLeaveDetailsdatewise(int EmployeeId, string FromDate,string ToDate )
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string Username = User.Identity.Name;
+            try
+            {
+                ds = rDD_LeaveApproval_TemplatesDb.ShowMyLeaveDetailsdatewise(EmployeeId, FromDate, ToDate);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult ShowMyLeaveDetailsallwise(int EmployeeId, int LeaveTypeId,string FromDate,string ToDate)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string Username = User.Identity.Name;
+            try
+            {
+                ds = rDD_LeaveApproval_TemplatesDb.ShowMyLeaveDetailsallwise(EmployeeId, LeaveTypeId,FromDate,ToDate);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetEmployeeAutoComplete()
+        {
+            return Json(rDD_LeaveApproval_TemplatesDb.GetEmployeeModal(), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ShowLeaveRequestDetail(int Loginuserid)
         {            
             ContentResult retVal = null;
@@ -60,6 +122,26 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
                 }
                 return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetCountryWiseLeaveType(int EmployeeId)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = rDD_LeaveApproval_TemplatesDb.CountryLeaveType(EmployeeId);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
             }
             catch (Exception ex)
             {
@@ -118,7 +200,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 throw ex;
             }
         }
-        [Route("GETHOLIDAY")]
+        
         public ActionResult GetHolidayCountryWise(int EmployeeId)
         {
             ContentResult retVal = null;

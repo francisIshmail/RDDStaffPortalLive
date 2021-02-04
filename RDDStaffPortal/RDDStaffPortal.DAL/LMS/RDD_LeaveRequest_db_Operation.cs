@@ -158,7 +158,7 @@ namespace RDDStaffPortal.DAL.LMS
                             LeaveTypeId = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? Convert.ToInt32(dr["LeaveTypeId"].ToString()) : 0,
                             FromDate = Convert.ToDateTime(dr["FromDate"].ToString()),
                             ToDate = Convert.ToDateTime(dr["ToDate"].ToString()),
-                            NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? (dr["NoOfDays"].ToString()) : "",
+                            NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? Convert.ToInt32((dr["NoOfDays"].ToString())) : 0,
                             LeaveStatus = !string.IsNullOrWhiteSpace(dr["LeaveStatus"].ToString()) ? dr["LeaveStatus"].ToString() : "",
                             ApproverRemarks = !string.IsNullOrWhiteSpace(dr["ApproverRemarks"].ToString()) ? dr["ApproverRemarks"].ToString() : "",
                             AttachmentUrl = !string.IsNullOrWhiteSpace(dr["AttachmentUrl"].ToString()) ? dr["AttachmentUrl"].ToString() : "",
@@ -175,7 +175,7 @@ namespace RDDStaffPortal.DAL.LMS
                     LeaveTypeId = 0,
                     FromDate = null,
                     ToDate = null,
-                    NoOfDays = "",
+                    NoOfDays = 0,
                     LeaveStatus = "",
                     ApproverRemarks = "",
                     AttachmentUrl = "",
@@ -205,7 +205,7 @@ namespace RDDStaffPortal.DAL.LMS
                         rDD_LeaveRequest.LeaveTypeId = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? Convert.ToInt32(dr["LeaveTypeId"].ToString()) : 0;
                         rDD_LeaveRequest.FromDate = Convert.ToDateTime(dr["FromDate"].ToString());
                         rDD_LeaveRequest.ToDate = Convert.ToDateTime(dr["ToDate"].ToString());
-                        rDD_LeaveRequest.NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? dr["NoOfDays"].ToString() : "";
+                        rDD_LeaveRequest.NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? Convert.ToInt32(dr["NoOfDays"].ToString()) : 0;
                         rDD_LeaveRequest.LeaveStatus = !string.IsNullOrWhiteSpace(dr["LeaveStatus"].ToString()) ? dr["LeaveStatus"].ToString() : "";
                         rDD_LeaveRequest.ApproverRemarks = !string.IsNullOrWhiteSpace(dr["ApproverRemarks"].ToString()) ? dr["ApproverRemarks"].ToString() : "";
                         rDD_LeaveRequest.AttachmentUrl = !string.IsNullOrWhiteSpace(dr["AttachmentUrl"].ToString()) ? dr["AttachmentUrl"].ToString() : "";
@@ -220,7 +220,7 @@ namespace RDDStaffPortal.DAL.LMS
                 rDD_LeaveRequest.LeaveTypeId = 0;
                 rDD_LeaveRequest.FromDate = null;
                 rDD_LeaveRequest.ToDate = null;
-                rDD_LeaveRequest.NoOfDays = "";
+                rDD_LeaveRequest.NoOfDays = 0;
                 rDD_LeaveRequest.LeaveStatus = "";
                 rDD_LeaveRequest.ApproverRemarks = "";
                 rDD_LeaveRequest.AttachmentUrl = "";

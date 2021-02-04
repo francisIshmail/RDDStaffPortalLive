@@ -69,7 +69,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
 
             if (t[0].Id != -1)
             {
-                if (RDD_LeaveRequest.Editflag == false)
+               
                 {
                     if (t[0].Outtf == true)
                     {

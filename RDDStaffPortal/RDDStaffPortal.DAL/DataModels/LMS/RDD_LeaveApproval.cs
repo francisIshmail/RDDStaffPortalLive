@@ -19,7 +19,7 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public string LeaveName { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public string NoOfDays { get; set; }        
+        public decimal NoOfDays { get; set; }        
         public int ManagerId { get; set; }
         public string ManagerType { get; set; }
         public string ApprovalStatus { get; set; }
@@ -44,7 +44,14 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
 
         public string ErrorMsg { get; set; }
     }
-   
+    public class Rdd_comonDrops
+    {
+        public string Code { get; set; }
+        public string CodeName{ get; set; }
+
+
+    }
+
 
 
 }

@@ -585,13 +585,7 @@
         
         calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
         
-        loginEmpid = $("#EmployeeId").val();
-        //if (loginEmpid != '' || loginEmpid != undefined) {
-        //    Empides = loginEmpid;
-        //}
-        //else {
-        //    Empides = changeEmpid;
-        //}
+        loginEmpid = $("#EmployeeId").val();      
         GetDashboardData(loginEmpid);
         //$("#backup1").attr("autocomplete", "on");
         //$("#backup2").attr("autocomplete", "on");
@@ -662,12 +656,7 @@
 
                 }
             });
-        }
-        //$(document).on("focusout", "#EmployeeIdPopup", function () {
-        //    debugger
-        //    var EmployeeId = $("#EmployeeIde").val();
-          
-        //});
+        }        
         $(document).on("focusout", "#EmployeeIdPopup", function () {
             debugger
             $("#Leavedtls").empty();
