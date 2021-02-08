@@ -226,6 +226,10 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
 
         public ActionResult GeneratePdf(int CompPlanid, string Email2, string MailFlag, string Acceptstatus)
         {
+            string MailResponse = "";
+            string EventType = "";
+            string Tomail="";
+            string cc = "";
             try
             {
                 DataSet ds;
@@ -252,6 +256,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                 //string TnC = ds3.Tables[1].Rows[0]["TnC"].ToString();
                 if (MailFlag == "False")
                 {
+                    EventType = "SetCompPlan";
                     StringBuilder sb = new StringBuilder();
                     //sb.Append("<table width='100%' align='center' border='1'><tr><td width='100%' colspan='6'><table width='100%' align='center' border='0'><tr><td colspan = '6'> &nbsp; </td></tr><tr><td colspan = '6' align = 'center'><span style = 'font-size:medium'> <b> <u> PAYMENT VOUCHER </u> </b> </span> </td></tr><tr><td colspan = '4' width = '70%'> &nbsp; </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> PV No </span> </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> DU000001 </b> </span> </td></tr><tr><td width = '17%'><span style = 'font-size:10px;font-family:calibri;'> Paid to Mr./ Ms.</span>   </td><td width = '52%' colspan = '3'><span style = 'font-size:10px;font-family:calibri;'> <b><u> FRONTLINE LOGISTICS JAFZA </u></b> </span> </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Date </span> </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> 14 - 01 - 2020 </b> </span> </td></tr><tr><td width = '17%'><span style = 'font-size:10px;font-family:calibri;'> Cash / Cheque No </span> </td><td width = '18%'><span style = 'font-size:10px;font-family:calibri;'> <b> 711075 </b> </span> </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Bank Name </span> </td><td width = '20%'><span style = 'font-size:10px;font-family:calibri;'> <b> Citibank AED </b> </span> </td><td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> Payment Date </span> </td> <td width = '15%'><span style = 'font-size:10px;font-family:calibri;'> <b> 14 - 01 - 2020 </b> </span> </td></tr><tr><td width = '100%' colspan = '6'> &nbsp;<br/></td></tr><tr><td width = '100%' colspan = '6'><table width = '100%' align = 'left' border = '1'><tr><td width = '8%'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> SrNo </b> </span>  </td> <td width = '72%' align = 'center'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Particulars </b> </span> </td><td width = '20%' align = 'right'> &nbsp;<span style = 'font-size:10px;font-family:calibri;'>  <b> Amount(AED) </b> </span> </td></tr><tr><td width='8%' align='center' >  <span style='font-size:10px;font-family:calibri;'></span></td><td width='72%'>  <span style='font-size:10px;font-family:calibri;'>Payment against Nov Dec 19 Invoices</span></td><td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'>15485.00</span></td></tr><tr> <td width='8%' >  <span style='font-size:10px;font-family:calibri;'>  &nbsp; </span> </td>   <td width='72%' align='right'  >  <span style='font-size:10px;font-family:calibri;'> <b> TOTAL ( AED ) </b> </span> </td><td width='20%' align='right' >  <span style='font-size:10px;font-family:calibri;'> <b> 15,485.00 </b> </span> </td>  </tr></table></td></tr></tr><tr><td width = '17%'> <span style = 'font-size:10px;font-family:calibri;'> Amount in Word</span></td><td width = '83%' colspan = '5'> <span style = 'font-size:10px;font-family:calibri;'> <b> (AED) Fifteen Thousand Four Hundred Eighty Five Only.</b></span></td></tr><tr><td width = '100%' colspan = '6'> <span style = 'font-size:10px;font-family:calibri;'> &nbsp; &nbsp;</span></td></tr><tr><td width = '17%'> <span style = 'font-size:10px;font-family:calibri;'> Prepared by</span></td><td width = '18%'> <span style = 'font-size:10px;font-family:calibri;'> <b> shirin</b></span></td></tr><br/><tr></tr><tr><td width = '17%'> <span style = 'font-size:10px;font-family:calibri;'> Received by Name</span></td><td width = '53%' colspan = '3'> <span style = 'font-size:10px;font-family:calibri;'> <b> _____________________________</b></span></td><td width = '15%'> <span style = 'font-size:10px;font-family:calibri;'> &nbsp;</span></td><td width = '15%'> <span style = 'font-size:10px;font-family:calibri;'> &nbsp;</span></td></tr></table></tr></td></table>");
                     #region html
@@ -420,8 +425,8 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                                 pdfDoc.Close();
                                 byte[] bytes = ms.ToArray();
                                 ms.Close();
-                                string Tomail = Email1;
-                                string cc = Email2;
+                                Tomail = Email1;
+                                cc = Email2;
                                 var Html = " Dear " + EmployeeName + ", <br/><br/>  Your compensation plan for <b> " + Period + "-" + Year + " </b> is set by your line manager. Kindly click on below link to take action. <br/> ";
                                 Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
                                 Html = Html + "Best Regards, <br/> Red Dot Distribution.";
@@ -442,16 +447,17 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
 
                 else
                 {
-                    string Tomail = Email2;
-                    string cc = Email1;
+                    Tomail = Email2;
+                    cc = Email1;
                     var Html = "";
                     string Subject = "";
                     if (Acceptstatus == "Accepted")
-                    {
+                    {                        
                         Html = "Dear" + Managername + ",<br/><br/>";
                         Html = "" + EmployeeName + " accepted compensation plan for <b> " + Period + "-" + Year + " </b> <br/><br/> ";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
                         Subject = EmployeeName + " accepted compensation plan for" + " " + Period + "-" + Year;
+                        EventType = "AcceptedCompPlan";
                     }
                     else
                     {
@@ -459,6 +465,7 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                         Html = Html + "http://localhost:28986/Incentive/CompensationPlan?CompPlanid=" + CompPlanid + "" + "<br/><br/>";
                         Html = Html + "Best Regards, <br/> Red Dot Distribution.";
                         Subject = EmployeeName + " requested to change the compensation plan for" + " " + Period + "-" + Year;
+                        EventType = "RequestToChangeCompPlan";
                     }
 
                     Tomail = "pratim.d@reddotdistribution.com";
@@ -466,15 +473,25 @@ namespace RDDStaffPortal.Areas.Incentive.Controllers
                    
                     SendMail.Send(Tomail, cc, Subject, Html, true);
                 }
-
-                return RedirectToAction("Index", "CompensationPlan");
+                MailResponse = "Mail Send Successfully";                
             }
 
             catch (Exception ex)
             {
-                return HandleErrorCondition(ex.Message);
+                MailResponse = ex.Message;
+                //return HandleErrorCondition(ex.Message);
             }
-
+            SqlParameter[] prms = new SqlParameter[]
+            {
+                new SqlParameter("@DocId",CompPlanid),
+                new SqlParameter("@ModuleName","CompensationPlan"),
+                new SqlParameter("@EventType",EventType),
+                new SqlParameter("@ToEmailIds",Tomail),
+                new SqlParameter("@CCEmailIds",cc),
+                new SqlParameter("@SendMailResponse",MailResponse)
+            };            
+            string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
+            return RedirectToAction("Index", "CompensationPlan");
         }
         private ActionResult HandleErrorCondition(string message)
         {
