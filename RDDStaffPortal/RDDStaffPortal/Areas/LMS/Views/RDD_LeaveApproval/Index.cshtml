@@ -16,6 +16,9 @@
 @Html.Hidden(string.Concat("HdnLeaveType"))
 @Html.Hidden(string.Concat("HdnFromdate"))
 @Html.Hidden(string.Concat("HdnTodate"))
+@Html.Hidden(string.Concat("HdnfromdateEdit"))
+@Html.Hidden(string.Concat("HdntodateEdit"))
+
 
 <style>
     .disabled:hover {
@@ -892,6 +895,8 @@
             $('#reportrange span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
             $(this).val(picker.startDate.format('MM/DD/YYYY') + '-' + picker.endDate.format('MM/DD/YYYY'));
             $("#divDates").empty();
+            $("#HdnfromdateEdit").val(fromdate);
+            $("#HdntodateEdit").val(todate);
             var weeklyoff = $("#Weeklyoff").val();
             var LeaveRule = $("#LeaveRule").val();
             var weekday = new Array(7);
@@ -981,6 +986,29 @@
                 $("#Leavedtls").append(Header);
             }
         });
+        $('#exampleModal').on('hidden.bs.modal', function (e) {
+
+            $("#Leavedtls").empty();
+            $("#divDates").empty();
+            $("#random").show();
+            if ($("#HR").val() == "True") {
+                $("#EmployeeIdPopup").val('');
+                $("#EmployeeIde").val('0');
+            }
+            $("#Reason").val('');
+            $("#BackUp").val('');
+            $("#BackUp2").val('');
+            $("#hdnBackUp").val('0');
+            $("#hdnBackUp2").val('0');
+            ////$(this)
+            ////    .find("input,textarea")
+            //    .val('')
+            //    .end()
+            $(this)
+                .find("select")
+                .trigger('change')
+                .end()
+        });
 
     });
     $(document).on('change', '#ddlleavetype', function () {
@@ -994,7 +1022,7 @@
         }
         else {
             GetLeaveDetailsByLeaveTypeSearch(empid, lvtypeid);
-        }       
+        }
     });
     $(document).on('click','#btnLeaveRqProcess',function() {
         var currow = $(this).closest("tr");
@@ -1088,7 +1116,7 @@
                             debugger;
                             RedDotAlert_Success(response);
 
-                            window.location.href = "/LMS/RDD_LeaveApproval/SendApprovedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "&Comments=" + comments + "&Backup1Id=" + backup1id + "&Backup2Id=" + backup2id +"";
+                            window.location.href = "/LMS/RDD_LeaveApproval/SendApprovedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "&Comments=" + comments + "&Backup1Id=" + backup1id + "&Backup2Id=" + backup2id + "&LeaveRequestId=" + Lvrqid+"";
                         });
                     }
                     else {
@@ -1142,7 +1170,7 @@
                 $.post('/LEAVEDECLINE', { LeaveRequestId: Lvrqid, ApproverRemarks: comments }, function (data) {
                     RedDotAlert_Success(data);
 
-                    window.location.href = "/LMS/RDD_LeaveApproval/SendRejectedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "&Comments=" + comments + "&Backup1Id=" + backup1id + "&Backup2Id=" + backup2id + "";
+                    window.location.href = "/LMS/RDD_LeaveApproval/SendRejectedEmail?&Fromdate=" + fromdate + "&Todate=" + todate + "&LoginUserid=" + loginUserId + "&EmployeeName=" + Empnm + "&LeaveName=" + leaveNm + "&Comments=" + comments + "&Backup1Id=" + backup1id + "&Backup2Id=" + backup2id + "&LeaveRequestId=" + Lvrqid + "";
                 });
 
             }
@@ -1212,6 +1240,8 @@
             $("#BackUp").val(data.Table2[0].FullName);
             $("#BackUp2").val(data.Table3[0].FullName);
             $("#hdnBackUp2").val(data.Table[0].BackUp2Id);
+            $("#HdnfromdateEdit").val(data.Table[0].FromDate);
+            $("#HdntodateEdit").val(data.Table[0].ToDate);
             if (data.Table[0].AttachmentUrl != null || data.Table[0].AttachmentUrl != undefined) {
                 var filepath = data.Table[0].AttachmentUrl;
                 var fileNameIndex = filepath.lastIndexOf("/") + 1;
@@ -1230,7 +1260,7 @@
             startMin = new Date(startMin);
             var startdayMin = ("0" + startMin.getDate()).slice(-2);
             var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
-            var nowMax = moment(data.Table[0].ToDate, 'YYYY-MM-DD');
+            var nowMax = moment(data.Table[0].ToDate, 'YYYY-MM-DD');            
             nowMax = new Date(nowMax);
             var dayMax = ("0" + nowMax.getDate()).slice(-2);
             var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
@@ -1333,16 +1363,19 @@
             var LeaveDate = $(this).find("[id^='divLvDates']").html();
             var LeaveDay = $(this).find("[id^='ddlDayType']").val();
             var LeaveDayType = $(this).find("[id^='ddlDayType'] option:selected").text();
-            totalday += parseFloat(LeaveDay);
-            var LeaveRequestDetails = {
-                LeaveDate: LeaveDate,
-                LeaveDay: LeaveDay,
-                LeaveDayType: LeaveDayType
-            };
+            if (LeaveDate != undefined) {
+                totalday += parseFloat(LeaveDay);
+            }
+
+            //var LeaveRequestDetails = {
+            //    LeaveDate: LeaveDate,
+            //    LeaveDay: LeaveDay,
+            //    LeaveDayType: LeaveDayType
+            //};
         });
 
-        var fromdate = $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var todate = $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var fromdate = $("#HdnfromdateEdit").val();// $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD');
+        var todate = $("#HdntodateEdit").val();//$('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD');
         var days = daysdifference(fromdate, todate);
         var day = totalday;
         var RDD_LeaveRequest = {
@@ -1373,7 +1406,10 @@
                 LeaveDay: LeaveDay,
                 LeaveDayType: LeaveDayType
             };
-            RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
+            if (LeaveDate != undefined) {
+                RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
+            }
+
         });
 
         $.post("/SaveLeaveRequest", { RDD_LeaveRequest: RDD_LeaveRequest }, function (response) {

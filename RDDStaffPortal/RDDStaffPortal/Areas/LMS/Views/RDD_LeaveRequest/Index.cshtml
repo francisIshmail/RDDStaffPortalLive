@@ -1094,10 +1094,11 @@
             
             $(".loader1").hide();
             /*if (response.data.Saveflag == true && response.data.LeaveRequestId != -1)*/
-            if (response[0].Responsemsg == "Leave Request Inserted Successfully") {
+            debugger
+            if (response[0].Responsemsg == "Leave Request Inserted Successfully.") {
                 $("#exampleModal").modal("hide");
                 RedDotAlert_Success(response[0].Responsemsg);
-                debugger
+               
                 //var LoginUserid = $("#EmployeeIde").val();
                 //var backupid = $("#hdnBackUp").val();
                 ////var backup2id = $("#hdnBackUp2").val();

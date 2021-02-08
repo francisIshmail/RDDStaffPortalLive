@@ -58,6 +58,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         [Route("SaveLeaveRequest")]
         public ActionResult SaveLeaveRequest(RDD_LeaveRequest RDD_LeaveRequest)
         {
+
             RDD_LeaveRequest.CreatedBy = User.Identity.Name;
             RDD_LeaveRequest.CreatedOn = DateTime.Now;
             if (RDD_LeaveRequest.Editflag == true)
@@ -65,14 +66,16 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 RDD_LeaveRequest.LastUpdatedBy = User.Identity.Name;
                 RDD_LeaveRequest.LastUpdatedOn = System.DateTime.Now;
             }
-            var t = rDD_LeaveRequest_TemplatesDb.Save(RDD_LeaveRequest);
-
+            var t = rDD_LeaveRequest_TemplatesDb.Save(RDD_LeaveRequest);           
             if (t[0].Id != -1)
             {
                
                 {
                     if (t[0].Outtf == true)
                     {
+                        string MailResponse = "";
+                        string ToMail = "";
+                        string cc = "";                        
                         try
                         {
                             DataSet ds = new DataSet();
@@ -112,13 +115,25 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             {
                                 Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
                             }
+                            else
+                            {
+                                Email2 = "";
+                            }
                             var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                             var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
                             var backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
                             var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
                             var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
-                            var Tomail = Email1;
-                            var cc = Email3 + ";" + Email2 + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                            ToMail = Email1;                            
+                            if (Email2 != "")
+                            {
+                                 cc = Email3 + ";" + Email2 + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                            }
+                            else
+                            {
+                                 cc = Email3 + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                            }
+                            
                             string Subject = "Leave Approval Request";
 
                             if (ds.Tables[0].Rows[0]["AttachmentUrl"] != null && !DBNull.Value.Equals(ds.Tables[0].Rows[0]["AttachmentUrl"]))
@@ -140,7 +155,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             // cc = backupmail;
 
                             //SendMail.Send(Tomail, cc, Subject, Html, true);
-                            SendMail.SendMailWithAttachment(Tomail, cc, Subject, Html, true, attachmentPath);
+
+                          MailResponse= SendMail.SendMailWithAttachment(ToMail, cc, Subject, Html, true, attachmentPath);
 
                         }
                         catch (Exception ex)
@@ -151,9 +167,20 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             {
                                 Outtf = false,
                                 Id = -1,
-                                Responsemsg = "Error occured : Leave Request Details "
+                                Responsemsg = "Error occured : Mail Not Sent "
                             });
+                            MailResponse = ex.Message;
                         }
+                        SqlParameter[] prms = new SqlParameter[]
+                            {
+                                new SqlParameter("@DocId",t[0].Id),
+                                new SqlParameter("@ModuleName","LMS"),
+                                new SqlParameter("@EventType","LeaveApprovalRequest"),
+                                new SqlParameter("@ToEmailIds",ToMail),
+                                new SqlParameter("@CCEmailIds",cc),
+                                new SqlParameter("@SendMailResponse",MailResponse)
+                            };
+                        string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
                     }
                 }
             }

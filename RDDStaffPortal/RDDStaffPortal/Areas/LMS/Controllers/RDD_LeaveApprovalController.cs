@@ -307,7 +307,10 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
             }
 
         }
-        public ActionResult SendApprovedEmail(int loginUserId, string Fromdate,string Todate ,string EmployeeName,string LeaveName ,string Comments,int Backup1Id,int Backup2Id)
+        string response = "";
+        string ToMail = "";
+        string cc = "";
+        public ActionResult SendApprovedEmail(int loginUserId, string Fromdate,string Todate ,string EmployeeName,string LeaveName ,string Comments,int Backup1Id,int Backup2Id,int LeaveRequestId)
         {
             try
             {
@@ -339,8 +342,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var backup1Mail= ds2.Tables[2].Rows[0]["Email"].ToString();
                 var backup2Mail = ds3.Tables[2].Rows[0]["Email"].ToString();
-                var Tomail = Email3;
-                var cc = Email1 + "," + Email2+","+HrMail+","+ backup1Mail+","+ backup2Mail; 
+                 ToMail = Email3;
+                cc = Email1 + ";" + Email2 + ";" + HrMail + ";" + backup1Mail + ";" + backup2Mail;
                 string Subject = "Your Leave Request Is Approved";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
@@ -356,16 +359,27 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
                // Tomail = "mainak@reddotdistribution.com";
                // cc = "pratim.d@reddotdistribution.com"+","+"mainakg81@gmail.com";
-                SendMail.Send(Tomail, cc, Subject, Html, true);
+                 response=SendMail.Send(ToMail, cc, Subject, Html, true);
 
             }
             catch (Exception ex)
             {
+                response = ex.Message;
                 throw ex;
             }
+            SqlParameter[] prms = new SqlParameter[]
+                           {
+                                new SqlParameter("@DocId",LeaveRequestId),
+                                new SqlParameter("@ModuleName","LMS"),
+                                new SqlParameter("@EventType","LeaveRequestApproved"),
+                                new SqlParameter("@ToEmailIds",ToMail),
+                                new SqlParameter("@CCEmailIds",cc),
+                                new SqlParameter("@SendMailResponse",response)
+                           };
+            string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
             return RedirectToAction("Index", "RDD_LeaveApproval");
         }
-        public ActionResult SendRejectedEmail(int loginUserId, string Fromdate, string Todate, string EmployeeName, string LeaveName, string Comments, int Backup1Id, int Backup2Id)
+        public ActionResult SendRejectedEmail(int loginUserId, string Fromdate, string Todate, string EmployeeName, string LeaveName, string Comments, int Backup1Id, int Backup2Id,int LeaveRequestId)
         {
             try
             {
@@ -414,15 +428,26 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 }
                 Html = Html + "Remarks : " + Comments + ",<br/><br/>";
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
-               // Tomail = "mainak@reddotdistribution.com";
-               // cc = "pratim.d@reddotdistribution.com" + "," + "mainakg81@gmail.com";
-                SendMail.Send(Tomail, cc, Subject, Html, true);
+                // Tomail = "mainak@reddotdistribution.com";
+                // cc = "pratim.d@reddotdistribution.com" + "," + "mainakg81@gmail.com";
+                 response= SendMail.Send(Tomail, cc, Subject, Html, true);
 
             }
             catch (Exception ex)
             {
+                response = ex.Message;
                 throw ex;
             }
+            SqlParameter[] prms = new SqlParameter[]
+                          {
+                                new SqlParameter("@DocId",LeaveRequestId),
+                                new SqlParameter("@ModuleName","LMS"),
+                                new SqlParameter("@EventType","LeaveRequestDecline"),
+                                new SqlParameter("@ToEmailIds",ToMail),
+                                new SqlParameter("@CCEmailIds",cc),
+                                new SqlParameter("@SendMailResponse",response)
+                          };
+            string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
             return RedirectToAction("Index", "RDD_LeaveApproval");
         }
 
