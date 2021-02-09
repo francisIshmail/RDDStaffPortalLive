@@ -34,7 +34,7 @@
 		});
 		
 		$("#Cards #Firstcard").each(function (index, item) {
-            debugger;
+            
 			var url = $(this).find("#hdnurl").val();
 			var Col = $(this).find("#hdnColumns").val();
 			var Noc = $(this).find("#hdnNoofColumns").val();
@@ -42,7 +42,7 @@
 			var lbl = $(this).find(".ds1").text().split(" ");
 
 			$(this).find(".ds2").text(lbl[0] + " Achieved");
-			debugger
+			
 			if ($(this).find(".ds1").text() == "Rev Target") {
 				$(this).find(".A1").text("$" + Cards[0].RevTarget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$(this).find(".B1").text("$" + Cards[0].ActualRev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -78,7 +78,7 @@
 
 
 		$("#SecCard #SecondCard").each(function (index, item) {
-			debugger;
+			
 			var url = $(this).find("#hdnurl").val().split(",");
 			
 
@@ -179,7 +179,7 @@
 					contentType: "Application/json",
 					dataType: 'JSON',
 					success: function (response) {
-						debugger
+						
 						var i = 0;
 						while (i < response.data.length) {
 							pts.push(response.data[i].points);
@@ -344,7 +344,7 @@
 			//		colms.push({
 			//			'mDataProp': fld[i] + '',
 			//			"render": function (data) {
-			//				debugger
+			//				
 			//				var num = $.fn.dataTable.render.number(',', '.', 2).display(data);
 			//				//var k = "";
 			//				//if (num.length >= 4) {
@@ -366,7 +366,7 @@
 			//	i++;
 			//}
 			//RdottableDash(ids, url, colms)
-			debugger
+			
 			var tblhead1 = ['CompanyName','Date1','Amount'];
 			var tblhide = ['Date1'];
 			if (Col.length == 3) {
@@ -387,7 +387,7 @@
 				contentType: "application/json",
 				dataType: "json",				
 				success: function (data) {
-					debugger
+					
 					tr2.find("#Ist").show();
 					tr2.find("div#Ist").not(':first').remove();
 					arr = data;
@@ -466,7 +466,7 @@
 				contentType: "Application/json",
 				dataType: 'JSON',
 				success: function (response) {	
-					debugger
+					
 					
 					i = 0;
 					while (i < response.data.length) {
@@ -487,7 +487,7 @@
 			})
 			i = 0;
 			var ds = [];
-			debugger;
+			
 			while (i < lblarr2.length) {
 				ds.push({
 					label: lblarr2[i],
@@ -497,7 +497,7 @@
 				});
 				i++;
             }
-			debugger
+			
 			$("#second_tab").find(".card-title").text($("#bars1").find(".card-title").text());
 			if (ids == 'DASH017') {
 				ids = 'multipleLineChart1';				
@@ -573,7 +573,7 @@
 
 		var tf1 = true;
 		$("#lins #MultilineChart").each(function (index, item) {
-			debugger
+			
 			var url1 = $(this).find("#hdnurl").val();
 			var lbl2 = $(this).find("#hdnlbl2").val().split(",");
 			var lbl1 = $(this).find("#hdnlbl1").val().split(",");
@@ -598,7 +598,7 @@
 				bgarr.push(bgs[i])
 				i++;
 			}
-			debugger
+			
 			var ConTf = true;
 			$.ajax({
 				async: false,
@@ -608,7 +608,7 @@
 				contentType: "Application/json",
 				dataType: 'JSON',
 				success: function (response) {
-					debugger
+					
 					if (response.data[0].points.length == 0) {
 						ConTf = false;
 						return;
@@ -629,7 +629,7 @@
 			})
 			i = 0;
 			var ds = [];
-			debugger
+			
 			while (i < lblarr2.length) {
 				ds.push({					
 						label: lblarr2[i],
@@ -677,7 +677,7 @@
 							ticks: {
 								beginAtZero: true,
 								userCallback: function (value, index, values) {
-									debugger
+									
 									if (value > 0) {
 										if (value >= 1000000000) {
 											values = (value / 1000000000) + 'b';
@@ -739,9 +739,9 @@
 		};
 		$("#btnsave").on("click", function () {
 
-			debugger
+			
 			$(".mar-b10").each(function (index, item) {
-				debugger
+				
 				var DashidTxt = $(this).find("[id='Inphdn']").val();
 				var IsActiveTxt = $(this).find("[id='ChkDash']").is(":checked");
 

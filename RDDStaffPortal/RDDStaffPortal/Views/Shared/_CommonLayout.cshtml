@@ -63,6 +63,7 @@
             <nav class="navbar navbar-header navbar-expand-lg">
 
                 <div class="container-fluid">
+
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link menu-icon-c" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -616,7 +617,7 @@
     <!--   Core JS Files   -->
 
 
-    <script src="~/js/core/jquery.3.2.1.min.js"></script>
+    <script src="@Url.Content("~/js/core/jquery.3.2.1.min.js")"></script>
 
     <script src="~/js/core/popper.min.js"></script>
     <script src="~/js/core/bootstrap.min.js"></script>
@@ -1005,6 +1006,139 @@
             $('.scroll-div').css('width', $('.dynamic-div').outerWidth());
         });
     </script>
+    
+
+        <script src="@Url.Content("~/Scripts/jquery.signalR-2.4.1.min.js")"></script>
+        <script src="http://localhost:28989/signalr/hubs"></script>
+        @*<script src="@Url.Content("~/Scripts/main.js")"></script>*@
+
+        <script>
+
+            // GET NOTIFICATIONS AND SETUP SIGNALR
+            debugger
+            console.log("signalr");
+            // Click on notification icon to show notification
+            $('span.notification').click(function (e) {
+                e.stopPropagation();
+                $('.noti-content').show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                count++;
+                // Only load notification if not already loaded
+                if (count > 0) {
+                    updateNotification();
+                }
+                $('span.count', this).html('&nbsp;');
+            });
+
+            // Hide notifications
+            $('html').click(function () {
+                $('.noti-content').hide();
+            });
+
+            // Update notifications
+            function updateNotification() {
+                $('#notiContent').empty();
+                $('#notiContent').append($('<li>Loading...</li>'));
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: '/Dashboard/GetNotificationContacts',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        debugger
+                        $('#notiContent').empty();
+                        if (response.Table.length === 0) {
+                            $('#notiContent').append($('<li>No data available</li>'));
+                        }
+                        $(".notification").html(response.Table.length);
+                        $("#dropdown-title").html("You have " + response.Table.length + " new notification");
+                        $.each(response.Table, function (index, value) {
+                            //$('#notiContent').append($('<li>New contact : ' + value.DocumentName + ' (' + value.Description + ') added</li>'));
+                            $('#notiContent').append($(' <a href="' + value.PVURL + '">' +
+                                '<div class= "notif-icon notif-primary" > <i class="fa fa-money-bill-alt"></i> </div >' +
+                                '<div class="notif-content">' +
+                                '<span class="block">' +
+                                '' + value.DocumentName + '(' + value.Description + ')' +
+                                ' </span>' +
+                                ' <span class="time">1 day ago</span>' +
+                                '</div>' +
+                                ' </a >'));
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Update notifications count
+            //function updateNotificationCount() {
+            //    var count = 0;
+            //    count = parseInt($('span.count').html()) || 0;
+            //    count++;
+            //    $('span.count').html(count);
+            //}
+
+            $(function () {
+                // SignalR method for push server message to client
+                notificationHub.client.notify = function (message) {
+                    if (message && message.toLowerCase() === "added") {
+                        debugger
+                        updateNotificationCount();
+                    }
+                };
+                debugger
+                function updateNotificationCount() {
+                    debugger
+                    $('span.notification').show();
+                    var count = 0;
+                    count = parseInt($('span.notification').html()) || 0;
+                    count++;
+                    $('span.noti').css("color", "white");
+                    //    $('span.count').css({ "background-color": "red", "color": "white" });
+                    $('span.notification').html(count);
+
+                }
+                // signalr js code for start hub and send receive notification
+                var hub = $.connection.notificationHub;
+                $.connection.hub.url = "http://localhost:28989/signalr";
+                $.connection.notificationHub.on('displayStatus', function (text) {
+                    alert("scan received");
+                    updateNotificationCount();
+                });
+                // Declare a function on the hub hub so the server can invoke it
+                hub.client.displayStatus = function () {
+                    debugger
+                    updateNotificationCount();
+
+                };
+                $.connection.notificationHub.on('updateMessages', function (text) {
+                    alert("scan received");
+                    updateNotificationCount();
+                })
+                hub.client.updateMessages = function () {
+                    debugger
+                    updateNotificationCount();
+
+                };
+                // Start the connection
+                $.connection.hub.start();
+
+
+
+            })
+            // SignalR js code for start hub and send receive notification(s) from the server side
+            var notificationHub = $.connection.notificationHub;
+            $.connection.hub.start().done(function () {
+                console.log('Notification hub started');
+            });
+
+
+        </script>
+    
     <style>
         .demo-scrollbar {
             height: 300px;

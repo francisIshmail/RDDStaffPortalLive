@@ -1,6 +1,8 @@
 ﻿using RDDStaffPortal.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -13,16 +15,26 @@ namespace RDDStaffPortal
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        string conStr = ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            //START SQL DEPENDENCY
+            SqlDependency.Start(conStr);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalFilters.Filters.Add(new CustomAuthenticationFilter());
             GlobalFilters.Filters.Add(new MyCustomHandleErrorAttribute());
+           
         }
-
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            NotificationComponent notiCom = new NotificationComponent();
+            var currentDateTime = DateTime.Now;
+            HttpContext.Current.Session["LastTimeNotified"] = currentDateTime;
+            notiCom.RegisterNotification(currentDateTime);
+        }
         protected void Application_BeginRequest(Object sender, EventArgs e)                           
         {
             CultureInfo cInfo = new CultureInfo("en-IN");
@@ -44,6 +56,11 @@ namespace RDDStaffPortal
             }
             return base.GetVaryByCustomString(context, custom);
         }
-       
+        protected void Application_End()
+        {
+            //STOP SQL DEPENDENCY
+            SqlDependency.Stop(conStr);
+        }
+
     }
 }

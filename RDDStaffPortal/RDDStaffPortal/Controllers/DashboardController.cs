@@ -1,4 +1,5 @@
-﻿using RDDStaffPortal.DAL.DataModels;
+﻿using Newtonsoft.Json;
+using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,15 @@ namespace RDDStaffPortal.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult GetNotificationContacts()
+        {
+            var noticiationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            NotificationComponent NC = new NotificationComponent();
+            var list = NC.GetContacts(noticiationRegisterTime,User.Identity.Name);
+            // Update session to get new added contacts only notification)
+            Session["LastUpdated"] = DateTime.Now;
+            return Content(JsonConvert.SerializeObject(list), "application/json");
         }
         [Route("CheckAuthorization")]
         public ActionResult CheckAuthrization(string url)
