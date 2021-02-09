@@ -332,18 +332,23 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                 ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
-                var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
-                var Email2 = "";
+                var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                var L2ManagerEmail = "";
                 var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
-                    Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
+                    L2ManagerEmail = ds1.Tables[1].Rows[0]["Email"].ToString();
                 }
-                var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
+                else
+                {
+                    L2ManagerEmail = "";
+                }
+               
+                var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var backup1Mail= ds2.Tables[2].Rows[0]["Email"].ToString();
                 var backup2Mail = ds3.Tables[2].Rows[0]["Email"].ToString();
-                 ToMail = Email3;
-                cc = Email1 + ";" + Email2 + ";" + HrMail + ";" + backup1Mail + ";" + backup2Mail;
+                 ToMail = EmployeeEmail;
+                cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backup2Mail;
                 string Subject = "Your Leave Request Is Approved";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
@@ -403,18 +408,22 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                 ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
 
-                var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
-                var Email2 = "";
+                var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                var L2ManagerEmail = "";
                 var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
                 {
-                    Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
+                    L2ManagerEmail = ds1.Tables[1].Rows[0]["Email"].ToString();
                 }
-                var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
+                else
+                {
+                    L2ManagerEmail = "";
+                }
+                var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var backup1Mail = ds2.Tables[2].Rows[0]["Email"].ToString();
                 var backup2Mail = ds3.Tables[2].Rows[0]["Email"].ToString();
-                var Tomail = Email3;
-                var cc = Email1 + "," + Email2 + "," + HrMail + "," + backup1Mail + "," + backup2Mail;
+                var Tomail = EmployeeEmail;
+                var cc = L1ManagerEmail + "," + L2ManagerEmail + "," + HrMail + "," + backup1Mail + "," + backup2Mail;
                 string Subject = "Your Leave Request is Rejected";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if(String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))

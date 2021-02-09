@@ -109,29 +109,29 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             var Todate = ds.Tables[0].Rows[0]["ToDate"];
                             var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"];
                             var L1ManagerName = ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
-                            var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
-                            var Email2 = "";
+                            var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                            var L2ManagerEmail = "";
                             if (ds1.Tables[1].Rows.Count > 0)
                             {
-                                Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
+                                L2ManagerEmail = ds1.Tables[1].Rows[0]["Email"].ToString();
                             }
                             else
                             {
-                                Email2 = "";
+                                L2ManagerEmail = "";
                             }
                             var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                             var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
                             var backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
-                            var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
+                            var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                             var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
-                            ToMail = Email1;                            
-                            if (Email2 != "")
+                            ToMail = L1ManagerEmail;                            
+                            if (L2ManagerEmail != "")
                             {
-                                 cc = Email3 + ";" + Email2 + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                 cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
                             }
                             else
                             {
-                                 cc = Email3 + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                 cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
                             }
                             
                             string Subject = "Leave Approval Request";
