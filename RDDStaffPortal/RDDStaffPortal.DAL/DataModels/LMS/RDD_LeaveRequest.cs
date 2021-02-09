@@ -19,7 +19,7 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public string Reason { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-        public string NoOfDays { get; set; }
+        public decimal NoOfDays { get; set; }
         public string LeaveStatus { get; set; }
         public string ApproverRemarks { get; set; }
         public bool IsPrivateLeave { get; set; }
@@ -60,7 +60,6 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
     {
         public string Code { get; set; }
         public string CodeName { get; set; }
-
         
     }
 
