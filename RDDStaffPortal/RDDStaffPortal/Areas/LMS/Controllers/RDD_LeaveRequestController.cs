@@ -121,17 +121,43 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             }
                             var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                             var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
-                            var backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
+                            var backupmail2 = "";
+                            if (ds3.Tables[2].Rows.Count > 0)
+                            {
+                                backupmail2= ds3.Tables[2].Rows[0]["Email"].ToString();
+                            }
+                            else
+                            {
+                                backupmail2 = "";
+                            }
                             var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                             var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                             ToMail = L1ManagerEmail;                            
                             if (L2ManagerEmail != "")
                             {
-                                 cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                if(backupmail2!="")
+                                {
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+
+                                }
+                                else
+                                {
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail;
+                                }
+                                 
                             }
                             else
                             {
-                                 cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                if (backupmail2 != "")
+                                {
+                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+
+                                }
+                                else
+                                {
+                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail;
+                                }
+                                   
                             }
                             
                             string Subject = "Leave Approval Request";

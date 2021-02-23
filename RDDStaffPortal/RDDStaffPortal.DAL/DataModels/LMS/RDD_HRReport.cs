@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Web.Mvc;
 
-
 namespace RDDStaffPortal.DAL.DataModels.LMS
 {
-    public class RDD_LMSReport
+    public class RDD_HRReport
     {
+
         public List<SelectListItem> CountryList { get; set; }
         public List<SelectListItem> DepartmentList { get; set; }
         public List<SelectListItem> EmployeesList { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
-        public decimal NoOfDays { get; set; }
+        public List<SelectListItem> LeaveTypeList { get; set; }
+        public string TotalTakenLeave { get; set; }
+        public string TotakPendingLeave { get; set; }        
         public string Remarks { get; set; }
+        public string BalanceLeave { get; set; }       
         public int LeaveRequestId { get; set; }
         public int LeaveTypeId { get; set; }
         public int EmployeeId { get; set; }
@@ -26,11 +27,5 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public string Country { get; set; }
         public string DeptId { get; set; }
         public string DeptName { get; set; }
-        public string AttachmentUrl { get; set; }
     }
-    //public partial class GetCountryDetails
-    //{
-    //    public string CountryCode { get; set; }
-    //    public string Country { get; set; }
-    //}
 }

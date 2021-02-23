@@ -1,4 +1,4 @@
-﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_LMSReport
+﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_HRReport
 
 @{
     ViewBag.Title = "Index";
@@ -11,51 +11,57 @@
             <div class="col-md-2">
                 <form>
                     @*<select name="department" class="custom-select">
-                            <option selected>Country </option>
-                            <option value="one">India </option>
+                <option selected>Country </option>
+                <option value="one">India </option>
 
-                        </select>*@
+            </select>*@
                     Country
-                    @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control" })
+                    <select name="department" class="form-control" id="ddlCountry">
+                        <option value="">--Select--</option>
+                    </select>
                 </form>
+                <input type="hidden" id="HdnCountrcode" />
             </div>
             <div class="col-md-2">
                 <form>
                     Department
                     <select name="department" class="form-control" id="ddlDepartment">
-                        <option value="-1">--Select--</option>
+                        <option value="">--Select--</option>
                     </select>
                 </form>
-                <input type="hidden" id="HdnCountryCode" />
+                <input type="hidden" id="HdnDeptId" />
             </div>
+
 
             <div class="col-md-4">
                 <form>
                     Employee
                     <select name="Employee" class="form-control" id="ddlEmp">
-                        <option value="-1">--Select--</option>
+                        <option value="">--Select--</option>
                     </select>
                     <input type="hidden" id="hdnEmployeeId" />
                 </form>
             </div>
+            <div class="col-md-2">
+                <form>
+                    LeaveType
+                    <select name="Employee" class="form-control" id="ddlLeavetype">
+                        <option value="">--Select--</option>
+                    </select>
+                    <input type="hidden" id="hdnLeaveTypeId" />
+                </form>
+            </div>
 
             @*<div class="col-md-2">
-                    <form>
-                        <select name="calendar" class="custom-select">
-                            <option selected>Select Month & Year </option>
-                            <option value="one">Calendar 1</option>
-                            <option value="two">Calendar 2</option>
-                            <option value="three">Calendar 3</option>
-                        </select>
-                    </form>
-                </div>*@
-
-
-
-
-
-
-
+            <form>
+                <select name="calendar" class="custom-select">
+                    <option selected>Select Month & Year </option>
+                    <option value="one">Calendar 1</option>
+                    <option value="two">Calendar 2</option>
+                    <option value="three">Calendar 3</option>
+                </select>
+            </form>
+        </div>*@
             <div class="col-md-2" style="padding-right: 50px; padding-top: 16px;">
                 <div class="nav-masthead"><button type="button" class="btn btn-secondary" id="btnSearchReport">Search Report</button></div>
             </div>
@@ -72,9 +78,9 @@
 
             <div class="card mt-3 mb-3 box-shadow">
                 <div class="card-header">
-                    <div class="lftside-hding">
+                    @*<div class="lftside-hding">
                         <h5 class="my-0 "><i class="fa fa-user" aria-hidden="true"></i><div id="divname">Employee</div> </h5>
-                    </div>
+                    </div>*@
                     <div class="rgtside-btn">
                         <div class="nav-masthead">
                             <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Add Ajustment </button> -->
@@ -93,30 +99,21 @@
                         <table id="htmltable" class="table">
                             <thead>
                                 <tr>
-                                    <th>Leave type</th>
-                                    <th>From Date</th>
-                                    <th>To Date</th>
-
-                                    <th>No Of Leaves</th>
-                                    <th>Reason</th>
-
+                                    <th>Employee Name</th>
+                                    <th>Leave Name</th>
+                                    <th>Dept Name</th>
+                                    <th>Current Yr Entitlement</th>
+                                    <th>Total Taken Leave</th>
+                                    <th>Total Pending Leave</th>
+                                    <th>Balance Days</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-
-
-
-
-
+            </div>  
         </div>
-
-
-
         <div id="edit" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -153,14 +150,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
     </div>
 </div>
 
@@ -216,120 +205,92 @@
             }
         });
     });
-
-    function GetDeparmentList(Countryid) {
+    function GetLeaveTypeList(Countryid) {
+         debugger
         j.ajax({
             type: "POST",
-            url: '@Url.Action("GetCountryWiseDepartment","RDD_LMSReport")',
+            url: '@Url.Action("GetCountryWiseLeaveType", "RDD_HRLMSReport")',
             data: { Cid: Countryid },
             dataType: "json",
             success: function (data) {
+                
+                var d = data.Table;
+                j("#ddlLeavetype").empty();
+                j("#ddlLeavetype").append('<option value="-1">--Select--</option>');
+                j.each(d, function (index, Value) {
+                    j("#ddlLeavetype").append("<option value='" + Value.LeaveTypeId + "'>" + Value.LeaveName + "</option>");
+                });
+            }
+        });
+    }
+    function GetDropdownList() {
+        j.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDropdownList", "RDD_HRLMSReport")', 
+            dataType:"json",
+            success: function (data) {
                 debugger
                 var d = data.Table;
+                j("#ddlCountry").empty();
+                j("#ddlCountry").append('<option value="-1">--Select--</option>');
+                j("#ddlEmp").empty();
+                j("#ddlEmp").append('<option value="-1">--Select--</option>');
                 j("#ddlDepartment").empty();
                 j("#ddlDepartment").append('<option value="-1">--Select--</option>');
-                j.each(d, function (index, Value) {
+                j.each(data.Table, function (index, Value) {
+                    j("#ddlCountry").append("<option value='" + Value.CountryCode + "'>" + Value.Country + "</option>");
+                });
+                j.each(data.Table1, function (index, Value) {
+                    j("#ddlEmp").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
+                });
+                j.each(data.Table2, function (index, Value) {
                     j("#ddlDepartment").append("<option value='" + Value.DeptId + "'>" + Value.DeptName + "</option>");
                 });
             }
         });
     }
-    function GetEmployeeList(DeptId,Countryid) {
-        j.ajax({
-            type: "POST",
-            url: '@Url.Action("GetDeptWiseEmployee", "RDD_LMSReport")',
-            data: { dept: DeptId, cid:Countryid },
-            dataType: "json",
-            success: function (data) {
-                debugger
-                var d = data.Table;
-                j("#ddlEmp").empty();
-                j("#ddlEmp").append('<option value="-1">--Select--</option>');
-                j.each(d, function (index, Value) {
-                    j("#ddlEmp").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
-                });
-            }
-        });
-    }
-
-
-    j(document).on("change", "#Country", function () {
+    j(document).ready(function () {
+        GetDropdownList();
+       
+    });  
+    j(document).on("change", "#ddlCountry", function () {
         debugger
         var Countryid = j(this).val();
-        j("#HdnCountryCode").val(Countryid);
-        GetDeparmentList(Countryid);
-
-    });
-    j(document).on("change", "#ddlDepartment", function () {
-        var DeptId = j(this).val();
-        var Countryid = j("#HdnCountryCode").val();
-        GetEmployeeList(DeptId,Countryid);
-    });
-    j(document).on("change", "#ddlEmp", function () {
-        var Empid = j(this).val();
-        j("#hdnEmployeeId").val(Empid);
+        j("#HdnCountrcode").val(Countryid);
+        GetLeaveTypeList(Countryid);
     });
     j(document).on('click', '#btnSearchReport', function () {
-        var Empid = j("#hdnEmployeeId").val();
+        var Empid = j("#ddlEmp option:selected").val();
+        var CountryId = j("#ddlCountry option:selected").val();
+        var Deptid = j("#ddlDepartment option:selected ").val();
+        var lvtypeid = j("#ddlLeavetype option:selected").val();
         j.ajax({
             type: "POST",
-            url: '@Url.Action("ShowEmployeeReport", "RDD_LMSReport")',
-            data: { Empid: Empid},
+            url: '@Url.Action("ShowEmployeeReport", "RDD_HRLMSReport")',
+            data: { Empid: Empid, Cid: CountryId, DeptId: Deptid, LeaveTypeId: lvtypeid},
             dataType: "json",
             success: function (data) {
                 debugger
-                j("#divname").html(j("#ddlEmp option:selected").text());
+                var a = data.Table;
+               // j("#divname").html(j("#ddlEmp option:selected").text());
                 j("#htmltable tbody").empty();
                 var i = 0;
-                
-                while (data.length > i) {
-                    if (data[i].AttachmentUrl != "") {
-                        j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td><td>' + '<a href="#" target="_blank" id="attachedfile" data="' + data[i].AttachmentUrl + '"><label id="lbldownload">Download Attachment</label></a>' + '</td></tr>');
-                        break;
-                    }
-                    else {
-                        while (data.length > i) {
-                            j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td></tr>');
-                            break;
-                        }
+                if (a.length > 0) {
+                    while (a.length > i) {
+                        j("#htmltable tbody").append('<tr><td>' + a[i].FullName + '</td><td>' + a[i].LeaveName + '</td><td>' + a[i].Department + '</td><td>' + a[i].CurrentYearEntitlement + '</td><td>' + a[i].TotalTakenLeave + '</td><td>' + a[i].TotalPendingLeave + '</td><td>' + a[i].BalanceLeave + '</td></tr>');
                         i++;
                     }
-                }               
+                }
+                else {
+                    j('#htmltable tbody').append('<tr data-no-results-found><td colspan="6">NO RESULTS FOUND</td></tr>');
+                    return
+                }
+               
             }
         });
     });
-    j(document).on('click', '#attachedfile', function () {
-        var attachment = j(this).attr("data");
-        //var attachment = currow.find("td:eq(9)").html();
-        if (attachment != "") {
-            //$("#lbldownload").show();
-            var filepath = attachment;
-            var fileNameIndex = filepath.lastIndexOf("/") + 1;
-            var filename = filepath.substr(fileNameIndex);
-            //$("#lblattachment").text(filename);
-            $("#attachedfile").attr('href', filepath);
+   
+   
 
-        }
-      
-        $("#attachedfile").attr("target", "_blank");
-    });
-    j(document).on('click', '#showLeaveFormpdf', function () {
-        debugger
-        var currow = j(this).closest("tr");
-        var lvrqid = currow.find("td:eq(5)").html();
-        var empid = currow.find("td:eq(7)").html();
-        var lvtypeid = currow.find("td:eq(6)").html();
-        window.location.href = "/LMS/RDD_LMSReport/GeneratePdfDetails?LeaveRequestId=" + lvrqid + "&EmployeeId=" + empid + "&LeaveTypeId=" + lvtypeid + "";
-        @*j.ajax({
-            type: "POST",
-            url: '@Url.Action("GeneratePdfDetails", "RDD_LMSReport")',
-            data: { EmployeeId: empid,LeaveTypeId:lvtypeid,LeaveRequestId:lvrqid },
-            dataType: "json",
-            success: function (data) {
-
-            }
-        });*@     
-    });
-    
 </script>
 

@@ -346,9 +346,44 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                
                 var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                 var backup1Mail= ds2.Tables[2].Rows[0]["Email"].ToString();
-                var backup2Mail = ds3.Tables[2].Rows[0]["Email"].ToString();
-                 ToMail = EmployeeEmail;
-                cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backup2Mail;
+                
+                var backupmail2 = "";
+                if (ds3.Tables[2].Rows.Count > 0)
+                {
+                    backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
+                }
+                else
+                {
+                    backupmail2 = "";
+                }
+                ToMail = EmployeeEmail;
+                if (L2ManagerEmail != "")
+                {
+                    if (backupmail2 != "")
+                    {
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+
+                    }
+                    else
+                    {
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                    }
+
+                }
+                else
+                {
+                    if (backupmail2 != "")
+                    {
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+
+                    }
+                    else
+                    {
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                    }
+
+                }
+                //cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
                 string Subject = "Your Leave Request Is Approved";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
@@ -420,10 +455,45 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     L2ManagerEmail = "";
                 }
                 var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
-                var backup1Mail = ds2.Tables[2].Rows[0]["Email"].ToString();
-                var backup2Mail = ds3.Tables[2].Rows[0]["Email"].ToString();
+                var backup1Mail = ds2.Tables[2].Rows[0]["Email"].ToString();                
+                var backupmail2 = "";
+                if (ds3.Tables[2].Rows.Count > 0)
+                {
+                    backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
+                }
+                else
+                {
+                    backupmail2 = "";
+                }
                 var Tomail = EmployeeEmail;
-                var cc = L1ManagerEmail + "," + L2ManagerEmail + "," + HrMail + "," + backup1Mail + "," + backup2Mail;
+             
+                if (L2ManagerEmail != "")
+                {
+                    if (backupmail2 != "")
+                    {
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+
+                    }
+                    else
+                    {
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                    }
+
+                }
+                else
+                {
+                    if (backupmail2 != "")
+                    {
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+
+                    }
+                    else
+                    {
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                    }
+
+                }
+                //var cc = L1ManagerEmail + "," + L2ManagerEmail + "," + HrMail + "," + backup1Mail + "," + backup2Mail;
                 string Subject = "Your Leave Request is Rejected";
                 var Html = "Dear " + EmployeeName + ",<br/><br/>";
                 if(String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))

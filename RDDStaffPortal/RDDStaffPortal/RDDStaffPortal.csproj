@@ -190,6 +190,7 @@
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_AnnualLeaveCalenderController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_HRLMSReportController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveAdjustmentController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_LeaveRequestController.cs" />
@@ -983,6 +984,7 @@
     <Content Include="Areas\LMS\Views\_ViewStart.cshtml" />
     <Content Include="Areas\LMS\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\LMS\Views\RDD_LMSReport\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_HRLMSReport\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
