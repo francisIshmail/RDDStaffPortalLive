@@ -405,6 +405,7 @@
     
     $(document).on('click', '#btnSave', function () {
         $('.loader1').show();
+        $("#btnSave").attr("disabled", true);
         var RDD_Incentive = {
             KPI_Id: $("#KPI_Id").val(),
             DesignationId: $("#DesigId option:selected").val(),
@@ -447,7 +448,7 @@
             contentType: "Application/json",
             success: function (data) {
                 debugger
-
+                $("#btnSave").removeAttr("disabled", true);
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
                     $('.loader1').hide();

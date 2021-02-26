@@ -223,6 +223,7 @@
         RedDot_Table_DeleteActivity(tr, tblDetails, ".OriginatorDet", "hdncount");
     });
     $(document).on('click', '#btnSave', function () {
+        $("#btnSave").attr("disabled", true);
         $('.loader1').show();
         var RDD_Incentive = {
             SlabId: $("#SlabId").val(),
@@ -262,6 +263,7 @@
             success: function (data) {
                 debugger
                 $('.loader1').hide();
+                $("#btnSave").removeAttr("disabled", true);
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
                     window.location.href = '@Url.Action("Index", "IncentiveSlab")';
