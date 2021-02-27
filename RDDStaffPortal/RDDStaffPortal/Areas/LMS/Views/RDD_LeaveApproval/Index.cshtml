@@ -318,9 +318,10 @@
 
 
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
 <script type="text/javascript">
+
     function NextsevenDays() {
         var weekday = new Array(7);
         weekday[0] = "Sunday";
@@ -469,6 +470,12 @@
                 }
                 else {
                     $("#Aprovalsection").hide();
+                }
+            }, complete: function () {
+                var me = getUrlVars()["LVId"];
+                debugger
+                if (me != undefined) {
+                    $("#btnLeaveRqProcess[data-leaverequestid='" + me + "']").trigger("click")
                 }
             }
         });
@@ -640,6 +647,7 @@
         return rep;
     }
     $(document).ready(function () {
+       
         $(".loader1").hide();
         NextsevenDays();
         var Loginuserid = $("#EmployeeId").val();
@@ -766,6 +774,7 @@
                 $("#Leavedtls").append(Header);
             }
         });
+       
 
     });
     $(document).on('click','#btnLeaveRqProcess',function() {

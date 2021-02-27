@@ -11,22 +11,23 @@ namespace RDDStaffPortal
     [AllowAnonymous]
     public class NotificationHub : Hub
     {
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
+        
+        //public void Hello()
+        //{
+        //    Clients.All.hello();
+        //}
 
-        [HubMethodName("sendMessages")]
-        public static void SendMessages()
-        {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            context.Clients.All.updateMessages();
-        }
-        public static void Send()
-        {
+        //[HubMethodName("sendMessages")]
+        //public static void SendMessages()
+        //{
+        //    IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+        //    context.Clients.All.updateMessages();
+        //}
+        //public static void Send()
+        //{
 
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            context.Clients.All.displayStatus();
-        }
+        //    IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+        //    context.Clients.All.displayStatus();
+        //}
     }
 }

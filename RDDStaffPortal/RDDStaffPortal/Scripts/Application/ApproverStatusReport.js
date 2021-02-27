@@ -289,8 +289,8 @@ function RedDot_dateEditFormat(dtval) {
 
 $(document).on('change', 'input[type=radio][name=ApprovalStatus]', function () {
     debugger
+    $('select.noSelect2').select2('destroy');
     FillOriginator();
-
 });
 
 function FillOriginator() {
@@ -314,10 +314,28 @@ function FillOriginator() {
     var found_names1 = $.grep(arr3.Table2, function (v) {
         return v.Action === k;
     });    
+
+      
         
     RedDot_DivTable_Header_Fill("II", found_names1);
 
 
+    var Vendor_List = $.grep(arr3.Table3, function (v) {
+        return v.Action === k;
+    }); 
+    $("#cbCARDCODE").empty();
+   i1 = 0;
+    while (i1 < Vendor_List.length) {
+        //,
+        $('#cbCARDCODE').append('<option value=' + Vendor_List[i1]['VendorCode'] + ' selected="">' + Vendor_List[i1]['VendorEmployee'] + '</option>');
+        i1++;
+    }
+    $('#cbCARDCODE').val('All');
+    $("select").select2({
+        theme: "bootstrap",
+        allowClear: true,
+
+    });
 
 }
 function Get_DocumentApprove_List() {
@@ -332,8 +350,14 @@ function Get_DocumentApprove_List() {
     if ($("#txtFrmDate").val() != '' && $("#txtToDate").val() != '')
         value1 = value1 + " And T1." + $("input[name='ApprovalStatus']:checked").attr("alt")+" BetWeen $" + GetSqlDateformat($("[id$=txtFrmDate]").val()) + "$ And $" + GetSqlDateformat($("[id$=txtToDate]").val())+"$"
 
+    
     if ($("#cbOriginator").val() != '' && $("#cbOriginator").val()!='All')
-        value1 = value1 + " And ORIGINATOR=$" + $("#cbOriginator").val() + "$";
+        value1= value1 + " And ORIGINATOR=$" + $("#cbOriginator").val() + "$";
+
+    
+    var cardName = '';
+    if ($("#cbCARDCODE").val() != '' && $("#cbCARDCODE").val() != 'All')
+        cardName = $("#cbCARDCODE option:selected").text();
 
     if ($("#txtApprover").val() != '')
         value1 = value1 + " And APPROVER=$" + $("#txtApprover").val()+"$";
@@ -354,6 +378,7 @@ function Get_DocumentApprove_List() {
         DBName: DBName,
         UserName: UserName,
         Objtype: Objtype,
+        cardName: cardName
     });
     arr = RedDot_DivTable_Fill("II", "/Get_ApprovalDoc_List", data, dateCond, tblhead1, tblhide, tblhead2);
     debugger;

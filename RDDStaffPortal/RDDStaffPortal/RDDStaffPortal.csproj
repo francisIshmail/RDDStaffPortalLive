@@ -876,6 +876,12 @@
     <Content Include="Scripts\evo-calendar.min.js" />
     <Content Include="Scripts\holder.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="App_Code\RDD_RightSideTask.cshtml" />
+    <None Include="Scripts\jquery-3.5.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.5.1.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
@@ -1011,11 +1017,8 @@
     <Content Include="Areas\LMS\Views\RDD_LMSReport\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\RDDSignalR.pubxml" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.5.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1056,6 +1059,8 @@
     <Content Include="Uploads\Sample\SampleExcel.xls" />
     <Content Include="Views\Dashboard\_PartialLoginUserProfile.cshtml" />
     <Content Include="Views\Shared\_LMSLayout.cshtml" />
+    <Content Include="Views\Dashboard\GetRightSideTask.cshtml" />
+    <Content Include="Views\Dashboard\AllNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1086,8 +1091,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RDDStaffPortal.DAL\RDDStaffPortal.DAL.csproj">

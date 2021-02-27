@@ -459,7 +459,7 @@ namespace RDDStaffPortal.DAL.Admin
 
         }
 
-        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBNAme, string ApproverName, int pagesize, int pageno, string psearch,string Objtype)
+        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBNAme, string ApproverName, int pagesize, int pageno, string psearch,string Objtype,string cardname)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
 
@@ -467,7 +467,7 @@ namespace RDDStaffPortal.DAL.Admin
             {
                 SqlParameter[] Para = {
                     
-                  
+                  new SqlParameter("@p_cardName",cardname),
                     new SqlParameter("@p_UserName",ApproverName),
                      new SqlParameter("@SearchCriteria ", psearch),
                     new SqlParameter("@p_PageNo", pageno),

@@ -18,22 +18,23 @@ namespace RDDStaffPortal
         string conStr = ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            //START SQL DEPENDENCY
-            SqlDependency.Start(conStr);
+            AreaRegistration.RegisterAllAreas();            
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalFilters.Filters.Add(new CustomAuthenticationFilter());
             GlobalFilters.Filters.Add(new MyCustomHandleErrorAttribute());
-           
+            //START SQL DEPENDENCY
+            SqlDependency.Start(conStr);
+
         }
         protected void Session_Start(object sender, EventArgs e)
         {
+            string username = Context.User.Identity.Name;
             NotificationComponent notiCom = new NotificationComponent();
             var currentDateTime = DateTime.Now;
             HttpContext.Current.Session["LastTimeNotified"] = currentDateTime;
-            notiCom.RegisterNotification(currentDateTime);
+            notiCom.RegisterNotification(currentDateTime,username);
         }
         protected void Application_BeginRequest(Object sender, EventArgs e)                           
         {

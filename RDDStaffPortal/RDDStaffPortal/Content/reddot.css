@@ -921,7 +921,8 @@ table.table {
 }
 
 .modal-header {
-    padding:5px 12px;
+    background: #e7483e !important;
+    padding: 5px 12px;
 }
 
     .modal-header .modal-title{color:#fff}

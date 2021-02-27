@@ -141,21 +141,35 @@ new List<SelectListItem>
 }, "Value", "Text");
 
                                 }
-                                <div class="row">
-                                    <div class="col-xl-5 col-md-5">
-                                        <div class="form-group form-inline">
-                                            <label for="Database" class="col-md-1 col-form-label p-0 width80px">Originator :</label>
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    @Html.DropDownListFor(m => m.ORIGINATOR,k , new { @id = "cbOriginator", @class = "form-control form-control-sm" })
+                            <div class="row">
+                                <div class="col-xl-5 col-md-5">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 col-form-label p-0 width80px">Originator :</label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                @Html.DropDownListFor(m => m.ORIGINATOR, k, new { @id = "cbOriginator", @class = "form-control form-control-sm" })
 
-                                                </div>
                                             </div>
-
                                         </div>
 
                                     </div>
+
                                 </div>
+
+                                <div class="col-xl-5 col-md-5">
+                                    <div class="form-group form-inline">
+                                        <label for="Database" class="col-md-1 p-0  col-form-label">Vendor :</label>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="input-group">
+                                                @Html.DropDownListFor(m => m.CARDCODE, k, new { @id = "cbCARDCODE", @class = "form-control form-control-sm" })
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
                                 <div class="row">
                                     <div class="col-xl-5 col-md-5">
                                         <div class="form-group form-inline">

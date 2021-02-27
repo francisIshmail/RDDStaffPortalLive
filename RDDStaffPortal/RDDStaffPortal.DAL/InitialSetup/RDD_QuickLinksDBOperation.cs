@@ -75,7 +75,38 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
 
 
+        public List<RDD_RightSide> GetRightsideTask(string UserName)
+        {
+            List<RDD_RightSide> _rdd = new List<RDD_RightSide>();
+            try
+            {
+                SqlParameter[] parm = { new SqlParameter("@p_username", UserName) };
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Notification_QuickLinks", CommandType.StoredProcedure, parm);
+                if (dsModules.Tables.Count > 0)
+                {
+                    DataTable dtModule = dsModules.Tables[0];
+                    DataRowCollection drc = dtModule.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        _rdd.Add(new RDD_RightSide()
+                        {
 
+                            NavUrl = !string.IsNullOrWhiteSpace(dr["NavUrl"].ToString()) ? dr["NavUrl"].ToString() : "",
+                            typs = !string.IsNullOrWhiteSpace(dr["typs"].ToString()) ? dr["typs"].ToString() : "",
+                            MenuName = !string.IsNullOrWhiteSpace(dr["MenuName"].ToString()) ? dr["MenuName"].ToString() : "",
+                        });
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                _rdd = null;
+            }
+
+            return _rdd;
+        }
         public List<RDD_RightSide> GetRightside(string UserName)
         {
             List<RDD_RightSide> _rdd = new List<RDD_RightSide>();

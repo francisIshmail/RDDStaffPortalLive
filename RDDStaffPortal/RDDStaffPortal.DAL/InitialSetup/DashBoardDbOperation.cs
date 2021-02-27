@@ -490,7 +490,24 @@ namespace RDDStaffPortal.DAL.InitialSetup
         }
 
 
+        public DataSet Get_Dashboard_Notification(string UserName)
+        {
+            DataSet ds = null;
+            try
+            {
+                
+                SqlParameter[] ParaDet1 = {new SqlParameter("@p_userName",UserName)};
 
+                ds = Com.ExecuteDataSet("Get_RDD_Dashboard_Notification", CommandType.StoredProcedure, ParaDet1);
+
+            }
+            catch (Exception)
+            {
+
+                ds = null;
+            }
+            return ds;
+        }
         public List<Pichart_Dash> GetBankBalPichart(string username)
         {
             List<Pichart_Dash> _DtDash = new List<Pichart_Dash>();

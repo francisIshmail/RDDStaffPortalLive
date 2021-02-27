@@ -25,15 +25,44 @@ namespace RDDStaffPortal.Controllers
         {
             return View();
         }
-        public ActionResult GetNotificationContacts()
+        public ActionResult GetNotificationContacts(string Flag)
         {
             var noticiationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
             NotificationComponent NC = new NotificationComponent();
-            var list = NC.GetContacts(noticiationRegisterTime,User.Identity.Name);
+            var list = NC.GetContacts(noticiationRegisterTime,User.Identity.Name,Flag);
             // Update session to get new added contacts only notification)
             Session["LastUpdated"] = DateTime.Now;
             return Content(JsonConvert.SerializeObject(list), "application/json");
         }
+        public ActionResult GetNotificationDashBoard()
+        {
+            var list = _DashDbOp.Get_Dashboard_Notification(User.Identity.Name);
+            return Content(JsonConvert.SerializeObject(list), "application/json");
+        }
+        public ActionResult SetNotification_Status_Chnage()
+        {
+            var noticiationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            NotificationComponent NC = new NotificationComponent();
+            var list = NC.Notification_Status_change(noticiationRegisterTime, User.Identity.Name);
+            // Update session to get new added contacts only notification)
+            Session["LastUpdated"] = DateTime.Now;
+            return Content(JsonConvert.SerializeObject(list), "application/json");
+        }
+        public ActionResult AllNotification()
+        {
+            return View();
+        }
+
+        public ActionResult AllNotificationList(string Flag,int PageNo, int PageSize, string p_search)
+        {
+            var noticiationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            NotificationComponent NC = new NotificationComponent();
+            var list = NC.Get_All_Notification_Page(noticiationRegisterTime, User.Identity.Name, Flag,PageNo,PageSize,p_search);
+            // Update session to get new added contacts only notification)
+            Session["LastUpdated"] = DateTime.Now;
+            return Content(JsonConvert.SerializeObject(list), "application/json");
+        }
+
         [Route("CheckAuthorization")]
         public ActionResult CheckAuthrization(string url)
         {
@@ -65,6 +94,11 @@ namespace RDDStaffPortal.Controllers
         public  ActionResult GetRightSide()
         {
             return PartialView(_RDD_QuickOP.GetRightside(User.Identity.Name));
+        }
+
+        public ActionResult GetRightSideTask()
+        {
+            return PartialView(_RDD_QuickOP.GetRightsideTask(User.Identity.Name));
         }
         //[Route("GetProfileImg")]
         //public ActionResult GetProfileImg()

@@ -5,6 +5,7 @@ function Red_Dot_Model_Popup(ids, Modalid, data) {
         //do something
         return value;
     }
+    debugger
     //#region Modal 
     $(ids).html('<div class="modal fade" id="' + Modalid + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static">' +
         '<div class="modal-dialog">' +
@@ -98,7 +99,7 @@ function Red_Dot_Model_Popup(ids, Modalid, data) {
         '<label for="Database" class="col-md-1 col-form-label width150px">Remark :</label>' +
         '<div class="col-md-8 p-0">' +
 
-        '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"/>' +
+        '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"></textarea>' +
         '</div>' +
         '</div>' +
 
