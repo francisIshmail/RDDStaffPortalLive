@@ -194,8 +194,10 @@ namespace RDDStaffPortal.DAL.LMS
                             ToDate = Convert.ToDateTime(dr["ToDate"].ToString()),
                             NoOfDays = !string.IsNullOrWhiteSpace(dr["NoOfDays"].ToString()) ? Convert.ToDecimal(dr["NoOfDays"].ToString()) : 0,
                             Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
-
-
+                            LeaveRequestId= !string.IsNullOrWhiteSpace(dr["LeaveRequestId"].ToString()) ?Convert.ToInt32( dr["LeaveRequestId"].ToString()) : 0,
+                            EmployeeId= !string.IsNullOrWhiteSpace(dr["EmployeeId"].ToString()) ? Convert.ToInt32(dr["EmployeeId"].ToString()) : 0,
+                            LeaveTypeId = !string.IsNullOrWhiteSpace(dr["LeaveTypeId"].ToString()) ? Convert.ToInt32(dr["LeaveTypeId"].ToString()) : 0,
+                            AttachmentUrl = !string.IsNullOrWhiteSpace(dr["AttachmentUrl"].ToString()) ? dr["AttachmentUrl"].ToString() : "",
                         });
                     }
                 }
@@ -210,9 +212,25 @@ namespace RDDStaffPortal.DAL.LMS
                     LeaveName = "",
                     NoOfDays = 0,
                     Remarks = "",
+                    AttachmentUrl=""
                 });
             }
             return rDD_LMSReport;
+        }
+        public DataSet GeneratePdfDetails(int EmployeeId, int LeaveRequestId, int LeaveTypeId)
+        {
+            string Msg = "";
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@LeaveTypeId",LeaveTypeId),
+                new SqlParameter("@LeaveRequestId",LeaveRequestId),
+
+            };
+            ds = Com.ExecuteDataSet("RDD_PDFgenerateforReport", CommandType.StoredProcedure, prm);
+            return ds;
         }
     }
 }

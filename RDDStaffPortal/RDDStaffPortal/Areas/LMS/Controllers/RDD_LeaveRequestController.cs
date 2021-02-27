@@ -82,6 +82,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             DataSet ds1 = new DataSet();
                             DataSet ds2 = new DataSet();
                             DataSet ds3 = new DataSet();
+                            DataSet ds4 = new DataSet();
                             SqlParameter[] prm =
                             {
                    new SqlParameter("@LeaveRequestId",t[0].Id)
@@ -100,14 +101,21 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             {
                    new SqlParameter("@LoginUserId",RDD_LeaveRequest.backup2id)
                 };
+
+                            SqlParameter[] prm4 =
+                            {
+                   new SqlParameter("@LoginUserId",RDD_LeaveRequest.EmployeeId)
+                };
                             ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                             ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                             ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
+                            ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
                             string attachmentPath = string.Empty;
                             var LeaveName = ds.Tables[0].Rows[0]["LeaveName"];
                             var Fromdate = ds.Tables[0].Rows[0]["FromDate"];
                             var Todate = ds.Tables[0].Rows[0]["ToDate"];
                             var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"];
+                            var L1ManagerofManagerEmail= ds1.Tables[3].Rows[0]["Email"].ToString();
                             var L1ManagerName = ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
                             var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
                             var L2ManagerEmail = "";
@@ -121,17 +129,43 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             }
                             var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                             var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
-                            var backupmail2 = ds3.Tables[2].Rows[0]["Email"].ToString();
+                            var backupmail2 = "";
+                            if (ds3.Tables[2].Rows.Count > 0)
+                            {
+                                backupmail2= ds3.Tables[2].Rows[0]["Email"].ToString();
+                            }
+                            else
+                            {
+                                backupmail2 = "";
+                            }
                             var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
                             var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                             ToMail = L1ManagerEmail;                            
                             if (L2ManagerEmail != "")
                             {
-                                 cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                if(backupmail2!="")
+                                {
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2+";"+ L1ManagerofManagerEmail;
+
+                                }
+                                else
+                                {
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
+                                }
+                                 
                             }
                             else
                             {
-                                 cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2;
+                                if (backupmail2 != "")
+                                {
+                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
+
+                                }
+                                else
+                                {
+                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
+                                }
+                                   
                             }
                             
                             string Subject = "Leave Approval Request";

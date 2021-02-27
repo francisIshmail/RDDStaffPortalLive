@@ -10,6 +10,8 @@
 @Html.HiddenFor(m => m.LeaveRequestId)
 @Html.HiddenFor(m => m.Editflag)
 @Html.Hidden(string.Concat("Hdndays"))
+@Html.Hidden(string.Concat("HdnAttachmentUrl"))
+@Html.Hidden(string.Concat("HdnReason"))
 @Html.Hidden(string.Concat("HdnRemainLeave"))
 @Html.Hidden(string.Concat("HdnNoOfDays"))
 @Html.Hidden(string.Concat("HdnLeaveBalance"))
@@ -867,6 +869,7 @@
             applyAutoCompletedata("#BackUp", "#hdnBackUp", "#BackUp2", "#hdnBackUp2", results);
         }
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+            var leavename = $("#LeaveTypeId option:selected").text();
             var currentleave;
             var count = 0;
             var weeklyoffdaycount = $("#hdnweeklyoffdaycount").val();
@@ -879,9 +882,9 @@
             var EndDate = d.getFullYear() + "/" + 12 + "/" + 31;
             var fromdate = $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD');
             var todate = $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD');
-
             var startMin1 = new Date(moment(fromdate, 'YYYY-MM-DD').add(-1, 'days'));
-
+            var tomax1 = new Date(moment(todate, 'YYYY-MM-DD').add(+1, 'days'));
+            var Tomax2 = new Date(moment(todate, 'YYYY-MM-DD').add(+1, 'days'));
             var days = daysdifference(fromdate, todate);
             var arr2 = getDateArray(fromdate, todate);
             var startMin = moment(fromdate, 'YYYY-MM-DD');
@@ -899,6 +902,7 @@
             $("#HdntodateEdit").val(todate);
             var weeklyoff = $("#Weeklyoff").val();
             var LeaveRule = $("#LeaveRule").val();
+            var Count = 0;
             var weekday = new Array(7);
             weekday[0] = "Sunday";
             weekday[1] = "Monday";
@@ -906,18 +910,7 @@
             weekday[3] = "Wednesday";
             weekday[4] = "Thursday";
             weekday[5] = "Friday";
-            weekday[6] = "Saturday";
-            if (LeaveRule != "WorkingDays") {
-                if (weekday[startMin1.getDay()] == weeklyoff) {
-                    $('#reportrange').data('daterangepicker').startDate.add(-1, 'day')
-                    html = '<tr class="dttype"><td style="width:50%; float:left">';
-                    html += '<div id="divLvDates">' + getMonthDetails((startMin1.getMonth())) + '' + startMin1.getDate() + '</div>';
-                    html += '</td><td style="width:50%; float:right">';
-                    html += '<select name="daytime" class="custom-select" id="ddlDayType" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
-                    html += '</td></tr>';
-                    $("#divDates").append(html);
-                }
-            }
+            weekday[6] = "Saturday";          
 
             for (var i = 0; i < arr2.length; i++) {
 
@@ -946,6 +939,30 @@
                 else {
                     $("#divDates").append(html);
                 }
+               
+            }
+            if (LeaveRule != "WorkingDays") {
+
+                var flag = true;
+
+                while (flag == true) {
+                    var imp = getImportancedatepicker(tomax1, holidayList);
+                    if ((weekday[tomax1.getDay()] == weeklyoff) || (imp != undefined && imp != null)) {
+                        flag == true;
+                        $('#reportrange').data('daterangepicker').endDate.add(+1, 'day')
+                        html = '<tr class="dttype"><td style="width:50%; float:left">';
+                        html += '<div id="divLvDates">' + getMonthDetails((tomax1.getMonth())) + '' + tomax1.getDate() + '</div>';
+                        html += '</td><td style="width:50%; float:right">';
+                        html += '<select name="daytime" class="custom-select" id="ddlDayType" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
+                        html += '</td></tr>';
+                        $("#divDates").append(html);
+                        tomax1 = new Date(moment(tomax1, 'YYYY-MM-DD').add(+1, 'days'));
+                        Count++;
+                    }
+                    else {
+                        flag = false;
+                    }
+                }
             }
             var EmpIde = $("#EmployeeId").val();
             var LvtypeId = $("#LeaveTypeId").val();
@@ -953,17 +970,17 @@
             currentleave = $("#HdnLeaveBalance").val();
             if (LeaveRule == "CalenderDays") {
 
-                if (weekday[startMin1.getDay()] == weeklyoff) {
+                if ((weekday[Tomax2.getDay()] == weeklyoff) || (imp != undefined && imp != null)) {
                     var remainleave = (currentleave - days);
-                    var Header = '<h5><label id="lblDays">' + (days + 1) + '</label> days of annual leave</h5>';
-                    Header += '<h5><label id="lblRemaindays">' + (remainleave - 1) + '</label> days remaining</h5>';
+                    var Header = '<h5><label id="lblDays">' + (days + Count) + '</label> days of' + leavename + '</h5>';
+                    Header += '<h5><label id="lblRemaindays">' + (remainleave - Count) + '</label> days remaining</h5>';
                     $("#Hdndays").val(days + 1);
                     $("#HdnRemainLeave").val(remainleave);
                     $("#Leavedtls").append(Header);
                 }
                 else {
                     var remainleave = (currentleave - days);
-                    var Header = '<h5><label id="lblDays">' + days + '</label> days of annual leave</h5>';
+                    var Header = '<h5><label id="lblDays">' + days + '</label> days of' + leavename + '</h5>';
                     Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
                     $("#Hdndays").val(days);
                     $("#HdnRemainLeave").val(remainleave);
@@ -979,7 +996,7 @@
                     var remainleave = (currentleave - days);
                     var leave = days;
                 }
-                var Header = '<h5><label id="lblDays">' + leave + '</label> days of annual leave</h5>';
+                var Header = '<h5><label id="lblDays">' + leave + '</label> days of' + leavename + '</h5>';
                 Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
                 $("#Hdndays").val(days);
                 $("#HdnRemainLeave").val(remainleave);
@@ -1046,7 +1063,7 @@
         var todate = currow.find("td:eq(4)").html();
         var attachment = currow.find("td:eq(9)").html();
         $("#divempname").text(Empnm);
-        $("#lbllvname").text(leaveNm + " " + "Leave");
+        $("#lbllvname").text(leaveNm);
         $("#lblfromdate").text(fromdate);
         $("#lbltodate").text(todate);
         $("#lblreason").text(reason);
@@ -1238,10 +1255,14 @@
             $("#HdnNoOfDays").val(noofdays);
             $("#hdnBackUp").val(data.Table[0].BackUp1Id);
             $("#BackUp").val(data.Table2[0].FullName);
-            $("#BackUp2").val(data.Table3[0].FullName);
-            $("#hdnBackUp2").val(data.Table[0].BackUp2Id);
+            if (data.Table3.length != 0) {
+                $("#BackUp2").val(data.Table3[0].FullName);
+                $("#hdnBackUp2").val(data.Table[0].BackUp2Id);
+            }            
             $("#HdnfromdateEdit").val(data.Table[0].FromDate);
             $("#HdntodateEdit").val(data.Table[0].ToDate);
+            $("#HdnAttachmentUrl").val(data.Table[0].AttachmentUrl);
+            $("#HdnReason").val(data.Table[0].Reason);
             if (data.Table[0].AttachmentUrl != null || data.Table[0].AttachmentUrl != undefined) {
                 var filepath = data.Table[0].AttachmentUrl;
                 var fileNameIndex = filepath.lastIndexOf("/") + 1;
@@ -1260,7 +1281,7 @@
             startMin = new Date(startMin);
             var startdayMin = ("0" + startMin.getDate()).slice(-2);
             var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
-            var nowMax = moment(data.Table[0].ToDate, 'YYYY-MM-DD');            
+            var nowMax = moment(data.Table[0].ToDate, 'YYYY-MM-DD');
             nowMax = new Date(nowMax);
             var dayMax = ("0" + nowMax.getDate()).slice(-2);
             var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
@@ -1297,6 +1318,7 @@
             default:
                 $(this).val('');
                 $("input[id='AttachmentUrl'][type='hidden']").val('');
+               // $("#HdnAttachmentUrl").val('');
                 //$("#FilePathview").removeAttr("href");
                 //$("#FilePathview").removeAttr("target");
                 // error message here
@@ -1321,6 +1343,7 @@
 
                 if (response.indexOf("Error occurred") == 0) {
                     $("input[id='AttachmentUrl'][type='hidden']").val('');
+                    $("#HdnAttachmentUrl").val('');
                     //$("#FilePathview").removeAttr("href");
                     //$("#FilePathview").removeAttr("target");
                     RedDotAlert_Error(response);
@@ -1328,6 +1351,7 @@
                 }
                 else {
                     $("input[id='AttachmentUrl'][type='hidden']").val(response);
+                    $("#HdnAttachmentUrl").val(response);
                     //$("#FilePathview").attr("href", $("input[id='FilePath'][type='hidden']").val());
                     //$("#FilePathview").attr("target", "_blank");
                 }
@@ -1352,11 +1376,11 @@
             $(".loader1").hide();
             return false;
         }
-        if ($('#BackUp2').val().length == 0) {
-            RedDotAlert_Error("Please choose a backup name");
-            $(".loader1").hide();
-            return false;
-        }
+        //if ($('#BackUp2').val().length == 0) {
+        //    RedDotAlert_Error("Please choose a backup name");
+        //    $(".loader1").hide();
+        //    return false;
+        //}
         $(".dttype").each(function () {
             debugger;
 
@@ -1375,7 +1399,8 @@
         });
 
         var fromdate = $("#HdnfromdateEdit").val();// $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var todate = $("#HdntodateEdit").val();//$('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var todate = $("#HdntodateEdit").val();   
+        //var attachmenturl = $("#HdnAttachmentUrl").val();
         var days = daysdifference(fromdate, todate);
         var day = totalday;
         var RDD_LeaveRequest = {
@@ -1391,7 +1416,7 @@
             LeaveStatus: "Pending",
             ApproverRemarks: "NULL",
             IsPrivateLeave: $('input[name="private"]:checked').val(),
-            AttachmentUrl: $("#AttachmentUrl[type='hidden']").val(),
+            AttachmentUrl: $("#HdnAttachmentUrl").val(),
             LeaveRequestId: lvrquestId,
             LeaveRequestDetailsList: []
         };

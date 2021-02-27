@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+   <table>
+        
+       
+        <tr>
+            
+            
+            <td colspan='6' align='center'> <img src='https://www.reddotdistribution.com/images/reddot%20logo%20black.png' alt='' border='0' width='150' class='center' /> </td>
+            
+        </tr>
+        
+        <tr>
+            
+            
+            <th colspan='6'><b><u>Personal Leave Details</u></b>:</th>
+            
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='4'><b>Full Name</b>:</th>
+           
+            <td>"+ds.Tables[0].Rows[0]["FullName"]+"</td>
+           
+            <th colspan='2'><b>ID No</b>:</th>
+           
+            <td>" + ds.Tables[0].Rows[0]["EmployeeNo"] +</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Department</b>:</th>
+           
+            <td>" + ds.Tables[0].Rows[0]["DeptName"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Leave Name</b>:</th>
+           
+            <td>" + ds.Tables[1].Rows[0]["LeaveName"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Leave requested from</b>:&nbsp;&nbsp;" + ds.Tables[0].Rows[0]["FromDate"] + &nbsp;&nbsp;<b> to </b>&nbsp;&nbsp; + ds.Tables[0].Rows[0]["ToDate"] + &nbsp; &nbsp;<b> No of Days</b> : &nbsp; &nbsp; + ds.Tables[0].Rows[0]["NoOfdays"] + </th>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Reason For Request</b>:</th>
+           
+            <td colspan='2'>" + ds.Tables[0].Rows[0]["Reason"] +</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Home/Leave Address</b>:</th>
+           
+            <td colspan='3'>" + ds.Tables[0].Rows[0]["Current_Address"] +</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='5'><b>Applicant Signature</b>:&nbsp;&nbsp;" + ds.Tables[0].Rows[0]["FullName"] +&nbsp;&nbsp;  &nbsp; &nbsp;<b> Date</b> : &nbsp; &nbsp; + ds.Tables[0].Rows[0]["todayDate"] + </th>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>BackUp Person 1</b>:</th>
+           
+            <td colspan='3'>" + ds.Tables[2].Rows[0]["FullName"] +</td>
+           
+        </tr>
+       
+        <th colspan='2'><b>BackUp Person 1 Signature</b>:</th>
+       
+        <td colspan='3'>" + ds.Tables[2].Rows[0]["FullName"] +</td>
+       </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>BackUp Person 2</b>:</th>
+           
+            <td colspan='3'>" + ds.Tables[3].Rows[0]["FullName"] +</td>
+           
+        </tr>
+       
+        <th colspan='2'><b>BackUp Person 2 Signature</b>:</th>
+       
+        <td colspan='3'>" + ds.Tables[3].Rows[0]["FullName"] +</td>
+       </tr>
+       
+        <tr>
+            
+           
+            <th colspan='6'><b><u>Computational Of Outstanding Days</u></b>:</th>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Current Year Entitlement</b>:</th>
+           
+            <td>&nbsp;&nbsp;" + ds.Tables[0].Rows[0]["Current_Address"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Less Days Already Taken</b>:</th>
+           
+            <td>&nbsp;&nbsp;" + ds.Tables[5].Rows[0]["TotalTakenLeave"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Less Days Applied For</b>:</th>
+           
+            <td>&nbsp;&nbsp;" + ds.Tables[6].Rows[0]["TotalPendingLeave"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='2'><b>Balance If Approved</b>:</th>
+           
+            <td>&nbsp;&nbsp;" + ds.Tables[7].Rows[0]["BalanceLeave"] +</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='6'><b><u>Recommendation By Head Of Department</u></b>:</th>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='3'><b>Approved To Proceed For Annual Leave</b>:</th>
+           
+            <td>&nbsp;&nbsp;0 Days</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='6'><b><u>Recommendation By Managing Director</u></b>:</th>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='3'><b>Approved To Proceed For Annual Leave</b>:</th>
+           
+            <td>&nbsp;&nbsp;0 Days</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='3'><b>Salary Advance Payment Approved/Not Approved</b>:</th>
+           
+            <td>&nbsp;&nbsp;</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='5'><b>Dept Manager</b>:&nbsp;&nbsp;" + ds.Tables[4].Rows[0]["EmployeeName"] + &nbsp;&nbsp;&nbsp; &nbsp;<b>General Manager</b> : &nbsp; &nbsp;" + ds.Tables[0].Rows[0]["Current_Address"] +</th>
+           
+            <td>&nbsp;&nbsp;</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+        <tr>
+            
+           
+            <th colspan='3'><b>Checked By</b>:</th>
+           
+            <td>&nbsp;&nbsp;</td>
+            <td colspan='2'> &nbsp;</td>
+           
+        </tr>
+       
+    </table>
+
+</body>
+</html>

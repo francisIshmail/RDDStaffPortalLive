@@ -11,14 +11,13 @@
 @Html.Hidden(string.Concat("HdnRemainLeave"))
 @Html.Hidden(string.Concat("HdnEmpId"))
 @Html.Hidden(string.Concat("HdnLeaveBalance"))
+@Html.Hidden(string.Concat("HdnLeavename"))
 <link href="~/Scripts/datapicker-separate/daterangepicker.css" rel="stylesheet" />
 
 <style>
     .ui-autocomplete {
         z-index: 5000;
-
     }
-
 </style>
 <div class="p-0 dropdown-header py-3 pt-md-5 pb-md-4 mx-auto">
     <div class="container-fluid">
@@ -48,14 +47,14 @@
             </div>
 
             <div class="col-md-9 row">
-               <div class="col-md-10"> 
-                <form>
-                    <div class="btnarea" style="font-size: 23px;padding: 7px;"><a href="#" class="previous round"><i class="fas fa-arrow-circle-left"></i></a><strong id="calendarid"> 2021 </strong><a href="#" class="next round next1"><i class="fas fa-arrow-circle-right"></i></a></div>
-                </form>
+                <div class="col-md-10">
+                    <form>
+                        <div class="btnarea" style="font-size: 23px;padding: 7px;"><a href="#" class="previous round"><i class="fas fa-arrow-circle-left"></i></a><strong id="calendarid"> 2021 </strong><a href="#" class="next round next1"><i class="fas fa-arrow-circle-right"></i></a></div>
+                    </form>
                 </div>
-               <div class="col-md-2 text-right"> 
-                
-                <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModal">Apply Leave</button>
+                <div class="col-md-2 text-right">
+
+                    <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModal">Apply Leave</button>
                 </div>
             </div>
         </div>
@@ -74,22 +73,20 @@
                     <h4 class="my-0 font-weight-bold">Annual Leaves</h4>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled mt-0 mb-4" id="ulAnnualDetails">
-                        
-                    </ul>
+                    <ul class="list-unstyled mt-0 mb-4" id="ulAnnualDetails"></ul>
                 </div>
             </div>
             <div class="card mt-3 mb-3 box-shadow">
                 @*<div class="card-header">
-                    <h4 class="my-0 font-weight-bold">Options </h4>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mt-0 mb-4">
-                        <li><a href="#"><strong class="blu">Add to regilar calendar </strong></a></li>
-                    </ul>
-                </div>*@
+                        <h4 class="my-0 font-weight-bold">Options </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-0 mb-4">
+                            <li><a href="#"><strong class="blu">Add to regilar calendar </strong></a></li>
+                        </ul>
+                    </div>*@
             </div>
-            
+
         </div>
     </div>
 
@@ -179,7 +176,7 @@
                                     <input id="hdnBackUp2" type="hidden" />
 
                                     @*<label for="comment">Select Backup Person 2:</label>
-        @Html.DropDownListFor(m => m.EmployeeIde, Model.EmployeeListsModal, new { @class = "form-control" })*@
+                                        @Html.DropDownListFor(m => m.EmployeeIde, Model.EmployeeListsModal, new { @class = "form-control" })*@
                                 </div>
                                 <div class="form-group">
                                     <label for="comment">Attachments:</label>
@@ -345,7 +342,7 @@
         //        dataType: "json",
         //        data: JSON.stringify({ EmployeeId: EmpId }),
         //        success: function (data) {
-                   
+
 
         //            var d = new Date();
         //            var getyear = d.getFullYear();
@@ -438,7 +435,7 @@
                 var d = new Date();
                 var getyear = d.getFullYear();
                 HolidayDetails = data.Table;
-                debugger               
+                debugger
 
             }
 
@@ -460,7 +457,7 @@
             dataType: "json",
             data:{ EmployeeId: Empid, LeaveTypeId: Leavetypeid },
             success: function (data) {
-                
+
                 $("#HdnLeaveBalance").val(data.Table[0].Balance);
 
             },
@@ -470,7 +467,7 @@
 
         });
     }
-    
+
     function GetDashboardData(EmployeeId) {
         $.ajax({
             async: false,
@@ -486,7 +483,7 @@
                 var TotaltakenLv;
                 var TotalBookedLeave;
                 //$("#HdnLeaveBalance").val(data.Table[0].Balance);
-                
+
                 if (data.Table1[0].TotalTakenLeave == null) {
                     TotaltakenLv = 0;
                 }
@@ -515,15 +512,15 @@
 
         });
     }
-    
+
     $(document).ready(function () {
-        
+
         var loginEmpid;
         var changeEmpid;
         var Empides;
         var seletedDate = moment(new Date());
         var day = getWeeklyoffDayNo();
-       
+
         var holidayList = loadCalender($("#EmployeeId").val());
         $(document).on('change', '#EmployeeId', function () {
 
@@ -547,7 +544,7 @@
             $("#calendarid").html(seletedDate.year());
 
             $("#calendar").html("");
-            
+
             var $calendar = document.getElementById("calendar");
             var currentYear = seletedDate.year();
             var calendarize = new Calendarize();
@@ -580,53 +577,53 @@
         var $calendar = document.getElementById("calendar");
         var currentYear = seletedDate.year();
         var calendarize = new Calendarize();
-        
 
-        
+
+
         calendarize.buildYearCalendar($calendar, currentYear, holidayList, day);
-        
-        loginEmpid = $("#EmployeeId").val();      
+
+        loginEmpid = $("#EmployeeId").val();
         GetDashboardData(loginEmpid);
         //$("#backup1").attr("autocomplete", "on");
         //$("#backup2").attr("autocomplete", "on");
-        $(".loader1").hide();     
+        $(".loader1").hide();
         var dayNo = getWeeklyoffDayNo();
         var k1 = Getdate1();
-               
-        
-        
-        
+
+
+
+
         if ($("#HR").val() != "True") {
             debugger;
             var results = k1.filter(function (elem) {
                 return elem.Code == $("#EmployeeIde").val();
             });
             if (results.length > 0) {
-                $("#EmployeeIdPopup").val(results[0].CodeName);               
+                $("#EmployeeIdPopup").val(results[0].CodeName);
             }
             results = k1.filter(function (elem) {
 
                 return elem.Code !== $("#EmployeeIde").val();
             });
-            
+
             var EmployeeId = $("#EmployeeIde").val();
             GetLeaveTypeList(EmployeeId);
             //GetEmployeeWeeklyOff();
             applyAutoCompletedata("#BackUp", "#hdnBackUp", "#BackUp2", "#hdnBackUp2", results);
-            
-            
-            
-          
+
+
+
+
 
         } else {
             debugger;
             applyAutoCompletedataHR("#EmployeeIdPopup", "#EmployeeIde", "#BackUp", "#hdnBackUp", "#BackUp2","#hdnBackUp2", k1);
-            
+
         }
-       
-       
-       
-        $(document).on('change', '#LeaveTypeIde', function () {          
+
+
+
+        $(document).on('change', '#LeaveTypeIde', function () {
             $("#LeaveTypeId").val($(this).val());
         });
         function GetLeaveTypeList(EmployeeId) {
@@ -656,7 +653,7 @@
 
                 }
             });
-        }        
+        }
         $(document).on("focusout", "#EmployeeIdPopup", function () {
             debugger
             $("#Leavedtls").empty();
@@ -683,7 +680,7 @@
                 }
             });
         });
-       
+
         $('#exampleModal').on('hidden.bs.modal', function (e) {
 
             $("#Leavedtls").empty();
@@ -707,16 +704,30 @@
                 .trigger('change')
                 .end()
         });
+        $("#LeaveTypeIde").on('change', function () {
+            //leavename = $("#LeaveTypeIde option:selected").text();
+            //$("#HdnLeavename").val(leavename);
+            $("#Leavedtls").empty();
+            $("#divDates").empty();
+            //$("#random").hide();
+            //var d = new Date();
+            //var StrtDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            //var EndDate = d.getFullYear() + "/" + 12 + "/" + 31;
+            //var leavename = "";
+            //RedDot_DateRange_Min_Max_Lms("reportrange", StrtDate, EndDate);
+        });
 
         var d = new Date();
         var StrtDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
         var EndDate = d.getFullYear() + "/" + 12 + "/" + 31;
-
+        var leavename = "";
 
         RedDot_DateRange_Min_Max_Lms("reportrange", StrtDate, EndDate);
 
-        
+       
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+            var leavename = $("#LeaveTypeIde option:selected").text();
+            var lvname = $("#HdnLeavename").val();
             var currentleave;
             var count=0;
             var weeklyoffdaycount = $("#hdnweeklyoffdaycount").val();
@@ -729,7 +740,8 @@
             var todate = $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD');
 
             var startMin1 = new Date(moment(fromdate, 'YYYY-MM-DD').add(-1, 'days'));
-
+            var tomax1 = new Date(moment(todate, 'YYYY-MM-DD').add(+1, 'days'));
+            var Tomax2= new Date(moment(todate, 'YYYY-MM-DD').add(+1, 'days'));
             var days = daysdifference(fromdate, todate);
             var arr2 = getDateArray(fromdate, todate);
             var startMin = moment(fromdate, 'YYYY-MM-DD');
@@ -745,6 +757,7 @@
             $("#divDates").empty();
             var weeklyoff = $("#Weeklyoff").val();
             var LeaveRule = $("#LeaveRule").val();
+            var Count = 0;
             var weekday = new Array(7);
             weekday[0] = "Sunday";
             weekday[1] = "Monday";
@@ -753,21 +766,10 @@
             weekday[4] = "Thursday";
             weekday[5] = "Friday";
             weekday[6] = "Saturday";
-            if (LeaveRule != "WorkingDays") {
-                if (weekday[startMin1.getDay()] == weeklyoff) {
-                    $('#reportrange').data('daterangepicker').startDate.add(-1, 'day')
-                    html = '<tr class="dttype"><td style="width:50%; float:left">';
-                    html += '<div id="divLvDates">' + getMonthDetails((startMin1.getMonth())) + '' + startMin1.getDate() + '</div>';
-                    html += '</td><td style="width:50%; float:right">';
-                    html += '<select name="daytime" class="custom-select" id="ddlDayType" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
-                    html += '</td></tr>';
-                    $("#divDates").append(html);
-                }
-            }
 
             for (var i = 0; i < arr2.length; i++) {
 
-               
+
                 var date1 = arr2[i].getDate();
                 var curyear = d.getFullYear();
                 var months = getMonthDetails((arr2[i].getMonth()));
@@ -778,11 +780,11 @@
                 html += '</td></tr>';
 
                 if (LeaveRule == "WorkingDays") {
-                    var imp = getImportancedatepicker(arr2[i], holidayList);                    
-                    
+                    var imp = getImportancedatepicker(arr2[i], holidayList);
+
                     if (weekday[arr2[i].getDay()] != weeklyoff && (imp == undefined && imp == null)) {
                         $("#divDates").append(html);
-                        
+
                     }
                     else {
                         //$("#divDates").append("");
@@ -792,6 +794,30 @@
                 else {
                     $("#divDates").append(html);
                 }
+
+            }
+            if (LeaveRule != "WorkingDays") {
+
+                var flag = true;
+
+                while (flag == true) {
+                    var imp = getImportancedatepicker(tomax1, holidayList);
+                    if ((weekday[tomax1.getDay()] == weeklyoff) || (imp != undefined && imp != null)) {
+                        flag == true;
+                        $('#reportrange').data('daterangepicker').endDate.add(+1, 'day')
+                        html = '<tr class="dttype"><td style="width:50%; float:left">';
+                        html += '<div id="divLvDates">' + getMonthDetails((tomax1.getMonth())) + '' + tomax1.getDate() + '</div>';
+                        html += '</td><td style="width:50%; float:right">';
+                        html += '<select name="daytime" class="custom-select" id="ddlDayType" disabled="disabled"> <option value="1">All Day </option> <option value="0.5">half day - morning</option> <option value="0.5">half day - afternoon </option> </select >';
+                        html += '</td></tr>';
+                        $("#divDates").append(html);
+                        tomax1 = new Date(moment(tomax1, 'YYYY-MM-DD').add(+1, 'days'));
+                        Count++;
+                    }
+                    else {
+                        flag = false;
+                    }
+                }
             }
             var EmpIde = $("#EmployeeIde").val();
             var LvtypeId = $("#LeaveTypeId").val();
@@ -799,17 +825,17 @@
             currentleave = $("#HdnLeaveBalance").val();
             if (LeaveRule == "CalenderDays") {
 
-                if (weekday[startMin1.getDay()] == weeklyoff) {
+                if ((weekday[Tomax2.getDay()] == weeklyoff)|| (imp != undefined && imp != null)) {
                     var remainleave = (currentleave - days);
-                    var Header = '<h5><label id="lblDays">' + (days + 1) + '</label> days of annual leave</h5>';
-                    Header += '<h5><label id="lblRemaindays">' + (remainleave-1) + '</label> days remaining</h5>';
+                    var Header = '<h5><label id="lblDays">' + (days + Count) + '</label> days of' + leavename+ '</h5>';
+                    Header += '<h5><label id="lblRemaindays">' + (remainleave-Count) + '</label> days remaining</h5>';
                     $("#Hdndays").val(days + 1);
                     $("#HdnRemainLeave").val(remainleave);
                     $("#Leavedtls").append(Header);
                 }
                 else {
                     var remainleave = (currentleave - days);
-                    var Header = '<h5><label id="lblDays">' + days + '</label> days of annual leave</h5>';
+                    var Header = '<h5><label id="lblDays">' + days + '</label> days of' + leavename+'</h5>';
                     Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
                     $("#Hdndays").val(days);
                     $("#HdnRemainLeave").val(remainleave);
@@ -825,7 +851,7 @@
                     var remainleave = (currentleave - days);
                     var leave = days;
                 }
-                var Header = '<h5><label id="lblDays">' + leave + '</label> days of annual leave</h5>';
+                var Header = '<h5><label id="lblDays">' + leave + '</label> days of' + leavename+'</h5>';
                 Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
                 $("#Hdndays").val(days);
                 $("#HdnRemainLeave").val(remainleave);
@@ -833,7 +859,7 @@
             }
         });
     });
-   
+
 
     $(document).on('change', '.DayType', function () {
         //$("#Leavedtls").empty();
@@ -851,7 +877,7 @@
     });
     var totalday = 0;
 
-    
+
     var getDateArray = function (fromdate, todate) {
 
 
@@ -1029,7 +1055,7 @@
             }
         });
 
-    }); 
+    });
 
 
     $(document).on('click', '#Btn_Submit', function () {
@@ -1044,6 +1070,12 @@
             $(".loader1").hide();
             return false;
         }
+        //if ($('#BackUp2').val().length == 0) {
+        //    RedDotAlert_Error("Please choose another backup name");
+        //    $(".loader1").hide();
+        //    return false;
+        //}
+        $("#Btn_Submit").attr("disabled", true);
         $(".dttype").each(function () {
 
             var currow = $(this).closest('tr');
@@ -1064,7 +1096,7 @@
         var RDD_LeaveRequest = {
             EmployeeId: $("#EmployeeIde").val(),
             backupid: $("#hdnBackUp").val(),
-            backup2id: $("#hdnBackUp2").val(),  
+            backup2id: $("#hdnBackUp2").val(),
             LeaveTypeId: $("#LeaveTypeIde option:selected").val(),
             Reason: $("#Reason").val(),
             FromDate: fromdate,
@@ -1091,14 +1123,15 @@
         });
 
         $.post("/SaveLeaveRequest", { RDD_LeaveRequest: RDD_LeaveRequest }, function (response) {
-            
+
             $(".loader1").hide();
+            $("#Btn_Submit").removeAttr("disabled",true);
             /*if (response.data.Saveflag == true && response.data.LeaveRequestId != -1)*/
             debugger
             if (response[0].Responsemsg == "Leave Request Inserted Successfully.") {
                 $("#exampleModal").modal("hide");
                 RedDotAlert_Success(response[0].Responsemsg);
-               
+
                 //var LoginUserid = $("#EmployeeIde").val();
                 //var backupid = $("#hdnBackUp").val();
                 ////var backup2id = $("#hdnBackUp2").val();
