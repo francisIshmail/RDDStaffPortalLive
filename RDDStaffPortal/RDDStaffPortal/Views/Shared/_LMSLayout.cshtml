@@ -106,7 +106,7 @@
                         <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LMSReport/Index">Reports</a>
                     </li>
                 }
-                
+
                 <li class="p-3 nav-item">
                     <a class="nav-link text-dark font-weight-normal" href="~/Dashboard/Index">Main Dashboard</a>
                 </li>
@@ -134,9 +134,162 @@
         });
     </script>
     <!--   Core JS Files   -->
+    @*<script src="~/js/core/jquery.3.2.1.min.js"></script>*@
+    @*<script src="~/Scripts/jquery-3.5.1.min.js"></script>*@
+    <script src="@Url.Content("~/Scripts/jquery-3.5.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.4.1.min.js")"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+
+            // GET NOTIFICATIONS AND SETUP SIGNALR
+            debugger
+        console.log("signalr");
+        updateNotification('Old');
+            // Click on notification icon to show notification
+        $('.fa-bell').click(function (e) {
+                e.stopPropagation();
+                $('.notif-box').show();
+            debugger
+                // Only load notification if not already loaded
 
 
-    <script src="~/js/core/jquery.3.2.1.min.js"></script>
+
+        });
+        $("#notiContent").click(function () {
+            count = parseInt($('span.notification').html()) || 0;
+            if (count > 0) {
+
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: '/Dashboard/SetNotification_Status_Chnage',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        debugger
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }})
+
+            // Hide notifications
+            $('html').click(function () {
+                $('.notif-box').hide();
+            });
+
+            // Update notifications
+            function updateNotification(Flag) {
+
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    data: JSON.stringify({
+                        Flag: Flag
+                    }),
+                    url: '/Dashboard/GetNotificationContacts',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        debugger
+                        $('#notiContent').append($('<li>Loading...</li>'));
+                        //$('#notiContent').empty();
+                        var found_names = response.Table;
+                            @*$.grep(response.Table, function (v) {
+                            return v.Notification_AssignTo === @HttpContext.Current.User.Identity.Name;
+                        });*@
+                        if (found_names.length === 0) {
+                            $('#notiContent').append($('<li>No data available</li>'));
+                        }
+                        count = parseInt($('span.notification').html()) || 0;
+                        if (count < found_names.length) {
+                            $('span.notif-box').css("color", "");
+                            $('span.notification').css({ "background-color": "", "color": "" });
+                        } else {
+                            //$('span.notif-box').css("color", "white");
+                            //$('span.notification').css({ "background-color": "red", "color": "white" });
+                            return
+                        }
+
+                        $(".notification").html(found_names.length);
+                        $("#dropdown-title").html("You have " + found_names.length + " new notification");
+                        $('#notiContent').empty();
+
+                        $.each(found_names, function (index, value) {
+                            //$('#notiContent').append($('<li>New contact : ' + value.DocumentName + ' (' + value.Description + ') added</li>'));
+                            $('#notiContent').append($(' <a href="' + value.REf_URL + '" style="background-color :'+ value.Notification_Background+'">' +
+                                '<div class= "notif-icon notif-primary" > <i class="fa fa-money-bill-alt"></i> </div >' +
+                                '<div class="notif-content">' +
+                                '<span class="block">' +
+                                '' + value.Notification_Text + '' +
+                                ' </span>' +
+                                ' <span class="time">' + value.Notification_Createdon+'</span>' +
+                                '</div>' +
+                                ' </a >'));
+                        });
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        $(function () {
+            debugger
+
+
+        })
+        // SignalR js code for start hub and send receive notification(s) from the server side
+        var notificationHub = $.connection.notificationHub;
+        $.connection.hub.start().done(function () {
+            console.log('Notification hub started');
+        });
+
+        // SignalR method for push server message to client
+        notificationHub.client.notify = function (message) {
+            debugger
+            var count = 0,Count1=0;
+            if (message && message.toLowerCase() === "added") {
+                console.log('Notification hub added');
+               // count = parseInt($('span.notification').html()) || 0;
+                updateNotification('New');
+                //count1 = parseInt($('span.notification').html()) || 0;
+                //if (count < count1) {
+                //    $('span.notif-box').css("color", "white");
+                //    $('span.notification').css({ "background-color": "red", "color": "white" });
+                //}
+            }
+            //else if (message && message.toLowerCase() === "updated") {
+            //    console.log('Notification hub Approver');
+            //    count = parseInt($('span.notification').html()) || 0;
+            //    updateNotification('New');
+            //    count1 = parseInt($('span.notification').html()) || 0;
+            //    if (count<count1) {
+            //        $('span.notif-box').css("color", "white");
+            //        $('span.notification').css({ "background-color": "red", "color": "white" });
+            //    }
+
+            //}
+        };
+            function updateNotificationCount() {
+                debugger
+                $('span.notification').show();
+                var count = 0;
+                count = parseInt($('span.notification').html()) || 0;
+                count++;
+                $('span.notif-box').css("color", "white");
+                $('span.notification').css({ "background-color": "red", "color": "white" });
+                $('span.notification').html(count);
+
+        }
+
+            // signalr js code for start hub and send receive notification
+
+
+    </script>
     <script src="~/js/core/popper.min.js"></script>
     <script src="~/js/core/bootstrap.min.js"></script>
     @*Select2*@
@@ -158,11 +311,18 @@
     <!-- DateTimePicker -->
     <script src="~/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
     <script src="~/Scripts/datapicker-separate/daterangepicker.js"></script>
-
+    <!-- jQuery Scrollbar -->
+    <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="~/js/atlantis.min.js"></script>
 
     <script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
     <script src="~/Scripts/RedDotUtility.js"></script>
+    <script>
 
+
+
+    </script>
 </body>
 </html>
 <!--   Core JS Files   -->

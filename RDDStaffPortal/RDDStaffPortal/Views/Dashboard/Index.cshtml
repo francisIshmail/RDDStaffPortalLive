@@ -22,9 +22,13 @@
                     <div class="rightwidgets">
                         <div class="row rights1">
                             @{ Html.RenderAction("GetRightSide", "Dashboard");}
+
+                        </div>
+                        <div class="row rights2">
+                            @{ Html.RenderAction("GetRightSideTask", "Dashboard");}
+                            <div>
                         </div>
                     </div>
-                </div>
 
             </div>
         </div>
@@ -120,6 +124,82 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="NewApprovalRequestWidgetspopup" tabindex="-1" role="dialog" aria-labelledby="NewApprovalRequestWidgetspopup" aria-hidden="true" keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Requests</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-1 pb-1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:20px" scope="col">#</th>
+                            <th scope="col" style="width: 203px">Approval Request</th>
+
+                            <th style="text-align: right;" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ApprovalRequest_Body_Ibody">
+                        <tr id="ApprovalRequest_Body_Ist">
+                            <th scope="row" class="Abcd">1</th>
+                            <td class="Abcd">PV DU000087 shirin</td>
+
+                            <td style="text-align: right;" class="Abcd"><a class="fa fa-eye fa-2x"></a></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        @*<div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Approval Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body selectwidget-section" >
+
+
+                <div class="table-responsive">
+                    <div class="reddotTable sm-form mar-t0">
+                        <div class="loader1"></div>
+                        <div id="ApprovalRequest_Body_Ind" class="reddotTableBody">
+                            <div class="reddotTableRow odd-even-row">
+
+
+                                <div class="reddotTableHead"><div> Approval Request</div></div>
+                                <div class="reddotTableHead"><div>Action</div></div>
+
+
+                            </div>
+                        </div>
+                        <div id="ApprovalRequest_Body_Ibody" class="reddotTableBody">
+                            <div id="ApprovalRequest_Body_Ist" class="reddotTableRow odd-even-row">
+                                <div class="reddotTableCellLeft  Abcd"><div></div></div>
+                                <div class="reddotTableCell Abcd"><div>  <a class="fa fa-eye fa-2x"></a></div></div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>*@
+    </div>
+</div>
+
 @*@{ Html.RenderAction("GetMenuTree", "Account"); }*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
@@ -128,7 +208,9 @@
     }
 </style>
 <script>
+    var data_Notification = '';
     $(document).ready(function () {
+
         (function ($) {
             $(function () {
 
@@ -144,8 +226,64 @@
         })(jQuery);
         $('.scrollbar-inner').scrollbar();
 
+       
 
+      //  $("[id^='NewApprovalRequestbtn']").on("click", function () {
+        $(document).on("click", "[id^='NewApprovalRequestbtn']", function () {
+            debugger
+             $(".loader1").show();
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: '/Dashboard/GetNotificationDashBoard',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    data_Notification = response.Table;
+                },
+                error: function (error) {
+                    data_Notification = '';
+                }
+            });
+            var i = 0;
+           
+            var Notification_Type = $(this).attr("name");
+            if (Notification_Type != undefined) {
 
+                var found_names = data_Notification;
+                found_names = $.grep(found_names, function (v) {
+                    return v.Notification_Type === Notification_Type;
+                });
+
+                $('tbody#ApprovalRequest_Body_Ist').not(':first').remove();
+                if (found_names != null && found_names.length != 0) {
+                    var i = 0;
+                    $("#ApprovalRequest_Body_Ist").show();
+                    while (found_names.length > i) {
+                        var tr = $("#ApprovalRequest_Body_Ist").clone();
+                       
+                        var k = 0;
+                        var l1 = tr.find(".Abcd").length;
+                        while (l1 > k + 1) {
+                            tr.find(".Abcd").eq(0).text(i + 1); 
+                            tr.find(".Abcd").eq(1).text(found_names[i]["NotificationText"]);
+                            tr.find(".fa-eye").attr("href", found_names[i]["Notification_URL"]);
+                            k++;
+                        }
+                        $("#ApprovalRequest_Body_Ibody").append(tr);
+                        i++;
+                    }
+                   $("#ApprovalRequest_Body_Ist")[0].remove();
+                } else {
+
+                    $("#ApprovalRequest_Body_Ist").hide();
+
+                }
+                $(".loader1").hide();
+                $("#NewApprovalRequestWidgetspopup").modal('show');
+            }
+        })
         $.ajax({
             async: false,
             cache: false,
@@ -238,7 +376,7 @@
     $(function () {
         $("body").on("keyup", function () {
 
-            var value = $("#Search-Forms-QuickLinks").val().toLowerCase();
+            var value = $("#Search-Forms-QuickLinks").val() == undefined?'':$("#Search-Forms-QuickLinks").val().toLowerCase();
             $("#Forms-1 li").find("a").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });

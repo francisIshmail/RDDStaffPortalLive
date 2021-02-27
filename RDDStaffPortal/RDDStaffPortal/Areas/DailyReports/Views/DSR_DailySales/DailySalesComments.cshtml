@@ -222,13 +222,13 @@
                     flags[arr.Table[i].CreatedBy.toUpperCase()] = true;
                     output.push(arr.Table[i].CreatedBy.toUpperCase());
                 }
-                var l1 = output.length, i1, flags1 = [], flags2 = [];
+                var l1 = output.length, i1;
                 for (i1 = 0; i1 < l1; i1++) {
+                    var flags1 = [], flags2 = [];
                     var tempArray = [];
                     var tempArray1 = [];
                     for (i = 0; i < l; i++) {
-                        if ((arr.Table[i].CreatedBy.toUpperCase() == output[i1])) {
-                            debugger
+                        if ((arr.Table[i].CreatedBy.toUpperCase() == output[i1])) {                           
                             if (arr.Table[i].Flag == 'HOD') {
                                 if (arr.Table[i].IsPMRead == true) {
                                     if (flags1[RedDot_dateEditFormat(arr.Table[i].VisitDate)]) continue;
@@ -254,6 +254,7 @@
 
                         }
                     }
+                    debugger
                     if (tempArray.length > 0) {
                         output1.push(tempArray);
                     }
