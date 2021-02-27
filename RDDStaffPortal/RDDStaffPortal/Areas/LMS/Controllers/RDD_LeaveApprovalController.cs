@@ -317,6 +317,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 DataSet ds1 = new DataSet();
                 DataSet ds2 = new DataSet();
                 DataSet ds3 = new DataSet();
+                DataSet ds4 = new DataSet();
                 SqlParameter[] prm1 =
                {
                    new SqlParameter("@LoginUserId",loginUserId)
@@ -329,10 +330,16 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
               {
                    new SqlParameter("@LoginUserId",Backup2Id)
                 };
+                SqlParameter[] prm4 =
+                            {
+                   new SqlParameter("@LoginUserId",loginUserId)
+                };
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                 ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
+                ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm4);
                 var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                var L1ManagerofManagerEmail = ds1.Tables[3].Rows[0]["Email"].ToString();
                 var L2ManagerEmail = "";
                 var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
@@ -361,12 +368,12 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 {
                     if (backupmail2 != "")
                     {
-                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
 
                     }
                     else
                     {
-                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + L1ManagerofManagerEmail;
                     }
 
                 }
@@ -374,12 +381,12 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 {
                     if (backupmail2 != "")
                     {
-                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
 
                     }
                     else
                     {
-                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + L1ManagerofManagerEmail;
                     }
 
                 }
@@ -427,6 +434,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 DataSet ds1 = new DataSet();
                 DataSet ds2 = new DataSet();
                 DataSet ds3 = new DataSet();
+                DataSet ds4 = new DataSet();
                 SqlParameter[] prm1 =
                {
                    new SqlParameter("@LoginUserId",loginUserId)
@@ -439,11 +447,16 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
               {
                    new SqlParameter("@LoginUserId",Backup2Id)
                 };
+                SqlParameter[] prm4 =
+                           {
+                   new SqlParameter("@LoginUserId",loginUserId)
+                };
                 ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                 ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                 ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
-
+                ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm4);
                 var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                var L1ManagerofManagerEmail = ds1.Tables[3].Rows[0]["Email"].ToString();
                 var L2ManagerEmail = "";
                 var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
                 if (ds1.Tables[1].Rows.Count > 0)
@@ -471,12 +484,12 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 {
                     if (backupmail2 != "")
                     {
-                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2+ ";" + L1ManagerofManagerEmail;
 
                     }
                     else
                     {
-                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                        cc = L1ManagerEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + L1ManagerofManagerEmail;
                     }
 
                 }
@@ -484,12 +497,12 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 {
                     if (backupmail2 != "")
                     {
-                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2;
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
 
                     }
                     else
                     {
-                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail;
+                        cc = L1ManagerEmail + ";" + HrMail + ";" + backup1Mail + ";" + L1ManagerofManagerEmail;
                     }
 
                 }

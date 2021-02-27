@@ -1075,6 +1075,7 @@
         //    $(".loader1").hide();
         //    return false;
         //}
+        $("#Btn_Submit").attr("disabled", true);
         $(".dttype").each(function () {
 
             var currow = $(this).closest('tr');
@@ -1124,6 +1125,7 @@
         $.post("/SaveLeaveRequest", { RDD_LeaveRequest: RDD_LeaveRequest }, function (response) {
 
             $(".loader1").hide();
+            $("#Btn_Submit").removeAttr("disabled",true);
             /*if (response.data.Saveflag == true && response.data.LeaveRequestId != -1)*/
             debugger
             if (response[0].Responsemsg == "Leave Request Inserted Successfully.") {
