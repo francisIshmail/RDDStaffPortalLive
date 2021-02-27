@@ -31,6 +31,48 @@ namespace RDDStaffPortal.DAL.LMS
             ds = com.ExecuteDataSet("RDD_ShowLeaveApproval", CommandType.StoredProcedure, prm);
             return ds;
         }
+        public DataSet ShowMyLeaveDetailsLeaveTypewise(int EmployeeId,int LeaveTypeId)
+        {
+            string Msg = "";
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","GetLeaveDetailsLeaveTypeFilter"),
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@LeaveTypeId",LeaveTypeId)
+            };
+            ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+        public DataSet ShowMyLeaveDetailsdatewise(int EmployeeId, string FromDate, string ToDate)
+        {
+            string Msg = "";
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","GetLeaveDetailsByDateFilter"),
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@Fromdate",FromDate),
+                new SqlParameter("@Todate",ToDate)
+            };
+            ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, prm);
+            return ds;
+        }
+        public DataSet ShowMyLeaveDetailsallwise(int EmployeeId, int LeaveTypeId, string FromDate, string ToDate)
+        {
+            string Msg = "";
+            DataSet ds = new DataSet();
+            SqlParameter[] prm =
+            {
+                new SqlParameter("@Type","GetLeaveDetailsByAllFilter"),
+                new SqlParameter("@EmployeeId",EmployeeId),
+                new SqlParameter("@LeaveTypeId",LeaveTypeId),
+                new SqlParameter("@Fromdate",FromDate),
+                new SqlParameter("@Todate",ToDate)
+            };
+            ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, prm);
+            return ds;
+        }
         public DataSet GetLeaveRequestList(int Loginuserid)
         {
             string Msg = "";
@@ -84,6 +126,56 @@ namespace RDDStaffPortal.DAL.LMS
                 Msg = ex.Message;
             }
             return Msg;
+        }
+        public List<Rdd_comonDrops> GetEmployeeModal()
+        {
+            List<Rdd_comonDrops> employeeLists = new List<Rdd_comonDrops>();
+            try
+            {
+                SqlParameter[] parm =
+                {
+                    new SqlParameter("@Type","GetEmployeeNameForModal")
+                };
+                DataSet ds = com.ExecuteDataSet("RDD_GetLeaveRequests", CommandType.StoredProcedure, parm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    DataRowCollection drc = dt.Rows;
+                    foreach (DataRow dr in drc)
+                    {
+                        employeeLists.Add(new Rdd_comonDrops()
+                        {
+                            Code = !string.IsNullOrWhiteSpace(dr["EmployeeIde"].ToString()) ? dr["EmployeeIde"].ToString() : "0",
+                            CodeName = !string.IsNullOrWhiteSpace(dr["Fullname"].ToString()) ? dr["Fullname"].ToString() : "0",
+                        });
+                    }
+                }
+                return employeeLists;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public DataSet CountryLeaveType(int EmployeeId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+               {
+                    new SqlParameter("@loginuserId",EmployeeId),
+                };
+                ds = com.ExecuteDataSet("RDD_GetLeaveTypeAsPerCountry", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return ds;
+
         }
         public string DeleteLeaveRequest(int LeaveRequestId)
         {
