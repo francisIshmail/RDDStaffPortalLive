@@ -519,7 +519,7 @@
 
 
 
-    <div class="custom-template">
+    @*<div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
             <div class="switcher">
@@ -589,7 +589,7 @@
         <div class="custom-toggle">
             <i class="flaticon-settings"></i>
         </div>
-    </div>
+    </div>*@
     <div class="modal fade" id="ChangePasswordPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="false" data-backdrop="static">
         <div class="modal-dialog width30per mar-0auto" role="document">
             <div class="modal-content">
@@ -647,16 +647,12 @@
         console.log("signalr");
         updateNotification('Old');
             // Click on notification icon to show notification
-        $('.fa-bell').click(function (e) {
+        $("#notifDropdown").click(function (e) {
+          
                 e.stopPropagation();
             $('.notif-box').show();
-           // updateNotification('New');
-            
-                // Only load notification if not already loaded
-
-
-
         });
+       
         $("#notiContent").click(function () {
             count = parseInt($('span.notification').html()) || 0;
             if (count > 0) {
@@ -697,7 +693,7 @@
                     dataType: "json",
                     success: function (response) {
                         debugger
-                        $('#notiContent').append($('<li>Loading...</li>'));
+                        //$('#notiContent').append($('<li>Loading...</li>'));
                        // $('#notiContent').empty();
                         var found_names = response.Table;
                             @*$.grep(response.Table, function (v) {
@@ -705,7 +701,11 @@
                         });*@
                         if (found_names.length === 0) {
                             $('#notiContent').empty();
-                            $('#notiContent').append($('<li>No data available</li>'));
+                            $('#notiContent').append($('<li class="see-all">No data available</li>'));
+                            $(".notif-box").find("a").hide();
+                        } else {
+                            //$('#notiContent').empty();
+                            $(".notif-box").find("a").show();
                         }
                         count = parseInt($('span.notification').html()) || 0;
                         if (count < found_names.length) {
@@ -719,19 +719,11 @@
 
                         $(".notification").html(found_names.length);
                         $("#dropdown-title").html("You have " + found_names.length + " new notification");
+                        $('#notiContent').append($('<li>Loading...</li>'));
                         $('#notiContent').empty();
 
                         $.each(found_names, function (index, value) {
-                            //$('#notiContent').append($('<li>New contact : ' + value.DocumentName + ' (' + value.Description + ') added</li>'));
-                            //$('#notiContent').append($(' <a href="' + value.REf_URL + '" style="background-color :'+ value.Notification_Background+'">' +
-                            //    '<div class= "notif-icon notif-primary" > <i class="fa fa-money-bill-alt"></i> </div >' +
-                            //    '<div class="notif-content">' +
-                            //    '<span class="block">' +
-                            //    '' + value.Notification_Text + '' +
-                            //    ' </span>' +
-                            //    ' <span class="time">' + value.Notification_Createdon+'</span>' +
-                            //    '</div>' +
-                            //    ' </a >'));
+                           
 
                             if (value.Notification_Status.toUpperCase() !== 'READ') {
 
@@ -786,26 +778,14 @@
             var count = 0,Count1=0;
             if (message && message.toLowerCase() === "added") {
                 console.log('Notification hub added');
-                //updateNotificationCount();
+               
                 updateNotification('New');
                  $(".rights2").load('@Url.Action("GetRightSideTask", "Dashboard")');
-               // count1 = parseInt($('span.notification').html()) || 0;
-                //if (count < count1) {
-                //    $('span.notif-box').css("color", "white");
-                //    $('span.notification').css({ "background-color": "red", "color": "white" });
-                //}
+               
             }
-            //else if (message && message.toLowerCase() === "updated") {
-            //    console.log('Notification hub Approver');
-            //    count = parseInt($('span.notification').html()) || 0;
-            //    updateNotification('New');
-            //    count1 = parseInt($('span.notification').html()) || 0;
-            //    if (count<count1) {
-            //        $('span.notif-box').css("color", "white");
-            //        $('span.notification').css({ "background-color": "red", "color": "white" });
-            //    }
+           
 
-            //}
+            
         };
             function updateNotificationCount() {
                 debugger
