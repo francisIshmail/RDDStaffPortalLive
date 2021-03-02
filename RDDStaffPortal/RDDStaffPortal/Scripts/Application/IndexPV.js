@@ -60,10 +60,11 @@
             debugger
             $("#btnAction").show();
             viewmode(me);
+           
         } else {
             Getdata();
         }
-       
+        
         $("#btnAdvApply").click(function () {
             Getdata();
         });
@@ -499,7 +500,7 @@
                 $("#btnCancel").text("Back");
 
                 VendorAging($("#DBName").val(), $("#VendorCode").val());
-                
+                RedDot_Notification_Status_change(me, $("#ApprovalStatus").val(), 'PV');
                
             })
         }

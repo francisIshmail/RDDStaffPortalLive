@@ -647,7 +647,12 @@
                 var me = getUrlVars()["LVId"];
                 debugger
                 if (me != undefined) {
-                    $("#btnLeaveRqProcess[data-leaverequestid='" + me + "']").trigger("click")
+                   
+                    if ($("#btnLeaveRqProcess[data-leaverequestid='" + me + "']").data('leaverequestid') != 'undefined') {
+                        $("#btnLeaveRqProcess[data-leaverequestid='" + me + "']").trigger("click");
+                        RedDot_Notification_Status_change(me, 'Approved', 'Leave');
+                    }
+                    //
                 }
             }
         });

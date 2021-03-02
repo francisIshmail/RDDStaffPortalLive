@@ -162,40 +162,40 @@
     <script src="/signalr/hubs"></script>
     <script type="text/javascript">
 
-            // GET NOTIFICATIONS AND SETUP SIGNALR
-            debugger
+        // GET NOTIFICATIONS AND SETUP SIGNALR
+        debugger
         console.log("signalr");
         updateNotification('Old');
-            // Click on notification icon to show notification
+        // Click on notification icon to show notification
         $("#notifDropdown").click(function (e) {
 
             e.stopPropagation();
             $('.notif-box').show();
         });
-        $("#notiContent").click(function () {
-            count = parseInt($('span.notification').html()) || 0;
-            if (count > 0) {
+        //$("#notiContent").click(function () {
+        //    count = parseInt($('span.notification').html()) || 0;
+        //    if (count > 0) {
 
-                $.ajax({
-                    async: false,
-                    cache: false,
-                    type: "POST",
-                    url: '/Dashboard/SetNotification_Status_Chnage',
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (response) {
-                        debugger
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            }})
+        //        $.ajax({
+        //            async: false,
+        //            cache: false,
+        //            type: "POST",
+        //            url: '/Dashboard/SetNotification_Status_Chnage',
+        //            contentType: "application/json",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                debugger
+        //            },
+        //            error: function (error) {
+        //                console.log(error);
+        //            }
+        //        });
+        //    }})
 
-            // Hide notifications
-            $('html').click(function () {
-                $('.notif-box').hide();
-            });
+        // Hide notifications
+        $('html').click(function () {
+            $('.notif-box').hide();
+        });
 
         // Update notifications
         function updateNotification(Flag) {
@@ -214,10 +214,10 @@
                     //$('#notiContent').append($('<li>Loading...</li>'));
                     // $('#notiContent').empty();
                     var found_names = response.Table;
-                    @* $.grep(response.Table, function (v) {
-                        return v.Notification_AssignTo === @HttpContext.Current.User.Identity.Name;
-                    });*@
-                        if (found_names.length === 0) {
+                    var found_names_unread = $.grep(response.Table, function (v) {
+                        return v.Notification_Status.toUpperCase() !== 'READ';
+                    });
+                    if (found_names.length === 0) {
                         $('#notiContent').empty();
                         $('#notiContent').append($('<li class="see-all">No data available</li>'));
                         $(".notif-box").find("a").hide();
@@ -235,8 +235,8 @@
                         return
                     }
 
-                    $(".notification").html(found_names.length);
-                    $("#dropdown-title").html("You have " + found_names.length + " new notification");
+                    $(".notification").html(found_names_unread.length);
+                    $("#dropdown-title").html("You have " + found_names_unread.length + " new notification");
                     $('#notiContent').append($('<li>Loading...</li>'));
                     $('#notiContent').empty();
 
@@ -259,7 +259,7 @@
                         }
                         else {
                             $('#notiContent').append($(' <a href="' + value.REf_URL + '">' +
-                                '<div class="notif-icon notif-success"> <i class="' + value.Notification_Icon + '" aria-hidden="true"></i> </div>' +
+                                '<div class="notif-icon notif-success" style="min-width:40px"> <i class="' + value.Notification_Icon + '" aria-hidden="true"></i> </div>' +
                                 '<div class="notif-content">' +
                                 '<span class="block">' +
                                 '' + value.Notification_Text + '' +
@@ -292,10 +292,10 @@
         // SignalR method for push server message to client
         notificationHub.client.notify = function (message) {
             debugger
-            var count = 0,Count1=0;
+            var count = 0, Count1 = 0;
             if (message && message.toLowerCase() === "added") {
                 console.log('Notification hub added');
-               // count = parseInt($('span.notification').html()) || 0;
+                // count = parseInt($('span.notification').html()) || 0;
                 updateNotification('New');
                 //count1 = parseInt($('span.notification').html()) || 0;
                 //if (count < count1) {
@@ -315,19 +315,19 @@
 
             //}
         };
-            function updateNotificationCount() {
-                debugger
-                $('span.notification').show();
-                var count = 0;
-                count = parseInt($('span.notification').html()) || 0;
-                count++;
-                $('span.notif-box').css("color", "white");
-                $('span.notification').css({ "background-color": "red", "color": "white" });
-                $('span.notification').html(count);
+        function updateNotificationCount() {
+            debugger
+            $('span.notification').show();
+            var count = 0;
+            count = parseInt($('span.notification').html()) || 0;
+            count++;
+            $('span.notif-box').css("color", "white");
+            $('span.notification').css({ "background-color": "red", "color": "white" });
+            $('span.notification').html(count);
 
         }
 
-            // signalr js code for start hub and send receive notification
+        // signalr js code for start hub and send receive notification
 
 
     </script>
@@ -359,10 +359,43 @@
 
     <script src="~/Scripts/sweetalret/sweetalert2.all.min.js"></script>
     <script src="~/Scripts/RedDotUtility.js"></script>
+
+    @{
+        var conf = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+        var section = (System.Web.Configuration.SessionStateSection)conf.GetSection("system.web/sessionState");
+
+        string timeout = section.Timeout.TotalMinutes.ToString();
+    }
+
+    <link href="~/Content/timeout-dialog.css" rel="stylesheet" />
+    <script src="~/Scripts/timeout-dialog.js"></script>
+
     <script>
+             $(function () {
+            Timer();
+            });
+        function Timer() {
+            //console.log("Set Timeout");
+            setTimeout(TimeOut, 10000);
+        }
+        function TimeOut() {
+            $.timeoutDialog({
+                timeout: @timeout*60,
+                countdown: 20,
+                keep_alive_url: '@Url.Action("Keepalive", "Account", new { area = "" })',
+                logout_redirect_url: '@Url.Action("SignOut", "Account", new { area = "" })',
+                logout_url: '@Url.Action("SignOut", "Account", new { area = "" })',
+                restart_on_yes: true
+            });
 
 
+            //$(document).on('mousemove keypress :not(#timeout-dialog)', function () {
+            //    clearTimeout();
+            //    Timer();
 
+            //});
+
+        }
     </script>
 </body>
 </html>

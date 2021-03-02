@@ -195,7 +195,7 @@ namespace RDDStaffPortal
             }
             return ds;
         }
-        public bool Notification_Status_change(DateTime afterDate, string UserName)
+        public bool Notification_Status_change(int Doc_id, string UserName,string decision,string Notification_type)
         {
             bool tf = false;
             try
@@ -205,14 +205,15 @@ namespace RDDStaffPortal
                 string SqlCommondText;
                 
                 SqlParameter[] ParaDet1 = {
-                                                new SqlParameter("@p_current_time",afterDate),
+                                                new SqlParameter("@p_doc_id",Doc_id),
                                                 new SqlParameter("@p_username",UserName),
-                 new SqlParameter("@p_flag","Read"),};
+                 new SqlParameter("@p_Notification_type",Notification_type),
+                new SqlParameter("@p_decsion",decision)};
                 using (SqlConn = new SqlConnection(conStr))
                 {
 
                     SqlConn.Open();
-                    SqlCommondText = "RDD_DashBoard_Notification";
+                    SqlCommondText = "RDD_Dashborad_Notification_Change";
                     using (sqlcmd = new SqlCommand(SqlCommondText, SqlConn))
                     {
                         sqlcmd.CommandType = CommandType.StoredProcedure;
