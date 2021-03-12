@@ -24,13 +24,14 @@
                             @{ Html.RenderAction("GetRightSide", "Dashboard");}
 
                         </div>
+                       
                         <div class="row rights2">
                             @{ Html.RenderAction("GetRightSideTask", "Dashboard");}
                             <div>
+                            </div>
                         </div>
-                    </div>
 
-            </div>
+                    </div>
         </div>
     </div>
 </div>
@@ -213,7 +214,7 @@
 
         (function ($) {
             $(function () {
-
+                $("#txtsearchId").focus();
                 $(":input[type='search']").removeAttr("autocomplete");
                 $(":input[type='search']").attr("autocomplete", "off");
                 /// $(":input").attr("autocomplete", "nope");

@@ -1984,3 +1984,27 @@ function getImportance(selectedDate, HolidayList) {
 
     return rep;
 }
+
+
+/*Notification Changes*/
+function RedDot_Notification_Status_change(Doc_id, decision, Notification_type) {
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        data: JSON.stringify({
+            Doc_id: Doc_id,
+            decision: decision,
+            Notification_type: Notification_type
+        }),
+        url: '/Dashboard/SetNotification_Status_Chnage',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            debugger
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}

@@ -875,9 +875,9 @@
                     var rDD_DailySalesDet = [];
 
                     $(".DailyDet").each(function () {
-
+                        debugger
                         var VisitType = 'D';
-                        if ($(this).find("[id^='ActionType']").val() == 'WEEKLY') {
+                        if ($(this).find("[id^='ActionType']").val() == 'R') {
                             VisitType = 'R';
                         }
                         var rDD_DailySales = {
@@ -917,7 +917,7 @@
                             ActualVisitDate: RedDot_setdtpkdate($(this).find("[id^='ActualVisitDate1']").val()),
                             IsRptSentToManager: $(this).find("[id^='IsRptSentToManager']").val()
                         };
-                        debugger
+                       
                         var ValidateFormCheck = ValidateForm(rDD_DailySales);
                         if (ValidateFormCheck.formValid == true && rDD_DailySales.IsDraft=="True") {
 
@@ -1136,6 +1136,7 @@
 
             $("#btnMainsave").on("click", function () {
                 try {
+                    debugger
                     $(".loader1").show();
                     var VisitType = 'D';
                     if ($("#ActionType").val() == 'WEEKLY') {

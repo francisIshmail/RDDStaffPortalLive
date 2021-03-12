@@ -39,13 +39,13 @@ namespace RDDStaffPortal.Controllers
             var list = _DashDbOp.Get_Dashboard_Notification(User.Identity.Name);
             return Content(JsonConvert.SerializeObject(list), "application/json");
         }
-        public ActionResult SetNotification_Status_Chnage()
+        public ActionResult SetNotification_Status_Chnage(int Doc_id, string decision, string Notification_type)
         {
-            var noticiationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            
             NotificationComponent NC = new NotificationComponent();
-            var list = NC.Notification_Status_change(noticiationRegisterTime, User.Identity.Name);
+            var list = NC.Notification_Status_change(Doc_id, User.Identity.Name,decision,Notification_type);
             // Update session to get new added contacts only notification)
-            Session["LastUpdated"] = DateTime.Now;
+           
             return Content(JsonConvert.SerializeObject(list), "application/json");
         }
         public ActionResult AllNotification()
