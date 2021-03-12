@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 using static RDDStaffPortal.DAL.CommonFunction;
 
 namespace RDDStaffPortal.Areas.LMS.Controllers
-{   
+{
     [Authorize]
     public class RDD_LeaveRequestController : Controller
     {
@@ -28,8 +28,8 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
             rDD_LeaveRequest.EmployeeLists = rDD_LeaveRequest_TemplatesDb.GetEmployee();
             //rDD_LeaveRequest.EmployeeListsModal = rDD_LeaveRequest_TemplatesDb.GetEmployeeModal();
             rDD_LeaveRequest.EmployeeIde = rDD_LeaveRequest_TemplatesDb.GetEmployeeIdByLoginName(User.Identity.Name);
-           // rDD_LeaveRequest.Fullname = rDD_LeaveRequest_TemplatesDb.GetEmployee().Select(x=>x.Value==Convert.ToString(rDD_LeaveRequest.EmployeeIde)).ToString();
-            rDD_LeaveRequest.EmployeeId = rDD_LeaveRequest_TemplatesDb.GetEmployeeIdByLoginName(User.Identity.Name);            
+            // rDD_LeaveRequest.Fullname = rDD_LeaveRequest_TemplatesDb.GetEmployee().Select(x=>x.Value==Convert.ToString(rDD_LeaveRequest.EmployeeIde)).ToString();
+            rDD_LeaveRequest.EmployeeId = rDD_LeaveRequest_TemplatesDb.GetEmployeeIdByLoginName(User.Identity.Name);
             //rDD_LeaveRequest.LeaveTypeList = rDD_LeaveRequest_TemplatesDb.GetLeaveTypeName(rDD_LeaveRequest.EmployeeId);
             rDD_LeaveRequest.WeeklyOffDays = rDD_LeaveRequest_TemplatesDb.GetWeeklyOffDay(rDD_LeaveRequest.EmployeeId);
             DataSet ds = rDD_LeaveRequest_TemplatesDb.GetHRRole(User.Identity.Name);
@@ -45,7 +45,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         }
         [Route("GetBackUpList")]
         public ActionResult GetEmployeeAutoComplete()
-        {            
+        {
             return Json( rDD_LeaveRequest_TemplatesDb.GetEmployeeModal(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetLeaveRequest_List()
@@ -66,16 +66,16 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 RDD_LeaveRequest.LastUpdatedBy = User.Identity.Name;
                 RDD_LeaveRequest.LastUpdatedOn = System.DateTime.Now;
             }
-            var t = rDD_LeaveRequest_TemplatesDb.Save(RDD_LeaveRequest);           
+            var t = rDD_LeaveRequest_TemplatesDb.Save(RDD_LeaveRequest);
             if (t[0].Id != -1)
             {
-               
+
                 {
                     if (t[0].Outtf == true)
                     {
                         string MailResponse = "";
                         string ToMail = "";
-                        string cc = "";                        
+                        string cc = "";
                         try
                         {
                             DataSet ds = new DataSet();
@@ -109,7 +109,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
                             ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
                             ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
-                            ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
+                            ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm4);
                             string attachmentPath = string.Empty;
                             var LeaveName = ds.Tables[0].Rows[0]["LeaveName"];
                             var Fromdate = ds.Tables[0].Rows[0]["FromDate"];
@@ -118,6 +118,24 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                             var L1ManagerofManagerEmail= ds1.Tables[3].Rows[0]["Email"].ToString();
                             var L1ManagerName = ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
                             var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
+                            var Local_HrEmail = "";
+                            if (ds1.Tables[4].Rows.Count > 0)
+                            {
+                                Local_HrEmail = ds1.Tables[4].Rows[0]["Email"].ToString();
+                            }
+                            else
+                            {
+                                Local_HrEmail = "";
+                            }
+                            var HOD_HREmail = "";
+                            if (ds1.Tables[5].Rows.Count > 0)
+                            {
+                                HOD_HREmail = ds1.Tables[5].Rows[0]["Email"].ToString();
+                            }
+                            else
+                            {
+                                HOD_HREmail = "";
+                            }
                             var L2ManagerEmail = "";
                             if (ds1.Tables[1].Rows.Count > 0)
                             {
@@ -139,35 +157,51 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                                 backupmail2 = "";
                             }
                             var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
-                            var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
-                            ToMail = L1ManagerEmail;                            
+                            // var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
+                            ToMail = L1ManagerEmail;
                             if (L2ManagerEmail != "")
                             {
-                                if(backupmail2!="")
+                                if (backupmail2 != "")
                                 {
-                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2+";"+ L1ManagerofManagerEmail;
-
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
                                 }
                                 else
                                 {
-                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + HrMail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
+                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
                                 }
-                                 
+
                             }
                             else
                             {
                                 if (backupmail2 != "")
                                 {
-                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
-
+                                    cc = EmployeeEmail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
                                 }
                                 else
                                 {
-                                    cc = EmployeeEmail + ";" + HrMail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
+                                    cc = EmployeeEmail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
                                 }
-                                   
+
                             }
-                            
+                            if (Local_HrEmail != "")
+                            {
+                                if (HOD_HREmail != "")
+                                {
+                                    cc = cc + ";" + Local_HrEmail + ";" + HOD_HREmail;
+                                }
+                                else
+                                {
+                                    cc = cc + ";" + Local_HrEmail;
+                                }
+                            }
+                            else
+                            {
+                                if (HOD_HREmail != "")
+                                {
+                                    cc = cc + ";" + HOD_HREmail;
+                                }
+                            }
+
                             string Subject = "Leave Approval Request";
 
                             if (ds.Tables[0].Rows[0]["AttachmentUrl"] != null && !DBNull.Value.Equals(ds.Tables[0].Rows[0]["AttachmentUrl"]))
@@ -190,7 +224,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
 
                             //SendMail.Send(Tomail, cc, Subject, Html, true);
 
-                          MailResponse= SendMail.SendMailWithAttachment(ToMail, cc, Subject, Html, true, attachmentPath);
+                            MailResponse= SendMail.SendMailWithAttachment(ToMail, cc, Subject, Html, true, attachmentPath);
 
                         }
                         catch (Exception ex)
@@ -218,17 +252,17 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                     }
                 }
             }
-            
-            
-            return Json( t, JsonRequestBehavior.AllowGet);
+
+
+            return Json(t, JsonRequestBehavior.AllowGet);
         }
         [Route("GetLeaveRequest")]
         public ActionResult GetData(string LeaveRequestId)
         {
             return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetData(LeaveRequestId) }, JsonRequestBehavior.AllowGet);
         }
-       
-        
+
+
         public ActionResult GetWeeklyOff(int EmployeeId)
         {
             return Json(new { data = rDD_LeaveRequest_TemplatesDb.GetWeeklyOffDay(EmployeeId) }, JsonRequestBehavior.AllowGet);
@@ -366,7 +400,7 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
             }
 
         }
-        public ActionResult SendEmail(int LeaveRequestId, int LoginUserid ,int backupid)
+        public ActionResult SendEmail(int LeaveRequestId, int LoginUserid, int backupid)
         {
             try
             {
@@ -397,11 +431,11 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 //var AttachmentPath = "~/excelFileUpload/PV/TZ000077_vineet/SampleExcel (4)22102020101026";
                 var L1ManagerName= ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
                 var Email1 = ds1.Tables[0].Rows[0]["Email"].ToString();
-                var Email2 = "";                
+                var Email2 = "";
                 if(ds1.Tables[1].Rows.Count>0)
                 {
                     Email2 = ds1.Tables[1].Rows[0]["Email"].ToString();
-                } 
+                }
                 var EmployeeName= ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
                 var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
                 var Email3 = ds1.Tables[2].Rows[0]["Email"].ToString();
@@ -430,11 +464,11 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
                 else
                 {
                     Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + " and it is pending for approval by you.<br/><br/>";
-                }                
+                }
                 Html = Html + "Best Regards, <br/> Red Dot Distribution";
                 //Tomail = "mainak@reddotdistribution.com";
                 cc = backupmail;
-                
+
                 //SendMail.Send(Tomail, cc, Subject, Html, true);
                 SendMail.SendMailWithAttachment(Tomail, cc, Subject, Html, true,attachmentPath);
 
