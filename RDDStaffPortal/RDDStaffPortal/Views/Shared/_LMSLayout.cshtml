@@ -124,7 +124,20 @@
                         <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LeaveAdjustment/Index">Adjustment</a>
                     </li>
                     <li class="p-3 nav-item">
-                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LMSReport/Index">Reports</a>
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LMSReport/Index">Report I</a>
+                    </li>
+                    <li class="p-3 nav-item">
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_HRLMSReport/Index">Report II</a>
+                    </li>
+                }
+
+                @if (User.IsInRole("LocalHR"))
+                {
+                    <li class="p-3 nav-item">
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_LMSReport/Index">Report I</a>
+                    </li>
+                    <li class="p-3 nav-item">
+                        <a class="nav-link text-dark font-weight-normal" href="~/LMS/RDD_HRLMSReport/Index">Report II</a>
                     </li>
                 }
 

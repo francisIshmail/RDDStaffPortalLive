@@ -1267,6 +1267,7 @@
         $.post('/LEAVEDETAILS', { LeaveRequestId: Lvrqid }, function (data) {
             debugger
             $("#Reason").val(data.Table[0].Reason);
+            $("#LeaveTypeId").val(data.Table[0].LeaveTypeId);            $("#LeaveTypeId").attr("disabled", true);
             var noofdays = data.Table[0].NoOfDays;
             $("#HdnNoOfDays").val(noofdays);
             $("#hdnBackUp").val(data.Table[0].BackUp1Id);
@@ -1314,8 +1315,8 @@
                 //$("#ddlDayType" + i + "").val(data.Table1[i].LeaveDay).trigger('change');
 
             }
-            var Header = '<h5><label id="lblDays">' + noofdays + '</label> days of annual leave</h5>';
-            $("#Leavedtls").append(Header);
+
+            var EmpIde = $("#EmployeeId").val();            var LvtypeId = $("#LeaveTypeId").val();            GetLeaveBalance(EmpIde, LvtypeId);            var currentleave = $("#HdnLeaveBalance").val();            var remainleave = (currentleave - noofdays);            var Header = '<h5><label id="lblDays">' + noofdays + '</label> days of annual leave</h5>';            Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';            $("#Leavedtls").append(Header);
 
 
         });
