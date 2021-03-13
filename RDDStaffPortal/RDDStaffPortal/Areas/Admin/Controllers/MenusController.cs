@@ -16,6 +16,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         // GET: Admin/Menus
         public ActionResult Index()
         {
+            ModelState.Clear();
             return View();
         }
 

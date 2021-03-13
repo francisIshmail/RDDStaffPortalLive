@@ -289,7 +289,7 @@ function RedDot_dateEditFormat(dtval) {
 
 $(document).on('change', 'input[type=radio][name=ApprovalStatus]', function () {
     debugger
-    $('select.noSelect2').select2('destroy');
+    $('select.noSelect2').not("#cbAction").select2('destroy');
     FillOriginator();
 });
 
@@ -331,7 +331,7 @@ function FillOriginator() {
         i1++;
     }
     $('#cbCARDCODE').val('All');
-    $("select").select2({
+    $("select").not("#cbAction").select2({
         theme: "bootstrap",
         allowClear: true,
 

@@ -818,7 +818,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                                                 <div class="row">
                                              
                                                     <div class="col-xl-4 col-md-4">
-                                                        <div class="form-group">
+                                                        <div class="form-group has-error1" id="div-Contract_Start_date1">
                                                             <label for="email2" class="width100px">Contract Start Date :</label>
                                                             <div class="input-group">
                                                                 @*@if (ViewBag.loginuserList[0].IsUserInRoleHR == "True")
@@ -829,7 +829,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                             else
                             {*@
                                                                 @Html.HiddenFor(m => m.Contract_Start_date)
-                                                                @Html.TextBox(string.Concat("Contract_Start_date", "1"), "", ViewBag.Contract_Start_dateD != null ? (object)new { @class = "form-control form-control-sm" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
+                                                                @Html.TextBox(string.Concat("Contract_Start_date", "1"), "", ViewBag.Contract_Start_dateD != null ? (object)new { @class = "form-control form-control-sm txtcheck" } : (object)new { @class = "form-control form-control-sm", @disabled = "disabled" })
                                                                 @*}*@
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text">
@@ -1469,7 +1469,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 $.each(ManagerListL2, function (i, RDD_EmployeeRegistration) {
                     $("#ManagerIdL2").append(
-                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
+                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerIdL2).html(RDD_EmployeeRegistration.ManagerName));
 
 
                 });
@@ -1499,7 +1499,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
                 $.each(ManagerListL2, function (i, RDD_EmployeeRegistration) {
                     $("#HOD_HR").append(
-                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerName).html(RDD_EmployeeRegistration.ManagerName));
+                        $('<option></option>').val(RDD_EmployeeRegistration.ManagerIdL2).html(RDD_EmployeeRegistration.ManagerName));
 
 
                 });
@@ -1725,7 +1725,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
         var k1 = 1;
 
-        $('#Joining_date1').datetimepicker({
+        $('#Joining_Date1').datetimepicker({
             format: 'DD/MM/YYYY',
         });
         var Month = parseInt(new Date().getMonth()) + 1;
@@ -1891,7 +1891,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
             $('#Salary').val('');
             debugger
-            $('#Joining_date1').val('');
+            $('#Joining_Date1').val('');
             $('#DOB1').val('');
             $('#Salary_Start_Date1').val('');
             $('#Contract_Start_date1').val('');
@@ -1990,7 +1990,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
 
 
     //$("#chkIsActive").is(":checked")
-    //$('#Joining_date1').datetimepicker({
+    //$('#Joining_Date1').datetimepicker({
     //    defaultDate: new Date($('#Joining_Date').val()),
     //    format: 'DD/MM/YYYY',
     //});
@@ -2089,6 +2089,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
     });
     var saveflag = false;
     $('#SaveEmpChanges').click(function () {
+        debugger
         $('.Loader1').css('display', 'block');
         if (saveflag == true) {
             RedDotAlert_Error("Please refresh Page");
@@ -2272,30 +2273,35 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                         saveflag = true;
                     }
                
-                if (result[0].Responsemsg == "Registration saved successfully." && result[0].Outtf==true) {
-                    GetCreateUserAcc();
-                    $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    //  RdotAlertSucesstxt(result);
+                    if (result[0].Responsemsg == "Registration saved successfully." && result[0].Outtf == true) {
+                        GetCreateUserAcc();
+                        $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
+                        //  RdotAlertSucesstxt(result);
 
-                    var pathname = window.location.search;
-                    
-
+                        var pathname = window.location.search;
 
 
-                    if (pathname =="") {
-                        ClearControl();
+
+
+                        if (pathname == "") {
+                            ClearControl();
+                        }
+
+
                     }
-                    
 
-                }
+                    else if (result[0].Responsemsg == "Registration updated successfully." && result[0].Outtf == true) {
 
-                else if (result[0].Responsemsg == "Registration updated successfully." && result[0].Outtf == true) {
+                        $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
+                        RedDotAlert_Success(result[0].Responsemsg);
+                        // ClearControl();
+                        $('.loader1').css('display', 'none');
+                    } else if (result[0].Outtf == false) {
+                        RedDotAlert_Error(result[0].Responsemsg);
+                        $('.loader1').css('display', 'none');
+                    }
 
-                    $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
-                    RedDotAlert_Success(result[0].Responsemsg);
-                    // ClearControl();
-                    $('.loader1').css('display', 'none');
-                } else {
+                else {
                     $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
                     RedDotAlert_Success(result[0].Responsemsg);
                     $('.loader1').css('display', 'none');
@@ -2390,7 +2396,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
        // $('#ManagerId').find('option:first').attr('selected', 'selected');
         $('#CountryCodeName').find('option:first').attr('selected', 'selected');
         $('#type_of_employement').val(0).trigger('change');
-        $("#Joining_date1").val('');
+        $("#Joining_Date1").val('');
         $("#Contract_Start_date1").val('');
         $('#Marital_Status').val(0).trigger('change');
         $("#Contract_Start_date1").val('');
@@ -2506,10 +2512,10 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
             return ValFlag = false;
         }
 
-        if ($("#Joining_date1").val() == "") {
+        if ($("#Joining_Date1").val() == "") {
             Tab_Activity_Hide_Show("#v-pills-home-tab-nobd", "#v-pills-home-nobd");
             RedDotAlert_Error('please select Joining Date');
-            $("#Joining_date1").focus();
+            $("#Joining_Date1").focus();
             return ValFlag = false;
         }
 

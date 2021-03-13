@@ -13,13 +13,13 @@
                 <div class="col-md-9 padd-0">
                     <h4 class="page-title">Expense Report</h4>
                 </div>
-                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+                <div class="col-md-1 ml-auto text-right" style="display:none"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
 
             </div>
 
 
 
-            <div class="rowmin" id="FilterSection" style="display:none">
+            <div class="rowmin" id="FilterSection" >
 
                 <div class="col-md-12">
                     <div class="card full-height padd-10">
@@ -60,17 +60,24 @@
                                     @Html.DropDownListFor(m => m.month, ViewBag.MonthList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
                                 </div>
                             </div>
-                           
-                            <div class="row">
+                            <div class="col-xl-3 col-md-3" id="ItemCode1">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px">Acct Code :</label>
+                                    @Html.TextBox("ItemCode", "", new { @class = "form-control form-control-sm" })
 
-
-                                <div class="col-xl-1 col-md-1 ml-auto">
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px"></label>
-                                        <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
-                                    </div>
+                                </div>
+                                <input id="ItemCode1" style="width:0px;height:0px" />
+                            </div>
+                            <div class="col-xl-1 col-md-3" style="    position: relative;
+    right: 0;
+    bottom: -5px;
+    width: 140px;">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px"></label>
+                                    <button class="btn btn-info btn-sm" style="width:100%;font-size: 14px;" id="btnApply">Apply Filter</button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -79,12 +86,12 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <div class="card full-height">
+                    <div class="card full-height Abc" id="card-data">
                         <div class="card-body">
                             <div class="rowmin row mar-b10">
 
 
-                                <div class="col-xl-4 col-md-4">
+                                <div class="col-xl-4 col-md-4" style="display:none;">
                                     <div class="form-group">
                                         <input type="search" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
                                     </div>
@@ -168,20 +175,42 @@
                                         </div>
                                     </div>
                                 </div>
-                                                    <div class="row mar-t10">
-                                                        <nav aria-label="Page navigation example">
-                                                            <ul class="pagination mar-b0">
-                                                                <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
 
-                                                                <li class="page-item next"><a class="page-link" href="#">Next</a></li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </div>
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
 
-                                            </div>
-                                                </div>
-                                            </div>
+                        </div>
+                    </div>
+                    <div class="card Abc" id="card-error">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/error.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    Select Filters to show data
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" id="card-search">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/search-property.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    Select Filters to show data
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                                                 </div>
                                             </div>
                                                 </div>
@@ -308,61 +337,61 @@
         var arr = [];
         var curPage = 1;
 
-        $.ajax({
-            type: "POST",
-            url: "/Reports/Reports/ExpenseSheetReport",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                pagesize: 50,
-                pageno: curPage,
-                psearch: value1,
-                Country: $("#Country").val(),
-                Project: $("#Project").val(),
-                SourceDb: $("#SourceDb").val(),
-                Month: $("#month").val(),
-                year: $("#Year").val()
-            }),
-            success: function (data) {
-                debugger
-                $("#Ist").show();
-                arr = data;
-                if (arr.data != null && arr.data.length != 0) {
-                    var i = 0;
-                    while (arr.data.length > i) {
-                        var tr = $("#Ist").clone();
-                        var tr1 = $("#Ind").closest();
-                        var k = 0;
-                        var l1 = tr.find(".Abcd").length;
-                        while (l1 > k) {
-                            if (tblhead1[k] == 'TxDate') {
-                                tr.find(".Abcd")[k].children[0].textContent =RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
-                            } else {
-                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
-                            }
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Reports/Reports/ExpenseSheetReport",
+        //    contentType: "application/json",
+        //    dataType: "json",
+        //    data: JSON.stringify({
+        //        pagesize: 50,
+        //        pageno: curPage,
+        //        psearch: value1,
+        //        Country: $("#Country").val(),
+        //        Project: $("#Project").val(),
+        //        SourceDb: $("#SourceDb").val(),
+        //        Month: $("#month").val(),
+        //        year: $("#Year").val()
+        //    }),
+        //    success: function (data) {
+        //        debugger
+        //        $("#Ist").show();
+        //        arr = data;
+        //        if (arr.data != null && arr.data.length != 0) {
+        //            var i = 0;
+        //            while (arr.data.length > i) {
+        //                var tr = $("#Ist").clone();
+        //                var tr1 = $("#Ind").closest();
+        //                var k = 0;
+        //                var l1 = tr.find(".Abcd").length;
+        //                while (l1 > k) {
+        //                    if (tblhead1[k] == 'TxDate') {
+        //                        tr.find(".Abcd")[k].children[0].textContent =RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
+        //                    } else {
+        //                        tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+        //                    }
                             
-                            var t = tblhead1[k];
+        //                    var t = tblhead1[k];
 
-                            if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".Abcd").eq(k).addClass("Abc")
-                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
-                            }
+        //                    if (jQuery.inArray(t, tblhide) !== -1) {
+        //                        tr.find(".Abcd").eq(k).addClass("Abc")
+        //                        tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+        //                    }
 
-                            k++;
-                        }
-                        $("#Ibody").append(tr);
-                        i++;
-                    }
-                    $("#Ist")[0].remove();
-                } else {
-                    $("#Ist").hide();
-                    RedDotAlert_Error("No Record Found");
-                }
-            }
-            , complete: function () {
-                $(".loader1").hide();
-            }
-        });
+        //                    k++;
+        //                }
+        //                $("#Ibody").append(tr);
+        //                i++;
+        //            }
+        //            $("#Ist")[0].remove();
+        //        } else {
+        //            $("#Ist").hide();
+        //            RedDotAlert_Error("No Record Found");
+        //        }
+        //    }
+        //    , complete: function () {
+        //        $(".loader1").hide();
+        //    }
+        //});
 
         $("#btnApply").on("click", function () {
             $(".loader1").show();
@@ -379,13 +408,18 @@
                     Project: $("#Project").val(),
                     SourceDb: $("#SourceDb").val(),
                     Month: $("#month").val(),
-                    year: $("#Year").val()
+                    year: $("#Year").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $(".excel-btn").attr("href", "/Reports/Reports/DownloadToExcel4?strwhercond=" + $("#Country").val() + "," + $("#Project").val() + "," + $("#SourceDb").val() + "," + $("#month").val() + "," + $("#Year").val() + "," + $("#ItemCode").val() + "");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -393,8 +427,15 @@
                             var k = 0;
                             var l1 = tr.find(".Abcd").length;
                             while (l1 > k) {
-                                tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                
+                                if (tblhead1[k] == 'TxDate') {
+                                    tr.find(".Abcd")[k].children[0].textContent = RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
+                                } else {
+                                    tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+                                }
+                               
                                 var t = tblhead1[k];
+
                                 debugger
                                 if (jQuery.inArray(t, tblhide) !== -1) {
                                     tr.find(".Abcd").eq(k).addClass("Abc")
@@ -408,7 +449,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        //RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -446,7 +490,8 @@
                     Project: $("#Project").val(),
                     SourceDb: $("#SourceDb").val(),
                     Month: $("#month").val(),
-                    year: $("#Year").val()
+                    year: $("#Year").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("div#Ist").not(':first').remove();
@@ -454,6 +499,9 @@
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
                         var i = 0;
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
                             var tr1 = $("#Ind").closest();
@@ -486,7 +534,10 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -504,7 +555,10 @@
                 }
             } else {
                 $(".loader1").hide();
-                RedDotAlert_Error('No Record Found');
+                $("#card-search").addClass("Abc");
+                $("#card-data").addClass("Abc");
+                $("#card-error").removeClass("Abc");
+               // RedDotAlert_Error('No Record Found');
                 return
             }
 
@@ -524,7 +578,8 @@
                     Project: $("#Project").val(),
                     SourceDb: $("#SourceDb").val(),
                     Month: $("#month").val(),
-                    year: $("#Year").val()
+                    year: $("#Year").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
 
@@ -532,6 +587,9 @@
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -560,7 +618,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
 
                 }
@@ -597,13 +658,17 @@
                     Project: $("#Project").val(),
                     SourceDb: $("#SourceDb").val(),
                     Month: $("#month").val(),
-                    year: $("#Year").val()
+                    year: $("#Year").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -630,7 +695,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
+                       // RedDotAlert_Error("No Record Found");
                     }
                 }
                 , complete: function () {

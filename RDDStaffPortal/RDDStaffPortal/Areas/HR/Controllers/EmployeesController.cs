@@ -386,7 +386,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 var itemToRemove = ManagerListL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.ManagerId);
                 if (itemToRemove != null)
                 {
-                    if (itemToRemove.ManagerId != 0)
+                    if (itemToRemove.ManagerIdL2 != 0)
                         ManagerListL2.Remove(itemToRemove);
                     ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
                 }
@@ -395,7 +395,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
                 if (itemToRemove1 != null)
                 {
-                    if (itemToRemove1.Local_HR != 0)
+                    if (itemToRemove1.ManagerIdL2 != 0)
                         ManagerListHRL2.Remove(itemToRemove1);
                 }
                 

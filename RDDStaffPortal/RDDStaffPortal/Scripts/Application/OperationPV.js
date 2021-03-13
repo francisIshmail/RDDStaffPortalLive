@@ -103,6 +103,35 @@
         //#endregion
         debugger
 
+        //#region Country Change
+        $(document).on("change", "select[id='Country']", function () {
+            debugger
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: "/GetVendorRef",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    Country: $(this).val()
+                }),
+                success: function (data) {
+                    debugger
+                    if (data.Table.length > 0) {
+                        $("#RefNo").removeAttr('disabled');
+                        $("#RefNo").val(data.Table[0].Column1 == null ? '' : data.Table[0].Column1);
+                    }
+                    
+
+                }, complete: function () {
+                    $("#RefNo").attr('disabled', true);
+                }
+            })
+           
+           
+
+        })
         
         //#region focus new row column
         RedDot_tableLstEnt("#IIst", "input[id^='Remarks']", "input[id ^= 'Date1']", "Please Enter Remark", "T", "");

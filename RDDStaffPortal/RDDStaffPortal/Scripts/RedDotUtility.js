@@ -1392,12 +1392,18 @@ function RedDot_Table_dateEdit(tr, date1, dtval) {
 }
 /* date formate dd-MM-yyyy get input date */
 function RedDot_dateEdit(date1, dtval) {
-
-    var now = new Date($(dtval).val());
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = (day) + "/" + (month) + "/" + now.getFullYear();
-    $(date1).val(today);
+    debugger
+    if ($(dtval).val() != '') {
+        var now = new Date($(dtval).val());
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (day) + "/" + (month) + "/" + now.getFullYear();
+        $(date1).val(today);
+    } else {
+        $(date1).val('');
+    }
+    
+   
 }
 function RedDot_dateEditFormat(dtval) {
     if (dtval != null || dtval == '') {

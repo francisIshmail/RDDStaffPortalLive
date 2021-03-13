@@ -47,7 +47,8 @@
                                         <div class="form-group">
                                             <label for="email2" class="width100px">Menu :</label>
                                             <input type="hidden" id="txtMenuId" />
-                                            <input type="search" class="form-control width180px" id="txtMenuName" placeholder="Menu Name">
+                                            @*<input type="search" class="form-control" style="width:1px;height:1px;" id="txtMenuName1" placeholder="Menu Name">*@
+                                            <input type="search" class="form-control width180px" id="txtMenuName" placeholder="Menu Name" value="">
                                         </div>
                                         <div class="form-group">
                                             <label for="email2" class="width100px">URL :</label>
@@ -104,6 +105,7 @@
 
                                 </div>
                                 <div class="row">
+                                    
                                     <div class="loader1"></div>
                                     <div class="table-responsive-xl">
                                         <table class="display table table-striped table-hover dataTable table-head-bg-info" id="tblMenusList">
@@ -201,9 +203,11 @@
 
 <!--   Core JS Files   -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 <script>
     $(document).ready(function () {
         $(".loader1").show();
+       
         $("#txtSearchMenus").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#tblMenusList tr").filter(function () {

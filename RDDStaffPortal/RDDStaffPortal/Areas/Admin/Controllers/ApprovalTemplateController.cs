@@ -18,6 +18,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index()
         {
+            ModelState.Clear();
             return View();
         }
 

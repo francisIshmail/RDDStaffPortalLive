@@ -386,10 +386,10 @@
                     var actiontblValue = ['ID', 'TEMPLATE_ID', 'OBJTYPE', 'APPROVER', 'APPROVAL_DECISION', 'APPROVAL_Remark', 'APPROVAL_DATE'];
                     var doc = $("#DocStatus").val();
                     $("#btnActionSave").show();
-                    if ($('#LastUpdatedBy').val().toLowerCase() == $('#CreatedBy').val().toLowerCase() && $("#VType").val() !='VType') {
-                        $("#btnActionSave").hide();
-                    }
-                    else
+                    //if ($('#LastUpdatedBy').val().toLowerCase() == $('#CreatedBy').val().toLowerCase() && $("#VType").val() !='VType') {
+                    //    $("#btnActionSave").hide();
+                    //}
+                    //else
                         if (doc == "Paid - Closed" || doc == "Rejected-Closed") {
                         $("#btnActionSave").hide();
                         $("#ApprovalDecisionPopup").find("#exampleModalLabel").text("Approval Decision   [ You can not take action on Rejected-Closed/Paid-Closed vourcher ]");
@@ -758,6 +758,7 @@
                                     $("#txtFrmDate").val('');
                                     $("#txtToDate").val('');
                                     Getdata();
+                                    $("#btnAction").hide();
                                     RedDot_Button_Init_HideShow();
                                     RedDotAlert_Success(arr4[0].Responsemsg + ' As Draft. ' + " Trans ID-" + arr4[0].Id);
                                     $(".modal-backdrop fade").removeClass("show");
@@ -774,6 +775,7 @@
                             $("#txtToDate").val('');
                             Getdata();
                             RedDot_Button_Init_HideShow();
+                            $("#btnAction").hide();
                             RedDotAlert_Success(arr4[0].Responsemsg + " Trans ID-" + arr4[0].Id);
                             $(".modal-backdrop fade").removeClass("show");
                             $("body").css("padding-right", "");

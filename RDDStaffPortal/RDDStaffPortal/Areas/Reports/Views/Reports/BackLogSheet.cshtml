@@ -12,10 +12,10 @@
                 <div class="col-md-9 padd-0">
                     <h4 class="page-title">Backlog Report</h4>
                 </div>
-                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+                <div class="col-md-1 ml-auto text-right" style="display:none;"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
 
             </div>
-            <div class="rowmin" id="FilterSection" style="display:none">
+            <div class="rowmin" id="FilterSection" >
 
                 <div class="col-md-12">
                     <div class="card danger-border full-height padd-10">
@@ -41,15 +41,27 @@
 
 
                             </div>
+                            <div class="col-xl-3 col-md-3" id="ItemCode1">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px">Item Code :</label>
+                                    @Html.TextBox("ItemCode", "", new { @class = "form-control form-control-sm" })
+
+                                </div>
+                                <input id="ItemCode1" style="width:0px;height:0px" />
+                            </div>
+                            <div class="col-xl-1 col-md-3" style="    position: relative;
+    right: 0;
+    bottom: -5px;
+    width: 140px;">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px"></label>
+                                    <button class="btn btn-info btn-sm" style="width:100%;font-size: 14px;" id="btnApply">Apply Filter</button>
+                                </div>
+                            </div>
                             <div class="row">
 
 
-                                <div class="col-xl-1 col-md-1 ml-auto">
-                                    <div class="form-group">
-                                        <label for="email2" class="width100px"></label>
-                                        <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -59,14 +71,15 @@
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    <div class="card full-height">
+                    <div class="card full-height Abc" id="card-data">
                         <div class="card-body">
                             <div class="rowmin row mar-b10">
 
 
                                 <div class="col-xl-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="search" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                        <input type="search" placeholder="Search" style="display:none" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
+                                        <input type="search" placeholder="Search" id="Search-Forms-QuickLinks1" style="width:1px;height:1px" />
                                     </div>
                                 </div>
 
@@ -74,7 +87,7 @@
                                 <div class="col-xl-2 col-md-2 ml-auto text-right">
                                     <div class="form-group">
                                         <button type="button" class="btn btn-info btn-sm" title="Hide Column" data-toggle="modal" data-target="#SelectWidgetspopup"><i href="#" class="fas fa-minus-circle"></i></button>
-                                        <a href="/Reports/Reports/DownloadToExcel3" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
+                                        <a href="/Reports/Reports/DownloadToExcel3?strwhercond=,,," title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
 
 
                                     </div>
@@ -163,6 +176,28 @@
 
                         </div>
                     </div>
+                    <div class="card Abc" id="card-error">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/error.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    No Data Found
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" id="card-search">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/search-property.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    Select Filters to show data
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -247,54 +282,54 @@
         var value1 = $("#Search-Forms-QuickLinks").val().toLowerCase();
         var arr = [];
         var curPage = 1;
-        $.ajax({
-            type: "POST",
-            url: "/Reports/Reports/BackLogSheetReport",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                pagesize: 50,
-                pageno: curPage,
-                psearch: value1,
-                MappBU: $('#mapped_BU').val(),
-                BUGroup: $("#BUGroup").val(),
-                MappProj: $("#mapped_Project").val()
-            }),
-            success: function (data) {
-                $("#Ist").show();
-                arr = data;
-                if (arr.data != null && arr.data.length != 0) {
-                    var i = 0;
-                    while (arr.data.length > i) {
-                        var tr = $("#Ist").clone();
-                        var tr1 = $("#Ind").closest();
-                        var k = 0;
-                        var l1 = tr.find(".Abcd").length;
-                        while (l1 > k) {
-                            debugger
-                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
-                            var t = tblhead1[k];
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Reports/Reports/BackLogSheetReport",
+        //    contentType: "application/json",
+        //    dataType: "json",
+        //    data: JSON.stringify({
+        //        pagesize: 50,
+        //        pageno: curPage,
+        //        psearch: value1,
+        //        MappBU: $('#mapped_BU').val(),
+        //        BUGroup: $("#BUGroup").val(),
+        //        MappProj: $("#mapped_Project").val()
+        //    }),
+        //    success: function (data) {
+        //        $("#Ist").show();
+        //        arr = data;
+        //        if (arr.data != null && arr.data.length != 0) {
+        //            var i = 0;
+        //            while (arr.data.length > i) {
+        //                var tr = $("#Ist").clone();
+        //                var tr1 = $("#Ind").closest();
+        //                var k = 0;
+        //                var l1 = tr.find(".Abcd").length;
+        //                while (l1 > k) {
+        //                    debugger
+        //                    tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+        //                    var t = tblhead1[k];
                             
-                            if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".Abcd").eq(k).addClass("Abc")
-                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
-                            }
+        //                    if (jQuery.inArray(t, tblhide) !== -1) {
+        //                        tr.find(".Abcd").eq(k).addClass("Abc")
+        //                        tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+        //                    }
 
-                            k++;
-                        }
-                        $("#Ibody").append(tr);
-                        i++;
-                    }
-                    $("#Ist")[0].remove();
-                } else {
-                    $("#Ist").hide();
-                    RedDotAlert_Error("No Record Found");
-                }
-            }, complete: function () {
-                $(".loader1").hide();
-            }
+        //                    k++;
+        //                }
+        //                $("#Ibody").append(tr);
+        //                i++;
+        //            }
+        //            $("#Ist")[0].remove();
+        //        } else {
+        //            $("#Ist").hide();
+        //            RedDotAlert_Error("No Record Found");
+        //        }
+        //    }, complete: function () {
+        //        $(".loader1").hide();
+        //    }
             
-        });
+        //});
 
 
         $("#btnsave").on("click", function () {
@@ -322,16 +357,20 @@
                 data: JSON.stringify({
                     pagesize: 50,
                     pageno: curPage,
-                    psearch: value1,
+                    psearch: '',
                     MappBU: $('#mapped_BU').val(),
                     BUGroup: $("#BUGroup").val(),
-                    MappProj: $("#mapped_Project").val()
+                    MappProj: $("#mapped_Project").val(),
+                    itemName: $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("div#Ist").not(':first').remove();
                     $("#Ist").show();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -361,7 +400,10 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -379,7 +421,10 @@
                 }
             } else {
                 $(".loader1").hide();
-                RedDotAlert_Error('No Record Found');
+               // RedDotAlert_Error('No Record Found');
+                $("#card-search").addClass("Abc");
+                $("#card-data").addClass("Abc");
+                $("#card-error").removeClass("Abc");
                 return
             }
             curPage++;
@@ -393,10 +438,11 @@
                 data: JSON.stringify({
                     pagesize: 50,
                     pageno: curPage,
-                    psearch: value1,
+                    psearch: '',
                     MappBU: $('#mapped_BU').val(),
                     BUGroup: $("#BUGroup").val(),
-                    MappProj: $("#mapped_Project").val()
+                    MappProj: $("#mapped_Project").val(),
+                    itemName: $("#ItemCode").val()
                 }),
                 success: function (data) {
 
@@ -404,6 +450,9 @@
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -428,7 +477,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        //RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
 
                 }, complete: function () {
@@ -458,16 +510,20 @@
                 data: JSON.stringify({
                     pagesize: 50,
                     pageno: curPage,
-                    psearch: value1,
+                    psearch: '',
                     MappBU: $('#mapped_BU').val(),
                     BUGroup: $("#BUGroup").val(),
-                    MappProj: $("#mapped_Project").val()
+                    MappProj: $("#mapped_Project").val(),
+                    itemName: $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -490,7 +546,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -508,16 +567,21 @@
                 data: JSON.stringify({
                     pagesize: 50,
                     pageno: curPage,
-                    psearch: $("#Search-Forms-QuickLinks").val(),
+                    psearch: '',
                     MappBU: $('#mapped_BU').val(),
                     BUGroup: $("#BUGroup").val(),
-                    MappProj: $("#mapped_Project").val()
+                    MappProj: $("#mapped_Project").val(),
+                    itemName: $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $(".excel-btn").attr("href", "/Reports/Reports/DownloadToExcel3?strwhercond=" + $('#mapped_BU').val() + "," + $("#BUGroup").val() + "," + $("#mapped_Project").val()+"," + $("#ItemCode").val() + "");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -540,7 +604,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        //RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -561,7 +628,8 @@
                     psearch: value,
                     MappBU: $('#mapped_BU').val(),
                     BUGroup: $("#BUGroup").val(),
-                    MappProj: $("#mapped_Project").val()
+                    MappProj: $("#mapped_Project").val(),
+                    itemName: $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
@@ -590,7 +658,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        //RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();

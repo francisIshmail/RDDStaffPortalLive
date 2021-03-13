@@ -17,6 +17,7 @@ using System.Web.UI.WebControls;
 using DataTable = System.Data.DataTable;
 using ClosedXML.Excel;
 using RDDStaffPortal.DAL.DataModels.Report;
+using Newtonsoft.Json;
 
 namespace RDDStaffPortal.Areas.Reports.Controllers
 {
@@ -117,6 +118,27 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             ViewBag.BUList = new SelectList(BUList, "Code", "Code");
 
             return View(_RDD_Stock);
+        }
+
+        public ActionResult InventoryDropDown_fill_Country(string Country)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = _ReptOp.GetDrop_Country_Inventory(Country);
+
+                if (DS.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+                return retVal;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult Inventory()
@@ -326,24 +348,35 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             return View(_RDD_Exp);
         }
 
-        public ActionResult BackLogSheetReport(int pagesize, int pageno, string psearch, string MappBU, string BUGroup, string MappProj)
+        public ActionResult BackLogSheetReport(int pagesize, int pageno, string psearch, string MappBU, string BUGroup, string MappProj, string itemName)
         {
-            return Json(new { data = _ReptOp.GetRDDBackLogList(User.Identity.Name, pagesize, pageno, psearch,MappBU,BUGroup,MappProj) }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _ReptOp.GetRDDBackLogList(User.Identity.Name, pagesize, pageno, psearch,MappBU,BUGroup,MappProj,itemName) }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult StockSheetReport(int pagesize, int pageno, string psearch, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus)
+        public ActionResult StockSheetReport(int pagesize, int pageno, string psearch, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus,string itemName)
         {
-            return Json(new { data = _ReptOp.GetRDDCustMergList(User.Identity.Name, pagesize, pageno, psearch,Country,BUGroup,BU,Whsename,WhseOwn,WhseStatus) }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _ReptOp.GetRDDCustMergList(User.Identity.Name, pagesize, pageno, psearch,Country,BUGroup,BU,Whsename,WhseOwn,WhseStatus,itemName) }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ExpenseSheetReport(int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb, string Month, string year)
+        public ActionResult ExpenseSheetReport(int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb, string Month, string year, string itemName)
         {
-            return Json(new { data = _ReptOp.GetRDDExpenseList(User.Identity.Name, pagesize, pageno, psearch, Country,Project,SourceDb,Month,year) }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _ReptOp.GetRDDExpenseList(User.Identity.Name, pagesize, pageno, psearch, Country,Project,SourceDb,Month,year,itemName) }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DownloadToExcel3()
+        public ActionResult DownloadToExcel3(string strwhercond)
         {
-            DataTable dt = _ReptOp.Getdata3(User.Identity.Name);
+            /*Backlogsheet*/
+            string  BUGroup = "", BU = "", Project = "", itemName = "";
+            var arrCondition = strwhercond.Split(',');
+            if (arrCondition.Length <= 0)
+            {
+                return View();
+            }
+            BU = arrCondition[0].ToString();
+            BUGroup = arrCondition[1].ToString();
+            Project = arrCondition[2].ToString();
+           itemName = arrCondition[3].ToString();
+            DataTable dt = _ReptOp.Getdata_Backlogsheet(User.Identity.Name,BU,BUGroup,Project,itemName);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
@@ -369,9 +402,22 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             }
 
         }
-        public ActionResult DownloadToExcel4()
+        public ActionResult DownloadToExcel4(string strwhercond)
         {
-            DataTable dt = _ReptOp.Getdata4(User.Identity.Name);
+           
+            string Country = "", Project = "", SourceDb = "", Month = "", year="", itemName="";
+            var arrCondition = strwhercond.Split(',');
+            if (arrCondition.Length <= 0)
+            {
+                return View();
+            }
+            Country = arrCondition[0].ToString();
+            Project = arrCondition[1].ToString();
+            SourceDb = arrCondition[2].ToString();
+            Month = arrCondition[3].ToString();
+            year= arrCondition[4].ToString();
+            itemName = arrCondition[5].ToString();
+            DataTable dt = _ReptOp.Getdata4(User.Identity.Name,Country,Project,SourceDb,Month,year,itemName);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
@@ -394,9 +440,23 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
             //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
-        public ActionResult DownloadToExcel2()
+        public ActionResult DownloadToExcel2(string strwhercond)
         {
-            DataTable dt = _ReptOp.Getdata1(User.Identity.Name);
+            string Country="",BUGroup="", BU="",Whsename="",WhseOwn="", WhseStatus="",itemName="";
+            var arrCondition=strwhercond.Split(',');
+            if (arrCondition.Length <= 0)
+            {
+                return View();
+            }
+            Country = arrCondition[0].ToString();
+            BUGroup = arrCondition[1].ToString();
+            BU = arrCondition[2].ToString();
+            Whsename = arrCondition[3].ToString();
+            WhseOwn = arrCondition[4].ToString();
+            WhseStatus = arrCondition[5].ToString();
+            itemName = arrCondition[6].ToString();
+
+            DataTable dt = _ReptOp.Getdata1(User.Identity.Name,Country,BUGroup,BU,Whsename,WhseOwn,WhseStatus,itemName);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
@@ -415,9 +475,23 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             //byte[] bindata = System.Text.Encoding.ASCII.GetBytes(sw.ToString());
             //return File(bindata, "application/ms-excel", "ReportFile.xls");
         }
-        public FileResult DownloadToExcel1()
+        public ActionResult DownloadToExcel1(string strwhercond)
         {
-            DataTable dt = _ReptOp.Getdata(User.Identity.Name);
+            string Country = "", BUGroup = "", BU = "", Whsename = "", WhseOwn = "", WhseStatus = "", itemName = "";
+            var arrCondition = strwhercond.Split(',');
+            if (arrCondition.Length <= 0)
+            {
+                return View();
+            }
+            Country = arrCondition[0].ToString();
+            BUGroup = arrCondition[1].ToString();
+            BU = arrCondition[2].ToString();
+            Whsename = arrCondition[3].ToString();
+            WhseOwn = arrCondition[4].ToString();
+            WhseStatus = arrCondition[5].ToString();
+            itemName = arrCondition[6].ToString();
+
+            DataTable dt = _ReptOp.Getdata(User.Identity.Name, Country, BUGroup, BU, Whsename, WhseOwn, WhseStatus, itemName);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
@@ -438,101 +512,101 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
         }
        // [HttpPost]
 
-        [Route("DownloadExcelTes")]
-        public FileResult DownloadExcelTes()
-        {
+        //[Route("DownloadExcelTes")]
+        //public FileResult DownloadExcelTes()
+        //{
            
-            DataTable dt= _ReptOp.Getdata(User.Identity.Name);
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
-                }
-            }
-            //var gv = new GridView();
-            //gv.DataSource = _ReptOp.Getdata(User.Identity.Name);
-            //gv.DataBind();
-            //Response.ClearContent();
-            //Response.Buffer = true;
-            //Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
-            //Response.ContentType = "application/ms-excel";
-            //Response.Charset = "";
-            //StringWriter objStringWriter = new StringWriter();
-            //HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-            //gv.RenderControl(objHtmlTextWriter);
-            //Response.Output.Write(objStringWriter.ToString());
-            //Response.Flush();
-            //Response.End();
-           // return View("Index");
-        }
-        [HttpPost]
+        //   // DataTable dt= _ReptOp.Getdata(User.Identity.Name);
+        //    using (XLWorkbook wb = new XLWorkbook())
+        //    {
+        //        wb.Worksheets.Add(dt);
+        //        using (MemoryStream stream = new MemoryStream())
+        //        {
+        //            wb.SaveAs(stream);
+        //            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+        //        }
+        //    }
+        //    //var gv = new GridView();
+        //    //gv.DataSource = _ReptOp.Getdata(User.Identity.Name);
+        //    //gv.DataBind();
+        //    //Response.ClearContent();
+        //    //Response.Buffer = true;
+        //    //Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+        //    //Response.ContentType = "application/ms-excel";
+        //    //Response.Charset = "";
+        //    //StringWriter objStringWriter = new StringWriter();
+        //    //HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+        //    //gv.RenderControl(objHtmlTextWriter);
+        //    //Response.Output.Write(objStringWriter.ToString());
+        //    //Response.Flush();
+        //    //Response.End();
+        //   // return View("Index");
+        //}
+       // [HttpPost]
 
-        [Route("DownloadExcel")]
-        public ActionResult DownloadExcel()
-        {
-            DataTable ds = _ReptOp.Getdata(User.Identity.Name);
+        //[Route("DownloadExcel")]
+        //public ActionResult DownloadExcel()
+        //{
+        //    DataTable ds = _ReptOp.Getdata(User.Identity.Name);
 
-            string ExcelFilePath = "C:\\Users\\dev3\\Documents";
-            int ColumnsCount;
+        //    string ExcelFilePath = "C:\\Users\\dev3\\Documents";
+        //    int ColumnsCount;
 
-            if (ds == null || (ColumnsCount = ds.Columns.Count) == 0)
-                throw new Exception("ExportToExcel: Null or empty input table!\n");
+        //    if (ds == null || (ColumnsCount = ds.Columns.Count) == 0)
+        //        throw new Exception("ExportToExcel: Null or empty input table!\n");
 
-            // load excel, and create a new workbook
-            Microsoft.Office.Interop.Excel.Application Excel = new Microsoft.Office.Interop.Excel.Application();
-            Excel.Workbooks.Add();
+        //    // load excel, and create a new workbook
+        //    Microsoft.Office.Interop.Excel.Application Excel = new Microsoft.Office.Interop.Excel.Application();
+        //    Excel.Workbooks.Add();
 
-            // single worksheet
-            Microsoft.Office.Interop.Excel._Worksheet Worksheet = Excel.ActiveSheet;
+        //    // single worksheet
+        //    Microsoft.Office.Interop.Excel._Worksheet Worksheet = Excel.ActiveSheet;
 
-            object[] Header = new object[ColumnsCount];
+        //    object[] Header = new object[ColumnsCount];
 
-            // column headings               
-            for (int i = 0; i < ColumnsCount; i++)
-                Header[i] = ds.Columns[i].ColumnName;
+        //    // column headings               
+        //    for (int i = 0; i < ColumnsCount; i++)
+        //        Header[i] = ds.Columns[i].ColumnName;
 
-            Microsoft.Office.Interop.Excel.Range HeaderRange = Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[1, 1]), (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[1, ColumnsCount]));
-            HeaderRange.Value = Header;
-            HeaderRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray);
-            HeaderRange.Font.Bold = true;
+        //    Microsoft.Office.Interop.Excel.Range HeaderRange = Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[1, 1]), (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[1, ColumnsCount]));
+        //    HeaderRange.Value = Header;
+        //    HeaderRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray);
+        //    HeaderRange.Font.Bold = true;
 
-            // DataCells
-            int RowsCount = ds.Rows.Count;
-            object[,] Cells = new object[RowsCount, ColumnsCount];
+        //    // DataCells
+        //    int RowsCount = ds.Rows.Count;
+        //    object[,] Cells = new object[RowsCount, ColumnsCount];
 
-            for (int j = 0; j < RowsCount; j++)
-                for (int i = 0; i < ColumnsCount; i++)
-                    Cells[j, i] = ds.Rows[j][i];
+        //    for (int j = 0; j < RowsCount; j++)
+        //        for (int i = 0; i < ColumnsCount; i++)
+        //            Cells[j, i] = ds.Rows[j][i];
 
-            Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[2, 1]), (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[RowsCount + 1, ColumnsCount])).Value = Cells;
+        //    Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[2, 1]), (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[RowsCount + 1, ColumnsCount])).Value = Cells;
 
-            // check fielpath
-            if (ExcelFilePath != null && ExcelFilePath != "")
-            {
-                try
-                {
-                    Worksheet.SaveAs(ExcelFilePath);
-                    Excel.Quit();
+        //    // check fielpath
+        //    if (ExcelFilePath != null && ExcelFilePath != "")
+        //    {
+        //        try
+        //        {
+        //            Worksheet.SaveAs(ExcelFilePath);
+        //            Excel.Quit();
 
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("ExportToExcel: Excel file could not be saved! Check filepath.\n"
-                        + ex.Message);
-                }
-            }
-            else    // no filepath is given
-            {
-                Excel.Visible = true;
-            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new Exception("ExportToExcel: Excel file could not be saved! Check filepath.\n"
+        //                + ex.Message);
+        //        }
+        //    }
+        //    else    // no filepath is given
+        //    {
+        //        Excel.Visible = true;
+        //    }
           
-            return View(); 
+        //    return View(); 
        
           
-        }
+        //}
 
        
 

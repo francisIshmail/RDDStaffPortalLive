@@ -439,6 +439,12 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.Salary_Start_Date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"]);
                         }
+                        else
+                        {
+                            emp.Salary_Start_Date = string.IsNullOrEmpty(DS.Tables[0].Rows[0]["Salary_Start_Date"].ToString())
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"].ToString());
+                        }
 
 
                         if (DS.Tables[0].Rows[0]["Bank_Name"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Bank_Name"]))
