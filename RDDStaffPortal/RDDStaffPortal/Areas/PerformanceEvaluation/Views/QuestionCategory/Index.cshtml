@@ -1,0 +1,276 @@
+﻿@model RDDStaffPortal.DAL.DataModels.PerformanceEvaluation.RDD_QuestionCategory
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<style>
+    .table-responsive{
+        white-space:inherit;
+    }
+</style>
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title"><i class="fa fa-angle-double-left"></i> Back </h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title redtitle">Category </h4>
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal" id="btnAddCategory">
+                                    <i class="fa fa-plus"></i> Add Category
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Modal -->
+                            <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title">
+                                                <span class="fw-mediumbold">Add New Category </span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Category </label>
+                                                        <input type="text" id="txtCategory" class="form-control" />
+                                                        <input type="hidden" id="hdnCategoryId" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Select Department</label>
+                                                        <select id="ddlDepartment" class="multiselect-ui form-control" multiple="multiple">
+                                                            <option value="-1">---Select---</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" id="btnSaveCategory" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="tblCategoryDetails" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%">Category </th>
+                                            <th width="80%">Department</th>
+                                            <th style="text-align:center" width="10%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script type="text/javascript">    
+    function GetDepartmentList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDepartmentList", "QuestionCategory")',
+            dataType: "json",
+            success: function (data) {
+                var d = data.Table;
+                $("#ddlDepartment").empty();
+                $("#ddlDepartment").append('<option value="-1">--Select--</option>');
+                $.each(d, function (index, Value) {
+                    $("#ddlDepartment").append("<option value='" + Value.DeptId + "'>" + Value.DeptName + "</option>");
+                });
+                
+            }, complete: function () {                
+                $(".multiselect-ui").fSelect('reload');
+            }
+        });
+    }
+
+    function GetCategoryDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCategoryDetails", "QuestionCategory")',
+            dataType: "json",
+            success: function (data) {
+                var d = data.Table;
+                $("#tblCategoryDetails tbody").empty();
+                if (d.length > 0) {
+                    $.each(d, function (Index, Value) {
+                        $("#tblCategoryDetails tbody").append('<tr><td style="display:none">' + Value.CategoryId + '</td><td>' + Value.CategoryName + '</td><td style="display:none">' + Value.DepartmentId + '</td><td>' + Value.DepartmentName + '</td><td>'
+                            + '<div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.CategoryId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div > '
+                            + '</td ></tr > ');
+                    });
+                }
+                else {
+                    $("#tblCategoryDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
+                }               
+            }
+        });
+    }
+
+    function SaveCategory(rDD_Category) {
+        var rDD_Category = rDD_Category;
+         $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveCategoryDetails", "QuestionCategory")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ rDD_Category: rDD_Category }),
+            dataType: "json",
+            success: function (data) {
+                debugger
+                if (data.SaveFlag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                    GetCategoryDetails();
+                    $("#addRowModal").modal('hide');
+                }
+                else {                    
+                    alert(data.ErrorMsg);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        GetCategoryDetails();
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $(".multiselect-ui").hide();
+            });
+        })(jQuery);
+        GetDepartmentList();
+    });    
+    $(document).on('click', '#btnAddCategory', function () {
+        $("#txtCategory").val('');
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $(".multiselect-ui").hide();
+            });
+        })(jQuery);
+        GetDepartmentList();
+    });
+    $(document).on('click', '#btnSaveCategory', function () {
+        var deptid = "";
+        $("#ddlDepartment option:selected").each(function () {
+            deptid += $(this).val() + ",";
+        });
+        var rDD_Category = {
+            CategoryName: $.trim($("#txtCategory").val()),
+            DepartmentId: deptid
+        };
+        SaveCategory(rDD_Category);       
+    });   
+
+    $(document).on('click', '.edit', function () {
+        $("#btnSaveCategory").text("Update");
+        $("#btnSaveCategory").attr("id", "btnUpdateCategory");
+        var Categoryid = $(this).attr("data");     
+        $("#hdnCategoryId").val(Categoryid);
+        var Currow = $(this).closest("tr");
+        var CategoryName = Currow.find('td:eq(1)').html();
+        var DepartmentId = Currow.find('td:eq(2)').html();
+        var valarr = DepartmentId.split(',');
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();                
+                $('.fs-wrap').find('.fs-dropdown').find('.g0').removeClass('selected');
+                i = 0, size = valarr.length;
+                for (i; i < size; i++) {
+                    $('.fs-wrap').find('.fs-dropdown').find("[data-value='" + valarr[i].trim() + "']").addClass('selected');                   
+                }
+                if (size > 2) {
+                    $('.fs-label').text(size - 1 + ' selected');
+                }
+                $("#ddlDepartment").val(valarr);
+                $(".multiselect-ui").fSelect('reload');
+            });
+        })(jQuery);
+
+        $("#txtCategory").val(CategoryName);
+    });
+
+    $(document).on('click', '#btnUpdateCategory', function () {
+        var deptid = "";
+        var CategoryId = $("#hdnCategoryId").val();
+        $("#ddlDepartment option:selected").each(function () {
+            deptid += $(this).val() + ",";
+        });
+        var rDD_Category = {
+            CategoryId: CategoryId,
+            CategoryName: $.trim($("#txtCategory").val()),
+            DepartmentId: deptid,
+            EditFlag:true
+        };
+        SaveCategory(rDD_Category);     
+    });
+
+    $(document).on('click', '.delete', function () {
+        var Categoryid = $(this).attr("data");
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) {                   
+                    if (data[0].Outtf == true) {
+                        RedDotAlert_Success(data[0].Responsemsg);
+                        GetKPIdetails();
+                        GetKPIdetailsModal();
+                    }
+                });
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+        });
+    });
+
+    
+</script>
+

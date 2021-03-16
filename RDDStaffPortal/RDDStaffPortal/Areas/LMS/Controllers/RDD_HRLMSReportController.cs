@@ -20,7 +20,6 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
         // GET: LMS/RDD_HRLMSReport
         public ActionResult Index()
         {          
-            
             return View();
         }       
         public ActionResult GetDropdownList()
