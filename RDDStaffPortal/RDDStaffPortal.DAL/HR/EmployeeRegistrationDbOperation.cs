@@ -12,6 +12,7 @@ namespace RDDStaffPortal.DAL.HR
     public class EmployeeRegistrationDbOperation
     {
         CommonFunction Com = new CommonFunction();
+        
         // public string Save(RDD_EmployeeRegistration EmpData)
         public List<Outcls1> Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
         {
@@ -160,6 +161,10 @@ namespace RDDStaffPortal.DAL.HR
                         SqlParameter[] Para1 = {
                                         new SqlParameter("@EmployeeId", Emp_ID)};
                         Com.ExecuteNonQuery("RDD_SetEmployeeProfileCompletedPercentage", Para1);
+
+                       // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+
                         scope.Complete();
                     }
                     catch (Exception ex)

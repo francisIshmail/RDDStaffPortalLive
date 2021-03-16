@@ -18,6 +18,9 @@ using DataTable = System.Data.DataTable;
 using Antlr.Runtime;
 using Newtonsoft.Json;
 using static RDDStaffPortal.DAL.CommonFunction;
+using System.Data.SqlClient;
+using System.Transactions;
+using Microsoft.Office.Interop.Excel;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -582,15 +585,72 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     rdd_empreg.LogoType = ".jpg";
                    
                 }
-               
 
 
-                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+              
 
-              //  string[] UserName = EmpData.Email.Split('@');
+                using (TransactionScope scope = new TransactionScope())
+                {
 
-             //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
-              // result = response.Message;
+
+
+                    result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+
+
+                    string[] UserName = EmpData.Email.Split('@');
+                    if(result[0].Responsemsg== "Registration saved successfully.")
+                    {
+                        var response = accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                        var msg = response.Message;
+                        var t = false;
+                        if (response.Success == true)
+                        {
+                            msg = result[0].Responsemsg;
+                             t = EmpDbOp.Update(EmpData.Email, EmpData.FName, EmpData.LName);
+
+                        }
+
+
+                        var empid = result[0].Id;
+                        result.Clear();
+                        if (response.Success == true && t==true)
+                        {
+                            scope.Complete();
+                            result.Add(new Outcls1
+                            {
+                                Outtf = true,
+                                Id = empid,
+                                Responsemsg = msg
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new Outcls1
+                            {
+                                Outtf = false,
+                                Id = -1,
+                                Responsemsg = msg
+                            });
+                        }
+                    }
+                    else
+                    {
+                        scope.Complete();
+                    }
+
+                  
+
+                    
+
+
+                }
+
+               // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+                //  string[] UserName = EmpData.Email.Split('@');
+
+                //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                // result = response.Message;
 
 
 

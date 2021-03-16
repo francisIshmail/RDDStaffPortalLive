@@ -2274,10 +2274,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                     }
                
                     if (result[0].Responsemsg == "Registration saved successfully." && result[0].Outtf == true) {
-                        GetCreateUserAcc();
-                        $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
+                       // GetCreateUserAcc();
+                       
                         //  RdotAlertSucesstxt(result);
-
+                        RedDotAlert_Success(result[0].Responsemsg);
+                        $("input[id='Citizenship']:hidden").val($("select[name='hdnCitizenship']").val());
                         var pathname = window.location.search;
 
 
@@ -2286,6 +2287,7 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
                         if (pathname == "") {
                             ClearControl();
                         }
+                        $('.loader1').css('display', 'none');
 
 
                     }
@@ -2382,29 +2384,37 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $("#Emergency_Contact").val('');
         $("#passport_no").val('');
         $("#Salary_Start_Date").val('');
+        $("select:not(.combolist2,.swal2-select)").select2('destroy');
+        
         $('#DesigId').find('option:first').attr('selected', 'selected');
         $('#DeptId').find('option:first').attr('selected', 'selected');
         $('#StatusId').find('option:first').attr('selected', 'selected');
 
         $('#JobBandId').find('option:first').attr('selected', 'selected');
         $('#JobGradeId').find('option:first').attr('selected', 'selected');
-        //
-        $('#ManagerIdL2').val("0").trigger("change");
-        $('#ManagerId').val("0").trigger("change");
-        $('#Citizenship').val("0").trigger("change");
+
+
+        $('#JobBandId').val("0");
+        $('#JobGradeId').val("0");
+        
+        $('#ManagerIdL2').val("0") //.trigger("change");
+        $('#ManagerId').val("0") //.trigger("change");
+        $('#Citizenship').val("0") //.trigger("change");
 
        // $('#ManagerId').find('option:first').attr('selected', 'selected');
         $('#CountryCodeName').find('option:first').attr('selected', 'selected');
-        $('#type_of_employement').val(0).trigger('change');
+      //  $('#type_of_employement').val(0)//.trigger('change');
         $("#Joining_Date1").val('');
         $("#Contract_Start_date1").val('');
-        $('#Marital_Status').val(0).trigger('change');
+        $('#Marital_Status').val(0)//.trigger('change');
         $("#Contract_Start_date1").val('');
 
-        $('#Gender').val(0).trigger('change');
+        $('#Gender').val(0)//.trigger('change');
         $("#National_id").val('');
         $("#NOTE").val('');
-
+        $("#Local_HR").val("0");
+        $("#HOD_HR").val("0");
+        $("#type_of_employement").val("0");
         $("#Currency").val('');
         $("#Account_No").val('');
         $("#Insurance_no").val('');
@@ -2416,6 +2426,11 @@ new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" }
         $("#Remark").val('');
         $("#Bank_Code").val('');
         $("#Salary_Start_Date1").val('');
+        $("select:not(.combolist2,.swal2-select)").select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select--'
+        });
     }
 
     function Tab_Activity_Hide_Show(tabid,ids) {
