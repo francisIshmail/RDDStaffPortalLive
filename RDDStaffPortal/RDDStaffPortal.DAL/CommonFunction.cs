@@ -188,7 +188,17 @@ namespace RDDStaffPortal.DAL
                                 Id= Convert.ToInt32(SqlCmd.Parameters[p[k - 2].ParameterName].Value.ToString()),
                                 Responsemsg = SqlCmd.Parameters[p[k - 1].ParameterName].Value.ToString()
                             });
-                        };
+                        }
+                        else
+                        {
+                            t = false;
+                            str1.Add(new Outcls1
+                            {
+                                Outtf = t,
+                                Id = Convert.ToInt32(SqlCmd.Parameters[p[k - 2].ParameterName].Value.ToString()),
+                                Responsemsg = SqlCmd.Parameters[p[k - 1].ParameterName].Value.ToString()
+                            });
+                        }
                     }
                     catch (Exception ex)
                     {

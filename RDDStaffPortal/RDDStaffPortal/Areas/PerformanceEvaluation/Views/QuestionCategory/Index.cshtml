@@ -230,7 +230,9 @@
             DepartmentId: deptid,
             EditFlag:true
         };
-        SaveCategory(rDD_Category);     
+        SaveCategory(rDD_Category); 
+        $("#btnUpdateCategory").text("Save");
+        $("#btnUpdateCategory").attr("id", "btnSaveCategory");
     });
 
     $(document).on('click', '.delete', function () {
