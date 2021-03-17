@@ -92,29 +92,5 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return rDD_Category;
         }
-
-
-        public List<Outcls> DeleteCategoryDetails(int Categoryid)
-        {            
-            List<Outcls> outcls = new List<Outcls>();
-            try
-            {
-                //using (TransactionScope scope = new TransactionScope())
-
-                string response = string.Empty;
-                SqlParameter[] parm ={ new SqlParameter("@CategoryId",Categoryid),
-                         new SqlParameter("@Type","Delete"),
-                         new SqlParameter("@p_ide",Categoryid),
-                         new SqlParameter("@Response",response)
-                    };
-                outcls = Com.ExecuteNonQueryList("RDD_Insert_Update_QuestionCategory", parm);                
-            }
-            catch (Exception ex)
-            {
-                outcls[0].Outtf = false;
-                outcls[0].Responsemsg = ex.Message;
-            }
-            return outcls;
-        }
     }
 }
