@@ -152,7 +152,7 @@
                     $("#addRowModal").modal('hide');
                 }
                 else {                    
-                    alert(data.ErrorMsg);
+                    RedDotAlert_Error(data.ErrorMsg);
                 }
             }
         });
@@ -250,11 +250,15 @@
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
-                $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) {                   
+                $.getJSON("/QuestionCategory/DeleteCategoryDetails", { "Categoryid": Categoryid }).done(function (data) {
+                    
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
-                        GetKPIdetails();
-                        GetKPIdetailsModal();
+                        GetCategoryDetails();
+                        $("#addRowModal").modal('hide');
+                    }
+                    else {
+                        RedDotAlert_Error(data[0].Responsemsg);
                     }
                 });
             }
