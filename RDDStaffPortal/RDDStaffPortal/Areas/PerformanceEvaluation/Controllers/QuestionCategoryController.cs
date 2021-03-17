@@ -50,6 +50,11 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return Json(rDD_QuestionCategory_TemplateDb.SaveCategory(rDD_Category), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DeleteCategory(int Categoryid)
+        {            
+            return Json(rDD_QuestionCategory_TemplateDb.DeleteCategory(Categoryid), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetCategoryDetails()
         {
             ContentResult retVal = null;

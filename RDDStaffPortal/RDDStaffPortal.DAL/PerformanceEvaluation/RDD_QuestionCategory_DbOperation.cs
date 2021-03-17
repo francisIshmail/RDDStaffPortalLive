@@ -81,7 +81,14 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     outcls = Com.ExecuteNonQueryListID("RDD_Insert_Update_QuestionCategory", parm);
                     rDD_Category.SaveFlag = outcls[0].Outtf;
                     rDD_Category.ErrorMsg = outcls[0].Responsemsg;
-
+                    if (outcls[0].Id == -1)
+                    {
+                        rDD_Category.SaveFlag = false;
+                    }
+                    else
+                    {
+                        rDD_Category.SaveFlag = true;
+                    }
                     scope.Complete();
                 }
             }
@@ -91,6 +98,32 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 rDD_Category.SaveFlag = false;
             }
             return rDD_Category;
+        }
+
+        public List<Outcls> DeleteCategory(int Categoryid)
+        {
+            //RDD_Holidays rDD_Holiday = new RDD_Holidays();
+            List<Outcls> outcls = new List<Outcls>();
+            try
+            {
+                //using (TransactionScope scope = new TransactionScope())
+
+                string response = string.Empty;
+                SqlParameter[] parm ={ new SqlParameter("@CategoryId",Categoryid),
+                         new SqlParameter("@Type","Delete"),
+                         new SqlParameter("@p_ide",Categoryid),
+                         new SqlParameter("@Response",response)
+                    };
+                outcls = Com.ExecuteNonQueryList("RDD_Insert_Update_QuestionCategory", parm);
+                
+            }
+            catch (Exception ex)
+            {
+
+                outcls[0].Outtf = false;
+                outcls[0].Responsemsg = ex.Message;
+            }
+            return outcls;
         }
     }
 }

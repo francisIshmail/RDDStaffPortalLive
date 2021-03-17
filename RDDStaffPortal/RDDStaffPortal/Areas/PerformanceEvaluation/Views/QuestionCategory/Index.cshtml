@@ -150,16 +150,18 @@
                     RedDotAlert_Success(data.ErrorMsg);
                     GetCategoryDetails();
                     $("#addRowModal").modal('hide');
+                    $("#btnUpdateCategory").text("Save");
+                    $("#btnUpdateCategory").attr("id", "btnSaveCategory");
                 }
                 else {                    
-                    alert(data.ErrorMsg);
+                    RedDotAlert_Error(data.ErrorMsg);
                 }
             }
         });
     }
 
     $(document).ready(function () {
-        GetCategoryDetails();
+        GetCategoryDetails();       
         (function ($) {
             $(function () {
                 window.fs_test = $('.multiselect-ui').fSelect();
@@ -169,6 +171,8 @@
         GetDepartmentList();
     });    
     $(document).on('click', '#btnAddCategory', function () {
+        $("#btnUpdateCategory").text("Save");
+        $("#btnUpdateCategory").attr("id", "btnSaveCategory");
         $("#txtCategory").val('');
         (function ($) {
             $(function () {
@@ -180,6 +184,15 @@
     });
     $(document).on('click', '#btnSaveCategory', function () {
         var deptid = "";
+        if ($("#txtCategory").val() == "") {
+            RedDotAlert_Error("Please Enter Category");
+            return false;
+        }
+        var d = $("#ddlDepartment option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please Select Department");
+            return false;
+        }
         $("#ddlDepartment option:selected").each(function () {
             deptid += $(this).val() + ",";
         });
@@ -221,6 +234,15 @@
     $(document).on('click', '#btnUpdateCategory', function () {
         var deptid = "";
         var CategoryId = $("#hdnCategoryId").val();
+        if ($("#txtCategory").val() == "") {
+            RedDotAlert_Error("Please Enter Category");
+            return false;
+        }
+        var d = $("#ddlDepartment option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please Select Department");
+            return false;
+        }
         $("#ddlDepartment option:selected").each(function () {
             deptid += $(this).val() + ",";
         });
@@ -231,8 +253,7 @@
             EditFlag:true
         };
         SaveCategory(rDD_Category); 
-        $("#btnUpdateCategory").text("Save");
-        $("#btnUpdateCategory").attr("id", "btnSaveCategory");
+        
     });
 
     $(document).on('click', '.delete', function () {
@@ -255,8 +276,10 @@
                 $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) {                   
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
-                        GetKPIdetails();
-                        GetKPIdetailsModal();
+                        GetCategoryDetails();
+                    }
+                    else {
+                        RedDotAlert_Error(data[0].Responsemsg);
                     }
                 });
             }
