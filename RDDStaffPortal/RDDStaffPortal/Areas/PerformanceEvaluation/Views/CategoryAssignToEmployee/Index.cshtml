@@ -1,0 +1,328 @@
+﻿@model RDDStaffPortal.DAL.DataModels.PerformanceEvaluation.RDD_CategoryAssignToEmployee
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<style>
+    .ui-front {
+        z-index: 9999999999 !important;
+    }
+
+    .table-responsive {
+        white-space: inherit;
+    }
+</style>
+<input type="hidden" id="hdnCategoryAssignId" />
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title"><i class="fa fa-angle-double-left"></i> Back </h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title redtitle">Employees </h4>
+                                <button id="btnAddEmployee" class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                    <i class="fa fa-plus"></i> Add Employee
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Modal -->
+                            <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title">
+                                                <span class="fw-mediumbold">Add New Employee </span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body ui-front">
+
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group ">
+                                                            <label>Employee Name</label>
+                                                            <input id="txtEmployeeName" type="text" class="form-control" placeholder="fill name">
+                                                            <input type="hidden" id="hdnEmployeeName" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>Select Category</label>
+                                                            <select id="ddlCategory" class="multiselect-ui form-control" multiple="multiple">
+                                                                <option value="-1">---Select---</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" id="btnSaveEmpDetails" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input id="myInput" type="text" placeholder="Search.." class="form-control">
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="tblCatEmployeeDetails" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="30%">Employee Name</th>
+                                            <th width="60%">Category </th>
+                                            <th style="text-align:center" width:10%>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblCatEmployeeDetailstbody"></tbody>
+                                </table>
+                            </div>
+                            <div id="pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script type="text/javascript">
+    function GetCategoryWiseEmployeeDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCatEmpDetails", "CategoryAssignToEmployee")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+                var d = data.Table;
+                //$("#tblCatEmployeeDetails").DataTable().clear().destroy();
+                $("#tblCatEmployeeDetails").find("tbody").empty();
+                if (d.length > 0) {
+                    $.each(d, function (Index, Value) {
+                        $("#tblCatEmployeeDetails tbody").append('<tr><td style="display:none">' + Value.CategoryId + '</td><td style="display:none">' + Value.CategoryAssignId + '</td><td style="display:none">' + Value.EmployeeId + '</td><td>' + Value.EmployeeName + '</td><td>' + Value.CategoryName + '</td><td>'
+                            + '<div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.EmployeeId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div > '
+                            + '</td ></tr > ');
+                    });
+                }
+                else {
+                    $("#tblCatEmployeeDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
+                }
+                //$("#tblCatEmployeeDetails").DataTable();
+            }
+        });
+    }
+
+    function GetEmployeeList() {
+        applyAutoComplete2("#txtEmployeeName", "#hdnEmployeeName", "/CategoryAssignToEmployee/GetUserListAuto");
+    }
+
+    function GetCategoryList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCategoryList", "CategoryAssignToEmployee")',
+            dataType: "json",
+            success: function (data) {
+                var d = data.Table;
+                $("#ddlCategory").empty();
+                $("#ddlCategory").append('<option value="-1">--Select--</option>');
+                $.each(d, function (index, Value) {
+                    $("#ddlCategory").append("<option value='" + Value.CategoryId + "'>" + Value.CategoryName + "</option>");
+                });
+
+            }, complete: function () {
+                $(".multiselect-ui").fSelect('reload');
+            }
+        });
+    }
+
+    function SaveAssignCategory(rDD_AssignCategory) {
+        var rDD_AssignCategory = rDD_AssignCategory;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveAssignCategoryDetails", "CategoryAssignToEmployee")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ rDD_AssignCategory: rDD_AssignCategory }),
+            dataType: "json",
+            success: function (data) {
+                debugger
+                if (data.SaveFlag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                    GetCategoryWiseEmployeeDetails();
+                    $("#addRowModal").modal('hide');
+                    $("#btnUpdateEmpDetails").text("Save");
+                    $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
+                }
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        GetCategoryWiseEmployeeDetails();
+        //applyAutoComplete2("#txtEmployeeName", "#hdnEmployeeName", "/GetEmpList");
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $(".multiselect-ui").hide();
+            });
+        })(jQuery);
+        GetCategoryList();
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblCatEmployeeDetailstbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        
+    });
+
+    $(document).on('click', '#btnAddEmployee', function () {
+        GetEmployeeList();
+        $("#btnUpdateEmpDetails").text("Save");
+        $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
+        $("#txtEmployeeName").val('');
+        $("#hdnEmployeeName").val('');
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $(".multiselect-ui").hide();
+            });
+        })(jQuery);
+        GetCategoryList();
+    });
+
+    $(document).on('click', '.edit', function () {
+        $("#btnSaveEmpDetails").text("Update");
+        $("#btnSaveEmpDetails").attr("id", "btnUpdateEmpDetails");
+        var Categoryid = $(this).attr("data");
+        $("#hdnCategoryId").val(Categoryid);
+        var Currow = $(this).closest("tr");
+        var EmployeeName = Currow.find('td:eq(3)').html();
+        var EmployeeId = Currow.find('td:eq(2)').html();
+        $("#hdnCategoryAssignId").val(Currow.find('td:eq(1)').html());
+        var valarr = Categoryid.split(',');
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $('.fs-wrap').find('.fs-dropdown').find('.g0').removeClass('selected');
+                i = 0, size = valarr.length;
+                for (i; i < size; i++) {
+                    $('.fs-wrap').find('.fs-dropdown').find("[data-value='" + valarr[i].trim() + "']").addClass('selected');
+                }
+                if (size > 2) {
+                    $('.fs-label').text(size - 1 + ' selected');
+                }
+                $("#ddlCategory").val(valarr);
+                $(".multiselect-ui").fSelect('reload');
+            });
+        })(jQuery);
+
+        $("#txtEmployeeName").val(EmployeeName);
+        $("#hdnEmployeeName").val(EmployeeId);
+    });
+
+    $(document).on('click', '#btnSaveEmpDetails', function () {
+        var catid = "";
+        if ($("#txtEmployeeName").val() == "") {
+            RedDotAlert_Error("Please Enter Employee Name");
+            return false;
+        }
+        var d = $("#ddlCategory option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please Select Category");
+            return false;
+        }
+        $("#ddlCategory option:selected").each(function () {
+            catid += $(this).val() + ",";
+        });
+        var rDD_AssignCategory = {
+            CategoryId: catid,
+            EmployeeId: $("#hdnEmployeeName").val()
+        };
+        SaveAssignCategory(rDD_AssignCategory);
+    });
+
+    $(document).on('click', '#btnUpdateEmpDetails', function () {
+        var catid = "";
+        if ($("#txtEmployeeName").val() == "") {
+            RedDotAlert_Error("Please Enter Employee Name");
+            return false;
+        }
+        var d = $("#ddlCategory option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please Select Category");
+            return false;
+        }
+        $("#ddlCategory option:selected").each(function () {
+            catid += $(this).val() + ",";
+        });
+        var rDD_AssignCategory = {
+            CategoryId: catid,
+            EmployeeId: $("#hdnEmployeeName").val(),
+            CategoryAssignId: $("#hdnCategoryAssignId").val(),
+            EditFlag:true
+        };
+        SaveAssignCategory(rDD_AssignCategory);
+    });
+
+    $(document).on('click', '.delete', function () {
+        var EmployeeId = $(this).attr("data");
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.getJSON("/CategoryAssignToEmployee/DeleteAssignCategory", { "EmployeeId": EmployeeId }).done(function (data) {
+                    if (data[0].Outtf == true) {
+                        RedDotAlert_Success(data[0].Responsemsg);
+                        GetCategoryWiseEmployeeDetails();
+                    }
+                    else {
+                        RedDotAlert_Error(data[0].Responsemsg);
+                    }
+                });
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+        });
+    });
+</script>

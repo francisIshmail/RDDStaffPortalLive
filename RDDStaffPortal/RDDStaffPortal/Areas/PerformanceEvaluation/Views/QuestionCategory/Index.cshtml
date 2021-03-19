@@ -70,18 +70,20 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <input id="myInput" type="text" placeholder="Search.." class="form-control">
+                            </div>
+
                             <div class="table-responsive">
                                 <table id="tblCategoryDetails" class="display table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th width="10%">Category </th>
-                                            <th width="80%">Department</th>
+                                            <th width="20%">Category </th>
+                                            <th width="70%">Department</th>
                                             <th style="text-align:center" width="10%">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                                                      
-                                    </tbody>
+                                    <tbody id="tblCategoryDetailstbody"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -144,8 +146,7 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ rDD_Category: rDD_Category }),
             dataType: "json",
-            success: function (data) {
-                debugger
+            success: function (data) {               
                 if (data.SaveFlag == true) {
                     RedDotAlert_Success(data.ErrorMsg);
                     GetCategoryDetails();
@@ -169,6 +170,12 @@
             });
         })(jQuery);
         GetDepartmentList();
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblCategoryDetailstbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });    
     $(document).on('click', '#btnAddCategory', function () {
         $("#btnUpdateCategory").text("Save");
@@ -295,7 +302,6 @@
             }
         });
     });
-
     
 </script>
 

@@ -218,7 +218,9 @@
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
+    <Compile Include="Areas\PerformanceEvaluation\Controllers\CategoryAssignToEmployeeController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\Controllers\QuestionCategoryController.cs" />
+    <Compile Include="Areas\PerformanceEvaluation\Controllers\TestController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\PerformanceEvaluationAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
@@ -884,6 +886,8 @@
     <Content Include="App_Code\RDD_RightSideTask.cshtml" />
     <Content Include="Areas\PerformanceEvaluation\Views\web.config" />
     <Content Include="Areas\PerformanceEvaluation\Views\QuestionCategory\Index.cshtml" />
+    <Content Include="Areas\PerformanceEvaluation\Views\CategoryAssignToEmployee\Index.cshtml" />
+    <Content Include="Areas\PerformanceEvaluation\Views\Test\Index.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />

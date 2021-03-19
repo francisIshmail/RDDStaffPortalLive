@@ -1107,6 +1107,7 @@ function applyAutoComplete2(ids, hdnid, url) {
                 dataType: "json",
                 data: { Prefix: request.term },
                 success: function (data) {
+                    debugger
                     $(hdnid).val(-1);
                     if (data.length > 0) {
                         response($.map(data, function (item) {
