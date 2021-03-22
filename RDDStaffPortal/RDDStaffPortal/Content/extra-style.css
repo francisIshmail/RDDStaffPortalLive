@@ -1,0 +1,142 @@
+/* =========================================================
+ * CSS Just for Extra Style purpose
+ =========================================================*/
+ 
+ .navbar .navbar-nav .nav-item .nav-link i {color:#111111!important;}
+ 
+ .navbar .navbar-nav .notification {background-color:#e7483e;}
+
+.redtitle {color:#e7483e; font-size:24px; font-weight:600;}
+
+table.dataTable {margin-bottom:25px!important; margin-top:25px!important;}
+
+table.dataTable thead {background-color:rgba(0,0,0,.05);}
+
+.table-striped tbody tr:nth-of-type(even) {background-color:rgba(0,0,0,.02);}
+
+.table-striped tbody tr:nth-of-type(odd) {background-color:transparent;}
+
+.table thead th {font-size:15px;}
+
+.form-button-action .btn-lg {color:#007bff!important;}
+
+.form-button-action .btn-lg, .form-button-action .btn {font-size:18px; padding:10px 10px;} 
+
+.fw-mediumbold {color:#e7483e; font-size:20px; font-weight:600!important;}
+
+.dropdown-toggle {padding:15px 0 0; background:transparent; font-size:16px;}
+
+.form-group-default {overflow:visible;}
+
+.dropdown-toggle::after {display:none;}
+
+.dropdown-menu {padding:0 0; text-align:left;}
+
+.form-group-default .multiselect-container>li>a>label {font-size:12px!important;}
+
+.multiselect-container>li>a>label {margin:0; font-size:12px!important; height:100%; cursor:pointer; font-weight:400; padding:10px 20px;}
+
+.multiselect-container>li.active>a>label, .multiselect-container>li.active>a:focus>label, .multiselect-container>li.active>a:hover>label {
+color:#ffffff!important; text-decoration:none; background-color:#337ab7; outline:0;}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {color:#ffffff; text-decoration:none; background-color: #337ab7; outline:0;}
+
+.multiselect-container>li>a>label>input[type=checkbox] {margin-right:5px; margin-bottom:0;}
+
+
+
+
+/* ==================== SOR - Code generator page =================== */
+
+.redbg {background-color:#e7483e;}
+
+.whttitle {color:#ffffff;}
+
+.close.whtcolor {color:#ffffff;}
+
+#overlay {
+  background: #ffffff;
+  color: #666666;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 25%;
+  opacity: .80;
+}
+button {
+  cursor: pointer;
+}
+.spinner {
+    margin: 0 auto;
+    height: 64px;
+    width: 64px;
+    animation: rotate 0.8s infinite linear;
+    border: 5px solid firebrick;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width:576px) {
+.bigbox {max-width:1300px;}
+.midbox {max-width:800px;}
+}
+
+
+/* ================= Performance Appraisal - page =================== */
+
+.card-body ul {padding-left:20px;}
+
+.card-body ul li {margin-bottom:20px; font-size:18px; line-height:24px;}
+
+.card.card-primary .card-header {padding:20px 10px 0;}
+
+.card.card-primary h2, .card.card-primary a h2 {font-size:18px; color:#ffffff; font-weight:600; text-decoration:none;}
+
+.card.card-primary a:hover {color:#111111; text-decoration:none!important;}
+
+.card.card-primary a:hover h2 {color:#111111; text-decoration:none!important;}
+
+
+
+/* ================= Questions - page =================== */
+
+#myTab .nav-link {font-size:18px; font-weight:600;}
+
+.nav-tabs {border-bottom:2px solid #dee2e6;}
+
+.tab-content {padding-top:20px; padding-bottom:20px;}
+
+.nav-tabs .nav-item {margin-bottom:-2px;}
+
+.nav-tabs .nav-link {border:2px solid transparent;}
+
+.table-responsive table thead {background-color:rgba(0,0,0,.05);}
+
+.tab-content .table-responsive .table td {font-size:15px;}
+
+.card-body ul.multiselect-container {padding-left:0;}
+
+.card-body ul.multiselect-container li {margin-bottom:0; font-size:16px; line-height:20px;}
+
+#add-more, .remove-me {float:right;}
+
+
+
+
+
+
+
+

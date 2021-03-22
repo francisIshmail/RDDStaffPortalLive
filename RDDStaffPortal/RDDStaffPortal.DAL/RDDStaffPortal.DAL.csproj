@@ -132,8 +132,10 @@
     <Compile Include="DataModels\MarketingPlan\MarketingPlanMaster.cs" />
     <Compile Include="DataModels\MarketingPlan\Marketing_SearchData.cs" />
     <Compile Include="DataModels\MarketingPlan\RDD_VenderBu.cs" />
+    <Compile Include="DataModels\PerformanceEvaluation\RDD_AddAppraisalQuestion.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_CategoryAssignToEmployee.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_QuestionCategory.cs" />
+    <Compile Include="DataModels\PerformanceEvaluation\RDD_Settings.cs" />
     <Compile Include="DataModels\RDD_CountryBU.cs" />
     <Compile Include="DataModels\RDD_CountryTarget.cs" />
     <Compile Include="DataModels\Datatables_Dash.cs" />
@@ -210,8 +212,10 @@
     <Compile Include="obj\Debug\DataModels\DailyReports\UserControl1.g.i.cs" />
     <Compile Include="MarketingPlan\MarketingPlanDbOperation.cs" />
     <Compile Include="MarketingPlan\MarketingPlanLines.cs" />
+    <Compile Include="PerformanceEvaluation\RDD_AddAppraisalQuestion_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_CategoryAssignToEmployee_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_QuestionCategory_DbOperation.cs" />
+    <Compile Include="PerformanceEvaluation\RDD_Settings_DbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />

@@ -13,7 +13,13 @@
     .table-responsive {
         white-space: inherit;
     }
+
+    .row {
+        width: 100%
+    }
 </style>
+<link href="~/Content/extra-style.css" rel="stylesheet" />
+
 <input type="hidden" id="hdnCategoryAssignId" />
 
 <div class="main-panel">
@@ -33,6 +39,7 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="loader1"></div>
                         <div class="card-body">
                             <!-- Modal -->
                             <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -47,7 +54,6 @@
                                             </button>
                                         </div>
                                         <div class="modal-body ui-front">
-
                                             <form>
                                                 <div class="row">
                                                     <div class="col-sm-12">
@@ -77,18 +83,17 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <input id="myInput" type="text" placeholder="Search.." class="form-control">
-                            </div>
-
+                                                        
                             <div class="table-responsive">
                                 <table id="tblCatEmployeeDetails" class="display table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th width="30%">Employee Name</th>
-                                            <th width="60%">Category </th>
-                                            <th style="text-align:center" width:10%>Action</th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th width="20%">Employee Name</th>
+                                            <th width="70%">Category </th>
+                                            <th style="text-align:center" width="10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tblCatEmployeeDetailstbody"></tbody>
@@ -112,21 +117,33 @@
             url: '@Url.Action("GetCatEmpDetails", "CategoryAssignToEmployee")',
             dataType: "json",
             success: function (data) {
-                debugger
                 var d = data.Table;
-                //$("#tblCatEmployeeDetails").DataTable().clear().destroy();
-                $("#tblCatEmployeeDetails").find("tbody").empty();
+                $('#tblCatEmployeeDetails').dataTable().fnDestroy();
+                $("#tblCatEmployeeDetails tbody").empty();
                 if (d.length > 0) {
                     $.each(d, function (Index, Value) {
-                        $("#tblCatEmployeeDetails tbody").append('<tr><td style="display:none">' + Value.CategoryId + '</td><td style="display:none">' + Value.CategoryAssignId + '</td><td style="display:none">' + Value.EmployeeId + '</td><td>' + Value.EmployeeName + '</td><td>' + Value.CategoryName + '</td><td>'
-                            + '<div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.EmployeeId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div > '
-                            + '</td ></tr > ');
+                        var str = '';
+                        str += '<tr>';
+                        str += '<td style="display:none">' + Value.CategoryId + '</td>';
+                        str += '<td style="display:none">' + Value.CategoryAssignId + '</td>';
+                        str += '<td style="display:none">' + Value.EmployeeId + '</td>';
+                        str += '<td>' + Value.EmployeeName + '</td>';
+                        str += '<td>' + Value.CategoryName + '</td>';
+                        str += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.EmployeeId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str += '</tr>';
+                        $("#tblCatEmployeeDetails tbody").append(str);
+
+                        //$("#tblCatEmployeeDetails tbody").append('<tr><td style="display:none">' + Value.CategoryId + '</td><td style="display:none">' + Value.CategoryAssignId + '</td><td style="display:none">' + Value.EmployeeId + '</td><td>' + Value.EmployeeName + '</td><td>' + Value.CategoryName + '</td><td>'
+                        //    + '<div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.EmployeeId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div > '
+                        //    + '</td ></tr > ');
                     });
                 }
-                else {
-                    $("#tblCatEmployeeDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
-                }
-                //$("#tblCatEmployeeDetails").DataTable();
+                //else {
+                //    $("#tblCatEmployeeDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
+                //}
+                
+                $("#tblCatEmployeeDetails").DataTable();
+                $('.loader1').hide();
             }
         });
     }
@@ -155,6 +172,7 @@
     }
 
     function SaveAssignCategory(rDD_AssignCategory) {
+        $('.loader1').show();
         var rDD_AssignCategory = rDD_AssignCategory;
         $.ajax({
             type: "POST",
@@ -163,7 +181,7 @@
             data: JSON.stringify({ rDD_AssignCategory: rDD_AssignCategory }),
             dataType: "json",
             success: function (data) {
-                debugger
+                $('.loader1').hide();
                 if (data.SaveFlag == true) {
                     RedDotAlert_Success(data.ErrorMsg);
                     GetCategoryWiseEmployeeDetails();
@@ -180,6 +198,7 @@
 
     $(document).ready(function () {
         GetCategoryWiseEmployeeDetails();
+        
         //applyAutoComplete2("#txtEmployeeName", "#hdnEmployeeName", "/GetEmpList");
         (function ($) {
             $(function () {
@@ -188,21 +207,17 @@
             });
         })(jQuery);
         GetCategoryList();
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblCatEmployeeDetailstbody tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-        
+        //$("#myInput").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#tblCatEmployeeDetailstbody tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
     });
 
     $(document).on('click', '#btnAddEmployee', function () {
         GetEmployeeList();
-        $("#btnUpdateEmpDetails").text("Save");
-        $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
-        $("#txtEmployeeName").val('');
-        $("#hdnEmployeeName").val('');
         (function ($) {
             $(function () {
                 window.fs_test = $('.multiselect-ui').fSelect();
@@ -210,9 +225,16 @@
             });
         })(jQuery);
         GetCategoryList();
+        $("#txtEmployeeName").removeAttr("disabled", true);
+        $("#btnUpdateEmpDetails").text("Save");
+        $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
+        $("#txtEmployeeName").val('');
+        $("#hdnEmployeeName").val('');
+
     });
 
     $(document).on('click', '.edit', function () {
+        $("#txtEmployeeName").attr("disabled", true);
         $("#btnSaveEmpDetails").text("Update");
         $("#btnSaveEmpDetails").attr("id", "btnUpdateEmpDetails");
         var Categoryid = $(this).attr("data");
@@ -264,6 +286,7 @@
     });
 
     $(document).on('click', '#btnUpdateEmpDetails', function () {
+
         var catid = "";
         if ($("#txtEmployeeName").val() == "") {
             RedDotAlert_Error("Please Enter Employee Name");
@@ -302,8 +325,10 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
+            $('.loader1').show();
             if (result.value) {
                 $.getJSON("/CategoryAssignToEmployee/DeleteAssignCategory", { "EmployeeId": EmployeeId }).done(function (data) {
+                    $('.loader1').hide();
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
                         GetCategoryWiseEmployeeDetails();

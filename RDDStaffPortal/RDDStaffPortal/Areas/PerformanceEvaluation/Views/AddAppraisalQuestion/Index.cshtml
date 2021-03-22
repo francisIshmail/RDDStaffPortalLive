@@ -1,0 +1,392 @@
+﻿@model RDDStaffPortal.DAL.DataModels.PerformanceEvaluation.RDD_AddAppraisalQuestion
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<style>    
+    .ddlPeriod {        
+        font-size: 0.8rem;        
+    }    
+    a.disabled:hover {
+        cursor:not-allowed;
+    }
+</style>
+<link href="~/Content/extra-style.css" rel="stylesheet" />
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title redtitle">Questions </h4>
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                    <i class="fa fa-plus"></i> Add question
+                                </button>
+                            </div>
+                        </div>
+                        <div class="loader1"></div>
+                        <div class="card-body">
+                            <!-- Modal -->
+                            <div class="modal fade modp" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog midbox" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0 redbg">
+                                            <h5 class="modal-title">
+                                                <span class="fw-mediumbold whttitle">Add Question Form </span>
+                                            </h5>
+                                            <button type="button" class="close whtcolor" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Select Category</label>
+                                                            <select id="ddlCategory" class="form-control ddlPeriod">
+                                                                <option value="-1">---Select---</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Select Period</label>
+                                                            <select id="ddlPeriod" class="form-control ddlPeriod">
+                                                                <option value="-1">---Select---</option>
+                                                                <option value="H1">H1</option>
+                                                                <option value="H2">H2</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br /><br />
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Copy From Previous :</label>
+                                                            <select id="ddlCopyFromPrevious" class="form-control ddlPeriod">
+                                                                <option value="-1">---Select---</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Text "OR" input-->
+                                                <div class="form-group row">
+                                                    <div class="col-12 text-center"> OR </div>
+                                                </div>
+                                                <!-- File Button -->
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-2 control-label" for="action_json">Upload File :</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="file" id="action_json" name="action_json" class="input-file" accept=".txt,.json">
+                                                        <div id="action_jsondisplay"></div>
+
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button type="button" class="" id="btnUpload">Show</button>
+                                                    </div>
+                                                    <div class="col-sm-3">
+
+                                                        <a href="#" id="btnDownloadExcel">Download Excel File Format</a>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <!-- Text "OR" input-->
+                                                <div class="form-group row">
+                                                    <div class="col-12 text-center"> OR </div>
+                                                </div>
+                                                <div id="field">
+                                                    <div id="field0">
+                                                        <!-- Text input-->
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 control-label" for="action_name">Type Question :</label>
+                                                            <div class="col-md-10">
+                                                                <textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Button -->
+                                                <div class="col-12">
+                                                    <button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <section>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">H1 </a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">H2 </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="table-responsive">
+                                            <table id="add-row" class="display table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category </th>
+                                                        <th>Question </th>
+                                                        <th style="width:15%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Finance </td>
+                                                        <td>If corn oil is made from corn and vegetable oil is made from vegetables. What is baby oil made from? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Technology </td>
+                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sales </td>
+                                                        <td>Why is it that to stop Windows 98, you have to click on Start? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sales, Finance </td>
+                                                        <td>Why is lemon juice made with artificial flavor and dishwashing liquid made with real lemons? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="table-responsive">
+                                            <table class="display table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category</th>
+                                                        <th>Question </th>
+                                                        <th style="width:15%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Finance </td>
+                                                        <td>If corn oil is made from corn and vegetable oil is made from vegetables. What is baby oil made from? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Technology </td>
+                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sales </td>
+                                                        <td>Why is it that to stop Windows 98, you have to click on Start? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sales, Finance </td>
+                                                        <td>Why is lemon juice made with artificial flavor and dishwashing liquid made with real lemons? </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Help
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright ml-auto">
+                2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Reddot</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script>
+    function GetCategoryList() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
+            dataType: "json",
+            success: function (data) {
+                //var d = data.Table;
+                $("#ddlCopyFromPrevious").empty();
+                $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
+                $.each(data.Table, function (index, Value) {
+                    $("#ddlCopyFromPrevious").append("<option value='" + Value.PreviousPeriod + "'>" + Value.PreviousPeriod + "</option>");
+                });
+                $("#ddlCategory").empty();
+                $("#ddlCategory").append('<option value="-1">--Select--</option>');
+                $.each(data.Table1, function (index, Value) {
+                    $("#ddlCategory").append("<option value='" + Value.CategoryId + "'>" + Value.CategoryName + "</option>");
+                });
+
+            }
+        });
+    }
+    $(document).ready(function () {        
+        GetCategoryList();
+        // action dynamic childs
+        var next = 0;
+        $("#add-more").click(function (e) {
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md"></textarea></div></div></div>';
+            var newInput = $(newIn);
+            var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
+            var removeButton = $(removeBtn);
+            $(addto).after(newInput);
+            $(addRemove).after(removeButton);
+            $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+            $("#count").val(next);
+
+            $('.remove-me').click(function (e) {
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length - 1);
+                var fieldID = "#field" + fieldNum;
+                $(this).remove();
+                $(fieldID).remove();
+            });
+        });
+    });
+    $(document).on('click', '#btnDownloadExcel', function () {
+        window.location.href = '@Url.Action("Download", "AddAppraisalQuestion")';
+    });
+    $(document).on('change', '#ddlCopyFromPrevious', function () {
+        var Prev = $("#ddlCopyFromPrevious option:selected").val();
+        if (Prev != '-1') {
+            $("#action_json").attr("disabled", true);
+            $("#action_name").attr("disabled", true);
+            $("#add-more").attr("disabled", true);
+            $("#action_name").css("cursor", "not-allowed");
+            $("#action_json").css("cursor", "not-allowed");
+            $("#add-more").css("cursor", "not-allowed");
+        }
+        else {
+            $("#action_json").removeAttr("disabled", true);
+            $("#action_name").removeAttr("disabled", true);
+            $("#add-more").removeAttr("disabled", true);
+            $("#action_name").css("cursor", "");
+            $("#action_json").css("cursor", "");
+            $("#add-more").css("cursor", "");
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#myTab li:eq(0) a").tab('show');
+    })
+</script>

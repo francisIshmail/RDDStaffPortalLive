@@ -218,8 +218,10 @@
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
+    <Compile Include="Areas\PerformanceEvaluation\Controllers\AddAppraisalQuestionController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\Controllers\CategoryAssignToEmployeeController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\Controllers\QuestionCategoryController.cs" />
+    <Compile Include="Areas\PerformanceEvaluation\Controllers\SettingsController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\Controllers\TestController.cs" />
     <Compile Include="Areas\PerformanceEvaluation\PerformanceEvaluationAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
@@ -276,6 +278,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\evo-calendar.css" />
     <Content Include="Content\evo-calendar.min.css" />
+    <Content Include="Content\extra-style.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Switch.css" />
@@ -888,6 +891,9 @@
     <Content Include="Areas\PerformanceEvaluation\Views\QuestionCategory\Index.cshtml" />
     <Content Include="Areas\PerformanceEvaluation\Views\CategoryAssignToEmployee\Index.cshtml" />
     <Content Include="Areas\PerformanceEvaluation\Views\Test\Index.cshtml" />
+    <Content Include="Areas\PerformanceEvaluation\Views\AddAppraisalQuestion\Index.cshtml" />
+    <Content Include="excelFileUpload\PerformanceEvaluation\Employee Performance Appraisal Question Format.xlsx" />
+    <Content Include="Areas\PerformanceEvaluation\Views\Settings\Index.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />

@@ -28,6 +28,7 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="loader1"></div>
                         <div class="card-body">
                             <!-- Modal -->
                             <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -116,7 +117,7 @@
         });
     }
 
-    function GetCategoryDetails() {
+    function GetCategoryDetails() {        
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetCategoryDetails", "QuestionCategory")',
@@ -133,12 +134,14 @@
                 }
                 else {
                     $("#tblCategoryDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
-                }               
+                }  
+                $('.loader1').hide();
             }
         });
     }
 
     function SaveCategory(rDD_Category) {
+        $('.loader1').show();
         var rDD_Category = rDD_Category;
          $.ajax({
             type: "POST",
@@ -146,7 +149,8 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ rDD_Category: rDD_Category }),
             dataType: "json",
-            success: function (data) {               
+             success: function (data) {     
+                 $('.loader1').hide();
                 if (data.SaveFlag == true) {
                     RedDotAlert_Success(data.ErrorMsg);
                     GetCategoryDetails();
@@ -163,6 +167,7 @@
 
     $(document).ready(function () {
         GetCategoryDetails();       
+        
         (function ($) {
             $(function () {
                 window.fs_test = $('.multiselect-ui').fSelect();
@@ -263,7 +268,7 @@
         
     });
 
-    $(document).on('click', '.delete', function () {
+    $(document).on('click', '.delete', function () {        
         var Categoryid = $(this).attr("data");
         const swalWithBootstrapButtons = Swal.mixin({
             confirmButtonClass: 'btn btn-success',
@@ -279,8 +284,10 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
+            $('.loader1').show();
             if (result.value) {
-                $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) {                   
+                $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) { 
+                    $('.loader1').hide();
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
                         GetCategoryDetails();
