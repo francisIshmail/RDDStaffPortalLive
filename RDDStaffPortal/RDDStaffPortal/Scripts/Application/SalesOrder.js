@@ -666,7 +666,7 @@ SalesOrder.prototype = {
                                 $("#cbPCurency").append($("<option></option>").val(ddlCurrency[i].Code).html(ddlCurrency[i].Descr));
                             }
 
-                            $("[id$=cbDocCur]").val('USD').trigger();
+                            //$("[id$=cbDocCur]").val('USD').trigger();
                         },
                         error: function (response) {
                             alert(response.responseText);
@@ -893,8 +893,13 @@ SalesOrder.prototype = {
                         success: function (value) {
                             debugger;
                             var jData = value.Table;
-                            var QtyInWhs = jData[0].OnHand;
-                            var QtyAvl = jData[0].ActalQty;
+                            var QtyInWhs = 0;
+                            var QtyAvl = 0;
+                            if (jData.length > 0) {
+                                 QtyInWhs = jData[0].OnHand;
+                                 QtyAvl = jData[0].ActalQty;
+                            }
+                            
 
                             $("[id$=txtQtyWhs]").val(QtyInWhs);
                             $("[id$=txtQtAval]").val(QtyAvl);
@@ -932,9 +937,12 @@ SalesOrder.prototype = {
                         success: function (value) {
                             debugger;
                             var jData = value.Table;
-                            var TaxRate = jData[0].rate;
-
+                            var TaxRate = 0;
+                            if (jData.length > 0) {
+                                TaxRate = jData[0].Rate;                               
+                            }
                             $("[id$=txtTaxRate]").val(TaxRate);
+                           
 
                         },
                         error: function (response) {
@@ -1601,7 +1609,7 @@ SalesOrder.prototype = {
                         contentType: "Application/json",
 
                         success: function (value) {
-                            //debugger;
+                            debugger;
                             var jData = value
 
                             var ddlRDDProject = jData.Table;
@@ -1646,13 +1654,15 @@ SalesOrder.prototype = {
                         }
                     });
 
+                    Get_SOR_List();
+
                 }
             }
             catch (Error) {
                 alert(Error);
             }
 
-            Get_SOR_List();
+           
         });
 
         $("[id$=txtSerCardName]").autocomplete({
@@ -2336,7 +2346,7 @@ function Get_SOR_List() {
         else {
             var ToDate = new Date();
             var FromDate = ToDate.setDate(ToDate.getDate() - 30);
-            value1 = " And T0.PostingDate BetWeen $" + GetSqlDateformat(FromDate) + "$ And $" + GetSqlDateformat(ToDate) + "$"
+            value1 = " And T0.PostingDate BetWeen $" + RedDot_setdtpkdateFind(FromDate) + "$ And $" + RedDot_setdtpkdateFind(ToDate) + "$"
         }
 
         if ($("#txtSerCardCode").val() != '')
@@ -2413,10 +2423,10 @@ function getId(dbName, e) {
                 $("[id$=txtDocStatus]").val(SO_Header[0].docstatus);
                 $("[id$=txtApprvBy]").val(SO_Header[0].aprovedby);
                 $("[id$=txtCreatedBy]").val(SO_Header[0].createdby);
-                $("[id$=cbRDDProject]").val(SO_Header[0].rdd_project);
-                $("[id$=cbBusinessType]").val(SO_Header[0].businestype);
-                $("[id$=cbInvPayTerm]").val(SO_Header[0].invpayterms);
-                $("[id$=cbCustPayTerm]").val(SO_Header[0].custpayterms);
+                $("[id$=cbRDDProject]").val(SO_Header[0].rdd_project).trigger('change');
+                $("[id$=cbBusinessType]").val(SO_Header[0].businestype).trigger('change');
+                $("[id$=cbInvPayTerm]").val(SO_Header[0].invpayterms).trigger('change');
+                $("[id$=cbCustPayTerm]").val(SO_Header[0].custpayterms).trigger('change');
                 $("[id$=txt_ForworderDet]").val(SO_Header[0].forwarder);
                 $("[id$=cbSalesEmp]").val(SO_Header[0].salesemp);
 

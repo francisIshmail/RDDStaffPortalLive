@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Presentation;
 using ClosedXML.Excel;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace RDDStaffPortal.Areas.Funnel.Controllers
 {
@@ -252,16 +253,42 @@ namespace RDDStaffPortal.Areas.Funnel.Controllers
 
         public ActionResult FillCustomer(string Country)
         {
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = RddFunnel.FillCustomer(Country);
+                retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
 
+            }
+            catch (Exception)
+            {
 
-            return Json(RddFunnel.FillCustomer(Country), JsonRequestBehavior.AllowGet);
+                throw;
+            }
+            return retVal;
+            
 
         }
         public ActionResult FillBU(string Country)
         {
             string username = User.Identity.Name;
+            ContentResult retVal = null;
+            DataSet DS;
+            try
+            {
+                DS = RddFunnel.FillBU(Country, username);
+                retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
 
-            return Json(RddFunnel.FillBU(Country, username), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return retVal;
+
+            // return Json(RddFunnel.FillBU(Country, username), JsonRequestBehavior.AllowGet);
 
         }
 

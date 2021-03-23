@@ -48,10 +48,10 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         }
 
         [Route("Get_ApprovalDoc_List")]
-        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch,string Objtype)
+        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch,string Objtype,string cardName)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
-            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch, Objtype);
+            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch, Objtype,cardName);
             return Json(new { data = _RDD_APPROVAL_DOC }, JsonRequestBehavior.AllowGet);
         }
 
@@ -239,8 +239,8 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                         #endregion
 
-                        signatoryEmail = "nikhilesh@reddotdistribution.com; pramod@reddotdistribution.com";
-                        CFOEmail = "pramod@reddotdistribution.com";
+                        //signatoryEmail = "nikhilesh@reddotdistribution.com; pramod@reddotdistribution.com";
+                        //CFOEmail = "pramod@reddotdistribution.com";
                         try
                         {
                             //string sendmailresponse = Mail.SendSingleAttachPV("reddotstaff@reddotdistribution.com", signatoryEmail, CFOEmail , subject, html, true, Server.MapPath(ancChequeImage.HRef));

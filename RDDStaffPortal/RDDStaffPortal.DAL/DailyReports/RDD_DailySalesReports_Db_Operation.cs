@@ -110,7 +110,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                     outcls = Com.ExecuteNonQueryList("RDD_DSR_InsertUpdate", parm);
                     rDD_DSR.SaveFlag = outcls[0].Outtf;
                     rDD_DSR.ErrorMsg = outcls[0].Responsemsg;
-
+                    if(outcls[0].Outtf==true)
                     scope.Complete();
                 }
 
@@ -269,7 +269,7 @@ namespace RDDStaffPortal.DAL.DailyReports
                         new SqlParameter("@p_ForwardRemark", rDD_DailySales[i].ForwardRemark),
                         //new SqlParameter("@p_ForwardCallCCEmail",rDD_DailySales[i].ForwardCallCCEmail),
                         //new SqlParameter("@p_Priority",rDD_DailySales[i].Priority),
-                        new SqlParameter("@p_IsDraft", rDD_DailySales[i].IsDraft),
+                        new SqlParameter("@p_IsDraft", false),
                         //  new SqlParameter("@p_NextReminderDate",rDD_DailySales[i].NextReminderDate),
                         //new SqlParameter("@p_DocDraftDate",rDD_DailySales[i].DocDraftDate),
                         new SqlParameter("@p_LoggedInUser", rDD_DailySales[i].LastUpdatedBy),
@@ -306,41 +306,57 @@ namespace RDDStaffPortal.DAL.DailyReports
                         };
 
                         ds1 = Com.ExecuteDataSet("RDD_DSR_SendMail_Finalsubmit", CommandType.StoredProcedure, parm);
-
-                        string sendemail = ds1.Tables[0].Rows[0]["SendReport"].ToString();
-                        string Reportemail = ds1.Tables[0].Rows[0]["ReportMust"].ToString();
+                        
+                        string sendemail = ds1.Tables[0].Rows[0]["SendReport"].ToString()==""?",": ds1.Tables[0].Rows[0]["SendReport"].ToString();
+                        string Reportemail = ds1.Tables[0].Rows[0]["ReportMust"].ToString()==""?",": ds1.Tables[0].Rows[0]["ReportMust"].ToString();
                         string Tomail = sendemail.Substring(0, sendemail.Length - 1) + "," + Reportemail.Substring(0, Reportemail.Length - 1);
-                        string html = " Dear " + Tomail + ", <br/><br/>  Please find attached <b> " + rDD_DailySales[0].LastUpdatedBy + " </b>'s customer visit report. <br/> ";
-                        html = html + " Visit Date  -  <b> " + Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " </b>  to  <b>  " + Convert.ToDateTime(rDD_DailySales[0].ToDate).ToString("dd/MMM/yyyy") + " </b>  <br/><br/>";
-                        html = html + "Best Regards, <br/> Red Dot Distribution.";
-                        string cc = ds1.Tables[0].Rows[0]["Self"].ToString();
 
-                        string Filename = ds1.Tables[0].Rows[0]["Country"].ToString() + "-" + rDD_DailySales[0].LastUpdatedBy + "-Visit Report.xls";
-                        Attachment at = new Attachment(ms, Filename);
-                        string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
-                        
-                        Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
-                        cc = "nikhilesh@reddotdistribution.com";
-                        
-                        SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at);
+                        if (Tomail != ",")
+                        {
+                            string html = " Dear " + Tomail + ", <br/><br/>  Please find attached <b> " + rDD_DailySales[0].LastUpdatedBy + " </b>'s customer visit report. <br/> ";
+                            html = html + " Visit Date  -  <b> " + Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " </b>  to  <b>  " + Convert.ToDateTime(rDD_DailySales[0].ToDate).ToString("dd/MMM/yyyy") + " </b>  <br/><br/>";
+                            html = html + "Best Regards, <br/> Red Dot Distribution.";
+                            string cc = ds1.Tables[0].Rows[0]["Self"].ToString();
 
-                        SqlParameter[] parm1 ={
-                        new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
-                        new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
-                        new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
-                        };
-                        ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                            string Filename = ds1.Tables[0].Rows[0]["Country"].ToString() + "-" + rDD_DailySales[0].LastUpdatedBy + "-Visit Report.xls";
+                            Attachment at = new Attachment(ms, Filename);
+                            string subject = Convert.ToDateTime(rDD_DailySales[0].VisitDate).ToString("dd/MMM/yyyy") + " - Customer visit Report -" + rDD_DailySales[0].LastUpdatedBy.ToUpper();
+
+                            //Tomail = "pramod@reddotdistribution.com,Nikhilesh@reddotdistribution.com";
+                            //cc = "nikhilesh@reddotdistribution.com";
+
+                            if (System.Configuration.ConfigurationManager.AppSettings["SendDailyReportFromPortal"].ToString() == "1")
+                            {
+                                if (SendMail.SendMailWithAttachment(Tomail, cc, subject, html, true, at) == "Mail Sent Succcessfully")
+                                {
+                                    SqlParameter[] parm1 ={
+                                new SqlParameter("@p_LoggedInUser",rDD_DailySales[0].LastUpdatedBy),
+                                new SqlParameter("@p_VisitDate", rDD_DailySales[0].VisitDate),
+                                new SqlParameter("@p_VisitToDate", rDD_DailySales[0].ToDate),
+                                };
+                                    ds1 = Com.ExecuteDataSet("RDD_DSR_SetRptSentToManagerAndForwardCall", CommandType.StoredProcedure, parm1);
+                                }
+                            }
+
+                            scope.Complete();
+
+                        }
+                        else
+                        {
+                            outcls[0].Outtf = false;
+                            outcls[0].Responsemsg = "Reporting Frequency is not configured, please contact IT team.";
+
+                        }
 
                         //Com.ExecuteNonQuery("update RDD_DailySalesReports set IsRptSentToManager=1 where VisitId =" + rDD_DailySales[0].VisitId + "");
-                        scope.Complete();
+                        
                     }
                     catch (Exception ex)
                     {
 
-                        ds1 = null;
+                        outcls[0].Outtf = false;
+                        outcls[0].Responsemsg = ex.Message;
                     }
-
-
                 }
 
             }

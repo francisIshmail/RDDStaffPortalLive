@@ -90,6 +90,8 @@ namespace RDDStaffPortal.DAL.DataModels
         public string IsUserInRoleHR { get; set; }
         public string IsUserInRoleHeadOfFinance { get; set; }
         public string Emergency_Contact { get; set; }
+        public string Emergency_Contact_Name { get; set; }
+        public string Emergency_Contact_Relation { get; set; }
         public string passport_no { get; set; }
         public string CreatedBy { get; set; }
 
@@ -99,7 +101,7 @@ namespace RDDStaffPortal.DAL.DataModels
         public int FId { get; set; }
         public string Currency { get; set; }
         public int Salary { get; set; }
-        public DateTime Salary_Start_Date { get; set; }
+        public DateTime? Salary_Start_Date { get; set; }
         public string Remark { get; set; }
         public string Account_No { get; set; }
         public string Bank_Name { get; set; }

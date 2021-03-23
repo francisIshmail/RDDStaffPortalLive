@@ -2,9 +2,33 @@
 
 
 
+
+function getImportance(selectedDate,HolidayList) {
+    
+    var found_names = $.grep(HolidayList, function (v) {
+        return DateToStringformat(v.HolidayDate) === selectedDate;
+    });
+    var rep = undefined;
+    if (found_names.length > 0) {
+        rep = found_names[0].HolidayName;
+    }
+
+    return rep;
+}
+
+
+
+// var 
+
+
+
+
 function Calendarize() {
+	
+	
 	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	var dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
 
 	return {
 
@@ -46,10 +70,11 @@ function Calendarize() {
 		},
 
 		// Create a full 12-month calendar
-		buildYearCalendar: function(el, year) {
+        
+        buildYearCalendar: function (el, year, holidayList,day) {
 			var _this = this;
 			var months = _this.getMonthsInYear(year);
-
+           
 			var opts = {
 				showMonth: true,
 				showDaysOfWeek: true,
@@ -61,7 +86,7 @@ function Calendarize() {
 			};
 
 			months.forEach(function(a, b) {
-				var $monthNode = _this.buildMonth(b, year, opts);
+                var $monthNode = _this.buildMonth(b, year, opts, holidayList,day);
 				el.appendChild($monthNode);
 			});
 		},
@@ -85,8 +110,8 @@ function Calendarize() {
 
 		// Add days and place fillers for a given month
 		// This function and the one above needs consolidated
-		buildMonth: function(monthNum, year, opts) {
-			//if (monthNum === undefined || year === undefined) return "something is missing";
+        buildMonth: function (monthNum, year, opts, holidayList,dayOff) {
+			//if (monthNum === undefined || year ,=== undefined) return "something is missing";
 			var _this = this;
 			var dtm = new Date(year, monthNum, 1);
 			var dtmMonth = dtm.getMonth();
@@ -110,8 +135,8 @@ function Calendarize() {
 					}
 				}
 			}
-
-			$monthNode.classList.add('month');
+            
+            $monthNode.classList.add('month','calendermonth');
 
 			// Add a Title to the month
 			if (opts.showMonth) {
@@ -147,6 +172,29 @@ function Calendarize() {
 				$dayNode.classList.add('day');
 				$dayNode.setAttribute("data-date", c);
 				$dayNode.innerText = (d + 1);
+                var _date = c.getDate();
+                var _Month = c.getMonth();
+                if (parseInt(_date) < 10) {
+                    _date = '0' + _date;
+                }
+                if (parseInt(_Month) + 1 < 10) {
+                    _Month = '0' + (parseInt(_Month) + 1);
+                }
+                else {
+                    _Month = (parseInt(_Month) + 1)
+                }
+                let dte = _date + "/" + _Month + "/" + (c.getYear() + 1900);
+               
+                
+                var imp = getImportance(dte, holidayList);
+                debugger
+if(imp !== undefined && imp !== null) {
+   console.log("imp=" + imp + " dte=" + dte );
+   $dayNode.classList.add('importance');
+   $dayNode.setAttribute("title",imp);
+
+}
+
 				var dow = new Date(c).getDay();
 				var dateParsed = Date.parse(c);
 				var todayParsed = Date.parse(today);
@@ -155,7 +203,7 @@ function Calendarize() {
 				if (dateParsed > todayParsed) $dayNode.classList.add('future');
 				if (dateParsed <todayParsed) $dayNode.classList.add('past');
 
-				if (dow === 0 || dow === 6) $dayNode.classList.add('weekend');
+                if (dow === dayOff) $dayNode.classList.add('weekend');
 				if (opts.onlyCurrent && c < today) $dayNode.classList.add('dummy-day');
 				if (opts.limitDate) {
 					if (c > opts.limitDate) {

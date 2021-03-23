@@ -73,14 +73,34 @@
     <Reference Include="itextsharp.xmlworker, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itextsharp.xmlworker.5.5.13.2\lib\itextsharp.xmlworker.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,7 +208,14 @@
     <Compile Include="Areas\Incentive\Controllers\IncentiveSlabController.cs" />
     <Compile Include="Areas\Incentive\Controllers\ViewCompensationPlanController.cs" />
     <Compile Include="Areas\Incentive\IncentiveAreaRegistration.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_AnnualLeaveCalenderController.cs" />
     <Compile Include="Areas\LMS\Controllers\RDD_HolidaysController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_HRLMSReportController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveAdjustmentController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveApprovalController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveRequestController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LeaveTypeController.cs" />
+    <Compile Include="Areas\LMS\Controllers\RDD_LMSReportController.cs" />
     <Compile Include="Areas\LMS\LMSAreaRegistration.cs" />
     <Compile Include="Areas\Marketing\Controllers\MarketingPlanController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
@@ -229,7 +256,10 @@
     <Compile Include="Infrastructure\MyCustomHandleErrorAttribute.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Modules.cs" />
+    <Compile Include="NotificationComponent.cs" />
+    <Compile Include="NotificationHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="WebServices\AccountResponse.cs" />
     <Compile Include="WebServices\AccountService.asmx.cs">
       <DependentUpon>AccountService.asmx</DependentUpon>
@@ -240,7 +270,11 @@
     <Content Include="App_Code\RDD_DashBoardMain.cshtml" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\evo-calendar.css" />
+    <Content Include="Content\evo-calendar.min.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\Switch.css" />
     <Content Include="Content\timeout-dialog.css" />
     <Content Include="Images\nav-button.png" />
     <Content Include="img\bg\Background-001.JPG" />
@@ -255,8 +289,113 @@
     <Content Include="js\new-daterangepicker\daterangepicker.js" />
     <Content Include="js\new-daterangepicker\moment.min.js" />
     <Content Include="js\new-daterangepicker\package.js" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\iis14122020161237.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\iis14122020161253.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\iis14122020181202.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\iis21122020111237.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand14122020161201.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand14122020161209.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand14122020161255.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand15122020081212.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand15122020081232.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand21122020111235.PNG" />
+    <Content Include="LMSFileUpload\LRQ\1_pramod\msweb-brand21122020111241.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_asif\bkg-blu22122020131211.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_asif\msweb-brand18012021170110.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_asif\msweb-brand18012021170116.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_asif\msweb-brand18012021170142.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_asif\msweb-brand18012021180120.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu06012021100113.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu09012021130153.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu15012021100107.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu22122020121259.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu22122020141212.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu22122020151249.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu23122020141222.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu24122020101212.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu24122020101250.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu29122020181220.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu29122020181246.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu30122020111229.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\bkg-blu30122020121232.JPG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis19012021120104.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis19012021120119.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis19012021120158.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis22122020151254.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis22122020161229.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis22122020171205.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020101201.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020101215.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020101228.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020111202.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020111234.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis24122020111252.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\iis29122020171208.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021080137.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021110100.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021110125.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021110142.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021130122.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021130130.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021140107.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021140128.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021150126.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021160130.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand05012021160156.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand06012021100109.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand06012021110139.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand06012021190100.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand06012021190106.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand06012021190149.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand07012021120113.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand07012021120141.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand07012021120147.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand08012021100118.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand08012021100159.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand13012021150129.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand15012021100143.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand18012021120103.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand18012021120126.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand18012021160123.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand21122020171228.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand21122020171251.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand22122020141234.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand22122020141243.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand22122020151251.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand23122020101241.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand23122020151256.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand23122020191204.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand24122020111233.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand24122020111236.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand24122020111242.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020091212.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020091220.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020101211.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020101213.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020101221.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020101227.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020111203.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020111210.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020111249.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020121229.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020141202.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020151253.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020181212.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020181241.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand29122020181245.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\msweb-brand30122020101223.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\Screenshot %283%2919012021120119.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand06012021110116.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand29122020091205.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand29122020101224.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand29122020101247.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand29122020111252.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand29122020161219.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_pramod\w-brand30122020141246.PNG" />
+    <Content Include="LMSFileUpload\LRQ\_vineet\msweb-brand09012021120132.PNG" />
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
+    <Content Include="Scripts\Application\Calendarplanner.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -732,21 +871,37 @@
     <Content Include="Scripts\datatables\js\jszip.min.js" />
     <Content Include="Scripts\datatables\js\pdfmake.min.js" />
     <Content Include="Scripts\datatables\js\vfs_fonts.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\dragdrop\jquery-ui-1.9.0.custom.min.js" />
     <Content Include="Scripts\dragdrop\main.css" />
+    <Content Include="Scripts\evo-calendar.js" />
+    <Content Include="Scripts\evo-calendar.min.js" />
     <Content Include="Scripts\holder.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="App_Code\RDD_RightSideTask.cshtml" />
+    <None Include="Scripts\jquery-3.5.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.5.1.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.dd.js" />
     <Content Include="Scripts\jquery.dd.min.js" />
+    <Content Include="Scripts\jquery.disable.autocomplete.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\LMS\LeaveManage.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.css" />
     <Content Include="Scripts\multiselect\bootstrap-multiselect.js" />
     <Content Include="Scripts\multiselect\multiselect.css" />
     <Content Include="Scripts\multiselect\multiselect.js" />
     <Content Include="Scripts\offcanvas.js" />
     <Content Include="Scripts\RedDotUtility.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.all.min.js" />
     <Content Include="Scripts\sweetalret\sweetalert2.css" />
@@ -848,16 +1003,25 @@
     <Content Include="Areas\Incentive\Views\CompensationPlan\ADDCompensationPlan.cshtml" />
     <Content Include="Areas\LMS\Views\web.config" />
     <Content Include="Areas\LMS\Views\RDD_Holidays\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveType\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveAdjustment\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employees\LMSTest.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveRequest\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LeaveApproval\Index.cshtml" />
     <Content Include="Areas\CollectionForecast\Views\web.config" />
     <Content Include="Areas\CollectionForecast\Views\CollectionForecast\Index.cshtml" />
     <Content Include="excelFileUpload\Template\SalesOrder_Items.xlsx" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WelcomeMessage\AddWelcome_Message.cshtml" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Areas\LMS\Views\RDD_AnnualLeaveCalender\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\LMS\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_LMSReport\Index.cshtml" />
+    <Content Include="Areas\LMS\Views\RDD_HRLMSReport\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\RDDSignalR.pubxml" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.5.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -898,6 +1062,8 @@
     <Content Include="Uploads\Sample\SampleExcel.xls" />
     <Content Include="Views\Dashboard\_PartialLoginUserProfile.cshtml" />
     <Content Include="Views\Shared\_LMSLayout.cshtml" />
+    <Content Include="Views\Dashboard\GetRightSideTask.cshtml" />
+    <Content Include="Views\Dashboard\AllNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -912,7 +1078,7 @@
     <Folder Include="Areas\Incentive\Views\Shared\" />
     <Folder Include="Areas\Incentive\Views\ViewCompensationPlan\" />
     <Folder Include="Areas\LMS\Models\" />
-    <Folder Include="Areas\LMS\Views\Shared\" />
+    <Folder Include="Areas\LMS\Views\RDD_LeaveLedger\" />
     <Folder Include="Areas\Marketing\Data\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Reports\Data\" />
@@ -922,13 +1088,12 @@
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
+    <Folder Include="excelFileUpload\LMS\" />
     <Folder Include="excelFileUpload\MarketingPlan\" />
     <Folder Include="PdfUploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RDDStaffPortal.DAL\RDDStaffPortal.DAL.csproj">

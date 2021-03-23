@@ -1,0 +1,328 @@
+﻿
+@{
+    ViewBag.Title = "AllNotification";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <!-- <div class="page-header">
+                <h4 class="page-title">All Links</h4>
+
+            </div> -->
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card card-round">
+                        <div class="card-body">
+                            <!-- <div class="card-title fw-mediumbold">All Notifications</div> -->
+                            <nav class="navbar justify-content-between">
+                                <a class="navbar-brand">All Notifications</a>
+                                <form class="form-inline">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="txtsearch">
+                                    <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                                </form>
+                            </nav>
+                            <div class="loader1"></div>
+                            <div class="card-list" id="Notification_card_list">
+                                <div class="item-list" id="Notification_item_list">
+                                    <div class="notif-icon notif-success"> <i class="fa fa-calendar"></i> </div>
+                                    <div class="info-user ml-3">
+                                        <a class="cssurl"><div class="username">Jimmy Denis</div></a>
+                                       
+                                    </div>
+                                    
+                                </div>
+                                @*<div class="item-list">
+                                        <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Chad</div>
+                                            <div class="status">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+                                        </div>
+                                        <button class="btn btn-icon btn-grey btn-round btn-xs">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Talha</div>
+                                            <div class="status">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+                                        </div>
+                                        <button class="btn btn-icon btn-grey btn-round btn-xs">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                          
+                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+
+</script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script>
+    var totalCount = 0;
+    var curPage = 1;
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: JSON.stringify({
+                Flag: "Page",
+                PageNo:curPage,
+                PageSize:10,
+                    p_search:''
+            }),
+            url: '/Dashboard/AllNotificationList',
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                var found_names = response.Table;
+               debugger
+                var i = 0;
+                if (found_names != null && found_names.length != 0) {
+                    while (found_names.length > i) {
+                        totalCount = found_names[i].TotalCount;
+                        var tr = $("#Notification_item_list").clone();
+                        tr.find(".username").text(found_names[i].Notification_Text);
+                        tr.find(".cssurl").attr("href", found_names[i].REf_URL);
+                        tr.find(".notif-success").html('<i class="' + found_names[i].Notification_Icon + '" aria-hidden="true"></i>');
+                        $("#Notification_card_list").append(tr);
+                        i++;
+                    }
+
+                    $("#Notification_item_list")[0].remove();
+                } else {
+
+                    $("#Notification_item_list").hide();
+
+                }
+                //$.each(found_names, function (index, value) {
+                //    debugger
+                //    tr.find(".username").text(value.Notification_Text);
+                //    tr.find(".cssurl").attr("href", value.REf_URL);
+                //    tr.find(".notif-success").html('<i class=""' + value.Notification_Icon+'"" aria-hidden="true"></i>');
+                //    $("#Notification_card_list").append(tr);
+                   
+
+
+
+                //});
+               
+
+            },
+            error: function (error) {
+                console.log(error);
+            }, complete: function () {
+            $(".loader1").hide()}
+        });
+    
+        $(".prev").addClass("disabled")
+        $("#txtsearch").on("keyup", function () {
+            $(".loader1").show();
+            var value1 = $(this).val().toLowerCase();
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                data: JSON.stringify({
+                    Flag: "Page",
+                    PageNo: curPage,
+                    PageSize: 10,
+                    p_search: value1
+                }),
+                url: '/Dashboard/AllNotificationList',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    $('div#Notification_item_list').not(':first').remove();
+                    var found_names = response.Table;
+                    debugger
+                    var i = 0;
+                    if (found_names != null && found_names.length != 0) {
+                        while (found_names.length > i) {
+                            totalCount = found_names[i].TotalCount;
+                            var tr = $("#Notification_item_list").clone();
+                            tr.find(".username").text(found_names[i].Notification_Text);
+                            tr.find(".cssurl").attr("href", found_names[i].REf_URL);
+                            tr.find(".notif-success").html('<i class="' + found_names[i].Notification_Icon + '" aria-hidden="true"></i>');
+                            $("#Notification_card_list").append(tr);
+                            i++;
+                        }
+
+                        $("#Notification_item_list")[0].remove();
+                    } else {
+
+                        $("#Notification_item_list").hide();
+
+                    }
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+        //#region Next Button*/
+        $('.next').bind('click', function () {
+            $(".loader1").show();
+            if (totalCount > 0) {
+                if (totalCount < 10) {
+                    $(".loader1").hide();
+                    return;
+                }
+            } else {
+                $(".loader1").hide();
+                RedDotAlert_Error('No Record Found');
+                return;
+            }
+            var t = totalCount - (curPage * 10)
+            $(".prev").removeClass("disabled")
+            if (t < 0) {
+                curPage--;
+                $(".loader1").hide();
+                $(".next").addClass("disabled")
+                return;
+            }
+            curPage++;
+           
+            var value1 = $("#txtsearch").val().toLowerCase();
+            if (curPage > totalCount)
+                curPage = 0;
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                data: JSON.stringify({
+                    Flag: "Page",
+                    PageNo: curPage,
+                    PageSize: 10,
+                    p_search: value1
+                }),
+                url: '/Dashboard/AllNotificationList',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    $('div#Notification_item_list').not(':first').remove();
+                    var found_names = response.Table;
+                    debugger
+                    var i = 0;
+                    if (found_names != null && found_names.length != 0) {
+                        while (found_names.length > i) {
+                            totalCount = found_names[i].TotalCount;
+                            var tr = $("#Notification_item_list").clone();
+                            tr.find(".username").text(found_names[i].Notification_Text);
+                            tr.find(".cssurl").attr("href", found_names[i].REf_URL);
+                            tr.find(".notif-success").html('<i class="' + found_names[i].Notification_Icon + '" aria-hidden="true"></i>');
+                            $("#Notification_card_list").append(tr);
+                            i++;
+                        }
+
+                        $("#Notification_item_list")[0].remove();
+                    } else {
+
+                        $("#Notification_item_list").hide();
+
+                    }
+                    
+                },
+                error: function (error) {
+                    console.log(error);
+                }, complete: function () {
+                    $(".loader1").hide();
+                }
+            });
+        });
+        //#endregion
+
+        //#region Prev Button*/
+        $('.prev').bind('click', function () {
+            $(".loader1").show();
+            $(".next").removeClass("disabled")
+            var value1 = $("#txtsearch").val().toLowerCase();
+            if (totalCount > 0) {
+                if (totalCount < 10) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage <= 0) {
+                    //curPage = (totalCount - 1);
+                    $(".prev").addClass("disabled")
+                    $(".loader1").hide();
+                    curPage = 1;
+                    return;
+                }
+            } else {
+                curPage--;
+            }
+
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                data: JSON.stringify({
+                    Flag: "Page",
+                    PageNo: curPage,
+                    PageSize: 10,
+                    p_search: value1
+                }),
+                url: '/Dashboard/AllNotificationList',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    $('div#Notification_item_list').not(':first').remove();
+                    var found_names = response.Table;
+                    debugger
+                    var i = 0;
+                    if (found_names != null && found_names.length != 0) {
+                        while (found_names.length > i) {
+                            totalCount = found_names[i].TotalCount;
+                            var tr = $("#Notification_item_list").clone();
+                            tr.find(".username").text(found_names[i].Notification_Text);
+                            tr.find(".cssurl").attr("href", found_names[i].REf_URL);
+                            tr.find(".notif-success").html('<i class="' + found_names[i].Notification_Icon + '" aria-hidden="true"></i>');
+                            $("#Notification_card_list").append(tr);
+                            i++;
+                        }
+
+                        $("#Notification_item_list")[0].remove();
+                    } else {
+
+                        $("#Notification_item_list").hide();
+
+                    }
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }, complete: function () {
+                    $(".loader1").hide();
+                }
+            });
+        });
+        //#endregion
+    });
+</script>

@@ -38,7 +38,14 @@ namespace RDDStaffPortal.DAL.SAP
                 {
                     SAPconstring = Global.getAppSettingsDataForKey("SAPCompanyConnectCredsZM");
                 }
-
+                else if (sDBName == "SAPML")
+                {
+                    SAPconstring = Global.getAppSettingsDataForKey("SAPCompanyConnectCredsML");
+                }
+                else if (sDBName == "SAPTRI")
+                {
+                    SAPconstring = Global.getAppSettingsDataForKey("SAPCompanyConnectCredsTRI");
+                }
                 if (string.IsNullOrEmpty(SAPconstring) == false)
                 {
                     string[] connElements = SAPconstring.Split(';');

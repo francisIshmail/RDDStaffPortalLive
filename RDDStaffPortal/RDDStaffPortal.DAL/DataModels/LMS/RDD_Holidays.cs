@@ -35,9 +35,9 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
 
         public string ErrorMsg { get; set; }
     }
-    public partial class GetCountryDetails
-    {
-        public string CountryCode { get; set; }
-        public string Country { get; set; }
-    }
+    //public partial class GetCountryDetails
+    //{
+    //    public string CountryCode { get; set; }
+    //    public string Country { get; set; }
+    //}
 }

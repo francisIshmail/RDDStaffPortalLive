@@ -8,7 +8,7 @@
 
 <div class="card-body smform-section">
     <div class="row">
-
+        @Html.HiddenFor(m=>m.LastUpdatedBy)
         @Html.HiddenFor(m => m.PVId)
         @Html.HiddenFor(m => m.IsDraft)
         @Html.HiddenFor(m => m.CreatedBy)
@@ -112,7 +112,7 @@
             <div id="div-RequestedAmt" class="form-group form-inline ">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Requested Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.RequestedAmt, new { @class = "form-control form-control-sm", @disabled = "disabled" })
+                    @Html.TextBoxFor(m => m.RequestedAmt, "", new { @class = "form-control form-control-sm", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
 
                 </div>
                 <div class="col-md-1 p-0">
-                    <a id="FilePathview" class="fa fa-eye"></a>
+                    <a id="FilePathview" class="fa fa-eye fa-2x"></a>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
             <div id="div-ApprovedAmt" class="form-group form-inline ">
                 <label for="Database" class="col-md-1 col-form-label p-0 width120px">Approved Amount </label>
                 <div class="col-md-8 p-0">
-                    @Html.TextBoxFor(m => m.ApprovedAmt, new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Approve Amt cannot be longer than 13 characters.", @data_val_length_max = "13", @readonly = "true", @type = "number" })
+                    @Html.TextBoxFor(m => m.ApprovedAmt, "", new { @class = "form-control form-control-sm txtcheck txtmax", @data_val = "true", @data_val_length = "Approve Amt cannot be longer than 13 characters.", @data_val_length_max = "13", @readonly = "true" })
                 </div>
             </div>
         </div>
@@ -302,7 +302,7 @@
                                 <div class="reddotTableCell Abcd"> <div>@Html.TextBox(string.Concat("Description", count), Model.RDD_PVLinesDetails[count - 1].Description.ToString(), new { @readonly = "readonly", @class = "form-control form-control-sm" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Amount", count), Model.RDD_PVLinesDetails[count - 1].Amount.ToString(), new { @readonly = "readonly", @class = "form-control form-control-sm number" })</div> </div>
                                 <div class="reddotTableCell Abcd"> <div> @Html.TextBox(string.Concat("Remarks", count), Model.RDD_PVLinesDetails[count - 1].Remarks.ToString(), new { @readonly = "readonly", @class = "form-control form-control-sm" })</div> </div>
-                                <div class="reddotTableCell text-left Abcd"><div><a class="fas fa-eye" href="" target="_blank"></a> <label id="lblDocname">Document Name</label>@Html.Hidden(string.Concat("hdnFileURLInput", count), "")</div></div>
+                                <div class="reddotTableCell text-left Abcd"><div><a class="fas fa-eye fa-2x" href="" target="_blank"></a> <label id="lblDocname">Document Name</label>@Html.Hidden(string.Concat("hdnFileURLInput", count), "")</div></div>
                                 <div class="reddotTableCell Abcd colHide">
                                     <div class="file-upload">
                                         <div class="file-select">
@@ -407,7 +407,8 @@
     $(document).ready(function () {
         $(".loader1").show();
         debugger
-       OperationPV.initialize();
+        OperationPV.initialize();
+       
         $(".loader1").hide();
 
     });

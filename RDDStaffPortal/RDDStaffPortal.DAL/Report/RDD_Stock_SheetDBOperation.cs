@@ -11,7 +11,7 @@ namespace RDDStaffPortal.DAL.Report
     {
         CommonFunction Com = new CommonFunction();
 
-        public List<RDD_Stock_Sheet> GetRDDCustMergList(string UserName, int pagesize, int pageno, string psearch, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus)
+        public List<RDD_Stock_Sheet> GetRDDCustMergList(string UserName, int pagesize, int pageno, string psearch, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus,string itemName)
         {
             List<RDD_Stock_Sheet> Objlist = new List<RDD_Stock_Sheet>();
             try
@@ -27,7 +27,8 @@ namespace RDDStaffPortal.DAL.Report
                 new SqlParameter("@p_WhseName", Whsename),
                 new SqlParameter("@p_WhseStatus", WhseStatus),
                 new SqlParameter("@p_WhseOwn", WhseOwn),
-                new SqlParameter("@p_BU", BU)
+                new SqlParameter("@p_BU", BU),
+                 new SqlParameter("@p_itemName", itemName)
 
                 };
 
@@ -78,7 +79,7 @@ namespace RDDStaffPortal.DAL.Report
             return Objlist;
         }
 
-        public List<RDD_BackLog_Sheet> GetRDDBackLogList(string UserName, int pagesize, int pageno, string psearch, string MappBU, string BUGroup, string MappProj)
+        public List<RDD_BackLog_Sheet> GetRDDBackLogList(string UserName, int pagesize, int pageno, string psearch, string MappBU, string BUGroup, string MappProj, string itemName)
         {
             List<RDD_BackLog_Sheet> Objlist = new List<RDD_BackLog_Sheet>();
             try
@@ -92,6 +93,7 @@ namespace RDDStaffPortal.DAL.Report
                 new SqlParameter("@p_mappedBU", MappBU),
                 new SqlParameter("@P_BUGroup", BUGroup),
                 new SqlParameter("@p_mappedProject", MappProj),
+                new SqlParameter("@p_itemName", itemName),
                 new SqlParameter("@p_flag","I")
                 };
                 //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
@@ -145,7 +147,7 @@ namespace RDDStaffPortal.DAL.Report
             return Objlist;
         }
 
-        public List<RDD_Expense> GetRDDExpenseList(string UserName, int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb, string Month, string year)
+        public List<RDD_Expense> GetRDDExpenseList(string UserName, int pagesize, int pageno, string psearch, string Country, string Project, string SourceDb, string Month, string year, string itemName)
         {
             List<RDD_Expense> Objlist = new List<RDD_Expense>();
             try
@@ -163,6 +165,7 @@ namespace RDDStaffPortal.DAL.Report
                 new SqlParameter("@p_SourceDb", SourceDb),
                 new SqlParameter("@p_Month",Month),
                 new SqlParameter("@p_Year",year),
+                 new SqlParameter("@p_itemName", itemName),
                 new SqlParameter("@p_flag","I")
                 };
                 //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
@@ -232,6 +235,25 @@ namespace RDDStaffPortal.DAL.Report
 
             return dsModules;
         }
+
+
+        public DataSet GetDrop_Country_Inventory(string Country)
+        {
+            DataSet dsModules;
+            try
+            {
+                SqlParameter[] parm = {new SqlParameter("@Country",Country)
+                };
+                dsModules = Com.ExecuteDataSet("RDD_Rpt_GetStockSheets_Drop", CommandType.StoredProcedure, parm);
+            }
+            catch (Exception)
+            {
+
+                dsModules = null;
+            }
+
+            return dsModules;
+        }
         public DataSet GetDrop1()
         {
             DataSet dsModules;
@@ -266,16 +288,21 @@ namespace RDDStaffPortal.DAL.Report
             }
             return dsModules;
         }
-        public DataTable Getdata3(string Username)
+        public DataTable Getdata_Backlogsheet(string Username,string MappBU, string BUGroup, string MappProj, string itemName)
         {
             DataTable dt = null;
             try
             {
-                SqlParameter[] parm = {
-                new SqlParameter("@p_flag","II")
+                SqlParameter[] parm = { 
+                new SqlParameter("@p_UserName", Username),
+                new SqlParameter("@p_mappedBU", MappBU),
+                new SqlParameter("@P_BUGroup", BUGroup),
+                new SqlParameter("@p_mappedProject", MappProj),
+                new SqlParameter("@p_itemName", itemName),
+              
                 };
-
-                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheet", CommandType.StoredProcedure, parm);
+                //  DataSet dsModules = Com.ExecuteDataSet("retrive_RDD_Customermapping", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetBackLogSheetToExportToExcel", CommandType.StoredProcedure, parm);
                 dt = dsModules.Tables[0];
             }
             catch (Exception)
@@ -286,16 +313,24 @@ namespace RDDStaffPortal.DAL.Report
 
             return dt;
         }
-        public DataTable Getdata4(string Username)
+        public DataTable Getdata4(string Username,string Country, string Project, string SourceDb, string Month, string year, string itemName)
         {
             DataTable dt = null;
             try
             {
                 SqlParameter[] parm = {
-                new SqlParameter("@p_flag","II")
+                    
+                new SqlParameter("@p_UserName", Username),
+                new SqlParameter("@p_Country", Country),
+                new SqlParameter("@P_Project", Project),
+                new SqlParameter("@p_SourceDb", SourceDb),
+                new SqlParameter("@p_Month",Month),
+                new SqlParameter("@p_Year",year),
+                 new SqlParameter("@p_itemName", itemName),
+                
                 };
 
-                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheet", CommandType.StoredProcedure, parm);
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_ExpenseSheetToExportToExcel", CommandType.StoredProcedure, parm);
                 dt = dsModules.Tables[0];
             }
             catch (Exception)
@@ -306,7 +341,7 @@ namespace RDDStaffPortal.DAL.Report
 
             return dt;
         }
-        public DataTable Getdata(string Username)
+        public DataTable Getdata(string Username, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus, string itemName)
         {
             DataTable dt = new DataTable();
 
@@ -314,14 +349,25 @@ namespace RDDStaffPortal.DAL.Report
                 "WhseStatus, groupDesc as [BU], BUGroup, AvgUnitCost as [UnitCost], QtyOnHand as  [Qty],    " +
                 "QtyOnPO as [QtyOrdered],QtyOnSO as [QtyCommitted],Value,WhseOwner,ProdCategory,ProdLine," +
                 "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
-            SqlParameter[] parm = { };
+            SqlParameter[] parm = {
 
-            DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel",CommandType.StoredProcedure,parm);
+                new SqlParameter("@p_UserName", Username),
+                 new SqlParameter("@p_Country", Country),
+                new SqlParameter("@P_BUGroup", BUGroup),
+                new SqlParameter("@p_WhseName", Whsename),
+                new SqlParameter("@p_WhseStatus", WhseStatus),
+                new SqlParameter("@p_WhseOwn", WhseOwn),
+                new SqlParameter("@p_BU", BU),
+                 new SqlParameter("@p_itemName", itemName)
+
+                };
+
+            DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetStockSheetToExportToExcel", CommandType.StoredProcedure,parm);
             dt = dsModules.Tables[0];
             return dt;
             // return dsModules;
         }
-        public DataTable Getdata1(string Username)
+        public DataTable Getdata1(string Username, string Country, string BUGroup, string BU, string Whsename, string WhseOwn, string WhseStatus, string itemName)
         {
             DataTable dt = new DataTable();
             try
@@ -333,9 +379,22 @@ namespace RDDStaffPortal.DAL.Report
                "ProdGroup from tblStockSheetDataFrom5Dbs2017    ";
 
 
-                SqlParameter[] parm = { };
+                SqlParameter[] parm = { 
+               
+                new SqlParameter("@p_UserName", Username),
+                 new SqlParameter("@p_Country", Country),
+                new SqlParameter("@P_BUGroup", BUGroup),
+                new SqlParameter("@p_WhseName", Whsename),
+                new SqlParameter("@p_WhseStatus", WhseStatus),
+                new SqlParameter("@p_WhseOwn", WhseOwn),
+                new SqlParameter("@p_BU", BU),
+                 new SqlParameter("@p_itemName", itemName)
 
-                DataSet dsModules = Com.ExecuteDataSet("RDD_GET_DATA_Excel1", CommandType.StoredProcedure, parm);
+                };
+
+
+
+                DataSet dsModules = Com.ExecuteDataSet("RDD_Rpt_GetInventorySheetToExportToExcel", CommandType.StoredProcedure, parm);
                 dt = dsModules.Tables[0];
             }
             catch (Exception)

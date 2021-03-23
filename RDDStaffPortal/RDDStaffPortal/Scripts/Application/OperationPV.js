@@ -2,10 +2,12 @@
 	initialize: function () {
 
 		$.fn.dataTable.ext.errorMode = 'none';
-
+        
 		OperationPV.Attachevent();
 	},
-	Attachevent: function () {
+    Attachevent: function () {
+       
+        
         tblDetails = ['LineRefNo', 'Date1', 'Description', 'Amount', 'Remarks', 'FilePathInput', 'hdnFilePathInput'];
         //#region  Add Row
         var t = false;
@@ -78,6 +80,7 @@
             /*Edit Mode Table show Date(DD-MM-yyyy) & file path*/
             $(".PVLines").each(function () {
                 if ($(".PVLines").length != k1) {
+                    debugger
                     $(this).find("[name^='Date1']").val(RedDot_DateTblEdit($(this).find("[name^='hdnDate1']").val()));
                     var k = $(this).find("[name^='hdnFilePathInput']").val().split("/").length;
                     $(this).find(".fa-eye").attr("href", $(this).find("input[id ^= 'hdnFilePathInput']").val());
@@ -85,7 +88,7 @@
                     var str=$(this).find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1];
                     if (str.length > 15)
                         str = str.substring(0, 15)+"...";
-
+                    $(this).find("input[id ^='Amount']").val($(this).find("input[id ^='Amount']").val().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $(this).find("#lblDocname").text(str);
                     $(this).find("input[id ^= 'FilePathInput']").attr("title", $(this).find("input[id ^= 'hdnFilePathInput']").val().split("/")[parseInt(k) - 1]);
                 }
@@ -100,6 +103,35 @@
         //#endregion
         debugger
 
+        //#region Country Change
+        $(document).on("change", "select[id='Country']", function () {
+            debugger
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: "/GetVendorRef",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    Country: $(this).val()
+                }),
+                success: function (data) {
+                    debugger
+                    if (data.Table.length > 0) {
+                        $("#RefNo").removeAttr('disabled');
+                        $("#RefNo").val(data.Table[0].Column1 == null ? '' : data.Table[0].Column1);
+                    }
+                    
+
+                }, complete: function () {
+                    $("#RefNo").attr('disabled', true);
+                }
+            })
+           
+           
+
+        })
         
         //#region focus new row column
         RedDot_tableLstEnt("#IIst", "input[id^='Remarks']", "input[id ^= 'Date1']", "Please Enter Remark", "T", "");
@@ -152,11 +184,17 @@
         //#region File Upload Header
         /*Header File Uplaod*/
         $("#FilePath").on("change", function () {
+            debugger
             var data = new FormData();
             var files = $("input[id = 'FilePath']").get(0).files;
+            if ($("input[id = 'FilePath']").get(0).files[0].size > 10000000) {
+                RedDotAlert_Error("Can not greater than 10 mb");
+                return;
+            }
+
             var val = $(this).val();
             switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-                case 'gif': case 'jpg': case 'png': case 'pdf':                    
+                case 'gif': case 'jpg': case 'png': case 'pdf': case 'jpeg':
                     break;                
                 default:
                     $(this).val('');
@@ -207,8 +245,13 @@
         /* Details PVLines File uplaod*/
         $(document).on("change", "#IIst input[id^='FilePathInput']", function (event) {            
             var tr = $(this).closest("#IIst");
+
             var data = new FormData();
             var files = tr.find("input[id ^= 'FilePathInput']").get(0).files;
+            if (tr.find("input[id ^= 'FilePath']").get(0).files[0].size > 10000000) {
+                RedDotAlert_Error("Can not greater than 10 mb");
+                return;
+            }
             $("#RefNo").removeAttr('disabled');
             if (files.length > 0) {
                 data.append("Files", files[0]);
@@ -264,6 +307,7 @@
         var arr2 = "";
        
         $(document).on("change", "select[id^='VType']", function () {  
+            debugger
             arr1 = "";
             $('#VendorEmployee').val('');
             $("#VendorCode").val('');
@@ -302,7 +346,8 @@
             $(".creditlimit").hide();
             $("select[id ^= 'VType']").attr("disabled", true);
         }
-        $(document).on("change", "select[id^='DBName']", function () { 
+        $(document).on("change", "select[id^='DBName']", function () {
+            debugger
             arr1 = "";
             arr2 = "";
             debugger
@@ -485,10 +530,11 @@
             }
         }
 
+
         $('#VendorEmployee').autocomplete({
 
             source: function (request, response) {
-
+                debugger
                 try {
                     if (arr1 != "") {
                         debugger

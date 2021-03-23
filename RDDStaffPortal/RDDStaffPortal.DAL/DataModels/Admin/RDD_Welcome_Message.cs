@@ -33,6 +33,7 @@ namespace RDDStaffPortal.DAL.DataModels.Admin
         public string  Read { get; set; }
         public bool Saveflag { get; set; }
         public string Errormsg { get; set; }
+        
 
     }
 }

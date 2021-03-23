@@ -22,7 +22,7 @@
                             <div class="table-responsive">
                                 <div class="rowmin row mar-b10">
                                     <div class="col-xl-1 col-md-1">
-                                        <div class="form-group">
+                                        <div class="">
                                             <label for="email2" class="width100px mar-t4">Sales Person :</label>
                                         </div>
                                     </div>
@@ -31,8 +31,9 @@
                                         <div class="form-group">
 
                                             @*@Html.DropDownListFor(m => m.EmpName, ViewBag.EmpList as SelectList, "-Select-", new { @id = "EmployeeId", @class = "form-control form-control-sm" })*@
-                                                                                      
-                                            <input  id="EmpName" name="EmpName" class="form-control form-control-sm"/>
+
+                                            <input id="EmpName" name="EmpName" class="form-control form-control-sm" type="search" />
+                                            <input id="EmpName1" name="EmpName1" style="width:0px;height:0px" class="form-control form-control-sm" type="search" />
                                             <input id="hdnEmpName" type="hidden">
                                         </div>
                                     </div>
@@ -165,13 +166,16 @@
             </div>
         </div>
     </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script src="~/dragdrop/jquery-ui-1.9.0.custom.min.js"></script>
     <script src="~/Scripts/RedDotUtility.js"></script>
     <script>
         $(document).ready(function () {
+           
             debugger
+            
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#loghistory .reddotTableRow").filter(function () {
@@ -409,7 +413,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-
+                    debugger
                     $("." + countryCode + " li").each(function () {
                         var tr1 = $(this).closest("li");
                         tr1.find("#hdnflag").val(1);
@@ -423,7 +427,7 @@
                         var k1 = tr1.find("#hdnflag").val();
                         if (k1 == 0) {
                             debugger
-                            tmsg = $(this).closest("ul").attr("class");
+                            tmsg = tr1.closest("ul").attr("class");
                             t2 = true;
 
                         }

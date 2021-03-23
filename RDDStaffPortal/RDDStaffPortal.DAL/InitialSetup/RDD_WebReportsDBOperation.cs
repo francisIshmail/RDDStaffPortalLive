@@ -106,13 +106,10 @@ namespace RDDStaffPortal.DAL.InitialSetup
                     {
                         SqlParameter[] sqlpar1 = { new SqlParameter("@p_userName", URep.userName),
                             new SqlParameter("@p_fk_repTypeId", URep.WebRepLists[i-1].fk_repTypeId),
-
-
                         };
                         _WebRep.saveflag = Com.ExecuteNonQuery("RDD_WebReportsUser_Insert", sqlpar1);
                        
                         i--;
-                       
                     }
                     scope.Complete();
                 }

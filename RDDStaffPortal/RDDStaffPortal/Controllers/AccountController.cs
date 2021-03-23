@@ -43,6 +43,8 @@ namespace RDDStaffPortal.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
+                var urlToRemove = Url.Action("Index", "Dashboard");
+                HttpResponse.RemoveOutputCacheItem(urlToRemove);
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
                 {
@@ -62,8 +64,7 @@ namespace RDDStaffPortal.Controllers
                     }
                      Session["LoginName"] = ab;
 
-                    var urlToRemove = Url.Action("Index", "Dashboard");
-                    HttpResponse.RemoveOutputCacheItem(urlToRemove);
+                    
                     if(!string.IsNullOrEmpty(ReturnUrl))
                         return Redirect(ReturnUrl);
                     else
@@ -122,7 +123,7 @@ namespace RDDStaffPortal.Controllers
                                                         "<br>" +
                                                         " Please click on below link to reset your password<br>" +
                                                         "<br>" +
-                                                        "URL Link: <a href = 'http://localhost:28975/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "' target = '_blank' > http://localhost:28975/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "</a> <br>" +
+                                                        "URL Link: <a href = 'https://app.reddotdistribution.com/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "' target = '_blank' > https://app.reddotdistribution.com/ResetPwd?E=" + email + "&amp;VC=" + str[0].Responsemsg + "</a> <br>" +
                                                         "<br>" +
                                                         "This is one time password reset link and valid for 24 hours.<br>" +
                                                         "<br>" +

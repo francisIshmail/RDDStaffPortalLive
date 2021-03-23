@@ -45,8 +45,10 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
         [StringLength(500, ErrorMessage = "Benificiary cannot be longer than 500 characters.")]
         public string Benificiary { get; set; }
         [Range(0, 999999999.99, ErrorMessage = "Request Amt cannot be longer than 9 characters.")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public decimal RequestedAmt { get; set; }
         [Range(0, 999999999.99, ErrorMessage = "Approve Amt  cannot be longer than 9 characters.")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public decimal ApprovedAmt { get; set; }
         [StringLength(500, ErrorMessage = "Being Pay cannot be longer than 500 characters.")]
         public string BeingPayOf { get; set; }
@@ -111,7 +113,8 @@ namespace RDDStaffPortal.DAL.DataModels.Voucher
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
              public DateTime? Date { get; set; }
             public string Description { get; set; }
-            public decimal Amount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public decimal Amount { get; set; }
             public string Remarks { get; set; }
             public string FilePath { get; set; }
             public bool IsDeleted { get; set; }

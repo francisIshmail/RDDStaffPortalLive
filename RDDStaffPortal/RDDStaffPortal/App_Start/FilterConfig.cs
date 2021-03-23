@@ -15,9 +15,6 @@ namespace RDDStaffPortal
 
           AccountService accountService = new AccountService();
 
-
-
-          
             List<string> Roles = new List<string>();
             Roles = accountService.GetRoles().ToList();
             var str = "";
@@ -26,10 +23,8 @@ namespace RDDStaffPortal
                 str =  roleKey.ToString()+","+str;
             }
             filters.Add(new HandleErrorAttribute());
-          
             filters.Add(new AuthorizeAttribute() { Roles =str });//"Admin,HR,Funnel,Marketing,Reports,SAP,Targets" 
-            //filters.Add(new System.Web.Mvc.AuthorizeAttribute() );
-
+                                                                 //filters.Add(new System.Web.Mvc.AuthorizeAttribute() )
         }
     }
 }

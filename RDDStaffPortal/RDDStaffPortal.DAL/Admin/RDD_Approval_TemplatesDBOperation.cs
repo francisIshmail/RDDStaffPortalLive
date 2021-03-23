@@ -459,7 +459,7 @@ namespace RDDStaffPortal.DAL.Admin
 
         }
 
-        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBNAme, string ApproverName, int pagesize, int pageno, string psearch,string Objtype)
+        public List<RDD_APPROVAL_DOC> Get_ApprovalDoc_List(string DBNAme, string ApproverName, int pagesize, int pageno, string psearch,string Objtype,string cardname)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
 
@@ -467,7 +467,7 @@ namespace RDDStaffPortal.DAL.Admin
             {
                 SqlParameter[] Para = {
                     
-                  
+                  new SqlParameter("@p_cardName",cardname),
                     new SqlParameter("@p_UserName",ApproverName),
                      new SqlParameter("@SearchCriteria ", psearch),
                     new SqlParameter("@p_PageNo", pageno),
@@ -502,7 +502,10 @@ namespace RDDStaffPortal.DAL.Admin
                             APPROVAL_DATE = string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString())
                 ? (DateTime?)null
                 : (DateTime?)Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()),
-                           // dr["APPROVAL_DATE"].ToString()//!string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString()) ? Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()) : null,
+                            Country= !string.IsNullOrWhiteSpace(dr["Country"].ToString()) ? dr["Country"].ToString() : "",
+                            Currency = !string.IsNullOrWhiteSpace(dr["Currency"].ToString()) ? dr["Currency"].ToString() : "",
+                            Refno = !string.IsNullOrWhiteSpace(dr["Refno"].ToString()) ? dr["Refno"].ToString() : "",
+                            // dr["APPROVAL_DATE"].ToString()//!string.IsNullOrEmpty(dr["APPROVAL_DATE"].ToString()) ? Convert.ToDateTime(dr["APPROVAL_DATE"].ToString()) : null,
 
 
                         });

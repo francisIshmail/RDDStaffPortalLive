@@ -155,7 +155,7 @@
 
                                 <div class="col-xl-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" id="searchcutomer">
+                                        <input type="search" class="form-control form-control-sm" id="searchcutomer">
                                     </div>
                                 </div>
 
@@ -256,12 +256,14 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content width">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Funnel Deal</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Funnel Deal  </h5>
+                <h5 id="lblerror" class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div class="loader2"></div>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row">
@@ -274,7 +276,7 @@
                                             @Html.DropDownListFor(m => m.Country, ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control dropcheck" })
                                             @*<select id="basic1" name="basic" class="form-control">
 
-                                                </select>*@
+                                    </select>*@
                                             <input type="hidden" id="fid" />
                                         </div>
                                     </div>
@@ -517,8 +519,8 @@
                                     <div class="col-md-7 p-0">
                                         @Html.DropDownList("DealStatus", ViewBag.StatusList as SelectList, new { @id = "DealStatus", @class = "form-control form-control-sm" })
                                         @*(List<SelectListItem>
-                                            )ViewBag.StatusList*@
-                                            @*<input type="text" class="form-control form-control-sm" id="">*@
+                                )ViewBag.StatusList*@
+                                        @*<input type="text" class="form-control form-control-sm" id="">*@
                                     </div>
                                 </div>
                             </div>
@@ -573,7 +575,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-sm" id="btnSaveFunnel">Save</button>
-
+               
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
 
             </div>
@@ -719,17 +721,18 @@
                             dataType: "JSON",
                             data: { Country: Country },
                             success: function (FunnelListCust) {
+                                debugger
                                 $("#CardName").html("");
 
                                 $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+                                $.each(FunnelListCust.Table, function (i, RDD_FunnelData) {
                                     $("#CardName").append(
                                         $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
 
 
                                 });
-                                $('.loader1').hide();
+                                $('.loader').hide();
                             }, complete: function () {
                                 $("#CardName").val($("#hdnCardName").val());
                                 $(".multiselect-ui").fSelect('reload');
@@ -824,7 +827,8 @@
                             defaultDate: new Date(),
                             format: 'DD/MM/YYYY',
                         });
-
+                        $("#btnSaveFunnel").show();
+                        $("#lblerror").html('');
                         // $(".selected").removeAttr('checked');
 
 
@@ -884,10 +888,10 @@
                     $("#Cost").keyup(function () {
                         $("#value").val($("#Cost").val());
                     })
-
+                    $('.loader2').hide();
                     $('#Country').on("change", function () {
-
-
+                        var t = true;
+                        $('.loader2').show();
                         //$("#lblchk").show();
 
                         var Country = $('#Country').val();
@@ -908,6 +912,8 @@
 
 
                             $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
+                            $('.loader2').hide();
+                            t = false;
                             return;
                         }
                         $("#divhdnchk").show();
@@ -922,7 +928,7 @@
                             success: function (QuoteID) {
 debugger
                                 $("#lblQuoteID").text(QuoteID);
-
+                                t = false;
                                 //lblQuoteID.text()
                                 //   $('.multiselect-ui').fSelect('reload');
                             }
@@ -938,7 +944,7 @@ debugger
                             dataType: "JSON",
                             data: { Country: Country },
                             success: function (FunnelListCust) {
-
+                               
                                 // $('.test').fSelect('destroy');
                                 //   $("#CardName").html("");
                                 $('#CardName')
@@ -948,7 +954,7 @@ debugger
 
                                 $("#CardName").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListCust, function (i, RDD_FunnelData) {
+                                $.each(FunnelListCust.Table, function (i, RDD_FunnelData) {
 
                                     $("#CardName").append(
                                         $('<option></option>').val(RDD_FunnelData.CardCode).html(RDD_FunnelData.CardName));
@@ -984,35 +990,38 @@ debugger
 
                                     });
                                 })(jQuery);
-
+                                
                             },
 
                             complete: function () {
                                 $(".multiselect-ui").hide();
                                 $(".multiselect-ui").fSelect('reload');
+                                t = false;
 
                             }
                         });
 
                         $.ajax({
+                            async: false,
+                            cache: false,
                             url: '/FunnelData/FillBU',
                             type: "GET",
                             dataType: "JSON",
                             data: { Country: Country },
 
                             success: function (FunnelListBU) {
-
+                                debugger
 
                                 $("#ItmsGrpNam").html("");
                                 $("#BUName").empty();
-                                $("#hdnBUName").empty();
+                              //  $("#hdnBUName").empty();
 
 
                                 $("#ItmsGrpNam").append($('<option/>', { value: 0, text: '--Select--' }));
 
-                                $.each(FunnelListBU, function (i, RDD_FunnelData) {
+                                $.each(FunnelListBU.Table, function (i, RDD_FunnelData) {
                                     $("#BUName").append(
-                                        $('<option></option>').val(RDD_FunnelData.BUName).html(RDD_FunnelData.BUName));
+                                        $('<option></option>').val(RDD_FunnelData.ItmsGrpNam).html(RDD_FunnelData.ItmsGrpNam));
                                 });
                             },
                             complete: function () {
@@ -1024,6 +1033,7 @@ debugger
                                     allowClear: true,
                                     placeholder: '--Select--'
                                 });
+                                t = false;
                                 
                                     if ($("#BUName").val() !== '0') {
                                         $("#div-BUName").removeClass('has-error1').addClass('has-success1');
@@ -1035,8 +1045,10 @@ debugger
                             }
                         });
 
-
-
+                        if (t == false) {
+                            $('.loader2').hide();
+                        }
+                       
 
                     })
 
@@ -1243,15 +1255,17 @@ debugger
 
                     $('.prev').bind('click', function () {
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
-                            $(".loader1").hide();
-
-                            return;
+                        if (arr.length > 0) {
+                            if (arr[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                            curPage--;
+                            if (curPage < 0)
+                                curPage = (arr[0].TotalCount - 1);
+                        } else {
+                            curPage--;
                         }
-
-                        curPage--;
-                        if (curPage < 0)
-                            curPage = (arr[0].TotalCount - 1);
                         var FStatus = '';
                         var FCountry = '';
                         var QutMonth = '';
@@ -1355,9 +1369,15 @@ debugger
                     $('.next').bind('click', function () {
 
                         $(".loader1").show();
-                        if (arr[0].TotalCount < 50) {
+                        if (arr.length > 0) {
+                            if (arr[0].TotalCount < 50) {
+                                $(".loader1").hide();
+                                return;
+                            }
+                        } else {
                             $(".loader1").hide();
-                            return;
+                            RedDotAlert_Error('No Record Found');
+                            return
                         }
                         curPage++;
                         if (curPage > arr[0].TotalCount)
@@ -1980,15 +2000,18 @@ debugger
                     //  $("#CardName").removeAttr('checked');
 
                     var url = "/FunnelData/GetDataById?fid=" + fid;
-                    $("#NewDealPopUp").modal();
+                    $('.loader1').show();
                     $.ajax({
+                        async: false,
+                        cache: false,
                         type: "GET",
                         url: url,
                         success: function (data) {
-
+                            debugger
 
 
                             $("#fid").val(data.fid);
+                            $("#hdnBUName").val(data.BUName);
 
                             $("#Country").val(data.Country).trigger('change');
 
@@ -1996,7 +2019,7 @@ debugger
 
                             $("#hdnChangeCount").val(data.ChangeCount);
 
-                            $("#hdnBUName").val(data.BUName);
+
 
                             $("#bdm").val(data.bdm);
 
@@ -2037,6 +2060,10 @@ debugger
 
                             $("#value").val(data.value);
                             $("select#DealStatus").val(data.DealStatus).trigger("change");
+                            if (data.DealStatus!=="OPEN") {
+                                $("#btnSaveFunnel").hide();
+                                $("#lblerror").html(' [ Only Open Deal can changes. ]');
+                            }
                            
                             $("#expClosingDt").val(RdotdatefrmtRes1(data.expClosingDt));
                             
@@ -2093,7 +2120,10 @@ debugger
                                     $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
                                 }
                             });
+                            $('.loader1').hide();
+                            $("#NewDealPopUp").modal();
                         }
+
                         
                     });
                 }
@@ -2782,9 +2812,13 @@ debugger
                         return false;
                     }
                 }
+                $("#Landed").on("focusout", function () {
+                    calculateMarginAndPercent();
+                })
 
                 // Function to calculate Margin $ if Margin % is entered
                 function calculateMargin() {
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2801,7 +2835,7 @@ debugger
 
                 // Function to calculate Margin % if Margin $ is entered
                 function calculateMarginPercent() {
-
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;
@@ -2818,6 +2852,7 @@ debugger
 
                 // Function to calculate Margin % & Margin $ if Landed is changed after calculation
                 function calculateMarginAndPercent() {
+                    debugger
                     var Landed = $("#Landed").val() == '' ? 0 : parseFloat($("#Landed").val());
                     var Cost = $("#Cost").val() == '' ? 0 : parseFloat($("#Cost").val());
                     Landed = Landed == 0 ? Cost : Landed;

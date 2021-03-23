@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header" id="headingOne-@i.VisitId" data-toggle="collapse" data-target="#collapse-@i.VisitId" aria-expanded="true" aria-controls="collapseOne" role="button">
                     <div class="span-title">
-                        @i.Company.ToUpper()  :  @i.VisitDate.ToString("dd/MM/yyyy"):
+                        @i.Company.ToUpper()  :  @i.ActualVisitDate.ToString("dd/MM/yyyy"):
                         @i.Country @if (i.IsDraft == true)
                         {<label class="error" title="Draft">Draft</label>}
                     </div>
@@ -100,41 +100,41 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div id="div-PersonMet-@i.VisitId" class="form-group has-success1">
                                     <label>Contact Person :</label>
-                                    @Html.TextBox(string.Concat("PersonMet-", @i.VisitId), i.PersonMet, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Contact Person cannot be longer than 200 characters.", @data_val_length_max = "200" })
+                                    @Html.TextBox(string.Concat("PersonMet-", @i.VisitId), i.PersonMet, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Contact Person cannot be longer than 200 characters.", @data_val_length_max = "200" })
                                     @Html.ValidationMessage(string.Concat("PersonMet-", @i.VisitId), "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div id="div-Designation-@i.VisitId" class="form-group has-success1">
                                     <label>Designation :</label>
-                                    @Html.TextBox(string.Concat("Designation-", @i.VisitId), i.Designation, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.TextBox(string.Concat("Designation-", @i.VisitId), i.Designation, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Desination cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                     @Html.ValidationMessage(string.Concat("Designation-", @i.VisitId), "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-group" id="div-Email-@i.VisitId">
+                                <div class="form-group has-success1" id="div-Email-@i.VisitId">
                                     <label>Email :</label>
-                                    @Html.TextBox(string.Concat("Email-", @i.VisitId), i.Email, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.TextBox(string.Concat("Email-", @i.VisitId), i.Email, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "Email cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                     @Html.ValidationMessage(string.Concat("Email-", @i.VisitId), "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group has-success1" id="div-ContactNo-@i.VisitId">
                                     <label>Phone :</label>
-                                    @Html.TextBox(string.Concat("ContactNo-", @i.VisitId), i.ContactNo, new { @class = "form-control txtmax", @data_val= "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
+                                    @Html.TextBox(string.Concat("ContactNo-", @i.VisitId), i.ContactNo, new { @class = "form-control txtcheck txtmax", @data_val= "true", @data_val_length = "Contact No cannot be longer than 20 characters.", @data_val_length_max = "20" })
                                     @Html.ValidationMessage(string.Concat("ContactNo-", @i.VisitId), "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group has-success1" id="div-BU-@i.VisitId">
                                     <label>BU :</label>
-                                    @Html.TextBox(string.Concat("BU-", @i.VisitId), i.BU, new { @class = "form-control txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
+                                    @Html.TextBox(string.Concat("BU-", @i.VisitId), i.BU, new { @class = "form-control txtcheck txtmax", @data_val = "true", @data_val_length = "BU cannot be longer than 100 characters.", @data_val_length_max = "100" })
                                     @Html.ValidationMessage(string.Concat("BU-", @i.VisitId), "", new { @class = "text-danger" })
                                 </div>
                             </div>

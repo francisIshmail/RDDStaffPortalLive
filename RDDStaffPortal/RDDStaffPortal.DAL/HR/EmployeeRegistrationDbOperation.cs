@@ -12,11 +12,13 @@ namespace RDDStaffPortal.DAL.HR
     public class EmployeeRegistrationDbOperation
     {
         CommonFunction Com = new CommonFunction();
+        
         // public string Save(RDD_EmployeeRegistration EmpData)
-        public string Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
+        public List<Outcls1> Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
         {
             string response = string.Empty;
             string result = string.Empty;
+            List<Outcls1> str = new List<Outcls1>();
             try
             {
                 using (TransactionScope scope = new TransactionScope())
@@ -65,6 +67,9 @@ namespace RDDStaffPortal.DAL.HR
                                         new SqlParameter("@p_DesigId",EmpData.DesigId),
                             new SqlParameter("@p_DeptId",EmpData.DeptId),
                              new SqlParameter("@p_Emergency_Contact",EmpData.Emergency_Contact),
+                              new SqlParameter("@p_Emergency_Contact_Name",EmpData.Emergency_Contact_Name),
+                            new SqlParameter("@p_Emergency_Contact_Relation",EmpData.Emergency_Contact_Relation),
+
                               new SqlParameter("@p_passport_no",EmpData.passport_no),
                                new SqlParameter("@p_CreatedBy",EmpData.CreatedBy),
                                 new SqlParameter("@p_EmployeeNo",EmpData.EmployeeNo),
@@ -80,7 +85,7 @@ namespace RDDStaffPortal.DAL.HR
                             new SqlParameter("@p_EmployeeIdOUT",Emp_ID),
                             new SqlParameter("@p_Response",response),
                             };
-                        List<Outcls1> str = new List<Outcls1>();
+                       
                         str = Com.ExecuteNonQueryListID("RDD_Employees_InsertUpdate", Para);
                         Emp_ID = str[0].Id;
                         response = str[0].Responsemsg;
@@ -156,19 +161,35 @@ namespace RDDStaffPortal.DAL.HR
                         SqlParameter[] Para1 = {
                                         new SqlParameter("@EmployeeId", Emp_ID)};
                         Com.ExecuteNonQuery("RDD_SetEmployeeProfileCompletedPercentage", Para1);
+
+                       // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+
                         scope.Complete();
                     }
                     catch (Exception ex)
                     {
-                        response = "Error occured : " + ex.Message;
+                        str.Clear();
+                        str.Add(new Outcls1
+                        {
+                            Outtf = false,
+                            Id = -1,
+                            Responsemsg = "Error occured : " + ex.Message
+                        });
                     }
                 }
             }
             catch (Exception ex)
             {
-                response = "Error occured : " + ex.Message;
+                str.Clear();
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
             }
-            return response;
+            return str;
 
         }
 
@@ -205,6 +226,8 @@ namespace RDDStaffPortal.DAL.HR
                         {
                             emp.EmployeeId = Convert.ToInt32(DS.Tables[0].Rows[0]["EmployeeId"]);
                         }
+                        emp.Emergency_Contact_Name = (DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString()==null && DBNull.Value.Equals(DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString())) ? "": DS.Tables[0].Rows[0]["Emergency_Contact_Name"].ToString();
+                        emp.Emergency_Contact_Relation = (DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString()==null && DBNull.Value.Equals(DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString())) ? "": DS.Tables[0].Rows[0]["Emergency_Contact_Relation"].ToString();
 
                         if (DS.Tables[0].Rows[0]["Id"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Id"]))
                         {
@@ -420,6 +443,12 @@ namespace RDDStaffPortal.DAL.HR
                         if (DS.Tables[0].Rows[0]["Salary_Start_Date"] != null && !DBNull.Value.Equals(DS.Tables[0].Rows[0]["Salary_Start_Date"]))
                         {
                             emp.Salary_Start_Date = Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"]);
+                        }
+                        else
+                        {
+                            emp.Salary_Start_Date = string.IsNullOrEmpty(DS.Tables[0].Rows[0]["Salary_Start_Date"].ToString())
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(DS.Tables[0].Rows[0]["Salary_Start_Date"].ToString());
                         }
 
 

@@ -13,13 +13,13 @@
                 <div class="col-md-9 padd-0">
                     <h4 class="page-title">Stock Sheet</h4>
                 </div>
-                <div class="col-md-1 ml-auto text-right"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+                <div class="col-md-1 ml-auto text-right" style="display:none;"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
 
             </div>
 
 
 
-            <div class="rowmin" id="FilterSection" style="display:none">
+            <div class="rowmin" id="FilterSection" >
 
                 <div class="col-md-12">
                     
@@ -43,6 +43,14 @@
                                         <label for="email2" class="width100px">BU :</label>
                                         @Html.DropDownListFor(m => m.BU, ViewBag.BUList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
                                     </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3" id="ItemCode1">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px">Item Code :</label>
+                                        @Html.TextBoxFor(m => m.ItemCode, "", new { @class = "form-control form-control-sm" })
+
+                                    </div>
+                                    <input id="ItemCode1" style="width:0px;height:0px" />
                                 </div>
                             </div>
 
@@ -69,16 +77,25 @@
 
 
                                 </div>
-                                <div class="row">
-
-
-                                    <div class="col-xl-1 col-md-1 ml-auto">
-                                        <div class="form-group">
-                                            <label for="email2" class="width100px"></label>
-                                            <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
-                                        </div>
+                                <div class="col-xl-1 col-md-3" style="    position: relative;
+    right: 0;
+    bottom: -5px;
+    width: 140px;">
+                                    <div class="form-group">
+                                        <label for="email2" class="width100px"></label>
+                                        <button class="btn btn-info btn-sm" style="width:100%;font-size: 14px;" id="btnApply">Apply Filter</button>
                                     </div>
                                 </div>
+                                @*<div class="row">
+
+
+            <div class="col-xl-1 col-md-1 ml-auto">
+                <div class="form-group">
+                    <label for="email2" class="width100px"></label>
+                    <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
+                </div>
+            </div>
+        </div>*@
                             </div>
                         </div>
                      
@@ -87,97 +104,118 @@
                 </div>
             <div class="rowmin">
                 <div class="col-md-12">
-                    
-                        <div class="card danger-border full-height">
-                            <div class="card-body">
-                                <div class="rowmin row mar-b10">
+
+                    <div class="card danger-border full-height  Abc" id="card-data">
+                        <div class="card-body">
+                            <div class="rowmin row mar-b10">
 
 
-                                    <div class="col-xl-4 col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms-QuickLinks">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-xl-2 col-md-2 ml-auto text-right">
-                                        <div class="form-group">
-
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
-
-                                            <a href="/Reports/Reports/DownloadToExcel1" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
-
-                                            @*onclick="exportToExcel()"*@
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive">
-                                    <div class="reddotTable sm-form mar-t0">
-                                        <div class="loader1"></div>
-                                        <div id="Ind" class="reddotTableBody">
-                                            <div class="reddotTableRow odd-even-row">
-
-
-                                                <div class="reddotTableHead"><div> Country</div></div>
-                                                <div class="reddotTableHead"><div> ItemCode</div></div>
-                                                <div class="reddotTableHead"><div> ItemDesc</div></div>
-                                                <div class="reddotTableHead"><div> WhseName</div></div>
-                                                <div class="reddotTableHead"><div> WhseStatus</div></div>
-                                                <div class="reddotTableHead"><div> BU</div></div>
-                                                <div class="reddotTableHead"><div> BUGroup</div></div>
-                                                <div class="reddotTableHead"><div> UnitCost</div></div>
-                                                <div class="reddotTableHead"><div> Qty</div></div>
-                                                <div class="reddotTableHead"><div> QtyOrdered</div></div>
-                                                <div class="reddotTableHead"><div> QtyCommitted</div></div>
-                                                <div class="reddotTableHead"><div> QtyBal</div></div>
-                                                <div class="reddotTableHead"><div> Value</div></div>
-                                                <div class="reddotTableHead"><div> WhseOwner</div></div>
-                                                <div class="reddotTableHead"><div> ProdCategory</div></div>
-                                                <div class="reddotTableHead"><div> ProdLine</div></div>
-                                                <div class="reddotTableHead"><div> ProdGroup</div></div>
-
-                                            </div>
-                                        </div>
-                                        <div id="Ibody" class="reddotTableBody">
-                                            <div id="Ist" class="reddotTableRow odd-even-row">
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCell Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellRight Abcd"><div></div></div>
-                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
-                                                <div class="reddotTableCellLeft Abcd"><div></div></div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row mar-t10">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination mar-b0">
-                                                <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
-
-                                                <li class="page-item next"><a class="page-link" href="#">Next</a></li>
-                                            </ul>
-                                        </nav>
+                                <div class="col-xl-4 col-md-4">
+                                    <div class="form-group">
+                                        <input type="search" placeholder="Search" class="form-control form-control-sm Abc" id="Search-Forms-QuickLinks">
                                     </div>
                                 </div>
 
+
+                                <div class="col-xl-2 col-md-2 ml-auto text-right">
+                                    <div class="form-group">
+
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectWidgetspopup" title="Hide Column"><i href="#" class="fas fa-minus-circle"></i></button>
+
+                                        <a href="/Reports/Reports/DownloadToExcel1" title="Export to Excel" class="excel-btn"><i class="fas fa-file-excel"></i></a>
+
+                                        @*onclick="exportToExcel()"*@
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div class="loader1"></div>
+                                    <div id="Ind" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+
+
+                                            <div class="reddotTableHead"><div> Country</div></div>
+                                            <div class="reddotTableHead"><div> ItemCode</div></div>
+                                            <div class="reddotTableHead"><div> ItemDesc</div></div>
+                                            <div class="reddotTableHead"><div> WhseName</div></div>
+                                            <div class="reddotTableHead"><div> WhseStatus</div></div>
+                                            <div class="reddotTableHead"><div> BU</div></div>
+                                            <div class="reddotTableHead"><div> BUGroup</div></div>
+                                            <div class="reddotTableHead"><div> UnitCost</div></div>
+                                            <div class="reddotTableHead"><div> Qty</div></div>
+                                            <div class="reddotTableHead"><div> QtyOrdered</div></div>
+                                            <div class="reddotTableHead"><div> QtyCommitted</div></div>
+                                            <div class="reddotTableHead"><div> QtyBal</div></div>
+                                            <div class="reddotTableHead"><div> Value</div></div>
+                                            <div class="reddotTableHead"><div> WhseOwner</div></div>
+                                            <div class="reddotTableHead"><div> ProdCategory</div></div>
+                                            <div class="reddotTableHead"><div> ProdLine</div></div>
+                                            <div class="reddotTableHead"><div> ProdGroup</div></div>
+
+                                        </div>
+                                    </div>
+                                    <div id="Ibody" class="reddotTableBody">
+                                        <div id="Ist" class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCell Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellRight Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+                                            <div class="reddotTableCellLeft Abcd"><div></div></div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row mar-t10">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination mar-b0">
+                                            <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+
+                                            <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card Abc" id="card-error">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/error.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    Select Filters to show data
+                                </p>
                             </div>
                         </div>
-                    
                     </div>
+                    <div class="card" id="card-search">
+                        <div class="card-body">
+                            <div class="card-tools" style=" margin: 0 auto; text-align: center;">
+                                <img style="opacity:0.3;" src="https://img.icons8.com/dusk/110/000000/search-property.png" />
+
+                                <p class="p-3 mb-0" style="font-size: 21px; font-weight: bold;opacity:0.4;">
+                                    Select Filters to show data
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
         </div>
     </div>
@@ -307,61 +345,142 @@
             $("#FilterSection").slideToggle("slow");
 
         });
+        $("#Country").on("change", function () {
+
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: "/Reports/Reports/InventoryDropDown_fill_Country",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    Country: $("#Country").val() == '' ? '' : $("#Country").val()
+                }),
+                success: function (data) {
+                    debugger
+                    $("#WhseOwner").select2('destroy');
+                    $("#WhseOwner").empty();
+                    $("#BUGroup").select2('destroy');
+                    $("#BUGroup").empty();
+                    $("#BU").select2('destroy');
+                    $("#BU").empty();
+                    $("#WhseName").select2('destroy');
+                    $("#WhseName").empty();
+                    $("#WhseStatus").select2('destroy');
+                    $("#WhseStatus").empty();
+                    $.each(data.Table, function (key, value) {
+
+                        $('#WhseOwner').append('<option value=' + value.WhseOwner + ' selected="">' + value.WhseOwner + '<option>');
+                    });
+                    $.each(data.Table4, function (key, value) {
+
+                        $('#BUGroup').append('<option value=' + value.BUGroup + ' selected="">' + value.BUGroup + '<option>');
+                    });
+                    $.each(data.Table5, function (key, value) {
+
+                        $('#BU').append('<option value=' + value.BU + ' selected="">' + value.BU + '<option>');
+                    });
+                    $.each(data.Table3, function (key, value) {
+
+                        $('#WhseName').append('<option value=' + value.warehousename + ' selected="">' + value.warehousename + '<option>');
+                    });
+                    $.each(data.Table2, function (key, value) {
+
+                        $('#WhseStatus').append('<option value=' + value.WhseStatus + ' selected="">' + value.WhseStatus + '<option>');
+                    });
+
+
+                    // data.Table[0].WhseOwner
+                }, complete: function () {
+                    $('#WhseOwner').select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select Warehouse Owner--'
+                    });
+                    $('#WhseStatus').select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select Warehouse Status--'
+                    });
+
+                    $('#BUGroup').select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select BU Group--',
+
+                    });
+
+                    $('#WhseName').select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select Warehouse Name--'
+                    });
+                    $('#BU').select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        placeholder: '--Select BU--'
+                    });
+                    $('select').not('#Country').val('').trigger("change");
+
+                }
+            })
+        })
         var value1 = $("#Search-Forms-QuickLinks").val().toLowerCase();
         var arr = [];
         var curPage = 1;
        
-        $.ajax({
-            type: "POST",
-            url: "/Reports/Reports/StockSheetReport",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                pagesize: 50,
-                pageno: curPage,
-                psearch: value1,
-                Country: $("#Country").val(),
-                BUGroup: $("#BUGroup").val(),
-                BU: $("#BU").val(),
-                Whsename: $("#WhseName").val(),
-                WhseOwn: $("#WhseOwner").val(),
-                WhseStatus: $("#WhseStatus").val()
-            }),
-            success: function (data) {
-                debugger
-                $("#Ist").show();
-                arr = data;
-                if (arr.data != null && arr.data.length != 0) {
-                    var i = 0;
-                    while (arr.data.length > i) {
-                        var tr = $("#Ist").clone();
-                        var tr1 = $("#Ind").closest();
-                        var k = 0;
-                        var l1 = tr.find(".Abcd").length;
-                        while (l1 > k) {
-                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
-                            var t = tblhead1[k];
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Reports/Reports/StockSheetReport",
+        //    contentType: "application/json",
+        //    dataType: "json",
+        //    data: JSON.stringify({
+        //        pagesize: 50,
+        //        pageno: curPage,
+        //        psearch: value1,
+        //        Country: $("#Country").val(),
+        //        BUGroup: $("#BUGroup").val(),
+        //        BU: $("#BU").val(),
+        //        Whsename: $("#WhseName").val(),
+        //        WhseOwn: $("#WhseOwner").val(),
+        //        WhseStatus: $("#WhseStatus").val()
+        //    }),
+        //    success: function (data) {
+        //        debugger
+        //        $("#Ist").show();
+        //        arr = data;
+        //        if (arr.data != null && arr.data.length != 0) {
+        //            var i = 0;
+        //            while (arr.data.length > i) {
+        //                var tr = $("#Ist").clone();
+        //                var tr1 = $("#Ind").closest();
+        //                var k = 0;
+        //                var l1 = tr.find(".Abcd").length;
+        //                while (l1 > k) {
+        //                    tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
+        //                    var t = tblhead1[k];
                            
-                            if (jQuery.inArray(t, tblhide) !== -1) {
-                                tr.find(".Abcd").eq(k).addClass("Abc")
-                                tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
-                            }
+        //                    if (jQuery.inArray(t, tblhide) !== -1) {
+        //                        tr.find(".Abcd").eq(k).addClass("Abc")
+        //                        tr1.prevObject.find(".reddotTableHead").eq(k).addClass("Abc")
+        //                    }
 
-                            k++;
-                        }
-                        $("#Ibody").append(tr);
-                        i++;
-                    }
-                    $("#Ist")[0].remove();
-                } else {
-                    $("#Ist").hide();
-                    RedDotAlert_Error("No Record Found");
-                }
-            }
-            , complete: function () {
-                $(".loader1").hide();
-            }
-        });
+        //                    k++;
+        //                }
+        //                $("#Ibody").append(tr);
+        //                i++;
+        //            }
+        //            $("#Ist")[0].remove();
+        //        } else {
+        //            $("#Ist").hide();
+        //            RedDotAlert_Error("No Record Found");
+        //        }
+        //    }
+        //    , complete: function () {
+        //        $(".loader1").hide();
+        //    }
+        //});
 
         $("#btnApply").on("click", function () {
             $(".loader1").show();
@@ -373,19 +492,24 @@
                 data: JSON.stringify({
                     pagesize: 50,
                     pageno: curPage,
-                    psearch: $("#Search-Forms-QuickLinks").val(),
-                    Country: $("#Country").val(),
-                    BUGroup: $("#BUGroup").val(),
-                    BU: $("#BU").val(),
-                    Whsename: $("#WhseName").val(),
-                    WhseOwn: $("#WhseOwner").val(),
-                    WhseStatus: $("#WhseStatus").val()
+                    psearch: value1,
+                    Country: $("#Country").val() == null ? '' : $("#Country").val(),
+                    BUGroup: $("#BUGroup").val() == null ? '' : $("#BUGroup").val(),
+                    BU: $("#BU").val() == null ? '' : $("#BU").val(),
+                    Whsename: $("#WhseName").val() == null ? '' : $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val() == null ? '' : $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val() == null ? '' : $("#WhseStatus").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $(".excel-btn").attr("href", "/Reports/Reports/DownloadToExcel1?strwhercond=" + $("#Country").val() + "," + $("#BUGroup").val() + "," + $("#BU").val() + "," + $("#WhseName").val() + "," + $("#WhseOwner").val() + "," + $("#WhseStatus").val() + "," + $("#ItemCode").val() + "");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -408,7 +532,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -442,18 +569,22 @@
                     pagesize: 50,
                     pageno: curPage,
                     psearch: value1,
-                    Country: $("#Country").val(),
-                    BUGroup: $("#BUGroup").val(),
-                    BU: $("#BU").val(),
-                    Whsename: $("#WhseName").val(),
-                    WhseOwn: $("#WhseOwner").val(),
-                    WhseStatus: $("#WhseStatus").val()
+                    Country: $("#Country").val() == null ? '' : $("#Country").val(),
+                    BUGroup: $("#BUGroup").val() == null ? '' : $("#BUGroup").val(),
+                    BU: $("#BU").val() == null ? '' : $("#BU").val(),
+                    Whsename: $("#WhseName").val() == null ? '' : $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val() == null ? '' : $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val() == null ? '' : $("#WhseStatus").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("div#Ist").not(':first').remove();
                     $("#Ist").show();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -483,7 +614,10 @@
                         $('.close').trigger("click");
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                        //RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }, complete: function () {
                     $(".loader1").hide();
@@ -494,9 +628,18 @@
 
         $('.next').bind('click', function () {
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+            } else {
                 $(".loader1").hide();
-                return;
+                //RedDotAlert_Error('No Record Found');
+                $("#card-search").addClass("Abc");
+                $("#card-data").addClass("Abc");
+                $("#card-error").removeClass("Abc");
+                return
             }
             curPage++;
             if (curPage > arr.data[0].TotalCount)
@@ -510,12 +653,13 @@
                     pagesize: 50,
                     pageno: curPage,
                     psearch: value1,
-                    Country: $("#Country").val(),
-                    BUGroup: $("#BUGroup").val(),
-                    BU: $("#BU").val(),
-                    Whsename: $("#WhseName").val(),
-                    WhseOwn: $("#WhseOwner").val(),
-                    WhseStatus: $("#WhseStatus").val()
+                    Country: $("#Country").val() == null ? '' : $("#Country").val(),
+                    BUGroup: $("#BUGroup").val() == null ? '' : $("#BUGroup").val(),
+                    BU: $("#BU").val() == null ? '' : $("#BU").val(),
+                    Whsename: $("#WhseName").val() == null ? '' : $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val() == null ? '' : $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val() == null ? '' : $("#WhseStatus").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
 
@@ -523,6 +667,9 @@
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -547,7 +694,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
 
                 }
@@ -560,13 +710,17 @@
 
         $('.prev').bind('click', function () {
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
-                $(".loader1").hide();
-                return;
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage < 0)
+                    curPage = (arr.data[0].TotalCount - 1);
+            } else {
+                curPage--;
             }
-            curPage--;
-            if (curPage < 0)
-                curPage = (arr.data[0].TotalCount - 1);
             $.ajax({
                 type: "POST",
                 url: "/Reports/Reports/StockSheetReport",
@@ -576,18 +730,22 @@
                     pagesize: 50,
                     pageno: curPage,
                     psearch: value1,
-                    Country: $("#Country").val(),
-                    BUGroup: $("#BUGroup").val(),
-                    BU: $("#BU").val(),
-                    Whsename: $("#WhseName").val(),
-                    WhseOwn: $("#WhseOwner").val(),
-                    WhseStatus: $("#WhseStatus").val()
+                    Country: $("#Country").val() == null ? '' : $("#Country").val(),
+                    BUGroup: $("#BUGroup").val() == null ? '' : $("#BUGroup").val(),
+                    BU: $("#BU").val() == null ? '' : $("#BU").val(),
+                    Whsename: $("#WhseName").val() == null ? '' : $("#WhseName").val(),
+                    WhseOwn: $("#WhseOwner").val() == null ? '' : $("#WhseOwner").val(),
+                    WhseStatus: $("#WhseStatus").val() == null ? '' : $("#WhseStatus").val(),
+                    itemName: $("#ItemCode").val() == null ? '' : $("#ItemCode").val()
                 }),
                 success: function (data) {
                     $("#Ist").show();
                     $("div#Ist").not(':first').remove();
                     arr = data;
                     if (arr.data != null && arr.data.length != 0) {
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").removeClass("Abc");
+                        $("#card-error").addClass("Abc");
                         var i = 0;
                         while (arr.data.length > i) {
                             var tr = $("#Ist").clone();
@@ -610,7 +768,10 @@
                         $("#Ist")[0].remove();
                     } else {
                         $("#Ist").hide();
-                        RedDotAlert_Error("No Record Found");
+                       // RedDotAlert_Error("No Record Found");
+                        $("#card-search").addClass("Abc");
+                        $("#card-data").addClass("Abc");
+                        $("#card-error").removeClass("Abc");
                     }
                 }
                 , complete: function () {

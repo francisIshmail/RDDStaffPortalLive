@@ -612,7 +612,7 @@ body {
     }
 
 table.table {
-    table-layout: fixed;
+    /*table-layout: fixed;*/
     margin-bottom:0;
 }
 
@@ -922,7 +922,7 @@ table.table {
 
 .modal-header {
     background: #e7483e !important;
-    padding:5px 12px;
+    padding: 5px 12px;
 }
 
     .modal-header .modal-title{color:#fff}
@@ -933,8 +933,8 @@ table.table {
 
 .modal-footer {
     padding: 7px 10px !important;
-    background: #dfe1e7 !important;
-    border-top: 1px solid #fdada8 !important;
+    /*background: #dfe1e7 !important;
+    border-top: 1px solid #fdada8 !important;*/
     border-radius: 0 0 5px 5px;
     margin-top: 10px;
     text-align: right;

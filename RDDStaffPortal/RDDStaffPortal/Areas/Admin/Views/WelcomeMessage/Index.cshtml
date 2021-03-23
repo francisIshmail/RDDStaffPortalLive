@@ -17,6 +17,8 @@
                     <button class="btn btn-danger btn-sm" id="btnDelete">Delete</button>
                     <button class="btn btn-danger btn-sm" id="btnCancel">Cancel</button>
                     @*<button id="test" class="btn-dark">test</button>*@
+                    <button id="next">Next</button>
+                    <button id="pre">pre</button>
                 </div>
             </div>
             <div class="rowmin">
@@ -31,7 +33,7 @@
 
                                 <div class="col-xl-4 col-md-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
+                                        <input type="search" placeholder="Search" class="form-control form-control-sm" id="Search-Forms">
                                     </div>
                                 </div>
 
@@ -76,17 +78,20 @@
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
 <script type="text/javascript">
-
+    
     $(document).ready(function () {
         var curPage = 1;
-        var tblhead1 = ['Welcome_id','Welcome_title', 'Welcome_Message'];
+        var tblhead1 = ['Welcome_id', 'Welcome_title', 'Welcome_Message'];
         var tblhide = [];
         var tblhead2 = [];
         var dateCond = [];
         $('.loader1').hide();
         RedDot_Button_Init_HideShow();
         Getdata();
+
+       
         //#region Load Data
         function Getdata() {
             var value1 = $("#Search-Forms").val().toLowerCase();
@@ -109,7 +114,7 @@
             $.post("/AddWelcome_Message", { Welcome_id: TEMPId }, function (response) {
 
                 $("#idCard").html(response);
-                
+
 
                 RedDot_Button_Edit_HideShow();
                 debugger
@@ -117,7 +122,7 @@
                     $("#chkIsDefaultMenu").attr('checked', 'checked');
                     $("#chkIsDefaultMenu").val('true');
                 } else {
-                  
+
                     $("#chkIsDefaultMenu").val('false');
                     $("#chkIsDefaultMenu").removeAttr('checked');
                 }
@@ -158,9 +163,15 @@
         $('.next').bind('click', function (e) {
             e.preventDefault();
             $(".loader1").show();
-            if (arr.data[0].TotalCount < 50) {
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+            } else {
                 $(".loader1").hide();
-                return;
+                RedDotAlert_Error('No Record Found');
+                return
             }
             curPage++;
             var value1 = $("#Search-Forms").val().toLowerCase();
@@ -180,14 +191,19 @@
             e.preventDefault();
             $(".loader1").show();
             var value1 = $("#Search-Forms").val().toLowerCase();
-            if (arr.data[0].TotalCount < 50) {
-                $(".loader1").hide();
-                return;
+            if (arr.data.length > 0) {
+                if (arr.data[0].TotalCount < 50) {
+                    $(".loader1").hide();
+                    return;
+                }
+                curPage--;
+                if (curPage < 0)
+                    curPage = (arr.data[0].TotalCount - 1);
+            } else {
+                curPage--;
             }
-            curPage--;
 
-            if (curPage < 0)
-                curPage = (arr.data[0].TotalCount - 1);
+
             var data = JSON.stringify({
                 pagesize: 50,
                 pageno: curPage,
@@ -304,7 +320,7 @@
             }
             var rDD_Welcome = {
                 Welcome_title: $("#Welcome_title").val(),
-                imgbool:$("#imgbool").val(),
+                imgbool: $("#imgbool").val(),
                 Welcome_id: $("#Welcome_id").val(),
                 Welcome_Message: $("#Welcome_Message").val(),
                 EditFlag: $("#EditFlag").val(),
@@ -314,7 +330,7 @@
             }
             $.post("/SaveWelcomeMessage", { rDD_Welcome: rDD_Welcome }, function (response) {
                 debugger
-                if (response.Data[0].Outtf== true) {
+                if (response.Data[0].Outtf == true) {
                     RedDotAlert_Success(response.Data[0].Responsemsg);
                     RedDot_Button_Init_HideShow();
                     Getdata();

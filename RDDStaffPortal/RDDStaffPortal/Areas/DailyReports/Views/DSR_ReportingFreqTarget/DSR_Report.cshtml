@@ -196,6 +196,7 @@
             return -1;
         }
         $("#btngetscore").on("click", function () {
+            debugger
             try {            
             var t = $("#txtdate").val().split(' ');                      
             var Ipts = [];
@@ -349,6 +350,7 @@
                             Country: Country
                         }),
                         success: function (data) {
+                            debugger
                             $('#Person')
                                 .find('option')
                                 .remove()

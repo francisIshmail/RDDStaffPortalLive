@@ -17,6 +17,10 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DataTable = System.Data.DataTable;
 using Antlr.Runtime;
 using Newtonsoft.Json;
+using static RDDStaffPortal.DAL.CommonFunction;
+using System.Data.SqlClient;
+using System.Transactions;
+using Microsoft.Office.Interop.Excel;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -385,7 +389,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 var itemToRemove = ManagerListL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.ManagerId);
                 if (itemToRemove != null)
                 {
-                    if (itemToRemove.ManagerId != 0)
+                    if (itemToRemove.ManagerIdL2 != 0)
                         ManagerListL2.Remove(itemToRemove);
                     ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
                 }
@@ -394,7 +398,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
                 if (itemToRemove1 != null)
                 {
-                    if (itemToRemove1.Local_HR != 0)
+                    if (itemToRemove1.ManagerIdL2 != 0)
                         ManagerListHRL2.Remove(itemToRemove1);
                 }
                 
@@ -485,7 +489,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [HttpPost]
         public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
-                    string result = string.Empty;
+            // string result = string.Empty;
+            List<Outcls1> result = new List<Outcls1>();
             try
             {
                
@@ -495,6 +500,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.JobBandId = EmpData.JobBandId;
                 rdd_empreg.JobGradeId = EmpData.JobGradeId;
                 rdd_empreg.ManagerIdL2 = EmpData.ManagerIdL2;
+                rdd_empreg.Emergency_Contact_Relation = EmpData.Emergency_Contact_Relation;
+                rdd_empreg.Emergency_Contact_Name = EmpData.Emergency_Contact_Name;
 
                 rdd_empreg.EmployeeId = EmpData.EmployeeId;
                 rdd_empreg.About = EmpData.About;
@@ -578,15 +585,72 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     rdd_empreg.LogoType = ".jpg";
                    
                 }
-               
 
 
-                result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+              
 
-              //  string[] UserName = EmpData.Email.Split('@');
+                using (TransactionScope scope = new TransactionScope())
+                {
 
-             //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
-              // result = response.Message;
+
+
+                    result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
+
+
+                    string[] UserName = EmpData.Email.Split('@');
+                    if(result[0].Responsemsg== "Registration saved successfully.")
+                    {
+                        var response = accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                        var msg = response.Message;
+                        var t = false;
+                        if (response.Success == true)
+                        {
+                            msg = result[0].Responsemsg;
+                             t = EmpDbOp.Update(EmpData.Email, EmpData.FName, EmpData.LName);
+
+                        }
+
+
+                        var empid = result[0].Id;
+                        result.Clear();
+                        if (response.Success == true && t==true)
+                        {
+                            scope.Complete();
+                            result.Add(new Outcls1
+                            {
+                                Outtf = true,
+                                Id = empid,
+                                Responsemsg = msg
+                            });
+                        }
+                        else
+                        {
+                            result.Add(new Outcls1
+                            {
+                                Outtf = false,
+                                Id = -1,
+                                Responsemsg = msg
+                            });
+                        }
+                    }
+                    else
+                    {
+                        scope.Complete();
+                    }
+
+                  
+
+                    
+
+
+                }
+
+               // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+                //  string[] UserName = EmpData.Email.Split('@');
+
+                //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                // result = response.Message;
 
 
 
@@ -595,7 +659,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             catch (Exception ex)
             {
-                result = "Error occured :" + ex.Message;
+                //result = "Error occured :" + ex.Message;
+                result.Clear();
+                result.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

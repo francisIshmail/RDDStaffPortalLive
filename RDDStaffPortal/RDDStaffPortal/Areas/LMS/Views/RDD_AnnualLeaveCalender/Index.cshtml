@@ -1,0 +1,272 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LMSLayout.cshtml";
+    // Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+@*<div class="main-panel">
+    <div class="container">*@
+<div class="container-fluid">
+    
+    <div class="row">
+
+
+        <main role="main" class="col-md-12 mx-auto col-lg-12 pt-5 px-4">
+
+            <div class="card mt-3 mb-3 box-shadow">
+                <div class="card-header">
+                    <div class="lftside-hding">
+                        <h4 class="my-0 font-weight-bold">Leave Planner</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+
+                            <form>
+                                Country
+                                @Html.DropDownList(string.Concat("Country"), new List<SelectListItem> { new SelectListItem { Text = " - Select-", Value = "0" } }, new { @class = "form-control" })
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <form>
+                                Department
+                                @Html.DropDownList(string.Concat("DeptId"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" } }, new { @class = "form-control" })
+                            </form>
+                        </div>
+
+                        <div class="col-md-2">
+                            <form>
+                                Employee
+                                @Html.DropDownList(string.Concat("FullName"), new List<SelectListItem> { new SelectListItem { Text = "-Select-", Value = "0" } }, new { @class = "form-control" })
+                            </form>
+                        </div>
+
+
+
+                        <div class="col-md-2.9" style="padding-top: 20px; padding-left: 10px;">
+                            <div class="nav-masthead">
+                                <button type="button" class="btn btn-secondary" id="btnsearch">Search </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btnarea"><a href="#" class="previous round"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></a><strong id="calendarid" style="vertical-align: super;"> January 2021 </strong><a href="#" class="next round next1"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></a></div>
+                    <p></p>
+                    <div class="table-responsive">
+                        <div class="reddotTable sm-form mar-t0">
+                            <div class="loader1"></div>
+                            <div id="Ind" class="reddotTableBody">
+                                <div class="reddotTableRow odd-even-row">
+                                    <div class="reddotTableHead  headz"><div> Employee Name</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz Abc"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz Abc"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz Abc"><div> Country1</div><div>Country2</div></div>
+                                    <div class="reddotTableHead headz Abc"><div> Country1</div><div>Country2</div></div>
+
+                                </div>
+                            </div>
+                            <div id="Ibody" class="reddotTableBody">
+                                <div id="Ist" class="reddotTableRow odd-even-row">
+                                    <div class="reddotTableCellLeft Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd Abc"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd Abc"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd Abc"><div class="Abcde"></div></div>
+                                    <div class="reddotTableCell Abcd Abc"><div class="Abcde"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mar-t10">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination mar-b0">
+                                    <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+
+                                    <li class="page-item next next2"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+@*     </div>*@
+<div id="LeaveModal"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script src="~/Scripts/Application/Calendarplanner.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        CalendarplannerIndex.initialize();
+
+
+
+
+    });
+</script>
+<style>
+
+    body {
+        font-family: 'Quicksand';
+        padding: 2em;
+        background-color: #333;
+    }
+
+    .gpopover {
+        padding: 0px !important;
+    }
+
+    .custom-pop-hd {
+        font-weight: bold;
+        font-size: 12px;
+        color: blue;
+        margin-bottom: 0px;
+        padding: 6px 8px 0;
+    }
+
+    .leave-reason {
+        font-size: 12px;
+        padding: 0px 8px !important;
+        margin-bottom: 5px;
+    }
+
+    .emp-cir {
+        background: red;
+        padding: 6px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+        display: inline;
+        margin-right: 5px;
+    }
+
+    .depart-size {
+        font-size: 12px;
+    }
+
+    .emp-size {
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .bg-sec {
+        display: flex;
+        background-color: gainsboro;
+        padding: 10px 6px;
+    }
+
+    .days-lv {
+        padding: 0px 8px !important;
+    }
+
+    .b-cus {
+        width: 100%;
+        border-radius: 0;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .v-detail {
+        background: darkcyan;
+    }
+</style>
+<style>
+    .Abc {
+        display: none !important;
+    }
+
+
+    .reddotTableHead {
+        background: transparent;
+        color: black;
+    }
+
+        .reddotTableHead.headz {
+            background: white;
+            /* border: 1px solid rgb(198, 232, 248); */
+        }
+
+    .reddotTableCell {
+        border-radius: 0px !important;
+        border: 1px solid rgb(198, 232, 248) !important;
+        background: white !important;
+    }
+
+    .reddotTableCellLeft {
+        border-radius: 0px !important;
+        border: 1px solid rgb(198, 232, 248) !important;
+        background: #8ca8e6 !important;
+        padding: 10px;
+        color: white;
+    }
+
+    .btnarea {
+        text-align: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+</style>
+

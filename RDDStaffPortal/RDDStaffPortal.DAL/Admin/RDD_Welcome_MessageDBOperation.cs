@@ -184,10 +184,13 @@ namespace RDDStaffPortal.DAL.Admin
                     DataRowCollection drc = dtModule.Rows;
                     foreach (DataRow dr in drc)
                     {
+                       
+                        
                         rDD_Welcome_s.Add(new RDD_Welcome_Message
                         {
                             Welcome_title = !string.IsNullOrWhiteSpace(dr["Welcome_title"].ToString()) ? dr["Welcome_title"].ToString() : "",
                             Welcome_image = (byte[])dr["Welcome_Image"],
+                            Welcome_image1 = Convert.ToBase64String((byte[])dr["Welcome_Image"]),
                         Welcome_Message = !string.IsNullOrWhiteSpace(dr["Welcome_Message"].ToString()) ? dr["Welcome_Message"].ToString() : "",
                             Welcome_id = !string.IsNullOrWhiteSpace(dr["Welcome_id"].ToString()) ? Convert.ToInt32(dr["Welcome_id"].ToString()) : 0,
                         });

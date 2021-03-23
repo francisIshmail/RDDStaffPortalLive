@@ -46,7 +46,8 @@ namespace RDDStaffPortal.Areas.HR.Models
         public int ManagerIdL2 { get; set; }
         public int JobBandId { get; set; }
         public string JobBandName { get; set; }
-
+        public string Emergency_Contact_Name { get; set; }
+        public string Emergency_Contact_Relation { get; set; }
         public int JobGradeId { get; set; }
         public string JobGradeName { get; set; }
         public string About { get; set; }
@@ -87,7 +88,7 @@ namespace RDDStaffPortal.Areas.HR.Models
         public int FId { get; set; }
         public string Currency { get; set; }
         public int Salary { get; set; }
-        public DateTime Salary_Start_Date { get; set; }
+        public DateTime? Salary_Start_Date { get; set; }
         public string Remark { get; set; }
         public string Account_No { get; set; }
         public string Bank_Name { get; set; }

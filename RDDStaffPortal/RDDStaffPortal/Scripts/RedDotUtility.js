@@ -1,9 +1,11 @@
-﻿function Red_Dot_Model_Popup(ids, Modalid, data) {
+﻿
+function Red_Dot_Model_Popup(ids, Modalid, data) {
 
     function callback(value) {
         //do something
         return value;
     }
+    debugger
     //#region Modal 
     $(ids).html('<div class="modal fade" id="' + Modalid + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" keyboard="false" data-backdrop="static">' +
         '<div class="modal-dialog">' +
@@ -97,7 +99,7 @@
         '<label for="Database" class="col-md-1 col-form-label width150px">Remark :</label>' +
         '<div class="col-md-8 p-0">' +
 
-        '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"/>' +
+        '<textarea type="text" class="form-control form-control-sm" id="MRemark" cols="40" rows="1"></textarea>' +
         '</div>' +
         '</div>' +
 
@@ -1144,6 +1146,182 @@ function applyAutoComplete2(ids, hdnid, url) {
         }
     })
 }
+function applyAutoCompletedata(ids, hdnid, ids1, hdnid1, data) {
+    debugger
+    var found_names;
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
+
+                    };
+                }))
+            } else {
+
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
+
+
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+                found_names = $.grep(data, function (v) {
+                    return v.Code != $(hdnid).val();
+                });
+                $(ids1).val('');
+                $(hdnid1).val('-1');
+                applyAutoCompletedata_Hidden(ids1, hdnid1, found_names);
+                
+            }
+        },
+        minLength: 1
+    });
+    function ReturnFilterdata(found_names) {
+        return found_names;
+    }
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+   
+   
+}
+
+
+function applyAutoCompletedataHR(ids, hdnid, ids1, hdnid1, ids2, hdnid2, data) {
+    debugger
+    var found_names;
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
+
+                    };
+                }))
+            } else {
+
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
+
+
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+                found_names = $.grep(data, function (v) {
+                    return v.Code != $(hdnid).val();
+                });
+                $(ids1).val('');
+                $(hdnid1).val('-1');
+                applyAutoCompletedata(ids1, hdnid1,ids2, hdnid2, found_names);
+
+            }
+        },
+        minLength: 1
+    });
+    function ReturnFilterdata(found_names) {
+        return found_names;
+    }
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+
+
+}
+
+
+function applyAutoCompletedata_Hidden(ids, hdnid, data) {
+    var found_names;
+    debugger
+    $(ids).autocomplete({
+        source: function (request, response) {
+            var k = $(ids).val().toLowerCase();
+            var results = data.filter(function (elem) {
+                return elem.CodeName.toLowerCase().indexOf(k) > -1;
+            });
+
+            $(hdnid).val(-1);
+            if (results.length > 0) {
+                response($.map(results, function (item) {
+                    return {
+                        label: item.CodeName,
+                        value: item.CodeName,
+                        val1: item.Code
+
+                    };
+                }))
+            } else {
+
+                response([{ label: 'No results found.', value: 'No results found.' }]);
+            }
+
+
+        },
+        // autoFocus: true,
+        select: function (event, u) {
+            event.preventDefault();
+            debugger
+            var v = u.item.val1;
+            if (u.item.val1 == -1 || u.item.val1 == '') {
+                $(hdnid).val(-1);
+                return false;
+            } else {
+                $(ids).val(u.item.value);
+                $(hdnid).val(u.item.val1);
+
+
+            }
+        },
+        minLength: 1
+    });
+    $(ids).on("change", function () {
+        if ($(hdnid).val() == -1) {
+            $(this).val('');
+        }
+    })
+
+
+}
 
 function RedDot_Table_DeleteActivity(tr, tblDt, tblclass, hdnid) {
     tr.remove();
@@ -1214,12 +1392,18 @@ function RedDot_Table_dateEdit(tr, date1, dtval) {
 }
 /* date formate dd-MM-yyyy get input date */
 function RedDot_dateEdit(date1, dtval) {
-
-    var now = new Date($(dtval).val());
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = (day) + "/" + (month) + "/" + now.getFullYear();
-    $(date1).val(today);
+    debugger
+    if ($(dtval).val() != '') {
+        var now = new Date($(dtval).val());
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (day) + "/" + (month) + "/" + now.getFullYear();
+        $(date1).val(today);
+    } else {
+        $(date1).val('');
+    }
+    
+   
 }
 function RedDot_dateEditFormat(dtval) {
     if (dtval != null || dtval == '') {
@@ -1315,10 +1499,58 @@ set_picker_start_end = (picker, when) => {
     picker.setStartDate(week_start);
     picker.setEndDate(week_end);
 }
+function RedDot_DateRange_Min_Max_Lms(id, min1, max1) {
+    debugger;
+   
+    var nowMin = new Date(min1);
+    //nowMin.setDate(nowMin.getDate() - 1);
+    var dayMin = ("0" + nowMin.getDate()).slice(-2);
+    var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
+    var startMin = new Date(min1);
+
+    var startdayMin = ("0" + startMin.getDate()).slice(-2);
+    var startmonthMin = ("0" + (startMin.getMonth() + 1)).slice(-2);
+
+
+    var nowMax = new Date(max1);
+    nowMax.setDate(nowMax.getDate() + 1);
+    var dayMax = ("0" + nowMax.getDate()).slice(-2);
+    var monthMax = ("0" + (nowMax.getMonth() + 1)).slice(-2);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+    function cb(start, end) {
+        $('#' + id + ' span').html(startdayMin + "/" + startmonthMin + "/" + startMin.getFullYear() + ' - ' + dayMax + "/" + monthMax + "/" + nowMax.getFullYear());
+    }
+
+    $('#' + id + '').daterangepicker({
+        startDate: start,
+        endDate: end,
+        maxDate: nowMax,
+         minDate: nowMin,        
+       // singleDatePicker: true,
+        autoApply: true,
+        //isCustomDate: function (dte) {
+        //    var imp = getImportance(dte, Holidaylist);
+        //    if (imp !== undefined && imp !== null) {
+        //        console.log("imp=" + imp + " dte=" + dte);
+        //        //$dayNode.classList.add('importance');
+        //        //$dayNode.setAttribute("title", imp);
+
+        //    }
+        //}
+       
+
+    }, cb);
+
+    cb(start, end);
+}
+
+
 function RedDot_DateRange_Min_Max_Daily(id, min1, max1) {
     debugger
     var nowMin = new Date(min1);
-    nowMin.setDate(nowMin.getDate() - 1);
+    nowMin.setDate(nowMin.getDate() - 7);
     var dayMin = ("0" + nowMin.getDate()).slice(-2);
     var monthMin = ("0" + (nowMin.getMonth() + 1)).slice(-2);
     var startMin = new Date(min1);
@@ -1454,8 +1686,10 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
 function RedDot_DivTable_Header_Fill(Ids,data) {
     if (data != null && data.length != 0) {
         var i = 0;
+       
         while (data.length > i) {
             var tr1 = $('#' + Ids + 'st').clone();
+            var tr = $('#' + Ids + 'st').closest();
             var k = 0;
             var l1 = tr1.find(".Abcd").length;
             while (l1 > k) {
@@ -1469,8 +1703,33 @@ function RedDot_DivTable_Header_Fill(Ids,data) {
         }
     }
 }
+
+function RedDot_DivTable_Header_Fill_Append(Ids, data) {
+    if (data != null && data.length != 0) {
+        var i = 0;
+        debugger
+        $('#' + Ids + 'nd').find(".reddotTableHead").addClass("Abc");
+        $('#' + Ids + 'st').find(".reddotTableCell").addClass("Abc");
+        $('div#' + Ids + 'st').not(':first').remove();
+        while (data.length > i) {
+            var t = data[i].toUpperCase().split("-");
+            var tr1 = $('#' + Ids + 'nd').closest();
+           var tr = $('#' + Ids + 'st').closest();
+
+            $('#' + Ids + 'nd').find(".reddotTableHead")[i + 1].children[0].textContent = t[1];
+            $('#' + Ids + 'nd').find(".reddotTableHead")[i + 1].children[1].textContent = t[0];
+            tr1.prevObject.find(".reddotTableHead").eq(0).removeClass("Abc");
+            tr1.prevObject.find(".reddotTableHead").eq(i+1).removeClass("Abc");
+            tr.prevObject.find(".reddotTableCell").eq(i).removeClass("Abc")
+           // tr.prevObject.find(".Abcd").eq(i+1).removeClass("Abc") 
+              
+            i++;
+        }
+    }
+}
 function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
-    debugger;
+    
+   
     var arr = [];
     $.ajax({
         async: false,
@@ -1481,7 +1740,7 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
         dataType: "json",
         data: data,
         success: function (data) {
-            debugger
+            
             $('#' + Ids + 'st').show();
             $('div#' + Ids + 'st').not(':first').remove();
             arr = data;
@@ -1497,7 +1756,12 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
                         if (jQuery.inArray(t, dateCond) !== -1) {
 
                             tr.find(".Abcd")[k].children[0].textContent = RdotdatefrmtRes1(arr.data[i][tblhead1[k]]);
-                        } else {
+                        } else if (jQuery.inArray(t, tblhead2) !== -1) {
+                            tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            tr.find(".Abcd").eq(k).removeClass('reddotTableCell');
+                            tr.find(".Abcd").eq(k).addClass('reddotTableCellRight');
+                        }
+                        else {
                             tr.find(".Abcd")[k].children[0].textContent = arr.data[i][tblhead1[k]];
                         }
                         if (jQuery.inArray(t, tblhide) !== -1) {
@@ -1523,6 +1787,146 @@ function RedDot_DivTable_Fill(Ids, url, data, dateCond, tblhead1, tblhide, tblhe
     });
     return arr;
 }
+
+function RedDot_DivTable_Fill_Table(Ids, url, data, dateCond, tblhead1, tblhide, tblhead2) {
+    
+
+    var arr = [];
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        url: url,
+        contentType: "application/json",
+        dataType: "json",
+        data: data,
+        success: function (data) {
+            
+            $('#' + Ids + 'st').show();
+            $('div#' + Ids + 'st').not(':first').remove();
+            arr = data;
+            
+            if (arr.Table != null && arr.Table.length != 0) {
+                var i = 0;
+                while (arr.Table.length > i) {
+                  
+                        var tr = $('#' + Ids + 'st').clone();
+                        var tr1 = $('#' + Ids + 'nd').closest();
+                        var k = 0;
+                        var l1 = tr.find(".Abcd").length;
+                        while (l1 > k) {
+                            var t = tblhead1[k];
+                            
+                            var i1 = 0;
+                                var found_names = $.grep(arr.Table1, function (v) {
+                                    return v.EmployeeId === arr.Table[i][tblhead2[0]];
+                                });
+                            while (i1 < found_names.length) {                                                            
+                                var date = parseInt(new Date(found_names[i1].ToDate).getDate());
+                                var date1 = parseInt(new Date(found_names[i1].FromDate).getDate());                               
+                                while (date >= date1) {
+                                    var $dayNode = document.createElement('button');
+                                    $dayNode.classList.add('fa', 'fa-circle', 'text-' + found_names[i1].leaveStatuscss);
+                                    $dayNode.setAttribute("data-toggle", "modal");
+                                    $dayNode.setAttribute("data-target", "#Leave" + found_names[i1].RowNum + '_' + found_names[i1].EmployeeId);
+                                    $dayNode.setAttribute("title", "Annual Leave");
+
+                                    tr.find(".Abcde").eq(date1).empty();
+                                    tr.find(".Abcde").eq(date1).append($dayNode);
+                                    date1 = parseInt(date1) + 1;
+
+                                }                                                            
+                                
+                                i1++;
+                            }
+
+                                
+                             
+                            
+                                tr.find(".Abcd")[k].children[0].textContent = arr.Table[i][tblhead1[k]];
+                           
+                           
+                            k++;
+                        }
+                        $('#' + Ids + 'body').append(tr);
+                    
+                    i++;
+                }
+             
+                $('#' + Ids + 'st')[0].remove();
+            } else {
+                $('#' + Ids + 'st').hide();
+                RedDotAlert_Error("No Record Found");
+            }
+            if (arr.Table1 != null && arr.Table1.length != 0) {
+                var i1 = 0;
+                while (arr.Table1.length > i1) {
+                    debugger
+                    var d = arr.Table1[i1].FullName.split(' ');
+                    //#region Modal
+                    $("#LeaveModal").append('<div id="LeaveModal' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '" ></div>');
+
+
+                    // console.log(found_names[i].RowNum + '_' + found_names[i].EmployeeId);
+                    $("#LeaveModal" + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId).html('<div class="modal fade"  id="Leave' + arr.Table1[i1].RowNum + '_' + arr.Table1[i1].EmployeeId + '"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" keyboard="false" data-backdrop="static" >' +
+
+                        '<div class="modal-dialog modal-sm">' +
+                        '<div class="modal-content" >' +
+
+                        //'<div class="modal-header">'+
+                        //' <h5 class="modal-title" id="exampleModalLongTitle">' + arr.Table1[i1].LeaveName + ' </h5>'+
+                        //    '<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">'+
+                        //        '<span aria-hidden="true">&times;</span>'+
+                        //    '</button>'+
+                        //'</div>'+
+
+                        '<div class="modal-body"  >' +
+
+                        '<div style = "display: flex;" class= "bg-sec" > ' +
+                        '<div>' +
+                        '<div class= "emp-cir" >' + d[0].slice(0, 1) + '' + d[d.length - 1].slice(0, 1) + '</div > ' +
+                        '</div>' +
+                        '<div>' +
+                        ' <div class= "emp-size" > ' + arr.Table1[i1].FullName + '' + ' </div > ' +
+                        ' <div class= "depart-size" > ' + arr.Table1[i1].DesigName + '</div > ' +
+                        '  </div > ' +
+                        '  </div > ' +
+
+                        '<h5 class="custom-pop-hd"><strong>' + arr.Table1[i1].LeaveName + '</strong></h5>'+
+                        '<div class="days-lv"><strong>  Date  &nbsp;&nbsp;  :-  ' + arr.Table1[i1].FromDate + ' to ' + arr.Table1[i1].ToDate + '</strong> </div>'+
+                        '<div class= "leave-reason" > <b> Reason &nbsp; :- <b/> ' + arr.Table1[i1].Reason + '</div > '+
+                        '<div class= "leave-reason" > <b> Status &nbsp;&nbsp; :- <b/>' + arr.Table1[i1].LeaveStatus + '</div > ' +
+
+
+                        ' </div > ' +
+                      '  <div class= "d-grid gap-2" > '+
+                 //'   <button class= "btn btn-primary b-cus v-detail" type = "button" > View Details</button > '+
+                  '  <button class= "btn text-secondary btn-white b-cus" type = "button" data-dismiss="modal" > Cancel</button > '+
+                       ' </div > '+
+                        //'<p>' + arr.Table1[i1].LeaveName + '</p>' +
+                        //'<p>' + 'arr.Table1[i1].Reason + '</p>' +
+                        //'<p>' + arr.Table1[i1].FullName + '</p>' +
+                        //'<p>' + arr.Table1[i1].DesigName + '</p>' +
+                        //'<p>' + arr.Table1[i1].FromDate + '</p>' +
+                        //'<p>' + arr.Table1[i1].ToDate + '</p>' +
+                       
+                       
+                       
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div > ' +
+                        '</div>')
+                    //#endregion
+                    i1++;
+                }
+            }
+        }, complete: function () {
+            $(".loader1").hide();
+        }
+    });
+    return arr;
+}
+
 
 function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
 
@@ -1572,5 +1976,41 @@ function RedDot_AutotxtEventTbl1(Ids, EveNames, inpid, inphid, urls, txtsno) {
         });
 
     })
+    
+}
+function getImportance(selectedDate, HolidayList) {
 
+    var found_names = $.grep(HolidayList, function (v) {
+        return DateToStringformat(v.HolidayDate) === selectedDate;
+    });
+    var rep = undefined;
+    if (found_names.length > 0) {
+        rep = found_names[0].HolidayName;
+    }
+
+    return rep;
+}
+
+
+/*Notification Changes*/
+function RedDot_Notification_Status_change(Doc_id, decision, Notification_type) {
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        data: JSON.stringify({
+            Doc_id: Doc_id,
+            decision: decision,
+            Notification_type: Notification_type
+        }),
+        url: '/Dashboard/SetNotification_Status_Chnage',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            debugger
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }

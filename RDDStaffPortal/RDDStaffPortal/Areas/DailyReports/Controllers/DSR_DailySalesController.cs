@@ -199,7 +199,7 @@ namespace RDDStaffPortal.Areas.DailyReports.Controllers
                         }
 
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                         rDD.FromDate = System.DateTime.Now;
