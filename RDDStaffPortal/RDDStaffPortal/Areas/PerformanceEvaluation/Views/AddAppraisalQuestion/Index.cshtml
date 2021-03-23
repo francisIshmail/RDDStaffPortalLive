@@ -465,17 +465,21 @@
         $(this).parents("tr").remove();
     });
     $(document).on('click', '#btnSaveQuestion', function () {
-        var rDD_Question = new Array();
+        var rDD_Question = {
+            CategoryId: $("#ddlCategory option:selected").val(),
+            Period: $("#ddlPeriod option:selected").val(),
+            RDD_AddAppraisalQuestionList:[]
+        };
         
         $("#add-rowExcel tbody tr").each(function () {
-            var PushItem = {};
-            var CategoryId= $("#ddlCategory option:selected").val();
-            var Period= $("#ddlPeriod option:selected").val();
+            
+            //var CategoryId= 
+            //var Period= 
             var qstn = $.trim($('.appqstn', this).val());
-            PushItem.CategoryId = CategoryId;
-            PushItem.Period = Period;
-            PushItem.Question = qstn;
-            rDD_Question.push(PushItem);
+            var rDD_QuestionList = {
+                Question: qstn
+            };
+            rDD_Question.RDD_AddAppraisalQuestion.push(rDD_QuestionList);
         });        
         
         SaveQuestion(rDD_Question);
