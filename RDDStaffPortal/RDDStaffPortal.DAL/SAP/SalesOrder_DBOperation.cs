@@ -29,13 +29,13 @@ namespace RDDStaffPortal.DAL.SAP
             }
         }
 
-        public DataSet Get_BindDDLPayMethod(string dbname,string payterms)
+        public DataSet Get_BindDDLPayMethod(string dbname, string payterms)
         {
             try
             {
                 Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-                DataSet DS = Db.myGetDS("EXEC RDD_SOR_Get_Pay_Method '" + dbname + "','"+payterms+"'");
+                DataSet DS = Db.myGetDS("EXEC RDD_SOR_Get_Pay_Method '" + dbname + "','" + payterms + "'");
 
                 return DS;
 
@@ -213,7 +213,7 @@ namespace RDDStaffPortal.DAL.SAP
                             RefNo = !string.IsNullOrWhiteSpace(dr["RefNo"].ToString()) ? dr["RefNo"].ToString() : "",
                             SAP_DocNum = !string.IsNullOrWhiteSpace(dr["SAPDocNum"].ToString()) ? dr["SAPDocNum"].ToString() : "",
                             PostingDate = Convert.ToDateTime(dr["PostDate"].ToString()),
-                           // CardCode = !string.IsNullOrWhiteSpace(dr["CardCode"].ToString()) ? dr["CardCode"].ToString() : "",
+                            // CardCode = !string.IsNullOrWhiteSpace(dr["CardCode"].ToString()) ? dr["CardCode"].ToString() : "",
                             CardName = !string.IsNullOrWhiteSpace(dr["CardName"].ToString()) ? dr["CardName"].ToString() : "",
                             SlpName = !string.IsNullOrWhiteSpace(dr["SlpName"].ToString()) ? dr["SlpName"].ToString() : "",
                             RDD_Project = !string.IsNullOrWhiteSpace(dr["Project"].ToString()) ? dr["Project"].ToString() : "",
@@ -315,32 +315,39 @@ namespace RDDStaffPortal.DAL.SAP
                         oSalesOrder.GroupNumber = Convert.ToInt16(DS.Tables[0].Rows[0]["CustPayTerms"].ToString());
                         oSalesOrder.SalesPersonCode = Convert.ToInt16(DS.Tables[0].Rows[0]["SalesEmp"].ToString());
                         oSalesOrder.Comments = DS.Tables[0].Rows[0]["Remarks"].ToString();
-                        oSalesOrder.DocCurrency = "USD";
+                        oSalesOrder.DocCurrency = DS.Tables[0].Rows[0]["DocCur"].ToString();
 
                         oSalesOrder.UserFields.Fields.Item("U_SO_ID").Value = DS.Tables[0].Rows[0]["SO_ID"].ToString();
                         oSalesOrder.UserFields.Fields.Item("U_PayTerm").Value = DS.Tables[0].Rows[0]["InvPayTerms"].ToString();
                         oSalesOrder.UserFields.Fields.Item("U_Project").Value = DS.Tables[0].Rows[0]["RDD_Project"].ToString();
                         oSalesOrder.UserFields.Fields.Item("U_BizType").Value = DS.Tables[0].Rows[0]["BusinesType"].ToString();
 
-                        oSalesOrder.UserFields.Fields.Item("U_paymethod1").Value = DS.Tables[0].Rows[0]["Pay_Method_1"].ToString();
-                        oSalesOrder.UserFields.Fields.Item("U_refno1").Value = DS.Tables[0].Rows[0]["Rcpt_check_No_1"].ToString();
-                        oSalesOrder.UserFields.Fields.Item("U_refdate1").Value = DS.Tables[0].Rows[0]["Rcpt_check_Date_1"].ToString();
-                        oSalesOrder.UserFields.Fields.Item("U_memo1").Value = DS.Tables[0].Rows[0]["Remarks_1"].ToString();
-                        oSalesOrder.UserFields.Fields.Item("U_currency1").Value = DS.Tables[0].Rows[0]["Curr_1"].ToString();
-                        oSalesOrder.UserFields.Fields.Item("U_amount1").Value = DS.Tables[0].Rows[0]["Amount_1"].ToString();
+                        if (DS.Tables[2].Rows.Count > 0)
+                        {
+                            for (int iRow = 0; iRow < DS.Tables[2].Rows.Count; iRow++)
+                            {
+                                oSalesOrder.UserFields.Fields.Item("U_paymethod"+(iRow+1).ToString()).Value = DS.Tables[2].Rows[iRow]["Pay_Method_Id"].ToString();
+                                oSalesOrder.UserFields.Fields.Item("U_refno" + (iRow + 1).ToString()).Value = DS.Tables[2].Rows[iRow]["Rcpt_Check_No"].ToString();
+                                oSalesOrder.UserFields.Fields.Item("U_refdate" + (iRow + 1).ToString()).Value = DS.Tables[2].Rows[iRow]["Rcpt_Check_Date"].ToString();
+                                oSalesOrder.UserFields.Fields.Item("U_memo" + (iRow + 1).ToString()).Value = DS.Tables[2].Rows[iRow]["Remark"].ToString();
+                                oSalesOrder.UserFields.Fields.Item("U_currency" + (iRow + 1).ToString()).Value = DS.Tables[2].Rows[iRow]["Curr_Id"].ToString();
+                                oSalesOrder.UserFields.Fields.Item("U_amount" + (iRow + 1).ToString()).Value = DS.Tables[2].Rows[iRow]["Allocated_Amt"].ToString();
+                            }
+                        }
+                       
 
                         oSalesOrder.UserFields.Fields.Item("U_SOR_User").Value = DS.Tables[0].Rows[0]["CreatedBy"].ToString();
 
-                        if (DS.Tables[0].Rows[0]["Pay_Method_2"].ToString() != "0" && DS.Tables[0].Rows[0]["Pay_Method_2"].ToString() != "")
-                        {
-                            oSalesOrder.UserFields.Fields.Item("U_paymethod2").Value = DS.Tables[0].Rows[0]["Pay_Method_2"].ToString();
-                            oSalesOrder.UserFields.Fields.Item("U_refno2").Value = DS.Tables[0].Rows[0]["Rcpt_check_No_2"].ToString();
-                            oSalesOrder.UserFields.Fields.Item("U_refdate2").Value = DS.Tables[0].Rows[0]["Rcpt_check_Date_2"].ToString();
-                            oSalesOrder.UserFields.Fields.Item("U_memo2").Value = DS.Tables[0].Rows[0]["Remarks_2"].ToString();
-                            oSalesOrder.UserFields.Fields.Item("U_currency2").Value = DS.Tables[0].Rows[0]["Curr_2"].ToString();
-                            oSalesOrder.UserFields.Fields.Item("U_amount2").Value = DS.Tables[0].Rows[0]["Amount_2"].ToString();
+                        //if (DS.Tables[0].Rows[0]["Pay_Method_2"].ToString() != "0" && DS.Tables[0].Rows[0]["Pay_Method_2"].ToString() != "")
+                        //{
+                        //    oSalesOrder.UserFields.Fields.Item("U_paymethod2").Value = DS.Tables[0].Rows[0]["Pay_Method_2"].ToString();
+                        //    oSalesOrder.UserFields.Fields.Item("U_refno2").Value = DS.Tables[0].Rows[0]["Rcpt_check_No_2"].ToString();
+                        //    oSalesOrder.UserFields.Fields.Item("U_refdate2").Value = DS.Tables[0].Rows[0]["Rcpt_check_Date_2"].ToString();
+                        //    oSalesOrder.UserFields.Fields.Item("U_memo2").Value = DS.Tables[0].Rows[0]["Remarks_2"].ToString();
+                        //    oSalesOrder.UserFields.Fields.Item("U_currency2").Value = DS.Tables[0].Rows[0]["Curr_2"].ToString();
+                        //    oSalesOrder.UserFields.Fields.Item("U_amount2").Value = DS.Tables[0].Rows[0]["Amount_2"].ToString();
 
-                        }
+                        //}
 
                         if (DS.Tables[1].Rows.Count > 0)
                         {
@@ -376,7 +383,7 @@ namespace RDDStaffPortal.DAL.SAP
 
                             System.Runtime.InteropServices.Marshal.ReleaseComObject(oSalesOrder);
 
-                           // return result_ds;
+                            // return result_ds;
 
                         }
                         else
@@ -407,13 +414,13 @@ namespace RDDStaffPortal.DAL.SAP
                             result_ds.Tables.Add(t1);
 
                             System.Runtime.InteropServices.Marshal.ReleaseComObject(oSalesOrder);
-                           // return result_ds;
+                            // return result_ds;
 
-                           
+
                         }
                     }
                 }
-              
+
             }
             catch (Exception ex)
             {
