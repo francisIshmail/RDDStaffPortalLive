@@ -51,19 +51,37 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     {
                         rDD_Question.ActionType = "Update";
                     }
-                    SqlParameter[] parm = {
-                        new SqlParameter("@Period",rDD_Question.Period),
-                        new SqlParameter("@CategoryId",rDD_Question.CategoryId),
-                        new SqlParameter("@Question",rDD_Question.Question),
-                        new SqlParameter("@CreatedBy",rDD_Question.CreatedBy),
-                        new SqlParameter("@LastUpdatedBy",rDD_Question.LastUpdatedBy),
-                        new SqlParameter("@Type",rDD_Question.ActionType),
-                        new SqlParameter("@p_ide",rDD_Question.id),
-                        new SqlParameter("@Response",rDD_Question.ErrorMsg)
-                    };
+                    int m = 0;
+                    while (rDD_Question.rDD_QuestionList.Count > m)
+                    {
+                        SqlParameter[] parm = {
+                            new SqlParameter("@Period",rDD_Question.Period),
+                            new SqlParameter("@CategoryId",rDD_Question.CategoryId),
+                            new SqlParameter("@Question",rDD_Question.rDD_QuestionList[m].Question),
+                            new SqlParameter("@CreatedBy",rDD_Question.CreatedBy),
+                            new SqlParameter("@LastUpdatedBy",rDD_Question.LastUpdatedBy),
+                            new SqlParameter("@Type",rDD_Question.ActionType),
+                            //new SqlParameter("@p_ide",rDD_Question.id),
+                            //new SqlParameter("@Response",rDD_Question.ErrorMsg)
+                        };
+                        
+                        var det1 = Com.ExecuteNonQuery("RDD_Insert_Update_AppraisalQuestions", parm);
+                        if (det1 == false)
+                        {
+                            str.Clear();
+                            str.Add(new Outcls1
+                            {
+                                Outtf = false,
+                                Id = -1,
+                                Responsemsg = "Error occured : KPI Parameter Details "
+                            });
+                            return str;
+                        }
+                        m++;
+                    }
+                    
 
-                    List<Outcls1> outcls = new List<Outcls1>();
-                    outcls = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", parm);
+                    
                     rDD_Question.SaveFlag = outcls[0].Outtf;
                     rDD_Question.ErrorMsg = outcls[0].Responsemsg;
                     if (outcls[0].Id == -1)
