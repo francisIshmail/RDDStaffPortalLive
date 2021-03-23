@@ -24,18 +24,15 @@
 
 <div class="main-panel">
     <div class="container">
-        <div class="page-inner">
-            <div class="page-header">
-                <h4 class="page-title"><i class="fa fa-angle-double-left"></i> Back </h4>
-            </div>
+        <div class="page-inner">            
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title redtitle">Employees </h4>
+                                <h4 class="card-title redtitle">Assign Category To Employee</h4>
                                 <button id="btnAddEmployee" class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                                    <i class="fa fa-plus"></i> Add Employee
+                                    <i class="fa fa-plus"></i> Assign Category
                                 </button>
                             </div>
                         </div>
@@ -47,7 +44,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header border-0">
                                             <h5 class="modal-title">
-                                                <span class="fw-mediumbold">Add New Employee </span>
+                                                <span class="fw-mediumbold" style="color:white">Assign Category To Employee </span>
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -286,7 +283,6 @@
     });
 
     $(document).on('click', '#btnUpdateEmpDetails', function () {
-
         var catid = "";
         if ($("#txtEmployeeName").val() == "") {
             RedDotAlert_Error("Please Enter Employee Name");

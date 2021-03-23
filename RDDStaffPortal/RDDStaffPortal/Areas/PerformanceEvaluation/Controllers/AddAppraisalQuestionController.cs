@@ -9,8 +9,8 @@ using RDDStaffPortal.DAL;
 using RDDStaffPortal.DAL.PerformanceEvaluation;
 using RDDStaffPortal.DAL.DataModels.PerformanceEvaluation;
 using Newtonsoft.Json;
-//using DocumentFormat.OpenXml.Drawing;
 using System.IO;
+using OfficeOpenXml;
 
 namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
 {
@@ -46,6 +46,52 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
         {
             string fullPath = Path.Combine(Server.MapPath("~/excelFileUpload/PerformanceEvaluation"), "Employee Performance Appraisal Question Format.xlsx");
             return File(fullPath, "application/vnd.ms-excel", "Employee Performance Appraisal Question Format.xlsx");            
+        }
+
+        public ActionResult GetExcelData()
+        {
+            CommonFunction Com = new CommonFunction();
+            try
+            {
+                string Msg = "";
+                if (Request.Files.Count > 0)
+                {
+                    List<RDD_AddAppraisalQuestion_ExcelData> docs = new List<RDD_AddAppraisalQuestion_ExcelData>();
+                    HttpFileCollectionBase Files = Request.Files;
+                    for (int i = 0; i < Files.Count; i++)
+                    {
+                        HttpPostedFileBase FileDetails = Files[i];
+                        DataTable dt = new DataTable();
+                        ExcelPackage excelpack = new ExcelPackage(FileDetails.InputStream);
+                        dt = Com.ExcelToDataTable(excelpack);
+                        dt = Com.RemoveBlankRow(dt);
+                        dt = Com.ChangeColumnDataType(dt);
+                        dt = Com.SettiingDataTableHeaderAsList(dt, docs);
+                        docs = Com.ConvertDataTableToClassObjectList<RDD_AddAppraisalQuestion_ExcelData>(dt);
+                    }
+                    return Json(docs, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    Msg = "Error";
+                }
+                return Json(Msg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(Convert.ToString(ex.Message), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult SaveAppraisalQuestion(RDD_AddAppraisalQuestion rDD_Question)
+        {
+            rDD_Question.CreatedBy = User.Identity.Name;
+            if (rDD_Question.EditFlag == true)
+            {
+                rDD_Question.LastUpdatedBy = User.Identity.Name;
+                rDD_Question.LastUpdatedOn = System.DateTime.Now;
+            }
+            return Json(rDD_AppraisalQuestion_TemplateDb.SaveAssignCategoryDetails(rDD_Question), JsonRequestBehavior.AllowGet);
         }
     }
 }

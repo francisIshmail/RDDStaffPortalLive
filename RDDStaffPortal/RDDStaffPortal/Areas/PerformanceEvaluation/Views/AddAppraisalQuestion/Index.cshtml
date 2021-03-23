@@ -12,6 +12,15 @@
     a.disabled:hover {
         cursor:not-allowed;
     }
+    .table-responsive {
+        white-space: inherit;
+    }
+    .row {
+        width: 100%
+    }
+    .btnDel {
+        padding: 9px 24px;
+    }
 </style>
 <link href="~/Content/extra-style.css" rel="stylesheet" />
 <div class="main-panel">
@@ -58,8 +67,6 @@
                                                             <label>Select Period</label>
                                                             <select id="ddlPeriod" class="form-control ddlPeriod">
                                                                 <option value="-1">---Select---</option>
-                                                                <option value="H1">H1</option>
-                                                                <option value="H2">H2</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -83,18 +90,29 @@
                                                 <hr />
                                                 <div class="form-group row">
                                                     <label class="col-md-2 control-label" for="action_json">Upload File :</label>
-                                                    <div class="col-sm-3">
-                                                        <input type="file" id="action_json" name="action_json" class="input-file" accept=".txt,.json">
+                                                    <div class="col-sm-7">
+                                                        <input type="file" id="action_json" name="action_json" class="input-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
                                                         <div id="action_jsondisplay"></div>
-
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    @*<div class="col-sm-4">
                                                         <button type="button" class="" id="btnUpload">Show</button>
-                                                    </div>
+                                                    </div>*@
                                                     <div class="col-sm-3">
-
                                                         <a href="#" id="btnDownloadExcel">Download Excel File Format</a>
                                                     </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table id="add-rowExcel" class="display table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>                                                                
+                                                                <th width="90%">Question </th>
+                                                                <th style="text-align:center" width="10%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>                                                            
+                                                            
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                                 <hr />
                                                 <!-- Text "OR" input-->
@@ -119,7 +137,7 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer border-0">
-                                            <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
+                                            <button type="button" id="btnSaveQuestion" class="btn btn-primary">Add</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -285,28 +303,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <footer class="footer">
-        <div class="container-fluid">
-            <nav class="pull-left">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Help
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Licenses
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="copyright ml-auto">
-                2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Reddot</a>
-            </div>
-        </div>
-    </footer>
+    </div>   
 </div>
 
 <script src="~/Scripts/jquery-3.5.1.min.js"></script>
@@ -314,11 +311,13 @@
 
 <script>
     function GetCategoryList() {
+        $('.loader1').show();
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
             dataType: "json",
             success: function (data) {
+                $('.loader1').hide();
                 //var d = data.Table;
                 $("#ddlCopyFromPrevious").empty();
                 $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
@@ -330,20 +329,49 @@
                 $.each(data.Table1, function (index, Value) {
                     $("#ddlCategory").append("<option value='" + Value.CategoryId + "'>" + Value.CategoryName + "</option>");
                 });
-
+                $("#ddlPeriod").empty();
+                $("#ddlPeriod").append('<option value="-1">--Select--</option>');
+                $.each(data.Table2, function (index, Value) {
+                    $("#ddlPeriod").append("<option value='" + Value.Period + "'>" + Value.Period + "</option>");
+                });
+            }
+        });
+    }
+    function SaveQuestion(rDD_Question) {
+        $('.loader1').show();
+        var rDD_Question = rDD_Question;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveAppraisalQuestion", "AddAppraisalQuestion")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ rDD_Question: rDD_Question }),            
+            dataType: "json",
+            success: function (data) {
+                $('.loader1').hide();
+                if (data.SaveFlag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                    GetCategoryWiseEmployeeDetails();
+                    $("#addRowModal").modal('hide');
+                    $("#btnUpdateEmpDetails").text("Save");
+                    $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
+                }
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }
             }
         });
     }
     $(document).ready(function () {        
         GetCategoryList();
-        // action dynamic childs
+        $("#add-rowExcel").hide();
+        // action dynamic childss
         var next = 0;
         $("#add-more").click(function (e) {
             e.preventDefault();
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md"></textarea></div></div></div>';
+            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md btnDel"></textarea></div></div></div>';
             var newInput = $(newIn);
             var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
             var removeButton = $(removeBtn);
@@ -364,6 +392,56 @@
     $(document).on('click', '#btnDownloadExcel', function () {
         window.location.href = '@Url.Action("Download", "AddAppraisalQuestion")';
     });
+    $(document).on('change', '#action_json', function () {
+        var Files = $(this).get(0).files;
+        if (Files[0].name != "") {
+            $("#ddlCopyFromPrevious").attr("disabled", true);
+            $("#action_name").attr("disabled", true);
+            $("#add-more").attr("disabled", true);
+            $("#ddlCopyFromPrevious").css("cursor", "not-allowed");
+            $("#action_name").css("cursor", "not-allowed");
+            $("#add-more").css("cursor", "not-allowed");
+        }
+        else {
+            $("#ddlCopyFromPrevious").removeAttr("disabled", true);
+            $("#action_name").removeAttr("disabled", true);
+            $("#add-more").removeAttr("disabled", true);
+            $("#action_name").css("cursor", "");
+            $("#ddlCopyFromPrevious").css("cursor", "");
+            $("#add-more").css("cursor", "");
+        }
+        var filedata = new FormData();
+        filedata.append(Files[0].name, Files[0]);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetExcelData", "AddAppraisalQuestion")',
+            data: filedata,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (data) {                
+                //$('#add-rowExcel').dataTable().fnDestroy();
+                $("#add-rowExcel tbody").empty();
+                $("#add-rowExcel").show();
+                var Html = "";
+                if (data.length > 0) {
+                    $.each(data, function (Index, Value) {                        
+                        Html += '<tr>';
+                        Html += '<td>' + '<input type="text" class="form-control appqstn" value="' + Value.AppraisalQuestion + '">' + '</td>';
+                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        Html += '</tr>';                        
+                    });
+                }
+                else {                    
+                    Html += '<tr>';
+                    Html += '<td colspan="6" style="text-align:center">No Data Found</td>';                    
+                    Html += '</tr>'; 
+                }
+                $("#add-rowExcel tbody").append(Html);
+
+            }
+        });
+    });
     $(document).on('change', '#ddlCopyFromPrevious', function () {
         var Prev = $("#ddlCopyFromPrevious option:selected").val();
         if (Prev != '-1') {
@@ -382,6 +460,25 @@
             $("#action_json").css("cursor", "");
             $("#add-more").css("cursor", "");
         }
+    });
+    $(document).on('click', '.btnDel', function () {
+        $(this).parents("tr").remove();
+    });
+    $(document).on('click', '#btnSaveQuestion', function () {
+        var rDD_Question = new Array();
+        
+        $("#add-rowExcel tbody tr").each(function () {
+            var PushItem = {};
+            var CategoryId= $("#ddlCategory option:selected").val();
+            var Period= $("#ddlPeriod option:selected").val();
+            var qstn = $.trim($('.appqstn', this).val());
+            PushItem.CategoryId = CategoryId;
+            PushItem.Period = Period;
+            PushItem.Question = qstn;
+            rDD_Question.push(PushItem);
+        });        
+        
+        SaveQuestion(rDD_Question);
     });
 </script>
 

@@ -35,5 +35,54 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return ds;
         }
+
+        public RDD_AddAppraisalQuestion SaveAssignCategoryDetails(RDD_AddAppraisalQuestion rDD_Question)
+        {
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    string response = string.Empty;
+                    if (rDD_Question.EditFlag == false)
+                    {
+                        rDD_Question.ActionType = "Insert";
+                    }
+                    else
+                    {
+                        rDD_Question.ActionType = "Update";
+                    }
+                    SqlParameter[] parm = {
+                        new SqlParameter("@Period",rDD_Question.Period),
+                        new SqlParameter("@CategoryId",rDD_Question.CategoryId),
+                        new SqlParameter("@Question",rDD_Question.Question),
+                        new SqlParameter("@CreatedBy",rDD_Question.CreatedBy),
+                        new SqlParameter("@LastUpdatedBy",rDD_Question.LastUpdatedBy),
+                        new SqlParameter("@Type",rDD_Question.ActionType),
+                        new SqlParameter("@p_ide",rDD_Question.id),
+                        new SqlParameter("@Response",rDD_Question.ErrorMsg)
+                    };
+
+                    List<Outcls1> outcls = new List<Outcls1>();
+                    outcls = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", parm);
+                    rDD_Question.SaveFlag = outcls[0].Outtf;
+                    rDD_Question.ErrorMsg = outcls[0].Responsemsg;
+                    if (outcls[0].Id == -1)
+                    {
+                        rDD_Question.SaveFlag = false;
+                    }
+                    else
+                    {
+                        rDD_Question.SaveFlag = true;
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                rDD_Question.ErrorMsg = ex.Message;
+                rDD_Question.SaveFlag = false;
+            }
+            return rDD_Question;
+        }
     }
 }
