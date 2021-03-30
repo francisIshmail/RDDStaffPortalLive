@@ -21,6 +21,7 @@ using static RDDStaffPortal.DAL.CommonFunction;
 using System.Data.SqlClient;
 using System.Transactions;
 using Microsoft.Office.Interop.Excel;
+using System.Threading;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -587,10 +588,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
 
 
-              
 
-                using (TransactionScope scope = new TransactionScope())
-                {
+
+                //using (TransactionScope scope = new TransactionScope())
+                //{
 
 
 
@@ -615,7 +616,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                         result.Clear();
                         if (response.Success == true && t==true)
                         {
-                            scope.Complete();
+                           // Thread.Sleep(99999);
+                           //scope.Complete();
                             result.Add(new Outcls1
                             {
                                 Outtf = true,
@@ -635,7 +637,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     }
                     else
                     {
-                        scope.Complete();
+                      // Thread.Sleep(99999);
+                    //  scope.Complete();
                     }
 
                   
@@ -643,7 +646,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     
 
 
-                }
+          //  }
 
                // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
 
