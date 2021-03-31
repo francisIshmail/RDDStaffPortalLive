@@ -23,6 +23,45 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return View();
         }
 
+        public ActionResult GetQuestionDetails()
+        {
+            ContentResult retVal = null;
+            DataSet ds;            
+            try
+            {
+                ds = rDD_AppraisalQuestion_TemplateDb.GetQuestionDetails();
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetCategorywiseQuestionList(int CategoryId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_AppraisalQuestion_TemplateDb.GetCategorywiseQuestionList(CategoryId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ActionResult GetPeriodCategoryList()
         {
             ContentResult retVal = null;
@@ -30,6 +69,25 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             try
             {
                 ds = rDD_AppraisalQuestion_TemplateDb.GetPeriodCategoryList();
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetPreviousPeriodQuestion(string PrevPeriod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            try
+            {
+                ds = rDD_AppraisalQuestion_TemplateDb.GetPreviousPeriodQuestion(PrevPeriod);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -92,6 +150,16 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 rDD_Question.LastUpdatedOn = System.DateTime.Now;
             }
             return Json(rDD_AppraisalQuestion_TemplateDb.SaveAssignCategoryDetails(rDD_Question), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateAppraisalQuestion(string Qid,string Question)
+        {            
+            return Json(rDD_AppraisalQuestion_TemplateDb.UpdateAssignCategoryDetails(Qid,Question), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteAppraisalQuestion(int Qid)
+        {
+            return Json(rDD_AppraisalQuestion_TemplateDb.DeleteAppraisalQuestion(Qid), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -141,6 +141,7 @@
     <Compile Include="DataModels\PerformanceEvaluation\RDD_AddAppraisalQuestion.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_AddAppraisalQuestion_ExcelData.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_CategoryAssignToEmployee.cs" />
+    <Compile Include="DataModels\PerformanceEvaluation\RDD_EmployeeRating.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_QuestionCategory.cs" />
     <Compile Include="DataModels\PerformanceEvaluation\RDD_Settings.cs" />
     <Compile Include="DataModels\RDD_CountryBU.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="MarketingPlan\MarketingPlanLines.cs" />
     <Compile Include="PerformanceEvaluation\RDD_AddAppraisalQuestion_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_CategoryAssignToEmployee_DbOperation.cs" />
+    <Compile Include="PerformanceEvaluation\RDD_Employeerating_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_QuestionCategory_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_Settings_DbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

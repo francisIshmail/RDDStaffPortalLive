@@ -5,27 +5,35 @@
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
 }
 
-<style>    
-    .ddlPeriod {        
-        font-size: 0.8rem;        
-    }    
-    a.disabled:hover {
-        cursor:not-allowed;
+<style>
+    .ddlPeriod {
+        font-size: 0.8rem;
     }
+
+    a.disabled:hover {
+        cursor: not-allowed;
+    }
+
     .table-responsive {
         white-space: inherit;
     }
+
     .row {
         width: 100%
     }
+
     .btnDel {
         padding: 9px 24px;
+    }
+
+    .save{
+
     }
 </style>
 <link href="~/Content/extra-style.css" rel="stylesheet" />
 <div class="main-panel">
     <div class="container">
-        <div class="page-inner">            
+        <div class="page-inner">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -82,6 +90,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="table-responsive">
+                                                    <table id="add-rowPrevious" class="display table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="90%">Question </th>
+                                                                <th style="text-align:center" width="10%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
                                                 <!-- Text "OR" input-->
                                                 <div class="form-group row">
                                                     <div class="col-12 text-center"> OR </div>
@@ -94,9 +113,7 @@
                                                         <input type="file" id="action_json" name="action_json" class="input-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
                                                         <div id="action_jsondisplay"></div>
                                                     </div>
-                                                    @*<div class="col-sm-4">
-                                                        <button type="button" class="" id="btnUpload">Show</button>
-                                                    </div>*@
+
                                                     <div class="col-sm-3">
                                                         <a href="#" id="btnDownloadExcel">Download Excel File Format</a>
                                                     </div>
@@ -104,14 +121,12 @@
                                                 <div class="table-responsive">
                                                     <table id="add-rowExcel" class="display table table-striped table-hover">
                                                         <thead>
-                                                            <tr>                                                                
+                                                            <tr>
                                                                 <th width="90%">Question </th>
                                                                 <th style="text-align:center" width="10%">Action</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>                                                            
-                                                            
-                                                        </tbody>
+                                                        <tbody></tbody>
                                                     </table>
                                                 </div>
                                                 <hr />
@@ -124,8 +139,8 @@
                                                         <!-- Text input-->
                                                         <div class="form-group row">
                                                             <label class="col-md-2 control-label" for="action_name">Type Question :</label>
-                                                            <div class="col-md-10">
-                                                                <textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md"></textarea>
+                                                            <div class="col-md-10" id="divTypeQuestion">
+                                                                <textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,163 +150,30 @@
                                                     <button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>
                                                 </div>
                                             </form>
-                                        </div>
-                                        <div class="modal-footer border-0">
-                                            <button type="button" id="btnSaveQuestion" class="btn btn-primary">Add</button>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                                            <div class="modal-footer border-0">
+                                                <button type="button" id="btnSaveQuestion" class="btn btn-primary">Add</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <section>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">H1 </a>
-                                    </li>
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">H2 </a>
-                                    </li>
-                                </ul>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="table-responsive">
-                                            <table id="add-row" class="display table table-striped table-hover">
+                                        <div class="table-responsive tblscroll">
+                                            <table id="tblShowQuestion" class="display table table-striped table-hover">
                                                 <thead>
-                                                    <tr>
-                                                        <th>Category </th>
-                                                        <th>Question </th>
-                                                        <th style="width:15%">Action</th>
+                                                    <tr>                                                        
+                                                        <th width="90%">Question </th>                                                        
+                                                        <th style="text-align:center" width="10%">Action </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Finance </td>
-                                                        <td>If corn oil is made from corn and vegetable oil is made from vegetables. What is baby oil made from? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Technology </td>
-                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sales </td>
-                                                        <td>Why is it that to stop Windows 98, you have to click on Start? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sales, Finance </td>
-                                                        <td>Why is lemon juice made with artificial flavor and dishwashing liquid made with real lemons? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="table-responsive">
-                                            <table class="display table table-striped table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Category</th>
-                                                        <th>Question </th>
-                                                        <th style="width:15%">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Finance </td>
-                                                        <td>If corn oil is made from corn and vegetable oil is made from vegetables. What is baby oil made from? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Technology </td>
-                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sales </td>
-                                                        <td>Why is it that to stop Windows 98, you have to click on Start? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sales, Finance </td>
-                                                        <td>Why is lemon juice made with artificial flavor and dishwashing liquid made with real lemons? </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -303,7 +185,7 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 
 <script src="~/Scripts/jquery-3.5.1.min.js"></script>
@@ -311,13 +193,13 @@
 
 <script>
     function GetCategoryList() {
-        $('.loader1').show();
+        
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
             dataType: "json",
             success: function (data) {
-                $('.loader1').hide();
+                //$('.loader1').hide();
                 //var d = data.Table;
                 $("#ddlCopyFromPrevious").empty();
                 $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
@@ -344,24 +226,102 @@
             type: "POST",
             url: '@Url.Action("SaveAppraisalQuestion", "AddAppraisalQuestion")',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ rDD_Question: rDD_Question }),            
+            data: JSON.stringify({ rDD_Question: rDD_Question }),
             dataType: "json",
             success: function (data) {
+                debugger
                 $('.loader1').hide();
-                if (data.SaveFlag == true) {
-                    RedDotAlert_Success(data.ErrorMsg);
-                    GetCategoryWiseEmployeeDetails();
+                if (data[0].Outtf == true) {
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    //GetCategoryWiseEmployeeDetails();
                     $("#addRowModal").modal('hide');
                     $("#btnUpdateEmpDetails").text("Save");
                     $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
                 }
                 else {
-                    RedDotAlert_Error(data.ErrorMsg);
+                    RedDotAlert_Error(data[0].Responsemsg);
                 }
             }
         });
     }
-    $(document).ready(function () {        
+    function GetPreviousPeriodQuestion(PrevPeriod) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetPreviousPeriodQuestion", "AddAppraisalQuestion")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ PrevPeriod: PrevPeriod}),
+            dataType: "json",
+            success: function (data) {
+                debugger
+                //$('#add-rowExcel').dataTable().fnDestroy();
+                $("#add-rowPrevious tbody").empty();
+                $("#add-rowPrevious").show();
+                var Html = "";
+                var a = data.Table;
+                if (a.length > 0) {
+                    $.each(a, function (Index, Value) {
+                        Html += '<tr>';
+                        Html += '<td>' + '<input type="text" class="form-control appqstns" value="' + Value.Question + '">' + '</td>';
+                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        Html += '</tr>';
+                    });
+                }
+                else {
+                    Html += '<tr>';
+                    Html += '<td colspan="6" style="text-align:center">No Data Found</td>';
+                    Html += '</tr>';
+                }
+                $("#add-rowPrevious tbody").append(Html);
+            }
+        });
+    }
+
+    function GetQuestionDetails() {
+        $('.loader1').show();
+        $("#tblShowQuestion tbody").empty();
+        $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetQuestionDetails", "AddAppraisalQuestion")',
+            dataType: "json",
+            success: function (data) {
+                  debugger
+                $('.loader1').hide();
+                $("#myTab").empty();
+                $.each(data.Table, function (Index, Value) {
+                    var str1 = "";
+                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                    $("#myTab").append(str1);
+                });
+                $("#myTab li:eq(0) a").tab('show');
+                var str2 = "";
+                //$('#tblShowQuestion').dataTable().fnDestroy();
+                $("#tblShowQuestion tbody").empty();
+                if (data.Table1.length > 0) {
+                    $.each(data.Table1, function (Index, Value) {                        
+                        str2 += '<tr>';          
+                        str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
+                        str2 += '<td>' + Value.Question + '</td>';                        
+                        str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str2 += '</tr>';
+                        
+                    });
+                }
+                else {
+                    str2 += '<tr>';
+                    str2 += '<td colspan="6" style="text-align:center">No Question Assigned Under This Category</td>';
+                    str2 += '</tr>';
+                }
+                $("#tblShowQuestion tbody").append(str2);
+                $(".update").attr("hidden", "hidden");
+                //$('#tblShowQuestion').DataTable();
+            }
+        });
+    }
+    
+    $(document).ready(function () {
+        GetQuestionDetails();
+        
         GetCategoryList();
         $("#add-rowExcel").hide();
         // action dynamic childss
@@ -371,7 +331,7 @@
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md btnDel"></textarea></div></div></div>';
+            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div>';
             var newInput = $(newIn);
             var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
             var removeButton = $(removeBtn);
@@ -419,23 +379,23 @@
             contentType: false,
             processData: false,
             dataType: "json",
-            success: function (data) {                
+            success: function (data) {
                 //$('#add-rowExcel').dataTable().fnDestroy();
                 $("#add-rowExcel tbody").empty();
                 $("#add-rowExcel").show();
                 var Html = "";
                 if (data.length > 0) {
-                    $.each(data, function (Index, Value) {                        
+                    $.each(data, function (Index, Value) {
                         Html += '<tr>';
                         Html += '<td>' + '<input type="text" class="form-control appqstn" value="' + Value.AppraisalQuestion + '">' + '</td>';
                         Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
-                        Html += '</tr>';                        
+                        Html += '</tr>';
                     });
                 }
-                else {                    
+                else {
                     Html += '<tr>';
-                    Html += '<td colspan="6" style="text-align:center">No Data Found</td>';                    
-                    Html += '</tr>'; 
+                    Html += '<td colspan="6" style="text-align:center">No Data Found</td>';
+                    Html += '</tr>';
                 }
                 $("#add-rowExcel tbody").append(Html);
 
@@ -443,8 +403,8 @@
         });
     });
     $(document).on('change', '#ddlCopyFromPrevious', function () {
-        var Prev = $("#ddlCopyFromPrevious option:selected").val();
-        if (Prev != '-1') {
+        var PrevPeriod = $("#ddlCopyFromPrevious option:selected").val();
+        if (PrevPeriod != '-1') {
             $("#action_json").attr("disabled", true);
             $("#action_name").attr("disabled", true);
             $("#add-more").attr("disabled", true);
@@ -460,34 +420,197 @@
             $("#action_json").css("cursor", "");
             $("#add-more").css("cursor", "");
         }
+        GetPreviousPeriodQuestion(PrevPeriod);
     });
     $(document).on('click', '.btnDel', function () {
         $(this).parents("tr").remove();
     });
+    $(document).on('keyup', '#action_name', function () {
+        var Key = $(this).val();
+        if (Key.length > 0) {
+            $("#action_json").attr("disabled", true);
+            $("#ddlCopyFromPrevious").attr("disabled", true);
+            $("#ddlCopyFromPrevious").css("cursor", "not-allowed");
+            $("#action_json").css("cursor", "not-allowed");
+        }
+        else {
+            $("#action_json").removeAttr("disabled", true);
+            $("#ddlCopyFromPrevious").removeAttr("disabled", true);
+            $("#ddlCopyFromPrevious").css("");
+            $("#action_json").css("");
+        }
+    });
     $(document).on('click', '#btnSaveQuestion', function () {
+        var Catid = $("#ddlCategory option:selected").val();
+        var Period = $("#ddlPeriod option:selected").val();
+        if (Catid == "-1") {
+            RedDotAlert_Error("Please Select Category");
+            return false;
+        }
+        if (Period == "-1") {
+            RedDotAlert_Error("Please Select Period");
+            return false;
+        }
         var rDD_Question = {
-            CategoryId: $("#ddlCategory option:selected").val(),
-            Period: $("#ddlPeriod option:selected").val(),
-            RDD_AddAppraisalQuestionList:[]
+            CategoryId: Catid,
+            Period: Period,
+            rDD_QuestionList:[]
         };
-        
-        $("#add-rowExcel tbody tr").each(function () {
-            
-            //var CategoryId= 
-            //var Period= 
-            var qstn = $.trim($('.appqstn', this).val());
-            var rDD_QuestionList = {
-                Question: qstn
-            };
-            rDD_Question.RDD_AddAppraisalQuestion.push(rDD_QuestionList);
-        });        
-        
+        if ($("#action_json").prop("disabled") == false) {
+            $("#add-rowExcel tbody tr").each(function () {
+                var qstn = $.trim($('.appqstn', this).val());
+                var rDD_QuestionList = {
+                    Question: qstn
+                };
+                rDD_Question.rDD_QuestionList.push(rDD_QuestionList);
+            });
+        }
+        else if ($("#action_name").prop("disabled") == false) {
+            $('.txtQuestion').each(function () {
+                var qstn = $.trim($(this).val());
+                var rDD_QuestionList = {
+                    Question: qstn
+                };
+                rDD_Question.rDD_QuestionList.push(rDD_QuestionList);
+            });
+        }
+        else if ($("#ddlCopyFromPrevious").prop("disabled") == false) {
+            $("#add-rowPrevious tbody tr").each(function () {
+                var qstn = $.trim($('.appqstns', this).val());
+                var rDD_QuestionList = {
+                    Question: qstn
+                };
+                rDD_Question.rDD_QuestionList.push(rDD_QuestionList);
+            });
+        }
+        if ($("#action_json").prop("disabled") == false && $("#action_name").prop("disabled") == false && $("#ddlCopyFromPrevious").prop("disabled") == false) {
+            RedDotAlert_Error("Please Select Anyone Option");
+            return false;
+        }
         SaveQuestion(rDD_Question);
+    });
+
+    $(document).on('click', '.selectCategory', function () {
+        var CategoryId = $(this).attr("data");
+        $("#tblShowQuestion tbody").empty();
+        $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetCategorywiseQuestionList", "AddAppraisalQuestion")',
+            data: { "CategoryId": CategoryId},
+            dataType: "json",
+            success: function (data) { 
+                debugger
+                var d = data.Table;
+                var str = "";
+                var Count = 0;
+                $("#tblShowQuestion tbody").empty();                
+                if (d.length > 0) {
+                    $.each(d, function (Index, Value) {                        
+                        str += '<tr>';
+                        str += '<td style="display:none">' + Value.QuestionTransId + '</td>';
+                        str += '<td>' + Value.Question + '</td>';                                              
+                        str += '<td><div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str += '</tr>';                        
+                    });
+                }
+                else {
+                    str += '<tr>';
+                    str += '<td colspan="6" style="text-align:center">No Question Assigned Under This Category</td>';                    
+                    str += '</tr>';     
+                }    
+                $("#tblShowQuestion tbody").append(str);
+            }
+        });
+    });
+    $(document).on('click', '.edit', function () {        
+        var tr = $(this).closest("tr");        
+        tr.find(".edit").attr("hidden", "hidden");
+        tr.find(".delete").attr("hidden", "hidden");
+        tr.find(".update").removeAttr("hidden", "hidden");       
+        $(this).parents("tr").find("td:eq(1)").html('<input type="text"  class="form-control" id="txtQstn" value="' + $(this).parents("tr").find("td:eq(1)").html() + '">');
+        //$(this).parents("tr").find("td:eq(2)").html('<div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-success save" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div>')        
+    });   
+    $(document).on('click', '.update', function () {
+        $('.loader1').show();
+        var tr = $(this).closest("tr");
+        var Qid = tr.find("td:eq(0)").html();       
+        var Question = tr.find("#txtQstn").val();        
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateAppraisalQuestion", "AddAppraisalQuestion")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify ({ Qid: Qid, Question: Question }),
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $('.loader1').hide();
+                if (data[0].Outtf == true) {
+                    $('.loader1').hide();
+                    RedDotAlert_Success(data[0].Responsemsg);
+                    GetQuestionDetails();
+                    tr.find(".edit").removeAttr("hidden", "hidden");
+                    tr.find(".delete").removeAttr("hidden", "hidden");
+                    tr.find(".update").attr("hidden", "hidden");
+                }
+                else {
+                    RedDotAlert_Error(data[0].Responsemsg);
+                }
+            }
+        });
+    });
+    $(document).on('click', '.delete', function () {
+        var Qid = $(this).closest("tr").find("td:eq(0)").html();
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            $('.loader1').show();
+            if (result.value) {
+                $.getJSON("/DeleteAppraisalQuestion/AddAppraisalQuestion", { "Qid": Qid }).done(function (data) {
+                    $('.loader1').hide();
+                    if (data[0].Outtf == true) {
+                        RedDotAlert_Success(data[0].Responsemsg);
+                        GetQuestionDetails();
+                    }
+                    else {
+                        RedDotAlert_Error(data[0].Responsemsg);
+                    }
+                });
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+            $('.loader1').hide();
+        });
     });
 </script>
 
 <script>
     $(document).ready(function () {
         $("#myTab li:eq(0) a").tab('show');
-    })
+    });
+    $('.panel-collapse').on('show.bs.collapse', function () {
+        $(this).siblings('.panel-heading').addClass('active');
+    });
+    $('.panel-collapse').on('hide.bs.collapse', function () {
+        $(this).siblings('.panel-heading').removeClass('active');
+    });
 </script>
