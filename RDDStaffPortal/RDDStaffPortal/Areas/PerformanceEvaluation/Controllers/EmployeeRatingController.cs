@@ -78,5 +78,15 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 throw ex;
             }
         }
+        public ActionResult SaveEmployeeRating(RDD_EmployeeRating rDD_EmpAppraisal)
+        {
+            rDD_EmpAppraisal.Emp_SubmittedBy = User.Identity.Name;
+            if (rDD_EmpAppraisal.EditFlag == true)
+            {
+                //rDD_EmpAppraisal.E = User.Identity.Name;
+                rDD_EmpAppraisal.Emp_LastUpdatedOn = System.DateTime.Now;
+            }
+            return Json(rDD_EmpRating_TemplateDb.SaveEmployeeRating(rDD_EmpAppraisal), JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -192,8 +192,7 @@
 <script src="~/Scripts/RedDotUtility.js"></script>
 
 <script>
-    function GetCategoryList() {
-        
+    function GetCategoryList() {        
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
@@ -493,7 +492,7 @@
     $(document).on('click', '.selectCategory', function () {
         var CategoryId = $(this).attr("data");
         $("#tblShowQuestion tbody").empty();
-        $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
+        $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');        
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetCategorywiseQuestionList", "AddAppraisalQuestion")',
@@ -520,6 +519,7 @@
                     str += '</tr>';     
                 }    
                 $("#tblShowQuestion tbody").append(str);
+                $(".update").attr("hidden", "hidden");
             }
         });
     });
@@ -577,7 +577,7 @@
         }).then((result) => {
             $('.loader1').show();
             if (result.value) {
-                $.getJSON("/DeleteAppraisalQuestion/AddAppraisalQuestion", { "Qid": Qid }).done(function (data) {
+                $.getJSON("/AddAppraisalQuestion/DeleteAppraisalQuestion", { "Qid": Qid }).done(function (data) {
                     $('.loader1').hide();
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
