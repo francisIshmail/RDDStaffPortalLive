@@ -147,7 +147,7 @@ namespace RDDStaffPortal.WebServices
                 mailformat = mailformat + "<div>Dear  " + UserName + ",</div><br/>";
                 mailformat = mailformat + "<div>Congratulations !!  You have been registered on Red Dot Distribution website. You can login to our site using the following credentials,</div><br/>";
 
-                mailformat = mailformat + "<div>Login Name -<b> " + UserName + " </b><br/>Password - <b>" + randomPassword + "</b><br/><a href=https://app.reddotdistribution.com/Login.aspx > Click Here To Login </a></div><br/>";
+                mailformat = mailformat + "<div>Login Name -<b> " + UserName + " </b><br/>Password - <b>" + randomPassword + "</b><br/><a href=https://app.reddotdistribution.com > Click Here To Login </a></div><br/>";
 
                 mailformat = mailformat + "<div>This is system generated password , We urged you to change the password at the earliest using the <b>Change Password</b> option in your profile.</div><br/>";
                 mailformat = mailformat + "<div>Best Regards,<br/>Red Dot Distribution</div>";
