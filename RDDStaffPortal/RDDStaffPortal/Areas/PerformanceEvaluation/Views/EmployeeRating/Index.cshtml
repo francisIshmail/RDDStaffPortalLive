@@ -30,10 +30,10 @@
                                     <div class="col-11 p-0">
                                         <h2 id="headEmpName"></h2>
                                         <div class="row">
-                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divDepartment"> <i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i> </div>
-                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divCountry"> <i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i></div>
-                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divYear"> <i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i></div>
-                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divPeriod"> <i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i></div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divDepartment"> </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divCountry"> </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divYear"> </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divPeriod"> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,10 +98,10 @@
                 str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table[0].DesigName + '</span>';
                 $("#headEmpName").append(str);
                 $('.emp').empty();
-                $("#divDepartment").append(data.Table[0].DeptName);
-                $("#divCountry").append(data.Table[0].Country);
-                $("#divYear").append(data.Table1[0].Years);
-                $("#divPeriod").append(data.Table2[0].Period);
+                $("#divDepartment").append('<i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].DeptName);
+                $("#divCountry").append('<i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].Country);
+                $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].Years);
+                $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table2[0].Period);
                 $("#hdnEmployeeId").val(data.Table[0].EmployeeId);
                 $("#hdnCategoryId").val(data.Table3[0].CategoryId);
                 $("#myTab").empty();
@@ -358,13 +358,18 @@
             Period: $.trim($("#divPeriod").text()),
             rDD_EmpAppraisalList:[]
         };
+        var Alerts = "";
         $("#add-row tbody tr").each(function () {
             var QuestionId = $(this).closest("tr").find("td:eq(1)").text();
             var EmpRating = $('#hdnstarval_' + QuestionId).val();
             var EmpComment = $.trim($(".empcomnt", this).val());
             if (EmpRating == "" || EmpComment == "") {
                 RedDotAlert_Error("Please Fill All Fields");
+                Alerts = 1;
                 return false;
+            }
+            else {
+                Alerts = 0;
             }
             var rDD_EmpAppraisalList = {
                 QuestionId: QuestionId,
@@ -373,7 +378,12 @@
             };
             rDD_EmpAppraisal.rDD_EmpAppraisalList.push(rDD_EmpAppraisalList);            
         });
-        SaveEmpRating(rDD_EmpAppraisal);
+        if (Alerts == 0) {
+            SaveEmpRating(rDD_EmpAppraisal);
+        }
+        else {
+            return false;
+        }        
     });
     $(document).on('click', '#btnUpdateRating', function () {
         var rDD_EmpAppraisal = {
@@ -387,7 +397,6 @@
         };
         $("#add-row tbody tr").each(function () {
             var QuestionId = $(this).closest("tr").find("td:eq(1)").text();
-            //var EmpRating = $('#hdnstarval_' + QuestionId).val();
             var EmpRating = $(this).closest("tr").find("td:eq(5)").html();
             var EmpComment = $.trim($(".empcomnt", this).val());
             var rDD_EmpAppraisalList = {

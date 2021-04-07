@@ -322,8 +322,9 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
-            $('.loader1').show();
+            
             if (result.value) {
+                $('.loader1').show();
                 $.getJSON("/CategoryAssignToEmployee/DeleteAssignCategory", { "EmployeeId": EmployeeId }).done(function (data) {
                     $('.loader1').hide();
                     if (data[0].Outtf == true) {
@@ -333,6 +334,7 @@
                     else {
                         RedDotAlert_Error(data[0].Responsemsg);
                     }
+                    $('.loader1').hide();
                 });
             }
             else if (

@@ -31,6 +31,8 @@
     }
 </style>
 <link href="~/Content/extra-style.css" rel="stylesheet" />
+
+<input type="hidden" id="hdnFiledCount" />
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
@@ -40,7 +42,7 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title redtitle">Questions </h4>
-                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal" id="btnAddQuestions" onclick="ClearModalData();">
                                     <i class="fa fa-plus"></i> Add question
                                 </button>
                             </div>
@@ -138,7 +140,7 @@
                                                     <div id="field0">
                                                         <!-- Text input-->
                                                         <div class="form-group row">
-                                                            <label class="col-md-2 control-label" for="action_name">Type Question :</label>
+                                                            <label class="col-md-2 control-label divTypeQuestions" for="action_name" id="">Type Question :</label>
                                                             <div class="col-md-10" id="divTypeQuestion">
                                                                 <textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea>
                                                             </div>
@@ -146,8 +148,8 @@
                                                     </div>
                                                 </div>
                                                 <!-- Button -->
-                                                <div class="col-12">
-                                                    <button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>
+                                                <div class="col-12" id="divAddMore">
+                                                    @*<button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>*@
                                                 </div>
                                             </form>
 
@@ -323,14 +325,48 @@
         
         GetCategoryList();
         $("#add-rowExcel").hide();
+        $("#add-rowPrevious").hide();
         // action dynamic childss
+        
+        var count = 0;
+        
+    });
+
+    function ClearModalData() {        
+        GetCategoryList();
+        $("#add-rowPrevious").hide();
+        $("#add-rowExcel").hide();
+        $("#add-rowPrevious tbody").empty();
+        $("#add-rowExcel tbody").empty();
+        $('.txtQuestion').each(function () {
+            $(this).val("");            
+            $(this).remove();
+            $('.remove-me').remove();
+            $('.divTypeQuestions').text("");
+        });
+        $("#ddlCopyFromPrevious").removeAttr("disabled", true);
+        $("#action_name").removeAttr("disabled", true);
+        $("#add-more").removeAttr("disabled", true);
+        $("#action_name").css("cursor", "");
+        $("#ddlCopyFromPrevious").css("cursor", "");
+        $("#add-more").css("cursor", "");
+        $("#action_json").removeAttr("disabled", true);        
+        $("#action_json").css("cursor", "");
+        $("#action_json").val("");
+        $("#field").empty();
+        $("#field").append('<div id="field0"><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name" id="">Type Question :</label><div class="col-md-10" id="divTypeQuestion"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div >');
+        //$("#divTypeQuestion").empty();
+        //$('.divTypeQuestions').text("Type Question:");
+        //$("#divTypeQuestion").append('<textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea>');
+        $("#divAddMore").empty();
+        $("#divAddMore").append('<button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>');
         var next = 0;
-        $("#add-more").click(function (e) {
+        $("#add-more").click(function (e) {            
             e.preventDefault();
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div>';
+            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div>';
             var newInput = $(newIn);
             var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
             var removeButton = $(removeBtn);
@@ -347,7 +383,8 @@
                 $(fieldID).remove();
             });
         });
-    });
+    }
+
     $(document).on('click', '#btnDownloadExcel', function () {
         window.location.href = '@Url.Action("Download", "AddAppraisalQuestion")';
     });
@@ -412,6 +449,8 @@
             $("#add-more").css("cursor", "not-allowed");
         }
         else {
+            $("#add-rowPrevious").hide();
+            $("#add-rowPrevious tbody").empty();
             $("#action_json").removeAttr("disabled", true);
             $("#action_name").removeAttr("disabled", true);
             $("#add-more").removeAttr("disabled", true);

@@ -79,7 +79,9 @@
                                 <table id="tblCategoryDetails" class="display table table-striped table-hover">
                                     <thead>
                                         <tr>
+                                            <th style="display:none"></th>
                                             <th width="20%">Category </th>
+                                            <th style="display:none"></th>
                                             <th width="70%">Department</th>
                                             <th style="text-align:center" width="10%">Action</th>
                                         </tr>
@@ -136,6 +138,7 @@
                 else {
                     $("#tblCategoryDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
                 }
+                //$("#tblCategoryDetails").dataTable();
                 $('.loader1').hide();
             }
         });
