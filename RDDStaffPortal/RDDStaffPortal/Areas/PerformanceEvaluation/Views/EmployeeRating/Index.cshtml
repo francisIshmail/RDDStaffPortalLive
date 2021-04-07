@@ -30,10 +30,10 @@
                                     <div class="col-11 p-0">
                                         <h2 id="headEmpName"></h2>
                                         <div class="row">
-                                            <div class="col-3 p-0" style="font-size:16px" id="divDepartment"> <i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i> </div>
-                                            <div class="col-3 p-0" style="font-size:16px" id="divCountry"> <i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i></div>
-                                            <div class="col-3 p-0" style="font-size:16px" id="divYear"> <i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i></div>
-                                            <div class="col-3 p-0" style="font-size:16px" id="divPeriod"> <i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i></div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divDepartment"> <i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i> </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divCountry"> <i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i></div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divYear"> <i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i></div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divPeriod"> <i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i></div>
                                         </div>
                                     </div>
                                 </div>
@@ -90,14 +90,14 @@
                 debugger
                 if (data.Table7.length > 0) {
                     var SaveStatus = data.Table7[0].Emp_FinalSubmissionStatus;
-                }
-                
+                }                
                 
                 $("#headEmpName").empty();
                 var str = "";
                 str += data.Table[0].EmployeeName;
                 str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table[0].DesigName + '</span>';
                 $("#headEmpName").append(str);
+                $('.emp').empty();
                 $("#divDepartment").append(data.Table[0].DeptName);
                 $("#divCountry").append(data.Table[0].Country);
                 $("#divYear").append(data.Table1[0].Years);
@@ -136,9 +136,9 @@
                             }
                             str2 += '</form></div></td>';                            
                             str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="dis textarea-style empcomnt">' + Value.EmployeeComment + '</textarea></td>';                            
+                            str2 += '<td style="display:none">' + Value.EmployeeRating + '</td>';
                             str2 += '</tr>';
-                            j++;
-                            $('#hdnstarval_' + Value.QuestionTransId).val(Value.EmployeeRating);
+                            j++;                            
                         });
                     }
                     $("#btnSaveRating").text("Update");
@@ -259,6 +259,7 @@
         var QNo = $(this).attr('data-qno');
         var StarNo = $(this).attr('data-starno');
         $('#hdnstarval_' + QNo).val(StarNo);
+        $(this).closest("tr").find("td:eq(5)").html(StarNo);
     });
 
     $(document).ready(function () {
@@ -307,6 +308,7 @@
                             }
                             str += '</form></div></td>';
                             str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt">' + Value.EmployeeComment + '</textarea></td>';                            
+                            str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
                             str += '</tr>';
                             j++;
                         });
@@ -360,6 +362,10 @@
             var QuestionId = $(this).closest("tr").find("td:eq(1)").text();
             var EmpRating = $('#hdnstarval_' + QuestionId).val();
             var EmpComment = $.trim($(".empcomnt", this).val());
+            if (EmpRating == "" || EmpComment == "") {
+                RedDotAlert_Error("Please Fill All Fields");
+                return false;
+            }
             var rDD_EmpAppraisalList = {
                 QuestionId: QuestionId,
                 EmployeeRating: EmpRating,
@@ -381,7 +387,8 @@
         };
         $("#add-row tbody tr").each(function () {
             var QuestionId = $(this).closest("tr").find("td:eq(1)").text();
-            var EmpRating = $('#hdnstarval_' + QuestionId).val();
+            //var EmpRating = $('#hdnstarval_' + QuestionId).val();
+            var EmpRating = $(this).closest("tr").find("td:eq(5)").html();
             var EmpComment = $.trim($(".empcomnt", this).val());
             var rDD_EmpAppraisalList = {
                 QuestionId: QuestionId,
@@ -390,7 +397,7 @@
             };
             rDD_EmpAppraisal.rDD_EmpAppraisalList.push(rDD_EmpAppraisalList);
         });
-        //SaveEmpRating(rDD_EmpAppraisal);
+        SaveEmpRating(rDD_EmpAppraisal);
     });
 </script>
 

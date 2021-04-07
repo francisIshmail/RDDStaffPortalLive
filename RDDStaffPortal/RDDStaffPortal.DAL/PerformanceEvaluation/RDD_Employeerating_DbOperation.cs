@@ -100,7 +100,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
 
                     str = Com.ExecuteNonQueryListID("RDD_Insert_Update_PerformanceAppraisal", parm);
                     if (str[0].Outtf == true)
-                    {
+                    {                        
                         int m = 0;
                         if (rDD_EmpAppraisal.EditFlag == true)
                         {
@@ -110,6 +110,17 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                         {
                             rDD_EmpAppraisal.ActionTypeTrans = "Insert";
                         }
+                        if(rDD_EmpAppraisal.ActionTypeTrans== "Update")
+                        {
+                            SqlParameter[] prms =
+                            {
+                                new SqlParameter("@Type","Delete"),
+                                new SqlParameter("@AppraisalId",str[0].Id)
+                            };
+                            var det = Com.ExecuteNonQuery("RDD_Insert_Update_PerformanceAppraisalTrans", prms);
+                        }
+                        
+                        
                         while (rDD_EmpAppraisal.rDD_EmpAppraisalList.Count > m)
                         {
                             SqlParameter[] ParaDet1 =
