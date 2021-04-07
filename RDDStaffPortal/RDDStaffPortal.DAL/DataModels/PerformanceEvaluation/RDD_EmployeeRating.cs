@@ -12,7 +12,7 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public int CategoryId { get; set; }
         public int EmployeeId { get; set; }
         public int Year { get; set; }
-        public int Period { get; set; }
+        public string Period { get; set; }
         public bool SaveFlag { get; set; }
         public bool EditFlag { get; set; }
         public string ActionType { get; set; }

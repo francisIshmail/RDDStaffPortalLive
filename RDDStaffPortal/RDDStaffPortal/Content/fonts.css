@@ -5729,9 +5729,9 @@ readers do not read off random characters that represent icons */
 .icon-directions,
 .icon-compass,
 .icon-layers,
-.icon-menu,
+.fas fa-bars,
 .icon-list,
-.icon-options-vertical,
+.fas fa-ellipsis-v,
 .icon-options,
 .icon-arrow-down,
 .icon-arrow-left,
@@ -5967,13 +5967,13 @@ readers do not read off random characters that represent icons */
 .icon-layers:before {
   content: "\e034";
 }
-.icon-menu:before {
+.fas fa-bars:before {
   content: "\e601";
 }
 .icon-list:before {
   content: "\e067";
 }
-.icon-options-vertical:before {
+.fas fa-ellipsis-v:before {
   content: "\e602";
 }
 .icon-options:before {

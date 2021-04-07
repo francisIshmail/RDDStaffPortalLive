@@ -16,6 +16,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
     public class EmployeeRatingController : Controller
     {
         RDD_Employeerating_DbOperation rDD_EmpRating_TemplateDb = new RDD_Employeerating_DbOperation();
+        CommonFunction cf = new CommonFunction();
         // GET: PerformanceEvaluation/EmployeeRating
         public ActionResult Index()
         {
@@ -87,6 +88,35 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 rDD_EmpAppraisal.Emp_LastUpdatedOn = System.DateTime.Now;
             }
             return Json(rDD_EmpRating_TemplateDb.SaveEmployeeRating(rDD_EmpAppraisal), JsonRequestBehavior.AllowGet);
+        }
+        [Route("FinalSaveEmployeeRating")]
+        public ActionResult FinalSaveEmployeeRating(int EmployeeId,int Year,string Period)
+        {
+            //ContentResult retVal = null;
+            var t = rDD_EmpRating_TemplateDb.FinalSaveEmployeeRating(EmployeeId, Year, Period);
+            if (t[0].Id != -1)
+            {
+                string MailResponse = "";
+                try
+                {
+                    DataSet ds = new DataSet();
+                    ds = rDD_EmpRating_TemplateDb.GetMailDetails(EmployeeId, Period);
+                    string ToMail = ds.Tables[1].Rows[0]["ToMail"].ToString();
+                    string cc = ds.Tables[2].Rows[0]["CC"].ToString();
+                    string MailBody = ds.Tables[3].Rows[0]["Body"].ToString();
+                    string Subject = ds.Tables[0].Rows[0]["MailSubject"].ToString();
+                    MailResponse = SendMail.Send(ToMail, cc, Subject, MailBody, true);
+                }
+                catch (Exception ex)
+                {
+                    MailResponse = ex.Message;                  
+                }                
+            }
+            else
+            {
+                t[0].Outtf = false;
+            }
+            return Json(t, JsonRequestBehavior.AllowGet);
         }
     }
 }
