@@ -52,7 +52,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetQuestionList(int CategoryId)
+        public DataSet GetQuestionList(int CategoryId,string Loginname)
         {
             DataSet ds = null;
             try
@@ -60,7 +60,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 SqlParameter[] Para =
                 {
                     new SqlParameter("Type","GetQuestion"),
-                    new SqlParameter("CategoryId",CategoryId)
+                    new SqlParameter("CategoryId",CategoryId),
+                    new SqlParameter("LoginName",Loginname)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }

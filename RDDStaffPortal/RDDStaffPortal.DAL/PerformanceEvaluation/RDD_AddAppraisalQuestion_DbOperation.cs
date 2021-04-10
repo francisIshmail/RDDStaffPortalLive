@@ -219,5 +219,52 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return outcls;
         }
 
+        public List<Outcls1> LaunchAppraisal()
+        {
+            List<Outcls1> str = new List<Outcls1>();
+            RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
+            try
+            {
+                using(TransactionScope scope=new TransactionScope())
+                {
+                    SqlParameter[] prm =
+                    {
+                        new SqlParameter("Type","LaunchAppraisal"),                        
+                        new SqlParameter("p_ide",rDD_Question.id),
+                        new SqlParameter("Response",rDD_Question.ErrorMsg)
+                    };
+                    str = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", prm);
+                    scope.Complete();
+                }                
+            }
+            catch (Exception ex)
+            {
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
+
+        public DataSet GetMailDetails()
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] prm =
+                {
+                    new SqlParameter("Type","GetMailDetails")                    
+                };
+                ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, prm);
+            }
+            catch (Exception ex)
+            {
+                throw;             
+            }
+            return ds;
+        }
     }
 }

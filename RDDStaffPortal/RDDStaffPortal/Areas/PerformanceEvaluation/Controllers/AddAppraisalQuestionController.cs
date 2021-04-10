@@ -161,5 +161,32 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
         {
             return Json(rDD_AppraisalQuestion_TemplateDb.DeleteAppraisalQuestion(Qid), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult LaunchAppraisal()
+        {
+            var t = rDD_AppraisalQuestion_TemplateDb.LaunchAppraisal();
+            if (t[0].Id != -1)
+            {
+                string Mailresponse = "";
+                try
+                {
+                    DataSet ds = new DataSet();
+                    ds = rDD_AppraisalQuestion_TemplateDb.GetMailDetails();
+                    string ToMail = ds.Tables[0].Rows[0]["EmployeeMail"].ToString();
+                    string MailSubject = ds.Tables[1].Rows[0]["MailSubject"].ToString();
+                    string MailBody = ds.Tables[2].Rows[0]["Body"].ToString();
+                    Mailresponse = SendMail.Send(ToMail, "", MailSubject, MailBody, true);
+                }
+                catch (Exception ex)
+                {
+                    Mailresponse = ex.Message;                    
+                }
+            }
+            else
+            {
+                t[0].Outtf = false;
+            }
+            return Json(t, JsonRequestBehavior.AllowGet);
+        }
     }
 }

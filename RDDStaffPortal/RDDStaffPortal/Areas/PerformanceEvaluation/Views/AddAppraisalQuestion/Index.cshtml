@@ -42,13 +42,21 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title redtitle">Questions </h4>
-                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal" id="btnAddQuestions" onclick="ClearModalData();">
+                                <button class="btn btn-primary btn-round ml-auto dis" data-toggle="modal" data-target="#addRowModal" id="btnAddQuestions" onclick="ClearModalData();">
                                     <i class="fa fa-plus"></i> Add question
                                 </button>
                             </div>
                         </div>
                         <div class="loader1"></div>
                         <div class="card-body">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Period-Year</label>
+                                    <select id="ddlSelectYear" class="form-control">
+                                        <option value="-1">---Select---</option>
+                                    </select>
+                                </div>
+                            </div>
                             <!-- Modal -->
                             <div class="modal fade modp" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog midbox" role="document">
@@ -182,6 +190,9 @@
                                     </div>
                                 </div>
                             </section>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success dis" id="btnLaunchAppraisal" onclick="LaunchAppraisal();">Launch Appraisal</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -238,6 +249,8 @@
                     $("#addRowModal").modal('hide');
                     $("#btnUpdateEmpDetails").text("Save");
                     $("#btnUpdateEmpDetails").attr("id", "btnSaveEmpDetails");
+                    GetQuestionDetails();
+                    GetCategoryList();
                 }
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
@@ -286,7 +299,15 @@
             url: '@Url.Action("GetQuestionDetails", "AddAppraisalQuestion")',
             dataType: "json",
             success: function (data) {
-                  debugger
+                debugger
+                if (data.Table3.length > 0) {
+                    $("#ddlSelectYear").empty();
+                    $("#ddlSelectYear").append('<option value="-1">--Select--</option>');
+                    $.each(data.Table3, function (index, Value) {
+                        $("#ddlSelectYear").append("<option value='" + Value.AllYear + "'>" + Value.AllYear + "</option>");
+                    });
+                }
+                $("#ddlSelectYear").val(data.Table4[0].CurrentYear);
                 $('.loader1').hide();
                 $("#myTab").empty();
                 $.each(data.Table, function (Index, Value) {
@@ -303,7 +324,7 @@
                         str2 += '<tr>';          
                         str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str2 += '<td>' + Value.Question + '</td>';                        
-                        str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str2 += '</tr>';
                         
                     });
@@ -315,6 +336,18 @@
                 }
                 $("#tblShowQuestion tbody").append(str2);
                 $(".update").attr("hidden", "hidden");
+                if (data.Table2.length > 0) {
+                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
+                }
+                if (LaunchStatus == true) {
+                    $('.dis').prop("disabled", true);
+                    $('.dis').css("cursor", "not-allowed");
+                    
+                }
+                else {
+                    $('.dis').prop("disabled", false);
+                    $('.dis').css("cursor", "");
+                }
                 //$('#tblShowQuestion').DataTable();
             }
         });
@@ -326,11 +359,51 @@
         GetCategoryList();
         $("#add-rowExcel").hide();
         $("#add-rowPrevious").hide();
-        // action dynamic childss
-        
-        var count = 0;
-        
+        // action dynamic childss        
     });
+
+    function LaunchAppraisal() {     
+        const swalWithBootstrapButtons = Swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Submit it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            $('.loader1').show();
+            if (result.value) {
+                $.getJSON("/AddAppraisalQuestion/LaunchAppraisal",).done(function (data) {
+                    $('.loader1').hide();
+                    if (data[0].Outtf == true) {
+                        RedDotAlert_Success(data[0].Responsemsg);
+                        GetQuestionDetails();
+                        GetCategoryList();
+                    }
+                    else {
+                        RedDotAlert_Error(data[0].Responsemsg);
+                    }
+                });
+            }
+            else if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your Record  is safe :)',
+                    'error'
+                )
+            }
+            $('.loader1').hide();
+        });
+    }
 
     function ClearModalData() {        
         GetCategoryList();
@@ -447,6 +520,7 @@
             $("#action_name").css("cursor", "not-allowed");
             $("#action_json").css("cursor", "not-allowed");
             $("#add-more").css("cursor", "not-allowed");
+            GetPreviousPeriodQuestion(PrevPeriod);
         }
         else {
             $("#add-rowPrevious").hide();
@@ -458,7 +532,7 @@
             $("#action_json").css("cursor", "");
             $("#add-more").css("cursor", "");
         }
-        GetPreviousPeriodQuestion(PrevPeriod);
+        
     });
     $(document).on('click', '.btnDel', function () {
         $(this).parents("tr").remove();
@@ -548,7 +622,7 @@
                         str += '<tr>';
                         str += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str += '<td>' + Value.Question + '</td>';                                              
-                        str += '<td><div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str += '<td><div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str += '</tr>';                        
                     });
                 }
@@ -559,6 +633,17 @@
                 }    
                 $("#tblShowQuestion tbody").append(str);
                 $(".update").attr("hidden", "hidden");
+                if (data.Table1.length > 0) {
+                    var LaunchStatus = data.Table1[0].AppraisalLaunchStatus;
+                }
+                if (LaunchStatus == true) {
+                    $('.dis').prop("disabled", true);
+                    $('.dis').css("cursor", "not-allowed");
+                }
+                else {
+                    $('.dis').prop("disabled", false);
+                    $('.dis').css("cursor", "");
+                }
             }
         });
     });
@@ -584,8 +669,7 @@
             success: function (data) {
                 debugger
                 $('.loader1').hide();
-                if (data[0].Outtf == true) {
-                    $('.loader1').hide();
+                if (data[0].Outtf == true) {                    
                     RedDotAlert_Success(data[0].Responsemsg);
                     GetQuestionDetails();
                     tr.find(".edit").removeAttr("hidden", "hidden");

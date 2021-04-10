@@ -67,7 +67,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             string LoginName = User.Identity.Name;
             try
             {
-                ds = rDD_EmpRating_TemplateDb.GetQuestionList(CategoryId);
+                ds = rDD_EmpRating_TemplateDb.GetQuestionList(CategoryId,LoginName);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
