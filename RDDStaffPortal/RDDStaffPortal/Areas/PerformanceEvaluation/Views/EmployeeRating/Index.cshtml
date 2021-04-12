@@ -192,10 +192,15 @@
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
                     $("#btnUpdateRating").remove();
+                    $("#btnFinalSubmit").prop("disabled", "disabled");
+                    $('#btnFinalSubmit').css("cursor", "not-allowed");
                 }
                 else {
                     $('.dis').prop("disabled", false);
                     $('.dis').css("cursor", "");
+                    $("#btnFinalSubmit").prop("disabled", "disabled");
+                    $("#btnFinalSubmit").removeAttr("disabled", "disabled");
+                    $('#btnFinalSubmit').css("cursor", "");
                 }
             }
         });
