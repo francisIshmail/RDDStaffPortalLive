@@ -128,11 +128,20 @@
                                     str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
                                 }                                
                             }
-                            str2 += '</form></div></td>';                            
+                            str2 += '</form></div></td>';            
+                            if (Value.EmployeeComment == null) {
+                                Value.EmployeeComment = "";
+                            }
                             str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="dis textarea-style empcomnt">' + Value.EmployeeComment + '</textarea></td>';                            
                             str2 += '<td style="display:none">' + Value.EmployeeRating + '</td>';
-                            str2 += '</tr>';
-                            
+                            str2 += '<td style="display:none"></td>';
+                            str2 += '<td><div class="stars"><form action="">';
+                            for (var k = RatingNo; k > 0; k--) {
+                                str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                            }
+                            str2 += '</form></div></td>';
+                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
+                            str2 += '</tr>';                            
                             j++;                            
                         });
                     }
@@ -159,7 +168,7 @@
                                 str2 += '<td style="display:none"></td>';
                                 str2 += '<td><div class="stars"><form action="">';
                                 for (var k = RatingNo; k > 0; k--) {
-                                    str2 += '<input class="star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                 }
                                 str2 += '</form></div></td>';
                                 str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
@@ -178,6 +187,7 @@
                 }
                
                 $("#add-row tbody").append(str2);
+                $('.distar').attr("disabled", "disabled");                
                 if (SaveStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
@@ -313,8 +323,18 @@
                                 }                               
                             }
                             str += '</form></div></td>';
+                            if (Value.EmployeeComment == null) {
+                                Value.EmployeeComment = "";
+                            }
                             str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis">' + Value.EmployeeComment + '</textarea></td>';                            
                             str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
+                            str += '<td style="display:none"></td>';
+                            str += '<td><div class="stars"><form action="">';
+                            for (var k = RatingNo; k > 0; k--) {
+                                str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                            }
+                            str += '</form></div></td>';
+                            str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
                             str += '</tr>';
                             j++;
                         });
@@ -340,7 +360,7 @@
                                 str += '<td style="display:none"></td>';
                                 str += '<td><div class="stars"><form action="" disabled="disabled">';
                                 for (var k = RatingNo; k > 0; k--) {
-                                    str += '<input class="star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                 }
                                 str += '</form></div></td>';
                                 str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
@@ -360,7 +380,8 @@
                         $("#divBtnSave").hide();
                     }
                 }                
-                $("#add-row tbody").append(str);                
+                $("#add-row tbody").append(str);  
+                $('.distars').attr("disabled", "disabled");  
                 if (data.Table2.length > 0) {
                     var SaveStatus = data.Table2[0].Emp_FinalSubmissionStatus;
                 }
@@ -383,20 +404,11 @@
             Year: $.trim($("#divYear").text()),
             Period: $.trim($("#divPeriod").text()),
             rDD_EmpAppraisalList:[]
-        };
-        var Alerts = "";
+        };        
         $("#add-row tbody tr").each(function () {
             var QuestionId = $(this).closest("tr").find("td:eq(1)").text();
             var EmpRating = $('#hdnstarval_' + QuestionId).val();
-            var EmpComment = $.trim($(".empcomnt", this).val());
-            if (EmpRating == "" || EmpComment == "") {
-                RedDotAlert_Error("Please Fill All Fields");
-                Alerts = 1;
-                return false;
-            }
-            else {
-                Alerts = 0;
-            }
+            var EmpComment = $.trim($(".empcomnt", this).val());            
             var rDD_EmpAppraisalList = {
                 QuestionId: QuestionId,
                 EmployeeRating: EmpRating,
@@ -404,12 +416,19 @@
             };
             rDD_EmpAppraisal.rDD_EmpAppraisalList.push(rDD_EmpAppraisalList);            
         });
-        if (Alerts == 0) {
-            SaveEmpRating(rDD_EmpAppraisal);
+        var i = 0;
+        var length = rDD_EmpAppraisal.rDD_EmpAppraisalList.length;
+        while (i < length) {
+            if ((rDD_EmpAppraisal.rDD_EmpAppraisalList[i].EmployeeRating == "") || (rDD_EmpAppraisal.rDD_EmpAppraisalList[i].EmployeeComment == "")) {
+                i++;
+            }
+            else {
+                SaveEmpRating(rDD_EmpAppraisal);
+                return false;
+            }
+            RedDotAlert_Error("Please Fill At Least One Rating And Comments")
         }
-        else {
-            return false;
-        }        
+         
     });
     $(document).on('click', '#btnUpdateRating', function () {
         var rDD_EmpAppraisal = {
@@ -432,7 +451,19 @@
             };
             rDD_EmpAppraisal.rDD_EmpAppraisalList.push(rDD_EmpAppraisalList);
         });
-        SaveEmpRating(rDD_EmpAppraisal);
+        var i = 0;
+        var length = rDD_EmpAppraisal.rDD_EmpAppraisalList.length;
+        while (i < length) {
+            if ((rDD_EmpAppraisal.rDD_EmpAppraisalList[i].EmployeeRating == "") || (rDD_EmpAppraisal.rDD_EmpAppraisalList[i].EmployeeComment == "")) {
+                i++;
+            }
+            else {
+                SaveEmpRating(rDD_EmpAppraisal);
+                return false;
+            }
+            RedDotAlert_Error("Please Fill At Least One Rating And Comments")
+        }
+        //SaveEmpRating(rDD_EmpAppraisal);
     });
 </script>
 
