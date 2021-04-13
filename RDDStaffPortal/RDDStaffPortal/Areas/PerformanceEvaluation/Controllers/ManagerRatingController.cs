@@ -41,14 +41,13 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetEmployeeByDepartment(int DeptId)
+        public ActionResult GetEmployeeRating(int EmpId)
         {
             ContentResult retVal = null;
-            DataSet ds;
-            string LoginName = User.Identity.Name;
+            DataSet ds;            
             try
             {
-                ds = rDD_MngRating_TemplateDb.GetEmployeeByDepartment(DeptId,LoginName);
+                ds = rDD_MngRating_TemplateDb.GetEmployeeRating(EmpId);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -59,6 +58,11 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             {
                 throw ex;
             }
+        }
+
+        public ActionResult GetPartial()
+        {
+            return PartialView("~/Areas/PerformanceEvaluation/Views/ManagerRating/ManagerRatingPartial.cshtml");
         }
     }
 }

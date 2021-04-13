@@ -25,7 +25,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     new SqlParameter("Type","GetDetailsForManager"),
                     new SqlParameter("LoginName",LoginName)
                 };
-                ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+                ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }
             catch (Exception)
             {
@@ -34,18 +34,17 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetEmployeeByDepartment(int DeptId, string LoginName)
+        public DataSet GetEmployeeRating(int EmpId)
         {
             DataSet ds = null;
             try
             {
                 SqlParameter[] Para =
                 {
-                    new SqlParameter("Type","GetEmployeeByDepartment"),
-                    new SqlParameter("LoginName",LoginName),
-                    new SqlParameter("DeptId",DeptId)
+                    new SqlParameter("Type","GetEmployeeRating"),
+                    new SqlParameter("EmployeeId",EmpId)                    
                 };
-                ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+                ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }
             catch (Exception)
             {
