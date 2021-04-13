@@ -21,207 +21,62 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="  align-items-center">
-                                <h4 class="card-title redtitle">Rating</h4>
-                                <div class="row">
-                                    <form class="form-inline col-12">
-                                        <div class="form-group mr-sm-3 mb-2 col-3">
-                                            <label for="inputPassword2" class=" ">Department</label>
-                                            <select class="form-control" id="ddlDepartment" onchange="GetEmployeeName();">
-                                                <option value="-1">--Select--</option>
-                                            </select>
+                                <h4 class="card-title redtitle">Employee Rating</h4>
+                                <div class="row mx-3 mt-3">
+                                    <div class="col-1">
+                                        <img src="data:image;base64,@HttpContext.Current.Session["LoginName"]" alt="..." class="avatar-img rounded-circle">
+                                    </div>
+                                    <div class="col-11 p-0">
+                                        <h2 id="headEmpName">
+                                            Tathagata Ghosh
+                                            <span class="badge badge-danger mb-1 ml-2">HEAD OF IT</span>
+                                        </h2>
+                                        <div class="row">
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divDepartment"><i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>IT </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divCountry"><i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>INDIA </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divYear"><i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>2021 </div>
+                                            <div class="col-3 p-0 emp" style="font-size:16px" id="divPeriod"><i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>H2 </div>
                                         </div>
-                                        <div class="form-group mr-sm-3 mb-2 col-3">
-                                            <label for="inputPassword2" class=" ">Name</label>
-                                            <select class="form-control" id="ddlEmployeeName">
-                                                <option value="-1">--Select--</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mr-sm-3 mb-2 col-2" style="display: inline-block;">
-                                            <label for="inputPassword2" class="">Year</label>
-                                            <div style=" font-size: 16px;padding: 10px 0;" id="divYear"></div>
-                                        </div>
-                                        <div class="form-group mr-sm-3 mb-2 col-2" style="display: inline-block;">
-                                            <label for="inputPassword2" class=" ">Period</label>
-                                            <div style="font-size: 16px;padding: 10px 0" id="divPeriod"></div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-round">Filter</button>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">                           
                             <section>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Finance </a>
-                                    </li>
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sales </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="table-responsive tblscroll">
-                                            <table id="add-row" class="display table table-striped table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width:300px;">Question </th>
-                                                        <th style="width:150px;">Employee Rating </th>
-                                                        <th style="width:200px;">Employee Comment </th>
-                                                        <th style="width:150px;">Manager Rating </th>
-                                                        <th style="width:200px;">Manager Comment </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="star-5" type="radio" name="star" />
-                                                                    <label class="star star-5" for="star-5"></label>
-                                                                    <input class="star star-4" id="star-4" type="radio" name="star" />
-                                                                    <label class="star star-4" for="star-4"></label>
-                                                                    <input class="star star-3" id="star-3" type="radio" name="star" />
-                                                                    <label class="star star-3" for="star-3"></label>
-                                                                    <input class="star star-2" id="star-2" type="radio" name="star" />
-                                                                    <label class="star star-2" for="star-2"></label>
-                                                                    <input class="star star-1" id="star-1" type="radio" name="star" />
-                                                                    <label class="star star-1" for="star-1"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="star-5-2" type="radio" name="star" />
-                                                                    <label class="star star-5" for="star-5-2"></label>
-                                                                    <input class="star star-4" id="star-4-2" type="radio" name="star" />
-                                                                    <label class="star star-4" for="star-4-2"></label>
-                                                                    <input class="star star-3" id="star-3-2" type="radio" name="star" />
-                                                                    <label class="star star-3" for="star-3-2"></label>
-                                                                    <input class="star star-2" id="star-2-2" type="radio" name="star" />
-                                                                    <label class="star star-2" for="star-2-2"></label>
-                                                                    <input class="star star-1" id="star-1-2" type="radio" name="star" />
-                                                                    <label class="star star-1" for="star-1-2"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
+                                <table class="display table table-striped table-hover">
+                                    <thead style="background-color: rgba(0,0,0,.05);">
+                                        <tr style="font-size:14px">
+                                            <th width="20px" scope="col">#</th>
+                                            <th scope="col">Employee</th>                                           
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td style="font-size:16px"><a href="#" target="_blank">Mainak ghosh</a></td>
+                                            <td><span class="badge badge-warning">pending</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td style="font-size:16px">Subhojit ghosh</td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="stare-5" type="radio" name="star" />
-                                                                    <label class="star star-5" for="stare-5"></label>
-                                                                    <input class="star star-4" id="stare-4" type="radio" name="star" />
-                                                                    <label class="star star-4" for="stare-4"></label>
-                                                                    <input class="star star-3" id="stare-3" type="radio" name="star" />
-                                                                    <label class="star star-3" for="stare-3"></label>
-                                                                    <input class="star star-2" id="stare-2" type="radio" name="star" />
-                                                                    <label class="star star-2" for="stare-2"></label>
-                                                                    <input class="star star-1" id="stare-1" type="radio" name="star" checked="checked" />
-                                                                    <label class="star star-1" for="stare-1"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="stare-5-2" type="radio" name="star" />
-                                                                    <label class="star star-5" for="stare-5-2"></label>
-                                                                    <input class="star star-4" id="stare-4-2" type="radio" name="star" checked="checked" />
-                                                                    <label class="star star-4" for="stare-4-2"></label>
-                                                                    <input class="star star-3" id="stare-3-2" type="radio" name="star" />
-                                                                    <label class="star star-3" for="stare-3-2"></label>
-                                                                    <input class="star star-2" id="stare-2-2" type="radio" name="star" />
-                                                                    <label class="star star-2" for="stare-2-2"></label>
-                                                                    <input class="star star-1" id="stare-1-2" type="radio" name="star" />
-                                                                    <label class="star star-1" for="stare-1-2"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
+                                            <td><span class="badge badge-success">completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td style="font-size:16px">Tathagata ghosh</td>
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="table-responsive tblscroll">
-                                            <table id="add-row-two" class="display table table-striped table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width:350px;">Question </th>
-                                                        <th style="width:125px;">Employee Rating </th>
-                                                        <th style="width:200px;">Employee Comment </th>
-                                                        <th style="width:125px;">Manager Rating </th>
-                                                        <th style="width:200px;">Manager Comment </th>
-                                                        <th style="width:70px;">Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                            <td><span class="badge badge-success">completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td style="font-size:16px">Pratim ghosh</td>
 
-                                                    <tr>
-                                                        <td>Why is an electrical outlet called an outlet when you plug things into it? Shouldn't it be called an inlet? </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="star-5-3" type="radio" name="star" />
-                                                                    <label class="star star-5" for="star-5-3"></label>
-                                                                    <input class="star star-4" id="star-4-3" type="radio" name="star" />
-                                                                    <label class="star star-4" for="star-4-3"></label>
-                                                                    <input class="star star-3" id="star-3-3" type="radio" name="star" />
-                                                                    <label class="star star-3" for="star-3-3"></label>
-                                                                    <input class="star star-2" id="star-2-3" type="radio" name="star" />
-                                                                    <label class="star star-2" for="star-2-3"></label>
-                                                                    <input class="star star-1" id="star-1-3" type="radio" name="star" />
-                                                                    <label class="star star-1" for="star-1-3"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
-                                                        <td>
-                                                            <div class="stars">
-                                                                <form action="">
-                                                                    <input class="star star-5" id="star-5-4" type="radio" name="star" />
-                                                                    <label class="star star-5" for="star-5-4"></label>
-                                                                    <input class="star star-4" id="star-4-4" type="radio" name="star" />
-
-                                                                    <label class="star star-4" for="star-4-4"></label>
-                                                                    <input class="star star-3" id="star-3-4" type="radio" name="star" />
-                                                                    <label class="star star-3" for="star-3-4"></label>
-                                                                    <input class="star star-2" id="star-2-4" type="radio" name="star" />
-                                                                    <label class="star star-2" for="star-2-4"></label>
-                                                                    <input class="star star-1" id="star-1-4" type="radio" name="star" />
-                                                                    <label class="star star-1" for="star-1-4"></label>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style"></textarea> </td>
-                                                        <td>
-                                                            <div class="form-button-action">
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <td><span class="badge badge-warning">Warning</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </section>
                         </div>
                     </div>
@@ -234,7 +89,7 @@
 <script src="~/Scripts/jquery-3.5.1.min.js"></script>
 <script src="~/Scripts/RedDotUtility.js"></script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     function GetDetailsForManager() {
         $.ajax({
             type: "GET",
@@ -272,4 +127,4 @@
         GetDetailsForManager();
     });
     
-</script>
+</script>*@
