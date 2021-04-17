@@ -41,8 +41,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title redtitle">Questions </h4>
-                                <button class="btn btn-primary btn-round ml-auto dis" data-toggle="modal" data-target="#addRowModal" id="btnAddQuestions" onclick="ClearModalData();">
+                                <h4 class="card-title redtitle">Add Appraisal Questions </h4>
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal" id="btnAddQuestions" onclick="ClearModalData();">
                                     <i class="fa fa-plus"></i> Add question
                                 </button>
                             </div>
@@ -72,7 +72,7 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label>Select Category</label>
                                                             <select id="ddlCategory" class="form-control ddlPeriod">
@@ -80,10 +80,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label>Select Period</label>
                                                             <select id="ddlPeriod" class="form-control ddlPeriod">
+                                                                <option value="-1">---Select---</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label>Select Year</label>
+                                                            <select id="ddlYear" class="form-control ddlPeriod">
                                                                 <option value="-1">---Select---</option>
                                                             </select>
                                                         </div>
@@ -208,9 +216,7 @@
             type: "GET",
             url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
             dataType: "json",
-            success: function (data) {
-                //$('.loader1').hide();
-                //var d = data.Table;
+            success: function (data) {               
                 $("#ddlCopyFromPrevious").empty();
                 $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
                 $.each(data.Table, function (index, Value) {
@@ -226,6 +232,11 @@
                 $.each(data.Table2, function (index, Value) {
                     $("#ddlPeriod").append("<option value='" + Value.Period + "'>" + Value.Period + "</option>");
                 });
+                $("#ddlYear").empty();
+                $("#ddlYear").append('<option value="-1">--Select--</option>');
+                $.each(data.Table3, function (index, Value) {
+                    $("#ddlYear").append("<option value='" + Value.Years + "'>" + Value.Years + "</option>");
+                });
             }
         });
     }
@@ -238,8 +249,7 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ rDD_Question: rDD_Question }),
             dataType: "json",
-            success: function (data) {
-                debugger
+            success: function (data) {                
                 $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
@@ -264,8 +274,7 @@
             data: JSON.stringify({ PrevPeriod: PrevPeriod}),
             dataType: "json",
             success: function (data) {
-                debugger
-                //$('#add-rowExcel').dataTable().fnDestroy();
+                debugger               
                 $("#add-rowPrevious tbody").empty();
                 $("#add-rowPrevious").show();
                 var Html = "";
@@ -288,25 +297,25 @@
         });
     }
 
-    function GetQuestionDetails() {
-        $('.loader1').show();
+    function GetQuestionDetails() {        
         $("#tblShowQuestion tbody").empty();
         $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetQuestionDetails", "AddAppraisalQuestion")',
             dataType: "json",
-            success: function (data) {
-                debugger
+            success: function (data) {               
+                
+                $("#ddlSelectYear").empty();
+                $("#ddlSelectYear").append('<option value="-1">--Select--</option>');
                 if (data.Table3.length > 0) {
-                    $("#ddlSelectYear").empty();
-                    $("#ddlSelectYear").append('<option value="-1">--Select--</option>');
-                    $.each(data.Table3, function (index, Value) {
+                    $.each(data.Table3, function (index, Value) {                        
                         $("#ddlSelectYear").append("<option value='" + Value.AllYear + "'>" + Value.AllYear + "</option>");
                     });
-                }
-                $("#ddlSelectYear").val(data.Table4[0].CurrentYear);
-                $('.loader1').hide();
+                    if (data.Table4.length > 0) {
+                        $("#ddlSelectYear").val(data.Table4[0].CurrentYear);
+                    }
+                }            
                 $("#myTab").empty();
                 $.each(data.Table, function (Index, Value) {
                     var str1 = "";
@@ -329,7 +338,7 @@
                 }
                 else {
                     str2 += '<tr>';
-                    str2 += '<td colspan="6" style="text-align:center">No Question Assigned Under This Category</td>';
+                    str2 += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';
                     str2 += '</tr>';
                 }
                 $("#tblShowQuestion tbody").append(str2);
@@ -346,21 +355,21 @@
                     $('.dis').prop("disabled", false);
                     $('.dis').css("cursor", "");
                 }
-                //$('#tblShowQuestion').DataTable();
+                $('.loader1').hide();                
             }
         });
     }
     
     $(document).ready(function () {
-        GetQuestionDetails();
-        
+        $('.loader1').show();
+        GetQuestionDetails();         
         GetCategoryList();
         $("#add-rowExcel").hide();
         $("#add-rowPrevious").hide();
-        // action dynamic childss        
     });
 
     function LaunchAppraisal() {     
+        var Qperiod = $("#ddlSelectYear option:selected").val();
         const swalWithBootstrapButtons = Swal.mixin({
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger',
@@ -377,7 +386,7 @@
         }).then((result) => {
             $('.loader1').show();
             if (result.value) {
-                $.getJSON("/AddAppraisalQuestion/LaunchAppraisal",).done(function (data) {
+                $.getJSON("/AddAppraisalQuestion/LaunchAppraisal", { "Qperiod": Qperiod }).done(function (data) {
                     $('.loader1').hide();
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
@@ -455,6 +464,57 @@
             });
         });
     }
+
+    $(document).on('change', '#ddlSelectYear', function () {
+        var Qperiodyear = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetQuestionByPeriodYear", "AddAppraisalQuestion")',
+            data: { "Qperiodyear": Qperiodyear },
+            dataType: "json",
+            success: function (data) {                
+                $("#myTab").empty();
+                $.each(data.Table, function (Index, Value) {
+                    var str1 = "";
+                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                    $("#myTab").append(str1);
+                });
+                $("#myTab li:eq(0) a").tab('show');
+                var str2 = "";
+                //$('#tblShowQuestion').dataTable().fnDestroy();
+                $("#tblShowQuestion tbody").empty();
+                if (data.Table1.length > 0) {
+                    $.each(data.Table1, function (Index, Value) {
+                        str2 += '<tr>';
+                        str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
+                        str2 += '<td>' + Value.Question + '</td>';
+                        str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        str2 += '</tr>';
+
+                    });
+                }
+                else {
+                    str2 += '<tr>';
+                    str2 += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';
+                    str2 += '</tr>';
+                }
+                $("#tblShowQuestion tbody").append(str2);
+                $(".update").attr("hidden", "hidden");
+                if (data.Table2.length > 0) {
+                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
+                }
+                if (LaunchStatus == true) {
+                    $('.dis').prop("disabled", true);
+                    $('.dis').css("cursor", "not-allowed");
+
+                }
+                else {
+                    $('.dis').prop("disabled", false);
+                    $('.dis').css("cursor", "");
+                }
+            }    
+        });
+    });
 
     $(document).on('click', '#btnDownloadExcel', function () {
         window.location.href = '@Url.Action("Download", "AddAppraisalQuestion")';
@@ -553,6 +613,7 @@
     $(document).on('click', '#btnSaveQuestion', function () {
         var Catid = $("#ddlCategory option:selected").val();
         var Period = $("#ddlPeriod option:selected").val();
+        var QYear = $("#ddlYear option:selected").val();
         if (Catid == "-1") {
             RedDotAlert_Error("Please Select Category");
             return false;
@@ -561,9 +622,14 @@
             RedDotAlert_Error("Please Select Period");
             return false;
         }
+        if (QYear == "-1") {
+            RedDotAlert_Error("Please Select Year");
+            return false;
+        }
         var rDD_Question = {
             CategoryId: Catid,
             Period: Period,
+            Year: QYear,
             rDD_QuestionList:[]
         };
         if ($("#action_json").prop("disabled") == false) {
@@ -602,12 +668,13 @@
 
     $(document).on('click', '.selectCategory', function () {
         var CategoryId = $(this).attr("data");
+        var Qperiod = $("#ddlSelectYear option:selected").val();
         $("#tblShowQuestion tbody").empty();
         $("#tblShowQuestion tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');        
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetCategorywiseQuestionList", "AddAppraisalQuestion")',
-            data: { "CategoryId": CategoryId},
+            data: { "CategoryId": CategoryId, "Qperiod": Qperiod},
             dataType: "json",
             success: function (data) { 
                 debugger

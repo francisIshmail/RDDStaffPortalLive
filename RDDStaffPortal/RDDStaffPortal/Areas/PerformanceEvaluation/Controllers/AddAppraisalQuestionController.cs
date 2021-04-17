@@ -42,14 +42,14 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetCategorywiseQuestionList(int CategoryId)
+        public ActionResult GetCategorywiseQuestionList(int CategoryId, string Qperiod)
         {
             ContentResult retVal = null;
             DataSet ds;
             string LoginName = User.Identity.Name;
             try
             {
-                ds = rDD_AppraisalQuestion_TemplateDb.GetCategorywiseQuestionList(CategoryId);
+                ds = rDD_AppraisalQuestion_TemplateDb.GetCategorywiseQuestionList(CategoryId, Qperiod);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -88,6 +88,25 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             try
             {
                 ds = rDD_AppraisalQuestion_TemplateDb.GetPreviousPeriodQuestion(PrevPeriod);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetQuestionByPeriodYear(string Qperiodyear)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            try
+            {
+                ds = rDD_AppraisalQuestion_TemplateDb.GetQuestionByPeriodYear(Qperiodyear);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -162,16 +181,16 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return Json(rDD_AppraisalQuestion_TemplateDb.DeleteAppraisalQuestion(Qid), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult LaunchAppraisal()
+        public ActionResult LaunchAppraisal(string Qperiod)
         {
-            var t = rDD_AppraisalQuestion_TemplateDb.LaunchAppraisal();
+            var t = rDD_AppraisalQuestion_TemplateDb.LaunchAppraisal(Qperiod);
             if (t[0].Id != -1)
             {
                 string Mailresponse = "";
                 try
                 {
                     DataSet ds = new DataSet();
-                    ds = rDD_AppraisalQuestion_TemplateDb.GetMailDetails();
+                    ds = rDD_AppraisalQuestion_TemplateDb.GetMailDetails(Qperiod);
                     string ToMail = ds.Tables[0].Rows[0]["EmployeeMail"].ToString();
                     string MailSubject = ds.Tables[1].Rows[0]["MailSubject"].ToString();
                     string MailBody = ds.Tables[2].Rows[0]["Body"].ToString();

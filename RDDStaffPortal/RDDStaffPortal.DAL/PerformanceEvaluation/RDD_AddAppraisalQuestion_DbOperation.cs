@@ -54,6 +54,25 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
+        public DataSet GetQuestionByPeriodYear(string Qperiodyear)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("@Type","GetQuestionByPeriodYear"),
+                    new SqlParameter("@Periods",Qperiodyear)
+                };
+                ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
         public DataSet GetQuestionDetails()
         {
             DataSet ds = null;
@@ -72,7 +91,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetCategorywiseQuestionList(int CategoryId)
+        public DataSet GetCategorywiseQuestionList(int CategoryId, string Qperiod)
         {
             DataSet ds = null;
             try
@@ -80,7 +99,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 SqlParameter[] Para =
                 {
                     new SqlParameter("Type","GetCategorywiseQuestion"),
-                    new SqlParameter("CategoryId",CategoryId)
+                    new SqlParameter("CategoryId",CategoryId),
+                    new SqlParameter("Periods",Qperiod)
                 };
                 ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, Para);
             }
@@ -109,6 +129,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     SqlParameter[] parm = {
                             new SqlParameter("@AppraisalQuestionId",rDD_Question.QuestionId),
                             new SqlParameter("@Period",rDD_Question.Period),
+                            new SqlParameter("@Qyear",rDD_Question.Year),
                             new SqlParameter("@CategoryId",rDD_Question.CategoryId),
                             new SqlParameter("@CreatedBy",rDD_Question.CreatedBy),
                             new SqlParameter("@LastUpdatedBy",rDD_Question.LastUpdatedBy),
@@ -219,7 +240,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return outcls;
         }
 
-        public List<Outcls1> LaunchAppraisal()
+        public List<Outcls1> LaunchAppraisal(string Qperiod)
         {
             List<Outcls1> str = new List<Outcls1>();
             RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
@@ -229,7 +250,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 {
                     SqlParameter[] prm =
                     {
-                        new SqlParameter("Type","LaunchAppraisal"),                        
+                        new SqlParameter("Type","LaunchAppraisal"),
+                        new SqlParameter("Periods",Qperiod),
                         new SqlParameter("p_ide",rDD_Question.id),
                         new SqlParameter("Response",rDD_Question.ErrorMsg)
                     };
@@ -249,14 +271,15 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return str;
         }
 
-        public DataSet GetMailDetails()
+        public DataSet GetMailDetails(string Qperiod)
         {
             DataSet ds;
             try
             {
                 SqlParameter[] prm =
                 {
-                    new SqlParameter("Type","GetMailDetails")                    
+                    new SqlParameter("Type","GetMailDetails"),
+                    new SqlParameter("Periods",Qperiod)
                 };
                 ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, prm);
             }

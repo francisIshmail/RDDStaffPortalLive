@@ -52,7 +52,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetQuestionList(int CategoryId,string Loginname)
+        public DataSet GetQuestionList(int CategoryId,string Loginname, string Qperiod)
         {
             DataSet ds = null;
             try
@@ -61,7 +61,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 {
                     new SqlParameter("Type","GetQuestion"),
                     new SqlParameter("CategoryId",CategoryId),
-                    new SqlParameter("LoginName",Loginname)
+                    new SqlParameter("LoginName",Loginname),
+                    new SqlParameter("Periods",Qperiod)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }
@@ -207,6 +208,26 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, prm);
             }
             catch(Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+        public DataSet GetDetailsByYearAndPeriod(string Qperiod,string Loginname)
+        {
+            DataSet ds = null;
+            try
+            {                
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetDetailsByYearAndPeriod"),
+                    new SqlParameter("Periods",Qperiod),
+                    new SqlParameter("LoginName",Loginname)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
             {
                 throw;
             }

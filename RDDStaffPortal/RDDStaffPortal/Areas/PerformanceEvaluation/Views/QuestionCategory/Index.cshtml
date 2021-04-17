@@ -9,7 +9,6 @@
     .table-responsive {
         white-space: inherit;
     }
-    
 </style>
 <link href="~/Content/extra-style.css" rel="stylesheet" />
 
@@ -74,7 +73,7 @@
                             <div class="col-md-4">
                                 <input id="myInput" type="text" placeholder="Search.." class="form-control">
                             </div>
-                            <br/>
+                            <br />
                             <div class="table-responsive">
                                 <table id="tblCategoryDetails" class="display table table-striped table-hover">
                                     <thead>
@@ -86,7 +85,11 @@
                                             <th style="text-align:center" width="10%">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tblCategoryDetailstbody"></tbody>
+                                    <tbody id="tblCategoryDetailstbody">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center">Please Wait...</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -136,7 +139,7 @@
                     });
                 }
                 else {
-                    $("#tblCategoryDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
+                    $("#tblCategoryDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>');
                 }
                 //$("#tblCategoryDetails").dataTable();
                 $('.loader1').hide();

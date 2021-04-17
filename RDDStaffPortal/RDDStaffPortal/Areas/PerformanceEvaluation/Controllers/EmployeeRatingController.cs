@@ -60,14 +60,14 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 throw ex;
             }
         }
-        public ActionResult GetQuestionList(int CategoryId)
+        public ActionResult GetQuestionList(int CategoryId,string Qperiod)
         {
             ContentResult retVal = null;
             DataSet ds;
             string LoginName = User.Identity.Name;
             try
             {
-                ds = rDD_EmpRating_TemplateDb.GetQuestionList(CategoryId,LoginName);
+                ds = rDD_EmpRating_TemplateDb.GetQuestionList(CategoryId,LoginName,Qperiod);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -117,6 +117,26 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 t[0].Outtf = false;
             }
             return Json(t, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetDetailsByYearAndPeriod(string Qperiod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;            
+            try
+            {
+                string Loginname = User.Identity.Name;
+                ds = rDD_EmpRating_TemplateDb.GetDetailsByYearAndPeriod(Qperiod,Loginname);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
