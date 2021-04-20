@@ -65,15 +65,35 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return PartialView("~/Areas/PerformanceEvaluation/Views/ManagerRating/ManagerRatingPartial.cshtml");
         }
 
-        //public ActionResult SaveManagerRating(RDD_EmployeeRating rDD_EmpAppraisal)
-        //{
-        //    rDD_EmpAppraisal.Emp_SubmittedBy = User.Identity.Name;
-        //    if (rDD_EmpAppraisal.EditFlag == true)
-        //    {
-        //        //rDD_EmpAppraisal.E = User.Identity.Name;
-        //        rDD_EmpAppraisal.Emp_LastUpdatedOn = System.DateTime.Now;
-        //    }
-        //    return Json(rDD_EmpRating_TemplateDb.SaveEmployeeRating(rDD_EmpAppraisal), JsonRequestBehavior.AllowGet);
-        //}
+        public ActionResult GetQuestionList(int CategoryId, string Qperiod, int EmpId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_MngRating_TemplateDb.GetQuestionList(CategoryId, Qperiod, EmpId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult SaveManagerRating(RDD_EmployeeRating rDD_MngAppraisal)
+        {
+            rDD_MngAppraisal.Emp_SubmittedBy = User.Identity.Name;
+            if (rDD_MngAppraisal.EditFlag == true)
+            {
+                //rDD_EmpAppraisal.E = User.Identity.Name;
+                rDD_MngAppraisal.Emp_LastUpdatedOn = System.DateTime.Now;
+            }
+            return Json(rDD_MngRating_TemplateDb.SaveManagerRating(rDD_MngAppraisal), JsonRequestBehavior.AllowGet);
+        }
     }
 }
