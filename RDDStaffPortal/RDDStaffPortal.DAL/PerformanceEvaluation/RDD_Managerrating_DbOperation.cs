@@ -77,31 +77,24 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
         public List<Outcls1> SaveManagerRating(RDD_EmployeeRating rDD_MngAppraisal)
         {
             List<Outcls1> str = new List<Outcls1>();
-            if (rDD_MngAppraisal.EditFlag == false)
-            {
-                rDD_MngAppraisal.ActionType = "ManagerInsert";
-            }
-            else
-            {
-                rDD_MngAppraisal.ActionType = "Update";
-            }
+            rDD_MngAppraisal.ActionType = "ManagerInsert";              
             try
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    int m = 0;                   
-                    
+                    int m = 0;                                    
                     while (rDD_MngAppraisal.rDD_EmpAppraisalList.Count > m)
                     {
                         SqlParameter[] ParaDet1 =
                         {
-                                    new SqlParameter("@Type",rDD_MngAppraisal.ActionType),
-                                    new SqlParameter("@AppraisalTransId",rDD_MngAppraisal.rDD_EmpAppraisalList[m].AppraisalTransId),
-                                    new SqlParameter("@ManagerRating",rDD_MngAppraisal.rDD_EmpAppraisalList[m].ManagerRating),
-                                    new SqlParameter("@ManagerComment",rDD_MngAppraisal.rDD_EmpAppraisalList[m].ManagerComment),
-                                    new SqlParameter("@p_ide",rDD_MngAppraisal.id),
-                                    new SqlParameter("@Response",rDD_MngAppraisal.ErrorMsg)
-                            };
+                            new SqlParameter("@Type",rDD_MngAppraisal.ActionType),
+                            new SqlParameter("@AppraisalTransId",rDD_MngAppraisal.rDD_EmpAppraisalList[m].AppraisalTransId),
+                            new SqlParameter("@ManagerRating",rDD_MngAppraisal.rDD_EmpAppraisalList[m].ManagerRating),
+                            new SqlParameter("@ManagerComment",rDD_MngAppraisal.rDD_EmpAppraisalList[m].ManagerComment),
+                            new SqlParameter("@Editflag",rDD_MngAppraisal.EditFlag),
+                            new SqlParameter("@p_ide",rDD_MngAppraisal.id),
+                            new SqlParameter("@Response",rDD_MngAppraisal.ErrorMsg)
+                        };
                         str = Com.ExecuteNonQueryListID("RDD_Insert_Update_PerformanceAppraisal", ParaDet1);
                         if (str[0].Outtf == false)
                         {

@@ -168,10 +168,25 @@
                             str2 += '<td style="display:none"></td>';
                             str2 += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (data.Table12[0].Mng_FinalSubmissionStatus == true) {
+                                    if (Value.ManagerRating == k) {
+                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                    else {
+                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }                                    
+                                }
+                                else {
+                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                }                                
                             }
                             str2 += '</form></div></td>';
-                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
+                            if (data.Table12[0].Mng_FinalSubmissionStatus == true) {
+                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt">'+Value.ManagerComment+'</textarea></td>';                                
+                            }
+                            else {
+                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
+                            }                            
                             str2 += '</tr>';                            
                             j++;                            
                         });

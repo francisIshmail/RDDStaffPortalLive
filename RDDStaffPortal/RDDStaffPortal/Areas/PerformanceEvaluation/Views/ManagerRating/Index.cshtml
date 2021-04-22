@@ -21,13 +21,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header mb-1">
-                        <h4 class="page-title"><button class="p-0 border-transparent" style="font-size:17px"><i class="fas fa-chevron-circle-left pr-1"></i>Back</button> </h4>
+                        <h4 class="page-title"><button class="p-0 border-transparent" hidden="hidden" style="font-size:17px" onclick="GetDetailsForManager();" id="btnBackEmpDetails"><i class="fas fa-chevron-circle-left pr-1"></i>Back</button> </h4>
                     </div>
                     <div class="card">
-                        <div class="card-header">                           
+                        <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title redtitle">Manager Rating</h4>
-                                <div class="form-group ml-auto">
+                                <div class="form-group ml-auto" id="divSelectPeriodYear">
                                     <label>Period-Year</label>
                                     <select id="ddlSelectYear" class="form-control">
                                         <option value="-1">---Select---</option>
@@ -67,8 +67,10 @@
                                     </tbody>
                                 </table>
                             </section>
-                            <section id="secEmpRating">
-                            </section>
+                            <section id="secEmpRating"></section>
+                        </div>
+                        <div class="modal-footer" id="divbtnFinalSubmit">
+                            
                         </div>
                     </div>
                 </div>
@@ -82,11 +84,25 @@
 
 <script type="text/javascript">
     function GetDetailsForManager() {
+        $('.loader1').show();
+        $("#divProfPic").show();
+        $("#secEmpRating").empty();
+        $("#secEmpDetails").show();
+        $("#headEmpName").empty();
+        $('.emp').empty();
+        $("#divbtnFinalSubmit").empty();
+        $("#divSelectPeriodYear").show();
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetDetailsForManager", "ManagerRating")',
             dataType: "json",
-            success: function (data) {
+            success: function (data) {               
+                
+                var str = "";
+                str += data.Table[0].EmployeeName;
+                str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table[0].DesigName + '</span>';
+                $("#headEmpName").append(str);
+                $("#btnBackEmpDetails").attr("hidden", "hidden"); 
                 $("#ddlSelectYear").empty();
                 $("#ddlSelectYear").append('<option value="-1">--Select--</option>');
                 if (data.Table1.length > 0) {
@@ -97,12 +113,7 @@
                         $("#ddlSelectYear").val(data.Table2[0].CurrentYears);
                     }
                 }
-                $("#headEmpName").empty();
-                var str = "";
-                str += data.Table[0].EmployeeName;
-                str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table[0].DesigName + '</span>';
-                $("#headEmpName").append(str);
-                $('.emp').empty();
+                
                 $("#divDepartment").append('<i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].DeptName);
                 $("#divCountry").append('<i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].Country);
                 $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table3[0].Years);
@@ -132,9 +143,15 @@
                     str += '</tr>';
                 }                       
                 $("#tblShowEmployee tbody").append(str);
+                $('.loader1').hide();
             }
         });
+        $("#secEmpRating").load('@Url.Action("GetPartial", "ManagerRating")');
+        $("#secEmpRating").hide();
     }    
+    function BackToEmployeeDetails() {
+        GetDetailsForManager();
+    }
     function SaveMngRating(rDD_MngAppraisal) {
         $('.loader1').show();
         var rDD_MngAppraisal = rDD_MngAppraisal;
@@ -158,20 +175,20 @@
             }
         });
     }
-    $(document).ready(function () {
-        $('.loader1').show();
+    $(document).ready(function () {        
         $("#secEmpRating").hide();
-        GetDetailsForManager();      
-        
-        $("#secEmpRating").load('@Url.Action("GetPartial", "ManagerRating")');
-        $('.loader1').hide();
+        GetDetailsForManager();    
+                
     });
     $(document).on('click', '.emprating', function (e) {
+        $("#divSelectPeriodYear").hide();
+        $("#btnBackEmpDetails").removeAttr("hidden","hidden");
         e.preventDefault();
         $("#divProfPic").hide();
         $('.loader1').show();          
         $("#headEmpName").empty();
-        $("#secEmpDetails").hide();        
+        $("#secEmpDetails").hide(); 
+        //$("#secEmpRating").show();
         var EmpId = $(this).attr("data-empid");
         $("#hdnEmployeeId").val(EmpId);
         $.ajax({
@@ -203,6 +220,7 @@
                 var str2 = "";
                 var QuestionCount = data.Table2.length;
                 var j = 1;
+                $("#divbtnFinalSubmit").append('<button type="button" class="btn btn-success" id="btnFinalSubmit" onclick="SaveFinalForm();">Final Submit</button>');
                 $("#add-row tbody").empty();
                 while (j <= QuestionCount) {
                     $.each(data.Table2, function (Index, Value) {
@@ -233,15 +251,19 @@
                             }
                             else {
                                 str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                            }
-                            
+                            }                            
                         }
                         str2 += '</form></div></td>';
 
                         if (Value.ManagerComment == null) {
                             Value.ManagerComment = "";
                         }
+                        else {
+                            $("#btnSaveRating").text("Update");
+                            $("#btnSaveRating").attr("id", "btnUpdateRating");
+                        }
                         str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt">' + Value.ManagerComment + '</textarea></td>';                        
+                        str2 += '<td style="display:none">' + Value.ManagerRating + '</td>';
                         str2 += '</tr>';
                         j++;
                     });
@@ -257,7 +279,7 @@
         var QNo = $(this).attr('data-qnos');
         var StarNo = $(this).attr('data-starnos');
         $('#hdnstarval_' + QNo).val(StarNo);
-        $(this).closest("tr").find("td:eq(5)").html(StarNo);
+        $(this).closest("tr").find("td:eq(9)").html(StarNo);
     });
     $(document).on('click', '.selectCategory', function () {
         $("#divBtnSave").hide();
@@ -307,11 +329,23 @@
                             str += '<td style="display:none"></td>';
                             str += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (Value.ManagerRating == k) {
+                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                }
+                                else {
+                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                }
                             }
                             str += '</form></div></td>';
-                            str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
-                           
+                            if (Value.ManagerComment == null) {
+                                Value.ManagerComment = "";
+                            }
+                            else {
+                                $("#btnSaveRating").text("Update");
+                                $("#btnSaveRating").attr("id", "btnUpdateRating");
+                            }
+                            str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';                                      
+                            str += '<td style="display:none">' + Value.ManagerRating + '</td>';
                             str += '</tr>';
                             j++;
                         });
@@ -335,21 +369,21 @@
                                 str += '</form></div></td>';
                                 str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis"></textarea></td>'; 
                                 str += '<td style="display:none"></td>';
+                                str += '<td style="display:none"></td>';
                                 str += '<td><div class="stars"><form action="" disabled="disabled">';
                                 for (var k = RatingNo; k > 0; k--) {
                                     str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                 }
                                 str += '</form></div></td>';
-                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" style="cursor:not-allowed"></textarea></td>';                                
-                                //str += '<td style="display:hidden">' + Value.AppraisalTransId + '</td>';
+                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';                                
+                                str += '<td style="display:hidden">' + Value.ManagerRating + '</td>';
                                 str += '</tr>';
                                 j++;
                             });
                         }
                         $("#btnUpdateRating").text("Save");
                         $("#btnUpdateRating").attr("id", "btnSaveRating");
-                        $("#divBtnSave").show();
-                        
+                        $("#divBtnSave").show();                        
                     }
                     else {
                         str += '<tr>';
@@ -360,21 +394,27 @@
                 }                
                 $("#add-row tbody").append(str);  
                 $('.dis').attr("disabled", "disabled");  
-                if (data.Table2.length > 0) {
-                    var SaveStatus = data.Table2[0].Emp_FinalSubmissionStatus;
+                $('.dis').css("cursor", "not-allowed");
+                if (data.Table1.length > 0) {
+                    var SaveStatus = data.Table1[0].Mng_FinalSubmissionStatus;
                 }
                 if (SaveStatus == true) {
                     $('.distars').attr("disabled", true);
                     $('.distars').css("cursor", "not-allowed");
                     $("#btnUpdateRating").remove();
+                    $('.mngcomnt').attr("disabled", true);
+                    $('.mngcomnt').css("cursor", "not-allowed");
                 }
                 else {
                     $('.distars').attr("disabled", false);
                     $('.distars').css("cursor", "");
+                    $('.mngcomnt').attr("disabled", false);
+                    $('.mngcomnt').css("cursor", "");
                 }
             }
         });
-    });
+    });   
+
     $(document).on('click', '#btnSaveRating', function () {
         var rDD_MngAppraisal = {            
             rDD_EmpAppraisalList: []
@@ -386,7 +426,37 @@
             var rDD_MngAppraisalList = {
                 AppraisalTransId: AppraisalTransId,
                 ManagerRating: MngRating,
-                ManagerComment: MngComment
+                ManagerComment: MngComment,
+                EditFlag: false
+            };
+            rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
+        });
+        var i = 0;
+        var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
+        while (i < length) {
+            if ((rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerRating == "") || (rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerComment == "")) {
+                i++;
+            }
+            else {
+                SaveMngRating(rDD_MngAppraisal);
+                return false;
+            }
+            RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
+        }
+    });
+    $(document).on('click', '#btnUpdateRating', function () {
+        var rDD_MngAppraisal = {
+            rDD_EmpAppraisalList: []
+        };
+        $("#add-row tbody tr").each(function () {
+            var AppraisalTransId = $(this).closest("tr").find("td:eq(1)").text();
+            var MngRating = $(this).closest("tr").find("td:eq(9)").html();
+            var MngComment = $.trim($(".mngcomnt", this).val());
+            var rDD_MngAppraisalList = {
+                AppraisalTransId: AppraisalTransId,
+                ManagerRating: MngRating,
+                ManagerComment: MngComment,
+                EditFlag: true
             };
             rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
         });
