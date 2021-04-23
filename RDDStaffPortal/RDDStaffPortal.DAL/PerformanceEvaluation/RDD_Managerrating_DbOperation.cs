@@ -122,5 +122,59 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return str;
         }
+
+        public List<Outcls1> FinalSaveManagerRating(int EmployeeId, int Year, string Period)
+        {
+            List<Outcls1> str = new List<Outcls1>();
+            RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] parm = {
+                            new SqlParameter("@EmployeeId",EmployeeId),
+                            new SqlParameter("@Period",Period),
+                            new SqlParameter("@Year",Year),
+                            new SqlParameter("@Type","ManagerFinalSubmit"),
+                            new SqlParameter("@p_ide",rDD_Question.id),
+                            new SqlParameter("@Response",rDD_Question.ErrorMsg)
+                        };
+
+                    str = Com.ExecuteNonQueryListID("RDD_Insert_Update_PerformanceAppraisal", parm);
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
+
+        public DataSet GetMailDetails(int EmployeeId, string Period, int Year)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] prm =
+                {
+                    new SqlParameter("Type","GetMailDetails"),
+                    new SqlParameter("EmployeeId",EmployeeId),
+                    new SqlParameter("Period",Period),
+                    new SqlParameter("Year",Year)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, prm);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
     }
 }

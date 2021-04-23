@@ -100,7 +100,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 try
                 {
                     DataSet ds = new DataSet();
-                    ds = rDD_EmpRating_TemplateDb.GetMailDetails(EmployeeId, Period);
+                    ds = rDD_EmpRating_TemplateDb.GetMailDetails(EmployeeId, Period, Year);
                     string ToMail = ds.Tables[1].Rows[0]["ToMail"].ToString();
                     string cc = ds.Tables[2].Rows[0]["CC"].ToString();
                     string MailBody = ds.Tables[3].Rows[0]["Body"].ToString();

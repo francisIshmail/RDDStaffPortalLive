@@ -95,5 +95,34 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
             return Json(rDD_MngRating_TemplateDb.SaveManagerRating(rDD_MngAppraisal), JsonRequestBehavior.AllowGet);
         }
+        [Route("FinalSaveManagerRating")]
+        public ActionResult FinalSaveEmployeeRating(int EmployeeId, int Year, string Period)
+        {
+            //ContentResult retVal = null;
+            var t = rDD_MngRating_TemplateDb.FinalSaveManagerRating(EmployeeId, Year, Period);
+            if (t[0].Id != -1)
+            {
+                string MailResponse = "";
+                try
+                {
+                    DataSet ds = new DataSet();
+                    ds = rDD_MngRating_TemplateDb.GetMailDetails(EmployeeId, Period, Year);
+                    string ToMail = ds.Tables[1].Rows[0]["ToMail"].ToString();
+                    string cc = ds.Tables[2].Rows[0]["CC"].ToString();
+                    string MailBody = ds.Tables[3].Rows[0]["Body"].ToString();
+                    string Subject = ds.Tables[0].Rows[0]["MailSubject"].ToString();
+                    MailResponse = SendMail.Send(ToMail, cc, Subject, MailBody, true);
+                }
+                catch (Exception ex)
+                {
+                    MailResponse = ex.Message;
+                }
+            }
+            else
+            {
+                t[0].Outtf = false;
+            }
+            return Json(t, JsonRequestBehavior.AllowGet);
+        }
     }
 }

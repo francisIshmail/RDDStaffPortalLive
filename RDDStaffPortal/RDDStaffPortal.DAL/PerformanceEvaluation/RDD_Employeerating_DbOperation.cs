@@ -194,7 +194,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return str;
         }
-        public DataSet GetMailDetails(int EmployeeId,string Period)
+        public DataSet GetMailDetails(int EmployeeId,string Period,int Year)
         {
             DataSet ds;
             try
@@ -203,7 +203,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 {
                     new SqlParameter("Type","GetMailDetails"),
                     new SqlParameter("EmployeeId",EmployeeId),
-                    new SqlParameter("Period",Period)
+                    new SqlParameter("Period",Period),
+                    new SqlParameter("Year",Year)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, prm);
             }
