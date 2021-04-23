@@ -41,13 +41,33 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetEmployeeRating(int EmpId)
+        public ActionResult GetDetailsForManagerByChangePeriods(string Qperiod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_MngRating_TemplateDb.GetDetailsForManagerByChangePeriods(LoginName, Qperiod);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetEmployeeRating(int EmpId,string Qperiods)
         {
             ContentResult retVal = null;
             DataSet ds;            
             try
             {
-                ds = rDD_MngRating_TemplateDb.GetEmployeeRating(EmpId);
+                ds = rDD_MngRating_TemplateDb.GetEmployeeRating(EmpId,Qperiods);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

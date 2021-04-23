@@ -34,7 +34,27 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetEmployeeRating(int EmpId)
+        public DataSet GetDetailsForManagerByChangePeriods(string LoginName, string Qperiod)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetDetailsForManagerByPeriod"),
+                    new SqlParameter("LoginName",LoginName),
+                    new SqlParameter("Periods",Qperiod)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+        public DataSet GetEmployeeRating(int EmpId,string Qperiods)
         {
             DataSet ds = null;
             try
@@ -42,7 +62,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 SqlParameter[] Para =
                 {
                     new SqlParameter("Type","GetEmployeeRating"),
-                    new SqlParameter("EmployeeId",EmpId)
+                    new SqlParameter("EmployeeId",EmpId),
+                    new SqlParameter("Periods",Qperiods)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }
