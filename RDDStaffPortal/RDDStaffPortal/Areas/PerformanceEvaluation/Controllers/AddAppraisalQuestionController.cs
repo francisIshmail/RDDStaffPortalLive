@@ -81,13 +81,13 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetPreviousPeriodQuestion(string PrevPeriod)
+        public ActionResult GetPreviousPeriodQuestion(string PrevPeriod,string CategoryId)
         {
             ContentResult retVal = null;
             DataSet ds;
             try
             {
-                ds = rDD_AppraisalQuestion_TemplateDb.GetPreviousPeriodQuestion(PrevPeriod);
+                ds = rDD_AppraisalQuestion_TemplateDb.GetPreviousPeriodQuestion(PrevPeriod, CategoryId);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

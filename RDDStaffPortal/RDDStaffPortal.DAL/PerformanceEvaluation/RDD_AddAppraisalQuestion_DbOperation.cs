@@ -35,7 +35,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetPreviousPeriodQuestion(string PrevPeriod)
+        public DataSet GetPreviousPeriodQuestion(string PrevPeriod, string CategoryId)
         {
             DataSet ds = null;
             try
@@ -43,7 +43,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 SqlParameter[] Para =
                 {
                     new SqlParameter("@Type","GetPreviosPeriodQuestion"),
-                    new SqlParameter("@Periods",PrevPeriod)
+                    new SqlParameter("@Periods",PrevPeriod),
+                    new SqlParameter("@CategoryId",CategoryId)
                 };
                 ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, Para);
             }

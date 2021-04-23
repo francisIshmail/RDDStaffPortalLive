@@ -221,7 +221,9 @@
                 $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
                 $.each(data.Table, function (index, Value) {
                     $("#ddlCopyFromPrevious").append("<option value='" + Value.PreviousPeriod + "'>" + Value.PreviousPeriod + "</option>");
+                    
                 });
+                $("#ddlCopyFromPrevious").append("<option value='H2-2020'>H2-2020</option>");
                 $("#ddlCategory").empty();
                 $("#ddlCategory").append('<option value="-1">--Select--</option>');
                 $.each(data.Table1, function (index, Value) {
@@ -266,17 +268,24 @@
             }
         });
     }
-    function GetPreviousPeriodQuestion(PrevPeriod) {
+    function GetPreviousPeriodQuestion(PrevPeriod, CategoryId) {
+        $('.loader1').show();
+        var Html1 = "";
+        $("#add-rowPrevious tbody").empty();
+        Html1 += '<tr>';
+        Html1 += '<td colspan="6" style="text-align:center">Please Wait....</td>';
+        Html1 += '</tr>';
+        $("#add-rowPrevious").show();
+        $("#add-rowPrevious tbody").append(Html1);
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetPreviousPeriodQuestion", "AddAppraisalQuestion")',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ PrevPeriod: PrevPeriod}),
+            data: JSON.stringify({ PrevPeriod: PrevPeriod, CategoryId: CategoryId }),
             dataType: "json",
             success: function (data) {
                 debugger               
-                $("#add-rowPrevious tbody").empty();
-                $("#add-rowPrevious").show();
+                $("#add-rowPrevious tbody").empty();                
                 var Html = "";
                 var a = data.Table;
                 if (a.length > 0) {
@@ -293,6 +302,8 @@
                     Html += '</tr>';
                 }
                 $("#add-rowPrevious tbody").append(Html);
+                
+                $('.loader1').hide();
             }
         });
     }
@@ -311,6 +322,7 @@
                 if (data.Table3.length > 0) {
                     $.each(data.Table3, function (index, Value) {                        
                         $("#ddlSelectYear").append("<option value='" + Value.AllYear + "'>" + Value.AllYear + "</option>");
+                        //$("#ddlSelectYear").append("<option value='H2-2020'>H2-2020</option>");
                     });
                     if (data.Table4.length > 0) {
                         $("#ddlSelectYear").val(data.Table4[0].CurrentYear);
@@ -454,7 +466,6 @@
             $(addRemove).after(removeButton);
             $("#field" + next).attr('data-source', $(addto).attr('data-source'));
             $("#count").val(next);
-
             $('.remove-me').click(function (e) {
                 e.preventDefault();
                 var fieldNum = this.id.charAt(this.id.length - 1);
@@ -490,7 +501,6 @@
                         str2 += '<td>' + Value.Question + '</td>';
                         str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str2 += '</tr>';
-
                     });
                 }
                 else {
@@ -570,7 +580,13 @@
         });
     });
     $(document).on('change', '#ddlCopyFromPrevious', function () {
+        var CategoryId = $("#ddlCategory option:selected").val();
+        if (CategoryId == "-1") {
+            RedDotAlert_Error("Please Select Category First");
+            return false;
+        }
         var PrevPeriod = $("#ddlCopyFromPrevious option:selected").val();
+        
         if (PrevPeriod != '-1') {
             $("#action_json").attr("disabled", true);
             $("#action_name").attr("disabled", true);
@@ -578,7 +594,7 @@
             $("#action_name").css("cursor", "not-allowed");
             $("#action_json").css("cursor", "not-allowed");
             $("#add-more").css("cursor", "not-allowed");
-            GetPreviousPeriodQuestion(PrevPeriod);
+            GetPreviousPeriodQuestion(PrevPeriod, CategoryId);
         }
         else {
             $("#add-rowPrevious").hide();
@@ -591,6 +607,24 @@
             $("#add-more").css("cursor", "");
         }
         
+    });
+
+    $(document).on('change', '#ddlCategory', function () {
+        var PrevPeriod = $("#ddlCopyFromPrevious option:selected").val();
+        var CategoryId = $(this).val();     
+        if (PrevPeriod == "-1") {
+            //RedDotAlert_Error("Please Select Category First");
+            return false;
+        }
+        else {
+            $("#action_json").attr("disabled", true);
+            $("#action_name").attr("disabled", true);
+            $("#add-more").attr("disabled", true);
+            $("#action_name").css("cursor", "not-allowed");
+            $("#action_json").css("cursor", "not-allowed");
+            $("#add-more").css("cursor", "not-allowed");
+            GetPreviousPeriodQuestion(PrevPeriod, CategoryId);
+        }       
     });
     $(document).on('click', '.btnDel', function () {
         $(this).parents("tr").remove();
