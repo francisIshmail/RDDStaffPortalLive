@@ -182,7 +182,7 @@
                             }
                             str2 += '</form></div></td>';
                             if (data.Table12[0].Mng_FinalSubmissionStatus == true) {
-                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt">'+Value.ManagerComment+'</textarea></td>';                                
+                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">'+Value.ManagerComment+'</textarea></td>';                                
                             }
                             else {
                                 str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
@@ -383,10 +383,27 @@
                             str += '<td style="display:none"></td>';
                             str += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (data.Table3[0].Mng_FinalSubmissionStatus == true) {
+                                    if (Value.ManagerRating == k) {
+                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                    else {
+                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                }
+                                
                             }
                             str += '</form></div></td>';
-                            str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
+                            if (data.Table3[0].Mng_FinalSubmissionStatus == true) {
+                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
+                            }
+                            else {
+                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
+                            }         
+                            //str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                
                             str += '</tr>';
                             j++;
                         });
