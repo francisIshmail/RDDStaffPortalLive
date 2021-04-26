@@ -292,7 +292,7 @@
                     $.each(a, function (Index, Value) {
                         Html += '<tr>';
                         Html += '<td>' + '<input type="text" class="form-control appqstns" value="' + Value.Question + '">' + '</td>';
-                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         Html += '</tr>';
                     });
                 }
@@ -344,11 +344,12 @@
                         str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str2 += '<td>' + Value.Question + '</td>';                        
                         str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
-                        str2 += '</tr>';
-                        
+                        str2 += '</tr>';                        
                     });
+                    $("#btnLaunchAppraisal").show();
                 }
                 else {
+                    $("#btnLaunchAppraisal").hide();
                     str2 += '<tr>';
                     str2 += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';
                     str2 += '</tr>';
@@ -392,7 +393,7 @@
             text: "You won't be able to revert this!",
             type: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, Submit it!',
+            confirmButtonText: 'Yes, Launch it!',
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
@@ -478,6 +479,7 @@
 
     $(document).on('change', '#ddlSelectYear', function () {
         var Qperiodyear = $(this).val();
+        $('.loader1').show();
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetQuestionByPeriodYear", "AddAppraisalQuestion")',
@@ -502,8 +504,10 @@
                         str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str2 += '</tr>';
                     });
+                    $("#btnLaunchAppraisal").show();
                 }
                 else {
+                    $("#btnLaunchAppraisal").hide();
                     str2 += '<tr>';
                     str2 += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';
                     str2 += '</tr>';
@@ -522,6 +526,7 @@
                     $('.dis').prop("disabled", false);
                     $('.dis').css("cursor", "");
                 }
+                $('.loader1').hide();
             }    
         });
     });
@@ -727,7 +732,7 @@
                 }
                 else {
                     str += '<tr>';
-                    str += '<td colspan="6" style="text-align:center">No Question Assigned Under This Category</td>';                    
+                    str += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';                    
                     str += '</tr>';     
                 }    
                 $("#tblShowQuestion tbody").append(str);

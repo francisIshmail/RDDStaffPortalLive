@@ -223,9 +223,11 @@
                             });
                         }
                         $("#divBtnSave").show();
+                        $("#btnFinalSubmit").show();
                     }
                     else {
                         $("#divBtnSave").hide();
+                        $("#btnFinalSubmit").hide();
                         str2 += '<tr>';
                         str2 += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
                         str2 += '</tr>';
@@ -606,10 +608,26 @@
                             str2 += '<td style="display:none"></td>';
                             str2 += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (data.Table11[0].Mng_FinalSubmissionStatus == true) {
+                                    if (Value.ManagerRating == k) {
+                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                    else {
+                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                }
                             }
                             str2 += '</form></div></td>';
-                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
+                            if (data.Table11[0].Mng_FinalSubmissionStatus == true) {
+                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
+                            }
+                            else {
+                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
+                            }
+                            
                             str2 += '</tr>';
                             j++;
                         });
@@ -617,6 +635,7 @@
                     $("#btnSaveRating").text("Update");
                     $("#btnSaveRating").attr("id", "btnUpdateRating");
                     $("#divBtnSave").show();
+                    $("#btnFinalSubmit").show();
                 }
                 else {
                     if (data.Table3.length > 0) {
@@ -646,9 +665,13 @@
                             });
                         }
                         $("#divBtnSave").show();
+                        $("#btnFinalSubmit").show();
+                        $("#btnUpdateRating").text("Save");
+                        $("#btnUpdateRating").attr("id", "btnSaveRating");
                     }
                     else {
                         $("#divBtnSave").hide();
+                        $("#btnFinalSubmit").hide();
                         str2 += '<tr>';
                         str2 += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
                         str2 += '</tr>';
@@ -660,7 +683,7 @@
                 if (SaveStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
-                    $("#btnUpdateRating").remove();
+                    $("#divBtnSave").hide();
                     $("#btnFinalSubmit").prop("disabled", "disabled");
                     $('#btnFinalSubmit').css("cursor", "not-allowed");
                 }

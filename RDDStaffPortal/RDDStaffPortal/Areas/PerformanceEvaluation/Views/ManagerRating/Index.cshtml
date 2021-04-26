@@ -167,7 +167,7 @@
     }    
     function BackToEmployeeDetails() {
         $("#ddlSelectYearEmp").attr("hidden","hidden");
-        $("#ddlSelectYear").removeAttr("style", "display:none")
+        $("#ddlSelectYear").removeAttr("style", "display:none");
         GetDetailsForManager();
     }
     function SaveMngRating(rDD_MngAppraisal) {
@@ -184,8 +184,10 @@
                 $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
+                    $("#btnSaveRating").text("Update");
+                    $("#btnSaveRating").attr("id", "btnUpdateRating");
                     //GetCategoryWiseEmployeeDetails();
-                    GetEmployeeDetails();
+                    //GetEmployeeDetails();
                 }
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
@@ -220,6 +222,8 @@
                     if (data[0].Outtf == true) {
                         RedDotAlert_Success(data[0].Responsemsg);
                         GetDetailsForManager();
+                        $("#ddlSelectYearEmp").attr("hidden", "hidden");
+                        $("#ddlSelectYear").removeAttr("style", "display:none");
                     }
                     else {
                         RedDotAlert_Error(data[0].Responsemsg);
@@ -291,7 +295,7 @@
                         str += '<th scope="row">' + Slno + '</th>';
                         str += '<td style="font-size:16px"><a href="#" target="" class="emprating" data-empid=' + Value.EmployeeId + '>' + Value.EmployeeName + '</a></td>';
                         if (Value.Mng_FinalSubmissionStatus == true) {
-                            str += '<td><span class="badge badge-success">Completed</span></td>';
+                            str += '<td><span class="badge badge-success">Complete</span></td>';
                         }
                         else {
                             str += '<td><span class="badge badge-warning">Pending</span></td>';
@@ -576,6 +580,8 @@
                 var Count = 0;
                 var QuestionCount = d.length;
                 var j = 1;
+                $("#btnUpdateRating").text("Save");
+                $("#btnUpdateRating").attr("id", "btnSaveRating");
                 $("#add-row tbody").empty();
                 if (data.Table.length > 0) {
                     $("#hdnAppraisalId").val(data.Table[0].AppraisalId);
@@ -613,6 +619,8 @@
                             str += '</form></div></td>';
                             if (Value.ManagerComment == null) {
                                 Value.ManagerComment = "";
+                                //$("#btnUpdateRating").text("Save");
+                                //$("#btnUpdateRating").attr("id", "btnSaveRating");
                             }
                             else {
                                 $("#btnSaveRating").text("Update");
@@ -624,8 +632,8 @@
                             j++;
                         });
                     }                    
-                    $("#btnSaveRating").text("Update");
-                    $("#btnSaveRating").attr("id", "btnUpdateRating");
+                    //$("#btnSaveRating").text("Update");
+                    //$("#btnSaveRating").attr("id", "btnUpdateRating");
                     $("#divBtnSave").show();
                 }
                 else {
