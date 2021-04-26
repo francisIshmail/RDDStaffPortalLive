@@ -138,5 +138,25 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetDetailsByYearAndPeriod(string Qperiod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            try
+            {
+                string Loginname = User.Identity.Name;
+                ds = rDD_EmpRating_TemplateDb.GetDetailsByYearAndPeriod(Qperiod, Loginname);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

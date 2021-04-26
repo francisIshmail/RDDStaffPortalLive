@@ -86,6 +86,15 @@
 <script src="~/Scripts/RedDotUtility.js"></script>
 
 <script type="text/javascript">
+    @*var me = getUrlVars()["UrlId"];    if (me != undefined) {        //$("#btnAction").show();        //GetMode(me);    } else {        //Getdata();    }
+
+    GetRatingDetailsViewMode(UrlId){
+        $.ajax({
+            type: "POST",
+            url:'@Url.Action("GetManagerRatingView","")'
+        });
+    }*@
+
     function GetDetailsForManager() {
         $('.loader1').show();
         $("#divProfPic").show();
