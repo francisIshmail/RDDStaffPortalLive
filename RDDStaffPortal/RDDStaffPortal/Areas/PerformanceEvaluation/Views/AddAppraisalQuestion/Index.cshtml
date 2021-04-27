@@ -216,14 +216,15 @@
             type: "GET",
             url: '@Url.Action("GetPeriodCategoryList", "AddAppraisalQuestion")',
             dataType: "json",
-            success: function (data) {               
+            success: function (data) {  
+                debugger
                 $("#ddlCopyFromPrevious").empty();
                 $("#ddlCopyFromPrevious").append('<option value="-1">--Select--</option>');
                 $.each(data.Table, function (index, Value) {
                     $("#ddlCopyFromPrevious").append("<option value='" + Value.PreviousPeriod + "'>" + Value.PreviousPeriod + "</option>");
                     
                 });
-                $("#ddlCopyFromPrevious").append("<option value='H2-2020'>H2-2020</option>");
+                //$("#ddlCopyFromPrevious").append("<option value='H2-2020'>H2-2020</option>");
                 $("#ddlCategory").empty();
                 $("#ddlCategory").append('<option value="-1">--Select--</option>');
                 $.each(data.Table1, function (index, Value) {
@@ -321,8 +322,7 @@
                 $("#ddlSelectYear").append('<option value="-1">--Select--</option>');
                 if (data.Table3.length > 0) {
                     $.each(data.Table3, function (index, Value) {                        
-                        $("#ddlSelectYear").append("<option value='" + Value.AllYear + "'>" + Value.AllYear + "</option>");
-                        //$("#ddlSelectYear").append("<option value='H2-2020'>H2-2020</option>");
+                        $("#ddlSelectYear").append("<option value='" + Value.AllYear + "'>" + Value.AllYear + "</option>");                        
                     });
                     if (data.Table4.length > 0) {
                         $("#ddlSelectYear").val(data.Table4[0].CurrentYear);

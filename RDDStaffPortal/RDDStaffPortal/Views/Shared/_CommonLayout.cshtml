@@ -1114,7 +1114,7 @@
 
 
 
-            if (pathname == "/HR/Employees" ) {
+            if (pathname == "/HR/Employees") {
                 var useremail = $("#Email").val();
                 var username = useremail.substring(0, useremail.lastIndexOf("@@"));
                 if (username !==  @HttpContext.Current.User.Identity.Name) {
@@ -1125,10 +1125,14 @@
             } else if (pathname.toUpperCase() == "/DASHBOARD/ALLNOTIFICATION") {
                 return
             }
+            else if (pathname == '/PerformanceEvaluation/EmployeeRating/ViewEmployeerating') {
+                return;
+            }
             else if (pathname !== '/Dashboard/ErrorPage') {
 
                 RedtDot_CheckAuthorization(pathname);
             }
+           
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 

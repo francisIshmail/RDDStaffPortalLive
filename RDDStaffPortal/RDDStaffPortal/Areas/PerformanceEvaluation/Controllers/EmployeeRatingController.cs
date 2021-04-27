@@ -139,14 +139,39 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetDetailsByYearAndPeriod(string Qperiod)
+        public ActionResult ViewEmployeerating()
+        {
+            return View();
+        }
+
+        public ActionResult ViewEmployeeRatingData(string UrlId)
         {
             ContentResult retVal = null;
             DataSet ds;
             try
             {
                 string Loginname = User.Identity.Name;
-                ds = rDD_EmpRating_TemplateDb.GetDetailsByYearAndPeriod(Qperiod, Loginname);
+                ds = rDD_EmpRating_TemplateDb.GetDetailsByClickUrl(UrlId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetCategoryWiseDetailsOnClickUrl(int CategoryId, string UrlId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_EmpRating_TemplateDb.GetCategoryWiseDetailsOnClickUrl(CategoryId, UrlId);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

@@ -73,6 +73,26 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
+        public DataSet GetCategoryWiseDetailsOnClickUrl(int CategoryId, string UrlId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetCategoryWiseDetailsOnClickUrl"),
+                    new SqlParameter("CategoryId",CategoryId),
+                    new SqlParameter("UrlIds",UrlId)                    
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
         public List<Outcls1> SaveEmployeeRating(RDD_EmployeeRating rDD_EmpAppraisal)
         {
             List<Outcls1> str = new List<Outcls1>();
@@ -227,6 +247,25 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     new SqlParameter("LoginName",Loginname)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+        public DataSet GetDetailsByClickUrl(string UrlId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmployeeRatingOnClickUrl"),
+                    new SqlParameter("UrlIds",UrlId)                    
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
             }
             catch (Exception)
             {

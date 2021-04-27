@@ -906,7 +906,7 @@
     <Content Include="Areas\PerformanceEvaluation\Views\ManagerRating\Index.cshtml" />
     <Content Include="Areas\PerformanceEvaluation\Views\ManagerRating\ManagerRatingPartial.cshtml" />
     <Content Include="Areas\PerformanceEvaluation\Views\ManagerRating\ViewManagerRating.cshtml" />
-    <Content Include="Areas\PerformanceEvaluation\Views\EmployeeRating\ViewEmployeeRating.cshtml" />
+    <Content Include="Areas\PerformanceEvaluation\Views\EmployeeRating\ViewEmployeerating.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
