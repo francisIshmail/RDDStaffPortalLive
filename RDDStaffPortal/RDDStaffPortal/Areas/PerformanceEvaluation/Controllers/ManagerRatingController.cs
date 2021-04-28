@@ -144,5 +144,25 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
             return Json(t, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetManagerRatingViewOnClickUrl(string UrlId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_MngRating_TemplateDb.GetManagerRatingViewOnClickUrl(UrlId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

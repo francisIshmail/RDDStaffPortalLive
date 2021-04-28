@@ -197,5 +197,24 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return ds;
         }
+
+        public DataSet GetManagerRatingViewOnClickUrl(string UrlId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmployeeRatingOnClickUrl"),
+                    new SqlParameter("UrlIds",UrlId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
     }
 }

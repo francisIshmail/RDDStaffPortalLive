@@ -262,7 +262,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             {
                 SqlParameter[] Para =
                 {
-                    new SqlParameter("Type","GetEmployeeRatingOnClickUrl"),
+                    new SqlParameter("Type","GetEmployeeManagerRatingOnClickUrl"),
                     new SqlParameter("UrlIds",UrlId)                    
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
