@@ -1118,16 +1118,18 @@
                 var useremail = $("#Email").val();
                 var username = useremail.substring(0, useremail.lastIndexOf("@@"));
                 if (username !==  @HttpContext.Current.User.Identity.Name) {
-                    RedtDot_CheckAuthorization(pathname);
+                   RedtDot_CheckAuthorization(pathname);
                 }
-            } else if (pathname == "/HR/UserList") {
+            }
+
+            else if (pathname == "/HR/UserList") {
                 RedtDot_CheckAuthorization("/HR/UserList/Index");
             } else if (pathname.toUpperCase() == "/DASHBOARD/ALLNOTIFICATION") {
                 return
             }
             else if (pathname !== '/Dashboard/ErrorPage') {
 
-                RedtDot_CheckAuthorization(pathname);
+               // RedtDot_CheckAuthorization(pathname);
             }
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');

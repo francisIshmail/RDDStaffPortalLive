@@ -529,7 +529,8 @@
         }
         $("#Email").blur(function () {
 
-            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,6}$/i;
+            debugger
             if (testEmail.test(this.value)) {
                 $("#div-Email").removeClass('has-error1').addClass('has-success1');
 
@@ -542,7 +543,7 @@
         });
         $("[id^='Email-'").blur(function () {
 
-            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,6}$/i;
             if (testEmail.test(this.value)) {
                 $("#div-"+$(this).attr("id")+"").removeClass('has-error1').addClass('has-success1');
 
@@ -555,7 +556,7 @@
         });
         $("[id^='ForwardCallToEmail-'").blur(function () {
 
-            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,6}$/i;
             if (testEmail.test(this.value)) {
                 $("#div-" + $(this).attr("id") + "").removeClass('has-error1').addClass('has-success1');
 
@@ -617,7 +618,7 @@
         });
         $("#ForwardCallToEmail").blur(function () {
 
-            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,6}$/i;
             if (testEmail.test(this.value)) {
                 $("#div-ForwardCallToEmail").removeClass('has-error1').addClass('has-success1');
 

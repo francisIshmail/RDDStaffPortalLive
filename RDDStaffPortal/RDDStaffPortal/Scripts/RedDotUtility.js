@@ -1046,7 +1046,7 @@ function RedDot_Button_New_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").hide();   
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 
@@ -1057,7 +1057,7 @@ function RedDot_Button_Edit_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").show();
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 

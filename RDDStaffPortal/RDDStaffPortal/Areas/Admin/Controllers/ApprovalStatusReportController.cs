@@ -23,7 +23,7 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
     {
         // GET: Admin/ApprovalStatusReport
         RDD_Approval_TemplatesDBOperation RDD_Approval_TemplatesDBOperation = new RDD_Approval_TemplatesDBOperation();
-        RDD_PV_VoucherDbOperation RDD_PV_VoucherDb =new RDD_PV_VoucherDbOperation();
+        RDD_PV_VoucherDbOperation RDD_PV_VoucherDb = new RDD_PV_VoucherDbOperation();
         CommonFunction Com = new CommonFunction();
         public ActionResult Index()
         {
@@ -48,10 +48,10 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         }
 
         [Route("Get_ApprovalDoc_List")]
-        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch,string Objtype,string cardName)
+        public ActionResult Get_ApprovalDoc_List(string DBName, string UserName, int pagesize, int pageno, string psearch, string Objtype, string cardName)
         {
             List<RDD_APPROVAL_DOC> _RDD_APPROVAL_DOC = new List<RDD_APPROVAL_DOC>();
-            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch, Objtype,cardName);
+            _RDD_APPROVAL_DOC = RDD_Approval_TemplatesDBOperation.Get_ApprovalDoc_List(DBName, UserName, pagesize, pageno, psearch, Objtype, cardName);
             return Json(new { data = _RDD_APPROVAL_DOC }, JsonRequestBehavior.AllowGet);
         }
 
@@ -78,13 +78,13 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
         }
 
         [Route("Get_Doc_ApproverAction")]
-        public ActionResult Get_Doc_ApproverAction(string ID,string Template_ID,string ObjectType, string DocKey, string Approver, string Action,string Remark,DateTime ApprovalDate)
+        public ActionResult Get_Doc_ApproverAction(string ID, string Template_ID, string ObjectType, string DocKey, string Approver, string Action, string Remark, DateTime ApprovalDate)
         {
             ContentResult retVal = null;
             DataSet DS;
             try
             {
-                DS = RDD_Approval_TemplatesDBOperation.Get_Doc_ApproverAction(ID,Template_ID,ObjectType, DocKey, Approver, Action,Remark,ApprovalDate);
+                DS = RDD_Approval_TemplatesDBOperation.Get_Doc_ApproverAction(ID, Template_ID, ObjectType, DocKey, Approver, Action, Remark, ApprovalDate);
 
                 if (DS.Tables.Count > 0)
                 {
@@ -100,9 +100,9 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
 
                         SendMailToSignatories(DocKey, ObjectType);
                     }
-                    
+
                     #endregion
-                    
+
 
                     retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
                 }
@@ -113,6 +113,12 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
             {
                 throw ex;
             }
+        }
+        [Route("PV_SendMailToSignatories")]
+        public ActionResult PV_SendMailToSignatories(string PVID, string ObjectType)
+        {
+            var tf = SendMailToSignatories(PVID, ObjectType);
+            return Json(tf, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -225,7 +231,8 @@ namespace RDDStaffPortal.Areas.Admin.Controllers
                         //    }
                         //}
 
-                        if (!string.IsNullOrEmpty(Server.MapPath(DS.Tables[2].Rows[0]["FilePath"].ToString())))
+                        //                        if (!string.IsNullOrEmpty(Server.MapPath(DS.Tables[2].Rows[0]["FilePath"].ToString())))
+                        if (!string.IsNullOrEmpty(DS.Tables[2].Rows[0]["FilePath"].ToString()))
                         {
                             if (!string.IsNullOrEmpty(attachmentPath))
                             {
