@@ -118,6 +118,7 @@ namespace RDDStaffPortal.DAL
                     SqlCmd.Parameters.Add(p[k - 1].ParameterName, SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;                   
                     try
                     {
+                        SqlCmd.CommandTimeout = 0;
                         int i = SqlCmd.ExecuteNonQuery();
                         //if (i > 0)
                         {
@@ -177,6 +178,7 @@ namespace RDDStaffPortal.DAL
                     SqlCmd.Parameters.Add(p[k - 1].ParameterName, SqlDbType.NVarChar, 1000).Direction = ParameterDirection.Output;
                     try
                     {
+                        SqlCmd.CommandTimeout = 0;
                         int i = SqlCmd.ExecuteNonQuery();
                         if (i > 0)
                         {

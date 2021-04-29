@@ -45,6 +45,8 @@ namespace RDDStaffPortal.DAL.DataModels.LMS
         public string ActionType { get; set; }
 
         public string ErrorMsg { get; set; }
+
+        public string LeaveDayType { get; set; }
     }
     public partial class EmployeeList
     {

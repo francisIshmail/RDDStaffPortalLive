@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading;
 using System.Transactions;
 using static RDDStaffPortal.DAL.CommonFunction;
 
@@ -162,10 +163,10 @@ namespace RDDStaffPortal.DAL.HR
                                         new SqlParameter("@EmployeeId", Emp_ID)};
                         Com.ExecuteNonQuery("RDD_SetEmployeeProfileCompletedPercentage", Para1);
 
-                       // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+                        // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
 
-
-                        scope.Complete();
+                      //  Thread.Sleep(99999);
+                       scope.Complete();
                     }
                     catch (Exception ex)
                     {
@@ -177,7 +178,7 @@ namespace RDDStaffPortal.DAL.HR
                             Responsemsg = "Error occured : " + ex.Message
                         });
                     }
-                }
+               }
             }
             catch (Exception ex)
             {

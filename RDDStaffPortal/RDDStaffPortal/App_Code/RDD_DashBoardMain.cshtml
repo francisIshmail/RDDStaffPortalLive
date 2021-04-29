@@ -386,9 +386,9 @@
                         <div id="@i.DashId" class="reddotTable sm-form mar-t0">
                             <div id="Ind" class="reddotTableBody">
                                 <div class="reddotTableRow odd-even-row">
-                                    <div class="reddotTableHead text-left"><div>Company Name</div></div>
-                                    <div class="reddotTableHead"><div>Date</div></div>
-                                    <div class="reddotTableHead text-right"><div>Amount</div></div>
+                                    <div class="reddotTableHead text-left Abcd"><div>Company Name</div></div>
+                                    <div class="reddotTableHead Abcd"><div>Date</div></div>
+                                    <div class="reddotTableHead text-right Abcd"><div>Amount</div></div>
                                 </div>
                             </div>
                             <div id="Ibody" class="reddotTableBody">
@@ -431,27 +431,30 @@
                 colcss1 = "col-sm-8 col-md-12";
             }
 
-            <div class="@colcss1" id="@i.TypeOfChart">
-                <input type="hidden" id="hdnurl" value="@i.Url" />
-                <input type="hidden" id="hdnDashid" value="@i.DashId">
-                <div class="card card-stats @i.cssclass card-round cursor" data-toggle="modal" data-target="#@i.DashId">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
+        <div class="@colcss1" id="@i.TypeOfChart">
+            <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+            <input type="hidden" id="hdnurl" value="@i.Url" />
+            <input type="hidden" id="hdnDashid" value="@i.DashId">
+            <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+
+            <div class="card card-stats @i.cssclass card-round cursor" data-toggle="modal" data-target="#@i.DashId">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <i class="fas fa-dollar-sign"></i>
                             </div>
-                            <div class="col-7 col-stats">
-                                <div class="numbers">
-                                    <p class="card-category">@i.DashName</p>
-                                    <h4 class="card-title">150000</h4>
-                                </div>
+                        </div>
+                        <div class="col-7 col-stats">
+                            <div class="numbers">
+                                <p class="card-category">@i.DashName</p>
+                                <h4 class="card-title">150000</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <div class="modal fade" id="@i.DashId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true" keyboard="false" data-backdrop="static">
                 <div class="modal-dialog modal-lg width100per mar-0auto" role="document">

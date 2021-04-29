@@ -3,6 +3,7 @@ using RDDStaffPortal.DAL.DataModels;
 using RDDStaffPortal.DAL.InitialSetup;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -119,8 +120,25 @@ namespace RDDStaffPortal.Controllers
             return result;
 
         }
-
-
+        [Route("Get_MainDashBoard")]
+        [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
+        public ActionResult MainDashBoard()
+        {
+            DataSet DS = _DashDbOp.GetMainDash(User.Identity.Name);
+            ContentResult ret = null;
+            try
+            {
+                if (DS.Tables.Count > 0)
+                {
+                    ret = Content(JsonConvert.SerializeObject(DS), "application/json");
+                }
+            }
+            catch (Exception)
+            {
+                ret = null;
+            }
+            return ret;
+        }
         [Route("GetDatatable2")]
         [MyOutputCache(VaryByParam = "none", VaryByCustom = "LoggedUserName")]
         public ActionResult GetDatatable2()

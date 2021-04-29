@@ -1704,6 +1704,30 @@ function RedDot_DivTable_Header_Fill(Ids,data) {
     }
 }
 
+
+function RedDot_DivTable_Header_Fill_Dashboard(Ids, data) {
+    debugger    
+    var tr3 = $('#' + Ids);
+    if (data != null && data.length != 0) {
+        var i = 0;
+
+        while (data.length > i) {
+            var tr1 = tr3.find('#Ind').clone();
+            var tr = tr3.find('#Ind').closest();
+            var k = 0;
+            var l1 = tr1.find(".Abcd").length;
+            while (l1 > k) {
+                var t = data[k];
+                if (data[k] !== 'Action') {
+                    tr3.find('#Ind').find(".reddotTableHead")[k].children[0].textContent = data[k];
+                }
+                k++;
+            }
+            i++;
+        }
+    }
+}
+
 function RedDot_DivTable_Header_Fill_Append(Ids, data) {
     if (data != null && data.length != 0) {
         var i = 0;
