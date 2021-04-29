@@ -265,7 +265,7 @@
                                 });
                             }
                         });
-                        $.ajax({
+                        @*$.ajax({
                             type: "POST",
                             url: '@Url.Action("GetCACM", "RDD_SORCodeGenerator")',
                             data: { DBName: dbName, DraftNo: draftNum },
@@ -275,7 +275,7 @@
                                 $("#txtCACM").val(data.Table[0].approver + "," + data.Table[1].approver);
                                 $("#hdnCACMmail").val(data.Table[0].email + "," + data.Table[1].email);
                             }
-                        });
+                        });*@
                     }
                     else {
 
@@ -287,7 +287,7 @@
     $(document).ready(function () {
         getDatabaseList();
         $(".loader1").hide();
-       
+
        // loadershow();
     });
     $('#SORdraftnum').on('focusout', function () {
@@ -378,27 +378,43 @@
         var Currow = $(this).closest("tr");
         $("#txtCountry").val(Currow.find('td:eq(12)').html());
         $("#txtSlpName").val(Currow.find('td:eq(11)').html());
-        $("#hdndraftSORkey").val(Currow.find('td:eq(2)').html());
+        $("#hdndraftSORkey").val(Currow.find('td:eq(1)').html());
+
+        
+
         var CurMonth = d.getMonth() + 1;
         var curdate = d.getDate();
         if (curdate < 10) {
             curdate = "0" + curdate;
         }
-        else {
-
-        }
+        
         if (CurMonth < 10) {
             CurMonth = "0" + CurMonth;
         }
-        else {
-
-        }
+        
         $("#txtDate").val(curdate + "-" + CurMonth + "-" + d.getFullYear());
         $("#addRowModal").modal('hide');
+        debugger;
+
+        var DraftKey = $("#hdndraftSORkey").val();
+        var DBName = $("#ddlDatabase option:selected").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetCACM", "RDD_SORCodeGenerator")',
+            data: { DBName: DBName, DraftNo: DraftKey },
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#txtCACM").val(data.Table[0].approver + "," + data.Table[1].approver);
+                $("#hdnCACMmail").val(data.Table[0].email + "," + data.Table[1].email);
+            }
+        });
+
+
     });
     $(document).on('click', '#btnGenerateOtp', function () {
         $('#overlay').fadeIn().delay(2000).fadeOut();
-        
+
         var project = $("#txtCountry").val();
         var draftNum = $("#SORdraftnum").val();
         if ((project == "") || (draftNum == "")) {
