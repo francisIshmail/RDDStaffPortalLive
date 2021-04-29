@@ -19,7 +19,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title redtitle">Employee Rating</h4>                                
+                                <h4 class="card-title redtitle">Employee Rating</h4>       
+                                <div class="form-group ml-auto">                                    
+                                    <button type="button" class="btn btn-primary" style="border-radius:25px" id="btnGeneratePDF">Download PDF</button>
+                                </div>
                             </div>
                             <div class="row mx-3 mt-3">
                                 <div class="col-1">
@@ -329,5 +332,17 @@
                 $('.dis').css("cursor", "not-allowed");
             }
         });
+    });
+    $(document).on('click', '#btnGeneratePDF', function () {
+        var UrlId = $("#hdnUrlId").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GeneratePDF","Employeerating")',
+            data: { "UrlId": UrlId },
+            dataType: "json",
+            success: (){
+
+            }
+        })
     });
 </script>

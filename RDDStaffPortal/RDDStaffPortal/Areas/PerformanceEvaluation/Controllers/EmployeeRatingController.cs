@@ -183,5 +183,10 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GeneratePDF(string UrlId)
+        {
+
+        }
     }
 }
