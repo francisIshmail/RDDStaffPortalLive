@@ -140,6 +140,14 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                         };
 
                     str = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", parm);
+                    if (str[0].Id == -1)
+                    {
+                        str[0].Outtf = false;
+                    }
+                    else
+                    {
+                        str[0].Outtf = true;
+                    }
                     if (str[0].Outtf == true)
                     {
                         int m = 0;

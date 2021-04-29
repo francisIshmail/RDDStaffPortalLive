@@ -291,8 +291,9 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
-            $('.loader1').show();
+            //$('.loader1').show();
             if (result.value) {
+                $('.loader1').show();
                 $.getJSON("/QuestionCategory/DeleteCategory", { "Categoryid": Categoryid }).done(function (data) {
                     $('.loader1').hide();
                     if (data[0].Outtf == true) {

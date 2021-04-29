@@ -65,7 +65,7 @@
             success: function (data) {
                 debugger
                 $('.loader1').hide();
-                if (data.Table.length > 0 || data.Table1.length>0) {
+                if (data.Table.length > 0 || data.Table1.length > 0) {
                     $("#ddlRating").find('option[value="' + data.Table[0].RatingNo + '"]').attr("selected", "selected");
                     $("#ddlFrequency").find('option[value="' + data.Table1[0].AppraisalFrequency + '"]').attr("selected", "selected");
                     $("#btnSaveSettings").text("Update");
@@ -94,7 +94,7 @@
                 $('.loader1').hide();
                 if (data.SaveFlag == true) {
                     RedDotAlert_Success(data.ErrorMsg);
-                    GetCategoryDetails();
+                    GetSettingsDetails();
                     $("#addRowModal").modal('hide');
                     $("#btnUpdateCategory").text("Save");
                     $("#btnUpdateCategory").attr("id", "btnSaveCategory");

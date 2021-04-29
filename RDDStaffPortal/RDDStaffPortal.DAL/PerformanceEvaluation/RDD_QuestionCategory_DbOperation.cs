@@ -69,7 +69,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     }
                     SqlParameter[] parm = {
                         new SqlParameter("@CategoryId",rDD_Category.CategoryId),
-                        new SqlParameter("@CategoryName",rDD_Category.CategoryName),
+                        new SqlParameter("@CategoryName",rDD_Category.CategoryName.ToLower()),
                         new SqlParameter("@DeptId",rDD_Category.DepartmentId.TrimEnd(',')),                        
                         new SqlParameter("@CreatedBy",rDD_Category.CreatedBy),                       
                         new SqlParameter("@Type",rDD_Category.ActionType),

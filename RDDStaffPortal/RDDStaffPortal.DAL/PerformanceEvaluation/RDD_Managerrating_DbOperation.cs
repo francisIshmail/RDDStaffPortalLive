@@ -198,7 +198,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
-        public DataSet GetManagerRatingViewOnClickUrl(string UrlId)
+        public DataSet GetManagerRatingViewOnClickUrl(string UrlId, string LoginName)
         {
             DataSet ds = null;
             try
@@ -206,7 +206,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 SqlParameter[] Para =
                 {
                     new SqlParameter("Type","GetEmployeeRatingOnClickUrl"),
-                    new SqlParameter("UrlIds",UrlId)
+                    new SqlParameter("UrlIds",UrlId),
+                    new SqlParameter("LoginName",LoginName)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
             }

@@ -152,7 +152,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             string LoginName = User.Identity.Name;
             try
             {
-                ds = rDD_MngRating_TemplateDb.GetManagerRatingViewOnClickUrl(UrlId);
+                ds = rDD_MngRating_TemplateDb.GetManagerRatingViewOnClickUrl(UrlId,LoginName);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
