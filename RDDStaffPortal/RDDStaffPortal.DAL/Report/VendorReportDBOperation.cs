@@ -11,6 +11,24 @@ namespace RDDStaffPortal.DAL.Report
    public class VendorReportDBOperation
     {
         CommonFunction Com = new CommonFunction();
+        public bool RDD_VendorReport_Refresh()
+        {
+            bool t = false;
+            try
+            {
+                SqlParameter[] parm = { };
+
+               t= Com.ExecuteNonQuery("RDD_VendorReport_RefreshWeeklyGP", parm);
+            }
+            catch (Exception)
+            {
+
+                return t;
+            }
+            
+
+            return t;
+        }
         public DataSet GetCannonReport(string BU,DateTime FromDate,DateTime Todate, string Country_code)
         {
             DataSet dsModules;

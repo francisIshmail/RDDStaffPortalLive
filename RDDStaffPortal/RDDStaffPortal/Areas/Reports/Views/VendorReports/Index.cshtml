@@ -22,7 +22,7 @@
 
                             <div class="col-xl-4 col-md-4" id="BU1">
                                 <div class="form-group form-inline">
-                                    <label for="email2" class="col-md-1 col-form-label p-0"> BU :</label>
+                                    <label for="email2" class="col-md-1 col-form-label p-0"> BU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
                                     <div class="col-md-6 col-xl-6">
                                         @Html.DropDownList(string.Concat("BU"), ViewBag.BUList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
                                     </div>
@@ -74,13 +74,15 @@
 
 
 
-                            <div class="col-xl-1 col-md-1" style="    position: relative;
+                            <div class="col-xl-4 col-md-4" style="    position: relative;
     right: 0;
     top: -18px;
     width: 140px;">
                                 <div class="form-group">
                                     <label for="email2" class="width100px"></label>
                                     <button class="excel-btn" title="Excel Download" id="btnApply"><i class="fas fa-file-excel"></i></button>
+                                   &nbsp;
+                                    <button class="btn btn-success" title="Refresh" id="btnRefresh">Refresh WeeklyGP</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -135,6 +137,32 @@
             }
 
         })
+        $("#btnRefresh").on("click", function () {
+            $(".loader1").show();
+           
+            $.ajax({
+                //async: false,
+                //cache: false,
+                type: "POST",
+                url: "/RDD_VendorReport_Refresh",
+                contentType: "application/json",
+                dataType: "json",
+                
+                success: function (data) {
+                    $(".loader1").show();
+
+
+                }, complete: function () {
+                   
+                    $(".loader1").hide();
+
+
+                }, error: function () {
+                    $(".loader1").hide();
+                }
+            });
+
+        })
         $("#btnApply").on("click", function () {
             $(".loader1").show();
             if ($("[id$=txtFrmDate]").val() == '') {
@@ -159,14 +187,14 @@
                 return;
             }
             if ($("#BU").val().toUpperCase() == 'CANON' || $("#BU").val().toUpperCase() == 'HIKVISION') {
-                window.location = '/CannonReport?BU=' + $("#BU").val() + '&FromDate=' + GetSqlDateformat($("[id$=txtFrmDate]").val()) + '&ToDate=' + GetSqlDateformat($("[id$=txtToDate]").val()) + '&country_code=""';
+                window.location = '/GetVendorReport?BU=' + $("#BU").val() + '&FromDate=' + GetSqlDateformat($("[id$=txtFrmDate]").val()) + '&ToDate=' + GetSqlDateformat($("[id$=txtToDate]").val()) + '&country_code=""';
                 $(".loader1").hide();
             } else if ($("#BU").val().toUpperCase() == 'APC' || $("#BU").val().toUpperCase() == 'LOGITECH' || $("#BU").val().toUpperCase() == 'EPSON') {
                 $.ajax({
-                    async: false,
-                    cache: false,
+                    //async: false,
+                   // cache: false,
                     type: "POST",
-                    url: "/CannonReport",
+                    url: "/GetVendorReport",
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify({

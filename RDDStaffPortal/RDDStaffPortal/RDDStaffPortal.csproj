@@ -1101,6 +1101,7 @@
     <Folder Include="Content\css\msdropdown\" />
     <Folder Include="excelFileUpload\LMS\" />
     <Folder Include="excelFileUpload\MarketingPlan\" />
+    <Folder Include="excelFileUpload\VendorReportExcel\" />
     <Folder Include="PdfUploads\" />
   </ItemGroup>
   <ItemGroup>
