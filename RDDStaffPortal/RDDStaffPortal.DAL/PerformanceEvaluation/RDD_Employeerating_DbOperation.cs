@@ -273,5 +273,24 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             }
             return ds;
         }
+
+        public DataSet GeneratePDF(string UrlId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmpMngRatingPDFformat"),
+                    new SqlParameter("UrlIds",UrlId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeManagerDetailsOnClickURL_PerformanceAppraisal", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
     }
 }

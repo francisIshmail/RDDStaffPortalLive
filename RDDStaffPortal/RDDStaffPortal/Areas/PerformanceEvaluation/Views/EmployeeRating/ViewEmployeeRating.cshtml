@@ -335,14 +335,6 @@
     });
     $(document).on('click', '#btnGeneratePDF', function () {
         var UrlId = $("#hdnUrlId").val();
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GeneratePDF","Employeerating")',
-            data: { "UrlId": UrlId },
-            dataType: "json",
-            success: (){
-
-            }
-        })
+        window.location.href = "/PerformanceEvaluation/EmployeeRating/GeneratePDF?UrlId=" + UrlId + "";
     });
 </script>

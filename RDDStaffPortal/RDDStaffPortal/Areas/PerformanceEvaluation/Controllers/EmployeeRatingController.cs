@@ -10,6 +10,13 @@ using RDDStaffPortal.DAL.PerformanceEvaluation;
 using RDDStaffPortal.DAL.DataModels.PerformanceEvaluation;
 using Newtonsoft.Json;
 using System.IO;
+using System.Text;
+using System.Web.UI;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using System.Net;
+using iTextSharp.text.html.simpleparser;
 
 namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
 {
@@ -186,7 +193,22 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
 
         public ActionResult GeneratePDF(string UrlId)
         {
-
+            string PDFname = "";
+            DataSet ds = new DataSet();
+            ds = rDD_EmpRating_TemplateDb.GeneratePDF(UrlId);
+            PDFname = ds.Tables[1].Rows[0]["PdfName"].ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(ds.Tables[0].Rows[0]["GetPDFdata"].ToString());
+            using (MemoryStream stream = new System.IO.MemoryStream())
+            {
+                StringReader reader = new StringReader(sb.ToString());
+                Document PdfFile = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(PdfFile, stream);
+                PdfFile.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, reader);
+                PdfFile.Close();
+                return File(stream.ToArray(), "application/pdf", "" + PDFname + ".pdf");
+            }            
         }
     }
 }
