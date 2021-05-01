@@ -189,7 +189,7 @@
                 var t = true;
                 $("#emailHelp").text('');
                 $("#emailid").blur(function () {
-                    var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,6}$/i;
+                    var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,9}$/i;
                     if (testEmail.test(this.value)) {
                         $("#emailHelp").text('');
                         t = false;
