@@ -20,6 +20,13 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
     {
         VendorReportDBOperation VenRepDBOp = new VendorReportDBOperation();
         // GET: Reports/VendorReports
+        [Route("RDD_VendorReport_Refresh")]
+        public ActionResult RDD_VendorReport_Refresh()
+        {
+            bool t = VenRepDBOp.RDD_VendorReport_Refresh();
+            
+            return Json(t, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Index()
         {
             DataSet dsModules = VenRepDBOp.DropDownFill();
@@ -56,8 +63,8 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             return View();
         }
 
-        [Route("CannonReport")]
-        public ActionResult GetCanonReport(string BU, DateTime FromDate, DateTime Todate,string  country_code)//string BU,DateTime FromDate,DateTime Todate)
+        [Route("GetVendorReport")]
+        public ActionResult GetVendorReport(string BU, DateTime FromDate, DateTime Todate,string  country_code)//string BU,DateTime FromDate,DateTime Todate)
         {
             DataSet ds; 
 
@@ -188,7 +195,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
                 ws_2.Range("A1:C" + (totalRows1 + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
                 ws_2.Range("A1:C" + (totalRows1 + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
-                string strMappath = "~/VendorReportExcel/" + User.Identity.Name + "/";
+                string strMappath = "~/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/";
                 if (!Directory.Exists(strMappath))
                 {
                     Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
@@ -197,7 +204,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 wb_1.SaveAs(file1);
                 var file2 = Path.Combine(Server.MapPath(strMappath), BU + " Inventory.xlsx");
                 wb_2.SaveAs(file2);
-                var FilesName = "/VendorReportExcel/" + User.Identity.Name + "/" + BU + " Sales.xlsx$/VendorReportExcel/"+User.Identity.Name+"/" + BU + " Inventory.xlsx";
+                var FilesName = "/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU + " Sales.xlsx$/excelFileUpload/VendorReportExcel/"+User.Identity.Name+"/" + BU + " Inventory.xlsx";
                 return Json(new { data = FilesName }, JsonRequestBehavior.AllowGet);
             }
             else if (BU == "HIKVISION")
@@ -309,6 +316,22 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
                     i++;
                 }
+                i = 2;
+                while (totalRows1 >= i)
+                {
+
+                    //ws_2.Cell(i,7).Style.Alignment.
+                    ws_1.Cell(i, 39).DataType = XLDataType.Number;
+                    ws_1.Cell(i, 39).Style.NumberFormat.Format = "$ " + "#,##0.00";
+                    ws_1.Cell(i, 41).DataType = XLDataType.Number;
+                    ws_1.Cell(i, 41).Style.NumberFormat.Format = "$ " + "#,##0.00";
+
+
+
+
+
+                    i++;
+                }
 
 
                 //ws_1.Cell(totalRows + 1, 9).Value = ws_1.Evaluate("SUM(I2:I" + totalRows + ")");
@@ -346,7 +369,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
                 ws_2.Range("A1:I" + (totalRows1 + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
                 ws_2.Range("A1:I" + (totalRows1 + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
-                string strMappath = "~/VendorReportExcel/" + User.Identity.Name + "/";
+                string strMappath = "~/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/";
                 if (!Directory.Exists(strMappath))
                 {
                     Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
@@ -355,7 +378,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 wb_1.SaveAs(file1);
                 var file2 = Path.Combine(Server.MapPath(strMappath), BU + " - 10487_INV_" + FromDate.ToString("MMyyyy") + ".xlsx");
                 wb_2.SaveAs(file2);
-                var FilesName = "/VendorReportExcel/" + User.Identity.Name + "/" + BU + " - 10487_POS_" + FromDate.ToString("MMyyyy") + ".xlsx$/VendorReportExcel/" + User.Identity.Name + "/"  + BU + " - 10487_INV_" + FromDate.ToString("MMyyyy") + ".xlsx";
+                var FilesName = "/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU + " - 10487_POS_" + FromDate.ToString("MMyyyy") + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/"  + BU + " - 10487_INV_" + FromDate.ToString("MMyyyy") + ".xlsx";
                 return Json(new { data = FilesName }, JsonRequestBehavior.AllowGet);
 
 
@@ -374,7 +397,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 ws_1.Style.Fill.BackgroundColor = XLColor.White;
                 ws_1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 ws_1.Style.Alignment.WrapText = true;
-                ws_1.Row(1).Hide();
+               // ws_1.Row(1).Hide();
               // ws_1.Row(1).InsertRowsAbove(1);
 
                 ws_1.AutoFilter.Clear();
@@ -384,7 +407,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 ws_2.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 ws_2.AutoFilter.Clear();
                 ws_2.SetAutoFilter(false);
-                ws_2.Row(1).Hide();
+               // ws_2.Row(1).Hide();
                 ///ws_2.Row(1).Delete();
 
 
@@ -395,7 +418,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 ws_3.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 ws_3.AutoFilter.Clear();
                 ws_3.SetAutoFilter(false);
-                ws_3.Row(1).Hide();
+                //ws_3.Row(1).Hide();
                 //ws_3.Row(1).Delete();
 
                 ws_1.AutoFilter.Clear();
@@ -460,7 +483,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
 
                 //ws_2.Range("A1:I" + (totalRows1 + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
                 //ws_2.Range("A1:I" + (totalRows1 + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
-                string strMappath = "~/VendorReportExcel/" + User.Identity.Name + "/";
+                string strMappath = "~/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/";
                 if (!Directory.Exists(strMappath))
                 {
                     Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
@@ -472,7 +495,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 wb_2.SaveAs(file2);
                 var file3 = Path.Combine(Server.MapPath(strMappath), ds.Tables[2].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx");
                 wb_3.SaveAs(file3);
-                var FilesName = "/VendorReportExcel/" + User.Identity.Name + "/" +  ds.Tables[0].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx$/VendorReportExcel/" + User.Identity.Name + "/"  + ds.Tables[1].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx$/VendorReportExcel/" + User.Identity.Name + "/" + ds.Tables[2].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx";
+                var FilesName = "/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" +  ds.Tables[0].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/"  + ds.Tables[1].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + ds.Tables[2].TableName + FromDate.ToString("ddMMyy") + FromDate.ToString("MMM").Substring(0, 1) + ".xlsx";
                 return Json(new { data = FilesName }, JsonRequestBehavior.AllowGet);
 
 
