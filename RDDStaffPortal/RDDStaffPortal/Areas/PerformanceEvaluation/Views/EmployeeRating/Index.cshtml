@@ -118,9 +118,9 @@
                 var str = "";
                 str += data.Table[0].EmployeeName;
                 str += '<span class="badge badge-danger mb-1 ml-2"><b>' + data.Table[0].DesigName + '</b></span>';
-                if (data.Table11.length > 0) {
-                    str += '<span id="spanrating"><span class="badge badge-warning mb-1 ml-2" data-toggle="popover" title="Manager Rating: ' + data.Table11[0].ManagerAvgRating + '"><b>' + data.Table10[0].EmployeeAvgRating + '</b><i class="fa fa-star ml-1" aria-hidden="true"></i></span></span>';
-                }
+                //if (data.Table11.length > 0) {
+                //    str += '<span id="spanrating"><span class="badge badge-warning mb-1 ml-2" data-toggle="popover" title="Manager Rating: ' + data.Table11[0].ManagerAvgRating + '"><b>' + data.Table10[0].EmployeeAvgRating + '</b><i class="fa fa-star ml-1" aria-hidden="true"></i></span></span>';
+                //}
                 
                 $("#headEmpName").append(str);
                 $('.emp').empty();

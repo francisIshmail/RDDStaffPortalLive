@@ -41,6 +41,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="txtRatingDescription">Rating Description</label>
+                                        <textarea class="form-control" id="txtRatingDescription" rows="4">
+
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div class="m-2" style="text-align:right;">
                             <a href="#" class="btn btn-danger" id="btnSaveSettings">Save</a>
@@ -66,6 +76,7 @@
                 debugger
                 $('.loader1').hide();
                 if (data.Table.length > 0 || data.Table1.length > 0) {
+                    $("#txtRatingDescription").val(data.Table[0].RatingDescription);
                     $("#ddlRating").find('option[value="' + data.Table[0].RatingNo + '"]').attr("selected", "selected");
                     $("#ddlFrequency").find('option[value="' + data.Table1[0].AppraisalFrequency + '"]').attr("selected", "selected");
                     $("#btnSaveSettings").text("Update");
@@ -113,6 +124,7 @@
     $(document).on('click', '#btnSaveSettings', function () {
         var RatingNo = $("#ddlRating option:selected").val();
         var AppraisalFrequency = $("#ddlFrequency option:selected").val();
+        var RatingDescription = $("#txtRatingDescription").val();
         if (AppraisalFrequency == "-1") {
             RedDotAlert_Error("Please Select Appraisal Frequency");
             return false;
@@ -123,7 +135,8 @@
         }        
         var rDD_Setting = {
             RatingNo: RatingNo,
-            AppraisalFrequency: AppraisalFrequency
+            AppraisalFrequency: AppraisalFrequency,
+            RatingDescription: RatingDescription
         };
         SaveSettings(rDD_Setting);
     });
@@ -131,6 +144,7 @@
     $(document).on('click', '#btnUpdateSettings', function () {
         var RatingNo = $("#ddlRating option:selected").val();
         var AppraisalFrequency = $("#ddlFrequency option:selected").val();
+        var RatingDescription = $("#txtRatingDescription").val();
         if (AppraisalFrequency == "-1") {
             RedDotAlert_Error("Please Select Appraisal Frequency");
             return false;
@@ -143,6 +157,7 @@
         var rDD_Setting = {
             RatingNo: RatingNo,
             AppraisalFrequency: AppraisalFrequency,
+            RatingDescription: RatingDescription,
             RatingId: $("#hdnRatingId").val(),
             FrequencyId: $("#hdnFrequencyId").val(),
             EditFlag:true

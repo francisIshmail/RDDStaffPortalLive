@@ -11,6 +11,7 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public int RatingId { get; set; }
         public int FrequencyId { get; set; }
         public int RatingNo { get; set; }
+        public string RatingDescription { get; set; }
         public string AppraisalFrequency { get; set; }
         public string CreatedBy { get; set; }
         public string LastUpdatedBy { get; set; }

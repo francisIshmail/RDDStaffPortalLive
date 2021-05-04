@@ -203,8 +203,10 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             {
                 StringReader reader = new StringReader(sb.ToString());
                 Document PdfFile = new Document(PageSize.A4);
+                //PdfFile.NewPage();
                 PdfWriter writer = PdfWriter.GetInstance(PdfFile, stream);
                 PdfFile.Open();
+                PdfFile.Add(new Chunk(""));
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, reader);
                 PdfFile.Close();
                 return File(stream.ToArray(), "application/pdf", "" + PDFname + ".pdf");
