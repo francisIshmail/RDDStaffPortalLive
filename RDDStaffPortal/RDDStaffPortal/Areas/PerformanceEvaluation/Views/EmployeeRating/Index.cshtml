@@ -91,9 +91,8 @@
         $('[data-toggle="popover"]').popover()
     })
 </script>
-<script type="text/javascript">
-    
-    function GetEmployeeDetails() {
+<script type="text/javascript">    
+    function GetEmployeeDetails() {        
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetEmployeeDetails", "EmployeeRating")',
@@ -169,7 +168,7 @@
                             str2 += '<td style="display:none"></td>';
                             str2 += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                if (data.Table12[0].Mng_FinalSubmissionStatus == true) {
+                                if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
                                     if (Value.ManagerRating == k) {
                                         str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                     }
@@ -182,7 +181,7 @@
                                 }                                
                             }
                             str2 += '</form></div></td>';
-                            if (data.Table12[0].Mng_FinalSubmissionStatus == true) {
+                            if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
                                 str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">'+Value.ManagerComment+'</textarea></td>';                                
                             }
                             else {
@@ -236,8 +235,9 @@
                 }
                
                 $("#add-row tbody").append(str2);
-                $('.distar').attr("disabled", "disabled");                
-                if (SaveStatus == true) {
+                $('.distar').attr("disabled", "disabled");    
+                var CloseAppraisalStatus = data.Table11[0].IsAppraisalClosedByHR;
+                if (SaveStatus == true || CloseAppraisalStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
                     $("#btnUpdateRating").remove();
@@ -251,6 +251,7 @@
                     $("#btnFinalSubmit").removeAttr("disabled", "disabled");
                     $('#btnFinalSubmit').css("cursor", "");
                 }
+                $('.loader1').hide();
             }
         });
     }
@@ -332,11 +333,10 @@
         $(this).closest("tr").find("td:eq(5)").html(StarNo);
     });
 
-    $(document).ready(function () {
+    $(document).ready(function () { 
         $('.loader1').show();
         $("#divBtnSave").hide();
-        GetEmployeeDetails();
-        $('.loader1').hide();
+        GetEmployeeDetails();       
     });
 
     $(document).on('click', '.selectCategory', function () {
@@ -609,7 +609,7 @@
                             str2 += '<td style="display:none"></td>';
                             str2 += '<td><div class="stars"><form action="">';
                             for (var k = RatingNo; k > 0; k--) {
-                                if (data.Table11[0].Mng_FinalSubmissionStatus == true) {
+                                if (data.Table9[0].Mng_FinalSubmissionStatus == true) {
                                     if (Value.ManagerRating == k) {
                                         str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                     }
@@ -622,7 +622,7 @@
                                 }
                             }
                             str2 += '</form></div></td>';
-                            if (data.Table11[0].Mng_FinalSubmissionStatus == true) {
+                            if (data.Table9[0].Mng_FinalSubmissionStatus == true) {
                                 str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
                             }
                             else {
@@ -681,7 +681,8 @@
 
                 $("#add-row tbody").append(str2);
                 $('.distar').attr("disabled", "disabled");
-                if (SaveStatus == true) {
+                var CloseAppraisalStatus = data.Table10[0].IsAppraisalClosedByHR;
+                if (SaveStatus == true || CloseAppraisalStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
                     $("#divBtnSave").hide();

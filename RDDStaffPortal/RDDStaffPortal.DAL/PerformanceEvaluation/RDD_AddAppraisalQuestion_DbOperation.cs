@@ -249,7 +249,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return outcls;
         }
 
-        public List<Outcls1> LaunchAppraisal(string Qperiod)
+        public List<Outcls1> LaunchAppraisal(string Qperiod,DateTime AppraisalEndDate)
         {
             List<Outcls1> str = new List<Outcls1>();
             RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
@@ -261,12 +261,44 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                     {
                         new SqlParameter("Type","LaunchAppraisal"),
                         new SqlParameter("Periods",Qperiod),
+                        new SqlParameter("AppraisalEndDate",AppraisalEndDate),
                         new SqlParameter("p_ide",rDD_Question.id),
                         new SqlParameter("Response",rDD_Question.ErrorMsg)
                     };
                     str = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", prm);
                     scope.Complete();
                 }                
+            }
+            catch (Exception ex)
+            {
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
+
+        public List<Outcls1> CloseAppraisal(string Qperiod)
+        {
+            List<Outcls1> str = new List<Outcls1>();
+            RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] prm =
+                    {
+                        new SqlParameter("Type","CloseAppraisal"),
+                        new SqlParameter("Periods",Qperiod),                        
+                        new SqlParameter("p_ide",rDD_Question.id),
+                        new SqlParameter("Response",rDD_Question.ErrorMsg)
+                    };
+                    str = Com.ExecuteNonQueryListID("RDD_Insert_Update_AppraisalQuestions", prm);
+                    scope.Complete();
+                }
             }
             catch (Exception ex)
             {
@@ -287,7 +319,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             {
                 SqlParameter[] prm =
                 {
-                    new SqlParameter("Type","GetMailDetails"),
+                    new SqlParameter("Type","GetMailDetailsOnLaunchAppraisal"),
                     new SqlParameter("Periods",Qperiod)
                 };
                 ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, prm);
@@ -295,6 +327,25 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             catch (Exception ex)
             {
                 throw;             
+            }
+            return ds;
+        }
+
+        public DataSet GetMailDetailsCloseAppraisal(string Qperiod)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] prm =
+                {
+                    new SqlParameter("Type","GetMailDetailsOnCloseAppraisal"),
+                    new SqlParameter("Periods",Qperiod)
+                };
+                ds = Com.ExecuteDataSet("RDD_SetAppraisalQuestion_GetData", CommandType.StoredProcedure, prm);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             return ds;
         }

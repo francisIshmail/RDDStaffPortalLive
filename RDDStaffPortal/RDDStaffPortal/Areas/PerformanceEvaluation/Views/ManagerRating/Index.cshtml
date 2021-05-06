@@ -87,8 +87,7 @@
 
 <script type="text/javascript">   
 
-    function GetManagerRatingViewOnClickUrl(UrlId) {
-        
+    function GetManagerRatingViewOnClickUrl(UrlId) {        
         $("#ddlSelectYear").hide();
         $("#ddlSelectYearEmp").removeAttr("hidden", "hidden");
         $("#btnBackEmpDetails").removeAttr("hidden", "hidden");
@@ -109,11 +108,7 @@
             contentType: "Application/json",
             success: function (data) {
                 debugger
-                $("#hdnEmployeeId").val(data.Table[0].EmployeeId);
-                //var SelectedPriods = $("#ddlSelectYear").val();
-                //var SplitPeriods = SelectedPriods.split("-");
-                //var SplitPeriod = SplitPeriods[0];
-                //var SplitYear = SplitPeriods[1];
+                $("#hdnEmployeeId").val(data.Table[0].EmployeeId);               
                 $("#ddlSelectYearEmp").empty();
                 $("#ddlSelectYearEmp").append('<option value="-1">--Select--</option>');
                 if (data.Table7.length > 0) {
@@ -189,7 +184,6 @@
                                 }
                             }
                             str2 += '</form></div></td>';
-
                             if (Value.ManagerComment == null) {
                                 Value.ManagerComment = "";
                             }
@@ -567,7 +561,7 @@
                     $("#add-row tbody").append(str2);
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
-                    if (data.Table4[0].Mng_FinalSubmissionStatus == true) {
+                    if (data.Table4[0].Mng_FinalSubmissionStatus == true || data.Table5[0].IsAppraisalClosedByHR == true) {
                         $('.distar').prop("disabled", true);
                         $('.mngcomnt').prop("disabled", true);
                         $('.mngcomnt').css("cursor", "not-allowed");
@@ -684,7 +678,7 @@
                     $("#add-row tbody").append(str2);
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
-                    if (data.Table4[0].Mng_FinalSubmissionStatus == true) {
+                    if (data.Table4[0].Mng_FinalSubmissionStatus == true || data.Table5[0].IsAppraisalClosedByHR == true) {
                         $('.distar').prop("disabled", true);
                         $('.mngcomnt').prop("disabled", true);
                         $('.mngcomnt').css("cursor", "not-allowed");
