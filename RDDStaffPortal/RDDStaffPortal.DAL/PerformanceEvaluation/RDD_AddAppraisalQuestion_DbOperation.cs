@@ -165,7 +165,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                             {
                                     new SqlParameter("@Type",rDD_Question.ActionTypeTrans),
                                     new SqlParameter("@QuestionId",str[0].Id),
-                                    new SqlParameter("@Question",rDD_Question.rDD_QuestionList[m].Question)
+                                    new SqlParameter("@Question",rDD_Question.rDD_QuestionList[m].Question),
+                                    new SqlParameter("@IsRatingApplicable",rDD_Question.rDD_QuestionList[m].IsRatingApplicable)
                                 };
                             var det1 = Com.ExecuteNonQuery("RDD_Insert_Update_AppraisalQuestionsTrans", ParaDet1);
                             if (det1 == false)

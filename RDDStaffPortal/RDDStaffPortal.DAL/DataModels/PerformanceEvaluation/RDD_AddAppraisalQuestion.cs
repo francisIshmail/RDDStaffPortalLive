@@ -30,5 +30,6 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public int QuestionTransId { get; set; }
         public int QuestionId { get; set; }
         public string Question { get; set; }
+        public int IsRatingApplicable { get; set; }
     }
 }
