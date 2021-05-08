@@ -362,7 +362,7 @@
             type: "GET",
             url: '@Url.Action("GetQuestionDetails", "AddAppraisalQuestion")',
             dataType: "json",
-            success: function (data) {
+            success: function (data) {                
                 if (data.Table5.length > 0) {
                     $("#AppraisalEndDate").val(data.Table5[0].AppraisalEndDate);
                 }
@@ -407,27 +407,35 @@
                 if (data.Table2.length > 0) {
                     var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
                 }
-                if (LaunchStatus == true) {
+                if (data.Table6.length > 0) {
+                    var ClosedAppraisal = data.Table6[0].IsAppraisalClosedByHR;
+                }
+                
+                if (LaunchStatus == true && ClosedAppraisal == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
+                    $("#btnCloseAppraisal").prop("disabled", true);
+                    $("#btnCloseAppraisal").css("cursor", "not-allowed");
+                    $("#AppraisalEndDate").prop("disabled", true);
+                    $("#AppraisalEndDate").css("cursor", "not-allowed");
+                }
+                else if (LaunchStatus == true && ClosedAppraisal == false) {
                     $("#btnCloseAppraisal").prop("disabled", false);
                     $("#btnCloseAppraisal").css("cursor", "");
+                    $("#AppraisalEndDate").prop("disabled", true);
+                    $("#AppraisalEndDate").css("cursor", "not-allowed");
+                    $('.dis').prop("disabled", true);
+                    $('.dis').css("cursor", "not-allowed");
                 }
                 else {
                     $('.dis').prop("disabled", false);
                     $('.dis').css("cursor", "");
                     $("#btnCloseAppraisal").prop("disabled", true);
                     $("#btnCloseAppraisal").css("cursor", "not-allowed");
-                }
-                var ClosedAppraisal = data.Table6[0].IsAppraisalClosedByHR;
-                if (ClosedAppraisal == true) {
-                    $("#btnCloseAppraisal").prop("disabled", true);
-                    $("#btnCloseAppraisal").css("cursor", "not-allowed")
-                }
-                else {
-                    $("#btnCloseAppraisal").prop("disabled", false);
-                    $("#btnCloseAppraisal").css("cursor", "");
-                }
+                    $("#AppraisalEndDate").prop("disabled", false);
+                    $("#AppraisalEndDate").css("cursor", "");
+                }                
+                
                 $('.loader1').hide();
             }
         });
@@ -446,7 +454,7 @@
         $("#addAttachments").on("click", function () {
             var newRow = $("#AddAttachmentsRow");            
             var cols = "";
-            cols += '<div class="reddotTableRow odd-even-row">';
+            cols += '<div class="reddotTableRow odd-even-row TypeAppraisalQuestion">';
             cols += '<div class="reddotTableCell text-left"> <div> <textarea id="action_name" rows="2" class="form-control txtQuestion"></textarea> </div> </div>';
             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount +' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div></div>';
             cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
@@ -470,7 +478,7 @@
 
     function LaunchAppraisal() {
         var Qperiod = $("#ddlSelectYear option:selected").val();
-        var AppraisalEndDate = $("#AppraisalEndDate").val();
+        var AppraisalEndDate = RedDot_setdtpkdate($("#AppraisalEndDate").val());
         if (AppraisalEndDate == "" || AppraisalEndDate == undefined) {
             RedDotAlert_Error("Please Select Appraisal Close Date");
             return false;
@@ -491,6 +499,13 @@
         }).then((result) => {
             if (result.value) {
                 $('.loader1').show();
+                @*$.ajax({
+                    type: "POST",
+                    url: '@Url.Action("LaunchAppraisal", "AddAppraisalQuestion")',
+                    data: { "Qperiod": Qperiod, "AppraisalEndDate": AppraisalEndDate },
+                    dataType: "json",
+                    success:function(data){}
+                });*@
                 $.getJSON("/AddAppraisalQuestion/LaunchAppraisal", { "Qperiod": Qperiod, "AppraisalEndDate": AppraisalEndDate }).done(function (data) {
                     $('.loader1').hide();
                     if (data[0].Outtf == true) {
@@ -627,6 +642,7 @@
             data: { "Qperiodyear": Qperiodyear },
             dataType: "json",
             success: function (data) {
+                debugger
                 if (data.Table3.length > 0) {
                     $("#AppraisalEndDate").val(data.Table3[0].AppraisalEndDate);
                 }
@@ -660,28 +676,41 @@
                 $(".update").attr("hidden", "hidden");
                 if (data.Table2.length > 0) {
                     var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
-                }
-                if (LaunchStatus == true) {
+                }                
+                var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
+                if (LaunchStatus == true && ClosedAppraisal == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
+                    $("#btnCloseAppraisal").prop("disabled", true);
+                    $("#btnCloseAppraisal").css("cursor", "not-allowed");
+                    $("#AppraisalEndDate").prop("disabled", true);
+                    $("#AppraisalEndDate").css("cursor", "not-allowed");
+                }
+                else if (LaunchStatus == true && ClosedAppraisal == false) {
                     $("#btnCloseAppraisal").prop("disabled", false);
                     $("#btnCloseAppraisal").css("cursor", "");
+                    $('.dis').prop("disabled", true);
+                    $('.dis').css("cursor", "not-allowed");
+                    $("#AppraisalEndDate").prop("disabled", true);
+                    $("#AppraisalEndDate").css("cursor", "not-allowed");
                 }
                 else {
                     $('.dis').prop("disabled", false);
                     $('.dis').css("cursor", "");
                     $("#btnCloseAppraisal").prop("disabled", true);
                     $("#btnCloseAppraisal").css("cursor", "not-allowed");
+                    $("#AppraisalEndDate").prop("disabled", false);
+                    $("#AppraisalEndDate").css("cursor", "");
                 }
-                var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
-                if (ClosedAppraisal == true) {
-                    $("#btnCloseAppraisal").prop("disabled", true);
-                    $("#btnCloseAppraisal").css("cursor", "not-allowed")
-                }
-                else {
-                    $("#btnCloseAppraisal").prop("disabled", false);
-                    $("#btnCloseAppraisal").css("cursor", "");
-                }
+               
+                //if (ClosedAppraisal == true) {
+                //    $("#btnCloseAppraisal").prop("disabled", true);
+                //    $("#btnCloseAppraisal").css("cursor", "not-allowed")
+                //}
+                //else {
+                //    $("#btnCloseAppraisal").prop("disabled", false);
+                //    $("#btnCloseAppraisal").css("cursor", "");
+                //}
                 $('.loader1').hide();
             }
         });
@@ -840,15 +869,17 @@
         else if ($("#action_name").prop("disabled") == false) {
             var ratingapply = "";
             var rowid = "";
-            $('.txtQuestion').each(function () {
+            var rating = "";
+            $('.TypeAppraisalQuestion').each(function () {
                 rowid = $(this).find(".rowids").html();
-                if ($("#hdnDiv_" + rowid).val() != "" || $("#hdnDiv_" + rowid).val() != undefined) {
+                rating = $("#hdnDiv_" + rowid).val();
+                if (rating != "") {
                     ratingapply = $("#hdnDiv_" + rowid).val();
                 }
                 else {
-                    ratingapply = 1;
+                    ratingapply = "1";
                 }
-                var qstn = $.trim($(this).val());
+                var qstn = $.trim($(this).find('.txtQuestion').val());
                 var rDD_QuestionList = {
                     Question: qstn,
                     IsRatingApplicable: ratingapply 
@@ -869,7 +900,7 @@
             RedDotAlert_Error("Please Select Anyone Option To Save Question");
             return false;
         }
-        //SaveQuestion(rDD_Question);
+        SaveQuestion(rDD_Question);
     });
 
     $(document).on('click', '.selectCategory', function () {
