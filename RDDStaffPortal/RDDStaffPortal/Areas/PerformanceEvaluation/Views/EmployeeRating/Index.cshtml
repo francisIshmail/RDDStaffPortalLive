@@ -125,8 +125,12 @@
                 $('.emp').empty();
                 $("#divDepartment").append('<i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].DeptName);
                 $("#divCountry").append('<i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].Country);
-                $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].Years);
-                $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table2[0].Period);
+                if (data.Table1.length>0) {
+                    $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].Years);
+                }
+                if (data.Table2.length > 0) {
+                    $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table2[0].Period);
+                }
                 $("#hdnEmployeeId").val(data.Table[0].EmployeeId);
                 $("#hdnCategoryId").val(data.Table3[0].CategoryId);
                 $("#myTab").empty();
@@ -263,8 +267,10 @@
                 }
                
                 $("#add-row tbody").append(str2);
-                $('.distar').attr("disabled", "disabled");    
-                var CloseAppraisalStatus = data.Table11[0].IsAppraisalClosedByHR;
+                $('.distar').attr("disabled", "disabled"); 
+                if (data.Table11.length > 0) {
+                    var CloseAppraisalStatus = data.Table11[0].IsAppraisalClosedByHR;
+                }                
                 if (SaveStatus == true || CloseAppraisalStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");

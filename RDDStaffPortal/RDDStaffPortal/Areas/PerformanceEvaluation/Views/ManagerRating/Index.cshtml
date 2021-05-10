@@ -896,18 +896,18 @@
             };
             rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
         });
-        var i = 0;
-        var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
-        while (i < length) {
-            if ((rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerRating == "") || (rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerComment == "")) {
-                i++;
+        //var i = 0;
+        //var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
+        //while (i < length) {
+            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "") {
+                RedDotAlert_Error("Please Comment For First Question At Least");
             }
             else {
                 SaveMngRating(rDD_MngAppraisal);
                 return false;
             }
-            RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
-        }
+            //RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
+        //}
     });
     $(document).on('click', '#btnUpdateRating', function () {
         var rDD_MngAppraisal = {
@@ -925,17 +925,17 @@
             };
             rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
         });
-        var i = 0;
-        var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
-        while (i < length) {
-            if ((rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerRating == "") || (rDD_MngAppraisal.rDD_EmpAppraisalList[i].ManagerComment == "")) {
-                i++;
+        //var i = 0;
+        //var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
+        //while (i < length) {
+            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "") {
+                RedDotAlert_Error("Please Comment For First Question At Least");
             }
             else {
                 SaveMngRating(rDD_MngAppraisal);
                 return false;
             }
-            RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
-        }
+            //RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
+        //}
     });
 </script>

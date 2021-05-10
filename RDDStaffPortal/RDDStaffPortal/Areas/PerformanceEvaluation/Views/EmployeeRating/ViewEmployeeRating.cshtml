@@ -128,13 +128,18 @@
                             str2 += '<td style="display:none;">' + Value.QuestionTransId + '</td>';
                             str2 += '<td>' + Value.Question + '</td>';
                             str2 += '<td><div class="stars"><form action="">';
-                            for (var i = RatingNo; i > 0; i--) {
-                                if (Value.EmployeeRating == i) {
-                                    str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                            if (Value.IsRatingApplicable == true) {
+                                for (var i = RatingNo; i > 0; i--) {
+                                    if (Value.EmployeeRating == i) {
+                                        str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
+                                    else {
+                                        str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
                                 }
-                                else {
-                                    str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                }
+                            }
+                            else {
+                                str2 += '<label>Rating Not Applicable</label>';
                             }
                             str2 += '</form></div></td>';
                             if (Value.EmployeeComment == null) {
@@ -144,18 +149,23 @@
                             str2 += '<td style="display:none">' + Value.EmployeeRating + '</td>';
                             str2 += '<td style="display:none"></td>';
                             str2 += '<td><div class="stars"><form action="">';
-                            for (var k = RatingNo; k > 0; k--) {
-                                if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
-                                    if (Value.ManagerRating == k) {
-                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                            if (Value.IsRatingApplicable == true) {
+                                for (var k = RatingNo; k > 0; k--) {
+                                    if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
+                                        if (Value.ManagerRating == k) {
+                                            str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                        }
+                                        else {
+                                            str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                        }
                                     }
                                     else {
                                         str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                     }
                                 }
-                                else {
-                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                }
+                            }
+                            else {
+                                str2 += '<label>Rating Not Applicable</label>';
                             }
                             str2 += '</form></div></td>';
                             if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
@@ -179,16 +189,26 @@
                                 str2 += '<td>' + Value.Question + '</td>';
 
                                 str2 += '<td><div class="stars"><form action="">';
-                                for (var i = RatingNo; i > 0; i--) {
-                                    str2 += '<input class="star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                if (Value.IsRatingApplicable == true) {
+                                    for (var i = RatingNo; i > 0; i--) {
+                                        str2 += '<input class="star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str2 += '<label>Rating not Applicable</label>';
                                 }
                                 str2 += '</form></div></td>';
                                 //str2 += '<td><div class="stars"><form action=""><input class="star star-5" id="star-5" type="radio" name="star" /> <label class="star star-5" for="star-5"></label></form></div>';
                                 str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt" disabled="disabled"></textarea></td>';
                                 str2 += '<td style="display:none"></td>';
                                 str2 += '<td><div class="stars"><form action="">';
-                                for (var k = RatingNo; k > 0; k--) {
-                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (Value.IsRatingApplicable == true) {
+                                    for (var k = RatingNo; k > 0; k--) {
+                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str2 += '<label>Rating not Applicable</label>';
                                 }
                                 str2 += '</form></div></td>';
                                 str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
@@ -251,13 +271,18 @@
                             str += '<td style="display:none" class="qid">' + Value.QuestionTransId + '</td>';
                             str += '<td>' + Value.Question + '</td>';
                             str += '<td><div class="stars"><form action="">';
-                            for (var i = RatingNo; i > 0; i--) {
-                                if (Value.EmployeeRating == i) {
-                                    str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                            if (Value.IsRatingApplicable == true) {
+                                for (var i = RatingNo; i > 0; i--) {
+                                    if (Value.EmployeeRating == i) {
+                                        str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
+                                    else {
+                                        str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
                                 }
-                                else {
-                                    str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                }                               
+                            }
+                            else {
+                                str += '<label>Rating not Applicable</label>';
                             }
                             str += '</form></div></td>';
                             if (Value.EmployeeComment == null) {
@@ -267,19 +292,23 @@
                             str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
                             str += '<td style="display:none"></td>';
                             str += '<td><div class="stars"><form action="">';
-                            for (var k = RatingNo; k > 0; k--) {
-                                if (data.Table3[0].Mng_FinalSubmissionStatus == true) {
-                                    if (Value.ManagerRating == k) {
-                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                            if (Value.IsRatingApplicable == true) {
+                                for (var k = RatingNo; k > 0; k--) {
+                                    if (data.Table3[0].Mng_FinalSubmissionStatus == true) {
+                                        if (Value.ManagerRating == k) {
+                                            str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                        }
+                                        else {
+                                            str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                        }
                                     }
                                     else {
                                         str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                     }
                                 }
-                                else {
-                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                }
-                                
+                            }
+                            else {
+                                str += '<label>Rating Not Applicable</label>';
                             }
                             str += '</form></div></td>';
                             if (data.Table3[0].Mng_FinalSubmissionStatus == true) {
@@ -303,15 +332,25 @@
                                 str += '<td style="display:none" class="qid">' + Value.QuestionTransId + '</td>';
                                 str += '<td>' + Value.Question + '</td>';
                                 str += '<td><div class="stars"><form action="">';
-                                for (var i = RatingNo; i > 0; i--) {
-                                    str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                if (Value.IsRatingApplicable == true) {
+                                    for (var i = RatingNo; i > 0; i--) {
+                                        str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str += '<label>Rating Not Applicable</label>';
                                 }
                                 str += '</form></div></td>';
                                 str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis"></textarea></td>'; 
                                 str += '<td style="display:none"></td>';
                                 str += '<td><div class="stars"><form action="" disabled="disabled">';
-                                for (var k = RatingNo; k > 0; k--) {
-                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                if (Value.IsRatingApplicable == true) {
+                                    for (var k = RatingNo; k > 0; k--) {
+                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                    }
+                                }
+                                else {
+                                    str += '<label>Rating Not Applicable</label>';
                                 }
                                 str += '</form></div></td>';
                                 str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';                                

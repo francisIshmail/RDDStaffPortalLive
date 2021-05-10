@@ -198,7 +198,9 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Mailresponse = ex.Message;                    
+                    Mailresponse = ex.Message;
+                    t[0].Outtf = false;
+                    t[0].Responsemsg = Mailresponse;
                 }
             }
             else
