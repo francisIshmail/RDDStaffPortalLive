@@ -197,7 +197,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return str;
         }
 
-        public List<Outcls1> UpdateAssignCategoryDetails(string Qid, string Question)
+        public List<Outcls1> UpdateAssignCategoryDetails(string Qid, string Question, string Ratingapplystatus)
         {
             List<Outcls1> str = new List<Outcls1>();
             RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
@@ -207,7 +207,8 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                 {
                     SqlParameter[] parm = {
                             new SqlParameter("@Question",Question),
-                            new SqlParameter("@QuestionTransId",Qid),                            
+                            new SqlParameter("@QuestionTransId",Qid), 
+                            new SqlParameter("@IsRatingApplicable",Ratingapplystatus),
                             new SqlParameter("@Type","Update"),
                             new SqlParameter("@p_ide",rDD_Question.id),
                             new SqlParameter("@Response",rDD_Question.ErrorMsg)

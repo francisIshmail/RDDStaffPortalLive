@@ -123,8 +123,9 @@
                                                     <table id="add-rowPrevious" class="display table table-striped table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th width="90%">Question </th>
-                                                                <th style="text-align:center" width="10%">Action</th>
+                                                                <th width="70%">Question </th>
+                                                                <th width="25%">Rating Applicable</th>
+                                                                <th style="text-align:center" width="5%">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody></tbody>
@@ -151,8 +152,9 @@
                                                     <table id="add-rowExcel" class="display table table-striped table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th width="90%">Question </th>
-                                                                <th style="text-align:center" width="10%">Action</th>
+                                                                <th width="70%">Question </th>
+                                                                <th width="25%">Rating Applicable</th>
+                                                                <th style="text-align:center" width="5%">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody></tbody>
@@ -179,13 +181,13 @@
             <button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>
         </div>*@
                                                 <div class="row">
-                                                    <div class="col-12 text-right padd-r0"><button type="button" class="btn btn-success btn-sm mar-t8" id="addAttachments">Add</button></div>
+                                                    <div class="col-12 text-right padd-r0"><button type="button" class="btn btn-success btn-sm mar-t8" id="add-more">Add</button></div>
                                                 </div>
 
                                                 <div class="reddotTable">
                                                     <div class="reddotTableBody">
-                                                        <div class="reddotTableRow odd-even-row">
-                                                            <div class="reddotTableHead width75per text-left"><div>Description</div></div>
+                                                        <div class="reddotTableRow odd-even-row" id="divTableTypeQuestion">
+                                                            <div class="reddotTableHead width75per text-left"><div>Question</div></div>
                                                             <div class="reddotTableHead width45per text-left"><div>Rating Applicable</div></div>
                                                             <div class="reddotTableHead width10per"><div>Action</div></div>
                                                         </div>
@@ -211,7 +213,8 @@
                                             <table id="tblShowQuestion" class="display table table-striped table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th width="90%">Question </th>
+                                                        <th width="70%">Question </th>
+                                                        <th width="20%">Rating Applicable</th>
                                                         <th style="text-align:center" width="10%">Action </th>
                                                     </tr>
                                                 </thead>
@@ -336,11 +339,23 @@
                 var Html = "";
                 var a = data.Table;
                 if (a.length > 0) {
+                    var ColCount = 1;
                     $.each(a, function (Index, Value) {
                         Html += '<tr>';
-                        Html += '<td>' + '<input type="text" class="form-control appqstns" value="' + Value.Question + '">' + '</td>';
+                        Html += '<td>' + '<input type="text" rows=2 class="form-control appqstns" value="' + Value.Question + '">' + '</td>';
+                        if (Value.IsRatingApplicable == true) {
+                            Html += '<td>' + '<div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>' + '</td>';
+                            Html += '<td style="display:none">1</td>';  
+                        }
+                        else {
+                            Html += '<td>' + '<div class="form-check form-check-inline"><input class="form-check-input radioRate" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" checked="checked" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>' + '</td>';
+                            Html += '<td style="display:none">0</td>'; 
+                        }
+                        Html += '<td style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></td>';
+                        Html += '<td class="rowids" style="display:none">' + ColCount + '</div>';
                         Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         Html += '</tr>';
+                        ColCount++;
                     });
                 }
                 else {
@@ -391,6 +406,14 @@
                         str2 += '<tr>';
                         str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str2 += '<td>' + Value.Question + '</td>';
+                        if (Value.IsRatingApplicable == true) {                            
+                            str2 += '<td>Yes</td>';
+                            str2 += '<td style="display:none">1</td>';
+                        }
+                        else {                            
+                            str2 += '<td>No</td>';
+                            str2 += '<td style="display:none">0</td>';
+                        }
                         str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str2 += '</tr>';
                     });
@@ -451,7 +474,7 @@
         $("#add-rowPrevious").hide();
         var counter = 0;
         var ColCount = 1;
-        $("#addAttachments").on("click", function () {
+        $("#add-more").on("click", function () {
             var newRow = $("#AddAttachmentsRow");            
             var cols = "";
             cols += '<div class="reddotTableRow odd-even-row TypeAppraisalQuestion">';
@@ -597,35 +620,42 @@
         $("#action_json").removeAttr("disabled", true);
         $("#action_json").css("cursor", "");
         $("#action_json").val("");
-        $("#field").empty();
-        $("#field").append('<div id="field0"><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name" id="">Type Question :</label><div class="col-md-10" id="divTypeQuestion"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div >');
+        $("#AddAttachmentsRow").empty();
+        $("#divTableTypeQuestion").empty();
+        var Html = "";
+        Html += '<div class="reddotTableHead width75per text-left"><div>Question</div></div>';
+        Html += '<div class="reddotTableHead width45per text-left"><div>Rating Applicable</div></div>';
+        Html += '<div class="reddotTableHead width10per"><div>Action</div></div>';
+        $("#divTableTypeQuestion").append(Html);
+        //$("#divTableTypeQuestion").append('<div id="field0"><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name" id="">Type Question :</label><div class="col-md-10" id="divTypeQuestion"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div >');
         //$("#divTypeQuestion").empty();
         //$('.divTypeQuestions').text("Type Question:");
         //$("#divTypeQuestion").append('<textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea>');
-        $("#divAddMore").empty();
-        $("#divAddMore").append('<button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>');
-        var next = 0;
-        $("#add-more").click(function (e) {
-            e.preventDefault();
-            var addto = "#field" + next;
-            var addRemove = "#field" + (next);
-            next = next + 1;
-            var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div>';
-            var newInput = $(newIn);
-            var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
-            var removeButton = $(removeBtn);
-            $(addto).after(newInput);
-            $(addRemove).after(removeButton);
-            $("#field" + next).attr('data-source', $(addto).attr('data-source'));
-            $("#count").val(next);
-            $('.remove-me').click(function (e) {
-                e.preventDefault();
-                var fieldNum = this.id.charAt(this.id.length - 1);
-                var fieldID = "#field" + fieldNum;
-                $(this).remove();
-                $(fieldID).remove();
-            });
-        });
+        //
+        //$("#divAddMore").empty();
+        //$("#divAddMore").append('<button id="add-more" name="add-more" class="btn btn-primary btn-round">Add More</button>');
+        //var next = 0;
+        //$("#add-more").click(function (e) {
+        //    e.preventDefault();
+        //    var addto = "#field" + next;
+        //    var addRemove = "#field" + (next);
+        //    next = next + 1;
+        //    var newIn = ' <div id="field' + next + '" name="field' + next + '"><!-- Text input--><div class="form-group row"><label class="col-md-2 control-label divTypeQuestions" for="action_name">Type Question :</label><div class="col-md-10"><textarea id="action_name" name="action_name" type="text" placeholder="" class="form-control input-md txtQuestion"></textarea></div></div></div>';
+        //    var newInput = $(newIn);
+        //    var removeBtn = '<div class="col-12" style="overflow:hidden;"><button id="remove' + (next - 1) + '" class="btn btn-danger btn-round remove-me" >Remove</button></div></div><div id="field">';
+        //    var removeButton = $(removeBtn);
+        //    $(addto).after(newInput);
+        //    $(addRemove).after(removeButton);
+        //    $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+        //    $("#count").val(next);
+        //    $('.remove-me').click(function (e) {
+        //        e.preventDefault();
+        //        var fieldNum = this.id.charAt(this.id.length - 1);
+        //        var fieldID = "#field" + fieldNum;
+        //        $(this).remove();
+        //        $(fieldID).remove();
+        //    });
+        //});
     }
     $(document).on('change', '.radioRate', function () {
         var rowno = $(this).attr('rowno');
@@ -661,6 +691,14 @@
                         str2 += '<tr>';
                         str2 += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str2 += '<td>' + Value.Question + '</td>';
+                        if (Value.IsRatingApplicable == true) {
+                            str2 += '<td>Yes</td>';
+                            str2 += '<td style="display:none">1</td>';
+                        }
+                        else {
+                            str2 += '<td>No</td>';
+                            str2 += '<td style="display:none">0</td>';
+                        }
                         str2 += '<td><div class="form-button-action"><button type="button" id="btnEditCategory" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.QuestionId + '" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str2 += '</tr>';
                     });
@@ -677,7 +715,9 @@
                 if (data.Table2.length > 0) {
                     var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
                 }                
-                var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
+                if (data.Table4.length > 0) {
+                    var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
+                }                
                 if (LaunchStatus == true && ClosedAppraisal == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
@@ -752,11 +792,17 @@
                 $("#add-rowExcel").show();
                 var Html = "";
                 if (data.length > 0) {
+                    var ColCount = 1;
                     $.each(data, function (Index, Value) {
                         Html += '<tr>';
                         Html += '<td>' + '<input type="text" class="form-control appqstn" value="' + Value.AppraisalQuestion + '">' + '</td>';
-                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete btnDel" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
+                        //Html += '<td>'+'<div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>'+'</td>';
+                        Html += '<td><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div></div>';
+                        Html += '<td style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
+                        Html += '<td class="rowids" style="display:none">' + ColCount + '</div>';
+                        Html += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btnDelt" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         Html += '</tr>';
+                        ColCount++;
                     });
                 }
                 else {
@@ -819,6 +865,9 @@
     $(document).on('click', '.btnDel', function () {
         $(this).parents("tr").remove();
     });
+    $(document).on('click', '.btnDelt', function () {
+        $(this).parents("tr").remove();
+    });
     $(document).on('keyup', '#action_name', function () {
         var Key = $(this).val();
         if (Key.length > 0 || $("#action_name").val()!="") {
@@ -857,25 +906,38 @@
             Year: QYear,            
             rDD_QuestionList:[]
         };
+        var ratingapply = "";
+        var rowid = "";
+        var rating = "";
         if ($("#action_json").prop("disabled") == false) {
+            //var excelratingapply = "";
+            //var excelrowid = "";
+            //var excelrating = "";
             $("#add-rowExcel tbody tr").each(function () {
+                rowid = $(this).find(".rowids").html();
+                rating = $("#hdnDiv_" + rowid).val();
+                if (rating == "" || rating == undefined) {                    
+                    ratingapply = "1";
+                }                
+                else {
+                    ratingapply = $("#hdnDiv_" + rowid).val();
+                }
                 var qstn = $.trim($('.appqstn', this).val());
                 var rDD_QuestionList = {
-                    Question: qstn
+                    Question: qstn,
+                    IsRatingApplicable: ratingapply
                 };
                 rDD_Question.rDD_QuestionList.push(rDD_QuestionList);
             });
         }
         else if ($("#action_name").prop("disabled") == false) {
-            var ratingapply = "";
-            var rowid = "";
-            var rating = "";
+            
             $('.TypeAppraisalQuestion').each(function () {
                 rowid = $(this).find(".rowids").html();
                 rating = $("#hdnDiv_" + rowid).val();
-                if (rating != "") {
+                if (rating == "" || rating == undefined) {
                     ratingapply = $("#hdnDiv_" + rowid).val();
-                }
+                }               
                 else {
                     ratingapply = "1";
                 }
@@ -888,10 +950,22 @@
             });
         }
         else if ($("#ddlCopyFromPrevious").prop("disabled") == false) {
+            //var ddlratingapply = "";
+            //var ddlrowid = "";
+            //var ddlrating = "";
             $("#add-rowPrevious tbody tr").each(function () {
+                rowid = $(this).find(".rowids").html();
+                rating = $("#hdnDiv_" + rowid).val();
+                if (rating == undefined || rating == "") {
+                    ratingapply = $(this).closest('tr').find('td:eq(2)').html();                    
+                }                
+                else {
+                    ratingapply = $("#hdnDiv_" + rowid).val();
+                }
                 var qstn = $.trim($('.appqstns', this).val());
                 var rDD_QuestionList = {
-                    Question: qstn
+                    Question: qstn,
+                    IsRatingApplicable: ratingapply 
                 };
                 rDD_Question.rDD_QuestionList.push(rDD_QuestionList);
             });
@@ -924,6 +998,14 @@
                         str += '<tr>';
                         str += '<td style="display:none">' + Value.QuestionTransId + '</td>';
                         str += '<td>' + Value.Question + '</td>';
+                        if (Value.IsRatingApplicable == true) {
+                            str += '<td>Yes</td>';
+                            str += '<td style="display:none">1</td>';
+                        }
+                        else {
+                            str += '<td>No</td>';
+                            str += '<td style="display:none">0</td>';
+                        }
                         str += '<td><div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-primary btn-lg edit dis" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" id="" title="" class= "btn btn-link btn-success update dis" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete dis" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>';
                         str += '</tr>';
                     });
@@ -951,22 +1033,44 @@
     });
     $(document).on('click', '.edit', function () {
         var tr = $(this).closest("tr");
+        var ratingapplystatus = $(this).parents("tr").find("td:eq(2)").html();
         tr.find(".edit").attr("hidden", "hidden");
         tr.find(".delete").attr("hidden", "hidden");
         tr.find(".update").removeAttr("hidden", "hidden");
         $(this).parents("tr").find("td:eq(1)").html('<input type="text"  class="form-control" id="txtQstn" value="' + $(this).parents("tr").find("td:eq(1)").html() + '">');
+        //if (Value.IsRatingApplicable == true) {
+        //    Html += '<td>' + '<div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>' + '</td>';
+        //    Html += '<td style="display:none">1</td>';
+        //}
+        //else {
+        //    Html += '<td>' + '<div class="form-check form-check-inline"><input class="form-check-input radioRate" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" checked="checked" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>' + '</td>';
+        //    Html += '<td style="display:none">0</td>';
+        //}
+        if (ratingapplystatus == "Yes") {
+            $(this).parents("tr").find("td:eq(2)").html('<div class="form-check form-check-inline"><input class="form-check-input radioRate1" checked="checked" type="radio" name="RatingApplicable" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input class="form-check-input radioRate1" type="radio" name="RatingApplicable" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>');
+        }
+        else {
+            $(this).parents("tr").find("td:eq(2)").html('<div class="form-check form-check-inline"><input class="form-check-input radioRate1" type="radio" name="RatingApplicable" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Yes</label></div ><div class="form-check form-check-inline"><input class="form-check-input radioRate1" checked="checked" type="radio" name="RatingApplicable" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">No</label></div>');
+        }
+        
         //$(this).parents("tr").find("td:eq(2)").html('<div class="form-button-action"><button type="button" id="" title="" class= "btn btn-link btn-success save" data-original-title="Edit Task"><i class="fas fa-save"></i></button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div>')
+    });
+    $(document).on('click', '.radioRate1', function () {
+        var rateval = $(this).val();
+        $(this).closest('tr').find('td:eq(3)').html(rateval);
+        //alert(rateval);
     });
     $(document).on('click', '.update', function () {
         $('.loader1').show();
         var tr = $(this).closest("tr");
         var Qid = tr.find("td:eq(0)").html();
         var Question = tr.find("#txtQstn").val();
+        var Ratingapplystatus = $(this).closest('tr').find('td:eq(3)').html();
         $.ajax({
             type: "POST",
             url: '@Url.Action("UpdateAppraisalQuestion", "AddAppraisalQuestion")',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify ({ Qid: Qid, Question: Question }),
+            data: JSON.stringify({ Qid: Qid, Question: Question, Ratingapplystatus: Ratingapplystatus }),
             dataType: "json",
             success: function (data) {
                 debugger

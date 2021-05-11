@@ -171,9 +171,9 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return Json(rDD_AppraisalQuestion_TemplateDb.SaveAssignCategoryDetails(rDD_Question), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult UpdateAppraisalQuestion(string Qid,string Question)
+        public ActionResult UpdateAppraisalQuestion(string Qid,string Question,string Ratingapplystatus)
         {            
-            return Json(rDD_AppraisalQuestion_TemplateDb.UpdateAssignCategoryDetails(Qid,Question), JsonRequestBehavior.AllowGet);
+            return Json(rDD_AppraisalQuestion_TemplateDb.UpdateAssignCategoryDetails(Qid,Question,Ratingapplystatus), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteAppraisalQuestion(int Qid)
