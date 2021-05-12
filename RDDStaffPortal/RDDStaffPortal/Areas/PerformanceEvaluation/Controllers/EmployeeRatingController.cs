@@ -158,7 +158,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             try
             {
                 string Loginname = User.Identity.Name;
-                ds = rDD_EmpRating_TemplateDb.GetDetailsByClickUrl(UrlId);
+                ds = rDD_EmpRating_TemplateDb.GetDetailsByClickUrl(UrlId,Loginname);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

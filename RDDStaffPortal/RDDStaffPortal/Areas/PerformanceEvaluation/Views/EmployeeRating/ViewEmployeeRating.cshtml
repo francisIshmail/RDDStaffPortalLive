@@ -19,7 +19,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title redtitle">Employee Rating</h4>       
+                                <h4 class="card-title redtitle">Employee & Manager Rating</h4>       
                                 <div class="form-group ml-auto">                                    
                                     <button type="button" class="btn btn-primary" style="border-radius:25px" id="btnGeneratePDF">Download PDF</button>
                                 </div>
@@ -107,126 +107,141 @@
                 $("#hdnEmployeeId").val(data.Table[0].EmployeeId);
                 $("#hdnCategoryId").val(data.Table3[0].CategoryId);
                 $("#myTab").empty();
-                $.each(data.Table3, function (Index, Value) {
-                    var str1 = "";
-                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
-                    $("#myTab").append(str1);
-                });
-                $("#myTab li:eq(0) a").tab('show');
-                var RatingNo = data.Table5[0].RatingNo;
-                $("#hdnRatingNo").val(RatingNo);
-                var str2 = "";
-                var QuestionCount = data.Table4.length;
-                var j = 1;
-                $("#add-row tbody").empty();
-                if (data.Table6.length > 0) {
-                    $("#hdnAppraisalId").val(data.Table6[0].AppraisalId);
-                    while (j <= QuestionCount) {
-                        $.each(data.Table6, function (Index, Value) {
-                            str2 += '<tr>';
-                            str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.QuestionTransId + '" value=""/> </td>';
-                            str2 += '<td style="display:none;">' + Value.QuestionTransId + '</td>';
-                            str2 += '<td>' + Value.Question + '</td>';
-                            str2 += '<td><div class="stars"><form action="">';
-                            if (Value.IsRatingApplicable == true) {
-                                for (var i = RatingNo; i > 0; i--) {
-                                    if (Value.EmployeeRating == i) {
-                                        str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                    }
-                                    else {
-                                        str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                    }
-                                }
-                            }
-                            else {
-                                str2 += '<label>Rating Not Applicable</label>';
-                            }
-                            str2 += '</form></div></td>';
-                            if (Value.EmployeeComment == null) {
-                                Value.EmployeeComment = "";
-                            }
-                            str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="dis textarea-style empcomnt">' + Value.EmployeeComment + '</textarea></td>';
-                            str2 += '<td style="display:none">' + Value.EmployeeRating + '</td>';
-                            str2 += '<td style="display:none"></td>';
-                            str2 += '<td><div class="stars"><form action="">';
-                            if (Value.IsRatingApplicable == true) {
-                                for (var k = RatingNo; k > 0; k--) {
-                                    if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
-                                        if (Value.ManagerRating == k) {
-                                            str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                if (data.Table10.length > 0) {
+                    if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
+                        if (data.Table11[0].ViewStatus == 1) {
+                            $.each(data.Table3, function (Index, Value) {
+                                var str1 = "";
+                                str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                                $("#myTab").append(str1);
+                            });
+                            $("#myTab li:eq(0) a").tab('show');
+                            var RatingNo = data.Table5[0].RatingNo;
+                            $("#hdnRatingNo").val(RatingNo);
+                            var str2 = "";
+                            var QuestionCount = data.Table4.length;
+                            var j = 1;
+                            $("#add-row tbody").empty();
+                            if (data.Table6.length > 0) {
+                                $("#hdnAppraisalId").val(data.Table6[0].AppraisalId);
+                                while (j <= QuestionCount) {
+                                    $.each(data.Table6, function (Index, Value) {
+                                        str2 += '<tr>';
+                                        str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.QuestionTransId + '" value=""/> </td>';
+                                        str2 += '<td style="display:none;">' + Value.QuestionTransId + '</td>';
+                                        str2 += '<td>' + Value.Question + '</td>';
+                                        str2 += '<td><div class="stars"><form action="">';
+                                        if (Value.IsRatingApplicable == true) {
+                                            for (var i = RatingNo; i > 0; i--) {
+                                                if (Value.EmployeeRating == i) {
+                                                    str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                                }
+                                                else {
+                                                    str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                                }
+                                            }
                                         }
                                         else {
-                                            str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                            str2 += '<label>Rating Not Applicable</label>';
                                         }
-                                    }
-                                    else {
-                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                    }
+                                        str2 += '</form></div></td>';
+                                        if (Value.EmployeeComment == null) {
+                                            Value.EmployeeComment = "";
+                                        }
+                                        str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="dis textarea-style empcomnt">' + Value.EmployeeComment + '</textarea></td>';
+                                        str2 += '<td style="display:none">' + Value.EmployeeRating + '</td>';
+                                        str2 += '<td style="display:none"></td>';
+                                        str2 += '<td><div class="stars"><form action="">';
+                                        if (Value.IsRatingApplicable == true) {
+                                            for (var k = RatingNo; k > 0; k--) {
+                                                if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
+                                                    if (Value.ManagerRating == k) {
+                                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                                    }
+                                                    else {
+                                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                                    }
+                                                }
+                                                else {
+                                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            str2 += '<label>Rating Not Applicable</label>';
+                                        }
+                                        str2 += '</form></div></td>';
+                                        if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
+                                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
+                                        }
+                                        else {
+                                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
+                                        }
+                                        str2 += '</tr>';
+                                        j++;
+                                    });
                                 }
                             }
                             else {
-                                str2 += '<label>Rating Not Applicable</label>';
+                                if (data.Table4.length > 0) {
+                                    while (j <= QuestionCount) {
+                                        $.each(data.Table4, function (Index, Value) {
+                                            str2 += '<tr>';
+                                            str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.QuestionTransId + '" /> </td>';
+                                            str2 += '<td style="display:none;">' + Value.QuestionTransId + '</td>';
+                                            str2 += '<td>' + Value.Question + '</td>';
+
+                                            str2 += '<td><div class="stars"><form action="">';
+                                            if (Value.IsRatingApplicable == true) {
+                                                for (var i = RatingNo; i > 0; i--) {
+                                                    str2 += '<input class="star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                                }
+                                            }
+                                            else {
+                                                str2 += '<label>Rating not Applicable</label>';
+                                            }
+                                            str2 += '</form></div></td>';
+                                            //str2 += '<td><div class="stars"><form action=""><input class="star star-5" id="star-5" type="radio" name="star" /> <label class="star star-5" for="star-5"></label></form></div>';
+                                            str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt" disabled="disabled"></textarea></td>';
+                                            str2 += '<td style="display:none"></td>';
+                                            str2 += '<td><div class="stars"><form action="">';
+                                            if (Value.IsRatingApplicable == true) {
+                                                for (var k = RatingNo; k > 0; k--) {
+                                                    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                                }
+                                            }
+                                            else {
+                                                str2 += '<label>Rating not Applicable</label>';
+                                            }
+                                            str2 += '</form></div></td>';
+                                            str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
+                                            str2 += '</tr>';
+                                            j++;
+                                        });
+                                    }
+                                }
+                                else {
+                                    str2 += '<tr>';
+                                    str2 += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
+                                    str2 += '</tr>';
+                                }
                             }
-                            str2 += '</form></div></td>';
-                            if (data.Table10[0].Mng_FinalSubmissionStatus == true) {
-                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
-                            }
-                            else {
-                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
-                            }
-                            str2 += '</tr>';
-                            j++;
-                        });
-                    }                    
+                            $("#add-row tbody").append(str2);
+                            $('.distar').attr("disabled", "disabled");
+                            $('.dis').attr("disabled", "disabled");
+                            $('.dis').css("cursor", "not-allowed");
+                        }
+                        else {
+                            RedDotAlert_Error("You Don't Have Permission To View Evaluation");
+                        }
+                    }
+                    else {
+                        RedDotAlert_Error("Manager Has Not Evaluated Till Now");
+                    }
                 }
                 else {
-                    if (data.Table4.length > 0) {
-                        while (j <= QuestionCount) {
-                            $.each(data.Table4, function (Index, Value) {
-                                str2 += '<tr>';
-                                str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.QuestionTransId + '" /> </td>';
-                                str2 += '<td style="display:none;">' + Value.QuestionTransId + '</td>';
-                                str2 += '<td>' + Value.Question + '</td>';
-
-                                str2 += '<td><div class="stars"><form action="">';
-                                if (Value.IsRatingApplicable == true) {
-                                    for (var i = RatingNo; i > 0; i--) {
-                                        str2 += '<input class="star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                    }
-                                }
-                                else {
-                                    str2 += '<label>Rating not Applicable</label>';
-                                }
-                                str2 += '</form></div></td>';
-                                //str2 += '<td><div class="stars"><form action=""><input class="star star-5" id="star-5" type="radio" name="star" /> <label class="star star-5" for="star-5"></label></form></div>';
-                                str2 += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt" disabled="disabled"></textarea></td>';
-                                str2 += '<td style="display:none"></td>';
-                                str2 += '<td><div class="stars"><form action="">';
-                                if (Value.IsRatingApplicable == true) {
-                                    for (var k = RatingNo; k > 0; k--) {
-                                        str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                    }
-                                }
-                                else {
-                                    str2 += '<label>Rating not Applicable</label>';
-                                }
-                                str2 += '</form></div></td>';
-                                str2 += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed"></textarea></td>';
-                                str2 += '</tr>';
-                                j++;
-                            });
-                        }                        
-                    }
-                    else {                        
-                        str2 += '<tr>';
-                        str2 += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
-                        str2 += '</tr>';
-                    }
+                    RedDotAlert_Error("Manager Has Not Evaluated Till Now");
                 }
-                $("#add-row tbody").append(str2);
-                $('.distar').attr("disabled", "disabled");
-                $('.dis').attr("disabled", "disabled");
-                $('.dis').css("cursor", "not-allowed");
                 $('.loader1').hide();
             }
         });
