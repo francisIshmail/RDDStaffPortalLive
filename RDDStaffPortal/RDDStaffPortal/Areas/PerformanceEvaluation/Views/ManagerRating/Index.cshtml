@@ -730,6 +730,7 @@
     });
     $(document).on('click', '.selectCategory', function () {
         $("#divBtnSave").hide();
+        var CatName = $(this).text();        
         var CategoryId = $(this).attr("data");
         var Qperiod = $("#ddlSelectYearEmp option:selected").val();
         var EmpId = $("#hdnEmployeeId").val();
@@ -781,7 +782,7 @@
                             str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis">' + Value.EmployeeComment + '</textarea></td>';                            
                             str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
                             str += '<td style="display:none"></td>';
-                            str += '<td><div class="stars"><form action="">';
+                            str += '<td><div class="stars"><form action="">';                            
                             if (Value.IsRatingApplicable == true) {
                                 for (var k = RatingNo; k > 0; k--) {
                                     if (Value.ManagerRating == k) {
@@ -809,6 +810,7 @@
                             str += '<td style="display:none">' + Value.ManagerRating + '</td>';
                             str += '</tr>';
                             j++;
+                            
                         });
                     }                    
                     //$("#btnSaveRating").text("Update");
@@ -836,7 +838,13 @@
                                     str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                                 }
                                 str += '</form></div></td>';
-                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';                                
+                                //if (CatName == "OBJECTIVES") {
+                                //    str += '<td><textarea rows="5" cols="5" disabled="disabled" style="cursor:not-allowed" class="textarea-style mngcomnt"></textarea></td>';
+                                //}
+                                //else {
+                                //    str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';
+                                //}
+                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';                               
                                 str += '<td style="display:hidden">' + Value.ManagerRating + '</td>';
                                 str += '</tr>';
                                 j++;
@@ -875,7 +883,7 @@
                     $('.mngcomnt').css("cursor", "");
                     $("#btnFinalSubmit").attr("disabled", false);
                     $("#btnFinalSubmit").css("cursor", "");
-                }
+                }                
             }
         });
     });   

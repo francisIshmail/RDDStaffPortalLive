@@ -294,6 +294,7 @@
     }
     function SaveQuestion(rDD_Question) {
         $('.loader1').show();
+        ClearModalData();
         var rDD_Question = rDD_Question;
         $.ajax({
             type: "POST",
@@ -301,7 +302,7 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ rDD_Question: rDD_Question }),
             dataType: "json",
-            success: function (data) {
+            success: function (data) {                
                 $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);
@@ -420,7 +421,7 @@
                     $("#btnLaunchAppraisal").show();
                 }
                 else {
-                    $("#btnLaunchAppraisal").hide();
+                    //$("#btnLaunchAppraisal").hide();
                     str2 += '<tr>';
                     str2 += '<td colspan="6" style="text-align:center">Question Not Assigned Under This Category</td>';
                     str2 += '</tr>';
@@ -936,10 +937,10 @@
                 rowid = $(this).find(".rowids").html();
                 rating = $("#hdnDiv_" + rowid).val();
                 if (rating == "" || rating == undefined) {
-                    ratingapply = $("#hdnDiv_" + rowid).val();
-                }               
-                else {
                     ratingapply = "1";
+                }               
+                else {                    
+                    ratingapply = $("#hdnDiv_" + rowid).val();
                 }
                 var qstn = $.trim($(this).find('.txtQuestion').val());
                 var rDD_QuestionList = {
