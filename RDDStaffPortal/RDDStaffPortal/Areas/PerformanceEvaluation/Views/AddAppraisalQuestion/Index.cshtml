@@ -378,7 +378,13 @@
             type: "GET",
             url: '@Url.Action("GetQuestionDetails", "AddAppraisalQuestion")',
             dataType: "json",
-            success: function (data) {                
+            success: function (data) {      
+                if (data.Table2.length > 0) {
+                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
+                }
+                if (data.Table6.length > 0) {
+                    var ClosedAppraisal = data.Table6[0].IsAppraisalClosedByHR;
+                }
                 if (data.Table5.length > 0) {
                     $("#AppraisalEndDate").val(data.Table5[0].AppraisalEndDate);
                 }
@@ -393,11 +399,21 @@
                     }
                 }
                 $("#myTab").empty();
-                $.each(data.Table, function (Index, Value) {
-                    var str1 = "";
-                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
-                    $("#myTab").append(str1);
-                });
+                if (LaunchStatus == true) {
+                    $.each(data.Table7, function (Index, Value) {
+                        var str1 = "";
+                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                        $("#myTab").append(str1);
+                    });
+                }
+                else {
+                    $.each(data.Table, function (Index, Value) {
+                        var str1 = "";
+                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                        $("#myTab").append(str1);
+                    });
+                }
+                
                 $("#myTab li:eq(0) a").tab('show');
                 var str2 = "";
                 //$('#tblShowQuestion').dataTable().fnDestroy();
@@ -428,12 +444,7 @@
                 }
                 $("#tblShowQuestion tbody").append(str2);
                 $(".update").attr("hidden", "hidden");
-                if (data.Table2.length > 0) {
-                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
-                }
-                if (data.Table6.length > 0) {
-                    var ClosedAppraisal = data.Table6[0].IsAppraisalClosedByHR;
-                }
+                
                 
                 if (LaunchStatus == true && ClosedAppraisal == true) {
                     $('.dis').prop("disabled", true);
@@ -674,15 +685,31 @@
             dataType: "json",
             success: function (data) {
                 debugger
+                if (data.Table2.length > 0) {
+                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
+                }
+                if (data.Table4.length > 0) {
+                    var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
+                }  
                 if (data.Table3.length > 0) {
                     $("#AppraisalEndDate").val(data.Table3[0].AppraisalEndDate);
                 }
                 $("#myTab").empty();
-                $.each(data.Table, function (Index, Value) {
-                    var str1 = "";
-                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
-                    $("#myTab").append(str1);
-                });
+                if (LaunchStatus == true) {
+                    $.each(data.Table5, function (Index, Value) {
+                        var str1 = "";
+                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                        $("#myTab").append(str1);
+                    });
+                }
+                else {
+                    $.each(data.Table, function (Index, Value) {
+                        var str1 = "";
+                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                        $("#myTab").append(str1);
+                    });
+                }
+                
                 $("#myTab li:eq(0) a").tab('show');
                 var str2 = "";
                 //$('#tblShowQuestion').dataTable().fnDestroy();
@@ -713,12 +740,7 @@
                 }
                 $("#tblShowQuestion tbody").append(str2);
                 $(".update").attr("hidden", "hidden");
-                if (data.Table2.length > 0) {
-                    var LaunchStatus = data.Table2[0].AppraisalLaunchStatus;
-                }                
-                if (data.Table4.length > 0) {
-                    var ClosedAppraisal = data.Table4[0].IsAppraisalClosedByHR;
-                }                
+                              
                 if (LaunchStatus == true && ClosedAppraisal == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");

@@ -581,6 +581,7 @@
                         $("#btnUpdateRating").attr("hidden", "hidden");
                         $("#btnFinalSubmit").attr("disabled", true);
                         $("#btnFinalSubmit").css("cursor", "not-allowed");
+                        $("#btnSaveRating").attr("hidden", "hidden");
                     }
                     else {
                         $('.distar').prop("disabled", false);
@@ -589,6 +590,7 @@
                         $("#btnUpdateRating").removeAttr("hidden", "hidden");
                         $("#btnFinalSubmit").attr("disabled", false);
                         $("#btnFinalSubmit").css("cursor", "");
+                        $("#btnSaveRating").removeAttr("hidden", "hidden");
                     }
                 }
                 $('.loader1').hide();
@@ -867,7 +869,10 @@
                 if (data.Table1.length > 0) {
                     var SaveStatus = data.Table1[0].Mng_FinalSubmissionStatus;
                 }
-                if (SaveStatus == true) {
+                if (data.Table2.length > 0) {
+                    var CloseAppraisalStatus = data.Table2[0].IsAppraisalClosedByHR;
+                }
+                if (SaveStatus == true || CloseAppraisalStatus == true) {
                     $('.distars').attr("disabled", true);
                     $('.distars').css("cursor", "not-allowed");
                     $("#btnUpdateRating").remove();
