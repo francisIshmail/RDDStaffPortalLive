@@ -116,10 +116,11 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return Json(rDD_MngRating_TemplateDb.SaveManagerRating(rDD_MngAppraisal), JsonRequestBehavior.AllowGet);
         }
         [Route("FinalSaveManagerRating")]
-        public ActionResult FinalSaveEmployeeRating(int EmployeeId, int Year, string Period)
+        public ActionResult FinalSaveManagerRating(int EmployeeId, int Year, string Period)
         {
             //ContentResult retVal = null;
-            var t = rDD_MngRating_TemplateDb.FinalSaveManagerRating(EmployeeId, Year, Period);
+            string Loginname = User.Identity.Name;
+            var t = rDD_MngRating_TemplateDb.FinalSaveManagerRating(EmployeeId, Year, Period, Loginname);
             if (t[0].Id != -1)
             {
                 string MailResponse = "";

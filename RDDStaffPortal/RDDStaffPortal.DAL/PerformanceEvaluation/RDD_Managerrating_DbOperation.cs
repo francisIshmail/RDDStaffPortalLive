@@ -144,7 +144,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return str;
         }
 
-        public List<Outcls1> FinalSaveManagerRating(int EmployeeId, int Year, string Period)
+        public List<Outcls1> FinalSaveManagerRating(int EmployeeId, int Year, string Period,string Loginname)
         {
             List<Outcls1> str = new List<Outcls1>();
             RDD_AddAppraisalQuestion rDD_Question = new RDD_AddAppraisalQuestion();
@@ -156,6 +156,7 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                             new SqlParameter("@EmployeeId",EmployeeId),
                             new SqlParameter("@Period",Period),
                             new SqlParameter("@Year",Year),
+                            new SqlParameter("@Mng_SubmittedBy",Loginname),
                             new SqlParameter("@Type","ManagerFinalSubmit"),
                             new SqlParameter("@p_ide",rDD_Question.id),
                             new SqlParameter("@Response",rDD_Question.ErrorMsg)

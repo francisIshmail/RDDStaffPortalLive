@@ -100,7 +100,8 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
         public ActionResult FinalSaveEmployeeRating(int EmployeeId,int Year,string Period)
         {
             //ContentResult retVal = null;
-            var t = rDD_EmpRating_TemplateDb.FinalSaveEmployeeRating(EmployeeId, Year, Period);
+            string Loginname = User.Identity.Name;
+            var t = rDD_EmpRating_TemplateDb.FinalSaveEmployeeRating(EmployeeId, Year, Period, Loginname);
             if (t[0].Id != -1)
             {
                 string MailResponse = "";
