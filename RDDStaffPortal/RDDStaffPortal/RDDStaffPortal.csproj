@@ -232,6 +232,7 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
+    <Compile Include="Areas\SAP\Controllers\ItemMasterController.cs" />
     <Compile Include="Areas\SAP\Controllers\SalesOrderController.cs" />
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
@@ -396,6 +397,7 @@
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\Calendarplanner.js" />
+    <Content Include="Scripts\Application\ItemMaster.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -879,6 +881,7 @@
     <Content Include="Scripts\holder.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="App_Code\RDD_RightSideTask.cshtml" />
+    <Content Include="Areas\SAP\Views\ItemMaster\Index.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -1140,9 +1143,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28967</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28989/</IISUrl>
+          <IISUrl>http://localhost:28992/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:28989/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:28992/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
