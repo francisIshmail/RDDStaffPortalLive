@@ -672,6 +672,7 @@
                 contentType: "Application/json",
                 success: function (data) {
                     arr = data;
+                    debugger;
                     $("#Weeklyoff").val(arr.data[0].WeeklyOff);
                     $("#LeaveRule").val(arr.data[0].LeaveRules);
                 },
@@ -1106,21 +1107,22 @@
             ApproverRemarks: "NULL",
             IsPrivateLeave: $('input[name="private"]:checked').val(),
             AttachmentUrl: $("#AttachmentUrl[type='hidden']").val(),
+            LeaveDayType: "All-Day",
             LeaveRequestDetailsList: []
         };
 
-        $(".dttype").each(function () {
-            var currow = $(this).closest('tr');
-            var LeaveDate = $(this).find("[id^='divLvDates']").html();
-            var LeaveDay = $(this).find("[id^='ddlDayType']").val();
-            var LeaveDayType = $(this).find("[id^='ddlDayType'] option:selected").text();
-            var LeaveRequestDetails = {
-                LeaveDate: LeaveDate,
-                LeaveDay: LeaveDay,
-                LeaveDayType: LeaveDayType
-            };
-            RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
-        });
+        //$(".dttype").each(function () {
+        //    var currow = $(this).closest('tr');
+        //    var LeaveDate = $(this).find("[id^='divLvDates']").html();
+        //    var LeaveDay = $(this).find("[id^='ddlDayType']").val();
+        //    var LeaveDayType = $(this).find("[id^='ddlDayType'] option:selected").text();
+        //    var LeaveRequestDetails = {
+        //        LeaveDate: LeaveDate,
+        //        LeaveDay: LeaveDay,
+        //        LeaveDayType: LeaveDayType
+        //    };
+        //    RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
+        //});
 
         $.post("/SaveLeaveRequest", { RDD_LeaveRequest: RDD_LeaveRequest }, function (response) {
 

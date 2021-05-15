@@ -221,6 +221,7 @@
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Reports\Controllers\DownloadReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\Reports\Controllers\VendorReportsController.cs" />
     <Compile Include="Areas\Reports\Controllers\WebReportsController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\BUCountriesController.cs" />
@@ -237,6 +238,8 @@
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\SORCodeGenerator\Controllers\RDD_SORCodeGeneratorController.cs" />
+    <Compile Include="Areas\SORCodeGenerator\SORCodeGeneratorAreaRegistration.cs" />
     <Compile Include="Areas\Targets\Controllers\CountryTargetController.cs" />
     <Compile Include="Areas\Targets\Controllers\ForecastController.cs" />
     <Compile Include="Areas\Targets\Controllers\SalesPersonTargetController.cs" />
@@ -273,6 +276,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\evo-calendar.css" />
     <Content Include="Content\evo-calendar.min.css" />
+    <Content Include="Content\extra-style.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Switch.css" />
@@ -397,6 +401,7 @@
     <Content Include="Scripts\Application\ApprovalOP.js" />
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\Calendarplanner.js" />
+    <Content Include="Scripts\Application\MainDashBoard.js" />
     <Content Include="Scripts\Application\ItemMaster.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
@@ -881,6 +886,9 @@
     <Content Include="Scripts\holder.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="App_Code\RDD_RightSideTask.cshtml" />
+    <Content Include="Areas\SORCodeGenerator\Views\web.config" />
+    <Content Include="Areas\SORCodeGenerator\Views\RDD_SORCodeGenerator\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\VendorReports\Index.cshtml" />
     <Content Include="Areas\SAP\Views\ItemMaster\Index.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
@@ -1067,6 +1075,7 @@
     <Content Include="Views\Shared\_LMSLayout.cshtml" />
     <Content Include="Views\Dashboard\GetRightSideTask.cshtml" />
     <Content Include="Views\Dashboard\AllNotification.cshtml" />
+    <Content Include="VendorReportExcel\BasicTable.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1088,11 +1097,14 @@
     <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Areas\SAP\Models\" />
     <Folder Include="Areas\SAP\Views\Shared\" />
+    <Folder Include="Areas\SORCodeGenerator\Models\" />
+    <Folder Include="Areas\SORCodeGenerator\Views\Shared\" />
     <Folder Include="Areas\Targets\Data\" />
     <Folder Include="Areas\Targets\Views\Shared\" />
     <Folder Include="Content\css\msdropdown\" />
     <Folder Include="excelFileUpload\LMS\" />
     <Folder Include="excelFileUpload\MarketingPlan\" />
+    <Folder Include="excelFileUpload\VendorReportExcel\" />
     <Folder Include="PdfUploads\" />
   </ItemGroup>
   <ItemGroup>

@@ -93,35 +93,61 @@ namespace RDDStaffPortal.DAL.LMS
                         }
 
 
-                            while (rDD_LeaveRequest.LeaveRequestDetailsList.Count > m)
-                            {
-                                SqlParameter[] ParaDet1 = {
-                                new SqlParameter("@Type",rDD_LeaveRequest.ActionType),
+                        SqlParameter[] ParaDet3 = {
+
                                 new SqlParameter("@LeaveRequestId",outcls[0].Id),
-                                new SqlParameter("@LeaveDate",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDate),
-                                new SqlParameter("@LeaveDayType",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDayType),
-                                new SqlParameter("@LeaveDay",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDay),
-                                new SqlParameter("@LoginId",rDD_LeaveRequest.LeaveRequestDetailsList[m].CreatedBy),
-                                new SqlParameter("@LoginDate",rDD_LeaveRequest.LeaveRequestDetailsList[m].CreatedOn)
-
-                                };
-                                var det1 = com.ExecuteNonQuery("RDD_LeaveRequestDetail", ParaDet1);
-                                if (det1 == false)
-                                {
-                                    outcls.Clear();
-                                    outcls.Add(new Outcls1
-                                    {
-                                        Outtf = false,
-                                        Id = -1,
-                                        Responsemsg = "Error occured : Leave Request Details "
-                                    });
-
-                                }
-                                m++;
-                            }                         
+                                new SqlParameter("@EmployeeId",rDD_LeaveRequest.EmployeeId),
+                                new SqlParameter("@FromDate",rDD_LeaveRequest.FromDate),
+                                new SqlParameter("@ToDate",rDD_LeaveRequest.ToDate),
+                                new SqlParameter("@LeaveDayType",rDD_LeaveRequest.LeaveDayType),
+                                new SqlParameter("@LoginId",rDD_LeaveRequest.CreatedBy),
+                                new SqlParameter("@LoginDate",rDD_LeaveRequest.CreatedOn)
 
 
-                        
+                            };
+                        var det1 = com.ExecuteNonQuery("RDD_LeaveRequestDetail_New", ParaDet3);
+                        if (det1 == false)
+                        {
+                            outcls.Clear();
+                            outcls.Add(new Outcls1
+                            {
+                                Outtf = false,
+                                Id = -1,
+                                Responsemsg = "Error occured : Leave Request Details "
+                            });
+
+                        }
+
+
+                        //while (rDD_LeaveRequest.LeaveRequestDetailsList.Count > m)
+                        //{
+                        //    SqlParameter[] ParaDet1 = {
+                        //    new SqlParameter("@Type",rDD_LeaveRequest.ActionType),
+                        //    new SqlParameter("@LeaveRequestId",outcls[0].Id),
+                        //    new SqlParameter("@LeaveDate",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDate),
+                        //    new SqlParameter("@LeaveDayType",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDayType),
+                        //    new SqlParameter("@LeaveDay",rDD_LeaveRequest.LeaveRequestDetailsList[m].LeaveDay),
+                        //    new SqlParameter("@LoginId",rDD_LeaveRequest.LeaveRequestDetailsList[m].CreatedBy),
+                        //    new SqlParameter("@LoginDate",rDD_LeaveRequest.LeaveRequestDetailsList[m].CreatedOn)
+
+                        //    };
+                        //    var det1 = com.ExecuteNonQuery("RDD_LeaveRequestDetail", ParaDet1);
+                        //    if (det1 == false)
+                        //    {
+                        //        outcls.Clear();
+                        //        outcls.Add(new Outcls1
+                        //        {
+                        //            Outtf = false,
+                        //            Id = -1,
+                        //            Responsemsg = "Error occured : Leave Request Details "
+                        //        });
+
+                        //    }
+                        //    m++;
+                        //}                         
+
+
+
                         //rDD_LeaveRequest.Saveflag = outcls[0].Outtf;
                         //rDD_LeaveRequest.ErrorMsg = outcls[0].Responsemsg;
                         scope.Complete();

@@ -1046,7 +1046,7 @@ function RedDot_Button_New_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").hide();   
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 
@@ -1057,7 +1057,7 @@ function RedDot_Button_Edit_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").show();
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 
@@ -1696,6 +1696,30 @@ function RedDot_DivTable_Header_Fill(Ids,data) {
                 var t = tblhead1[k];
                 if (tblhead1[k] !== 'Action') {
                     $('#' + Ids + 'nd').find(".reddotTableHead")[k].children[0].textContent = data[i][tblhead1[k]];
+                }
+                k++;
+            }
+            i++;
+        }
+    }
+}
+
+
+function RedDot_DivTable_Header_Fill_Dashboard(Ids, data) {
+    debugger    
+    var tr3 = $('#' + Ids);
+    if (data != null && data.length != 0) {
+        var i = 0;
+
+        while (data.length > i) {
+            var tr1 = tr3.find('#Ind').clone();
+            var tr = tr3.find('#Ind').closest();
+            var k = 0;
+            var l1 = tr1.find(".Abcd").length;
+            while (l1 > k) {
+                var t = data[k];
+                if (data[k] !== 'Action') {
+                    tr3.find('#Ind').find(".reddotTableHead")[k].children[0].textContent = data[k];
                 }
                 k++;
             }

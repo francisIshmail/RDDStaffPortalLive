@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">Download Vendor Report</h4>
+                </div>
+                <div class="col-md-1 ml-auto text-right" style="display:none;"><button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button></div>
+
+            </div>
+            <div class="rowmin" id="FilterSection">
+
+                <div class="col-md-12">
+                    <div class="card danger-border full-height padd-10">
+                        <div class="row">
+
+                            <div class="col-xl-4 col-md-4" id="BU1">
+                                <div class="form-group form-inline">
+                                    <label for="email2" class="col-md-1 col-form-label p-0"> BU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+                                    <div class="col-md-6 col-xl-6">
+                                        @Html.DropDownList(string.Concat("BU"), ViewBag.BUList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-4" id="Country1">
+                                <div class="form-group form-inline">
+                                    <label for="email2" class="col-md-1 col-form-label p-0">Country :</label>
+                                    <div class="col-md-6 col-xl-6">
+                                        @Html.DropDownList(string.Concat("Country"), ViewBag.CountryList as SelectList, "-Select-", new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-1 col-form-label p-0 width80px">From Date :</label>
+                                    <div class="col-md-6 col-xl-6">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control form-control-sm datepicker" id="txtFrmDate" name="datepicker">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-4">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-1 p-0  col-form-label">To Date :</label>
+                                    <div class="col-md-6 col-xl-6">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control form-control-sm datepicker" id="txtToDate" name="datepicker">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <div class="col-xl-4 col-md-4" style="    position: relative;
+    right: 0;
+    top: -18px;
+    width: 140px;">
+                                <div class="form-group">
+                                    <label for="email2" class="width100px"></label>
+                                    <button class="excel-btn" title="Excel Download" id="btnApply"><i class="fas fa-file-excel"></i></button>
+                                   &nbsp;
+                                    <button class="btn btn-success" title="Refresh" id="btnRefresh">Refresh WeeklyGP</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="loader1"></div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".loader1").hide();
+        $('body').on('focusin', '.datepicker', function () {
+
+            if ($('.datepicker').data('DateTimePicker') != undefined) {
+                $('.datepicker').datetimepicker('destroy');
+            }
+            $('.datepicker').datetimepicker({
+
+                format: 'DD/MM/YYYY',
+                showClose: true,
+                showClear: true,
+
+            });
+        });
+        $('#BU').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select BU--'
+        });
+        $('#Country').select2({
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: '--Select Country--'
+        });
+        $("#Country1").hide();
+        $("#BU").on("change", function () {
+            if ($(this).val() == 'EPSON') {
+                $("#Country1").show();
+            } else {
+                $("#Country1").hide();
+            }
+
+        })
+        $("#btnRefresh").on("click", function () {
+            $(".loader1").show();
+           
+            $.ajax({
+                //async: false,
+                //cache: false,
+                type: "POST",
+                url: "/RDD_VendorReport_Refresh",
+                contentType: "application/json",
+                dataType: "json",
+                
+                success: function (data) {
+                    $(".loader1").show();
+
+
+                }, complete: function () {
+                   
+                    $(".loader1").hide();
+
+
+                }, error: function () {
+                    $(".loader1").hide();
+                }
+            });
+
+        })
+        $("#btnApply").on("click", function () {
+            $(".loader1").show();
+            if ($("[id$=txtFrmDate]").val() == '') {
+                RdotAlerterrtxt1('Plase Select From Date');
+                $(".loader1").hide();
+                return;
+
+            } else if ($("[id$=txtToDate]").val() == '') {
+                RdotAlerterrtxt1('Plase Select To Date');
+                $(".loader1").hide();
+                return;
+
+            } else if ($("#BU") == '') {
+                RdotAlerterrtxt1('Plase Select BU');
+                $(".loader1").hide();
+                return;
+            }
+            debugger
+            var response = '';
+            if ($("#BU").val().toUpperCase() == 'EPSON' && $("#Country").val() =='') {
+                RdotAlerterrtxt1("Please Select country");
+                return;
+            }
+            if ($("#BU").val().toUpperCase() == 'CANON' || $("#BU").val().toUpperCase() == 'HIKVISION') {
+                window.location = '/GetVendorReport?BU=' + $("#BU").val() + '&FromDate=' + GetSqlDateformat($("[id$=txtFrmDate]").val()) + '&ToDate=' + GetSqlDateformat($("[id$=txtToDate]").val()) + '&country_code=""';
+                $(".loader1").hide();
+            } else if ($("#BU").val().toUpperCase() == 'APC' || $("#BU").val().toUpperCase() == 'LOGITECH' || $("#BU").val().toUpperCase() == 'EPSON') {
+                $.ajax({
+                    //async: false,
+                   // cache: false,
+                    type: "POST",
+                    url: "/GetVendorReport",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        BU: $("#BU").val(),
+                        FromDate: GetSqlDateformat($("[id$=txtFrmDate]").val()),
+                        ToDate: GetSqlDateformat($("[id$=txtToDate]").val()),
+                        Country_code: $("#Country").val()
+                    }),
+                    success: function (data) {
+                        response = data;
+
+
+                    }, complete: function () {
+                        debugger
+                        var urls = response.data.split('$');
+                        var k = 0;
+                        while (urls.length > k) {
+                            window.open(
+                                urls[k],
+                                '_blank' // <- This is what makes it open in a new window.
+                            );
+                            k++;
+                        }
+                        $(".loader1").hide();
+
+
+                    }, error: function () {
+                        $(".loader1").hide();
+                    }
+                });
+
+            }
+            else {
+                RdotAlerterrtxt1('Report not available to download for this BU.');
+                $(".loader1").hide();
+            }
+
+        })
+        var SqlDate;
+        function GetSqlDateformat(obj) {
+            try {
+                if (obj != undefined && obj != null) {
+                    SqlDate = obj.toString().split('/')[1] + '/';
+                    SqlDate += obj.toString().split('/')[0] + '/';
+                    SqlDate += obj.toString().split('/')[2];
+                    return SqlDate;
+                }
+            }
+            catch (ex) {
+                log(ex);
+            }
+        }
+
+    });
+</script>
