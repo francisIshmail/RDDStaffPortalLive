@@ -26,7 +26,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
         }
         public ActionResult GetPartial()
         {
-            return PartialView("~/Areas/PerformanceEvaluation/Views/ViewAllAppraisal/ManagerRatingPartial.cshtml");
+            return PartialView("~/Areas/PerformanceEvaluation/Views/ViewAllAppraisal/ViewAllAppraisalPartial.cshtml");
         }
         public ActionResult GetDetailsForHR()
         {
@@ -55,6 +55,63 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             try
             {
                 ds = rDD_ViewAppraisal_TemplateDb.GetEmployeeDetailsOnPeriod(Qperiod);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetEmployeeManagerRating(int EmpId, string Qperiod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_ViewAppraisal_TemplateDb.GetEmployeeManagerRating(EmpId, Qperiod);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetEmployeeManagerRatingCategoryWise(int EmpId, string Qperiod, int CategoryId)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_ViewAppraisal_TemplateDb.GetEmployeeManagerRatingCategoryWise(EmpId, Qperiod, CategoryId);
+                if (ds.Tables.Count > 0)
+                {
+                    retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
+                }
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetEmployeeManagerRatingPeriodWise(int EmpId, string Qperiod)
+        {
+            ContentResult retVal = null;
+            DataSet ds;
+            //string LoginName = User.Identity.Name;
+            try
+            {
+                ds = rDD_ViewAppraisal_TemplateDb.GetEmployeeManagerRatingPeriodWise(EmpId, Qperiod);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

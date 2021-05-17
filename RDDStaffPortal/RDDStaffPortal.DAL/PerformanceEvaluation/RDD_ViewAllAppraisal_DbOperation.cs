@@ -52,6 +52,67 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
+        public DataSet GetEmployeeManagerRating(int EmpId, string Qperiod)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmployeeManagerRating"),
+                    new SqlParameter("@Periods",Qperiod),
+                    new SqlParameter("@EmployeeId",EmpId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmpMngDetailsForHR_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+        public DataSet GetEmployeeManagerRatingCategoryWise(int EmpId, string Qperiod,int CategoryId)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmployeeManagerRatingCategoryWise"),
+                    new SqlParameter("@Periods",Qperiod),
+                    new SqlParameter("@EmployeeId",EmpId),
+                    new SqlParameter("@CategoryId",CategoryId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmpMngDetailsForHR_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+        public DataSet GetEmployeeManagerRatingPeriodWise(int EmpId, string Qperiod)
+        {
+            DataSet ds = null;
+            try
+            {
+                SqlParameter[] Para =
+                {
+                    new SqlParameter("Type","GetEmployeeManagerRatingPeriodWise"),
+                    new SqlParameter("@Periods",Qperiod),
+                    new SqlParameter("@EmployeeId",EmpId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmpMngDetailsForHR_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ds;
+        }
+
         public DataSet GeneratePDF(string UrlId)
         {
             DataSet ds = null;
