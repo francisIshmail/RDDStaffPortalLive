@@ -132,7 +132,10 @@
                     $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table2[0].Period);
                 }
                 $("#hdnEmployeeId").val(data.Table[0].EmployeeId);
-                $("#hdnCategoryId").val(data.Table3[0].CategoryId);
+                if (data.Table3.length > 0) {
+                    $("#hdnCategoryId").val(data.Table3[0].CategoryId);
+                }
+                
                 $("#myTab").empty();
                 $.each(data.Table3, function (Index, Value) {
                     var str1 = "";
@@ -225,7 +228,7 @@
                                 var i = "";
                                 if (Value.IsRatingApplicable == true) {
                                     for (i = RatingNo; i > 0; i--) {
-                                        str2 += '<input class="star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                        str2 += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
                                     }
                                 }
                                 else {
@@ -278,6 +281,9 @@
                     $("#btnUpdateRating").remove();
                     $("#btnFinalSubmit").prop("disabled", "disabled");
                     $('#btnFinalSubmit').css("cursor", "not-allowed");
+                    $('.empcomnt').prop("disabled", true);
+                    $('.empcomnt').css("cursor", "not-allowed");
+                    $("#btnSaveRating").attr("hidden", "hidden");
                 }
                 else {
                     $('.dis').prop("disabled", false);
@@ -285,6 +291,7 @@
                     $("#btnFinalSubmit").prop("disabled", "disabled");
                     $("#btnFinalSubmit").removeAttr("disabled", "disabled");
                     $('#btnFinalSubmit').css("cursor", "");
+                    $("#btnSaveRating").removeAttr("hidden", "hidden");
                 }
                 $('.loader1').hide();
             }
@@ -634,7 +641,10 @@
                 $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].Years);
                 $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].Period);
                 //$("#hdnEmployeeId").val(data.Table[0].EmployeeId);
-                $("#hdnCategoryId").val(data.Table2[0].CategoryId);
+                if (data.Table2.length > 0) {
+                    $("#hdnCategoryId").val(data.Table2[0].CategoryId);
+                }
+               
                 $("#myTab").empty();
                 $.each(data.Table2, function (Index, Value) {
                     var str1 = "";

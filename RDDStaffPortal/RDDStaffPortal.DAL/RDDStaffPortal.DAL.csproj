@@ -227,6 +227,7 @@
     <Compile Include="PerformanceEvaluation\RDD_Managerrating_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_QuestionCategory_DbOperation.cs" />
     <Compile Include="PerformanceEvaluation\RDD_Settings_DbOperation.cs" />
+    <Compile Include="PerformanceEvaluation\RDD_ViewAllAppraisal_DbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
