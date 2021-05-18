@@ -50,6 +50,42 @@
                                         </textarea>
                                     </div>
                                 </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="ddlEmpRemDays">Reminder Days To Employee</label>
+                                        <select class="form-control" id="ddlEmpRemDays">
+                                            <option value="-1">---Select---</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="ddlMngRemDays">Reminder Days To L1 Manager</label>
+                                        <select class="form-control" id="ddlMngRemDays">
+                                            <option value="-1">---Select---</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <div class="m-2" style="text-align:right;">
@@ -79,6 +115,8 @@
                     $("#txtRatingDescription").val(data.Table[0].RatingDescription);
                     $("#ddlRating").find('option[value="' + data.Table[0].RatingNo + '"]').attr("selected", "selected");
                     $("#ddlFrequency").find('option[value="' + data.Table1[0].AppraisalFrequency + '"]').attr("selected", "selected");
+                    $("#ddlEmpRemDays").val(data.Table1[0].ReminderDaysToEmployee);
+                    $("#ddlMngRemDays").val(data.Table1[0].ReminderDaysToManager);
                     $("#btnSaveSettings").text("Update");
                     $("#btnSaveSettings").attr("id", "btnUpdateSettings");
                     $("#hdnRatingId").val(data.Table[0].RatingId);
@@ -125,6 +163,8 @@
         var RatingNo = $("#ddlRating option:selected").val();
         var AppraisalFrequency = $("#ddlFrequency option:selected").val();
         var RatingDescription = $("#txtRatingDescription").val();
+        var EmpRemDays = $("#ddlEmpRemDays option:selected").val();
+        var MngRemDays = $("#ddlMngRemDays option:selected").val();
         if (AppraisalFrequency == "-1") {
             RedDotAlert_Error("Please Select Appraisal Frequency");
             return false;
@@ -136,7 +176,9 @@
         var rDD_Setting = {
             RatingNo: RatingNo,
             AppraisalFrequency: AppraisalFrequency,
-            RatingDescription: RatingDescription
+            RatingDescription: RatingDescription,
+            ReminderDaysToEmployee: EmpRemDays,
+            ReminderDaysToManager: MngRemDays
         };
         SaveSettings(rDD_Setting);
     });
@@ -145,6 +187,8 @@
         var RatingNo = $("#ddlRating option:selected").val();
         var AppraisalFrequency = $("#ddlFrequency option:selected").val();
         var RatingDescription = $("#txtRatingDescription").val();
+        var EmpRemDays = $("#ddlEmpRemDays option:selected").val();
+        var MngRemDays = $("#ddlMngRemDays option:selected").val();
         if (AppraisalFrequency == "-1") {
             RedDotAlert_Error("Please Select Appraisal Frequency");
             return false;
@@ -160,6 +204,8 @@
             RatingDescription: RatingDescription,
             RatingId: $("#hdnRatingId").val(),
             FrequencyId: $("#hdnFrequencyId").val(),
+            ReminderDaysToEmployee: EmpRemDays,
+            ReminderDaysToManager: MngRemDays,
             EditFlag:true
         };
         SaveSettings(rDD_Setting);

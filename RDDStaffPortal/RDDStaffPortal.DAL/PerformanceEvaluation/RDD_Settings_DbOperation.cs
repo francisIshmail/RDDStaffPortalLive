@@ -56,7 +56,10 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
                         new SqlParameter("@RatingNo",rDD_Setting.RatingNo),
                         new SqlParameter("@RatingDesc",rDD_Setting.RatingDescription),
                         new SqlParameter("@AppraisalFrequency",rDD_Setting.AppraisalFrequency),
+                        new SqlParameter("@RemDaysToEmployee",rDD_Setting.ReminderDaysToEmployee),
+                        new SqlParameter("@RemDaysToManager",rDD_Setting.ReminderDaysToManager),
                         new SqlParameter("@CreatedBy",rDD_Setting.CreatedBy),
+                        new SqlParameter("@LastUpdatedBy",rDD_Setting.LastUpdatedBy),
                         new SqlParameter("@Type",rDD_Setting.ActionType),
                         new SqlParameter("@p_ide",rDD_Setting.id),
                         new SqlParameter("@Response",rDD_Setting.ErrorMsg)

@@ -14,6 +14,8 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public string RatingDescription { get; set; }
         public string AppraisalFrequency { get; set; }
         public string CreatedBy { get; set; }
+        public int ReminderDaysToEmployee { get; set; }
+        public int ReminderDaysToManager { get; set; }
         public string LastUpdatedBy { get; set; }
         public DateTime? LastUpdatedOn { get; set; }
         public bool SaveFlag { get; set; }
