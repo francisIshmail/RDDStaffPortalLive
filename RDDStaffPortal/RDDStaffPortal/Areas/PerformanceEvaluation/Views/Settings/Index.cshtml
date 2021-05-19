@@ -162,7 +162,8 @@
     $(document).on('click', '#btnSaveSettings', function () {
         var RatingNo = $("#ddlRating option:selected").val();
         var AppraisalFrequency = $("#ddlFrequency option:selected").val();
-        var RatingDescription = $("#txtRatingDescription").val();
+        var RatingDescription = $.trim($("#txtRatingDescription").val());
+        RatingDescription = RatingDescription.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "");
         var EmpRemDays = $("#ddlEmpRemDays option:selected").val();
         var MngRemDays = $("#ddlMngRemDays option:selected").val();
         if (AppraisalFrequency == "-1") {
@@ -173,6 +174,18 @@
             RedDotAlert_Error("Please Select Rating No");
             return false;
         }        
+        if (RatingDescription == "") {
+            RedDotAlert_Error("Please Define Rating Description");
+            return false;
+        }
+        if (EmpRemDays == "-1") {
+            RedDotAlert_Error("Please Select Reminder Days To Employee");
+            return false;
+        }
+        if (MngRemDays == "-1") {
+            RedDotAlert_Error("Please Select Reminder Days To L1 Manager");
+            return false;
+        }
         var rDD_Setting = {
             RatingNo: RatingNo,
             AppraisalFrequency: AppraisalFrequency,
