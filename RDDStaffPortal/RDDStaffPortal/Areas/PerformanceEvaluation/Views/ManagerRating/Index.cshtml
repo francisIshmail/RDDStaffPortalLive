@@ -133,6 +133,7 @@
                 $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table5[0].Period);                              
                 if (data.Table9[0].ShowStatus == 0) {
                     RedDotAlert_Error("You Don't Have Permission to Evaluate");
+                    $("#btnBackEmpDetails").hide();
                 }
                 else {         
                     $("#myTab").empty();

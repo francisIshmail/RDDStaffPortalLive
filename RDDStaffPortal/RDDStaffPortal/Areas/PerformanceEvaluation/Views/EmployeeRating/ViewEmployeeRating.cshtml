@@ -233,14 +233,17 @@
                         }
                         else {
                             RedDotAlert_Error("You Don't Have Permission To View Evaluation");
+                            $("#btnGeneratePDF").hide();
                         }
                     }
                     else {
                         RedDotAlert_Error("Manager Has Not Evaluated Till Now");
+                        $("#btnGeneratePDF").hide();
                     }
                 }
                 else {
                     RedDotAlert_Error("Manager Has Not Evaluated Till Now");
+                    $("#btnGeneratePDF").hide();
                 }
                 $('.loader1').hide();
             }

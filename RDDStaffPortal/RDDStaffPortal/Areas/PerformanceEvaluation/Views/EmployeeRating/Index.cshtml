@@ -143,7 +143,10 @@
                     $("#myTab").append(str1);
                 });
                 $("#myTab li:eq(0) a").tab('show');
-                var RatingNo = data.Table5[0].RatingNo;
+                if (data.Table5.length > 0) {
+                    var RatingNo = data.Table5[0].RatingNo;
+                }
+                
                 $("#hdnRatingNo").val(RatingNo);
                 var str2 = "";
                 var QuestionCount = data.Table4.length;
