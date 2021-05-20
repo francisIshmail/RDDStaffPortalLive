@@ -234,6 +234,7 @@
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\SAP\Controllers\ItemMasterController.cs" />
+    <Compile Include="Areas\SAP\Controllers\RDD_TempCreditLimitController.cs" />
     <Compile Include="Areas\SAP\Controllers\SalesOrderController.cs" />
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
@@ -890,6 +891,7 @@
     <Content Include="Areas\SORCodeGenerator\Views\RDD_SORCodeGenerator\Index.cshtml" />
     <Content Include="Areas\Reports\Views\VendorReports\Index.cshtml" />
     <Content Include="Areas\SAP\Views\ItemMaster\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\RDD_TempCreditLimit\Index.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
