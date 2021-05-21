@@ -13,6 +13,7 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public int EmployeeId { get; set; }
         public int Year { get; set; }
         public string Period { get; set; }
+        public string AttachmentUrl { get; set; }
         public bool SaveFlag { get; set; }
         public bool EditFlag { get; set; }
         public string ActionType { get; set; }
@@ -25,6 +26,8 @@ namespace RDDStaffPortal.DAL.DataModels.PerformanceEvaluation
         public string Mng_SubmittedBy { get; set; }
         public DateTime? Mng_SubmittedOn { get; set; }
         public DateTime? Mng_LastUpdatedOn { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
         public List<RDD_EmployeeRatingTrans> rDD_EmpAppraisalList { get; set; }
     }
     public partial class RDD_EmployeeRatingTrans

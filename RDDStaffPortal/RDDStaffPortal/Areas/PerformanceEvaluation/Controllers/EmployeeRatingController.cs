@@ -192,6 +192,74 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UploadPDF(string EmployeeId)
+        {
+            string fname = "";
+            string strMappath = "";
+            string _imgname = string.Empty;
+            string _imgname1 = string.Empty;
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //string str = EmployeeId + "_" + User.Identity.Name;
+                    //Guid obj = Guid.NewGuid();
+                    //strMappath = "~/excelFileUpload/" + "PV/" + User.Identity.Name + "/" + type + "/";
+                    strMappath = "~/excelFileUpload/" + "PerformanceEvaluation/";
+                    //if (!Directory.Exists(strMappath))
+                    //{
+                    //    Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
+                    //}
+                    //  Get all files from Request object  
+                    System.Web.HttpFileCollectionBase files = Request.Files;
+                    var _ext = "";
+                    var fileName = "";
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFileBase file = files[i];
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                            fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                            _ext = System.IO.Path.GetExtension(fname).ToUpper();
+                            if (_ext != ".PDF")
+                            {
+                                return Json("Error occurred. Error details: Only Pdf", JsonRequestBehavior.AllowGet);
+                            }
+                        }
+                        // Get the complete folder path and store the file inside it.
+                        _imgname1 = fileName + "" + System.DateTime.Now.ToString("ddMMyyyyHHMMss") + "" + _ext;
+                        _imgname = System.IO.Path.Combine(Server.MapPath(strMappath), _imgname1);
+                        file.SaveAs(_imgname);
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json(strMappath.ToString().Replace("~", "") + _imgname1, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json(strMappath.ToString().Replace("~", "") + _imgname1, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult SavePdf(RDD_EmployeeRating rDD_AppraisalPdfUpload)
+        {
+            rDD_AppraisalPdfUpload.Emp_SubmittedBy = User.Identity.Name;            
+            return Json(rDD_EmpRating_TemplateDb.SavePdf(rDD_AppraisalPdfUpload), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GeneratePDF(string UrlId)
         {
             string PDFname = "";

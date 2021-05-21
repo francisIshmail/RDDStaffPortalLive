@@ -276,6 +276,41 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
+        public List<Outcls1> SavePdf(RDD_EmployeeRating rDD_AppraisalPdfUpload)
+        {
+            List<Outcls1> str = new List<Outcls1>();
+            rDD_AppraisalPdfUpload.ActionType = "SavePDF";
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    SqlParameter[] parm = {                            
+                            new SqlParameter("@Period",rDD_AppraisalPdfUpload.Period),                            
+                            new SqlParameter("@EmployeeId",rDD_AppraisalPdfUpload.EmployeeId),
+                            new SqlParameter("@Year",rDD_AppraisalPdfUpload.Year),
+                            new SqlParameter("@Emp_SubmittedBy",rDD_AppraisalPdfUpload.Emp_SubmittedBy),
+                            new SqlParameter("@AttachmentUrl",rDD_AppraisalPdfUpload.AttachmentUrl),
+                            new SqlParameter("@Type",rDD_AppraisalPdfUpload.ActionType),
+                            new SqlParameter("@p_ide",rDD_AppraisalPdfUpload.id),
+                            new SqlParameter("@Response",rDD_AppraisalPdfUpload.ErrorMsg)
+                        };
+
+                    str = Com.ExecuteNonQueryListID("RDD_Insert_Update_PerformanceAppraisal", parm);                    
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                str.Add(new Outcls1
+                {
+                    Outtf = false,
+                    Id = -1,
+                    Responsemsg = "Error occured : " + ex.Message
+                });
+            }
+            return str;
+        }
+
         public DataSet GeneratePDF(string UrlId)
         {
             DataSet ds = null;
