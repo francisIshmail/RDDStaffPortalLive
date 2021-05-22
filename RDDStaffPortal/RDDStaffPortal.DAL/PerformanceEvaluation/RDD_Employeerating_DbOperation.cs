@@ -311,6 +311,27 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return str;
         }
 
+        public DataSet GetMailDetailsForPDF(RDD_EmployeeRating rDD_AppraisalPdfUpload)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] prm =
+                {
+                    new SqlParameter("Type","GetMailForPDF"),
+                    new SqlParameter("Period",rDD_AppraisalPdfUpload.Period),
+                    new SqlParameter("Year",rDD_AppraisalPdfUpload.Year),
+                    new SqlParameter("EmployeeId",rDD_AppraisalPdfUpload.EmployeeId)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, prm);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
+
         public DataSet GeneratePDF(string UrlId)
         {
             DataSet ds = null;

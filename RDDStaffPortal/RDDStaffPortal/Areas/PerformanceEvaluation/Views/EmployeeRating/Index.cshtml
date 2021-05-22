@@ -112,7 +112,6 @@
     })
 </script>
 <script type="text/javascript">
-
     function GetEmployeeDetails() {
         $.ajax({
             type: "GET",
@@ -317,6 +316,18 @@
                     $('#btnFinalSubmit').css("cursor", "");
                     $("#btnSaveRating").removeAttr("hidden", "hidden");
                 }
+                if (CloseAppraisalStatus == true) {
+                    $("#AttachmentUrl").attr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "not-allowed");
+                    $("#btnPdfUpload").attr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "not-allowed");
+                }
+                else {
+                    $("#AttachmentUrl").removeAttr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "");
+                    $("#btnPdfUpload").removeAttr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "");
+                }
                 $('.loader1').hide();
             }
         });
@@ -424,7 +435,7 @@
                 }
                 else {
                     $("input[id='AttachmentUrl'][type='hidden']").val(response);
-                    alert(response);
+                    //alert(response);
                 }
             },
             error: function (er) {
@@ -433,9 +444,6 @@
         });
     });
 
-    function SavePDF() {
-        
-    }
     $(document).on('click', '#btnPdfUpload', function () {
         var rDD_AppraisalPdfUpload = {
             AttachmentUrl: $("#AttachmentUrl[type='hidden']").val(),
@@ -456,7 +464,8 @@
                 $('.loader1').hide();
                 if (data[0].Outtf == true) {
                     RedDotAlert_Success(data[0].Responsemsg);                    
-                    GetEmployeeDetails();
+                    GetEmployeeDetails();                  
+                    
                 }
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
@@ -480,6 +489,10 @@
 
     $(document).on('click', '.selectCategory', function () {
         $("#divBtnSave").hide();
+        if ($("#btnSaveRating").text() == "Save") {
+            RedDotAlert_Error("Plese save atlest one rating and comment");
+            return false;
+        }
         var CategoryId = $(this).attr("data");
         var Qperiod = $("#ddlSelectYear option:selected").val();
         $("#hdnCategoryId").val(CategoryId);

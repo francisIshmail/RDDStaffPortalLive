@@ -256,8 +256,33 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
 
         public ActionResult SavePdf(RDD_EmployeeRating rDD_AppraisalPdfUpload)
         {
-            rDD_AppraisalPdfUpload.Emp_SubmittedBy = User.Identity.Name;            
-            return Json(rDD_EmpRating_TemplateDb.SavePdf(rDD_AppraisalPdfUpload), JsonRequestBehavior.AllowGet);
+            rDD_AppraisalPdfUpload.Emp_SubmittedBy = User.Identity.Name;
+            var t = rDD_EmpRating_TemplateDb.SavePdf(rDD_AppraisalPdfUpload);
+            if (t[0].Id != -1)
+            {
+                string Mailresponse = "";
+                try
+                {
+                    DataSet ds;
+                    ds = rDD_EmpRating_TemplateDb.GetMailDetailsForPDF(rDD_AppraisalPdfUpload);
+                    string ToMail = ds.Tables[1].Rows[0]["ToMail"].ToString();
+                    string cc = ds.Tables[2].Rows[0]["CC"].ToString();
+                    string MailBody = ds.Tables[3].Rows[0]["Body"].ToString();
+                    string Subject = ds.Tables[0].Rows[0]["MailSubject"].ToString();
+                    string AttachmentPath = ds.Tables[4].Rows[0]["AttachmentUrl"].ToString();
+                    string AttachmentPdf = string.Empty;
+                    if(AttachmentPath!=null && !DBNull.Value.Equals(AttachmentPath))
+                    {
+                        AttachmentPdf = System.IO.Path.Combine(Server.MapPath(AttachmentPath));
+                    }
+                    Mailresponse = SendMail.SendMailWithAttachment(ToMail, cc, Subject, MailBody, true, AttachmentPdf);
+                }
+                catch (Exception ex)
+                {
+                    Mailresponse = ex.Message;
+                }
+            }
+            return Json(t, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GeneratePDF(string UrlId)
