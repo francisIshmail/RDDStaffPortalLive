@@ -15,6 +15,8 @@
 </style>
 <input type="hidden" id="hdnRatingNo" />
 <input type="hidden" id="hdnEmployeeId" />
+<input type="hidden" id="hdnCatSlno" />
+
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">            
@@ -105,9 +107,7 @@
             data: JSON.stringify({ UrlId: UrlId }),
             dataType: "Json",
             contentType: "Application/json",
-            success: function (data) {
-                debugger
-
+            success: function (data) {                
                 $("#hdnEmployeeId").val(data.Table[0].EmployeeId);               
                 $("#ddlSelectYearEmp").empty();
                 $("#ddlSelectYearEmp").append('<option value="-1">--Select--</option>');
@@ -138,13 +138,15 @@
                 else {         
                     $("#myTab").empty();
                     $("#secEmpRating").show();
-                    $.each(data.Table1, function (Index, Value) {
+                    var srno = 0;
+                    $.each(data.Table2, function (Index, Value) {
                         var str1 = "";
-                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
+                        str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                         $("#myTab").append(str1);
+                        srno++;
                     });
-
                     $("#myTab li:eq(0) a").tab('show');
+                    $("#hdnCatSlno").val("0");
                     var RatingNo = data.Table3[0].RatingNo;
                     $("#hdnRatingNo").val(RatingNo);
                     var str2 = "";
@@ -192,7 +194,7 @@
                                 }
                             }
                             else {
-                                str2 += '<label>Rating Not Applicable</label>';
+                                str2 += '<label class="strtxt">Rating Not Applicable</label>';
                             }
                             str2 += '</form></div></td>';
                             if (Value.ManagerComment == null) {
@@ -396,18 +398,7 @@
         });
     }
     
-    $(document).ready(function () { 
-        $("#secEmpRating").load('@Url.Action("GetPartial", "ManagerRating")');
-        $("#secEmpRating").hide();
-        var me = getUrlVars()["UrlId"];
-        if (me != undefined) {            
-            //GetDetailsForManager();
-            GetManagerRatingViewOnClickUrl(me);
-        } else {
-            GetDetailsForManager();
-        }
-                     
-    });
+    
     $(document).on('change', '#ddlSelectYear', function () {        
         var Qperiod = $(this).val();
         if (Qperiod == "-1") {
@@ -514,13 +505,16 @@
                 $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + SplitPeriod);
                 $("#secEmpRating").show();
                 $("#myTab").empty();
-                $.each(data.Table1, function (Index, Value) {    
+                var srno = 0;
+                $.each(data.Table1, function (Index, Value) {
                     var str1 = "";
-                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';                    
+                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                     $("#myTab").append(str1);
+                    srno++;
                 });
                 
                 $("#myTab li:eq(0) a").tab('show');
+                $("#hdnCatSlno").val("0");
                 var RatingNo = data.Table3[0].RatingNo;
                 $("#hdnRatingNo").val(RatingNo);
                 var str2 = "";
@@ -571,7 +565,7 @@
                             //for (var k = RatingNo; k > 0; k--) {
                             //    str2 += '<input class="distar star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" disabled="disabled"/> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
                             //}
-                            str2 += '<label>Rating Not Applicable</label>';
+                            str2 += '<label class="strtxt">Rating Not Applicable</label>';
                         }
                         
                         str2 += '</form></div></td>';
@@ -680,7 +674,7 @@
                             }
                         }
                         else {
-                            str2+='<label>rating Not Applicable</label>'
+                            str2+='<label>Rating Not Applicable</label>'
                         }
                         str2 += '</form></div></td>';
                         if (Value.EmployeeComment == null) {
@@ -701,7 +695,7 @@
                             }
                         }
                         else {
-                            str2+='<label>Rating Not Applicable</label>'
+                            str2 +='<label class="strtxt">Rating Not Applicable</label>'
                         }
                         str2 += '</form></div></td>';
 
@@ -732,6 +726,7 @@
                         $('.distar').prop("disabled", false);
                         $('.mngcomnt').prop("disabled", false);
                         $('.mngcomnt').css("cursor", "");
+                        $("#divBtnSave").show();
                         $("#btnUpdateRating").removeAttr("hidden", "hidden");
                         $("#btnFinalSubmit").attr("disabled", false);
                         $("#btnFinalSubmit").css("cursor", "");
@@ -747,169 +742,205 @@
         $('#hdnstarval_' + QNo).val(StarNo);
         $(this).closest("tr").find("td:eq(9)").html(StarNo);
     });
-    $(document).on('click', '.selectCategory', function () {
-        $("#divBtnSave").hide();
-        var CatName = $(this).text();        
-        var CategoryId = $(this).attr("data");
-        var Qperiod = $("#ddlSelectYearEmp option:selected").val();
-        var EmpId = $("#hdnEmployeeId").val();
-        $("#hdnCategoryId").val(CategoryId);
-        $("#add-row tbody").empty();
-        $("#add-row tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetQuestionList", "ManagerRating")',
-            data: { "CategoryId": CategoryId, "Qperiod": Qperiod, "EmpId": EmpId},
-            dataType: "json",
-            success: function (data) {
-                debugger                
-                var d = data.Table;
-                var RatingNo = $("#hdnRatingNo").val();
-                var str = "";
-                var Count = 0;
-                var QuestionCount = d.length;
-                var j = 1;
-                $("#btnUpdateRating").text("Save");
-                $("#btnUpdateRating").attr("id", "btnSaveRating");
+    $(document).ready(function () {
+        $("#secEmpRating").load('@Url.Action("GetPartial", "ManagerRating")');
+        $("#secEmpRating").hide();
+        var me = getUrlVars()["UrlId"];
+        if (me != undefined) {
+            //GetDetailsForManager();
+            GetManagerRatingViewOnClickUrl(me);
+        } else {
+            GetDetailsForManager();
+        }
+
+
+        $(document).on('click', '.selectCategory', function (e) {
+            debugger
+            var slno = $(this).attr("slno");
+            var prevcatslno = $("#hdnCatSlno").val();
+            if ($("#btnSaveRating").text() == "Save") {
+                e.preventDefault();
+                //Save clicked element to variable
+                var clickedTab = $(this).attr("id");
+                //Remove class from old tab
+                $(this).parent().find('.active').removeClass("active show");
+                //Add Active class to clicked tab
+                $(this).addClass('active show');
+
+                //Hide all Tab elements
+                $("[id^='home']").removeClass("active show");
+
+                //Show clicked Tab
+                //$('#' + clickedTab + '-content').show();
+                $("#myTab li").eq(prevcatslno).addClass('active show');
+                RedDotAlert_Error("Please save atlest one rating and comment");
+            }
+            else {
+                $("#hdnCatSlno").val(slno);
+                $("#divBtnSave").hide();
+                var CatName = $(this).text();
+                var CategoryId = $(this).attr("data");
+                var Qperiod = $("#ddlSelectYearEmp option:selected").val();
+                var EmpId = $("#hdnEmployeeId").val();
+                $("#hdnCategoryId").val(CategoryId);
                 $("#add-row tbody").empty();
-                if (data.Table.length > 0) {
-                    $("#hdnAppraisalId").val(data.Table[0].AppraisalId);
-                    while (j <= QuestionCount) {
-                        $.each(data.Table, function (Index, Value) {
-                            str += '<tr>';
-                            str += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '"/> </td>';
-                            str += '<td style="display:none" class="qid">' + Value.AppraisalTransId + '</td>';
-                            str += '<td>' + Value.Question + '</td>';
-                            str += '<td><div class="stars"><form action="">';
-                            if (Value.IsRatingApplicable == true) {
-                                for (var i = RatingNo; i > 0; i--) {
-                                    if (Value.EmployeeRating == i) {
-                                        str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                    }
-                                    else {
-                                        str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                    }
-                                }
-                            }
-                            else {
-                                str += '<label>Rating Not Applicable</label>';
-                            }
-                            str += '</form></div></td>';
-                            if (Value.EmployeeComment == null) {
-                                Value.EmployeeComment = "";
-                            }
-                            str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis">' + Value.EmployeeComment + '</textarea></td>';                            
-                            str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
-                            str += '<td style="display:none"></td>';
-                            str += '<td><div class="stars"><form action="">';                            
-                            if (Value.IsRatingApplicable == true) {
-                                for (var k = RatingNo; k > 0; k--) {
-                                    if (Value.ManagerRating == k) {
-                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                    }
-                                    else {
-                                        str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                    }
-                                }
-                            }
-                            else {
-                                str += '<label>Rating Not Applicable</label>';
-                            }
-                            str += '</form></div></td>';
-                            if (Value.ManagerComment == null) {
-                                Value.ManagerComment = "";
-                                //$("#btnUpdateRating").text("Save");
-                                //$("#btnUpdateRating").attr("id", "btnSaveRating");
-                            }
-                            else {
-                                $("#btnSaveRating").text("Update");
-                                $("#btnSaveRating").attr("id", "btnUpdateRating");
-                            }
-                            str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';                                      
-                            str += '<td style="display:none">' + Value.ManagerRating + '</td>';
-                            str += '</tr>';
-                            j++;
-                            
-                        });
-                    }                    
-                    //$("#btnSaveRating").text("Update");
-                    //$("#btnSaveRating").attr("id", "btnUpdateRating");
-                    $("#divBtnSave").show();
-                }
-                else {
-                    if (d.length > 0) {
-                        while (j <= QuestionCount) {
-                            $.each(d, function (Index, Value) {
-                                str += '<tr>';
-                                str += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '" /> </td>';
-                                str += '<td style="display:none" class="qid">' + Value.AppraisalTransId + '</td>';
-                                str += '<td>' + Value.Question + '</td>';
-                                str += '<td><div class="stars"><form action="">';
-                                for (var i = RatingNo; i > 0; i--) {
-                                    str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
-                                }
-                                str += '</form></div></td>';
-                                str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis"></textarea></td>'; 
-                                str += '<td style="display:none"></td>';
-                                str += '<td style="display:none"></td>';
-                                str += '<td><div class="stars"><form action="" disabled="disabled">';
-                                for (var k = RatingNo; k > 0; k--) {
-                                    str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
-                                }
-                                str += '</form></div></td>';
-                                //if (CatName == "OBJECTIVES") {
-                                //    str += '<td><textarea rows="5" cols="5" disabled="disabled" style="cursor:not-allowed" class="textarea-style mngcomnt"></textarea></td>';
-                                //}
-                                //else {
-                                //    str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';
-                                //}
-                                str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';                               
-                                str += '<td style="display:hidden">' + Value.ManagerRating + '</td>';
-                                str += '</tr>';
-                                j++;
-                            });
-                        }
+                $("#add-row tbody").append('<tr><td colspan="6" style="text-align:center">Please Wait....</td></tr>');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetQuestionList", "ManagerRating")',
+                    data: { "CategoryId": CategoryId, "Qperiod": Qperiod, "EmpId": EmpId },
+                    dataType: "json",
+                    success: function (data) {
+                        debugger
+                        var d = data.Table;
+                        var RatingNo = $("#hdnRatingNo").val();
+                        var str = "";
+                        var Count = 0;
+                        var QuestionCount = d.length;
+                        var j = 1;
                         $("#btnUpdateRating").text("Save");
                         $("#btnUpdateRating").attr("id", "btnSaveRating");
-                        $("#divBtnSave").show();                        
+                        $("#add-row tbody").empty();
+                        if (data.Table.length > 0) {
+                            $("#hdnAppraisalId").val(data.Table[0].AppraisalId);
+                            while (j <= QuestionCount) {
+                                $.each(data.Table, function (Index, Value) {
+                                    str += '<tr>';
+                                    str += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '"/> </td>';
+                                    str += '<td style="display:none" class="qid">' + Value.AppraisalTransId + '</td>';
+                                    str += '<td>' + Value.Question + '</td>';
+                                    str += '<td><div class="stars"><form action="">';
+                                    if (Value.IsRatingApplicable == true) {
+                                        for (var i = RatingNo; i > 0; i--) {
+                                            if (Value.EmployeeRating == i) {
+                                                str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                            }
+                                            else {
+                                                str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star"/> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        str += '<label>Rating Not Applicable</label>';
+                                    }
+                                    str += '</form></div></td>';
+                                    if (Value.EmployeeComment == null) {
+                                        Value.EmployeeComment = "";
+                                    }
+                                    str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis">' + Value.EmployeeComment + '</textarea></td>';
+                                    str += '<td style="display:none">' + Value.EmployeeRating + '</td>';
+                                    str += '<td style="display:none"></td>';
+                                    str += '<td><div class="stars"><form action="">';
+                                    if (Value.IsRatingApplicable == true) {
+                                        for (var k = RatingNo; k > 0; k--) {
+                                            if (Value.ManagerRating == k) {
+                                                str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" checked="checked"/> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                            }
+                                            else {
+                                                str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qnos=' + Value.AppraisalTransId + ' data-starnos=' + k + ' class="starlbls star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        str += '<label class="strtxt">Rating Not Applicable</label>';
+                                    }
+                                    str += '</form></div></td>';
+                                    if (Value.ManagerComment == null) {
+                                        Value.ManagerComment = "";
+                                        //$("#btnUpdateRating").text("Save");
+                                        //$("#btnUpdateRating").attr("id", "btnSaveRating");
+                                    }
+                                    else {
+                                        $("#btnSaveRating").text("Update");
+                                        $("#btnSaveRating").attr("id", "btnUpdateRating");
+                                    }
+                                    str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt" disabled="disabled" style="cursor:not-allowed">' + Value.ManagerComment + '</textarea></td>';
+                                    str += '<td style="display:none">' + Value.ManagerRating + '</td>';
+                                    str += '</tr>';
+                                    j++;
+
+                                });
+                            }
+                            //$("#btnSaveRating").text("Update");
+                            //$("#btnSaveRating").attr("id", "btnUpdateRating");
+                            $("#divBtnSave").show();
+                        }
+                        else {
+                            if (d.length > 0) {
+                                while (j <= QuestionCount) {
+                                    $.each(d, function (Index, Value) {
+                                        str += '<tr>';
+                                        str += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '" /> </td>';
+                                        str += '<td style="display:none" class="qid">' + Value.AppraisalTransId + '</td>';
+                                        str += '<td>' + Value.Question + '</td>';
+                                        str += '<td><div class="stars"><form action="">';
+                                        for (var i = RatingNo; i > 0; i--) {
+                                            str += '<input class="dis star star-' + i + '-' + j + '" id="star-' + i + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + i + ' class="starlbl star star-' + i + '-' + j + '" for="star-' + i + '-' + j + '"></label>';
+                                        }
+                                        str += '</form></div></td>';
+                                        str += '<td><textarea id="" name="" rows="5" cols="5" placeholder="" class="textarea-style empcomnt dis"></textarea></td>';
+                                        str += '<td style="display:none"></td>';
+                                        str += '<td style="display:none"></td>';
+                                        str += '<td><div class="stars"><form action="" disabled="disabled">';
+                                        for (var k = RatingNo; k > 0; k--) {
+                                            str += '<input class="distars star star-' + k + '-' + j + '" id="stare-' + k + '-' + j + '" type="radio" name="star" /> <label data-qno=' + Value.QuestionTransId + ' data-starno=' + k + ' class="star star-' + k + '-' + j + '" for="stare-' + k + '-' + j + '"></label>';
+                                        }
+                                        str += '</form></div></td>';
+                                        //if (CatName == "OBJECTIVES") {
+                                        //    str += '<td><textarea rows="5" cols="5" disabled="disabled" style="cursor:not-allowed" class="textarea-style mngcomnt"></textarea></td>';
+                                        //}
+                                        //else {
+                                        //    str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';
+                                        //}
+                                        str += '<td><textarea rows="5" cols="5" class="textarea-style mngcomnt"></textarea></td>';
+                                        str += '<td style="display:hidden">' + Value.ManagerRating + '</td>';
+                                        str += '</tr>';
+                                        j++;
+                                    });
+                                }
+                                $("#btnUpdateRating").text("Save");
+                                $("#btnUpdateRating").attr("id", "btnSaveRating");
+                                $("#divBtnSave").show();
+                            }
+                            else {
+                                str += '<tr>';
+                                str += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
+                                str += '</tr>';
+                                $("#divBtnSave").hide();
+                            }
+                        }
+                        $("#add-row tbody").append(str);
+                        $('.dis').attr("disabled", "disabled");
+                        $('.dis').css("cursor", "not-allowed");
+                        if (data.Table1.length > 0) {
+                            var SaveStatus = data.Table1[0].Mng_FinalSubmissionStatus;
+                        }
+                        if (data.Table2.length > 0) {
+                            var CloseAppraisalStatus = data.Table2[0].IsAppraisalClosedByHR;
+                        }
+                        if (SaveStatus == true || CloseAppraisalStatus == true) {
+                            $('.distars').attr("disabled", true);
+                            $('.distars').css("cursor", "not-allowed");
+                            $("#btnUpdateRating").remove();
+                            $('.mngcomnt').attr("disabled", true);
+                            $('.mngcomnt').css("cursor", "not-allowed");
+                            $("#btnFinalSubmit").attr("disabled", true);
+                            $("#btnFinalSubmit").css("cursor", "not-allowed");
+                        }
+                        else {
+                            $('.distars').attr("disabled", false);
+                            $('.distars').css("cursor", "");
+                            $('.mngcomnt').attr("disabled", false);
+                            $('.mngcomnt').css("cursor", "");
+                            $("#btnFinalSubmit").attr("disabled", false);
+                            $("#btnFinalSubmit").css("cursor", "");
+                            $("#divBtnSave").show();
+                        }
                     }
-                    else {
-                        str += '<tr>';
-                        str += '<td colspan="6" style="text-align:center">HR Not Launched Appraisal For This Period</td>';
-                        str += '</tr>';
-                        $("#divBtnSave").hide();
-                    }
-                }                
-                $("#add-row tbody").append(str);  
-                $('.dis').attr("disabled", "disabled");  
-                $('.dis').css("cursor", "not-allowed");
-                if (data.Table1.length > 0) {
-                    var SaveStatus = data.Table1[0].Mng_FinalSubmissionStatus;
-                }
-                if (data.Table2.length > 0) {
-                    var CloseAppraisalStatus = data.Table2[0].IsAppraisalClosedByHR;
-                }
-                if (SaveStatus == true || CloseAppraisalStatus == true) {
-                    $('.distars').attr("disabled", true);
-                    $('.distars').css("cursor", "not-allowed");
-                    $("#btnUpdateRating").remove();
-                    $('.mngcomnt').attr("disabled", true);
-                    $('.mngcomnt').css("cursor", "not-allowed");
-                    $("#btnFinalSubmit").attr("disabled", true);
-                    $("#btnFinalSubmit").css("cursor", "not-allowed");
-                }
-                else {
-                    $('.distars').attr("disabled", false);
-                    $('.distars').css("cursor", "");
-                    $('.mngcomnt').attr("disabled", false);
-                    $('.mngcomnt').css("cursor", "");
-                    $("#btnFinalSubmit").attr("disabled", false);
-                    $("#btnFinalSubmit").css("cursor", "");
-                }                
+                });
             }
         });
-    });   
-
+    });
     $(document).on('click', '#btnSaveRating', function () {
         var rDD_MngAppraisal = {            
             rDD_EmpAppraisalList: []
@@ -922,22 +953,24 @@
                 AppraisalTransId: AppraisalTransId,
                 ManagerRating: MngRating,
                 ManagerComment: MngComment,
+                MngRatingText: $('.strtxt').text(),
                 EditFlag: false
             };
             rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
         });
-        //var i = 0;
-        //var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
-        //while (i < length) {
-            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "") {
-                RedDotAlert_Error("Please Comment For First Question At Least");
+        var i = 0;
+        var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
+        while (i < length) {
+            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "" || (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerRating == "" && rDD_MngAppraisal.rDD_EmpAppraisalList[0].MngRatingText == "")) {
+                RedDotAlert_Error("Please comment for at least one question and it's corresponding rating(If Rating Applicable)");
+                i++;
             }
             else {
                 SaveMngRating(rDD_MngAppraisal);
                 return false;
             }
             //RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
-        //}
+        }
     });
     $(document).on('click', '#btnUpdateRating', function () {
         var rDD_MngAppraisal = {
@@ -951,21 +984,35 @@
                 AppraisalTransId: AppraisalTransId,
                 ManagerRating: MngRating,
                 ManagerComment: MngComment,
+                MngRatingText: $('.strtxt').text(),
                 EditFlag: true
             };
             rDD_MngAppraisal.rDD_EmpAppraisalList.push(rDD_MngAppraisalList);
         });
         //var i = 0;
         //var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
-        //while (i < length) {
-            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "") {
-                RedDotAlert_Error("Please Comment For First Question At Least");
+        ////while (i < length) {
+        //    if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "") {
+        //        RedDotAlert_Error("Please Comment For First Question At Least");
+        //    }
+        //    else {
+        //        SaveMngRating(rDD_MngAppraisal);
+        //        return false;
+        //    }
+        //    //RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
+        ////}
+        var i = 0;
+        var length = rDD_MngAppraisal.rDD_EmpAppraisalList.length;
+        while (i < length) {
+            if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "" || (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerRating == "" && rDD_MngAppraisal.rDD_EmpAppraisalList[0].MngRatingText == "")) {
+                RedDotAlert_Error("Please comment for at least one question and it's corresponding rating(If Rating Applicable)");
+                i++;
             }
             else {
                 SaveMngRating(rDD_MngAppraisal);
                 return false;
             }
             //RedDotAlert_Error("Please Fill At Least One Rating And Its Corresponding Comment");
-        //}
+        }
     });
 </script>
