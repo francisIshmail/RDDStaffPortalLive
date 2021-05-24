@@ -202,15 +202,8 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             if (Request.Files.Count > 0)
             {
                 try
-                {
-                    //string str = EmployeeId + "_" + User.Identity.Name;
-                    //Guid obj = Guid.NewGuid();
-                    //strMappath = "~/excelFileUpload/" + "PV/" + User.Identity.Name + "/" + type + "/";
-                    strMappath = "~/excelFileUpload/" + "PerformanceEvaluation/";
-                    //if (!Directory.Exists(strMappath))
-                    //{
-                    //    Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
-                    //}
+                {                    
+                    strMappath = "~/excelFileUpload/" + "PerformanceEvaluation/";                    
                     //  Get all files from Request object  
                     System.Web.HttpFileCollectionBase files = Request.Files;
                     var _ext = "";
