@@ -641,13 +641,16 @@
                 $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + SplitPeriod);
                 $("#secEmpRating").show();
                 $("#myTab").empty();
-                $.each(data.Table1, function (Index, Value) {    
+                var srno = 0;
+                $.each(data.Table1, function (Index, Value) {
                     var str1 = "";
-                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';                    
+                    str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                     $("#myTab").append(str1);
+                    srno++;
                 });
                 
                 $("#myTab li:eq(0) a").tab('show');
+                $("#hdnCatSlno").val("0");
                 var RatingNo = data.Table3[0].RatingNo;
                 $("#hdnRatingNo").val(RatingNo);
                 var str2 = "";
@@ -776,6 +779,7 @@
                 RedDotAlert_Error("Please save atlest one rating and comment");
             }
             else {
+                $("#myTab li").eq(prevcatslno).removeClass('active show');
                 $("#hdnCatSlno").val(slno);
                 $("#divBtnSave").hide();
                 var CatName = $(this).text();
@@ -921,7 +925,7 @@
                         if (SaveStatus == true || CloseAppraisalStatus == true) {
                             $('.distars').attr("disabled", true);
                             $('.distars').css("cursor", "not-allowed");
-                            $("#btnUpdateRating").remove();
+                            $("#divBtnSave").hide();
                             $('.mngcomnt').attr("disabled", true);
                             $('.mngcomnt').css("cursor", "not-allowed");
                             $("#btnFinalSubmit").attr("disabled", true);
