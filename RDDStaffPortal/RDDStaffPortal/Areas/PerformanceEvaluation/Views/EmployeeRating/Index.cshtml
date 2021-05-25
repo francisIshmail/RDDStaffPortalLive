@@ -94,6 +94,10 @@
                                     <div class="col-md-1 pl-1" style="float:left">
                                         <button type="button" id="btnPdfUpload" class="btn btn-primary btnupld">Upload</button>
                                     </div>
+                                    <div class="col-md-1 pl-1" style="float:left">
+                                        @*<a href="#" id="btnDownloadSignedPdf">Download Signed PDF</a>*@
+                                        <button type="button" id="btnDownloadSignedPdf" class="btn btn-primary btnupld">Download Signed PDF</button>
+                                    </div>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-success" id="btnFinalSubmit" onclick="SaveFinalForm();">Final Submit</button>
@@ -113,6 +117,10 @@
     })
 </script>
 <script type="text/javascript">
+    $(document).on('click', '#btnDownloadSignedPdf', function () {
+        var Periods = $("#ddlSelectYear option:selected").val();
+        window.location.href = "/PerformanceEvaluation/EmployeeRating/DownloadPDF?Periods=" + Periods + "";
+    });
     function GetEmployeeDetails() {
         $.ajax({
             type: "GET",
@@ -305,7 +313,8 @@
                 if (SaveStatus == true || CloseAppraisalStatus == true) {
                     $('.dis').prop("disabled", true);
                     $('.dis').css("cursor", "not-allowed");
-                    $("#btnUpdateRating").remove();
+                    //$("#btnUpdateRating").remove();
+                    $("#divBtnSave").hide();
                     $("#btnFinalSubmit").prop("disabled", "disabled");
                     $('#btnFinalSubmit').css("cursor", "not-allowed");
                     $('.empcomnt').prop("disabled", true);
@@ -338,12 +347,24 @@
                     $("#AttachmentUrl").css("cursor", "not-allowed");
                     $("#btnPdfUpload").attr("disabled", "disabled");
                     $("#btnPdfUpload").css("cursor", "not-allowed");
+                    $("#btnDownloadSignedPdf").removeAttr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "");                    
+                }
+                else if (CloseAppraisalStatus == true || SaveStatus != true) {
+                    $("#AttachmentUrl").attr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "not-allowed");
+                    $("#btnPdfUpload").attr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "not-allowed");
+                    $("#btnDownloadSignedPdf").attr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "not-allowed");
                 }
                 else {
                     $("#AttachmentUrl").removeAttr("disabled", "disabled");
                     $("#AttachmentUrl").css("cursor", "");
                     $("#btnPdfUpload").removeAttr("disabled", "disabled");
                     $("#btnPdfUpload").css("cursor", "");
+                    $("#btnDownloadSignedPdf").attr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "not-allowed");
                 }
                 $('.loader1').hide();
             }
@@ -690,7 +711,7 @@
                         if (SaveStatus == true) {
                             $('.dis').attr("disabled", true);
                             $('.dis').css("cursor", "not-allowed");
-                            $("#btnUpdateRating").remove();
+                            $("#divBtnSave").hide();
                         }
                         //else {
                         //    $('.dis').attr("disabled", false);
@@ -982,6 +1003,42 @@
                 //    $("#btnFinalSubmit").removeAttr("disabled", "disabled");
                 //    $('#btnFinalSubmit').css("cursor", "");
                 //}
+                if (CloseAppraisalStatus == true || SaveStatus != true) {
+                    $("#AttachmentUrl").attr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "not-allowed");
+                    $("#btnPdfUpload").attr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "not-allowed");
+                }
+                else {
+                    $("#AttachmentUrl").removeAttr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "");
+                    $("#btnPdfUpload").removeAttr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "");
+                }
+                if (data.Table11[0].FileCount > 0) {
+                    $("#AttachmentUrl").attr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "not-allowed");
+                    $("#btnPdfUpload").attr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "not-allowed");
+                    $("#btnDownloadSignedPdf").removeAttr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "");
+                }
+                else if (CloseAppraisalStatus == true || SaveStatus != true) {
+                    $("#AttachmentUrl").attr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "not-allowed");
+                    $("#btnPdfUpload").attr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "not-allowed");
+                    $("#btnDownloadSignedPdf").attr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "not-allowed");
+                }
+                else{
+                    $("#AttachmentUrl").removeAttr("disabled", "disabled");
+                    $("#AttachmentUrl").css("cursor", "");
+                    $("#btnPdfUpload").removeAttr("disabled", "disabled");
+                    $("#btnPdfUpload").css("cursor", "");
+                    $("#btnDownloadSignedPdf").attr("disabled", "disabled");
+                    $("#btnDownloadSignedPdf").css("cursor", "not-allowed");
+                }
                 $('.loader1').hide();
             }
         });

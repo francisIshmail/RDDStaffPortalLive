@@ -278,6 +278,23 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             return Json(t, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DownloadPDF(string Periods)
+        {            
+            try
+            {
+                string LoginName = User.Identity.Name;
+                DataSet ds;
+                ds = rDD_EmpRating_TemplateDb.DownloadPDF(Periods, LoginName);
+                string AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"].ToString();                
+                string PDFname = Path.GetFileName(AttachmentPath);
+                return File(AttachmentPath, "application/pdf", PDFname);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public ActionResult GeneratePDF(string UrlId)
         {
             string PDFname = "";

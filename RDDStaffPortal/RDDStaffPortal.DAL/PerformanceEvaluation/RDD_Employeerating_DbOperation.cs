@@ -332,6 +332,26 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             return ds;
         }
 
+        public DataSet DownloadPDF(string Periods,string LoginName)
+        {
+            DataSet ds;
+            try
+            {
+                SqlParameter[] prm =
+                {
+                    new SqlParameter("Type","DownloadPDF"),
+                    new SqlParameter("Periods",Periods),
+                    new SqlParameter("LoginName",LoginName)
+                };
+                ds = Com.ExecuteDataSet("RDD_GetEmployeeDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, prm);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
+
         public DataSet GeneratePDF(string UrlId)
         {
             DataSet ds = null;
