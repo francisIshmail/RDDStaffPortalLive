@@ -378,7 +378,7 @@
         var Currow = $(this).closest("tr");
         $("#txtCountry").val(Currow.find('td:eq(12)').html());
         $("#txtSlpName").val(Currow.find('td:eq(11)').html());
-        $("#hdndraftSORkey").val(Currow.find('td:eq(2)').html());
+        $("#hdndraftSORkey").val(Currow.find('td:eq(1)').html());
         var CurMonth = d.getMonth() + 1;
         var curdate = d.getDate();
         if (curdate < 10) {
