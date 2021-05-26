@@ -401,6 +401,7 @@
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\Calendarplanner.js" />
     <Content Include="Scripts\Application\MainDashBoard.js" />
+    <Content Include="Scripts\Application\MainDashBoard_V1.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
     <Content Include="Content\atlantis.css" />
     <Content Include="Content\atlantis.min.css" />
@@ -887,6 +888,7 @@
     <Content Include="Areas\SORCodeGenerator\Views\web.config" />
     <Content Include="Areas\SORCodeGenerator\Views\RDD_SORCodeGenerator\Index.cshtml" />
     <Content Include="Areas\Reports\Views\VendorReports\Index.cshtml" />
+    <Content Include="App_Code\RDD_DashBoardMain_V1.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -1073,6 +1075,8 @@
     <Content Include="Views\Dashboard\GetRightSideTask.cshtml" />
     <Content Include="Views\Dashboard\AllNotification.cshtml" />
     <Content Include="VendorReportExcel\BasicTable.xlsx" />
+    <Content Include="Views\Dashboard\IndexNew.cshtml" />
+    <Content Include="Views\Account\GetDashBoardView_V1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

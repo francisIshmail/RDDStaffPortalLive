@@ -79,9 +79,9 @@
     top: -18px;
     width: 140px;">
                                 <div class="form-group">
-                                    <label for="email2" class="width100px"></label>
-                                    <button class="excel-btn" title="Excel Download" id="btnApply"><i class="fas fa-file-excel"></i></button>
-                                   &nbsp;
+                                    @*<label for="email2" class="width100px"></label>*@
+                                    <button class="btn btn-info" title="Excel Download" id="btnApply">Excel Download</button>
+                                 
                                     <button class="btn btn-success" title="Refresh" id="btnRefresh">Refresh WeeklyGP</button>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
         });
         $("#Country1").hide();
         $("#BU").on("change", function () {
-            if ($(this).val() == 'EPSON') {
+            if ($(this).val() == 'EPSON') {//|| $(this).val()=='MS OEM'
                 $("#Country1").show();
             } else {
                 $("#Country1").hide();
@@ -189,7 +189,7 @@
             if ($("#BU").val().toUpperCase() == 'CANON' || $("#BU").val().toUpperCase() == 'HIKVISION') {
                 window.location = '/GetVendorReport?BU=' + $("#BU").val() + '&FromDate=' + GetSqlDateformat($("[id$=txtFrmDate]").val()) + '&ToDate=' + GetSqlDateformat($("[id$=txtToDate]").val()) + '&country_code=""';
                 $(".loader1").hide();
-            } else if ($("#BU").val().toUpperCase() == 'APC' || $("#BU").val().toUpperCase() == 'LOGITECH' || $("#BU").val().toUpperCase() == 'EPSON') {
+            } else if ($("#BU").val().toUpperCase() == 'MS OEM' || $("#BU").val().toUpperCase() == 'APC' || $("#BU").val().toUpperCase() == 'LOGITECH' || $("#BU").val().toUpperCase() == 'EPSON') {
                 $.ajax({
                     //async: false,
                    // cache: false,

@@ -358,13 +358,20 @@ function Get_DocumentApprove_List() {
     var cardName = '';
     if ($("#cbCARDCODE").val() != '' && $("#cbCARDCODE").val() != 'All')
         cardName = $("#cbCARDCODE option:selected").text();
-
+    debugger
     if ($("#txtApprover").val() != '')
         value1 = value1 + " And APPROVER=$" + $("#txtApprover").val()+"$";
-
-    if ($("#cbStatus").val() != '' && $("#cbStatus").val() !='-- Select --')
-        value1 = value1 + " And APPROVAL_DECISION=$" + $("#cbStatus").val() + "$";
     var Objtype = $("input[name='ApprovalStatus']:checked").attr('id');
+    if ($("#cbStatus").val() != '' && $("#cbStatus").val() != '-- Select --') {
+        if (Objtype == 18 && ($("#cbStatus").val() == 'RC' || $("#cbStatus").val() == 'P') ) {
+            value1 = value1 + " And T1.ApprovalStatus=$" + $("#cbStatus option:selected").text() + "$";
+        } else{
+            value1 = value1 + " And APPROVAL_DECISION=$" + $("#cbStatus").val() + "$";
+        }
+            
+    }
+       
+   
 
     //GetSqlDateformat($("[id$=txtChkDate2]").val());, ,APPROVAL_DECISION
     var DBName = 'All';
