@@ -482,7 +482,12 @@
         });
     });
 
-    $(document).on('click', '#btnPdfUpload', function () {
+    $(document).on('click', '#btnPdfUpload', function () {        
+        var valrrr = $("#AttachmentUrl[type='hidden']").val();       
+        if (valrrr == "") {
+            RedDotAlert_Error("Please upload signed pdf");
+            return false;
+        }
         var rDD_AppraisalPdfUpload = {
             AttachmentUrl: $("#AttachmentUrl[type='hidden']").val(),
             EmployeeId: $.trim($("#hdnEmployeeId").val()),
