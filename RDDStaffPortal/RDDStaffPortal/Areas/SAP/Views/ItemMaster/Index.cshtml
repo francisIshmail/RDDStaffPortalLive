@@ -1,0 +1,436 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+    <div class="main-panel">
+        <div class="container">
+            <div class="page-inner">
+                <div class="page-header">
+                    <div class="col-md-9 padd-0">
+                        <h4 class="page-title">SAP Part Number</h4>
+                    </div>
+                </div>
+
+
+                <div class="rowmin">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+
+                            <div class="card-body">
+                                <div class="loader1"></div>
+                                <div class="row">
+                                    <div class="col-md-5 col-lg-5">
+                                        <div class="panel padd-10 mar-t10 panel-red-border">
+                                            <div class="row rowmin text-center mar-b15">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <button id="btnConnectToSAP" class="btn btn-primary btn-sm"><i class="fas fa-database"></i> Click! Connect to SAP</button>
+                                                </div>
+                                            </div>
+                                            <div class="row  text-center">
+                                                <div class="col-md-12 col-lg-12" >
+                                                    <span id="LblMsg"> </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="row checkboxsap">
+                                                <div class="form-check form-check-inline  text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPAECheck">
+                                                        <label class="custom-control-label" for="SAPAECheck">AE</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPUGCheck">
+                                                        <label class="custom-control-label" for="SAPUGCheck">UG</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPTZCheck">
+                                                        <label class="custom-control-label" for="SAPTZCheck">TZ</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPKECheck">
+                                                        <label class="custom-control-label" for="SAPKECheck">KE</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPZMCheck">
+                                                        <label class="custom-control-label" for="SAPZMCheck">ZM</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPMLCheck">
+                                                        <label class="custom-control-label" for="SAPMLCheck">MA</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="SAPTRICheck">
+                                                        <label class="custom-control-label" for="SAPTRICheck">TRI</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-7 col-lg-7 smform-section">
+                                        <div class="panel padd-10 mar-t10 panel-red-border">
+                                            <div class="sub-panel-heading"></div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Manufacturer" class="col-md-5 col-form-label p-0">Manufacturer <span class="padd-l5 padd-r5"></span> :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control form-control-sm" id="cbManufacturer">
+                                                                        <option>--Select--</option>
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-5 col-form-label p-0">BU <span class="padd-l5 padd-r5"></span> :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control form-control-sm" id="cbBU">
+                                                                        <option>--Select BU--</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-7"><label for="BULable" class="col-md-1 col-form-label p-0">Code : DELL, BU : DELL CONSUMER</label></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-5 col-form-label p-0">Product Category <span class="padd-l5 padd-r5"></span> [Based on BU] :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control form-control-sm" id="cbPC">
+                                                                        <option>--Select--</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-7"><button id="btnAddPC" class="btn btn-secondary add-new-btn" data-toggle="modal" > <span class="btn-label"> <i class="fa fa-plus"></i> </span> Add New </button></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-5 col-form-label p-0">Product Line <span class="padd-l5 padd-r5"></span> [Based on Product Category] :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control form-control-sm" id="cbPL">
+                                                                        <option>--Select--</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-7"><button id="btnAddPL" class="btn btn-secondary add-new-btn" data-toggle="modal" data-target="#AddNewPopup"> <span class="btn-label"> <i class="fa fa-plus"></i> </span> Add New </button></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-5 col-form-label p-0">Product Group <span class="padd-l5 padd-r5"></span> [Based on BU] :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <select class="form-control form-control-sm" id="cbPG">
+                                                                        <option>--Select--</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-7"><button id="btnAddPG" class="btn btn-secondary add-new-btn" data-toggle="modal" data-target="#AddNewPopup"><span class="btn-label"><i class="fa fa-plus"></i> </span> Add New </button></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Manufacturer" class="col-md-5 col-form-label p-0">Item Code :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control form-control-sm" id="txItemCode">
+                                                                </div>
+                                                                <div class="col-md-2"><label for="Database" class="col-form-label p-0">Max 20 Chrs</label></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Manufacturer" class="col-md-5 col-form-label p-0">Item Description :</label>
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <textarea class="form-control" id="txDescr" rows="3"> </textarea>
+                                                                </div>
+                                                                <div class="col-md-2"><label for="Database" class="col-form-label p-0">Max 250 Chrs</label></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-1 col-form-label p-0">Length :</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control form-control-sm" id="txLength" placeholder="in CM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-1 col-form-label p-0">Width :</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control form-control-sm" id="txWidth" placeholder="in CM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-1 col-form-label p-0">Height :</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control form-control-sm" id="txHeight" placeholder="in CM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group form-inline">
+                                                        <label for="Database" class="col-md-1 col-form-label p-0">Weight :</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control form-control-sm" id="txWeight" placeholder="in KG">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="sub-panel-heading mar-t15">Select Databases</div>
+                                            <div class="row">
+                                                <div class="col-md-9 col-lg-9">
+                                                    <div class="row checkboxsap">
+                                                        <div class="form-check form-check-inline">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_AE">
+                                                                <label class="custom-control-label" for="chkDB_AE">AE</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_UG">
+                                                                <label class="custom-control-label" for="chkDB_UG">UG</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_TZ">
+                                                                <label class="custom-control-label" for="chkDB_TZ">TZ</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_KE">
+                                                                <label class="custom-control-label" for="chkDB_KE">KE</label>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_ZM">
+                                                                <label class="custom-control-label" for="chkDB_ZM">ZM</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_ML">
+                                                                <label class="custom-control-label" for="chkDB_ML">MA</label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="chkDB_TRI">
+                                                                <label class="custom-control-label" for="chkDB_TRI">TRI</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1">
+                                                    <button id="btnAddItem" class="btn btn-primary btn-sm">Add Item to selected DBs</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                @*<button class="btn btn-info btn-sm ">Save</button>*@
+                                <button id ="btnCancel" class="btn btn-danger btn-sm ">Clear Controls</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="AddNewPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+                        <button id= "btnPopCross" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body padd-b0">
+                        <div class="row font-11px">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-3 col-form-label p-0">Value :</label>
+                                    <div class="col-md-7 p-0">
+                                        <textarea class="form-control" id="txtPopValue" rows="3"> </textarea>
+                                    </div>
+                                    <div class="col-md-2"><label for="Database" class="col-form-label p-0">Max 250 Chrs</label></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group form-inline">
+                                    <label for="Database" class="col-md-3 col-form-label p-0">Description :</label>
+                                    <div class="col-md-7 p-0">
+                                        <textarea class="form-control" id="txtPopDescr" rows="3"> </textarea>
+                                    </div>
+                                    <div class="col-md-2"><label for="Database" class="col-form-label p-0">Max 250 Chrs</label></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnPopSave" class="btn btn-info btn-sm">Save</button>
+                        <button id="btnPopCancel" class="btn btn-danger btn-sm">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
+        <script src="~/Scripts/RedDotUtility.js"></script>
+        <script src="~/Scripts/Application/ItemMaster.js" type="text/javascript"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                var counter = 0;
+
+                $("#AddOriginatorRow").on("click", function () {
+                    var newRow = $("#OriginatorRow");
+                    var cols = "";
+                    cols += '<div class="reddotTableRow odd-even-row">';
+                    cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+                    cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+                    cols += ' <div class="reddotTableCell">';
+                    cols += ' <div>';
+                    cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+                    cols += ' </div>';
+                    cols += ' </div>';
+                    cols += ' </div>';
+                    newRow.append(cols);
+                    $("table.order-list").append(newRow);
+                    counter++;
+                });
+
+
+
+                $("#OriginatorRow").on("click", ".ibtnDel", function (event) {
+                    $(this).closest(".reddotTableRow").remove();
+                    counter -= 1
+                });
+
+
+            });
+        </script>
+
+        <script>
+
+            $(document).ready(function () {
+                var counter = 0;
+
+                $("#AddApproverRow").on("click", function () {
+                    var newRow = $("#ApproverRow");
+                    var cols = "";
+                    cols += '<div class="reddotTableRow odd-even-row">';
+                    cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+                    cols += ' <div class="reddotTableCell"> <div> <label class="colorinput"> <input name="color" type="checkbox" value="primary" class="colorinput-input"> <span class="colorinput-color bg-danger"></span> </label> </div> </div>';
+                    cols += ' <div class="reddotTableCell"> <div> <input type="text" class="form-control form-control-sm" id=""> </div> </div>';
+                    cols += ' <div class="reddotTableCell">';
+                    cols += ' <div>';
+                    cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger delete btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+                    cols += ' </div>';
+                    cols += ' </div>';
+                    cols += ' </div>';
+                    newRow.append(cols);
+                    $("table.order-list").append(newRow);
+                    counter++;
+                });
+
+
+
+                $("#ApproverRow").on("click", ".ibtnDel", function (event) {
+                    $(this).closest(".reddotTableRow").remove();
+                    counter -= 1
+                });
+
+
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('.scrollbar-inner').scrollbar();
+            });
+        </script>
+        <style>
+            .quick-scroll {
+                max-height: 270px;
+            }
+        </style>
