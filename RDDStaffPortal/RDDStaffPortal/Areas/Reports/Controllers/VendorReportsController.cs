@@ -84,6 +84,7 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
             var wb_1 = new XLWorkbook();
             var wb_2 = new XLWorkbook();
             var wb_3 = new XLWorkbook();
+            var wb_4 = new XLWorkbook();
             if (BU == "CANON")
             {
                 ds.Tables[0].TableName = "SALES";
@@ -499,6 +500,165 @@ namespace RDDStaffPortal.Areas.Reports.Controllers
                 return Json(new { data = FilesName }, JsonRequestBehavior.AllowGet);
 
 
+            }
+            else if(BU=="MS OEM")
+            {// MS – REDDOT – INV – KE - < YYYYMMDD>
+                ds.Tables[0].TableName = BU.Substring(0,2) + " - INV - KE - "  + Todate.ToString("yyyyMMdd") + "";
+                ds.Tables[1].TableName = BU.Substring(0,2) + " - INV - " + Todate.ToString("yyyyMMdd") + "";
+                ds.Tables[2].TableName = BU.Substring(0,2) + " - SAL - KE - " + Todate.ToString("yyyyMMdd") + "";
+                ds.Tables[3].TableName = BU.Substring(0,2) + " - SAL - " + Todate.ToString("yyyyMMdd") + "";
+
+                // Add all DataTables in the DataSet as a worksheets
+                wb_1.Worksheets.Add(dataSet.Tables[0]);
+                wb_2.Worksheets.Add(dataSet.Tables[1]);
+                wb_3.Worksheets.Add(dataSet.Tables[2]);
+                wb_4.Worksheets.Add(dataSet.Tables[3]);
+                var ws_1 = wb_1.Worksheet(1);
+                ws_1.Style.Fill.BackgroundColor = XLColor.White;
+                ws_1.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                ws_1.Style.Alignment.WrapText = true;
+                // ws_1.Row(1).Hide();
+                // ws_1.Row(1).InsertRowsAbove(1);
+
+                ws_1.AutoFilter.Clear();
+
+                var ws_2 = wb_2.Worksheet(1);
+                ws_2.Style.Fill.BackgroundColor = XLColor.White;
+                ws_2.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                ws_2.AutoFilter.Clear();
+                ws_2.SetAutoFilter(false);
+                // ws_2.Row(1).Hide();
+                ///ws_2.Row(1).Delete();
+
+
+
+
+                var ws_3 = wb_3.Worksheet(1);
+                ws_3.Style.Fill.BackgroundColor = XLColor.White;
+                ws_3.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                ws_3.AutoFilter.Clear();
+                ws_3.SetAutoFilter(false);
+                //ws_3.Row(1).Hide();
+                //ws_3.Row(1).Delete();
+
+
+                var ws_4 = wb_4.Worksheet(1);
+                ws_4.Style.Fill.BackgroundColor = XLColor.White;
+                ws_4.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                ws_4.AutoFilter.Clear();
+                ws_4.SetAutoFilter(false);
+
+                ws_1.AutoFilter.Clear();
+                ws_1.SetAutoFilter(false);
+                var totalRows = ws_1.RowsUsed().Count();
+                var totalRows1 = ws_2.RowsUsed().Count();
+
+                var totalRows2 = ws_3.RowsUsed().Count();
+                var totalRows3 = ws_4.RowsUsed().Count();
+                int i = 2;
+                ws_1.Style.Font.FontName = "Calibri";
+                ws_1.Style.Font.FontSize = 11;
+                ws_2.Style.Font.FontName = "Calibri";
+                ws_2.Style.Font.FontSize = 11;
+                ws_3.Style.Font.FontName = "Arial";
+                ws_3.Style.Font.FontSize = 8;
+                ws_4.Style.Font.FontName = "Arial";
+                ws_4.Style.Font.FontSize = 8;
+                // var TotalSum = ds.Tables[0].Select().Sum(w => (int)w["QTY"]);
+                while (totalRows >= i)
+                {
+                    ws_1.Cell(i, 4).DataType = XLDataType.DateTime;
+                    ws_1.Cell(i, 4).Style.DateFormat.Format = "yyyyMMdd";
+                    
+                    i++;
+                }
+                i = 2;
+                while (totalRows1 >= i)
+                {
+                    ws_2.Cell(i, 4).DataType = XLDataType.DateTime;
+                    ws_2.Cell(i, 4).Style.DateFormat.Format = "yyyyMMdd";
+                    i++;
+                }
+                i = 2;
+                while (totalRows2 >= i)
+                {
+                    ws_3.Cell(i, 2).DataType = XLDataType.DateTime;
+                    ws_3.Cell(i, 2).Style.DateFormat.Format = "yyyyMMdd";
+                    
+                    i++;
+                }
+                i = 2;
+                while (totalRows3 >= i)
+                {
+                    ws_4.Cell(i, 2).DataType = XLDataType.DateTime;
+                    ws_2.Cell(i, 2).Style.DateFormat.Format = "yyyyMMdd";
+                    
+                    i++;
+                }
+
+                ws_1.Range("A1:N1").Style.Fill.SetBackgroundColor(XLColor.White);
+                //ws_1.Range("A1:AP1").Style.Font.Bold.ToString();
+                ws_2.Range("A1:N1").Style.Fill.SetBackgroundColor(XLColor.White);
+                // ws_2.Range("A1:I1").Style.Font.Bold.ToString();
+                ws_1.Range("A1:N1").Style.Font.FontColor = XLColor.Bistre;
+
+
+                ws_2.Range("A1:N1").Style.Font.FontColor = XLColor.Bistre;
+
+                ws_1.Range("A1:N" + (totalRows + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws_1.Range("A1:N" + (totalRows + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
+
+                ws_1.Range("A" + (totalRows + 1) + ":N" + (totalRows + 1) + "").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws_1.Range("A" + (totalRows + 1) + ":N" + (totalRows + 1) + "").Style.Border.OutsideBorderColor = XLColor.Black;
+
+
+                ws_2.Range("A" + (totalRows1 + 1) + ":N" + (totalRows1 + 1) + "").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws_2.Range("A" + (totalRows1 + 1) + ":N" + (totalRows1 + 1) + "").Style.Border.OutsideBorderColor = XLColor.Black;
+
+                ws_2.Range("A1:N" + (totalRows1 + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws_2.Range("A1:N" + (totalRows1 + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
+
+
+                ws_3.Range("A1:R1").Style.Fill.SetBackgroundColor(XLColor.White);
+                //ws_1.Range("A1:AP1").Style.Font.Bold.ToString();
+                ws_4.Range("A1:R1").Style.Fill.SetBackgroundColor(XLColor.White);
+                // ws_2.Range("A1:I1").Style.Font.Bold.ToString();
+                ws_3.Range("A1:R1").Style.Font.FontColor = XLColor.Bistre;
+
+
+                ws_4.Range("A1:R1").Style.Font.FontColor = XLColor.Bistre;
+
+                ws_3.Range("A1:R" + (totalRows + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws_3.Range("A1:R" + (totalRows + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
+
+                ws_3.Range("A" + (totalRows + 1) + ":R" + (totalRows + 1) + "").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws_3.Range("A" + (totalRows + 1) + ":R" + (totalRows + 1) + "").Style.Border.OutsideBorderColor = XLColor.Black;
+
+
+                ws_4.Range("A" + (totalRows1 + 1) + ":R" + (totalRows1 + 1) + "").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws_4.Range("A" + (totalRows1 + 1) + ":R" + (totalRows1 + 1) + "").Style.Border.OutsideBorderColor = XLColor.Black;
+
+                ws_4.Range("A1:R" + (totalRows1 + 1) + "").Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws_4.Range("A1:R" + (totalRows1 + 1) + "").Style.Border.InsideBorderColor = XLColor.Black;
+
+                string strMappath = "~/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/";
+                if (!Directory.Exists(strMappath))
+                {
+                    Directory.CreateDirectory(System.IO.Path.Combine(Server.MapPath(strMappath)));
+                }
+                var file1 = Path.Combine(Server.MapPath(strMappath), BU.Substring(0, 2) + " - INV - KE - " + FromDate.ToString("yyyyMMdd")+ ".xlsx");
+                // wb_1.SaveAs(file1, FileFormat:= xlText);
+                wb_1.SaveAs(file1);
+                var file2 = Path.Combine(Server.MapPath(strMappath), BU.Substring(0, 2) + " - INV - " + FromDate.ToString("yyyyMMdd") +  ".xlsx");
+                wb_2.SaveAs(file2);
+                var file3 = Path.Combine(Server.MapPath(strMappath), BU.Substring(0, 2) + " - SAL - KE - " + FromDate.ToString("yyyyMMdd") + ".xlsx");
+                wb_3.SaveAs(file3);
+
+                var file4 = Path.Combine(Server.MapPath(strMappath), BU.Substring(0, 2) + " - SAL - " + FromDate.ToString("yyyyMMdd") + ".xlsx");
+                wb_4.SaveAs(file4);
+
+                var FilesName = "/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU.Substring(0, 2) + " - INV - KE - " + FromDate.ToString("yyyyMMdd") + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU.Substring(0, 2) + " - INV - " + FromDate.ToString("yyyyMMdd") + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU.Substring(0, 2) + " - SAL - KE - " + FromDate.ToString("yyyyMMdd") + ".xlsx$/excelFileUpload/VendorReportExcel/" + User.Identity.Name + "/" + BU.Substring(0, 2) + " - SAL - " + FromDate.ToString("yyyyMMdd") + ".xlsx";
+                return Json(new { data = FilesName }, JsonRequestBehavior.AllowGet);
             }
 
 

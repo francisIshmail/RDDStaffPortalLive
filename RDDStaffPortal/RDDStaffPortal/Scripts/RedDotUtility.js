@@ -589,6 +589,16 @@ function RdotdatefrmtRes1(dte) {
         return today;
     }
 }
+function RdotdatefrmtMonthYear(dte) {
+    if (dte !== undefined && dte !== null) {
+        var now = new Date(dte);
+        
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = RdotMMNames[month - 1] + "-" + now.getFullYear();
+        return today;
+    }
+}
 
 function RedDot_setdtpkdate(date1) {
     if (date1 !== undefined && date1 !== null && date1 !== "") {
@@ -1683,7 +1693,8 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
     });
 }
 
-function RedDot_DivTable_Header_Fill(Ids,data) {
+function RedDot_DivTable_Header_Fill(Ids, data) {
+    debugger
     if (data != null && data.length != 0) {
         var i = 0;
        

@@ -104,6 +104,24 @@ namespace RDDStaffPortal.DAL.InitialSetup
             }
             return _CardDash;
         }
+        public DataSet GetMainDash_V1(string username)
+        {
+            DataSet dsModules = new DataSet();
+            try
+            {
+
+                SqlParameter[] parm = { };
+                SqlParameter[] sqlpar = { new SqlParameter("@p_UserName", username) };
+                dsModules = Com.ExecuteDataSet("RDD_Dashboard_Main_V1", CommandType.StoredProcedure, sqlpar);
+            }
+            catch (Exception)
+            {
+
+                dsModules = null;
+            }
+
+            return dsModules;
+        }
         public DataSet GetMainDash(string username)
         {
             DataSet dsModules = new DataSet();

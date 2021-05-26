@@ -43,7 +43,7 @@ namespace RDDStaffPortal.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
-                var urlToRemove = Url.Action("Index", "Dashboard");
+                var urlToRemove = Url.Action("IndexNew", "Dashboard");
                 HttpResponse.RemoveOutputCacheItem(urlToRemove);
                 var response = accountService.Login(login.UserName, login.UserPassword);
                 if (response.Success)
@@ -68,7 +68,7 @@ namespace RDDStaffPortal.Controllers
                     if(!string.IsNullOrEmpty(ReturnUrl))
                         return Redirect(ReturnUrl);
                     else
-                        return RedirectToAction("Index", "Dashboard");
+                        return RedirectToAction("IndexNew", "Dashboard");
                 }
                 else
                 {
@@ -266,6 +266,19 @@ namespace RDDStaffPortal.Controllers
 
         //    }
             return PartialView(moduleDbOp.GetDashBoarMain(User.Identity.Name,"U"));
+        }
+
+
+        [ChildActionOnly]
+
+        public ActionResult GetDashBoardView_V1()
+        {
+            //    if (User.Identity.Name == "")
+            //    {
+            //        return RedirectToAction("/Login", "Account");
+
+            //    }
+            return PartialView(moduleDbOp.GetDashBoarMain(User.Identity.Name, "V1"));
         }
 
 
