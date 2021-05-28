@@ -376,38 +376,51 @@
         GetUserList();
         GetPdcSetupinfo();
         
-        var counter = 0;
-        var ColCount = "";    
-        if ($("#hdnFlag").val() == "Update") {
-            ColCount = $("#hdnRowNumber").val();
-        }
-        else {
-            ColCount = "1";
-        }
-        $("#addrow").on("click", function () {
-            var newRow = $("#AddCMRow");
-            var cols = "";
-            cols += '<div class="reddotTableRow odd-even-row addreason">';
-            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control Desc" id="Description"> </div> </div>';         
-
-            cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
-            cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
-            cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
-            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger dlt btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
-            cols += ' </div>';
-            cols += ' </div>';
-            cols += ' </div>';
-            newRow.append(cols);
-            $("table.order-list").append(newRow);
-            counter++;
-            ColCount++;
-        });
-        $("#AddCMRow").on("click", ".ibtnDel", function (event) {
-            $(this).closest(".reddotTableRow").remove();
-            counter -= 1
-        });
+        
     });
-    $(document).on('change', '.radioRate', function () {        var rowno = $(this).attr('rowno');        var Rate = $(this).attr('value');        $("#hdnDiv_" + rowno).val(Rate);        $(".rowACstatus").val(Rate);    });
+    $(document).on('click', '.tabCls', function () {
+        if ($(this).attr("tabNo") == "tab2") {
+            var counter = 0;
+            var ColCount = "";
+            if ($("#hdnFlag").val() == "Update") {
+                ColCount = $("#hdnRowNumber").val();
+                ColCount++;
+            }
+            else {
+                ColCount = "1";
+            }
+            $("#addrow").on("click", function () {
+                var newRow = $("#AddCMRow");
+                var cols = "";
+                cols += '<div class="reddotTableRow odd-even-row addreason">';
+                cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control Desc" id="Description"> </div> </div>';
+
+                cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
+                cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
+                cols += '<div class="reddotTableCell rowACstatus" style="display:none"></div>';
+                cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger dlt btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+                cols += ' </div>';
+                cols += ' </div>';
+                cols += ' </div>';
+                newRow.append(cols);
+                $("table.order-list").append(newRow);
+                counter++;
+                ColCount++;
+            });
+            $("#AddCMRow").on("click", ".ibtnDel", function (event) {
+                $(this).closest(".reddotTableRow").remove();
+                counter -= 1
+            });
+        }
+    });
+    $(document).on('change', '.radioRate', function () {
+        debugger
+        var rowno = $(this).attr('rowno');
+        var Rate = $(this).attr('value');
+        $("#hdnDiv_" + rowno).val(Rate);
+        $("#hdnDiv_" + rowno).find('.rowACstatus').html(Rate);
+    });
     
     $(document).on('click', '#BtnAddPDCSetUp', function () {
         $('.loader1').show();   
@@ -562,7 +575,13 @@
                 return false;
             }
             rowid = $(this).find(".rowids").html();
-            rating = $("#hdnDiv_" + rowid).val();            if (rating == "" || rating == undefined) {                ratingapply = "1";            }            else {                ratingapply = $("#hdnDiv_" + rowid).val();            }
+            rating = $("#hdnDiv_" + rowid).val();
+            if (rating == "" || rating == undefined) {
+                ratingapply = "1";
+            }
+            else {
+                ratingapply = $("#hdnDiv_" + rowid).val();
+            }
             var ChequeBouncereason = {
                 Reason: Description ,
                 AccountStatus: ratingapply
