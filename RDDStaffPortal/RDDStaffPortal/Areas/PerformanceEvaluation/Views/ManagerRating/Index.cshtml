@@ -139,7 +139,7 @@
                     $("#myTab").empty();
                     $("#secEmpRating").show();
                     var srno = 0;
-                    $.each(data.Table2, function (Index, Value) {
+                    $.each(data.Table1, function (Index, Value) {
                         var str1 = "";
                         str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                         $("#myTab").append(str1);
