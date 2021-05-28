@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.SAPbobsCOM">
-      <HintPath>..\..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
+      <HintPath>..\..\..\..\proj files\Interop.SAPbobsCOM.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
@@ -171,6 +171,8 @@
     <Compile Include="DataModels\Report\RDD_TrailBalance.cs" />
     <Compile Include="DataModels\SAP\RDD_CreditLimit.cs" />
     <Compile Include="DataModels\SAP\RDD_OSOR.cs" />
+    <Compile Include="DataModels\SAP\RDD_PDCConfigSetUp.cs" />
+    <Compile Include="DataModels\SAP\RDD_PDCEntry.cs" />
     <Compile Include="DataModels\SAP\RDD_SOR1.cs" />
     <Compile Include="DataModels\SORCodeGenerator\RDD_SORCodeGenerator.cs" />
     <Compile Include="DataModels\Voucher\RDD_PV.cs" />
@@ -216,6 +218,8 @@
     <Compile Include="SAP\ItemMaster_DBOperation.cs" />
     <Compile Include="Report\VendorReportDBOperation.cs" />
     <Compile Include="SAP\RDD_CreditLimit_DbOperation.cs" />
+    <Compile Include="SAP\RDD_PDCEntryDbOperation.cs" />
+    <Compile Include="SAP\RDD_PDC_ConfidSetUpDbOperation.cs" />
     <Compile Include="SAP\SalesOrder_DBOperation.cs" />
     <Compile Include="SAP\SAPCls.cs" />
     <Compile Include="SAP\SAP_ConnectToCompany.cs" />

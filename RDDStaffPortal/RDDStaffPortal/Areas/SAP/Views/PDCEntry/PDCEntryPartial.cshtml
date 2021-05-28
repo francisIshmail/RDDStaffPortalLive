@@ -1,0 +1,176 @@
+﻿<div class="page-header">
+
+
+    <div class="col-md-9 padd-0 row">
+
+        <div class="d-flex">
+            <h4 class="page-title pr-3">PDC Information</h4>
+            <a href="pdclist.html"><button class="btn btn-primary btn-round btn-xs">PDC List</button></a>
+        </div>
+    </div>
+    <div class="col-md-3 padd-0 pull-right text-right"><button class="btn btn-danger   btn-xs">Cancel</button> <button class="btn btn-success btn-xs">Save</button></div>
+
+</div>
+<div class="rowmin">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+
+
+                    <form role="form">
+                        <!-- <div class="panel panel-primary setup-content" id="step-1"> -->
+                        <div class="panel panel-primary  ">
+                            <div class="panel-heading" style="background-color: #4c4a4a;">
+                                <h3 class="panel-title m-1">Entry</h3>
+                            </div>
+                            <div class="panel-body">
+
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="col-md-12 ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Type :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <select class="form-control form-control-sm" id="smallSelect">
+                                                        <option value="PDC">PDC</option>
+                                                        <option value="BG">Bank Guarantee</option>
+                                                        <option value="SC">Security Cheque</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Database :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <select class="form-control form-control-sm" id="ddlDatabase">
+                                                        <option value="-1">--Select Database--</option>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Customer :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="txtCustomer" autocomplete="on">
+                                                    <input type="hidden" id="hdnCardcode" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Bank :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="txtBank" autocomplete="on">
+                                                    <input type="hidden" id="hdnBankcode" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Valid From Date :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm dis datepicker" id="PostingDate" placeholder="DD/MM/YYYY" name="datepicker">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Remarks :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <textarea class="form-control form-control-sm"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 p-2" style="
+																background: #f3dfd9;
+															">
+
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Reference No :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Currency :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Amount :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Cheque Date :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm dis datepicker" id="PostingDate" placeholder="DD/MM/YYYY" name="datepicker">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12  ">
+                                            <div class="form-group form-inline">
+                                                <label for="Database" class="col-md-5 col-form-label p-0">Created By :</label>
+                                                <div class="col-md-7 p-0">
+                                                    <input type="text" class="form-control form-control-sm" id="txtCreatedBy">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script type="text/javascript">
+   
+</script>*@

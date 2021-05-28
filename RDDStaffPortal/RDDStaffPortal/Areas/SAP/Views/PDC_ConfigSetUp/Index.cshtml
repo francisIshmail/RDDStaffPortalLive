@@ -1,0 +1,644 @@
+﻿@model RDDStaffPortal.DAL.DataModels.SAP.RDD_PDCConfigSetUp
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<input type="hidden" id="hdnFlag"/>
+<input type="hidden" id="hdnRowNumber" />
+<style>
+    .dlt {
+      
+        margin-top: 6px;
+        margin-left: 19px;
+    
+    }
+    .editable{
+        padding-left:17px !important;
+    }
+    .card .card-action {
+        
+        background: none !important;
+        border-top: none !important;
+        
+    }
+    .form-check-inline .form-check-input {
+        position: static;
+        margin-top: -8px !important;
+        margin-right: .3125rem;
+        margin-left: 0;
+    }
+</style>
+<input type="hidden" id="hdnConfigId"/>
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                
+
+                <div class="col-md-9 padd-0">
+                    <h4 class="page-title">PDC Settings</h4>
+                </div>
+
+
+            </div>
+            <div class="rowmin">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="loader1"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0 active show tabCls" id="pills-General-tab" tabNo="tab1" data-toggle="pill" href="#tab-General" role="tab" aria-controls="pills-General" aria-selected="false">General Setup</a>
+                                        </li>
+                                        <li class="nav-item submenu">
+                                            <a class="nav-link mar-0 tabCls" id="pills-EducationalProfessionalInfo-tab" tabNo="tab2" data-toggle="pill" href="#tab-EducationalProfessionalInfo" role="tab" aria-controls="pills-EducationalProfessionalInfo" aria-selected="false">Cheque Bounce Reasons</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab-content mt-2 mb-3" id="pills-General">
+                                <div class="tab-pane fade active show" id="tab-General" role="tabpanel" aria-labelledby="tab-General">
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-10 padd-l0">
+                                            <div class="row">
+                                                <div class="card-body alerts-section">
+                                                    <div class="odd-even-row">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 col-md-10">
+                                                                <div class="notif-icon btn-primary icon-wd"> <i class="flaticon-settings"></i> </div>
+                                                                <div class="notif-content">
+                                                                    <span class="block">Maximum allowable days from today on PDC</span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-1 col-md-2 text-right">
+                                                                <div class="editable">
+                                                                    <input type="text" class="form-control form-control-sm" id="txtMaxAllowableday">
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="odd-even-row">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 col-md-10">
+                                                                <div class="notif-icon btn-primary icon-wd"> <i class="flaticon-settings"></i> </div>
+                                                                <div class="notif-content">
+                                                                    <span class="block">Allow SOR in case of minimum tolerance level set for OS Amt </span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-1 col-md-2 text-right">
+                                                                <div class="editable">
+                                                                    <input type="text" class="form-control form-control-sm" id="txtOSAmt">
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="odd-even-row">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 col-md-10">
+                                                                <div class="notif-icon btn-primary icon-wd"> <i class="flaticon-settings"></i> </div>
+                                                                <div class="notif-content">
+                                                                    <span class="block">No. of Days to wait for original cheque to receive </span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-1 col-md-2 text-right">
+                                                                <div class="editable">
+                                                                    <input type="text" class="form-control form-control-sm" id="txtDaysTowait">
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="odd-even-row">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 col-md-9">
+                                                                <div class="notif-icon btn-primary icon-wd"> <i class="flaticon-settings"></i> </div>
+                                                                <div class="notif-content">
+                                                                    <span class="block">Authorise User For Bank Guarantee </span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-1 col-md-3 text-left">
+                                                                <div class="editable">
+                                                                    <select id="ddlBankUserName" class="multiselect-ui form-control" multiple="multiple">
+                                                                        <option value="-1">---Select---</option>
+                                                                    </select>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="odd-even-row">
+                                                        <div class="row">
+                                                            <div class="col-sm-11 col-md-9">
+                                                                <div class="notif-icon btn-primary icon-wd"> <i class="flaticon-settings"></i> </div>
+                                                                <div class="notif-content">
+                                                                    <span class="block">Authorise User For Security Cheque </span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-1 col-md-3 text-left">
+                                                                <div class="editable">
+                                                                    <select id="ddlSecurityChqUserName" class="multiselect-ui form-control" multiple="multiple">
+                                                                        <option value="-1">---Select---</option>
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-action">
+                                                        <button class="btn btn-success" id="BtnAddPDCSetUp">Submit</button>
+                                                        <button class="btn btn-danger" id="BtnCancelPDCSetUp">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane fade" id="tab-EducationalProfessionalInfo" role="tabpanel" aria-labelledby="tab-EducationalProfessionalInfo">
+                                    <div class="row">
+                                        <div class="col-12 text-right padd-r0 card-body pb-0 pt-0 "><button type="button" class="btn btn-success btn-sm mar-t8" id="addrow">Add</button></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="reddotTable card-body pb-0 pt-0 ">
+                                            <div class="reddotTableBody">
+                                                <div class="reddotTableRow odd-even-row">
+
+                                                    <div class="reddotTableHead width50per text-left"><div>Description</div></div>
+                                                    <div class="reddotTableHead width20per text-left"><div>Account Status</div></div>
+
+                                                    <div class="reddotTableHead width1per"><div>Action</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="reddotTableBody" id="AddCMRow">
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-action">
+                                        <button class="btn btn-success" id="BtnAddPDCSetUpTab2">Submit</button>
+                                        <button class="btn btn-danger" id="BtnCancelPDCSetUpTab2">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+<script>
+   
+     function GetUserList() {
+         $.ajax({
+             type: "GET",
+             url: '@Url.Action("GetUserList", "PDC_ConfigSetUp")',            
+             dataType: "json",
+             success: function (data) {
+                 var d = data.Table;
+                 $("#ddlBankUserName").empty();
+                 $("#ddlBankUserName").append('<option value="-1">--Select--</option>');
+                 $.each(d, function (index, Value) {
+                     $("#ddlBankUserName").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
+                 });
+                 $("#ddlSecurityChqUserName").empty();
+                 $("#ddlSecurityChqUserName").append('<option value="-1">--Select--</option>');
+                 $.each(d, function (index, Value) {
+                     $("#ddlSecurityChqUserName").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
+                 });
+             }, complete: function () {
+
+                 $(".multiselect-ui").fSelect('reload');
+             }
+         });
+    }
+    function GetPdcSetupinfo() {
+         $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetPDCSetUpInfo", "PDC_ConfigSetUp")',            
+            dataType: "json",
+             success: function (data) {
+                 debugger
+                 var d = data.Table;
+                 var bankuser = "";
+                 var securityChquser = "";
+                 if (d.length > 0) {
+                     $("#BtnAddPDCSetUp").text("Update");
+                     $("#BtnAddPDCSetUp").attr("id", "BtnUpdatePDCSetUp");
+                     $("#hdnConfigId").val(data.Table[0].PDCConfigId);
+                     $("#txtMaxAllowableday").val(data.Table[0].PDCMaxAllowableDays);
+                     $("#txtOSAmt").val(data.Table[0].AllowSORforOSAmount);
+                     $("#txtDaysTowait").val(data.Table[0].DaysToWaitForOriginalPDC);
+                     bankuser = data.Table[0].AuthUsersForBankGuarantee;
+                     securityChquser = data.Table[0].AuthUsersForSecurityCheque;
+                     (function ($) {
+                         $(function () {
+                             window.fs_test = $('.multiselect-ui').fSelect();
+                             $(".multiselect-ui").hide();
+                         });
+                     })(jQuery);
+                     $.ajax({
+                         type: "GET",
+                         url: '@Url.Action("GetUserList", "PDC_ConfigSetUp")',
+                         dataType: "json",
+                         success: function (data) {
+                             $('#ddlBankUserName')
+                                 .find('option')
+                                 .remove()
+                                 .end()
+                             $('#ddlSecurityChqUserName')
+                                 .find('option')
+                                 .remove()
+                                 .end()
+                             var d = data.Table;
+                             $("#ddlBankUserName").empty();
+                             $("#ddlBankUserName").append('<option value="-1">--Select--</option>');
+                             $.each(d, function (index, Value) {
+                                 $("#ddlBankUserName").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
+                             });
+                             $("#ddlSecurityChqUserName").empty();
+                             $("#ddlSecurityChqUserName").append('<option value="-1">--Select--</option>');
+                             $.each(d, function (index, Value) {
+                                 $("#ddlSecurityChqUserName").append("<option value='" + Value.EmployeeId + "'>" + Value.FullName + "</option>");
+                             });
+                             var valarr1 = bankuser.split(';');
+                             (function ($) {
+                                 $(function () {
+                                     window.fs_test = $('.multiselect-ui').fSelect();
+                                     $("#ddlBankUserName .fs-wrap").find('.fs-dropdown').find('.g0').removeClass('selected');
+
+                                     i = 0, size = valarr1.length;
+                                     for (i; i < size; i++) {
+                                         $("#ddlBankUserName .fs-wrap").find('.fs-dropdown').find("[data-value='" + valarr1[i].trim() + "']").addClass('selected');
+                                     }
+                                     if (size > 2) {
+                                         $("#ddlBankUserName .fs-label").val(size - 1 + ' selected');
+                                     }
+                                     $("#ddlBankUserName").val(valarr1);
+                                     var valarr2 = securityChquser.split(';');
+
+                                     i = 0, size = valarr2.length;
+                                     for (i; i < size; i++) {
+                                         $("#ddlSecurityChqUserName .fs-wrap").find('.fs-dropdown').find("[data-value='" + valarr2[i].trim() + "']").addClass('selected');
+                                     }
+                                     if (size > 2) {
+                                         $("#ddlSecurityChqUserName  .fs-label").val(size - 1 + ' selected');
+                                     }
+                                     $("#ddlSecurityChqUserName ").val(valarr2);
+                                     $(".multiselect-ui").fSelect('reload');
+                                 });
+                             })(jQuery);
+
+                         }, complete: function () {
+
+                             $(".multiselect-ui").hide();
+                             $(".multiselect-ui").fSelect('reload');
+                         }
+                     });
+
+                 }
+                 if (data.Table1.length > 0) {
+
+                     var counter = 0;
+                     var ColCount = 1;
+                     $('.Desc').each(function () {
+                         $(this).val("");
+                         $(".addreason").remove();
+
+                     });
+                     $.each(data.Table1, function (index, value) {
+                         var newRow = $("#AddCMRow");
+                         var cols = "";
+                         cols += '<div class="reddotTableRow odd-even-row addreason">';
+                         cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" value="' + value.ChequeBounceReason + '" class="form-control Desc" id="Description"> </div> </div>';
+                         if (value.AccountStatus == 1) {
+                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                         }
+                         else {
+                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div><div class="form-check form-check-inline"><input rowno=' + ColCount + ' checked="checked" class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                         }
+                         cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
+                         cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
+                         cols += '<div class="reddotTableCell rowACstatus" style="display:none">' + value.AccountStatus + '</div>';
+                         cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger dlt btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+                         cols += ' </div>';
+                         cols += ' </div>';
+                         cols += ' </div>';
+                         newRow.append(cols);
+                         $("table.order-list").append(newRow);
+                         $("#hdnRowNumber").val(ColCount);
+                         
+                         counter++;
+                         ColCount++;
+
+                     });
+                     $("#hdnFlag").val("Update");                     
+                     $("#BtnAddPDCSetUpTab2").text("Update");
+                     $("#BtnAddPDCSetUpTab2").attr("id", "BtnUpdatePDCSetUpTab2");
+                 }
+                 $('.loader1').hide();
+             }
+        });
+    }
+     
+    $(document).ready(function () {
+        $('.loader1').show();
+        (function ($) {
+            $(function () {
+                window.fs_test = $('.multiselect-ui').fSelect();
+                $(".multiselect-ui").hide();
+            });
+        })(jQuery);
+        GetUserList();
+        GetPdcSetupinfo();
+        
+        var counter = 0;
+        var ColCount = "";    
+        if ($("#hdnFlag").val() == "Update") {
+            ColCount = $("#hdnRowNumber").val();
+        }
+        else {
+            ColCount = "1";
+        }
+        $("#addrow").on("click", function () {
+            var newRow = $("#AddCMRow");
+            var cols = "";
+            cols += '<div class="reddotTableRow odd-even-row addreason">';
+            cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control Desc" id="Description"> </div> </div>';         
+
+            cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+            cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
+            cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
+            cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger dlt btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
+            cols += ' </div>';
+            cols += ' </div>';
+            cols += ' </div>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
+            ColCount++;
+        });
+        $("#AddCMRow").on("click", ".ibtnDel", function (event) {
+            $(this).closest(".reddotTableRow").remove();
+            counter -= 1
+        });
+    });
+    $(document).on('change', '.radioRate', function () {        var rowno = $(this).attr('rowno');        var Rate = $(this).attr('value');        $("#hdnDiv_" + rowno).val(Rate);        $(".rowACstatus").val(Rate);    });
+    
+    $(document).on('click', '#BtnAddPDCSetUp', function () {
+        $('.loader1').show();   
+        if ($("#txtMaxAllowableday").val() == "") {
+            RedDotAlert_Error("Please enter PDC max allowable days");
+            return false;
+        }
+        if ($("#txtOSAmt").val() == "") {
+            RedDotAlert_Error("Please enter SOR for outstanding amount");
+            return false;
+        }
+        if ($("#txtDaysTowait").val() == "") {
+            RedDotAlert_Error("Please enter days to wait for originalPDC");
+            return false;
+        }
+        var d = $("#ddlBankUserName option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please select authorised user for bank guarantee ");
+            return false;
+        }
+        var d = $("#ddlSecurityChqUserName option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please select authorised user for security cheque ");
+            return false;
+        }
+        var AuthUsersForBankGuarantee = "";
+        var AuthUsersForSecurityCheque = "";
+        
+        $("#ddlBankUserName option:selected").each(function () {
+            AuthUsersForBankGuarantee += $(this).val() + ";";
+        });
+        $("#ddlSecurityChqUserName option:selected").each(function () {
+            AuthUsersForSecurityCheque += $(this).val() + ";";
+        });
+       
+        var rDD_PDC = {
+           
+            PDCMaxAllowableDays: $("#txtMaxAllowableday").val(),
+            AllowSORforOSAmount: $("#txtOSAmt").val(),
+            DaysToWaitForOriginalPDC: $("#txtDaysTowait").val(),            
+            AuthUsersForBankGuarantee: AuthUsersForBankGuarantee,
+            AuthUsersForSecurityCheque: AuthUsersForSecurityCheque,
+            
+        };
+        $.ajax({
+            type: "POST",
+            async: false,
+            cache: false,
+            url: "/SavePDCConfig",
+            // contentType: "application/json; charset=utf-8",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ rDD_PDC: rDD_PDC }),
+            success: function (data) {
+               
+                $('.loader1').hide();
+                if (data.Saveflag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                                    
+                    GetPdcSetupinfo();
+                }
+
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }
+            }
+        });
+    });
+    $(document).on('click', '#BtnUpdatePDCSetUp', function () {
+        $('.loader1').show();   
+        if ($("#txtMaxAllowableday").val() == "") {
+            RedDotAlert_Error("Please enter PDC max allowable days");
+            return false;
+        }
+        if ($("#txtOSAmt").val() == "") {
+            RedDotAlert_Error("Please enter SOR for outstanding amount");
+            return false;
+        }
+        if ($("#txtDaysTowait").val() == "") {
+            RedDotAlert_Error("Please enter days to wait for originalPDC");
+            return false;
+        }
+        var d = $("#ddlBankUserName option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please select authorised user for bank guarantee ");
+            return false;
+        }
+        var d = $("#ddlSecurityChqUserName option:selected").val();
+        if (d == "-1" || d == undefined) {
+            RedDotAlert_Error("Please select authorised user for security cheque ");
+            return false;
+        }
+        var AuthUsersForBankGuarantee = "";
+        var AuthUsersForSecurityCheque = "";
+
+        $("#ddlBankUserName option:selected").each(function () {
+            AuthUsersForBankGuarantee += $(this).val() + ";";
+        });
+        $("#ddlSecurityChqUserName option:selected").each(function () {
+            AuthUsersForSecurityCheque += $(this).val() + ";";
+        });
+
+        var rDD_PDC = {
+
+            PDCMaxAllowableDays: $("#txtMaxAllowableday").val(),
+            AllowSORforOSAmount: $("#txtOSAmt").val(),
+            DaysToWaitForOriginalPDC: $("#txtDaysTowait").val(),
+            AuthUsersForBankGuarantee: AuthUsersForBankGuarantee,
+            AuthUsersForSecurityCheque: AuthUsersForSecurityCheque,
+            PDCConfigId: $("#hdnConfigId").val(),
+            Editflag:true
+        };
+        $.ajax({
+            type: "POST",
+            async: false,
+            cache: false,
+            url: "/SavePDCConfig",
+            // contentType: "application/json; charset=utf-8",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ rDD_PDC: rDD_PDC }),
+            success: function (data) {
+
+                $('.loader1').hide();
+                if (data.Saveflag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                    GetPdcSetupinfo(); 
+                }           
+
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#BtnAddPDCSetUpTab2', function () {
+        $('.loader1').show();
+        var rDD_PDC = {
+            ChequeBounceReasonList:[]
+        };
+        var counter = 0;
+        var rating = "";
+        var ratingapply = "";
+        var rowid = "";
+        $(".addreason").each(function () {
+            debugger
+            var Description = $(this).find('.Desc').val();
+            if (Description == "" || Description== undefined || Description== null) {
+                RedDotAlert_Error("Please add at least one reason ");
+                counter++;
+                return false;
+            }
+            rowid = $(this).find(".rowids").html();
+            rating = $("#hdnDiv_" + rowid).val();            if (rating == "" || rating == undefined) {                ratingapply = "1";            }            else {                ratingapply = $("#hdnDiv_" + rowid).val();            }
+            var ChequeBouncereason = {
+                Reason: Description ,
+                AccountStatus: ratingapply
+            };
+            
+            rDD_PDC.ChequeBounceReasonList.push(ChequeBouncereason);
+        }); 
+       
+        if (counter <= 0) {
+            $.ajax({
+                type: "POST",
+                async: false,
+                cache: false,
+                url: "/SaveBounceReason",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({ rDD_PDC: rDD_PDC }),
+                success: function (data) {
+                    $('.loader1').hide();
+                    if (data.Saveflag == true) {
+                        RedDotAlert_Success(data.ErrorMsg);
+                        $("#hdnFlag").val("Update");
+                        GetPdcSetupinfo();
+                    }
+                    else {
+                        RedDotAlert_Error(data.ErrorMsg);
+                    }
+                }
+            });
+        }
+        
+    });
+    $(document).on('click', '#BtnUpdatePDCSetUpTab2', function () {
+        $('.loader1').show();
+        var rDD_PDC = {
+            Editflag:true,
+            ChequeBounceReasonList: []
+        };
+        var ratingapply = "";
+        var rowacstatus = "";
+        $(".addreason").each(function () {
+            debugger
+            var Description = $(this).find('.Desc').val();
+            rowacstatus = $(this).find('.rowACstatus').html();
+            if (rowacstatus == "" || rowacstatus== undefined)
+                ratingapply = "1";
+            else
+                ratingapply = rowacstatus;
+            var ChequeBouncereason = {
+                Reason: Description,
+                AccountStatus: ratingapply
+            };
+            rDD_PDC.ChequeBounceReasonList.push(ChequeBouncereason);
+        });
+        return false;
+        $.ajax({
+            type: "POST",
+            async: false,
+            cache: false,
+            url: "/SaveBounceReason",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ rDD_PDC: rDD_PDC }),
+            success: function (data) {
+                $('.loader1').hide();
+                if (data.Saveflag == true) {
+                    RedDotAlert_Success(data.ErrorMsg);
+                    GetPdcSetupinfo();
+                }
+                else {
+                    RedDotAlert_Error(data.ErrorMsg);
+                }
+            }
+        });
+    });
+
+</script>
+
+

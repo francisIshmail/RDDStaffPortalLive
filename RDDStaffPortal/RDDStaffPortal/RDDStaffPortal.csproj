@@ -234,9 +234,12 @@
     <Compile Include="Areas\SAP\Controllers\BPMappingController.cs" />
     <Compile Include="Areas\SAP\Controllers\CustomerMergingController.cs" />
     <Compile Include="Areas\SAP\Controllers\ItemMasterController.cs" />
+    <Compile Include="Areas\SAP\Controllers\PDCEntryController.cs" />
+    <Compile Include="Areas\SAP\Controllers\PDC_ConfigSetUpController.cs" />
     <Compile Include="Areas\SAP\Controllers\RDD_TempCreditLimitController.cs" />
     <Compile Include="Areas\SAP\Controllers\SalesOrderController.cs" />
     <Compile Include="Areas\SAP\Controllers\RDD_PVController.cs" />
+    <Compile Include="Areas\SAP\PDC_EntryController.cs" />
     <Compile Include="Areas\SAP\SAPAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Areas\SORCodeGenerator\Controllers\RDD_SORCodeGeneratorController.cs" />
@@ -892,6 +895,9 @@
     <Content Include="Areas\Reports\Views\VendorReports\Index.cshtml" />
     <Content Include="Areas\SAP\Views\ItemMaster\Index.cshtml" />
     <Content Include="Areas\SAP\Views\RDD_TempCreditLimit\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\PDC_ConfigSetUp\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\PDCEntry\Index.cshtml" />
+    <Content Include="Areas\SAP\Views\PDCEntry\PDCEntryPartial.cshtml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
