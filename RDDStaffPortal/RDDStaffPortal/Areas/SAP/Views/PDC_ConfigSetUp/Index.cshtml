@@ -374,9 +374,7 @@
             });
         })(jQuery);
         GetUserList();
-        GetPdcSetupinfo();
-        
-        
+        GetPdcSetupinfo();       
     });
     $(document).on('click', '.tabCls', function () {
         if ($(this).attr("tabNo") == "tab2") {
@@ -415,11 +413,13 @@
         }
     });
     $(document).on('change', '.radioRate', function () {
-        debugger
+        
         var rowno = $(this).attr('rowno');
         var Rate = $(this).attr('value');
         $("#hdnDiv_" + rowno).val(Rate);
-        $("#hdnDiv_" + rowno).find('.rowACstatus').html(Rate);
+        //alert($(this).closest('tr').find('.rowids').html());
+        //alert($('.addreason').find('.rowids').val());
+        $(this).parent().parent().parent().find('.rowACstatus').html(Rate);
     });
     
     $(document).on('click', '#BtnAddPDCSetUp', function () {
@@ -636,7 +636,6 @@
             };
             rDD_PDC.ChequeBounceReasonList.push(ChequeBouncereason);
         });
-        return false;
         $.ajax({
             type: "POST",
             async: false,
