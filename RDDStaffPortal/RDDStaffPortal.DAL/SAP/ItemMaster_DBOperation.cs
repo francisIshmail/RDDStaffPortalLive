@@ -262,7 +262,7 @@ namespace RDDStaffPortal.DAL.SAP
             }
         }
 
-        public DataSet Add_ItemToSAPDB(string DBList, string itmCode, string itmDesc, int mfrId, int itmGrpId, string itmGrpCode, string itmBU, string itmProductCategory, string itmPL, string itmProductGrp, double Lenght, double Width, double Height, double Weight)
+        public DataSet Add_ItemToSAPDB(string DBList, string itmCode, string itmDesc, int mfrId, int itmGrpId, string itmGrpCode, string itmBU, string itmProductCategory, string itmPL, string itmProductGrp, double Lenght, double Width, double Height, double Weight,string HSCode)
         {
             DataSet result_ds = new DataSet();
             DataTable t1 = new DataTable("table");
@@ -311,6 +311,7 @@ namespace RDDStaffPortal.DAL.SAP
                         oItem.UserFields.Fields.Item("U_Category").Value = itmProductCategory;   //this is product category
                         oItem.UserFields.Fields.Item("U_ProdLine").Value = itmPL;  //this is product Line
                         oItem.UserFields.Fields.Item("U_DashboardCategory").Value = itmProductGrp; //this is product Group
+                        oItem.UserFields.Fields.Item("U_HSCode").Value = HSCode; //For HS Code
 
                         double _Lenght, _Width, _Height, _Weight;
                         _Lenght = Lenght / 100;

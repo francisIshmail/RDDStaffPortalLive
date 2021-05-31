@@ -744,7 +744,7 @@
 								while (k < points.length && found_names.length > 0) {
 									var Monthsplit = points[k].split('-');
 									var found_names1 = $.grep(found_names, function (v) {
-										return v.quoteMonthMMM === Monthsplit[0] && v.QuoteYear == Monthsplit[1];
+										return v.quoteMonthMMM.toUpperCase() === Monthsplit[0].toUpperCase() && v.QuoteYear == Monthsplit[1];
 									});
 
 									if (found_names1.length > 0) {

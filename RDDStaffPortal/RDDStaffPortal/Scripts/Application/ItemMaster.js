@@ -447,11 +447,12 @@ ItemMaster.prototype = {
                     return false;
                 }
 
-                var itmCode, itmDesc, mfrId, itmGrpId, itmGrpCode, itmBU, itmProductCategory, itmPL, itmProductGrp, Lenght, Width, Height, Weight;
+                var itmCode, itmDesc, mfrId, itmGrpId, itmGrpCode, itmBU, itmProductCategory, itmPL, itmProductGrp, Lenght, Width, Height, Weight,HSCode;
                 itmCode = $("#txItemCode").val();
                 itmDesc = $("#txDescr").val();
                 mfrId = $("[id$=cbManufacturer]").val();
                 itmGrpId = $("[id$=cbBU]").val();
+                HSCode = $("[id$=txHSCode]").val();
                 debugger;
                 var str = $("#cbBU option:selected").text()
                 var str_Pos = str.indexOf("[")+1;
@@ -479,7 +480,7 @@ ItemMaster.prototype = {
                         cache: false,
                         type: "POST",
                         url: "/SAP/ItemMaster/Add_ItemToSAPDB",
-                        data: JSON.stringify({ DBList: dbList, itmCode: itmCode, itmDesc: itmDesc, mfrId: mfrId, itmGrpId: itmGrpId, itmGrpCode: itmGrpCode, itmBU: itmBU, itmProductCategory: itmProductCategory, itmPL: itmPL, itmProductGrp: itmProductGrp, Lenght: Lenght, Width: Width, Height: Height, Weight: Weight}),
+                        data: JSON.stringify({ DBList: dbList, itmCode: itmCode, itmDesc: itmDesc, mfrId: mfrId, itmGrpId: itmGrpId, itmGrpCode: itmGrpCode, itmBU: itmBU, itmProductCategory: itmProductCategory, itmPL: itmPL, itmProductGrp: itmProductGrp, Lenght: Lenght, Width: Width, Height: Height, Weight: Weight, HSCode: HSCode}),
                         dataType: 'Json',
                         contentType: "Application/json",
                         success: function (value) {
@@ -519,6 +520,25 @@ ItemMaster.prototype = {
                 return false;
             }
         })
+
+        //HS Code validation
+        $("[id$=txHSCode]").on('blur', function () {           
+            var t = true;           
+            // before 4 char and  2 char exact
+            //8888.88 -abcd.ef  valid             
+            var testEmail = /^\w{4}\.\w{2}$|^\d{0,11}$/;// /[0-9a-zA-Z]{4}+.[0-9a-zA-Z]{2}/;
+            var t = $(this).val().match(testEmail)
+            if (t!==null) {
+                $(this).val(t[0]);
+                t = false;
+            }
+            else {
+                $(this).val('');
+                $(this).attr("placeholder", "Enter HS Code");
+                t = true;
+            }
+
+        })
     },
 
 }
@@ -532,6 +552,7 @@ function ClearControlAfterSave() {
     $("[id$=cbPG]").val('').trigger('change');
 
     $("[id$=txItemCode]").val('');
+    $("[id$ = txHSCode]").val('');
     $("[id$=txDescr]").val('');
     $("[id$=txLength]").val('');
     $("[id$=txWidth]").val('');
@@ -578,7 +599,8 @@ function Validate() {
             RedDotAlert_Warning("Erro ! Field BU left blank!!!.Make sure you select from the list, and retry");
             return false;
         }
-
+        
+       
         //if ($("#cbBU option:selected").text().indexOf("'") >= '0') {
         //    RedDotAlert_Error("Invalid Character occurs ' in field Manufacturer , Char( ' ) not supported.");
         //    return false;
@@ -614,7 +636,21 @@ function Validate() {
             RedDotAlert_Error("Invalid Character occurs ' in field  Product Group, Char( ' ) not supported.");
             return false;
         }
+        var str2 = "";
+        try {
+            var str = $("#cbBU option:selected").text()
+            var str_Pos = str.indexOf("[") + 1;
+            var lst_Pos = str.indexOf("]");
+           
+             str2 = str.substring(0, str_Pos - 2);
+        } catch (e) {
 
+        }
+       
+        if ($.inArray(str2, ['MS FG', 'MS OEM', 'MS CSP']) == -1 && $("[id$=HSCode]").val() == '') {
+            RedDotAlert_Warning("Erro ! Please enter HS Code, and retry");
+            return false;
+        }
         if ($("[id$=txLength]").val() == '') {
             RedDotAlert_Error("Error ! Please enter Length, and retry");
             return false;

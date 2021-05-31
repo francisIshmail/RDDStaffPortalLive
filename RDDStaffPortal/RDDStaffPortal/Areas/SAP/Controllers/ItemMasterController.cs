@@ -106,13 +106,13 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             }
         }
 
-        public ActionResult Add_ItemToSAPDB(string DBList,string itmCode,string itmDesc,int mfrId,int itmGrpId,string itmGrpCode,string itmBU,string itmProductCategory,string itmPL,string itmProductGrp,double Lenght,double Width,double Height,double Weight)
+        public ActionResult Add_ItemToSAPDB(string DBList,string itmCode,string itmDesc,int mfrId,int itmGrpId,string itmGrpCode,string itmBU,string itmProductCategory,string itmPL,string itmProductGrp,double Lenght,double Width,double Height,double Weight,string HSCode)
         {
             ContentResult retVal = null;
             DataSet DS;
             try
             {
-                DS = ItemMaster_DBOperation.Add_ItemToSAPDB(DBList,itmCode,itmDesc,mfrId,itmGrpId,itmGrpCode,itmBU,itmProductCategory,itmPL,itmProductGrp,Lenght,Width,Height,Weight);
+              DS = ItemMaster_DBOperation.Add_ItemToSAPDB(DBList,itmCode,itmDesc,mfrId,itmGrpId,itmGrpCode,itmBU,itmProductCategory,itmPL,itmProductGrp,Lenght,Width,Height,Weight,HSCode);
 
                 if (DS.Tables.Count > 0)
                 {
