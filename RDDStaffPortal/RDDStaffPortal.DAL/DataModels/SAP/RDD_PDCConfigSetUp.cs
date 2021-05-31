@@ -27,7 +27,7 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
     {
         public int ReasonId { get; set; }
         public string Reason { get; set; }
-        public int AccountStatus { get; set; }
+        public int BlockCustomerAccount { get; set; }
         
     }
 }

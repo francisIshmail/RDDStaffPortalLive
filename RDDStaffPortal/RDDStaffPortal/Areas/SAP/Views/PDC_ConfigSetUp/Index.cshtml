@@ -335,15 +335,15 @@
                          var cols = "";
                          cols += '<div class="reddotTableRow odd-even-row addreason">';
                          cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" value="' + value.ChequeBounceReason + '" class="form-control Desc" id="Description"> </div> </div>';
-                         if (value.AccountStatus == 1) {
-                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                         if (value.BlockCustomerAccount == 1) {
+                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="true"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="false"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
                          }
                          else {
-                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div><div class="form-check form-check-inline"><input rowno=' + ColCount + ' checked="checked" class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                             cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="true"><label class="form-check-label" for="inlineRadio1">Block</label></div><div class="form-check form-check-inline"><input rowno=' + ColCount + ' checked="checked" class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="false"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
                          }
                          cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
                          cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
-                         cols += '<div class="reddotTableCell rowACstatus" style="display:none">' + value.AccountStatus + '</div>';
+                         cols += '<div class="reddotTableCell rowACstatus" style="display:none">' + value.BlockCustomerAccount + '</div>';
                          cols += '<button type="button" title="" data-toggle="tooltip" class="btn btn-danger dlt btn-sm ibtnDel" data-original-title="Edit"> <i class="fas fa-trash"></i></button >';
                          cols += ' </div>';
                          cols += ' </div>';
@@ -393,7 +393,7 @@
                 cols += '<div class="reddotTableRow odd-even-row addreason">';
                 cols += ' <div class="reddotTableCell text-left"> <div> <input type="text" class="form-control Desc" id="Description"> </div> </div>';
 
-                cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="1"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="0"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
+                cols += '<div class="reddotTableCell text-left"><div class="form-check form-check-inline"><input class="form-check-input radioRate" checked="checked" rowno=' + ColCount + ' type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio1" value="true"><label class="form-check-label" for="inlineRadio1">Block</label></div ><div class="form-check form-check-inline"><input rowno=' + ColCount + ' class="form-check-input radioRate" type="radio" name="RatingApplicable_' + ColCount + '" id="inlineRadio2" value="false"><label class="form-check-label" for="inlineRadio2">Unblock</label></div></div>';
                 cols += '<div class="reddotTableCell" style="display:none"><input type="hidden" id="hdnDiv_' + ColCount + '"/></div>';
                 cols += '<div class="reddotTableCell rowids" style="display:none">' + ColCount + '</div>';
                 cols += '<div class="reddotTableCell rowACstatus" style="display:none"></div>';
@@ -577,14 +577,14 @@
             rowid = $(this).find(".rowids").html();
             rating = $("#hdnDiv_" + rowid).val();
             if (rating == "" || rating == undefined) {
-                ratingapply = "1";
+                ratingapply = true;
             }
             else {
                 ratingapply = $("#hdnDiv_" + rowid).val();
             }
             var ChequeBouncereason = {
                 Reason: Description ,
-                AccountStatus: ratingapply
+                BlockCustomerAccount: ratingapply
             };
             
             rDD_PDC.ChequeBounceReasonList.push(ChequeBouncereason);
@@ -620,19 +620,21 @@
             Editflag:true,
             ChequeBounceReasonList: []
         };
-        var ratingapply = "";
+        var ratingapply = true;
         var rowacstatus = "";
         $(".addreason").each(function () {
             debugger
             var Description = $(this).find('.Desc').val();
             rowacstatus = $(this).find('.rowACstatus').html();
-            if (rowacstatus == "" || rowacstatus== undefined)
-                ratingapply = "1";
-            else
-                ratingapply = rowacstatus;
+            if (rowacstatus == "" || rowacstatus == undefined)
+                ratingapply = true;
+            else if (rowacstatus == "true")
+                ratingapply = true;
+            else if (rowacstatus == "false")
+                ratingapply = false;
             var ChequeBouncereason = {
                 Reason: Description,
-                AccountStatus: ratingapply
+                BlockCustomerAccount: ratingapply
             };
             rDD_PDC.ChequeBounceReasonList.push(ChequeBouncereason);
         });

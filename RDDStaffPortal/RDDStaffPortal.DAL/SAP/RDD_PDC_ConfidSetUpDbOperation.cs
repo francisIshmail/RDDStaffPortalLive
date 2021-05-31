@@ -148,6 +148,7 @@ namespace RDDStaffPortal.DAL.SAP
                             {
                                 SqlParameter[] parm11 = {
                             new SqlParameter("@Reason",rDD_PDC.ChequeBounceReasonList[m].Reason),
+                            new SqlParameter("@BlockCustomerAccount",rDD_PDC.ChequeBounceReasonList[m].BlockCustomerAccount),
                             new SqlParameter("@CreatedBy",rDD_PDC.CreatedBy),
                             new SqlParameter("@LastUpdatedBy",rDD_PDC.LastUpdatedBy),
                             new SqlParameter("@Type","Insert"),
@@ -173,7 +174,7 @@ namespace RDDStaffPortal.DAL.SAP
                         {
                             SqlParameter[] parm = {
                             new SqlParameter("@Reason",rDD_PDC.ChequeBounceReasonList[m].Reason),
-                            new SqlParameter("@AccountStatus",rDD_PDC.ChequeBounceReasonList[m].AccountStatus),
+                            new SqlParameter("@BlockCustomerAccount",rDD_PDC.ChequeBounceReasonList[m].BlockCustomerAccount),
                             new SqlParameter("@CreatedBy",rDD_PDC.CreatedBy),
                             new SqlParameter("@LastUpdatedBy",rDD_PDC.LastUpdatedBy),
                             new SqlParameter("@Type",rDD_PDC.ActionType),
