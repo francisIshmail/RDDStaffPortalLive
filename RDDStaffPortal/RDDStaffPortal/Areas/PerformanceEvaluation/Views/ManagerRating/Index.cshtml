@@ -648,7 +648,7 @@
                 $("#secEmpRating").show();
                 $("#myTab").empty();
                 var srno = 0;
-                $.each(data.Table1, function (Index, Value) {
+                $.each(data.Table2, function (Index, Value) {
                     var str1 = "";
                     str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                     $("#myTab").append(str1);
@@ -660,13 +660,13 @@
                 var RatingNo = data.Table3[0].RatingNo;
                 $("#hdnRatingNo").val(RatingNo);
                 var str2 = "";
-                var QuestionCount = data.Table2.length;
+                var QuestionCount = data.Table.length;
                 var j = 1;
                 $("#divbtnFinalSubmit").empty();
                 $("#divbtnFinalSubmit").append('<button type="button" class="btn btn-success" id="btnFinalSubmit" onclick="SaveFinalForm();">Final Submit</button>');
                 $("#add-row tbody").empty();
                 while (j <= QuestionCount) {
-                    $.each(data.Table2, function (Index, Value) {
+                    $.each(data.Table, function (Index, Value) {
                         str2 += '<tr>';
                         str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '" value=""/> </td>';
                         str2 += '<td style="display:none;">' + Value.AppraisalTransId + '</td>';
