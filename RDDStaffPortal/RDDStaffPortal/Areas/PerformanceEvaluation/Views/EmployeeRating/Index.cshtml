@@ -391,12 +391,15 @@
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
                 }
+                $("#btnSaveRating").removeAttr("disabled", true);
+                $("#btnUpdateRating").removeAttr("disabled", true);
             }
         });
     }
 
     function SaveFinalForm() {
         //$('.loader1').show();
+        $("#btnFinalSubmit").attr("disabled", true);
         var EmployeeId = $.trim($("#hdnEmployeeId").val());
         var Year= $.trim($("#divYear").text());
         var Period = $.trim($("#divPeriod").text());
@@ -438,6 +441,7 @@
                 )
             }
             $('.loader1').hide();
+            $("#btnFinalSubmit").removeAttr("disabled", true);
         });
     }
         
@@ -482,12 +486,14 @@
         });
     });
 
-    $(document).on('click', '#btnPdfUpload', function () {        
+    $(document).on('click', '#btnPdfUpload', function () {    
+        $("#btnPdfUpload").attr("disabled", true);
         var valrrr = $("#AttachmentUrl[type='hidden']").val();       
         if (valrrr == "") {
             RedDotAlert_Error("Please upload signed pdf");
+            $("#btnPdfUpload").removeAttr("disabled", true);
             return false;
-        }
+        }           
         var rDD_AppraisalPdfUpload = {
             AttachmentUrl: $("#AttachmentUrl[type='hidden']").val(),
             EmployeeId: $.trim($("#hdnEmployeeId").val()),
@@ -513,6 +519,7 @@
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
                 }
+                $("#btnPdfUpload").removeAttr("disabled", true);
             }
         });
 
@@ -728,6 +735,7 @@
         });
     });
     $(document).on('click', '#btnSaveRating', function () {
+        $("#btnSaveRating").attr("disabled", true);
         var rDD_EmpAppraisal = {
             CategoryId: $.trim($("#hdnCategoryId").val()),
             EmployeeId: $.trim($("#hdnEmployeeId").val()),
@@ -763,6 +771,7 @@
 
     });
     $(document).on('click', '#btnUpdateRating', function () {
+        $("#btnUpdateRating").attr("disabled", true);
         var rDD_EmpAppraisal = {
             CategoryId: $.trim($("#hdnCategoryId").val()),
             EmployeeId: $.trim($("#hdnEmployeeId").val()),

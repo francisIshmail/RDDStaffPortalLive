@@ -61,13 +61,13 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             }
         }
 
-        public ActionResult GetEmployeeRating(int EmpId,string Qperiods)
+        public ActionResult GetEmployeeRating(int EmpId, string Qperiods)
         {
             ContentResult retVal = null;
-            DataSet ds;            
+            DataSet ds;
             try
             {
-                ds = rDD_MngRating_TemplateDb.GetEmployeeRating(EmpId,Qperiods);
+                ds = rDD_MngRating_TemplateDb.GetEmployeeRating(EmpId, Qperiods);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");
@@ -153,7 +153,7 @@ namespace RDDStaffPortal.Areas.PerformanceEvaluation.Controllers
             string LoginName = User.Identity.Name;
             try
             {
-                ds = rDD_MngRating_TemplateDb.GetManagerRatingViewOnClickUrl(UrlId,LoginName);
+                ds = rDD_MngRating_TemplateDb.GetManagerRatingViewOnClickUrl(UrlId, LoginName);
                 if (ds.Tables.Count > 0)
                 {
                     retVal = Content(JsonConvert.SerializeObject(ds), "application/json");

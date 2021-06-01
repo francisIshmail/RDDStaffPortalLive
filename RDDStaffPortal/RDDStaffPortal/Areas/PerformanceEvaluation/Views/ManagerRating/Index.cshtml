@@ -346,11 +346,14 @@
                 else {
                     RedDotAlert_Error(data[0].Responsemsg);
                 }
+                $("#btnSaveRating").removeAttr("disabled", true);
+                $("#btnUpdateRating").removeAttr("disabled", true);
             }
         });
     }
 
     function SaveFinalForm() {
+        $("#btnFinalSubmit").attr("disabled", true);
         //$('.loader1').show();
         var EmployeeId = $.trim($("#hdnEmployeeId").val());
         var Year = $.trim($("#divYear").text());
@@ -395,6 +398,7 @@
                 )
             }
             $('.loader1').hide();
+            $("#btnFinalSubmit").removeAttr("disabled", true);
         });
     }
     
@@ -485,28 +489,30 @@
             url: '@Url.Action("GetEmployeeRating", "ManagerRating")',
             data: { "EmpId": EmpId, "Qperiods": Qperiods },
             dataType: "json",
-            success: function (data) { 
+            success: function (data) {
+                console.log(data.retVal);
+                console.log(data.retVal1);
                 debugger         
                 var SelectedPriods = $("#ddlSelectYear").val();
                 var SplitPeriods = SelectedPriods.split("-");
                 var SplitPeriod = SplitPeriods[0];
                 var SplitYear = SplitPeriods[1];
                 var str = "";                
-                str += data.Table[0].EmployeeName;
-                str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table[0].DesigName + '</span>';
+                str += data.Table1[0].EmployeeName;
+                str += '<span class="badge badge-danger mb-1 ml-2">' + data.Table1[0].DesigName + '</span>';
                 $("#headEmpName").append(str);
                 $("#divDepartment").empty();
                 $("#divCountry").empty();
                 $("#divYear").empty();
                 $("#divPeriod").empty();
-                $("#divDepartment").append('<i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].DeptName);
-                $("#divCountry").append('<i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table[0].Country);
+                $("#divDepartment").append('<i class="fas fa-building mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].DeptName);
+                $("#divCountry").append('<i class="fa fa-flag mr-1" style="color:darkgray" aria-hidden="true"></i>' + data.Table1[0].Country);
                 $("#divYear").append('<i class="fa fa-calendar-alt mr-1" style="color:darkgray" aria-hidden="true"></i>' + SplitYear);
                 $("#divPeriod").append('<i class="fas fa-calendar-minus mr-1" style="color:darkgray" aria-hidden="true"></i>' + SplitPeriod);
                 $("#secEmpRating").show();
                 $("#myTab").empty();
                 var srno = 0;
-                $.each(data.Table1, function (Index, Value) {
+                $.each(data.Table2, function (Index, Value) {
                     var str1 = "";
                     str1 += '<li class="nav-item waves-effect waves-light"><a class="nav-link selectCategory" id="home-' + Value.CategoryName + '" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false" slno="' + srno + '" data="' + Value.CategoryId + '">' + Value.CategoryName + '</a></li >';
                     $("#myTab").append(str1);
@@ -518,13 +524,13 @@
                 var RatingNo = data.Table3[0].RatingNo;
                 $("#hdnRatingNo").val(RatingNo);
                 var str2 = "";
-                var QuestionCount = data.Table2.length;
+                var QuestionCount = data.Table.length;
                 var j = 1;
                 $("#divbtnFinalSubmit").empty();
                 $("#divbtnFinalSubmit").append('<button type="button" class="btn btn-success" id="btnFinalSubmit" onclick="SaveFinalForm();">Final Submit</button>');
                 $("#add-row tbody").empty();
                 while (j <= QuestionCount) {
-                    $.each(data.Table2, function (Index, Value) {
+                    $.each(data.Table, function (Index, Value) {
                         str2 += '<tr>';
                         str2 += '<td style="display:none;"><input type="hidden" id="hdnstarval_' + Value.AppraisalTransId + '" value=""/> </td>';
                         str2 += '<td style="display:none;">' + Value.AppraisalTransId + '</td>';
@@ -946,6 +952,7 @@
         });
     });
     $(document).on('click', '#btnSaveRating', function () {
+        $("#btnSaveRating").attr("disabled", true);
         var rDD_MngAppraisal = {            
             rDD_EmpAppraisalList: []
         };
@@ -977,6 +984,7 @@
         }
     });
     $(document).on('click', '#btnUpdateRating', function () {
+        $("#btnUpdateRating").attr("disabled", true);
         var rDD_MngAppraisal = {
             rDD_EmpAppraisalList: []
         };

@@ -61,9 +61,9 @@ namespace RDDStaffPortal.DAL.PerformanceEvaluation
             {
                 SqlParameter[] Para =
                 {
-                    new SqlParameter("Type","GetEmployeeRating"),
-                    new SqlParameter("EmployeeId",EmpId),
-                    new SqlParameter("Periods",Qperiods)
+                    new SqlParameter("@Type","GetEmployeeRating"),
+                    new SqlParameter("@EmployeeId",EmpId),
+                    new SqlParameter("@Periods",Qperiods)
                 };
                 ds = Com.ExecuteDataSet("RDD_GetManagerDetails_EmpMngAppraisalRating", CommandType.StoredProcedure, Para);
             }
