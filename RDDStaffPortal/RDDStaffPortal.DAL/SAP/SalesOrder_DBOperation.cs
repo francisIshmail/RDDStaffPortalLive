@@ -445,5 +445,22 @@ namespace RDDStaffPortal.DAL.SAP
                 throw ex;
             }
         }
+
+        public DataSet GetDefaultPayMode(string dbname, string cardcode)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_PDC_GetCustomerPaymentTerms '" + dbname + "','" + cardcode + "'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

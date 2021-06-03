@@ -600,11 +600,11 @@ SalesOrder.prototype = {
                                 $("[id$=cbBusinessType]").append($("<option></option>").val(ddlBusinesType[i].Code).html(ddlBusinesType[i].Descr));
                             }
 
-                            $("[id$=cbInvPayTerm]").empty();
-                            for (var i = 0; i < ddlInvPayTerm.length; i++) {
+                            //$("[id$=cbInvPayTerm]").empty();
+                            //for (var i = 0; i < ddlInvPayTerm.length; i++) {
 
-                                $("[id$=cbInvPayTerm]").append($("<option></option>").val(ddlInvPayTerm[i].Code).html(ddlInvPayTerm[i].Descr));
-                            }
+                            //    $("[id$=cbInvPayTerm]").append($("<option></option>").val(ddlInvPayTerm[i].Code).html(ddlInvPayTerm[i].Descr));
+                            //}
                             $("[id$=cbCustPayTerm]").empty();
                             for (var i = 0; i < ddlCustPayTerm.length; i++) {
 
@@ -772,8 +772,8 @@ SalesOrder.prototype = {
                 //debugger;
                 $("[id$=txtCardName]").val(i.item.label);
                 $("[id$=txtCardCode]").val(i.item.val);
-
-                get_Customer_Due(i.item.val)
+                GetDefaultPayMode(i.item.val);
+                get_Customer_Due(i.item.val);
 
 
             },
@@ -1728,6 +1728,32 @@ $(document).ready(function () {
 
 });
 
+function GetDefaultPayMode(customercode) {
+    var s = customercode;
+    $.ajax({
+        async: false,
+        cache: false,
+        type: "POST",
+        url: "/SAP/SalesOrder/GetDefaultPayMode",
+        data: JSON.stringify({ dbname: $("#DBName").val(), cardcode: s }),
+        dataType: 'Json',
+        contentType: "Application/json",
+        success: function (data) {
+            debugger
+            //var d = data.Table1[0].DefaultPayMethod;
+            $("[id$=cbInvPayTerm]").empty();
+            for (var i = 0; i < data.Table.length; i++) {
+                $("[id$=cbInvPayTerm]").append($("<option></option>").val(data.Table[i].PayMethod).html(data.Table[i].PayMethod));
+            }
+            $("[id$=cbInvPayTerm]").val(data.Table1[0].DefaultPayMethod).trigger('change');      
+            $("[id$=txtCLStatus]").val("Ok");
+            $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+            $("[id$=txtTrnStatus]").val("Active");
+            $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+        }
+    });
+}
+
 function get_Customer_Due(customercode) {
     var s = customercode;
 
@@ -1744,7 +1770,7 @@ function get_Customer_Due(customercode) {
         success: function (data) {
             debugger;
             var theString = data;
-
+            //$("[id$=cbInvPayTerm]").val(data.Table2[0].DefaultPayMethod);
             var arySummary = new Array();
             arySummary = theString[0].split("#");
 
@@ -1757,29 +1783,29 @@ function get_Customer_Due(customercode) {
             $("[id$=txt_46_60]").val(arySummary[3]);
             $("[id$=txt_61_90]").val(arySummary[4]);
             $("[id$=txt_91_Above]").val(arySummary[5]);
-            $("[id$=txtTrnStatus]").val(arySummary[6]);
-            $("[id$=txtCLStatus]").val(arySummary[7]);
+            //$("[id$=txtTrnStatus]").val(arySummary[6]);
+            //$("[id$=txtCLStatus]").val(arySummary[7]);
             $("[id$=cbCustPayTerm]").val(arySummary[8]).trigger('change');
 
             var db = $("[id$=cbDataBase]").val();
 
             Get_DeliveryDate(arySummary[8], db);
 
-            if (arySummary[6] == "Active") {
-                $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
-                //$("[id$=txtTrnStatus]").attr('style', 'font-size: 14px; font-weight: bold; text-align:center;background-color:Green;color:White;');
-            }
-            else {
-                $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:red;');
-                //    $("[id$=txtTrnStatus]").attr('style', 'font-size: 14px; font-weight: bold; text-align:center;background-color:red;color:White;');
-            }
+            //if (arySummary[6] == "Active") {
+            //    $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+            //    //$("[id$=txtTrnStatus]").attr('style', 'font-size: 14px; font-weight: bold; text-align:center;background-color:Green;color:White;');
+            //}
+            //else {
+            //    $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:red;');
+            //    //    $("[id$=txtTrnStatus]").attr('style', 'font-size: 14px; font-weight: bold; text-align:center;background-color:red;color:White;');
+            //}
 
-            if (arySummary[7] == "Ok") {
-                $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
-            }
-            else {
-                $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:red;');
-            }
+            //if (arySummary[7] == "Ok") {
+            //    $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+            //}
+            //else {
+            //    $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:red;');
+            //}
 
 
         },
