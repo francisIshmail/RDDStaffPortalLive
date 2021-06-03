@@ -6,12 +6,12 @@
 <!--Sales  Order-->
 
 <style>
-    .mar-l14 {
-        margin-left: -31px !important;
-    }
     .m11 {
-        margin-left: 14px !important;
+        margin-left: 76px !important;
     }
+    /*.m11 {
+        margin-left: 14px !important;
+    }*/
 </style>
 
 <div class="main-panel">
@@ -26,13 +26,10 @@
                     <button id="btn_MainCancel" class="btn btn-danger btn-sm" hidden>Delete</button>
                     <button id="btn_MainPost" class="btn btn-success btn-sm" hidden>Post To SAP</button>
                 </div>
-
-
             </div>
             <div class="rowmin">
                 <div class="col-md-12">
                     <div class="card ">
-
                         <div class="card-body salesorder-section">
                             <div class="row" id="FilterSection1">
                                 <div class="col-md-6 col-lg-4">
@@ -40,17 +37,13 @@
                                         <label for="Database" class="col-md-5 col-form-label p-0">Database :</label>
                                         <div class="col-md-5 p-0">
                                             @Html.DropDownListFor(m => m.DBName, ViewBag.ddlDBList as SelectList, new { @id = "SerDBName", @class = "form-control form-control-sm" })
-
                                         </div>
-
                                     </div>
                                 </div>
-
                                 <div class="col-xl-1 col-md-1 ml-auto text-right p-0">
                                     <button class="btn btn-info btn-sm" id="btnApply">Apply</button>
                                     <button class="btn btn-info btn-sm" id="FilterBtn"><span class="btn-label"> </span> <i class="fas fa-filter"></i></button>
                                 </div>
-
                             </div>
                             <div class="row" id="FilterSection" style="display:none">
                                 <div class="col-md-6 col-lg-4">
@@ -810,7 +803,7 @@
                     <div class="col-md-12 col-lg-12">
                         <div class="form-group form-inline">
                             <label for="Database" class="col-md-1 col-form-label p-0 width80px">Item Code :</label>
-                            <div class="col-md-2 p-0 mar-l14 m11">
+                            <div class="col-md-2 p-0 mar-l14">
                                 <input type="text" class="form-control form-control-sm" id="txtItem">
                                 <input type="hidden" id="uxTrowindex" value="" />
                             </div>
@@ -943,14 +936,34 @@
             </div>
             <div class="modal-body padd-b0 ui-front">
                 <div class="row font-11px">
-                    <div class="col-md-6 col-lg-12">
+                    <div class="col-md-6 col-lg-4">
                         <div class="form-group form-inline">
                             <label for="Database" class="col-md-2 col-form-label p-0 width80px">Payment Method :</label>
-                            <div class="col-md-3 p-0 mar-l14">
+                            <div class="col-md-7 p-0 mar-l14 m11">
                                 <select class="form-control form-control-sm" id="cbPPaymentMethod">
                                     <option>-- Select --</option>
                                 </select>
                                 <input type="hidden" id="uxProwindex" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4" id="divDdlPdcType">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-2 col-form-label p-0 width80px">PDC Type :</label>
+                            <div class="col-md-7 p-0 mar-l14 m11">
+                                <select class="form-control form-control-sm" id="cbPPDCType">
+                                    <option>-- Select --</option>
+                                </select>
+                                <input type="hidden" id="" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group form-inline">
+                            <label for="Database" class="col-md-5 col-form-label p-0">Bank Name :</label>
+                            <div class="col-md-7 p-0">
+                                <input type="text" class="form-control form-control-sm" id="txtPBankName">
+                                <input type="hidden" id="txtPBankCode"/>
                             </div>
                         </div>
                     </div>
@@ -1025,13 +1038,13 @@
                     </div>
 
                     @*<div class="col-md-6 col-lg-12">
-                            <div class="form-group form-inline">
-                                <label for="Database" class="col-md-2 col-form-label p-0 width80px">Remarks :</label>
-                                <div class="col-md-3 p-0 mar-l14">
-                                    <input type="text" class="form-control form-control-sm" id="txtPRemarks">
-                                </div>
-                            </div>
-                        </div>*@
+            <div class="form-group form-inline">
+                <label for="Database" class="col-md-2 col-form-label p-0 width80px">Remarks :</label>
+                <div class="col-md-3 p-0 mar-l14">
+                    <input type="text" class="form-control form-control-sm" id="txtPRemarks">
+                </div>
+            </div>
+        </div>*@
                 </div>
             </div>
             <div class="modal-footer">

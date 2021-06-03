@@ -462,5 +462,22 @@ namespace RDDStaffPortal.DAL.SAP
                 throw ex;
             }
         }
+
+        public SqlDataReader GetBankList(string prefix, string dbname)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                SqlDataReader Dr = Db.myGetReader("RDD_SOR_GetBankList '" + prefix + "','" + dbname + "'");
+
+                return Dr;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

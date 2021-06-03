@@ -877,6 +877,50 @@ SalesOrder.prototype = {
             minLength: 1
         });
 
+        $("[id$=txtPBankName]").autocomplete({
+            source: function (request, response) {
+                debugger;
+                if ($("#DBName").val() == "--Select DB--" || $("#DBName").val() == "" || $("#DBName").val() == "0") {
+                    alert('Please Select Company DataBase ');
+                    $("[id$=txtPBankName]").val('');
+                    $("[id$=txtPBankCode]").val('');
+                    return;
+                }
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/SAP/SalesOrder/GetBankList",
+                    data: JSON.stringify({ prefix: request.term, dbname: $("#DBName").val() }),
+                    dataType: 'Json',
+                    contentType: "Application/json",
+                    success: function (data) {     
+                        
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.split('#')[0],
+                                val: item.split('#')[1]
+                            }
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                //debugger;
+                $("[id$=txtPBankName]").val(i.item.label);
+                $("[id$=txtPBankCode]").val(i.item.val);
+                //GetDefaultPayMode(i.item.val);
+                //get_Customer_Due(i.item.val);
+            },
+            minLength: 1
+        });
+
         $("[id$=cbWhs]").change(function () {
             debugger;
             try {
@@ -1665,6 +1709,63 @@ SalesOrder.prototype = {
            
         });
 
+        $("#cbPPaymentMethod").change(function () {
+            //alert("hi");
+            var Paymethod = $(this).val();
+            $("#txtPBankName").val('');
+            $("#cbPPDCType").empty();
+            if (Paymethod == "PDC") {
+                $("#cbPPDCType").empty();
+                //$("#divDdlPdcType").show();
+                var val = '';
+                val = val + '<option value="0">--Select--</option>';
+                val = val + '<option value="OPDC">Original PDC</option>';
+                val = val + '<option value="CPDC">Copy of PDC</option>';
+                val = val + '<option value="LC">LC</option>';
+                val = val + '<option value="SC">Security Cheque</option>';
+                val = val + '<option value="BG">Bank Guarantee</option>';
+                $("#cbPPDCType").append(val);
+                $("#txtPBankName").removeAttr("disabled", true);
+            }
+            else if (Paymethod == "CDC" || Paymethod == "LC") {
+                $("#txtPBankName").removeAttr("disabled", true);
+            }
+            else {
+                $("#txtPBankName").val('');
+                $("#txtPBankName").attr("disabled", true);
+            }
+        });
+
+        $("#txtPReciptCheckNo").focusout(function () {
+            var Chequeno = $(this).val();
+            var Pdctype = $("#cbPPDCType option:selected").val();  
+            var Customercode = $("#txtCardCode").val();
+            if (Pdctype == "BG") {
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/SAP/SalesOrder/GetDetailsForBG",
+                    data: JSON.stringify({ dbname: $("#DBName").val(), Pdctype: Pdctype, Chequeno: Chequeno, Customercode: Customercode }),
+                    dataType: 'Json',
+                    contentType: "Application/json",
+                    success: function (data) {
+                        debugger
+                        //var d = data.Table1[0].DefaultPayMethod;
+                        $("[id$=cbInvPayTerm]").empty();
+                        for (var i = 0; i < data.Table.length; i++) {
+                            $("[id$=cbInvPayTerm]").append($("<option></option>").val(data.Table[i].PayMethod).html(data.Table[i].PayMethod));
+                        }
+                        $("[id$=cbInvPayTerm]").val(data.Table1[0].DefaultPayMethod).trigger('change');
+                        $("[id$=txtCLStatus]").val("Ok");
+                        $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+                        $("[id$=txtTrnStatus]").val("Active");
+                        $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
+                    }
+                });
+            }
+        });
+
         $("[id$=txtSerCardName]").autocomplete({
 
             source: function (request, response) {
@@ -1719,7 +1820,7 @@ SalesOrder.prototype = {
             Get_SOR_List();
         });
     },
-}
+}   
 
 $(document).ready(function () {
 

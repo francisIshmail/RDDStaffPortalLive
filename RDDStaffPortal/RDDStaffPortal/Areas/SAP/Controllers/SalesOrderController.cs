@@ -692,5 +692,29 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetBankList(string prefix, string dbname)
+        {
+            string retVal = string.Empty;
+            SqlDataReader rdr;
+            List<string> customers = new List<string>();
+
+            try
+            {
+                rdr = SalesOrder_DBOperation.GetBankList(prefix, dbname);
+
+                while (rdr.Read())
+                {
+                    customers.Add(string.Format("{0}#{1}", rdr["AcctName"], rdr["AcctCode"]));
+                }
+                return Content(JsonConvert.SerializeObject(customers.ToArray()), "application/json");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
