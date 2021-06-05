@@ -133,7 +133,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             return retVal;
         }
 
-            public ActionResult Get_BindDDLList(string dbname)
+        public ActionResult Get_BindDDLList(string dbname)
         {
             ContentResult retVal = null;
             DataSet DS;
@@ -693,6 +693,28 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             }
         }
 
+        public ActionResult Get_CurrencyList(string dbname)
+        {
+            ContentResult retVal = null;
+            DataSet DS;
+
+            try
+            {
+                DS = SalesOrder_DBOperation.Get_CurrencyList(dbname);
+
+                if (DS.Tables.Count > 0)
+                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                else
+                    retVal = null;
+
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ActionResult GetBankList(string prefix, string dbname)
         {
             string retVal = string.Empty;
@@ -715,6 +737,21 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 throw ex;
             }
 
+        }
+
+        public ActionResult GetDetailsForBG(string dbname,string Pdctype,string Chequeno, string cardcode)
+        {
+            string retVal = string.Empty;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.GetDetailsForBG(dbname, Pdctype, Chequeno, cardcode);
+                return Content(JsonConvert.SerializeObject(DS), "application/json");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

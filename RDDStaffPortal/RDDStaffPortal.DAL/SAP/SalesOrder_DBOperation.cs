@@ -463,6 +463,23 @@ namespace RDDStaffPortal.DAL.SAP
             }
         }
 
+        public DataSet Get_CurrencyList(string dbname)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_PDC_GetCurrencies '" + dbname + "','SOR'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public SqlDataReader GetBankList(string prefix, string dbname)
         {
             try
@@ -472,6 +489,23 @@ namespace RDDStaffPortal.DAL.SAP
                 SqlDataReader Dr = Db.myGetReader("RDD_SOR_GetBankList '" + prefix + "','" + dbname + "'");
 
                 return Dr;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataSet GetDetailsForBG(string dbname, string Pdctype, string Chequeno, string cardcode)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG '" + dbname + "','" + Pdctype + "','" + cardcode + "','" + Chequeno + "'");
+
+                return DS;
 
             }
             catch (Exception ex)

@@ -145,8 +145,8 @@ SalesOrder.prototype = {
 
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
         debugger;
-        FieldHide = ['pay_line_id', 'pay_menthod_id', 'curr_id'];
-        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+        FieldHide = ['pay_line_id', 'pay_menthod_id', 'pdc_type_id', 'bank_code', 'curr_id'];
+        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type', 'bank_name','bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
 
         if (update_Row_Flag1 == true) {
 
@@ -410,7 +410,8 @@ SalesOrder.prototype = {
 
             $("[id$=uxProwindex]").val(tr.find(".Abcd").eq(0).text());
             $("[id$=cbPPaymentMethod]").val(tr.find(".Abcd").eq(2).text()).trigger('change');
-
+            $("[id$=cbPPDCType]").val(tr.find(".Abcd").eq(4).text()).trigger('change');
+            $("[id$=txtPBankName]").val(tr.find(".Abcd").eq(5).text());
             $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(4).text());
             $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(5).text());
             $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(6).text()).trigger('change');
@@ -458,19 +459,31 @@ SalesOrder.prototype = {
 
         $("[id$=btn_PAddRow]").click(function () {
             try {
-
                 debugger;
                 var _SOID = 0;
                 if (Validate_PAddRow() == true) {
-
-
                     if ($("[id$=btn_PAddRow]").text() == 'Add') {
                         var _PayTermDetails = {};
-
                         _PayTermDetails["SrNo"] = "0";
                         _PayTermDetails["pay_line_id"] = "0";
                         _PayTermDetails["pay_menthod_id"] = $("[id$=cbPPaymentMethod]").val();
                         _PayTermDetails["pay_method"] = $("#cbPPaymentMethod option:selected").text();
+                        if ($("#cbPPaymentMethod option:selected").val() == "PDC" || $("#cbPPaymentMethod option:selected").val() == "LC") {
+                            _PayTermDetails["pdc_type_id"] = $("#cbPPDCType option:selected").val();
+                            _PayTermDetails["pdc_type"] = $("#cbPPDCType option:selected").text();
+                        }
+                        else {
+                            _PayTermDetails["pdc_type_id"] = "";
+                            _PayTermDetails["pdc_type"] = "N/A";
+                        }
+                        if ($("#cbPPDCType option:selected").val() == "BG" || $("#cbPPDCType option:selected").val() == "SC") {
+                            _PayTermDetails["bank_code"] = $("#txtPBankCode").val();
+                            _PayTermDetails["bank_name"] = $("#txtPBankName").val();
+                        }
+                        else {
+                            _PayTermDetails["bank_code"] = "";
+                            _PayTermDetails["bank_name"] = "N/A";
+                        }
                         _PayTermDetails["rcpt_check_no"] = $("[id$=txtPReciptCheckNo]").val();
                         _PayTermDetails["rcpt_check_date"] = $("[id$=txtPChkDate]").val();
                         _PayTermDetails["curr_id"] = $("[id$=cbPCurency]").val();
@@ -520,16 +533,12 @@ SalesOrder.prototype = {
                         //$("[id$=btn_DelRow]").addClass("disabled");
 
                     }
-
-
                     SalesOrder.prototype.AddPaymentClearControls();
-
                 }
             }
             catch (Error) {
                 alert(Error);
             }
-
         });
 
         $("[id$=txtPRcptCheckAmt],[id$=txtPAllocatedAmt]").change(function () {
@@ -651,12 +660,33 @@ SalesOrder.prototype = {
 
                                 $("[id$=cbTax]").append($("<option></option>").val(ddlTaxCode[i].Code).html(ddlTaxCode[i].Descr));
                             }
+                            $.ajax({
+                                async: false,
+                                cache: false,
+                                type: "POST",
+                                url: "/SAP/SalesOrder/Get_CurrencyList",
+                                data: JSON.stringify({ dbname: $("#DBName").val() }),
+                                dataType: 'Json',
+                                contentType: "Application/json",
+                                success: function (data) {
+                                    var d = data.Table1;
+                                    var d1 = data.Table;
+                                    $("[id$=cbDocCur]").empty();
+                                    for (var i = 0; i < d.length; i++) {
+                                        $("[id$=cbDocCur]").append($("<option></option>").val(d[i].DocCurrency).html(d[i].DocCurrency));                                        
+                                        $("[id$=cbDocCur]").val("USD").trigger('change');
+                                    } 
+                                    for (var i = 0; i < d1.length; i++) {
+                                        $("[id$=cbPPaymentMethod]").append($("<option></option>").val(d1[i].Currency).html(d1[i].Currency));
+                                        //$("[id$=cbPPaymentMethod]").val("USD").trigger('change');
+                                    } 
+                                }
+                            });
+                            //$("[id$=cbDocCur]").empty();
+                            //for (var i = 0; i < ddlDocCur.length; i++) {
 
-                            $("[id$=cbDocCur]").empty();
-                            for (var i = 0; i < ddlDocCur.length; i++) {
-
-                                $("[id$=cbDocCur]").append($("<option></option>").val(ddlDocCur[i].Code).html(ddlDocCur[i].Descr));
-                            }
+                            //    $("[id$=cbDocCur]").append($("<option></option>").val(ddlDocCur[i].Code).html(ddlDocCur[i].Descr));
+                            //}
 
 
                             //---This is for Payment Terms Model pop form
@@ -1518,7 +1548,6 @@ SalesOrder.prototype = {
             }
         });
 
-
         function ConfirmYesNo(ModelId) {
             var dfd = jQuery.Deferred();
             var $confirm = $('#' + ModelId + '');
@@ -1621,7 +1650,6 @@ SalesOrder.prototype = {
 
         });
 
-
         $("#IIbody").on('dblclick', "#IIst", function (event) {
             debugger;
             _SO_ID = $(this).closest("IIst").prevObject.find(".Abcd").eq(1).text();
@@ -1633,7 +1661,6 @@ SalesOrder.prototype = {
             $('#btn_MainCancel').removeAttr('disabled');
 
         });
-
 
         //--This is for Serch Parameter
         $("#SerDBName").change(function () {
@@ -1740,27 +1767,26 @@ SalesOrder.prototype = {
             var Chequeno = $(this).val();
             var Pdctype = $("#cbPPDCType option:selected").val();  
             var Customercode = $("#txtCardCode").val();
-            if (Pdctype == "BG") {
+            if (Pdctype == "BG" || Pdctype == "SC") {
                 $.ajax({
                     async: false,
                     cache: false,
                     type: "POST",
                     url: "/SAP/SalesOrder/GetDetailsForBG",
-                    data: JSON.stringify({ dbname: $("#DBName").val(), Pdctype: Pdctype, Chequeno: Chequeno, Customercode: Customercode }),
+                    data: JSON.stringify({ dbname: $("#DBName").val(), Pdctype: Pdctype, Chequeno: Chequeno, cardcode: Customercode }),
                     dataType: 'Json',
                     contentType: "Application/json",
                     success: function (data) {
                         debugger
-                        //var d = data.Table1[0].DefaultPayMethod;
-                        $("[id$=cbInvPayTerm]").empty();
-                        for (var i = 0; i < data.Table.length; i++) {
-                            $("[id$=cbInvPayTerm]").append($("<option></option>").val(data.Table[i].PayMethod).html(data.Table[i].PayMethod));
+                        var d = data.Table[0];                        
+                        if (data.Table.length > 0) {
+                            $("#txtPRcptCheckAmt").val(d.Amount);
+                            $("#txtPAllocatedAmt").val(d.UsedAmount);
+                            $("#txtPBalanceAmt").val(d.BalanceAmount);
+                            $("#txtPChkDate").val(d.ValidToDate);
+                            $("#cbPCurency").val(d.Currency).trigger('change');
+                            $("#txtPRemarks").val(d.Remarks);
                         }
-                        $("[id$=cbInvPayTerm]").val(data.Table1[0].DefaultPayMethod).trigger('change');
-                        $("[id$=txtCLStatus]").val("Ok");
-                        $("[id$=txtCLStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
-                        $("[id$=txtTrnStatus]").val("Active");
-                        $("[id$=txtTrnStatus]").attr('style', 'font-weight: bold; text-align:center;color:green;');
                     }
                 });
             }
