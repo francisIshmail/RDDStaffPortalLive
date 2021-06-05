@@ -481,7 +481,7 @@ SalesOrder.prototype = {
                             _PayTermDetails["bank_name"] = $("#txtPBankName").val();
                         }
                         else {
-                            _PayTermDetails["bank_code"] = "";
+                            _PayTermDetails["bank_code"] = "N/A";
                             _PayTermDetails["bank_name"] = "N/A";
                         }
                         _PayTermDetails["rcpt_check_no"] = $("[id$=txtPReciptCheckNo]").val();
@@ -676,10 +676,10 @@ SalesOrder.prototype = {
                                         $("[id$=cbDocCur]").append($("<option></option>").val(d[i].DocCurrency).html(d[i].DocCurrency));                                        
                                         $("[id$=cbDocCur]").val("USD").trigger('change');
                                     } 
+                                    $("#cbPCurency").empty();
                                     for (var i = 0; i < d1.length; i++) {
-                                        $("[id$=cbPPaymentMethod]").append($("<option></option>").val(d1[i].Currency).html(d1[i].Currency));
-                                        //$("[id$=cbPPaymentMethod]").val("USD").trigger('change');
-                                    } 
+                                        $("#cbPCurency").append($("<option></option>").val(d1[i].Currency).html(d1[i].Currency));
+                                    }
                                 }
                             });
                             //$("[id$=cbDocCur]").empty();
@@ -690,11 +690,11 @@ SalesOrder.prototype = {
 
 
                             //---This is for Payment Terms Model pop form
-                            $("#cbPCurency").empty();
-                            for (var i = 0; i < ddlCurrency.length; i++) {
+                            //$("#cbPCurency").empty();
+                            //for (var i = 0; i < ddlCurrency.length; i++) {
 
-                                $("#cbPCurency").append($("<option></option>").val(ddlCurrency[i].Code).html(ddlCurrency[i].Descr));
-                            }
+                            //    $("#cbPCurency").append($("<option></option>").val(ddlCurrency[i].Code).html(ddlCurrency[i].Descr));
+                            //}
 
                             //$("[id$=cbDocCur]").val('USD').trigger();
                         },
