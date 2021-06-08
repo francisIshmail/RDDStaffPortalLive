@@ -1,4 +1,6 @@
-﻿var SalesOrder = function () { };  //Class
+﻿//import { error } from "jquery";
+
+var SalesOrder = function () { };  //Class
 
 var ItemDetails = new Array();
 var PayTermDetails = new Array();
@@ -146,7 +148,7 @@ SalesOrder.prototype = {
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
         debugger;
         FieldHide = ['pay_line_id', 'pay_menthod_id', 'pdc_type_id', 'bank_code', 'curr_id'];
-        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id','pdc_type', 'bank_name','bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id', 'pdc_type', 'bank_name', 'bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'ExchangeRate', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
 
         if (update_Row_Flag1 == true) {
 
@@ -270,9 +272,22 @@ SalesOrder.prototype = {
         $("[id$=cbPCurency]").val('').trigger('change');
         $("[id$=txtPReciptCheckNo]").val('');
         $("[id$=txtPChkDate]").val('');
+        $("[id$=txtPExchngRate]").val('');
         $("[id$=txtPRcptCheckAmt]").val('0.00');
         $("[id$=txtPAllocatedAmt]").val('0.00');
-
+        $("#cbPCurency").val("USD").trigger('change');
+        var d = new Date();
+        var curr_date = d.getDate();
+        if (curr_date < 10) {
+            curr_date = '0' + curr_date;
+        }
+        var curr_month = d.getMonth() + 1;
+        if (curr_month < 10) {
+            curr_month = '0' + curr_month;
+        }
+        var curr_year = d.getFullYear();
+        var Today = curr_date + '/' + curr_month + '/' + curr_year;
+        $("#txtPChkDate").val(Today);
         $("[id$=txtPBalanceAmt]").val('0.00');
         $("[id$=txtPRemarks]").val('');
 
@@ -290,8 +305,7 @@ SalesOrder.prototype = {
         });
 
         $("[id$=btnPopShow]").click(function () {
-            debugger;
-            
+            debugger;            
             var id = $('.tab-content .active').attr('id');
             if (id == "tab-Contants") {
                 $('#ItemDetailModalPopPup').modal('show');
@@ -430,10 +444,11 @@ SalesOrder.prototype = {
             $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(8).text());
             $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(9).text());
             $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(11).text()).trigger('change');
-            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(12).text());
-            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(13).text());           
-            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(14).text());
-            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(15).text());
+            $("[id$=txtPExchngRate]").val(tr.find(".Abcd").eq(12).text());
+            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(13).text());
+            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(14).text());           
+            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(15).text());
+            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(16).text());
                       
 
             $("[id$=btn_PAddRow]").text("Update");
@@ -491,6 +506,10 @@ SalesOrder.prototype = {
                             _PayTermDetails["pdc_type_id"] = "";
                             _PayTermDetails["pdc_type"] = "N/A";
                         }
+                        if ($("[id$=txtPExchngRate]").val() == '') {
+                            $("[id$=txtPExchngRate]").val('0.00');
+                        }
+                        _PayTermDetails["ExchangeRate"] = $("[id$=txtPExchngRate]").val();
                         if ($("#cbPPDCType option:selected").val() == "BG" || $("#cbPPDCType option:selected").val() == "SC") {
                             _PayTermDetails["bank_code"] = $("#txtPBankCode").val();
                             _PayTermDetails["bank_name"] = $("#txtPBankName").val();
@@ -526,11 +545,15 @@ SalesOrder.prototype = {
                         parameter.pay_line_id = index - 1;
                         parameter.pay_menthod_id = $("[id$=cbPPaymentMethod]").val();
                         parameter.pay_method = $("#cbPPaymentMethod option:selected").text();
+                        parameter.pdc_type_id = $("#cbPPDCType option:selected").val();
+                        parameter.pdc_type = $("#cbPPDCType option:selected").text();
+                        parameter.bank_name = $("[id$=txtPBankName]").val();
+                        parameter.bank_code = $("[id$=txtPBankCode]").val();
                         parameter.rcpt_check_no = $("[id$=txtPReciptCheckNo]").val();
                         parameter.rcpt_check_date = $("[id$=txtPChkDate]").val();
                         parameter.curr_id = $("[id$=cbPCurency]").val();
                         parameter.currency = $("#cbPCurency option:selected").text();
-
+                        parameter.ExchangeRate = $("[id$=txtPExchngRate]").val();
                         parameter.rcpt_check_amt = $("[id$=txtPRcptCheckAmt]").val();
                         parameter.allocated_amt = $("[id$=txtPAllocatedAmt]").val();
                         parameter.balance_amt = $("[id$=txtPBalanceAmt]").val();
@@ -555,10 +578,39 @@ SalesOrder.prototype = {
                 alert(Error);
             }
         });
-
+        $("#txtPRcptCheckAmt").focusout(function () {
+            debugger
+            try {
+                if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
+                    if($("#cbPCurency option:selected").val() != 'USD'){                       
+                        var ConvertedOSAmt = "";                       
+                        var ExchangeRate = $("#txtPExchngRate").val();
+                        ConvertedOSAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);                        
+                        
+                        if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
+                            var ConvertedRecpChqAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
+                            if (ConvertedRecpChqAmt > $("[id$=txtTotal]").val()) {
+                                var ConvertedTotalAmt = parseFloat($("#txtTotal").val()) * parseFloat(ExchangeRate);
+                                $("[id$=txtPAllocatedAmt]").val(ConvertedTotalAmt);
+                            }
+                            else {
+                                $("[id$=txtPAllocatedAmt]").val('0.00');
+                            }
+                        }
+                        else {
+                            RedDotAlert_Error("Please add contants");
+                        }
+                    }
+                }
+            }
+            catch {
+                alert(error);
+            }
+        });
         $("[id$=txtPRcptCheckAmt],[id$=txtPAllocatedAmt]").change(function () {
             debugger;
             try {
+                
                 if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtPAllocatedAmt]").val() != '' ) {
 
                     var _RcptCheck_Amt = parseFloat($("[id$=txtPRcptCheckAmt]").val());
@@ -567,7 +619,7 @@ SalesOrder.prototype = {
                    
                     if (_RcptCheck_Amt < _Allocated_Amt) {
                         RedDotAlert_Warning('Allocated Amount Should be less than or equal to Receipt/Check Amount');
-                        $("[id$=txtPAllocatedAmt]").val('0.00')
+                        $("[id$=txtPAllocatedAmt]").val('0.00');
                         return;
                     }
                     _Balance_Amt = _RcptCheck_Amt - _Allocated_Amt;
@@ -1194,9 +1246,7 @@ SalesOrder.prototype = {
                 debugger;
                 if (_Post_To_SAP == 'N') {
                     if (Validate() == true) {
-
                         var RDD_OSOR = {
-
                             SO_ID: _SO_ID,
                             Doc_Object: 17,
                             Base_Obj: 0,
@@ -1444,6 +1494,7 @@ SalesOrder.prototype = {
                             });
 
                             // This is for Payment Methods
+                            var AllocateAmt = 0;
                             $(".PayDetail").each(function () {
                                 //if (!this.rowIndex) return; // skip first row
 
@@ -1451,107 +1502,125 @@ SalesOrder.prototype = {
 
                                 SalesOrderPayDetail_Obj['Pay_Method_Id'] = $(this).find(".Abcd").eq(2).text();
                                 SalesOrderPayDetail_Obj['Pay_Method'] = $(this).find(".Abcd").eq(3).text();
-                                SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(4).text();
-                                SalesOrderPayDetail_Obj['Rcpt_Check_Date'] = GetSqlDateformat($(this).find(".Abcd").eq(5).text());
-                                SalesOrderPayDetail_Obj['Curr_Id'] = $(this).find(".Abcd").eq(6).text();
-                                SalesOrderPayDetail_Obj['Currency'] = $(this).find(".Abcd").eq(7).text();
-                                SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(8).text();
-                                SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(9).text();
-                                SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(10).text();
-                                SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(11).text();
+                                SalesOrderPayDetail_Obj['Pdc_Type_Id'] = $(this).find(".Abcd").eq(4).text();
+                                SalesOrderPayDetail_Obj['Bank_Name'] = $(this).find(".Abcd").eq(6).text();
+                                SalesOrderPayDetail_Obj['Bank_Code'] = $(this).find(".Abcd").eq(7).text();
+                                SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(8).text();
+                                SalesOrderPayDetail_Obj['Rcpt_Check_Date'] = GetSqlDateformat($(this).find(".Abcd").eq(9).text());
+                                SalesOrderPayDetail_Obj['Curr_Id'] = $(this).find(".Abcd").eq(10).text();
+                                SalesOrderPayDetail_Obj['Currency'] = $(this).find(".Abcd").eq(11).text();
+                                SalesOrderPayDetail_Obj['ExchangeRate'] = $(this).find(".Abcd").eq(12).text();
+                                SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(13).text();
+                                SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(14).text();
+                                AllocateAmt = AllocateAmt + $(this).find(".Abcd").eq(14).text();
+                                SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(15).text();
+                                SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(16).text();
 
                                 SalesOrderPayDetail_Obj['Base_Obj'] = 0;
                                 SalesOrderPayDetail_Obj['Base_Id'] = 0;
                                 SalesOrderPayDetail_Obj['Base_LinId'] = 0;
 
                                 SalesOrderPayMethod.push(SalesOrderPayDetail_Obj);
-
-
                             });
+                            debugger
+                            var OSamt = parseFloat(("#txtTotal").val()) - parseFloat(AllocateAmt);
+                            var DeclaredOSamt = $("#hdnAllowSOR_OSAmt").val();
+                            var ConvertedOSAmt = "";
+                            if ($("#cbPCurency option:selected").val() != 'USD') {
+                                var ExchangeRate = $("#txtPExchngRate").val();
+                                ConvertedOSAmt = parseFloat($("#txtPAllocatedAmt").val()) / parseFloat(ExchangeRate); 
+                            }
+                            else {
+                                ConvertedOSAmt = OSamt;
+                            }
+                            if (ConvertedOSAmt <= DeclaredOSamt) {
+                                $.ajax({
+                                    async: false,
+                                    cache: false,
+                                    type: "POST",
+                                    url: "/SAP/SalesOrder/Save_SalesOrder",
+                                    data: JSON.stringify({ model: JSON.stringify(SalesOrder), model1: JSON.stringify(SalesOrderDetail), model2: JSON.stringify(SalesOrderPayMethod), dbname: $("#DBName").val() }),
+                                    dataType: 'Json',
+                                    contentType: "Application/json",
 
-                            $.ajax({
-                                async: false,
-                                cache: false,
-                                type: "POST",
-                                url: "/SAP/SalesOrder/Save_SalesOrder",
-                                data: JSON.stringify({ model: JSON.stringify(SalesOrder), model1: JSON.stringify(SalesOrderDetail), model2: JSON.stringify(SalesOrderPayMethod), dbname: $("#DBName").val() }),
-                                dataType: 'Json',
-                                contentType: "Application/json",
+                                    success: function (value) {
+                                        debugger;
+                                        var jData = value;
 
-                                success: function (value) {
-                                    debugger;
-                                    var jData = value;
+                                        if (jData.table[0].Result == 'True') {
 
-                                    if (jData.table[0].Result == 'True') {
+                                            if ($("#btn_MainSave").text() == 'Save' || $("[id$=txtDocStatus]").val() == 'Draft' || $("[id$=txtDocStatus]").val() == 'Rejected-Open') {
+                                                debugger
+                                                _SO_ID = jData.table[1].Message;
 
-                                        if ($("#btn_MainSave").text() == 'Save' || $("[id$=txtDocStatus]").val() == 'Draft' || $("[id$=txtDocStatus]").val() == 'Rejected-Open') {
-                                            debugger
-                                            _SO_ID = jData.table[1].Message;
+                                                var data = JSON.stringify({
+                                                    Object_Type: '17',
+                                                    Originator: $("[id$=txtCreatedBy]").val(),
+                                                    DocKey: jData.table[1].Message,
 
-                                            var data = JSON.stringify({
-                                                Object_Type: '17',
-                                                Originator: $("[id$=txtCreatedBy]").val(),
-                                                DocKey: jData.table[1].Message,
+                                                });
+                                                var CheckApproval = Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
 
-                                            });
-                                            var CheckApproval = Red_Dot_Model_Popup("#Divid", "ApprovalModal", data);
+                                                if (CheckApproval == true) {
+                                                    var a = ConfirmYesNo("ApprovalModal");
 
-                                            if (CheckApproval == true) {
-                                                var a = ConfirmYesNo("ApprovalModal");
+                                                    a.then(function (b) {
+                                                        //debugger
+                                                        if (b == 1) {
 
-                                                a.then(function (b) {
-                                                    //debugger
-                                                    if (b == 1) {
+                                                            $.ajax({
+                                                                async: false,
+                                                                cache: false,
+                                                                type: "POST",
+                                                                data: JSON.stringify({ Object_Type: '17', Originator: $("[id$=txtCreatedBy]").val(), DocKey: _SO_ID, OriginatorRemark: $("[id$=MRemark]").val() }),
+                                                                url: "/RDD_Approver_Insert_Records",
+                                                                dataType: 'Json',
+                                                                contentType: "Application/json",
 
-                                                        $.ajax({
-                                                            async: false,
-                                                            cache: false,
-                                                            type: "POST",
-                                                            data: JSON.stringify({ Object_Type: '17', Originator: $("[id$=txtCreatedBy]").val(), DocKey: _SO_ID, OriginatorRemark: $("[id$=MRemark]").val() }),
-                                                            url: "/RDD_Approver_Insert_Records",
-                                                            dataType: 'Json',
-                                                            contentType: "Application/json",
+                                                                success: function (response) {
+                                                                    debugger
+                                                                    if (response.Table.length != 0) {
 
-                                                            success: function (response) {
-                                                                debugger
-                                                                if (response.Table.length != 0) {
+                                                                        if (response.Table[0].Result == 'True') {
+                                                                            RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message + ' And Document send for Approval');
+                                                                            ClearControls();
+                                                                        }
 
-                                                                    if (response.Table[0].Result == 'True') {
-                                                                        RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message + ' And Document send for Approval');
-                                                                        ClearControls();
                                                                     }
 
                                                                 }
+                                                            });
 
-                                                            }
-                                                        });
+                                                        }
+                                                        else {
+                                                            RedDotAlert_Success(jData.table[0].Message + ' As Draft. ' + " Trans ID-" + jData.table[1].Message);
+                                                            ClearControls();
+                                                        }
+                                                    })
+                                                }
+                                                else {
+                                                    RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message);
+                                                    ClearControls();
+                                                }
 
-                                                    }
-                                                    else {
-                                                        RedDotAlert_Success(jData.table[0].Message + ' As Draft. ' + " Trans ID-" + jData.table[1].Message);
-                                                        ClearControls();
-                                                    }
-                                                })
-                                            }
-                                            else {
-                                                RedDotAlert_Success(jData.table[0].Message + " Trans ID-" + jData.table[1].Message);
-                                                ClearControls();
                                             }
 
                                         }
-
+                                        else {
+                                            RedDotAlert_Error(jData.table[0].Message);
+                                        }
+                                    },
+                                    error: function (response) {
+                                        RedDotAlert_Error(response.responseText);
+                                    },
+                                    failure: function (response) {
+                                        RedDotAlert_Error(response.responseText);
                                     }
-                                    else {
-                                        RedDotAlert_Error(jData.table[0].Message);
-                                    }
-                                },
-                                error: function (response) {
-                                    RedDotAlert_Error(response.responseText);
-                                },
-                                failure: function (response) {
-                                    RedDotAlert_Error(response.responseText);
-                                }
-                            });
+                                });
+                            }
+                            else {
+                                RedDotAlert_Error("Maximum outstanding amount is " + DeclaredOSamt + "");
+                            }
                         }
                     }
                     else {
@@ -1826,6 +1895,16 @@ SalesOrder.prototype = {
             }            
         });
 
+        $("#cbPCurency").change(function () {
+            var Currency = $(this).val();
+            if (Currency != "USD") {
+                $("#divExchngRate").show();
+            }
+            else {
+                $("#divExchngRate").hide();
+            }
+        });
+
         $(document).on('click', '.AllocatePDC', function () {
             debugger
             //alert("hi");
@@ -1845,7 +1924,7 @@ SalesOrder.prototype = {
                 var Bankcode = trs.find('.bnkcode').html();
                 $("#txtPReciptCheckNo").val(Chequeno);
                 $("#txtPRcptCheckAmt").val(PDCamount);
-                //$("#txtPAllocatedAmt").val(Usedamount);
+                $("#txtPAllocatedAmt").val(PDCamount);
                 $("#txtPBalanceAmt").val(Balanceamount);
                 $("#txtPChkDate").val(Chequedate);
                 $("#cbPCurency").val(Currency).trigger('change');
@@ -1877,7 +1956,7 @@ SalesOrder.prototype = {
                         var d = data.Table[0];                        
                         if (data.Table.length > 0) {
                             $("#txtPRcptCheckAmt").val(d.Amount);
-                            //$("#txtPAllocatedAmt").val(d.UsedAmount);
+                            $("#txtPAllocatedAmt").val(d.Amount);
                             $("#txtPBalanceAmt").val(d.BalanceAmount);
                             $("#txtPChkDate").val(d.ValidToDate);
                             $("#cbPCurency").val(d.Currency).trigger('change');
@@ -2217,7 +2296,7 @@ function Validate() {
         $(".PayDetail").each(function () {
 
             //SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(8).text();
-            Allocated_Amt = Allocated_Amt + parseFloat($(this).find(".Abcd").eq(9).text());
+            Allocated_Amt = Allocated_Amt + parseFloat($(this).find(".Abcd").eq(13).text());
             //SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(10).text();
 
         });
@@ -2350,13 +2429,17 @@ function Validate_PAddRow() {
         }
         if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
             if ($("[id$=txtPReciptCheckNo]").val() == '') {
-                RedDotAlert_Error("Enter Check/Rceipt No ...");
+                RedDotAlert_Error("Enter Cheque/Receipt No ...");
+                return false;
+            }
+            if ($("[id$=txtPBankName]").val() == '') {
+                RedDotAlert_Error("Enter Bank Name ...");
                 return false;
             }
         }
 
         if ($("[id$=txtPChkDate]").val() == '') {
-            RedDotAlert_Error("Select Check/Rceipt Date ...");
+            RedDotAlert_Error("Select Cheque/Receipt Date ...");
             return false;
         }
 

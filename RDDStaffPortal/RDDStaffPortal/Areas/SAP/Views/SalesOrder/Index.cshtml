@@ -657,6 +657,7 @@
                                                                     <div class="reddotTableHead"><div>Rcpt/Cheque Date</div></div>
                                                                     <div class="reddotTableHead"><div>Currency</div></div>
                                                                     <div class="reddotTableHead"><div>Currency_id</div></div>
+                                                                    <div class="reddotTableHead"><div>Exchange Rate</div></div>
                                                                     <div class="reddotTableHead"><div>Rcpt/Cheque Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Allocated Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Balance Amt</div></div>
@@ -678,6 +679,7 @@
                                                                     <div class="reddotTableCell Abcd"><div>Rcpt/Cheque Date</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Currency</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Currency_id</div></div>
+                                                                    <div class="reddotTableCell Abcd"><div>Exchange Rate</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Rcpt/Cheque Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Allocated Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Balance Amt</div></div>
@@ -1012,6 +1014,14 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6 col-lg-4" id="divExchngRate">
+                            <div class="form-group form-inline">
+                                <label for="Database" class="col-md-5 col-form-label p-0">Exchange Rate :</label>
+                                <div class="col-md-7 p-0">
+                                    <input type="text" style="text-align:right" class="form-control form-control-sm" id="txtPExchngRate" value="0.00">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group form-inline">
@@ -1045,7 +1055,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <input type="hidden" id="hdnAllowSOR_OSAmt" />
                         <div class="col-md-12 p-2" id="divPaymentShow">
                             <div class="table-responsive">
