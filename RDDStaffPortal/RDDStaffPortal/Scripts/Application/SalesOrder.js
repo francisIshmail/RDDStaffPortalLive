@@ -291,12 +291,26 @@ SalesOrder.prototype = {
 
         $("[id$=btnPopShow]").click(function () {
             debugger;
+            
             var id = $('.tab-content .active').attr('id');
             if (id == "tab-Contants") {
                 $('#ItemDetailModalPopPup').modal('show');
             }
             else if (id == "tab-PaymentTerms") {
                 $('#PaymentModalPopPup').modal('show');
+                $("#cbPCurency").val("USD").trigger('change');
+                var d = new Date();
+                var curr_date = d.getDate();
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date;
+                }
+                var curr_month = d.getMonth() + 1;
+                if (curr_month < 10) {
+                    curr_month = '0' + curr_month;
+                }
+                var curr_year = d.getFullYear();
+                var Today = curr_date + '/' + curr_month + '/' + curr_year;
+                $("#txtPChkDate").val(Today);
             }
         });
 
@@ -682,6 +696,7 @@ SalesOrder.prototype = {
                                         $("#cbPCurency").append($("<option></option>").val(d1[i].Currency).html(d1[i].Currency));
                                         $("[id$=cbPCurency]").val("USD").trigger('change');
                                     }
+                                    $("#hdnAllowSOR_OSAmt").val(data.Table2[0].AllowSORforOSAmount);
                                 }
                             });
                             //$("[id$=cbDocCur]").empty();
@@ -1165,7 +1180,7 @@ SalesOrder.prototype = {
                         Get_Calculation();
                     }
                     SalesOrder.prototype.AddItemClearControls();
-
+                    $("#cbPCurency").val("USD").trigger('change');
                 }
             }
             catch (Error) {
@@ -1745,6 +1760,7 @@ SalesOrder.prototype = {
             $("#txtPBankName").val('');
             $("#cbPPDCType").empty();
             if (Paymethod == "PDC") {
+                $("#divPaymentShow").show();
                 $("#cbPPDCType").empty();
                 //$("#divDdlPdcType").show();
                 var val = '';
@@ -1788,11 +1804,25 @@ SalesOrder.prototype = {
             else if (Paymethod == "CDC" || Paymethod == "LC") {
                 $("#txtPBankName").removeAttr("disabled", true);
                 $("#cbPPDCType").attr("disabled", true);
+                $("#divPaymentShow").hide();
             }
             else {
                 $("#txtPBankName").val('');
                 $("#txtPBankName").attr("disabled", true);
                 $("#cbPPDCType").attr("disabled", true);
+                $("#divPaymentShow").hide();
+                var d = new Date();
+                var curr_date = d.getDate();
+                if (curr_date < 10) {
+                    curr_date = '0' + curr_date;
+                }
+                var curr_month = d.getMonth() + 1;
+                if (curr_month < 10) {
+                    curr_month = '0' + curr_month;
+                }
+                var curr_year = d.getFullYear();
+                var Today = curr_date + '/' + curr_month + '/' + curr_year;
+                $("#txtPChkDate").val(Today);
             }            
         });
 
@@ -1847,7 +1877,7 @@ SalesOrder.prototype = {
                         var d = data.Table[0];                        
                         if (data.Table.length > 0) {
                             $("#txtPRcptCheckAmt").val(d.Amount);
-                            $("#txtPAllocatedAmt").val(d.UsedAmount);
+                            //$("#txtPAllocatedAmt").val(d.UsedAmount);
                             $("#txtPBalanceAmt").val(d.BalanceAmount);
                             $("#txtPChkDate").val(d.ValidToDate);
                             $("#cbPCurency").val(d.Currency).trigger('change');
@@ -2318,10 +2348,11 @@ function Validate_PAddRow() {
             RedDotAlert_Error("Select Currency ...");
             return false;
         }
-
-        if ($("[id$=txtPReciptCheckNo]").val() == '') {
-            RedDotAlert_Error("Enter Check/Rceipt No ...");
-            return false;
+        if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
+            if ($("[id$=txtPReciptCheckNo]").val() == '') {
+                RedDotAlert_Error("Enter Check/Rceipt No ...");
+                return false;
+            }
         }
 
         if ($("[id$=txtPChkDate]").val() == '') {
