@@ -753,5 +753,20 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetDetailsOfPDC(string dbname, string cardcode)
+        {
+            string retVal = string.Empty;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.GetDetailsOfPDC(dbname, cardcode);
+                return Content(JsonConvert.SerializeObject(DS), "application/json");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

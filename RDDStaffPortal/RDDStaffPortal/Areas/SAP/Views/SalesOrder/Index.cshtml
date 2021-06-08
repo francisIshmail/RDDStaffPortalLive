@@ -649,14 +649,15 @@
                                                                     <div class="reddotTableHead"><div>Pay_id</div></div>
                                                                     <div class="reddotTableHead"><div>Pay_Method id</div></div>
                                                                     <div class="reddotTableHead"><div>Payment Method</div></div>
+                                                                    <div class="reddotTableHead"><div>PDC Typecode</div></div>
                                                                     <div class="reddotTableHead"><div>PDC Type</div></div>
                                                                     <div class="reddotTableHead"><div>Bank</div></div>
                                                                     <div class="reddotTableHead"><div>Bank Code</div></div>
-                                                                    <div class="reddotTableHead"><div>Rcpt/Check No</div></div>
-                                                                    <div class="reddotTableHead"><div>Rcpt/Check Date</div></div>
+                                                                    <div class="reddotTableHead"><div>Rcpt/Cheque No</div></div>
+                                                                    <div class="reddotTableHead"><div>Rcpt/Cheque Date</div></div>
                                                                     <div class="reddotTableHead"><div>Currency</div></div>
                                                                     <div class="reddotTableHead"><div>Currency_id</div></div>
-                                                                    <div class="reddotTableHead"><div>Rcpt/Check Amt</div></div>
+                                                                    <div class="reddotTableHead"><div>Rcpt/Cheque Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Allocated Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Balance Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Remarks</div></div>
@@ -669,14 +670,15 @@
                                                                     <div class="reddotTableCell Abcd"><div>Pay_id</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Payment Method</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Pay_Method id</div></div>
+                                                                    <div class="reddotTableCell Abcd"><div>PDC Typecode</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>PDC Type</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Bank</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Bank Code</div></div>
-                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Check No</div></div>
-                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Check Date</div></div>
+                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Cheque No</div></div>
+                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Cheque Date</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Currency</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Currency_id</div></div>
-                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Check Amt</div></div>
+                                                                    <div class="reddotTableCell Abcd"><div>Rcpt/Cheque Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Allocated Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Balance Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Remarks</div></div>
@@ -966,37 +968,18 @@
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group form-inline">
-                            <label for="Database" class="col-md-5 col-form-label p-0">Bank Name :</label>
+                            <label for="Database" class="col-md-5 col-form-label p-0">Receipt/Cheque No</label>
                             <div class="col-md-7 p-0">
-                                <input type="text" class="form-control form-control-sm" id="txtPBankName">
-                                <input type="hidden" id="txtPBankCode"/>
+                                <input type="text" class="form-control form-control-sm" id="txtPReciptCheckNo">
                             </div>
+
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group form-inline">
-                                <label for="Database" class="col-md-5 col-form-label p-0">Currency :</label>
-                                <div class="col-md-7 p-0">
-                                    <select class="form-control form-control-sm" id="cbPCurency">
-                                        <option>-- Select --</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="form-group form-inline">
-                                <label for="Database" class="col-md-5 col-form-label p-0">Receipt/Check No</label>
-                                <div class="col-md-7 p-0">
-                                    <input type="text" class="form-control form-control-sm" id="txtPReciptCheckNo">
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="form-group form-inline">
-                                <label for="Database" class="col-md-5 col-form-label p-0">Receipt/check Date :</label>
+                                <label for="Database" class="col-md-5 col-form-label p-0">Receipt/Cheque Date :</label>
                                 <div class="col-md-7 p-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control form-control-sm datepicker" id="txtPChkDate" name="datepicker">
@@ -1011,7 +994,28 @@
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group form-inline">
-                                <label for="Database" class="col-md-5 col-form-label p-0">Receipt/Check Amt :</label>
+                                <label for="Database" class="col-md-5 col-form-label p-0">Bank Name :</label>
+                                <div class="col-md-7 p-0">
+                                    <input type="text" class="form-control form-control-sm" id="txtPBankName">
+                                    <input type="hidden" id="txtPBankCode" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group form-inline">
+                                <label for="Database" class="col-md-5 col-form-label p-0">Currency :</label>
+                                <div class="col-md-7 p-0">
+                                    <select class="form-control form-control-sm" id="cbPCurency">
+                                        <option>-- Select --</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group form-inline">
+                                <label for="Database" class="col-md-5 col-form-label p-0">Receipt/Cheque Amt :</label>
                                 <div class="col-md-7 p-0">
                                     <input type="text" style="text-align:right" class="form-control form-control-sm" id="txtPRcptCheckAmt" value="0.00">
                                 </div>
@@ -1041,6 +1045,55 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="col-md-12 p-2">
+                            <div class="table-responsive">
+                                <div class="reddotTable sm-form mar-t0">
+                                    <div id="divShowPDCPaymentDetails" class="reddotTableBody">
+                                        <div class="reddotTableRow odd-even-row">
+                                            <div class="reddotTableHead"><div>PDC Type</div></div>
+                                            <div class="reddotTableHead" style="display:none"><div>PDC Typecode</div></div>
+                                            <div class="reddotTableHead"><div>Ref/Cheque No</div></div>
+                                            <div class="reddotTableHead"><div>Ref/Cheque Date</div></div>
+                                            <div class="reddotTableHead"><div>Bank</div></div>
+                                            <div class="reddotTableHead" style="display:none"><div>Bank Code</div></div>
+                                            <div class="reddotTableHead"><div>Currency</div></div>
+                                            <div class="reddotTableHead"><div>PDC Amt</div></div>
+                                            <div class="reddotTableHead"><div>Used Amt</div></div>
+                                            <div class="reddotTableHead"><div>Balance Amt</div></div>
+                                            <div class="reddotTableHead"><div>Remarks</div></div>
+                                            <div class="reddotTableHead"><div>Action</div></div>
+                                        </div>
+                                    </div>
+                                    <div id="" class="reddotTableBody">
+                                        <div id="divShowPDCPaymentDetailsBody" class="reddotTableRow odd-even-row PayAllocate">
+                                            <div class="reddotTableCell Abcd"><div>PDC Type</div></div>
+                                            <div class="reddotTableCell Abcd" style="display:none"><div>PDC Typecode</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Ref/Cheque No</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Ref/Cheque Date</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Bank</div></div>
+                                            <div class="reddotTableCell Abcd" style="display:none"><div>Bank Code</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Currency</div></div>
+                                            <div class="reddotTableCell Abcd"><div>PDC Amt</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Used Amt</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Remarks</div></div>
+                                            <div class="reddotTableCell Abcd"><div>Balance Amt</div></div>
+                                            <div class="reddotTableCell">
+                                                <div>
+                                                    <button type="button" id="PGrid_Edit" title="" class="btn btn-success btn-sm btn-sm" data-original-title="Edit">Allocate</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row rowmin">
+                       
+
                     </div>
 
                     @*<div class="col-md-6 col-lg-12">

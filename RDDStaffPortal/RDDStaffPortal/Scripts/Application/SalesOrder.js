@@ -146,7 +146,7 @@ SalesOrder.prototype = {
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
         debugger;
         FieldHide = ['pay_line_id', 'pay_menthod_id', 'pdc_type_id', 'bank_code', 'curr_id'];
-        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type', 'bank_name','bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id','pdc_type', 'bank_name','bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
 
         if (update_Row_Flag1 == true) {
 
@@ -411,14 +411,15 @@ SalesOrder.prototype = {
             $("[id$=uxProwindex]").val(tr.find(".Abcd").eq(0).text());
             $("[id$=cbPPaymentMethod]").val(tr.find(".Abcd").eq(2).text()).trigger('change');
             $("[id$=cbPPDCType]").val(tr.find(".Abcd").eq(4).text()).trigger('change');
-            $("[id$=txtPBankName]").val(tr.find(".Abcd").eq(5).text());
-            $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(4).text());
-            $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(5).text());
-            $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(6).text()).trigger('change');
-            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(8).text());
-            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(9).text());           
-            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(10).text());
-            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(11).text());
+            $("[id$=txtPBankName]").val(tr.find(".Abcd").eq(6).text());
+            $("[id$=txtPBankCode]").val(tr.find(".Abcd").eq(7).text());
+            $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(8).text());
+            $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(9).text());
+            $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(11).text()).trigger('change');
+            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(12).text());
+            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(13).text());           
+            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(14).text());
+            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(15).text());
                       
 
             $("[id$=btn_PAddRow]").text("Update");
@@ -679,6 +680,7 @@ SalesOrder.prototype = {
                                     $("#cbPCurency").empty();
                                     for (var i = 0; i < d1.length; i++) {
                                         $("#cbPCurency").append($("<option></option>").val(d1[i].Currency).html(d1[i].Currency));
+                                        $("[id$=cbPCurency]").val("USD").trigger('change');
                                     }
                                 }
                             });
@@ -1739,6 +1741,7 @@ SalesOrder.prototype = {
         $("#cbPPaymentMethod").change(function () {
             //alert("hi");
             var Paymethod = $(this).val();
+            var Customercode = $("#txtCardCode").val();
             $("#txtPBankName").val('');
             $("#cbPPDCType").empty();
             if (Paymethod == "PDC") {
@@ -1753,13 +1756,76 @@ SalesOrder.prototype = {
                 val = val + '<option value="BG">Bank Guarantee</option>';
                 $("#cbPPDCType").append(val);
                 $("#txtPBankName").removeAttr("disabled", true);
+                $("#cbPPDCType").removeAttr("disabled", true);
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/SAP/SalesOrder/GetDetailsOfPDC",
+                    data: JSON.stringify({ dbname: $("#DBName").val(), cardcode: Customercode }),
+                    dataType: 'Json',
+                    contentType: "Application/json",
+                    success: function (data) {
+                        var d = data.Table[0];
+                        var str = '';
+                        str += '<div class="reddotTableCell Abcd pdctype">' + d.PDCType + '</div>';
+                        str += '<div class="reddotTableCell Abcd pdctypecode" style="display:none">' + d.Type + '</div>';
+                        str += '<div class="reddotTableCell Abcd chequeno">' + d.Cheque_ReferenceNo + '</div>';
+                        str += '<div class="reddotTableCell Abcd chequedt">' + d.ValidToDate + '</div>';
+                        str += '<div class="reddotTableCell Abcd bnknm">' + d.BankName + '</div>';
+                        str += '<div class="reddotTableCell Abcd bnkcode" style="display:none">' + d.BankCode + '</div>';
+                        str += '<div class="reddotTableCell Abcd curncy">' + d.Currency + '</div>';
+                        str += '<div class="reddotTableCell Abcd amt">' + d.Amount + '</div>';
+                        str += '<div class="reddotTableCell Abcd uamt">' + d.UsedAmount + '</div>';
+                        str += '<div class="reddotTableCell Abcd bamt">' + d.BalanceAmount + '</div>';
+                        str += '<div class="reddotTableCell Abcd remrk">' + d.Remarks + '</div>';
+                        str += '<div class="reddotTableCell Abcd"><button type="button" id="btnAllocatePDC" title="" class="btn btn-success btn-sm btn-sm AllocatePDC">Allocate</button></div>';
+                        $("#divShowPDCPaymentDetailsBody").empty();
+                        $("#divShowPDCPaymentDetailsBody").append(str);
+                    }
+                });
             }
             else if (Paymethod == "CDC" || Paymethod == "LC") {
                 $("#txtPBankName").removeAttr("disabled", true);
+                $("#cbPPDCType").attr("disabled", true);
             }
             else {
                 $("#txtPBankName").val('');
                 $("#txtPBankName").attr("disabled", true);
+                $("#cbPPDCType").attr("disabled", true);
+            }            
+        });
+
+        $(document).on('click', '.AllocatePDC', function () {
+            debugger
+            //alert("hi");
+            var Pdctype = $("#cbPPDCType option:selected").val();
+
+            var trs = $(this).parent().parent();
+            var PayPdctype = trs.find('.pdctypecode').html();
+            if (Pdctype == PayPdctype) {
+                var Chequeno = trs.find('.chequeno').html();
+                var Chequedate = trs.find('.chequedt').html();
+                var Currency = trs.find('.curncy').html();
+                var PDCamount = trs.find('.amt').html();
+                var Usedamount = trs.find('.uamt').html();
+                var Balanceamount = trs.find('.bamt').html();
+                var Remark = trs.find('.remrk').html();
+                var Bankname = trs.find('.bnknm').html();
+                var Bankcode = trs.find('.bnkcode').html();
+                $("#txtPReciptCheckNo").val(Chequeno);
+                $("#txtPRcptCheckAmt").val(PDCamount);
+                //$("#txtPAllocatedAmt").val(Usedamount);
+                $("#txtPBalanceAmt").val(Balanceamount);
+                $("#txtPChkDate").val(Chequedate);
+                $("#cbPCurency").val(Currency).trigger('change');
+                $("#txtPRemarks").val(Remark);
+                $("#txtPBankName").val(Bankname);
+                $("#txtPBankCode").val(Bankcode);
+            }
+            else {
+                RedDotAlert_Error("Can't allocate");
+                return;
             }
         });
 
@@ -1786,6 +1852,8 @@ SalesOrder.prototype = {
                             $("#txtPChkDate").val(d.ValidToDate);
                             $("#cbPCurency").val(d.Currency).trigger('change');
                             $("#txtPRemarks").val(d.Remarks);
+                            $("#txtPBankName").val(d.BankName);
+                            $("#txtPBankCode").val(d.BankCode);
                         }
                     }
                 });

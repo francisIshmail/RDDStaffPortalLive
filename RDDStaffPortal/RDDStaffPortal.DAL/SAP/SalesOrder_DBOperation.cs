@@ -513,5 +513,22 @@ namespace RDDStaffPortal.DAL.SAP
                 throw ex;
             }
         }
+
+        public DataSet GetDetailsOfPDC(string dbname, string cardcode)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG '" + dbname + "','','" + cardcode + "',''");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
