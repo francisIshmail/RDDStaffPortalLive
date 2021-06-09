@@ -510,7 +510,7 @@ SalesOrder.prototype = {
                             $("[id$=txtPExchngRate]").val('0.00');
                         }
                         _PayTermDetails["ExchangeRate"] = $("[id$=txtPExchngRate]").val();
-                        if ($("#cbPPDCType option:selected").val() == "BG" || $("#cbPPDCType option:selected").val() == "SC") {
+                        if ($("#txtPBankName").val() != '') {
                             _PayTermDetails["bank_code"] = $("#txtPBankCode").val();
                             _PayTermDetails["bank_name"] = $("#txtPBankName").val();
                         }
@@ -1489,12 +1489,12 @@ SalesOrder.prototype = {
                                 SalesOrderDetail_Obj['Base_LinId'] = 0;
 
                                 SalesOrderDetail.push(SalesOrderDetail_Obj);
-
-
                             });
 
                             // This is for Payment Methods
-                            var AllocateAmt = 0;
+                            var AllocateAmt = 0.00;
+                            var ExchngRate = 0.00;
+                            var Currencytype = "";
                             $(".PayDetail").each(function () {
                                 //if (!this.rowIndex) return; // skip first row
 
@@ -1508,11 +1508,13 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(8).text();
                                 SalesOrderPayDetail_Obj['Rcpt_Check_Date'] = GetSqlDateformat($(this).find(".Abcd").eq(9).text());
                                 SalesOrderPayDetail_Obj['Curr_Id'] = $(this).find(".Abcd").eq(10).text();
+                                Currencytype = $(this).find(".Abcd").eq(10).text();
                                 SalesOrderPayDetail_Obj['Currency'] = $(this).find(".Abcd").eq(11).text();
                                 SalesOrderPayDetail_Obj['ExchangeRate'] = $(this).find(".Abcd").eq(12).text();
+                                ExchngRate = parseFloat($(this).find(".Abcd").eq(12).text());
                                 SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(13).text();
                                 SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(14).text();
-                                AllocateAmt = AllocateAmt + $(this).find(".Abcd").eq(14).text();
+                                AllocateAmt = parseFloat(AllocateAmt) + parseFloat($(this).find(".Abcd").eq(14).text());
                                 SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(15).text();
                                 SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(16).text();
 
@@ -1523,17 +1525,17 @@ SalesOrder.prototype = {
                                 SalesOrderPayMethod.push(SalesOrderPayDetail_Obj);
                             });
                             debugger
-                            var OSamt = parseFloat(("#txtTotal").val()) - parseFloat(AllocateAmt);
-                            var DeclaredOSamt = $("#hdnAllowSOR_OSAmt").val();
-                            var ConvertedOSAmt = "";
-                            if ($("#cbPCurency option:selected").val() != 'USD') {
-                                var ExchangeRate = $("#txtPExchngRate").val();
-                                ConvertedOSAmt = parseFloat($("#txtPAllocatedAmt").val()) / parseFloat(ExchangeRate); 
+                            //var ConvertedOSAmt = 0.00;
+                            var OSamt = 0.00;
+                            var DeclaredOSamt = parseFloat($("#hdnAllowSOR_OSAmt").val());
+                            if (Currencytype != 'USD') {
+                                var allocateamount = parseFloat(AllocateAmt) / parseFloat(ExchngRate);
+                                OSamt = parseFloat($("#txtTotal").val()) - parseFloat(allocateamount);                                             
                             }
                             else {
-                                ConvertedOSAmt = OSamt;
+                                OSamt = parseFloat($("#txtTotal").val()) - parseFloat(AllocateAmt);;
                             }
-                            if (ConvertedOSAmt <= DeclaredOSamt) {
+                            if (OSamt <= DeclaredOSamt) {
                                 $.ajax({
                                     async: false,
                                     cache: false,
@@ -2292,13 +2294,13 @@ function Validate() {
         }
         var Allocated_Amt = 0.00;
         var DocTotal = 0.00;
-
+        //var ExchngeRt = 0.00;
         $(".PayDetail").each(function () {
 
             //SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(8).text();
-            Allocated_Amt = Allocated_Amt + parseFloat($(this).find(".Abcd").eq(13).text());
+            Allocated_Amt = Allocated_Amt + parseFloat($(this).find(".Abcd").eq(14).text());
             //SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(10).text();
-
+            //ExchngeRt = $(this).find(".Abcd").eq(12).text();
         });
         debugger;
         if ($("[id$=txtTotal]").val() != '')
@@ -2432,9 +2434,11 @@ function Validate_PAddRow() {
                 RedDotAlert_Error("Enter Cheque/Receipt No ...");
                 return false;
             }
-            if ($("[id$=txtPBankName]").val() == '') {
-                RedDotAlert_Error("Enter Bank Name ...");
-                return false;
+            if ($("#cbPPaymentMethod option:selected").val() != "ON A/C") {
+                if ($("[id$=txtPBankName]").val() == '') {
+                    RedDotAlert_Error("Enter Bank Name ...");
+                    return false;
+                }
             }
         }
 
