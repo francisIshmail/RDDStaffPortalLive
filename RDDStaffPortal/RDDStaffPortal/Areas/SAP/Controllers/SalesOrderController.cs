@@ -548,6 +548,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                         cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = PayDetail[i].Base_LinId.ToString();
                                         cmd.Parameters.Add("@Pay_Method_Id", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method_Id.ToString();
                                         cmd.Parameters.Add("@Pay_Method", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method.ToString();
+                                        cmd.Parameters.Add("@PDCType", SqlDbType.NVarChar).Value = PayDetail[i].Pdc_Type_Id.ToString();
                                         cmd.Parameters.Add("@Rcpt_Check_No", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_No.ToString();
                                         cmd.Parameters.Add("@ExchangeRate", SqlDbType.Float).Value = PayDetail[i].ExchangeRate.ToString();
                                         cmd.Parameters.Add("@Bank_Code", SqlDbType.NVarChar).Value = PayDetail[i].Bank_Code.ToString();
@@ -564,7 +565,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                         
 
                                         cmd.ExecuteNonQuery();
-
+                                        
                                         cmd.Dispose();
                                     }
                                 }

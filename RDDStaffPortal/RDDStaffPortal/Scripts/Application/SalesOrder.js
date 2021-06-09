@@ -1503,6 +1503,7 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['Pay_Method_Id'] = $(this).find(".Abcd").eq(2).text();
                                 SalesOrderPayDetail_Obj['Pay_Method'] = $(this).find(".Abcd").eq(3).text();
                                 SalesOrderPayDetail_Obj['Pdc_Type_Id'] = $(this).find(".Abcd").eq(4).text();
+                                SalesOrderPayDetail_Obj['Pdc_Type'] = $(this).find(".Abcd").eq(5).text();
                                 SalesOrderPayDetail_Obj['Bank_Name'] = $(this).find(".Abcd").eq(6).text();
                                 SalesOrderPayDetail_Obj['Bank_Code'] = $(this).find(".Abcd").eq(7).text();
                                 SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(8).text();

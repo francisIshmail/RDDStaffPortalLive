@@ -122,6 +122,8 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public Int32 Base_LinId { get; set; }
         public string Pay_Method_Id { get; set; }
         public string Pay_Method { get; set; }
+        public string Pdc_Type_Id { get; set; }
+        public string Pdc_Type { get; set; }
         public decimal ExchangeRate { get; set; }
         public string Bank_Code { get; set; }
         public string Bank_Name { get; set; }
