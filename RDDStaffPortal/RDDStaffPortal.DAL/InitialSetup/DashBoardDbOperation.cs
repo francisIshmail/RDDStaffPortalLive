@@ -112,7 +112,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
 
                 SqlParameter[] parm = { };
                 SqlParameter[] sqlpar = { new SqlParameter("@p_UserName", username) };
-                dsModules = Com.ExecuteDataSet("RDD_Dashboard_Main_V1", CommandType.StoredProcedure, sqlpar);
+                dsModules = Com.ExecuteDataSet("RDD_Dashboard_Main_V1_Rights", CommandType.StoredProcedure, sqlpar);
             }
             catch (Exception)
             {
