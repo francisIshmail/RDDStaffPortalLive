@@ -148,7 +148,7 @@ SalesOrder.prototype = {
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
         debugger;
         FieldHide = ['pay_line_id', 'pay_menthod_id', 'pdc_type_id', 'bank_code', 'curr_id'];
-        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id', 'pdc_type', 'bank_name', 'bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'ExchangeRate', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
+        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id', 'pdc_type', 'bank_name', 'bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'ExchangeRate', 'rcpt_check_amt', 'allocated_amt_usd', 'allocated_amt_lc', 'balance_amt', 'remark'];
 
         if (update_Row_Flag1 == true) {
 
@@ -444,11 +444,17 @@ SalesOrder.prototype = {
             $("[id$=txtPReciptCheckNo]").val(tr.find(".Abcd").eq(8).text());
             $("[id$=txtPChkDate]").val(tr.find(".Abcd").eq(9).text());
             $("[id$=cbPCurency]").val(tr.find(".Abcd").eq(11).text()).trigger('change');
+            if (tr.find(".Abcd").eq(11).text() == "USD") {
+                $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(14).text()); 
+            }
+            else {
+                $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(15).text()); 
+            }
             $("[id$=txtPExchngRate]").val(tr.find(".Abcd").eq(12).text());
             $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(13).text());
-            $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(14).text());           
-            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(15).text());
-            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(16).text());
+            //$("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(14).text());           
+            $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(16).text());
+            $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(17).text());
                       
 
             $("[id$=btn_PAddRow]").text("Update");
@@ -521,10 +527,16 @@ SalesOrder.prototype = {
                         _PayTermDetails["rcpt_check_no"] = $("[id$=txtPReciptCheckNo]").val();
                         _PayTermDetails["rcpt_check_date"] = $("[id$=txtPChkDate]").val();
                         _PayTermDetails["curr_id"] = $("[id$=cbPCurency]").val();
-                        _PayTermDetails["currency"] = $("#cbPCurency option:selected").text();
-
+                        _PayTermDetails["currency"] = $("#cbPCurency option:selected").val();
+                        debugger
                         _PayTermDetails["rcpt_check_amt"] = $("[id$=txtPRcptCheckAmt]").val();
-                        _PayTermDetails["allocated_amt"] = $("[id$=txtPAllocatedAmt]").val();
+                        if ($("#cbPCurency option:selected").val() == "USD") {
+                            _PayTermDetails["allocated_amt_usd"] = $("[id$=txtPAllocatedAmt]").val();
+                        }
+                        else {
+                            _PayTermDetails["allocated_amt_lc"] = $("[id$=txtPAllocatedAmt]").val();
+                        }                       
+                        
                         _PayTermDetails["balance_amt"] = $("[id$=txtPBalanceAmt]").val();
                         _PayTermDetails["remark"] = $("[id$=txtPRemarks]").val();
 
@@ -552,10 +564,16 @@ SalesOrder.prototype = {
                         parameter.rcpt_check_no = $("[id$=txtPReciptCheckNo]").val();
                         parameter.rcpt_check_date = $("[id$=txtPChkDate]").val();
                         parameter.curr_id = $("[id$=cbPCurency]").val();
-                        parameter.currency = $("#cbPCurency option:selected").text();
+                        parameter.currency = $("#cbPCurency option:selected").val();
+                        if ($("#cbPCurency option:selected").val() == "USD") {
+                            parameter.allocated_amt_usd = $("[id$=txtPAllocatedAmt]").val();
+                        }
+                        else {
+                            parameter.allocated_amt_lc = $("[id$=txtPAllocatedAmt]").val();
+                        }
                         parameter.ExchangeRate = $("[id$=txtPExchngRate]").val();
                         parameter.rcpt_check_amt = $("[id$=txtPRcptCheckAmt]").val();
-                        parameter.allocated_amt = $("[id$=txtPAllocatedAmt]").val();
+                        //parameter.allocated_amt = $("[id$=txtPAllocatedAmt]").val();
                         parameter.balance_amt = $("[id$=txtPBalanceAmt]").val();
                         parameter.remark = $("[id$=txtPRemarks]").val();
 
@@ -581,27 +599,27 @@ SalesOrder.prototype = {
         $("#txtPRcptCheckAmt").focusout(function () {
             debugger
             try {
-                if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
-                    if($("#cbPCurency option:selected").val() != 'USD'){                       
-                        var ConvertedOSAmt = "";                       
-                        var ExchangeRate = $("#txtPExchngRate").val();
-                        ConvertedOSAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);                        
-                        
-                        if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
-                            var ConvertedRecpChqAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
-                            if (ConvertedRecpChqAmt > $("[id$=txtTotal]").val()) {
-                                var ConvertedTotalAmt = parseFloat($("#txtTotal").val()) * parseFloat(ExchangeRate);
-                                $("[id$=txtPAllocatedAmt]").val(ConvertedTotalAmt);
-                            }
-                            else {
-                                $("[id$=txtPAllocatedAmt]").val('0.00');
-                            }
+                //if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
+                if ($("#cbPCurency option:selected").val() != $("#cbDocCur option:selected").val()) {
+                    var ConvertedOSAmt = "";
+                    var ExchangeRate = $("#txtPExchngRate").val();
+                    ConvertedOSAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
+
+                    if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
+                        var ConvertedRecpChqAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
+                        if (ConvertedRecpChqAmt > $("[id$=txtTotal]").val()) {
+                            var ConvertedTotalAmt = parseFloat($("#txtTotal").val()) * parseFloat(ExchangeRate);
+                            $("[id$=txtPAllocatedAmt]").val(ConvertedTotalAmt);
                         }
                         else {
-                            RedDotAlert_Error("Please add contants");
+                            $("[id$=txtPAllocatedAmt]").val('0.00');
                         }
                     }
+                    else {
+                        RedDotAlert_Error("Please add contants");
+                    }
                 }
+                //}
             }
             catch {
                 alert(error);
@@ -1349,7 +1367,6 @@ SalesOrder.prototype = {
             try {
                 debugger
 
-
                 if ($("#btn_MainSave").text() == 'New') {
                     $("#FilterSection1").hide();
                     $("#FilterSection").hide();
@@ -1495,6 +1512,7 @@ SalesOrder.prototype = {
                             var AllocateAmt = 0.00;
                             var ExchngRate = 0.00;
                             var Currencytype = "";
+                            var doccurr = $("#cbDocCur option:selected").val();
                             $(".PayDetail").each(function () {
                                 //if (!this.rowIndex) return; // skip first row
 
@@ -1509,15 +1527,26 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(8).text();
                                 SalesOrderPayDetail_Obj['Rcpt_Check_Date'] = GetSqlDateformat($(this).find(".Abcd").eq(9).text());
                                 SalesOrderPayDetail_Obj['Curr_Id'] = $(this).find(".Abcd").eq(10).text();
-                                Currencytype = $(this).find(".Abcd").eq(10).text();
+                                Currencytype = $(this).find(".Abcd").eq(10).text();                                
                                 SalesOrderPayDetail_Obj['Currency'] = $(this).find(".Abcd").eq(11).text();
                                 SalesOrderPayDetail_Obj['ExchangeRate'] = $(this).find(".Abcd").eq(12).text();
                                 ExchngRate = parseFloat($(this).find(".Abcd").eq(12).text());
                                 SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(13).text();
                                 SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(14).text();
-                                AllocateAmt = parseFloat(AllocateAmt) + parseFloat($(this).find(".Abcd").eq(14).text());
-                                SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(15).text();
-                                SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(16).text();
+                                if (doccurr == Currencytype) {
+                                    if (Currencytype=="USD")
+                                        AllocateAmt = parseFloat(AllocateAmt) + parseFloat($(this).find(".Abcd").eq(14).text());
+                                    else
+                                        AllocateAmt = parseFloat(AllocateAmt) + parseFloat($(this).find(".Abcd").eq(15).text());
+                                }
+                                else {
+                                    if (Currencytype == "USD")
+                                        AllocateAmt = parseFloat(AllocateAmt) + (parseFloat($(this).find(".Abcd").eq(14).text()) / parseFloat(ExchngRate));
+                                    else
+                                        AllocateAmt = parseFloat(AllocateAmt) + (parseFloat($(this).find(".Abcd").eq(15).text()) / parseFloat(ExchngRate));
+                                }
+                                SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(16).text();
+                                SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(17).text();
 
                                 SalesOrderPayDetail_Obj['Base_Obj'] = 0;
                                 SalesOrderPayDetail_Obj['Base_Id'] = 0;
@@ -1529,13 +1558,14 @@ SalesOrder.prototype = {
                             //var ConvertedOSAmt = 0.00;
                             var OSamt = 0.00;
                             var DeclaredOSamt = parseFloat($("#hdnAllowSOR_OSAmt").val());
-                            if (Currencytype != 'USD') {
-                                var allocateamount = parseFloat(AllocateAmt) / parseFloat(ExchngRate);
-                                OSamt = parseFloat($("#txtTotal").val()) - parseFloat(allocateamount);                                             
-                            }
-                            else {
-                                OSamt = parseFloat($("#txtTotal").val()) - parseFloat(AllocateAmt);;
-                            }
+                            //if (Currencytype != 'USD') {
+                            //    //var allocateamount = parseFloat(AllocateAmt) / parseFloat(ExchngRate);
+                            //    OSamt = parseFloat($("#txtTotal").val()) - parseFloat(AllocateAmt);                                             
+                            //}
+                            //else {
+                            //    OSamt = parseFloat($("#txtTotal").val()) - parseFloat(AllocateAmt);;
+                            //}
+                            OSamt = parseFloat($("#txtTotal").val()) - parseFloat(AllocateAmt);
                             if (OSamt <= DeclaredOSamt) {
                                 $.ajax({
                                     async: false,
@@ -1855,21 +1885,24 @@ SalesOrder.prototype = {
                     contentType: "Application/json",
                     success: function (data) {
                         var d = data.Table[0];
-                        var str = '';
-                        str += '<div class="reddotTableCell Abcd pdctype">' + d.PDCType + '</div>';
-                        str += '<div class="reddotTableCell Abcd pdctypecode" style="display:none">' + d.Type + '</div>';
-                        str += '<div class="reddotTableCell Abcd chequeno">' + d.Cheque_ReferenceNo + '</div>';
-                        str += '<div class="reddotTableCell Abcd chequedt">' + d.ValidToDate + '</div>';
-                        str += '<div class="reddotTableCell Abcd bnknm">' + d.BankName + '</div>';
-                        str += '<div class="reddotTableCell Abcd bnkcode" style="display:none">' + d.BankCode + '</div>';
-                        str += '<div class="reddotTableCell Abcd curncy">' + d.Currency + '</div>';
-                        str += '<div class="reddotTableCell Abcd amt">' + d.Amount + '</div>';
-                        str += '<div class="reddotTableCell Abcd uamt">' + d.UsedAmount + '</div>';
-                        str += '<div class="reddotTableCell Abcd bamt">' + d.BalanceAmount + '</div>';
-                        str += '<div class="reddotTableCell Abcd remrk">' + d.Remarks + '</div>';
-                        str += '<div class="reddotTableCell Abcd"><button type="button" id="btnAllocatePDC" title="" class="btn btn-success btn-sm btn-sm AllocatePDC">Allocate</button></div>';
                         $("#divShowPDCPaymentDetailsBody").empty();
-                        $("#divShowPDCPaymentDetailsBody").append(str);
+                        if (data.Table.length > 0) {
+                            var str = '';
+                            str += '<div class="reddotTableCell Abcd pdctype">' + d.PDCType + '</div>';
+                            str += '<div class="reddotTableCell Abcd pdctypecode" style="display:none">' + d.Type + '</div>';
+                            str += '<div class="reddotTableCell Abcd chequeno">' + d.Cheque_ReferenceNo + '</div>';
+                            str += '<div class="reddotTableCell Abcd chequedt">' + d.ValidToDate + '</div>';
+                            str += '<div class="reddotTableCell Abcd bnknm">' + d.BankName + '</div>';
+                            str += '<div class="reddotTableCell Abcd bnkcode" style="display:none">' + d.BankCode + '</div>';
+                            str += '<div class="reddotTableCell Abcd curncy">' + d.Currency + '</div>';
+                            str += '<div class="reddotTableCell Abcd amt">' + d.Amount + '</div>';
+                            str += '<div class="reddotTableCell Abcd uamt">' + d.UsedAmount + '</div>';
+                            str += '<div class="reddotTableCell Abcd bamt">' + d.BalanceAmount + '</div>';
+                            str += '<div class="reddotTableCell Abcd remrk">' + d.Remarks + '</div>';
+                            str += '<div class="reddotTableCell Abcd"><button type="button" id="btnAllocatePDC" title="" class="btn btn-success btn-sm btn-sm AllocatePDC">Allocate</button></div>';
+                            
+                            $("#divShowPDCPaymentDetailsBody").append(str);
+                        }
                     }
                 });
             }
@@ -1900,7 +1933,18 @@ SalesOrder.prototype = {
 
         $("#cbPCurency").change(function () {
             var Currency = $(this).val();
-            if (Currency != "USD") {
+            var doccur = $("#cbDocCur option:selected").val();
+            if (Currency != doccur) {
+                $("#divExchngRate").show();
+            }
+            else {
+                $("#divExchngRate").hide();
+            }
+        });
+        $("#cbDocCur").change(function () {
+            var doccur = $(this).val();
+            var Currency = $("#cbPCurency option:selected").val();
+            if (Currency != doccur) {
                 $("#divExchngRate").show();
             }
             else {
