@@ -1007,7 +1007,9 @@ function RedDot_NumberFormat(value) {
     } else if (value >= 1000) {
         values = (value / 1000).toFixed(2) + ' K';
     }
-
+    else {
+        values = value;
+    }
     return abr + '' + values.toString();
 }
 
