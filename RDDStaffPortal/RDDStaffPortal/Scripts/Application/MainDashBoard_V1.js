@@ -138,19 +138,19 @@
 						/*End Month*/
 						/*Start Quoter */
 						var k = 0;
-						if ($.inArray(TodayMonth, [0, 1, 2]) == 1) {
+						if ($.inArray(TodayMonth, [0, 1, 2]) > 0) {
 							i = 3;
 							k = 0;
 
-						} else if ($.inArray(TodayMonth, [3, 4, 5]) == 1) {
+						} else if ($.inArray(TodayMonth, [3, 4, 5]) > 0) {
 							i = 6;
 							k = 3;
 						}
-						else if ($.inArray(TodayMonth, [6, 7, 8]) == 1) {
+						else if ($.inArray(TodayMonth, [6, 7, 8]) > 0) {
 							i = 9;
 							k = 6;
 						}
-						else if (($.inArray(TodayMonth, [9, 10, 11]) == 1)) {
+						else if (($.inArray(TodayMonth, [9, 10, 11]) > 0)) {
 							i = 12;
 							k = 9;
 						}

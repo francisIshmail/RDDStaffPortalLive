@@ -403,7 +403,6 @@
     <Content Include="Scripts\Application\ApproverStatusReport.js" />
     <Content Include="Scripts\Application\Calendarplanner.js" />
     <Content Include="Scripts\Application\MainDashBoard.js" />
-
     <Content Include="Scripts\Application\MainDashBoard_V1.js" />
     <Content Include="Scripts\Application\ItemMaster.js" />
     <Content Include="Scripts\Application\SalesOrder.js" />
@@ -1080,7 +1079,6 @@
     <Content Include="Views\Shared\_LMSLayout.cshtml" />
     <Content Include="Views\Dashboard\GetRightSideTask.cshtml" />
     <Content Include="Views\Dashboard\AllNotification.cshtml" />
-    <Content Include="VendorReportExcel\BasicTable.xlsx" />
     <Content Include="Views\Dashboard\IndexNew.cshtml" />
     <Content Include="Views\Account\GetDashBoardView_V1.cshtml" />
   </ItemGroup>
@@ -1113,6 +1111,7 @@
     <Folder Include="excelFileUpload\MarketingPlan\" />
     <Folder Include="excelFileUpload\VendorReportExcel\" />
     <Folder Include="PdfUploads\" />
+    <Folder Include="VendorReportExcel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

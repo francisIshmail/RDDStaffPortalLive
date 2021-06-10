@@ -328,7 +328,7 @@ namespace RDDStaffPortal.DAL.SAP
 
                         oItem.PurchaseUnitWeight = (Weight * 1000); //Weight
 
-                        oItem.SalesVATGroup = SAPCls.VATOUT;
+                        //oItem.SalesVATGroup = SAPCls.VATOUT;
                         oItem.GLMethod = SAPbobsCOM.BoGLMethods.glm_ItemClass;
                         oItem.DefaultWarehouse = SAPCls.MASTER_WAREHOUSE;
 
