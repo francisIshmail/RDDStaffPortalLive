@@ -1913,6 +1913,7 @@ SalesOrder.prototype = {
             }
             else {
                 $("#txtPBankName").val('');
+                $("#txtPBankCode").val('');
                 $("#txtPBankName").attr("disabled", true);
                 $("#cbPPDCType").attr("disabled", true);
                 $("#divPaymentShow").hide();
@@ -2508,7 +2509,29 @@ function Validate_PAddRow() {
             RedDotAlert_Error("Allocated Amount Should be greater than zero...");
             return false;
         }
-
+        var TotalRcptamt = 0.00;
+        var ConvertedCurr = 0.00;
+        var Doccurr = $("#cbDocCur option:selected").val();
+        var DocTotal = $("#txtTotal").val();
+        $('.PayDetail').each(function () {
+            var Paycurr = $("#cbPCurency option:selected").val();
+            var Rcptamt = $(this).find(".Abcd").eq(13).text();
+            var Exchngrate = $(this).find(".Abcd").eq(12).text();
+            //TotalRcptamt += parseFloat(Rcptamt);
+            if (Doccurr != Paycurr) {
+                ConvertedCurr = parseFloat(Rcptamt) / parseFloat(Exchngrate);
+                TotalRcptamt += parseFloat(ConvertedCurr);
+            }
+            else {
+                ConvertedCurr = parseFloat(Rcptamt) / parseFloat(1);
+                TotalRcptamt += parseFloat(ConvertedCurr);
+            }
+        });
+        
+        if (TotalRcptamt > DocTotal) {
+            RedDotAlert_Error("You can't add another payment term for this order");
+            return false;
+        }
         return true;
     }
     catch (Error) {
