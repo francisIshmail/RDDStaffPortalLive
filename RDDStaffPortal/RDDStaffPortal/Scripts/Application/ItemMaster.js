@@ -544,7 +544,7 @@ ItemMaster.prototype = {
 }
 
 function ClearControlAfterSave() {
-
+    debugger;
     $("[id$=cbManufacturer]").val('').trigger('change');
     $("[id$=cbBU]").val('').trigger('change');
     $("[id$=cbPC]").val('').trigger('change');
@@ -552,7 +552,7 @@ function ClearControlAfterSave() {
     $("[id$=cbPG]").val('').trigger('change');
 
     $("[id$=txItemCode]").val('');
-    $("[id$ = txHSCode]").val('');
+    $("[id$=txHSCode]").val('');
     $("[id$=txDescr]").val('');
     $("[id$=txLength]").val('');
     $("[id$=txWidth]").val('');
