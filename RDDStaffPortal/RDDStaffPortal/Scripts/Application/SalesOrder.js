@@ -600,16 +600,48 @@ SalesOrder.prototype = {
             debugger
             try {
                 //if ($("#cbPPaymentMethod option:selected").val() != "CASH") {
+                var Doccurr = $("#cbDocCur option:selected").val();
+                var AllocatedAmt = 0.00;
+                var TotalAllocatedAmt = 0.00;
+                $('.PayDetail').each(function () {
+                    debugger
+                    var Paycurr = $(this).find('.Abcd').eq(11).text();                    
+                    var ExchangeRate = $(this).find('.Abcd').eq(12).text();
+                    if (ExchangeRate == "" || ExchangeRate == undefined) {
+                        ExchangeRate = parseFloat(1);
+                    }
+                    if (Paycurr != Doccurr) {
+                        if (Paycurr == "USD")
+                            AllocatedAmt = parseFloat($(this).find('.Abcd').eq(14).text()) / parseFloat(ExchangeRate);
+                        else
+                            AllocatedAmt = parseFloat($(this).find('.Abcd').eq(15).text()) / parseFloat(ExchangeRate);
+                    }
+                    else {
+                        if (Paycurr == "USD")
+                            AllocatedAmt = $(this).find('.Abcd').eq(14).text();
+                        else
+                            AllocatedAmt = $(this).find('.Abcd').eq(15).text();
+                    }
+                    TotalAllocatedAmt += parseFloat(AllocatedAmt);
+                });
+                if (Number.isNaN(TotalAllocatedAmt) == true) {
+                    TotalAllocatedAmt = 0.00;
+                }
+                var DocTotal = $("[id$=txtTotal]").val();
                 if ($("#cbPCurency option:selected").val() != $("#cbDocCur option:selected").val()) {
                     var ConvertedOSAmt = "";
                     var ExchangeRate = $("#txtPExchngRate").val();
                     ConvertedOSAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
-
+                    var Total = TotalAllocatedAmt + ConvertedOSAmt;
+                    
                     if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
-                        var ConvertedRecpChqAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
-                        if (ConvertedRecpChqAmt > $("[id$=txtTotal]").val()) {
-                            var ConvertedTotalAmt = parseFloat($("#txtTotal").val()) * parseFloat(ExchangeRate);
-                            $("[id$=txtPAllocatedAmt]").val(ConvertedTotalAmt);
+                        if (Total >= DocTotal) {
+                            if (ExchangeRate <= parseFloat(0)) {
+                                ExchangeRate = parseFloat(1);
+                            }
+                            var AllocateAmnt = (parseFloat(DocTotal) - parseFloat(TotalAllocatedAmt)) * parseFloat(ExchangeRate);
+
+                            $("[id$=txtPAllocatedAmt]").val(AllocateAmnt);
                         }
                         else {
                             $("[id$=txtPAllocatedAmt]").val('0.00');
@@ -617,6 +649,45 @@ SalesOrder.prototype = {
                     }
                     else {
                         RedDotAlert_Error("Please add contants");
+                        return false;
+                    }
+
+
+                    var _RcptCheck_Amt = parseFloat($("[id$=txtPRcptCheckAmt]").val());
+                    var _Allocated_Amt = parseFloat($("[id$=txtPAllocatedAmt]").val());
+                    var _Balance_Amt = 0.00;
+
+                    if (_RcptCheck_Amt < _Allocated_Amt) {
+                        RedDotAlert_Warning('Allocated Amount Should be less than or equal to Receipt/Check Amount');
+                        $("[id$=txtPAllocatedAmt]").val('0.00');
+                        return;
+                    }
+                    _Balance_Amt = _RcptCheck_Amt - _Allocated_Amt;
+
+                    $("[id$=txtPBalanceAmt]").val(_Balance_Amt);
+
+                    //if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
+                    //    var ConvertedRecpChqAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
+                    //    if (ConvertedRecpChqAmt > $("[id$=txtTotal]").val()) {
+                    //        var ConvertedTotalAmt = (parseFloat($("#txtTotal").val()) * parseFloat(ExchangeRate)) + parseFloat(TotalAllocatedAmt);
+                    //        $("[id$=txtPAllocatedAmt]").val(ConvertedTotalAmt);
+                    //    }
+                    //    else {
+                    //        $("[id$=txtPAllocatedAmt]").val('0.00');
+                    //    }
+                    //}
+                    //else {
+                    //    RedDotAlert_Error("Please add contants");
+                    //}
+                }
+                else {
+                    if (parseFloat($("#txtPRcptCheckAmt").val()) > parseFloat(DocTotal)) {
+                        var AllocateAmnt = parseFloat(DocTotal) - parseFloat(TotalAllocatedAmt);
+
+                        $("[id$=txtPAllocatedAmt]").val(AllocateAmnt);
+                    }
+                    else {
+                        $("[id$=txtPAllocatedAmt]").val("0.00");
                     }
                 }
                 //}
@@ -625,31 +696,52 @@ SalesOrder.prototype = {
                 alert(error);
             }
         });
-        $("[id$=txtPRcptCheckAmt],[id$=txtPAllocatedAmt]").change(function () {
+        //$("[id$=txtPRcptCheckAmt],[id$=txtPAllocatedAmt]").change(function () {
+        //    debugger;
+        //    try {
+                
+        //        if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtPAllocatedAmt]").val() != '' ) {
+
+        //            var _RcptCheck_Amt = parseFloat($("[id$=txtPRcptCheckAmt]").val());
+        //            var _Allocated_Amt = parseFloat($("[id$=txtPAllocatedAmt]").val());
+        //            var _Balance_Amt = 0.00;
+                   
+        //            if (_RcptCheck_Amt < _Allocated_Amt) {
+        //                RedDotAlert_Warning('Allocated Amount Should be less than or equal to Receipt/Check Amount');
+        //                $("[id$=txtPAllocatedAmt]").val('0.00');
+        //                return;
+        //            }
+        //            _Balance_Amt = _RcptCheck_Amt - _Allocated_Amt;
+                    
+        //            $("[id$=txtPBalanceAmt]").val(_Balance_Amt);                    
+        //        }
+        //    }
+        //    catch (Error) {
+        //        alert(Error);
+        //    }
+        //});
+
+        $("#txtPAllocatedAmt").change(function () {
             debugger;
             try {
-                
-                if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtPAllocatedAmt]").val() != '' ) {
+                var _RcptCheck_Amt = parseFloat($("[id$=txtPRcptCheckAmt]").val());
+                var _Allocated_Amt = parseFloat($("[id$=txtPAllocatedAmt]").val());
+                var _Balance_Amt = 0.00;
 
-                    var _RcptCheck_Amt = parseFloat($("[id$=txtPRcptCheckAmt]").val());
-                    var _Allocated_Amt = parseFloat($("[id$=txtPAllocatedAmt]").val());
-                    var _Balance_Amt = 0.00;
-                   
-                    if (_RcptCheck_Amt < _Allocated_Amt) {
-                        RedDotAlert_Warning('Allocated Amount Should be less than or equal to Receipt/Check Amount');
-                        $("[id$=txtPAllocatedAmt]").val('0.00');
-                        return;
-                    }
-                    _Balance_Amt = _RcptCheck_Amt - _Allocated_Amt;
-                    
-                    $("[id$=txtPBalanceAmt]").val(_Balance_Amt);                    
+                if (_RcptCheck_Amt < _Allocated_Amt) {
+                    RedDotAlert_Warning('Allocated Amount Should be less than or equal to Receipt/Check Amount');
+                    $("[id$=txtPAllocatedAmt]").val('0.00');
+                    return;
                 }
+                _Balance_Amt = _RcptCheck_Amt - _Allocated_Amt;
+
+                $("[id$=txtPBalanceAmt]").val(_Balance_Amt);
+
             }
             catch (Error) {
                 alert(Error);
             }
         });
-
         $("#DBName").change(function () {
             try {
                 debugger;
@@ -1515,7 +1607,7 @@ SalesOrder.prototype = {
                             var doccurr = $("#cbDocCur option:selected").val();
                             $(".PayDetail").each(function () {
                                 //if (!this.rowIndex) return; // skip first row
-
+                                debugger
                                 var SalesOrderPayDetail_Obj = new Object();
 
                                 SalesOrderPayDetail_Obj['Pay_Method_Id'] = $(this).find(".Abcd").eq(2).text();
@@ -1532,7 +1624,13 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['ExchangeRate'] = $(this).find(".Abcd").eq(12).text();
                                 ExchngRate = parseFloat($(this).find(".Abcd").eq(12).text());
                                 SalesOrderPayDetail_Obj['Rcpt_Check_Amt'] = $(this).find(".Abcd").eq(13).text();
-                                SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(14).text();
+                                if (Currencytype == "USD") {
+                                    SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(14).text();
+                                }
+                                else {
+                                    SalesOrderPayDetail_Obj['Allocated_Amt'] = $(this).find(".Abcd").eq(15).text();
+                                }
+                                
                                 if (doccurr == Currencytype) {
                                     if (Currencytype=="USD")
                                         AllocateAmt = parseFloat(AllocateAmt) + parseFloat($(this).find(".Abcd").eq(14).text());
@@ -1884,24 +1982,28 @@ SalesOrder.prototype = {
                     dataType: 'Json',
                     contentType: "Application/json",
                     success: function (data) {
-                        var d = data.Table[0];
+                        var d = data.Table;
                         $("#divShowPDCPaymentDetailsBody").empty();
                         if (data.Table.length > 0) {
-                            var str = '';
-                            str += '<div class="reddotTableCell Abcd pdctype">' + d.PDCType + '</div>';
-                            str += '<div class="reddotTableCell Abcd pdctypecode" style="display:none">' + d.Type + '</div>';
-                            str += '<div class="reddotTableCell Abcd chequeno">' + d.Cheque_ReferenceNo + '</div>';
-                            str += '<div class="reddotTableCell Abcd chequedt">' + d.ValidToDate + '</div>';
-                            str += '<div class="reddotTableCell Abcd bnknm">' + d.BankName + '</div>';
-                            str += '<div class="reddotTableCell Abcd bnkcode" style="display:none">' + d.BankCode + '</div>';
-                            str += '<div class="reddotTableCell Abcd curncy">' + d.Currency + '</div>';
-                            str += '<div class="reddotTableCell Abcd amt">' + d.Amount + '</div>';
-                            str += '<div class="reddotTableCell Abcd uamt">' + d.UsedAmount + '</div>';
-                            str += '<div class="reddotTableCell Abcd bamt">' + d.BalanceAmount + '</div>';
-                            str += '<div class="reddotTableCell Abcd remrk">' + d.Remarks + '</div>';
-                            str += '<div class="reddotTableCell Abcd"><button type="button" id="btnAllocatePDC" title="" class="btn btn-success btn-sm btn-sm AllocatePDC">Allocate</button></div>';
+                            $.each(d, function (index, value) {
+                                var str = '';
+                                str += '<div class="reddotTableRow odd-even-row PayAllocate">';
+                                str += '<div class="reddotTableCell Abcd pdctype">' + value.PDCType + '</div>';
+                                str += '<div class="reddotTableCell Abcd pdctypecode" style="display:none">' + value.Type + '</div>';
+                                str += '<div class="reddotTableCell Abcd chequeno">' + value.Cheque_ReferenceNo + '</div>';
+                                str += '<div class="reddotTableCell Abcd chequedt">' + value.ValidToDate + '</div>';
+                                str += '<div class="reddotTableCell Abcd bnknm">' + value.BankName + '</div>';
+                                str += '<div class="reddotTableCell Abcd bnkcode" style="display:none">' + value.BankCode + '</div>';
+                                str += '<div class="reddotTableCell Abcd curncy">' + value.Currency + '</div>';
+                                str += '<div class="reddotTableCell Abcd amt">' + value.Amount + '</div>';
+                                str += '<div class="reddotTableCell Abcd uamt">' + value.UsedAmount + '</div>';
+                                str += '<div class="reddotTableCell Abcd bamt">' + value.BalanceAmount + '</div>';
+                                str += '<div class="reddotTableCell Abcd remrk">' + value.Remarks + '</div>';
+                                str += '<div class="reddotTableCell Abcd"><button type="button" id="btnAllocatePDC" title="" class="btn btn-success btn-sm btn-sm AllocatePDC">Allocate</button></div>';
+                                str += '</div>';
+                                $("#divShowPDCPaymentDetailsBody").append(str);
+                            });
                             
-                            $("#divShowPDCPaymentDetailsBody").append(str);
                         }
                     }
                 });
@@ -1968,12 +2070,12 @@ SalesOrder.prototype = {
                 var Usedamount = trs.find('.uamt').html();
                 var Balanceamount = trs.find('.bamt').html();
                 var Remark = trs.find('.remrk').html();
-                var Bankname = trs.find('.bnknm').html();
+                var Bankname = htmlDecode(trs.find('.bnknm').html());
                 var Bankcode = trs.find('.bnkcode').html();
                 $("#txtPReciptCheckNo").val(Chequeno);
-                $("#txtPRcptCheckAmt").val(PDCamount);
-                $("#txtPAllocatedAmt").val(PDCamount);
-                $("#txtPBalanceAmt").val(Balanceamount);
+                $("#txtPRcptCheckAmt").val(Balanceamount);
+                //$("#txtPAllocatedAmt").val(Usedamount);
+                //$("#txtPBalanceAmt").val(Balanceamount);
                 $("#txtPChkDate").val(Chequedate);
                 $("#cbPCurency").val(Currency).trigger('change');
                 $("#txtPRemarks").val(Remark);
@@ -2498,8 +2600,6 @@ function Validate_PAddRow() {
             return false;
         }
 
-
-
         if ($("[id$=txtPAllocatedAmt]").val() == '') {
             RedDotAlert_Error("Enter Amount ...");
             return false;
@@ -2509,26 +2609,49 @@ function Validate_PAddRow() {
             RedDotAlert_Error("Allocated Amount Should be greater than zero...");
             return false;
         }
-        var TotalRcptamt = 0.00;
+
+        var TotalAllocateamt = 0.00;
         var ConvertedCurr = 0.00;
         var Doccurr = $("#cbDocCur option:selected").val();
+        var Paymentcurr = $("#cbPCurency option:selected").val(); 
         var DocTotal = $("#txtTotal").val();
         $('.PayDetail').each(function () {
-            var Paycurr = $("#cbPCurency option:selected").val();
-            var Rcptamt = $(this).find(".Abcd").eq(13).text();
-            var Exchngrate = $(this).find(".Abcd").eq(12).text();
-            //TotalRcptamt += parseFloat(Rcptamt);
-            if (Doccurr != Paycurr) {
-                ConvertedCurr = parseFloat(Rcptamt) / parseFloat(Exchngrate);
-                TotalRcptamt += parseFloat(ConvertedCurr);
-            }
-            else {
-                ConvertedCurr = parseFloat(Rcptamt) / parseFloat(1);
-                TotalRcptamt += parseFloat(ConvertedCurr);
+            debugger
+            if ($(this).find(".Abcd").eq(0).text() != $("#uxProwindex").val()) {
+                var Paycurr = $(this).find(".Abcd").eq(11).text();
+                var AllocatedAmnt = 0.00;
+                if (Paycurr == "USD") {
+                    AllocatedAmnt = $(this).find(".Abcd").eq(14).text();
+                }
+                else {
+                    AllocatedAmnt = $(this).find(".Abcd").eq(15).text();
+                }
+                var Exchngrate = $(this).find(".Abcd").eq(12).text();
+                if (Exchngrate <= parseFloat(0)) {
+                    Exchngrate = parseFloat(1);
+                }
+                //TotalRcptamt += parseFloat(Rcptamt);
+                if (Doccurr != Paycurr) {
+                    ConvertedCurr = parseFloat(AllocatedAmnt) / parseFloat(Exchngrate);
+                    TotalAllocateamt += parseFloat(ConvertedCurr);
+                }
+                else {
+                    ConvertedCurr = parseFloat(AllocatedAmnt) / parseFloat(1);
+                    TotalAllocateamt += parseFloat(ConvertedCurr);
+                }
             }
         });
-        
-        if (TotalRcptamt > DocTotal) {
+        var Pexchngrate = $("#txtPExchngRate").val();
+        if (Pexchngrate <= 0) {
+            Pexchngrate = parseFloat(1);
+        }
+        if (Doccurr != Paymentcurr) {
+            TotalAllocateamt += parseFloat($("#txtPAllocatedAmt").val()) / parseFloat(Pexchngrate);
+        }
+        else {
+            TotalAllocateamt += parseFloat($("#txtPAllocatedAmt").val());
+        }
+        if (TotalAllocateamt > DocTotal) {
             RedDotAlert_Error("You can't add another payment term for this order");
             return false;
         }
@@ -2967,7 +3090,12 @@ function getId(dbName, e) {
         alert(n)
     }
 }
-
+function htmlDecode(input) {
+    var e = document.createElement('textbox');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
 function handleFile(e) {
     debugger;
    // alert("Hidssafsfdsdfs");
