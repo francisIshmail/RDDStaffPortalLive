@@ -558,6 +558,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
                                         cmd.Parameters.Add("@Curr_Id", SqlDbType.NVarChar).Value = PayDetail[i].Curr_Id.ToString();
                                         cmd.Parameters.Add("@Currency", SqlDbType.NVarChar).Value = PayDetail[i].Currency.ToString();
+                                        cmd.Parameters.Add("@PDCAmount", SqlDbType.Float).Value = PayDetail[i].PDCAmount.ToString();
                                         cmd.Parameters.Add("@Rcpt_Check_Amt", SqlDbType.Float).Value = PayDetail[i].Rcpt_Check_Amt.ToString();
                                         cmd.Parameters.Add("@Allocated_Amt", SqlDbType.Float).Value = PayDetail[i].Allocated_Amt.ToString();
                                         cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();

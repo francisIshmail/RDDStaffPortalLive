@@ -131,6 +131,7 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
         public DateTime Rcpt_Check_Date { get; set; }
         public string Curr_Id { get; set; }
         public string Currency { get; set; }
+        public decimal PDCAmount { get; set; }
         public decimal Rcpt_Check_Amt { get; set; }
         public decimal Allocated_Amt { get; set; }
         public decimal Balance_Amt { get; set; }
