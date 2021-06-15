@@ -140,9 +140,6 @@ SalesOrder.prototype = {
             $("#Ist").hide();
             // RedDotAlert_Error("No Record Found");
         }
-
-
-
     },
 
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
@@ -1253,8 +1250,7 @@ SalesOrder.prototype = {
 
 
                     if ($("[id$=btn_AddRow]").text() == 'Add') {
-                        var _ItemDetails = {};
-
+                        var _ItemDetails = {};                        
                         _ItemDetails["SrNo"] = "0";
                         _ItemDetails["pvlineid"] = "0";
                         _ItemDetails["itemcode"] = $("[id$=txtItem]").val();
@@ -1873,6 +1869,7 @@ SalesOrder.prototype = {
             debugger;
             _SO_ID = $(this).closest("IIst").prevObject.find(".Abcd").eq(1).text();
             var DBName = $(this).closest("IIst").prevObject.find(".Abcd").eq(0).text();
+            var CardCode = $(this).closest("IIst").prevObject.find(".Abcd").eq(14).text();
             getId(DBName, _SO_ID);
 
             $('#btn_MainClear').removeAttr('disabled');
@@ -2961,6 +2958,9 @@ function getId(dbName, e) {
                 $("#DBName").val(SO_Header[0].dbname).trigger('change');
                 $("[id$=txtCardCode]").val(SO_Header[0].cardcode);
                 $("[id$=txtCardName]").val(SO_Header[0].cardname);
+                if ($("[id$=txtCardCode]").val() != "" || $("[id$=txtCardCode]").val != undefined || $("[id$=txtCardCode]").val!="NULL") {
+                    GetDefaultPayMode($("[id$=txtCardCode]").val());
+                }
                 $("[id$=txtRefNum]").val(SO_Header[0].refno);
                 $("[id$=txtPostingDate]").val(SO_Header[0].postingdate);
                 $("[id$=txtDelDate]").val(SO_Header[0].deliverydate);

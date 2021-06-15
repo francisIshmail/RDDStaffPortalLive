@@ -225,7 +225,7 @@ namespace RDDStaffPortal.DAL.SAP
                             GP_Per = !string.IsNullOrWhiteSpace(dr["GP_Per"].ToString()) ? Convert.ToDecimal(dr["GP_Per"].ToString()) : 0,
                             //AprovedBy = !string.IsNullOrWhiteSpace(dr["AprovedBy"].ToString()) ? dr["AprovedBy"].ToString() : "",
                             Remarks = !string.IsNullOrWhiteSpace(dr["Remarks"].ToString()) ? dr["Remarks"].ToString() : "",
-
+                            
                         });
                     }
                 }
