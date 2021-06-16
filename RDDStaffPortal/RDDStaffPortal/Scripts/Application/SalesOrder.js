@@ -402,7 +402,8 @@ SalesOrder.prototype = {
             var Row_Index = tr.find(".Abcd").eq(0).text();
 
             ItemDetails.splice(Row_Index - 1, 1);
-            tr.remove()
+
+            if ($(".SalesDetail").length > 1) {                tr.remove()            }
 
             var k = 1;
             $(".SalesDetail").each(function () {
@@ -417,6 +418,8 @@ SalesOrder.prototype = {
                 Get_Calculation();
             }
             else {
+                
+                $("#Ist").hide();
                 $("[id$=txtTotBefTax]").val('0.00');
                 $("[id$=txtTotalTax]").val('0.00');
                 $("[id$=txtTotal]").val('0.00');
@@ -465,7 +468,7 @@ SalesOrder.prototype = {
             var Row_Index = tr.find(".Abcd").eq(0).text();
 
             PayTermDetails.splice(Row_Index - 1, 1);
-            tr.remove()
+            if ($(".PayDetail").length > 1) {                tr.remove()            }
 
             var k = 1;
             $(".PayDetail").each(function () {
@@ -474,7 +477,19 @@ SalesOrder.prototype = {
                 k++;
 
             });           
+            if (PayTermDetails.length <= 0) {
+                $("#IIIst").hide();
+                //Get_Calculation();
+            }
+            //else {
 
+            //    $("#Ist").hide();
+            //    $("[id$=txtTotBefTax]").val('0.00');
+            //    $("[id$=txtTotalTax]").val('0.00');
+            //    $("[id$=txtTotal]").val('0.00');
+            //    $("[id$=txtGP]").val('0.00');
+            //    $("[id$=txtGPPer]").val('0.00');
+            //}
             $('#uxProwindex').val('');
         });
 
@@ -574,7 +589,13 @@ SalesOrder.prototype = {
                         //parameter.allocated_amt = $("[id$=txtPAllocatedAmt]").val();
                         parameter.balance_amt = $("[id$=txtPBalanceAmt]").val();
                         parameter.remark = $("[id$=txtPRemarks]").val();
-
+                        var pdctypee = $("#cbPPDCType option:selected").val();
+                        if (pdctypee == undefined || pdctypee == "") {
+                            parameter.pdc_amt = "0.00";
+                        }
+                        else {
+                            parameter.pdc_amt = $("#hdnPDCamount").val();
+                        }
                         PayTermDetails[index - 1] = parameter;
                         _PayTermDetails[0] = parameter;
 
@@ -1279,7 +1300,7 @@ SalesOrder.prototype = {
                             _ItemDetails["gp"] = $("[id$=txt_GP]").val();
                             _ItemDetails["gpper"] = $("[id$=txt_GPPer]").val();
                         }
-
+                        //ItemDetails = new Array();
                         ItemDetails.push(_ItemDetails);
                         SalesOrder.prototype.BindGrid(_ItemDetails, ItemDetails);
                     }
@@ -2935,7 +2956,6 @@ function getId(dbName, e) {
             data: JSON.stringify({ dbname: dbName, so_id: _SO_ID }),
             dataType: 'Json',
             contentType: "Application/json",
-
             success: function (value) {
                 var jData = value;
                 debugger;
