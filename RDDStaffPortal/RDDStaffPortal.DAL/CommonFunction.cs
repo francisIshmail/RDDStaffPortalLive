@@ -8,6 +8,7 @@ using System.Data;
 using System.Configuration;
 using System.Reflection;
 using System.Globalization;
+using OfficeOpenXml;
 
 namespace RDDStaffPortal.DAL
 {
@@ -190,7 +191,17 @@ namespace RDDStaffPortal.DAL
                                 Id= Convert.ToInt32(SqlCmd.Parameters[p[k - 2].ParameterName].Value.ToString()),
                                 Responsemsg = SqlCmd.Parameters[p[k - 1].ParameterName].Value.ToString()
                             });
-                        };
+                        }
+                        else
+                        {
+                            t = false;
+                            str1.Add(new Outcls1
+                            {
+                                Outtf = t,
+                                Id = Convert.ToInt32(SqlCmd.Parameters[p[k - 2].ParameterName].Value.ToString()),
+                                Responsemsg = SqlCmd.Parameters[p[k - 1].ParameterName].Value.ToString()
+                            });
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -512,11 +523,116 @@ namespace RDDStaffPortal.DAL
             }
             return retval;
         }
-       
+
+        public DataTable ExcelToDataTable(ExcelPackage package)
+        {
+            ExcelWorksheet workSheet = package.Workbook.Worksheets.First();
+            DataTable table = new DataTable();
+            foreach (var firstRowCell in workSheet.Cells[1, 1, 1, workSheet.Dimension.End.Column])
+            {
+                table.Columns.Add(firstRowCell.Text);
+            }
+
+            for (var rowNumber = 2; rowNumber <= workSheet.Dimension.End.Row; rowNumber++)
+            {
+                var row = workSheet.Cells[rowNumber, 1, rowNumber, workSheet.Dimension.End.Column];
+                var newRow = table.NewRow();
+                foreach (var cell in row)
+                {
+                    newRow[cell.Start.Column - 1] = cell.Text;
+                }
+                table.Rows.Add(newRow);
+            }
+            return table;
+        }
+        public DataTable RemoveBlankRow(DataTable dtRomoveBlank)
+        {
+
+            for (int h = 0; h < dtRomoveBlank.Rows.Count; h++)
+            {
+                if (dtRomoveBlank.Rows[h].IsNull(0) == true)
+                {
+
+                    dtRomoveBlank.Rows.RemoveAt(h);
+                    h = 0;
+                }
+            }
+            return dtRomoveBlank;
+        }
+        public DataTable ChangeColumnDataType(DataTable table)
+        {
+            List<string> columnName = new List<string>();
+            try
+            {
+                for (int i = 0; i < table.Columns.Count; i++)
+                {
+                    columnName.Add(table.Columns[i].ColumnName);
+                }
+                foreach (string ColName in columnName)
+                {
+                    DataColumn newcolumn = new DataColumn("temporary", typeof(string));
+                    table.Columns.Add(newcolumn);
+                    foreach (DataRow row in table.Rows)
+                    {
+                        try
+                        {
+                            row["temporary"] = Convert.ChangeType(row[ColName], typeof(string));
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    table.Columns.Remove(ColName);
+                    newcolumn.ColumnName = ColName;
+                }
+            }
+            catch (Exception)
+            {
+                return new DataTable();
+            }
+
+            return table;
+        }
+        public DataTable SettiingDataTableHeaderAsList<T>(DataTable dt, List<T> items)
+        {
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var i = 0;
+            foreach (DataColumn dc in dt.Columns)
+            {
+                dc.ColumnName = Props[i].Name;
+                i++;
+            }
+            return dt;
+        }
+        public List<T> ConvertDataTableToClassObjectList<T>(DataTable dt)
+        {
+            List<T> data = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                T item = GetItem<T>(row);
+                data.Add(item);
+            }
+            return data;
+        }
+        public T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                        pro.SetValue(obj, Convert.ToString(dr[column.ColumnName]), null);
+                    else
+                        continue;
+                }
+            }
+            return obj;
+        }
 
     }
-
-
 }
 
 

@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title"><i class="fa fa-angle-double-left"></i> Back </h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title redtitle">Employees </h4>
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                    <i class="fa fa-plus"></i> Add Employee
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Modal -->
+                            <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title">
+                                                <span class="fw-mediumbold">Add New Employee </span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Create a new employee row using this form, please fill them all. </p>
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Name</label>
+                                                            <input id="addName" type="text" class="form-control" placeholder="fill name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Department </label>
+                                                            <input id="addPosition" type="text" class="form-control" placeholder="fill department">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group form-group-default">
+                                                            <label>Category </label>
+                                                            <select id="example-getting-started" multiple="multiple">
+                                                                <option value="finance">Finance</option>
+                                                                <option value="technology">Technology</option>
+                                                                <option value="sales">Sales</option>
+                                                                <option value="f">Finance</option>
+                                                                <option value="t">Technology</option>
+                                                                <option value="sa">Sales</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="tblCatEmployeeDetails" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Department </th>
+                                            <th>Category </th>
+                                            <th style="width:7%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+
+
+<script>
+    function GetCategoryWiseEmployeeDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCatEmpDetails", "CategoryAssignToEmployee")',
+            dataType: "json",
+            success: function (data) {
+                var d = data.Table;
+                //$("#tblCatEmployeeDetails").DataTable();
+                $("#tblCatEmployeeDetails tbody").empty();
+                
+                if (d.length > 0) {
+                    $.each(d, function (Index, Value) {
+                        $("#tblCatEmployeeDetails tbody").append('<tr><td style="display:none">' + Value.CategoryId + '</td><td style="display:none">' + Value.CategoryAssignId + '</td><td>' + Value.EmployeeName + '</td><td>' + Value.CategoryName + '</td><td>'
+                            + '<div class="form-button-action"><button type="button" id="btnEditCategory" data-toggle="modal" data-target="#addRowModal" data="' + Value.CategoryId + '" title="" class= "btn btn-link btn-primary btn-lg edit" data-original-title="Edit Task"><i class="fa fa-edit"></i></button> <button type="button" data-toggle="tooltip" data="' + Value.CategoryId + '" title="" class="btn btn-link btn-danger delete" data-original-title="Remove"><i class="fa fa-times"></i></button></div > '
+                            + '</td ></tr > ');
+                    });
+                }
+                else {
+                    $("#tblCatEmployeeDetails tbody").append('<tr><td colspan="6" style="text-align:center">NO DATA FOUND!</td></tr>')
+                }                   
+            }
+        });
+    }
+		$(document).ready(function() {			
+			// Add Row
+            $("#tblCatEmployeeDetails").dataTable();
+            GetCategoryWiseEmployeeDetails();
+   //         $('#tblCatEmployeeDetails').DataTable({
+			//	"pageLength": 5,
+			//});
+
+			
+		});
+</script>
+
+<!-- Multi Select Initialize the plugin: -->
+<!-- Include the plugin's JS: -->
+<script type="text/javascript" src="assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $('#example-getting-started').multiselect();
+        });
+</script>
+
+

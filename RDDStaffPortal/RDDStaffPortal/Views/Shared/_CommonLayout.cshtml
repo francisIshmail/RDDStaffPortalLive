@@ -68,13 +68,13 @@
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
-                        <i class="icon-menu"></i>
+                        <i class="fas fa-bars"></i>
                     </span>
                 </button>
-                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <button class="topbar-toggler more"><i class="fas fa-ellipsis-v"></i></button>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
-                        <i class="icon-menu"></i>
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
@@ -1130,7 +1130,7 @@
 
 
 
-            if (pathname == "/HR/Employees" ) {
+            if (pathname == "/HR/Employees") {
                 var useremail = $("#Email").val();
                 var username = useremail.substring(0, useremail.lastIndexOf("@@"));
                 if (username !==  @HttpContext.Current.User.Identity.Name) {
@@ -1143,10 +1143,17 @@
             } else if (pathname.toUpperCase() == "/DASHBOARD/ALLNOTIFICATION") {
                 return
             }
+            else if (pathname == '/PerformanceEvaluation/EmployeeRating/ViewEmployeerating') {
+                return;
+            }
+            else if (pathname == '/PerformanceEvaluation/ManagerRating') {
+                return;
+            }
             else if (pathname !== '/Dashboard/ErrorPage') {
 
                // RedtDot_CheckAuthorization(pathname);
             }
+           
         //$('#ulid li').removeAttr('class','');
     })                                                    //$('#ulid li a').removeAttr('data-toggle', '');
 

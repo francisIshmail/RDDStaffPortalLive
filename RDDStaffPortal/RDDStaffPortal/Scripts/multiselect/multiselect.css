@@ -2,7 +2,11 @@
     display: inline-block;
     cursor: pointer;
     line-height: 1;
-    width:184px;
+    /*width:184px;*/
+}
+
+.form-grid {
+    display:grid !important;
 }
 
 .fs-label-wrap {
@@ -10,7 +14,7 @@
     background-color: #fff;
     border: 1px solid #b9bec8 !important;
     cursor: default;
-    padding: .35rem .5rem !important;
+    padding: .6rem !important;
     border-radius: .2rem;
 }
 
@@ -52,8 +56,8 @@
     position: absolute;
     background-color: #fff;
     border: 1px solid #ddd;
-    width: 200px;
-    margin-top: 5px;
+    width: 97%;
+    /* margin-top: 5px; */
     z-index: 1000;
 }
 
