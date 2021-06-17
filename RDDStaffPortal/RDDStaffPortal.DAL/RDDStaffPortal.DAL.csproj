@@ -182,8 +182,10 @@
     <Compile Include="DataModels\RDD_WebReportsUser.cs" />
     <Compile Include="DataModels\Report\RDD_Expense.cs" />
     <Compile Include="DataModels\Report\RDD_TrailBalance.cs" />
+    <Compile Include="DataModels\SAP\RDD_CreditLimit.cs" />
     <Compile Include="DataModels\SAP\RDD_OSOR.cs" />
     <Compile Include="DataModels\SAP\RDD_SOR1.cs" />
+    <Compile Include="DataModels\SORCodeGenerator\RDD_SORCodeGenerator.cs" />
     <Compile Include="DataModels\Voucher\RDD_PV.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Global.cs" />
@@ -231,9 +233,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\RDD_Stock_Sheet.cs" />
     <Compile Include="Report\RDD_Stock_SheetDBOperation.cs" />
+    <Compile Include="SAP\ItemMaster_DBOperation.cs" />
+    <Compile Include="Report\VendorReportDBOperation.cs" />
+    <Compile Include="SAP\RDD_CreditLimit_DbOperation.cs" />
     <Compile Include="SAP\SalesOrder_DBOperation.cs" />
+    <Compile Include="SAP\SAPCls.cs" />
     <Compile Include="SAP\SAP_ConnectToCompany.cs" />
     <Compile Include="SendMail.cs" />
+    <Compile Include="SORCodeGenerator\RDD_SORCodeGenerator_Db_Operation.cs" />
     <Compile Include="Targets\CountryTargetDbOperations.cs" />
     <Compile Include="Targets\ForecastDBOperation.cs" />
     <Compile Include="Targets\SalesPersonDBOperation.cs" />

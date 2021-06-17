@@ -589,6 +589,16 @@ function RdotdatefrmtRes1(dte) {
         return today;
     }
 }
+function RdotdatefrmtMonthYear(dte) {
+    if (dte !== undefined && dte !== null) {
+        var now = new Date(dte);
+        
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = RdotMMNames[month - 1] + "-" + now.getFullYear();
+        return today;
+    }
+}
 
 function RedDot_setdtpkdate(date1) {
     if (date1 !== undefined && date1 !== null && date1 !== "") {
@@ -997,7 +1007,9 @@ function RedDot_NumberFormat(value) {
     } else if (value >= 1000) {
         values = (value / 1000).toFixed(2) + ' K';
     }
-
+    else {
+        values = value;
+    }
     return abr + '' + values.toString();
 }
 
@@ -1046,7 +1058,7 @@ function RedDot_Button_New_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").hide();   
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 
@@ -1057,7 +1069,7 @@ function RedDot_Button_Edit_HideShow() {
     $("#btnSave").show();
     $("#btnCancel").show();
     $("#btnDelete").show();
-    $("#btnSendMail").show();
+    $("#btnSendMail").hide();
     $("#tblid").hide();
     $("#tblid1").hide();
 
@@ -1684,7 +1696,8 @@ function RedDot_tableTabEve(tbl, ide, idf, errmsg, typ, vtyp) {
     });
 }
 
-function RedDot_DivTable_Header_Fill(Ids,data) {
+function RedDot_DivTable_Header_Fill(Ids, data) {
+    debugger
     if (data != null && data.length != 0) {
         var i = 0;
        
@@ -1697,6 +1710,30 @@ function RedDot_DivTable_Header_Fill(Ids,data) {
                 var t = tblhead1[k];
                 if (tblhead1[k] !== 'Action') {
                     $('#' + Ids + 'nd').find(".reddotTableHead")[k].children[0].textContent = data[i][tblhead1[k]];
+                }
+                k++;
+            }
+            i++;
+        }
+    }
+}
+
+
+function RedDot_DivTable_Header_Fill_Dashboard(Ids, data) {
+    debugger    
+    var tr3 = $('#' + Ids);
+    if (data != null && data.length != 0) {
+        var i = 0;
+
+        while (data.length > i) {
+            var tr1 = tr3.find('#Ind').clone();
+            var tr = tr3.find('#Ind').closest();
+            var k = 0;
+            var l1 = tr1.find(".Abcd").length;
+            while (l1 > k) {
+                var t = data[k];
+                if (data[k] !== 'Action') {
+                    tr3.find('#Ind').find(".reddotTableHead")[k].children[0].textContent = data[k];
                 }
                 k++;
             }

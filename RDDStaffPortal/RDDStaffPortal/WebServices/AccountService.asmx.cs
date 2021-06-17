@@ -139,22 +139,26 @@ namespace RDDStaffPortal.WebServices
 
             //temprorary close this later , open below three lines
             //lblMsg.Text = "Successfully Registered : User '" + dealerDesiredID + "' , Login Information sent to user on EMail Id : '" + dealerEmail + "'  " + randomPassword
+            if (membershipResponse.Success == true)
+            {
 
-            membershipResponse.Message = "Successfully Registered : User '" + UserName + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
-            var mailformat = "<div>Warm Welcome to <b>Red Dot Distribution</b> Family.<br/><br/>";
-            mailformat = mailformat + "<div>Dear  " + UserName + ",</div><br/>";
-            mailformat = mailformat + "<div>Congratulations !!  You have been registered on Red Dot Distribution website. You can login to our site using the following credentials,</div><br/>";
-           
-            mailformat = mailformat + "<div>Login Name -<b> " + UserName + " </b><br/>Password - <b>" + randomPassword + "</b><br/><a href=https://app.reddotdistribution.com/Login.aspx > Click Here To Login </a></div><br/>";
-     
-            mailformat = mailformat + "<div>This is system generated password , We urged you to change the password at the earliest using the <b>Change Password</b> option in your profile.</div><br/>";
-            mailformat = mailformat + "<div>Best Regards,<br/>Red Dot Distribution</div>";
+                membershipResponse.Message = "Successfully Registered : User '" + UserName + "' , Login Information sent to user on EMail Id : '" + UserEmail + "'";
+                var mailformat = "<div>Warm Welcome to <b>Red Dot Distribution</b> Family.<br/><br/>";
+                mailformat = mailformat + "<div>Dear  " + UserName + ",</div><br/>";
+                mailformat = mailformat + "<div>Congratulations !!  You have been registered on Red Dot Distribution website. You can login to our site using the following credentials,</div><br/>";
+
+                mailformat = mailformat + "<div>Login Name -<b> " + UserName + " </b><br/>Password - <b>" + randomPassword + "</b><br/><a href=https://app.reddotdistribution.com > Click Here To Login </a></div><br/>";
+
+                mailformat = mailformat + "<div>This is system generated password , We urged you to change the password at the earliest using the <b>Change Password</b> option in your profile.</div><br/>";
+                mailformat = mailformat + "<div>Best Regards,<br/>Red Dot Distribution</div>";
 
 
-            ////sending mail here to the new user 
-            //myGlobal.sendMailToNewUser(rol, dealerDesiredID, randomPassword, dealerEmail);
+                ////sending mail here to the new user 
+                //myGlobal.sendMailToNewUser(rol, dealerDesiredID, randomPassword, dealerEmail);
 
-            SendMail.Send(UserEmail, "", "Your have been registered on Red Dot Distribution portal", mailformat , true);
+                SendMail.Send(UserEmail, "", "Your have been registered on Red Dot Distribution portal", mailformat, true);
+            }
+            
 
 
             return membershipResponse;

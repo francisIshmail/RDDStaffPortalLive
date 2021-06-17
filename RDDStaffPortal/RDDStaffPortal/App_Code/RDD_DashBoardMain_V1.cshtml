@@ -1,0 +1,623 @@
+﻿@helper GetDashBoard_V1(List<RDDStaffPortal.DAL.DataModels.RDD_DashBoard_Main> Dashview)
+{
+// your helper can contain code and/or markup, e.g.
+// var msg = "Hello " + name;
+// <p>@msg</p>
+// For more information, visit https://go.microsoft.com/fwlink/?LinkID=204658
+
+
+    <div class="row" id="MainChart">
+        @foreach (var i in Dashview.Where(a => a.TypeOfChart == "MainChart-V1"))
+        {
+            <div class="col-12   mt-0" id="@i.TypeOfChart" >
+                <div class="card   card-light ABC" id="@i.DashId">
+
+                    <div class="card-body pt-0 pb-0">
+
+                        <input type="hidden" id="hdnurl" value="@i.Url" />
+                        <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                        <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                        <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                        <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="pt-1" width="200px" src="~/Images/undraw_wallet_aym5.png" style="opacity: .6;">
+                            </div>
+                            <div class="col-6" align="right" ; style="padding: 34px 0px 1px;">
+                                <div class="text-muted bold"><strong>@i.DashName</strong></div>
+                                <h2 id="balance-@i.DashId" style="font-size: 42px;
+													 font-weight: lighter; color: #7eb56d;">
+                                    0 $
+                                </h2>
+
+                            </div>
+                            <div id="footer-@i.DashId" style="overflow: auto;"
+                                 class="col-12 d-flex mr-auto mb-2 float-right justify-content-between">
+
+
+
+
+
+                                <div class="mr-2 country-amount" id="Head-@i.DashId">
+
+                                    <span id="Country-@i.DashId" class="text-muted light mr-1" style="
+
+color: red !important;
+
+">NA</span>
+
+                                    <strong id="CountryAmt-@i.DashId">$ 0</strong>
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+
+        </div>
+
+        <div class="col-12 col-md-12" id="first_tab" style="display:none;">
+
+            <div class="card full-height">
+                <div class="card-header pd-small">
+                    <div class="card-head-row">
+                        <div class="d-flex">
+
+                            <div class="card-title">
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SalesCheck" value="chartSales">
+                                    <label class="form-check-label" id="SalesChecklbl" for="SalesCheck">Sales</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="GPCheck" name="inlineRadioOptions" value="chartGP">
+                                    <label class="form-check-label" id="GPChecklbl" for="GPCheck">GP</label>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="card-tools">
+                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link  mar-0" id="pills-Month-tab"
+                                       data-toggle="pill" href="#pills-Month-Sales" role="tab"
+                                       aria-selected="false">MONTH </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link  mar-0 active" id="pills-Quarter-tab"
+                                       data-toggle="pill" href="#pills-Quarter-Sales" role="tab"
+                                       aria-selected="true">QUARTER </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mar-0 " id="pills-Half-tab"
+                                       data-toggle="pill" href="#pills-Half-Sales" role="tab"
+                                       aria-selected="false">HALF YEAR </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mar-0" id="pills-Year-tab"
+                                       data-toggle="pill" href="#pills-Year-Sales" role="tab"
+                                       aria-selected="false">YEAR </a>
+                                </li>
+                                <!-- <li class="nav-item">
+
+
+                                <button class="btn btn-toggle" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><i
+                                        class="fas fa-ellipsis-v"></i></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">MTD</a>
+                                    <a class="dropdown-item" href="#">QTD</a>
+                                </div>
+                            </li> -->
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+
+                    <div class="infoarea">
+                        <h3 class="texthd text-danger" id="daysLeft">127 </h3>
+
+                        <h5 class="text-small-new">Days Left</h5>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-sm-10">
+
+                            <div class="tab-content mt-1 mb-1 pt-0 pb-1" id="pills-tabContent-Sales">
+
+                                <div class="tab-pane fade" id="pills-Year-Sales"
+                                     role="tabpanel" aria-labelledby="pills-Year-tab">
+                                    <div class="">
+                                        <div id="chartSales-Year">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-Half-Sales" role="tabpanel"
+                                     aria-labelledby="pills-Half-tab">
+                                    <div class="">
+                                        <div id="chartSales-Half">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade show active" id="pills-Quarter-Sales" role="tabpanel"
+                                     aria-labelledby="pills-Quarter-tab">
+                                    <div class="">
+                                        <div id="chartSales-Quarter">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-Month-Sales" role="tabpanel"
+                                     aria-labelledby="pills-Month-tab">
+                                    <div class="">
+                                        <div id="chartSales-Month">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-content mt-1 mb-1 pt-0 pb-1" id="pills-tabContent-GP" style="display:none;">
+
+                                <div class="tab-pane fade" id="pills-Year-GP"
+                                     role="tabpanel" aria-labelledby="pills-Month-tab">
+                                    <div class="">
+                                        <div id="chartGP-Year">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-Half-GP" role="tabpanel"
+                                     aria-labelledby="pills-Half-tab">
+                                    <div class="">
+                                        <div id="chartGP-Half">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade show active" id="pills-Quarter-GP" role="tabpanel"
+                                     aria-labelledby="pills-Quarter-tab">
+                                    <div class="">
+                                        <div id="chartGP-Quarter">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-Month-GP" role="tabpanel"
+                                     aria-labelledby="pills-Month-tab">
+                                    <div class="">
+                                        <div id="chartGP-Month">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="infowrap">
+                                <div class="infoarea">
+                                    <h5 class="text-small-new">Target</h5><br />
+                                    <h3 class="texthd text-info" id="Target">$200 </h3>
+
+                                </div>
+                                <div class="infoarea">
+                                    <h5 class="text-small-new">Forecast</h5><br />
+                                    <h3 class="texthd text-warning" id="Forecast">$100 </h3>
+
+                                </div>
+                                <div class="infoarea">
+                                    <h5 class="text-small-new">Actual</h5><br />
+                                    <h3 class="texthd text-success" id="Actual">$100 </h3>
+
+                                </div>
+
+
+                                <div class="infoarea">
+                                    <h5 class="text-small-new">Delta</h5><br />
+                                    <h3 class="texthd text-danger" id="Delta">$50 </h3>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        foreach (var i in Dashview.Where(a => a.TypeOfChart == "BarChart-V1"))
+        {
+
+        <div class="row" id="lins">
+            <div class="col-md-12">
+                <div class="card" id="@i.TypeOfChart">
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                    <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-title">@i.DashName</div>
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+
+                                    @*<li class="nav-item mar-l5">
+                                        <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Percentage</a>
+                                            <a class="dropdown-item" href="#">Number</a>
+                                            <a class="dropdown-item" href="#">Tabular</a>
+
+                                        </div>
+                                    </li>*@
+                                    <li class="nav-item">
+                                        <div id="headingOne" data-toggle="collapse" data-target="#@i.DashId" aria-expanded="true" aria-controls="collapseOne" role="button"><div class="plus-minus"></div></div>
+
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="@i.DashId"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        }
+
+
+        <div class="row" id="GP">
+            @foreach (var i in Dashview.Where(a => a.TypeOfChart == "GraphChart-V1"))
+            {
+                <div class="col-md-6" id="@i.TypeOfChart">
+                    <div class="card  ">
+                        <input type="hidden" id="hdnurl" value="@i.Url" />
+                        <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                        <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                        <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                        <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+                        <div class="card-header">
+                            <div class="card-title titletxt  row">
+                                <div class="col-8">
+                                    <strong>@i.DashName </strong>
+
+                                </div>
+                                <div class="col-4">
+
+                                    <select style="height: 25px;" class="form-control form-control-sm" id="smallSelect-@i.DashId">
+                                        <option>ALL</option>
+                                        <option>OPEN</option>
+                                        <option>WON OPG</option>
+                                        <option>WON-R OPG</option>
+                                        <option>LOST-CLOSED</option>
+                                        <option>EXPECTED CLOSE</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-body pt-2 pb-0">
+
+
+                            <div id="chart" style="position: relative;">
+                                <div class="toolbar">
+                                    <button class="btn btn-secondary btn-sm" id="Three_month-@i.DashId">
+                                        3M
+                                    </button>
+
+                                    <button class="btn btn-secondary btn-sm" id="six_months-@i.DashId">
+                                        6M
+                                    </button>
+
+
+
+
+                                </div>
+
+                                <div class="mb-0 mt-2">
+                                    @*<h3 class="texthd text-center text-success">$5,321.00</h3>
+                                    <div class="mb-0 choto-not">
+                                        <span style="background: rgba(75,191,115,.175);
+                                                        color: #4bbf73 !important;
+                                                        border-radius: 5px;
+                                                        padding: 4px;
+                                                    " class="badge badge-warning me-2"> <i class="mdi mdi-arrow-bottom-right"></i> +8.65% </span>
+                                        <span class="text-muted">Since last week</span>
+                                    </div>*@
+                                </div>
+                                <div class="chart-container" style="min-height:100% !important">
+                                    <div id="@i.DashId" style="min-height: 365px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+        <div class="row" id="ThirdCard">
+            @foreach (var i in Dashview.Where(a => a.TypeOfChart == "ThirdCard-V1"))
+            {
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6 mt-0" id=@i.TypeOfChart>
+                    <input type="hidden" id="hdnurl" value="@i.Url" />
+                    <input type="hidden" id="hdnlbl2" value="@i.ColumNames" />
+                    <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                    <input type="hidden" id="hdnlbl1" value="@i.FieldName" />
+                    <input type="hidden" id="hdnbgcolors" value="@i.cssclass" />
+                    <div class="card   card-light">
+                        <div class="card-header  @i.cssclass text-white">
+
+                            <!-- <h4 class="card-title titletxt text-white"><strong>PDC Updates</strong> </h4> -->
+                            <div class="card-title row">
+                                <div class="col-7 ABC">
+                                    <h4 id="@i.DashId" class="card-title titletxt text-white">
+                                        <strong>
+                                            @i.DashName
+                                        </strong>
+                                    </h4>
+
+                                </div>
+                                <div class="col-5">
+                                    <select style="height: 25px;" class="form-control form-control-sm" id="smallSelect-@i.DashId">
+                                        <option>Tanzania</option>
+                                        <option>India</option>
+
+                                    </select>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row" style="text-align: center;">
+                                <div class="col-md-6 mt-2 mb-3 border-right" style="    text-align: -webkit-center;">
+                                    <div class="">
+                                        <h3 class="fw-bold big-text-style" id="lblamt1-I-@i.DashId">210</h3>
+                                        <span class="small-text" id="lblamt2-I-@i.DashId">54000K</span>
+                                        <!-- <h6 class="fw-bold font-s12 text-danger op-8">Credit Limit Expired  </h6> -->
+                                        <!-- Button trigger modal -->
+                                        <button style="display: inherit;" type="button" id="btn-I-@i.DashId" class="fw-bold font-s12 text-danger op-8 btn-stylex" data-toggle="modal" data-target="#exampleModal-I-@i.DashId">
+                                            To Be Deposited <i class="fas fa-paperclip"></i>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div style="color: black; display: none;" class="modal fade" id="exampleModal-I-@i.DashId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel-I-@i.DashId">
+                                                            PDC to be Deposited in Bank
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="tableFixHead">
+                                                            <table style="font-size: 12px;" id="tbl-I-@i.DashId">
+                                                                <thead>
+                                                                    <tr id="tbl-IHead-@i.DashId">
+                                                                        <th class="Abcd">DBName</th>
+                                                                        <th class="Abcd">Customer#</th>
+                                                                        <th class="Abcd">Customer Name</th>
+                                                                        <th class="Abcd">Country</th>
+                                                                        <th class="Abcd">CreditLimit</th>
+                                                                        <th class="Abcd">CLExpiryDate</th>
+                                                                        <th class="Abcd">CLExpiringInDays</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tbl-Ibody-@i.DashId">
+                                                                    <tr id="tbl-body-I-@i.DashId">
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd  text-right"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd" style="color: red;
+																					font-weight: bold;">
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnclose-I-@i.DashId">Close</button>
+                                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-2 mb-3" style="text-align: -webkit-center;">
+                                    <div class="">
+
+                                        <h3 class="fw-bold big-text-style" id="lblamt1-II-@i.DashId">175</h3>
+                                        <span class="small-text" id="lblamt2-II-@i.DashId">54000K</span>
+
+                                        <!-- <h6 class="fw-bold font-s12 text-danger op-8">Expiring in next 30days </h6> -->
+                                        <!-- Button trigger modal -->
+                                        <button style="display: inherit;" type="button" id="btn-II-@i.DashId" class="fw-bold font-s12 text-danger op-8 btn-stylex" data-toggle="modal" data-target="#exampleModal-II-@i.DashId">
+                                            Recieved <i class="fas fa-paperclip"></i>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div style="color: black;" class="modal fade" id="exampleModal-II-@i.DashId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel-II-@i.DashId">
+                                                            PDC Recieved
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="tableFixHead">
+                                                            <table style="font-size: 12px;" id="tbl-II-@i.DashId">
+                                                                <thead>
+                                                                    <tr id="tbl-IIHead-@i.DashId">
+                                                                        <th class="Abcd">DBName</th>
+                                                                        <th class="Abcd">Customer#</th>
+                                                                        <th class="Abcd">Customer Name</th>
+                                                                        <th class="Abcd">Country</th>
+                                                                        <th class="Abcd">CreditLimit</th>
+                                                                        <th class="Abcd">CLExpiryDate</th>
+                                                                        <th class="Abcd">CLExpiringInDays</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tbl-IIbody-@i.DashId">
+                                                                    <tr id="tbl-body-II-@i.DashId">
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd text-right"></td>
+                                                                        <td class="Abcd"></td>
+                                                                        <td class="Abcd" style="color: red;
+																					font-weight: bold;">
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnclose-I-@i.DashId">Close</button>
+                                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row" id="dt">
+            @foreach (var i in Dashview.Where(a => a.TypeOfChart == "Datatables1-V1"))
+            {
+
+
+                <div class="col-md-4" id="@i.TypeOfChart">
+                    <div class="card">
+                        <input type="hidden" id="hdnurl" value="@i.Url" />
+                        <input type="hidden" id="hdnColumns" value="@i.ColumNames" />
+                        <input type="hidden" id="hdnField" value="@i.FieldName" />
+                        <input type="hidden" id="hdnNoofColumns" value="@i.NoOfColumn" />
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">@i.DashName</div>
+                                @*<div class="card-tools">
+                                    <button class="btn btn-primary btn-border btn-round widview-btn" type="button" data-toggle="tootip" title="View All"><i class="far fa-eye"></i></button>
+                                    <button class="btn btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-options-vertical"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Percentage</a>
+                                        <a class="dropdown-item" href="#">Number</a>
+                                        <a class="dropdown-item" href="#">Tabular</a>
+
+                                    </div>
+
+
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="@i.DashId" class="reddotTable sm-form mar-t0">
+                                <div id="Ind" class="reddotTableBody">
+                                    <div class="reddotTableRow odd-even-row">
+                                        <div class="reddotTableHead text-left Abcd"><div>Company Name</div></div>
+                                        <div class="reddotTableHead Abcd"><div>Date</div></div>
+                                        <div class="reddotTableHead text-right Abcd"><div>Amount</div></div>
+                                    </div>
+                                </div>
+                                <div id="Ibody" class="reddotTableBody">
+                                    <div id="Ist" class="reddotTableRow odd-even-row">
+                                        <div class="reddotTableCell text-left Abcd"><div>Orange Tech</div></div>
+                                        <div class="reddotTableCell Abcd"><div>2 Jan 2020</div></div>
+                                        <div class="reddotTableCell text-right Abcd"><div>$15516</div></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+
+
+
+
+
+
+        }

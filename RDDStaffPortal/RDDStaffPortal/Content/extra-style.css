@@ -1,3 +1,4 @@
+
 /* ========================================================
  * CSS Just for Extra Style purpose
  =========================================================*/
@@ -14,6 +15,17 @@
 .navbar .navbar-nav .notification {background-color:#e7483e;}*/
 
 .redtitle {color:#e7483e; font-size:24px!important; font-weight:700;}
+
+/* =========================================================
+ * CSS Just for Extra Style purpose
+ =========================================================*/
+ 
+ 
+ 
+ 
+/* master branch css */
+/*.redtitle {color:#e7483e; font-size:24px; font-weight:600;}   */
+
 
 table.dataTable {margin-bottom:25px!important; margin-top:25px!important;}
 
@@ -33,7 +45,12 @@ table.dataTable thead {background-color:rgba(0,0,0,.05);}
 
 .dropdown-toggle {padding:15px 0 0; background:transparent; font-size:16px;}
 
+
 .form-group-default {overflow:visible; padding-top:7px; padding-left:12px; padding-right:12px; padding-bottom:4px;}
+
+/* Master Branch Original Css */
+/*.form-group-default {overflow:visible;} */
+
 
 .dropdown-toggle::after {display:none;}
 
@@ -50,6 +67,7 @@ color:#ffffff!important; text-decoration:none; background-color:#337ab7; outline
 
 .multiselect-container>li>a>label>input[type=checkbox] {margin-right:5px; margin-bottom:0;}
 
+/* added below table css for performance evaluation system*/
 table.table td i {font-size:14px;}
 
 /*.main-panel .page-header {margin-bottom:20px!important;}*/
@@ -71,6 +89,7 @@ table.table tr th, table.table tr td {padding:5px 10px!important;}
 table.table tr th {font-weight:600; font-size:16px;}
 
 textarea.form-control {padding:.6rem 1rem!important}
+
 
 
 
@@ -117,6 +136,7 @@ button {
     }
 }
 
+/* added midbox for performance evaluation*/
 @media (min-width:576px) {
 .bigbox {max-width:1300px;}
 .midbox {max-width:800px;}
@@ -217,5 +237,636 @@ label.star:before {content:'\f006'; font-family:FontAwesome;}
 ::-webkit-scrollbar-thumb:horizontal {background:#bbbbbb; border-radius:10px; cursor:pointer;}
 
 
+
+=======
+
+@media (min-width:576px) {
+.bigbox {max-width:1300px;}
+}
+
+/* ================= Sales Dashboard - page =================== */
+
+.seracharea {
+    border-radius: 7px;
+    box-shadow: 0px 2px 5px 0 rgb(69 65 78 / 8%);
+    margin-bottom: 15px;
+}
+
+    .seracharea .form-control {
+        border-color: #eeeeee !important;
+        font-size: 12px !important;
+        padding: 0rem 0.7rem !important;
+    }
+
+.kanban-board {
+    background: #ffffff;
+}
+
+.kanban-title-board {
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.kanban-title-button {
+    float: right;
+}
+
+.texthd {
+    display: inline;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 24px;
+}
+
+.infowrap {
+    overflow: hidden;
+    width: 96%;
+    margin: 0px auto;
+}
+
+.infoarea {
+    display: inline-block;
+    width: 22%;
+    margin: 1% 1%;
+    text-align: center;
+}
+
+.progress.progress-wrap {
+    border-radius: 0;
+    margin-top: 11px;
+}
+
+.text-small-new {
+    display: inline;
+    font-size: 15px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.text-smalltxt {
+    display: inline;
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.progress-wrap .progress-bar {
+    border-radius: 0;
+}
+
+.kanban-badges {
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.card .pd-small {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.btnarea {
+    border: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 0px !important;
+    margin-bottom: 0 !important;
+    background: transparent;
+}
+
+    .btnarea i.fa-plus-circle {
+        margin-bottom: 10px;
+    }
+
+        .btnarea i.fa-plus-circle:before {
+            font-size: 105px;
+            color: rgba(231, 72, 62, 0.2);
+        }
+
+    .btnarea h5 {
+        font-size: 16px;
+        font-weight: 600;
+        color: rgba(75, 75, 75, 0.5);
+    }
+
+    .btnarea:hover h5 {
+        color: rgba(75, 75, 75, 0.8);
+    }
+
+    .btnarea:hover i.fa-plus-circle:before {
+        color: rgba(231, 72, 62, 0.7);
+    }
+
+.profilearea {
+    margin-bottom: 10px;
+}
+
+    .profilearea .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: block;
+    }
+
+    .profilearea .user-profile {
+        margin-left: 3px;
+    }
+
+    .profilearea .name {
+        margin-top: 15px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(75, 75, 75, 1);
+    }
+
+    .profilearea .designation {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(75, 75, 75, 0.5);
+    }
+
+.iconinfoarea .kanban-item {
+    padding: 1px 10px 7px;
+}
+
+    .iconinfoarea .kanban-item .kanban-badges {
+        margin-right: 7px;
+        margin-left: 0;
+        display: block;
+    }
+
+.lfticon {
+    margin-top: 12px;
+    float: left;
+}
+
+.iconinfoarea i.fa-calendar-alt {
+    font-size: 18px;
+    color: rgb(208 190 188)
+}
+
+.iconinfoarea i.fa-calendar-check {
+    font-size: 18px;
+    color: rgb(208 190 188)
+}
+
+.iconinfoarea i.fa-file-invoice-dollar {
+    font-size: 18px;
+    color: rgb(208 190 188)
+}
+
+
+
+
+.iconinfoarea .kanban-title, .iconinfoarea .badge-text {
+    color: #ffffff;
+}
+
+.iconinfoarea .kanban-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #6861ce;
+}
+
+}
+
+.iconinfoarea .kanban-item .kanban-badges .badge-text {
+    font-size: 11px;
+    line-height: 14px;
+    margin-left: 0;
+}
+
+.iconinfoarea .kanban-item .kanban-edit {
+    top: 3px;
+    right: 0;
+    background: transparent;
+}
+
+.iconinfoarea .dropdown, .dropleft, .dropright, .dropup {
+    position: absolute;
+    bottom: 7px;
+    right: 8px;
+    border: 0;
+}
+
+.iconinfoarea .dropdown-toggle {
+    border: 0;
+}
+
+.iconinfoarea .dropdown-menu {
+    border: 0;
+    box-shadow: none;
+}
+
+.iconinfoarea i.fa-ellipsis-v {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.rgtsideblock {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.rgtside-header {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ebecec !important;
+    color: #000000;
+}
+
+.card-body ul.list-style {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+    .card-body ul.list-style li {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 7px;
+        font-size: 13px;
+        line-height: 18px;
+        color: #555;
+    }
+
+        .card-body ul.list-style li a {
+            color: #999999;
+        }
+
+            .card-body ul.list-style li a:hover {
+                text-decoration: underline;
+                color: #ffad46;
+            }
+
+.card .pd-small i.fa-ellipsis-v {
+    color: #bbbbbb;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.card .pd-small i.fa-plus-circle {
+    color: #bbbbbb;
+    font-size: 13px;
+}
+
+.badge-text {
+    font-size: 12px;
+}
+
+.boxlfticon {
+    float: left;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 12px;
+}
+
+    .boxlfticon i {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+.rgtsideblock .card-pricing.card-pricing-focus {
+    padding: 0;
+    overflow: hidden;
+}
+
+.rgtsideblock .card-pricing .card-header {
+    padding: 10px 12px !important;
+    margin: 0;
+    border-bottom: 1px solid #dddde4 !important;
+}
+
+.rgtsideblock .card-price {
+    margin-top: 0;
+}
+
+.rgtsideblock .card-pricing .card-price .price {
+    font-size: 34px;
+    color: #777777;
+}
+
+.rgtsideblock .card-pricing .card-price .text {
+    color: #c5ccda;
+}
+
+.rgtsideblock .card-title {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: left;
+}
+
+.rgtsideblock .card-pricing .specification-list li {
+    padding: 10px 0;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+    .rgtsideblock .card-pricing .specification-list li:last-child {
+        border-bottom: 0;
+    }
+
+    .rgtsideblock .card-pricing .specification-list li a {
+        color: #2569bf;
+    }
+
+        .rgtsideblock .card-pricing .specification-list li a:hover {
+            color: #2569bf;
+        }
+
+        .rgtsideblock .card-pricing .specification-list li a i {
+            margin-right: 10px;
+        }
+
+        .rgtsideblock .card-pricing .specification-list li a strong {
+            color: #2569bf;
+        }
+
+.rgtsideblock .card .card-body {
+    padding: 5px 15px;
+}
+
+.titletxt {
+    font-size: 16px !important;
+}
+
+
+section.model-3 {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 10px 0;
+    text-align: center;
+    min-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.tooltip {
+    position: absolute;
+    background: #333333;
+    padding: 3px;
+    font-weight: 300;
+    font-size: 12px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    bottom: 100%;
+    left: 50%;
+    opacity: 0;
+    transition: 0.3s;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+    .tooltip:after {
+        content: "" attr(tooltip) "";
+        margin-left: 3px;
+        color: #2DABD8;
+    }
+
+    .tooltip:before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: #2DABD8;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+.graph {
+    width: 300px;
+    height: 150px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    font-size: 22px;
+    line-height: 280px;
+    font-weight: 600;
+    border-radius: 150px 150px 0 0;
+    overflow: hidden;
+    color: #0ff;
+}
+
+    .graph:before, .graph:after {
+        content: '';
+        width: 300px;
+        height: 150px;
+        border: 50px solid #0ff;
+        border-top: none;
+        position: absolute;
+        transition: 0.3s;
+        -webkit-transform-origin: 50% 0%;
+        transform-origin: 50% 0%;
+        border-radius: 0 0 300px 300px;
+        -webkit-animation: demo 2s;
+        animation: demo 2s;
+        left: 0;
+        top: 100%;
+        z-index: 5;
+    }
+
+    .graph:after {
+        z-index: 3;
+        border-color: rgba(0, 0, 0, 0.15);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    .graph:hover:before {
+        opacity: .8;
+        cursor: pointer;
+    }
+
+    .graph:hover + .tooltip {
+        bottom: 105%;
+        opacity: 1;
+    }
+
+.multi-graph {
+    width: 300px;
+    height: 150px;
+    position: relative;
+    margin: auto;
+    color: #000;
+    font-size: 22px;
+    line-height: 280px;
+    font-weight: 600;
+}
+
+    .multi-graph:before {
+        content: '';
+        width: 300px;
+        height: 150px;
+        border: 50px solid rgba(0, 0, 0, 0.10);
+        border-bottom: none;
+        position: absolute;
+        -webkit-transform-origin: 50% 0%;
+        transform-origin: 50% 0%;
+        border-radius: 300px 300px 0 0;
+        left: 0;
+        top: 0;
+        box-shadow: 0px 0px 15px 0 rgb(69 65 78 / 20%);
+    }
+
+    .multi-graph .graph {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+        .multi-graph .graph:after {
+            background: #eee;
+            border: medium none;
+            border-radius: 2px;
+            color: #333;
+            font-weight: 400;
+            content: "" attr(data-name) "";
+            display: inline-block;
+            font-size: 13px;
+            height: 20px;
+            left: 50%;
+            line-height: 20px;
+            padding: 0 5px;
+            top: 50px;
+            z-index: 0;
+            -webkit-transform: rotate(0deg) translateX(-50%);
+            transform: rotate(0deg) translateX(-50%);
+            width: auto;
+            opacity: 0;
+        }
+
+        .multi-graph .graph:hover:after {
+            opacity: 1;
+            top: 70px;
+        }
+
+.model-1 .graph {
+    color: #EC4A26;
+}
+
+    .model-1 .graph:before {
+        -webkit-transform: rotate(100deg);
+        transform: rotate(100deg);
+        border-color: #EC4A26;
+    }
+
+section.model-2 .graph {
+    color: #2DABD8;
+}
+
+    section.model-2 .graph:before {
+        -webkit-transform: rotate(130deg);
+        transform: rotate(130deg);
+        border-color: #2DABD8;
+    }
+
+section.model-3 .javaScript:before {
+    -webkit-transform: rotate(80deg);
+    transform: rotate(80deg);
+    border-color: #FEDA3E;
+}
+
+section.model-3 .jQuery:before {
+    -webkit-transform: rotate(130deg);
+    transform: rotate(130deg);
+    border-color: #0669AD;
+}
+
+section.model-3 .angular:before {
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+    border-color: #E62A39;
+}
+
+section.model-3 .graph {
+    color: #2DABD8;
+}
+
+@-webkit-keyframes demo {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes demo {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+.circlearea {
+    background: #ffffff;
+    padding: 50px 20px;
+    border-radius: 50%;
+    color: #154ec4;
+    font-size: 18px;
+    z-index: 9;
+    box-shadow: 0px 0px 15px 0 rgb(69 65 78 / 20%);
+    border: 2px solid #eee;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.card-body ul.html-legend {
+    padding-left: 0;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .card-body ul.html-legend li {
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+
+        .card-body ul.html-legend li span {
+            height: 10px;
+            margin-right: 9px;
+            width: 10px;
+            margin-top: 7px;
+        }
+
+.salestables {
+    overflow: hidden;
+}
+
+    .salestables table td div.avatar {
+        margin-right: 10px;
+    }
+
+    .salestables table tr td .avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+.card-body #myChartLegend ul.html-legend {
+    text-align: center;
+}
+
+
+.d-grid{
+    display:grid !important;
+}
 
 

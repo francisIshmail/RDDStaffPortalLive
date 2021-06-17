@@ -1,0 +1,509 @@
+﻿@model RDDStaffPortal.DAL.DataModels.SORCodeGenerator.RDD_SORCodeGenerator
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<input type="hidden" id="hdnCACMmail" />
+<input type="hidden" id="hdndraftSORkey" />
+<style>
+    .modal-lg {
+        width: 1000px !important
+    }
+
+    .modal-footer button {
+        width: 16%;
+        border-radius: 25px;
+        border: 0;
+        background: #02a4ec;
+        font-size: 18px;
+    }
+</style>
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/extra-style.css" rel="stylesheet" />
+<div class="main-panel">
+    <div class="container">
+        <div class="page-inner">
+           
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title redtitle">SOR - Code Generator </h4>
+                            </div>
+                        </div>
+                        <div class="loader1"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2">Database <span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="select2-input">
+                                                <select id="ddlDatabase" name="database" class="form-control" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">Draft SOR Num <span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="SORdraftnum" name="draftnum" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">Requested by <span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="select2-input">
+                                                <select id="ddlRequestedBy" name="database" class="form-control" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">CA/CM <span class="required-label">*</span></label>
+
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="txtCACM" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">Date<span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="txtDate" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">Country/Project <span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="txtCountry" name="draftnum" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-4 col-md-4 col-sm-4 mt-sm-2 ">SalesPerson <span class="required-label">*</span></label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="txtSlpName" name="draftnum" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-2 col-md-3 col-sm-3 mt-sm-2 ">Approval Code <span class="required-label">*</span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <input type="text" class="form-control" id="txtOTP" name="draftnum" readonly style="font-weight:bold" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <button class="btn btn-primary ml-auto loadbtn" id="btnGenerateOtp">Generate Code</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-show-validation row">
+                                        <label for="database" class="col-lg-2 col-md-3 col-sm-4 mt-sm-2 ">Remarks <span class="required-label">*</span></label>
+                                        <div class="col-lg-10 col-md-9 col-sm-8">
+                                            <input type="text" class="form-control" id="remarks" name="remarks" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="btn btn-primary btn-round" type="submit" id="btnSubmit" value="Save &amp; Send Email" />
+                                    <button class="btn btn-danger btn-round ml-auto" id="btnViewOrder"><i class="fa fa-edit"></i>&nbsp; View Order </button>
+                                    <button class="btn btn-danger btn-round ml-auto" id="btnViewList"><i class="fa fa-list"></i>&nbsp; View List </button>
+                                    @*<button class="btn btn-danger btn-round">Cancel</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true" keyboard="false" data-backdrop="static">
+        <div class="modal-dialog bigbox modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0 redbg">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold whttitle">Draft Sales Order List </span>
+                    </h5>
+                    <button type="button" class="close whtcolor" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="tblSORDetails" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>DocEntry </th>
+                                    <th>DocNum </th>
+                                    <th>Ref. No. </th>
+                                    <th>Posting Date </th>
+                                    <th>Customer </th>
+                                    <th>Order Total </th>
+                                    <th>Total Sell </th>
+                                    <th>Total Cost </th>
+                                    <th>Total Rebate </th>
+                                    <th>Total GP </th>
+                                    <th>Sales Person </th>
+                                    <th>Project </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ViewListModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bigbox modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0 redbg">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold whttitle">SOR Approval Code List</span>
+                    </h5>
+                    <button type="button" class="close whtcolor" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="tblViewListDetails" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>DBName</th>
+                                    <th>ProjectCode </th>
+                                    <th>Draft SOR No </th>
+                                    <th>SOR Approval Code </th>
+                                    <th>Sales Person </th>
+                                    <th>Requested By </th>
+                                    <th>Remarks </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div id="overlay" style="display:none;">
+    <div class="spinner"></div>
+    <br />
+    Loading...
+</div>
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/RedDotUtility.js"></script>
+
+<script type="text/javascript">
+    function loadershow() {
+        $('.loadbtn').click(function () {
+            $('#overlay').fadeIn().delay(2000).fadeOut();
+        });
+    }
+
+    function getDatabaseList() {
+         $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDatabaseList", "RDD_SORCodeGenerator")',
+            dataType: "json",
+            success: function (data) {
+                debugger
+               // var d = data.Table;
+                $("#ddlDatabase").empty();
+                $.each(data, function (index, Value) {
+                    $("#ddlDatabase").append("<option value='" + Value.Text + "'>" + Value.Text + "</option>");
+                });
+            }
+        });
+    }
+    function GetSORdetails_validation(dbName,draftNum) {
+         $.ajax({
+                type: "POST",
+                url: '@Url.Action("DraftSORNumVallidation", "RDD_SORCodeGenerator")',
+                data: { DBName: dbName, DraftNo: draftNum },
+                dataType: "json",
+                success: function (data) {
+                    debugger
+                    if (data.Table.length > 0) {
+                        $("#addRowModal").modal('toggle');
+                        $("#tblSORDetails tbody").empty();
+                        $.each(data.Table, function (index, value) {
+                            $("#tblSORDetails tbody").append('<tr><td>' +'<button type="button" class="btn-primary" id="btnSelect" data="'+value.DocEntry+'">Select</button>' + '</td><td>' + value.DocEntry + '</td><td>' + value.DocNum + '</td><td>'
+                                + value.RefNo + '</td><td>' + value.DocDate + '</td><td>' + value.Customer + '</td><td>' + value.DocTotal + '</td><td>' + value.TotalSell + '</td><td>'
+                                + value.TotalCost + '</td><td>' + value.TotalRebate + '</td><td>' + value.GP + '</td><td>' + value.SlpName + '</td><td>' + value.Project + '</td><td>' + '</td></tr>');
+                        });
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("GetRequestedByList", "RDD_SORCodeGenerator")',
+                            dataType: "json",
+                            success: function (data) {
+                                debugger
+                                var d = data.Table;
+                                $("#ddlRequestedBy").empty();
+                                $.each(d, function (index, Value) {
+                                    $("#ddlRequestedBy").append("<option value='" + Value.email + "'>" + Value.employee + "</option>");
+                                });
+                            }
+                        });
+                        @*$.ajax({
+                            type: "POST",
+                            url: '@Url.Action("GetCACM", "RDD_SORCodeGenerator")',
+                            data: { DBName: dbName, DraftNo: draftNum },
+                            dataType: "json",
+                            success: function (data) {
+                                debugger
+                                $("#txtCACM").val(data.Table[0].approver + "," + data.Table[1].approver);
+                                $("#hdnCACMmail").val(data.Table[0].email + "," + data.Table[1].email);
+                            }
+                        });*@
+                    }
+                    else {
+
+                        RedDotAlert_Error("Invalid SOR Number.Please enter valid SOR Number");
+                    }
+                }
+            });
+    }
+    $(document).ready(function () {
+        getDatabaseList();
+        $(".loader1").hide();
+
+       // loadershow();
+    });
+    $('#SORdraftnum').on('focusout', function () {
+            var dbName = $("#ddlDatabase option:selected").val();
+            var draftNum = $("#SORdraftnum").val();
+            if (dbName == "--Select--") {
+                RedDotAlert_Error("Please Select Database");
+            }
+             GetSORdetails_validation(dbName, draftNum);
+    });
+    $('#ddlDatabase').on('change', function () {
+        var dbName = $("#ddlDatabase option:selected").val();
+        var draftNum = $("#SORdraftnum").val();
+        if (draftNum == "" ) {
+
+            return false;
+        }
+        GetSORdetails_validation(dbName, draftNum);
+    });
+
+    $(document).on('click', '#btnViewList', function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetSORApprovalCodeList", "RDD_SORCodeGenerator")',
+            dataType: "json",
+            success: function (data) {
+
+                if (data.Table.length > 0) {
+                    $("#ViewListModal").modal('toggle');
+                    $("#tblViewListDetails tbody").empty();
+                    $.each(data.Table, function (index, value) {
+                        $("#tblViewListDetails tbody").append('<tr><td>' + value.Id + '</td><td>' + value.DBName + '</td><td>'
+                            + value.projectcode + '</td><td>' + value.DraftSORNum + '</td><td>' + value.SORApprovalCode + '</td><td>' + value.SalesPerson + '</td><td>'
+                            + value.RequestedBy + '</td><td>' + value.Remarks + '</td><td>' + '</td></tr>');
+                    });
+                }
+                else {
+                    RedDotAlert_Error("No Record Found");
+                }
+            }
+
+        });
+
+    });
+    $(document).on('click', '#btnViewOrder', function () {
+        var mydropdown = $("#ddlDatabase option:selected");
+        if (mydropdown.length == 0 || $(mydropdown).val() == "") {
+            RedDotAlert_Error("Please select database");
+            $(".loader1").hide();
+            return false;
+        }
+        else if ($('#SORdraftnum').val().length == 0) {
+            $("#addRowModal").modal('hide');
+            RedDotAlert_Error("Please Enter Valid SOR NO.");
+            $(".loader1").hide();
+            return false;
+        }
+        else {
+
+                var dbName = $("#ddlDatabase option:selected").val();
+                var draftNum = $("#SORdraftnum").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DraftSORNumVallidation", "RDD_SORCodeGenerator")',
+                    data: { DBName: dbName, DraftNo: draftNum },
+                    dataType: "json",
+                    success: function (data) {
+
+                        if (data.Table.length > 0) {
+                            $("#addRowModal").modal('toggle');
+                            $("#tblSORDetails tbody").empty();
+                            $.each(data.Table, function (index, value) {
+                                $("#tblSORDetails tbody").append('<tr><td>' + '<button type="button" class="btn-primary" id="btnSelect" data="' + value.DocEntry + '">Select</button>' + '</td><td>' + value.DocEntry + '</td><td>' + value.DocNum + '</td><td>'
+                                    + value.RefNo + '</td><td>' + value.DocDate + '</td><td>' + value.Customer + '</td><td>' + value.DocTotal + '</td><td>' + value.TotalSell + '</td><td>'
+                                    + value.TotalCost + '</td><td>' + value.TotalRebate + '</td><td>' + value.GP + '</td><td>' + value.SlpName + '</td><td>' + value.Project + '</td><td>' + '</td></tr>');
+                            });
+                        }
+                        else {
+                            RedDotAlert_Error("Invalid SOR Code");
+                        }
+                    }
+                });
+             }
+    });
+    $(document).on('click', '#btnSelect', function () {
+
+        var d = new Date();
+        var Currow = $(this).closest("tr");
+        $("#txtCountry").val(Currow.find('td:eq(12)').html());
+        $("#txtSlpName").val(Currow.find('td:eq(11)').html());
+        $("#hdndraftSORkey").val(Currow.find('td:eq(1)').html());
+
+        
+
+        var CurMonth = d.getMonth() + 1;
+        var curdate = d.getDate();
+        if (curdate < 10) {
+            curdate = "0" + curdate;
+        }
+        
+        if (CurMonth < 10) {
+            CurMonth = "0" + CurMonth;
+        }
+        
+        $("#txtDate").val(curdate + "-" + CurMonth + "-" + d.getFullYear());
+        $("#addRowModal").modal('hide');
+        debugger;
+
+        var DraftKey = $("#hdndraftSORkey").val();
+        var DBName = $("#ddlDatabase option:selected").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetCACM", "RDD_SORCodeGenerator")',
+            data: { DBName: DBName, DraftNo: DraftKey },
+            dataType: "json",
+            success: function (data) {
+                debugger
+                $("#txtCACM").val(data.Table[0].approver + "," + data.Table[1].approver);
+                $("#hdnCACMmail").val(data.Table[0].email + "," + data.Table[1].email);
+            }
+        });
+
+
+    });
+    $(document).on('click', '#btnGenerateOtp', function () {
+        $('#overlay').fadeIn().delay(2000).fadeOut();
+
+        var project = $("#txtCountry").val();
+        var draftNum = $("#SORdraftnum").val();
+        if ((project == "") || (draftNum == "")) {
+            RedDotAlert_Error("Please Enter Project Name or DraftNumber");
+        }
+        else {
+                $.ajax({
+                type: "POST",
+                url: '@Url.Action("GenerateOTP", "RDD_SORCodeGenerator")',
+                data: { Project: project, DraftSORDocEntry: draftNum },
+                dataType: "json",
+                success: function (data) {
+
+                    $("#txtOTP").val(data);
+                }
+            });
+        }
+
+    });
+    $(document).on('click', '#btnSubmit', function () {
+        $(".loader1").show();
+        var mydropdown = $("#ddlDatabase option:selected").val();
+        if (mydropdown == "--Select--" || mydropdown == "") {
+            RedDotAlert_Error("Please select Database Name");
+            $(".loader1").hide();
+            return false;
+        }
+        if ($('#SORdraftnum').val().length == 0) {
+            RedDotAlert_Error("Please Enter Valid SOR NO.");
+            $(".loader1").hide();
+            return false;
+        }
+        var mydropdown1 = $("#ddlRequestedBy option:selected").val();
+        if (mydropdown1 == "--Select--" || mydropdown1 == "") {
+            RedDotAlert_Error("Please select RequestedBy Name");
+            $(".loader1").hide();
+            return false;
+        }
+        if ($('#txtOTP').val().length == 0) {
+            RedDotAlert_Error("Please generate OTP");
+            $(".loader1").hide();
+            return false;
+        }
+        if ($('#remarks').val().length == 0) {
+            RedDotAlert_Error("Please Enter remarks");
+            $(".loader1").hide();
+            return false;
+        }
+
+        var rDD_SORCodeGenerator = {
+            DBName: $("#ddlDatabase option:selected").val(),
+            DraftSORNum: $("#SORdraftnum").val(),
+            DraftSORKey: $("#hdndraftSORkey").val(),
+            ProjectCode: $("#txtCountry").val(),
+            SORApprovalCode: $("#txtOTP").val(),
+            Remarks: $("#remarks").val(),
+            SalesPerson: $("#txtSlpName").val(),
+            RequestedBy: $("#ddlRequestedBy option:selected").text(),
+            RequestedByEmail: $("#ddlRequestedBy option:selected").val(),
+            CACM: $("#txtCACM").val(),
+            CACMEmail: $("#hdnCACMmail").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveSORDetails", "RDD_SORCodeGenerator")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ rDD_SORCodeGenerator: rDD_SORCodeGenerator }),
+            dataType: "json",
+            success: function (data) {
+                $(".loader1").hide();
+                debugger
+                if (data.Saveflag == true) {
+
+                    RedDotAlert_Success(data.ErrorMsg);
+                    getDatabaseList();
+                    $("#SORdraftnum").val('');
+                    $("#txtOTP").val('');
+                    $("#remarks").val('');
+                    $("#txtSlpName").val('');
+                    $("#txtCACM").val('');
+                    $("#txtDate").val('');
+                    $("#txtCountry").val('');
+                    $("#ddlRequestedBy").val('--Select--');
+                }
+                else {
+
+                    alert(data.ErrorMsg);
+                }
+            }
+        });
+    });
+</script>

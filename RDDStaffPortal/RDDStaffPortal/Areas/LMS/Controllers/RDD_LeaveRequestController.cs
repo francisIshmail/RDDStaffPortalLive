@@ -70,186 +70,90 @@ namespace RDDStaffPortal.Areas.LMS.Controllers
             if (t[0].Id != -1)
             {
 
+                if (t[0].Outtf == true)
                 {
-                    if (t[0].Outtf == true)
+                    string MailResponse = "";
+                    string ToMail = "";
+                    string cc = "";
+                    try
                     {
-                        string MailResponse = "";
-                        string ToMail = "";
-                        string cc = "";
-                        try
+                        DataSet ds = new DataSet();
+                        SqlParameter[] prm =
                         {
-                            DataSet ds = new DataSet();
-                            DataSet ds1 = new DataSet();
-                            DataSet ds2 = new DataSet();
-                            DataSet ds3 = new DataSet();
-                            DataSet ds4 = new DataSet();
-                            SqlParameter[] prm =
-                            {
-                   new SqlParameter("@LeaveRequestId",t[0].Id)
-                };
-                            ds = Com.ExecuteDataSet("RDD_GetLeaverequestDetailformail", CommandType.StoredProcedure, prm);
+                               new SqlParameter("@LeaveRequestId",t[0].Id),
+                               new SqlParameter("@LoginUserId",RDD_LeaveRequest.EmployeeId),
+                               new SqlParameter("@Backup1id",RDD_LeaveRequest.backupid),
+                               new SqlParameter("@backup2id",RDD_LeaveRequest.backup2id),
 
-                            SqlParameter[] prm1 =
-                            {
-                   new SqlParameter("@LoginUserId",RDD_LeaveRequest.EmployeeId)
-                };
-                            SqlParameter[] prm2 =
-                            {
-                   new SqlParameter("@LoginUserId",RDD_LeaveRequest.backupid)
-                };
-                            SqlParameter[] prm3 =
-                            {
-                   new SqlParameter("@LoginUserId",RDD_LeaveRequest.backup2id)
-                };
 
-                            SqlParameter[] prm4 =
-                            {
-                   new SqlParameter("@LoginUserId",RDD_LeaveRequest.EmployeeId)
-                };
-                            ds1 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm1);
-                            ds2 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm2);
-                            ds3 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm3);
-                            ds4 = Com.ExecuteDataSet("RDD_GetManagerDetails", CommandType.StoredProcedure, prm4);
-                            string attachmentPath = string.Empty;
-                            var LeaveName = ds.Tables[0].Rows[0]["LeaveName"];
-                            var Fromdate = ds.Tables[0].Rows[0]["FromDate"];
-                            var Todate = ds.Tables[0].Rows[0]["ToDate"];
-                            var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"];
-                            var L1ManagerofManagerEmail= ds1.Tables[3].Rows[0]["Email"].ToString();
-                            var L1ManagerName = ds1.Tables[0].Rows[0]["EmployeeName"].ToString();
-                            var L1ManagerEmail = ds1.Tables[0].Rows[0]["Email"].ToString();
-                            var Local_HrEmail = "";
-                            if (ds1.Tables[4].Rows.Count > 0)
-                            {
-                                Local_HrEmail = ds1.Tables[4].Rows[0]["Email"].ToString();
-                            }
-                            else
-                            {
-                                Local_HrEmail = "";
-                            }
-                            var HOD_HREmail = "";
-                            if (ds1.Tables[5].Rows.Count > 0)
-                            {
-                                HOD_HREmail = ds1.Tables[5].Rows[0]["Email"].ToString();
-                            }
-                            else
-                            {
-                                HOD_HREmail = "";
-                            }
-                            var L2ManagerEmail = "";
-                            if (ds1.Tables[1].Rows.Count > 0)
-                            {
-                                L2ManagerEmail = ds1.Tables[1].Rows[0]["Email"].ToString();
-                            }
-                            else
-                            {
-                                L2ManagerEmail = "";
-                            }
-                            var EmployeeName = ds1.Tables[2].Rows[0]["EmployeeName"].ToString();
-                            var backupmail = ds2.Tables[2].Rows[0]["Email"].ToString();
-                            var backupmail2 = "";
-                            if (ds3.Tables[2].Rows.Count > 0)
-                            {
-                                backupmail2= ds3.Tables[2].Rows[0]["Email"].ToString();
-                            }
-                            else
-                            {
-                                backupmail2 = "";
-                            }
-                            var EmployeeEmail = ds1.Tables[2].Rows[0]["Email"].ToString();
-                            // var HrMail = System.Configuration.ConfigurationManager.AppSettings["hrEmail"].ToString();
-                            ToMail = L1ManagerEmail;
-                            if (L2ManagerEmail != "")
-                            {
-                                if (backupmail2 != "")
-                                {
-                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
-                                }
-                                else
-                                {
-                                    cc = EmployeeEmail + ";" + L2ManagerEmail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
-                                }
+                            };
+                        ds = Com.ExecuteDataSet("RDD_GetManagerDetails_New", CommandType.StoredProcedure, prm);
 
-                            }
-                            else
-                            {
-                                if (backupmail2 != "")
-                                {
-                                    cc = EmployeeEmail + ";" + backupmail + ";" + backupmail2 + ";" + L1ManagerofManagerEmail;
-                                }
-                                else
-                                {
-                                    cc = EmployeeEmail + ";" + backupmail + ";" + L1ManagerofManagerEmail;
-                                }
-
-                            }
-                            if (Local_HrEmail != "")
-                            {
-                                if (HOD_HREmail != "")
-                                {
-                                    cc = cc + ";" + Local_HrEmail + ";" + HOD_HREmail;
-                                }
-                                else
-                                {
-                                    cc = cc + ";" + Local_HrEmail;
-                                }
-                            }
-                            else
-                            {
-                                if (HOD_HREmail != "")
-                                {
-                                    cc = cc + ";" + HOD_HREmail;
-                                }
-                            }
-
-                            string Subject = "Leave Approval Request";
-
-                            if (ds.Tables[0].Rows[0]["AttachmentUrl"] != null && !DBNull.Value.Equals(ds.Tables[0].Rows[0]["AttachmentUrl"]))
-                            {
-                                attachmentPath = System.IO.Path.Combine(Server.MapPath(ds.Tables[0].Rows[0]["AttachmentUrl"].ToString()));
-                            }
-
-                            var Html = "Dear " + L1ManagerName + ",<br/><br/>";
-                            if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
-                            {
-                                Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave on" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " and it is pending for approval by you.<br/><br/>";
-                            }
-                            else
-                            {
-                                Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + " and it is pending for approval by you.<br/><br/>";
-                            }
-                            Html = Html + "Best Regards, <br/> Red Dot Distribution";
-                            // Tomail = "mainak@reddotdistribution.com";
-                            // cc = backupmail;
-
-                            //SendMail.Send(Tomail, cc, Subject, Html, true);
-
-                            MailResponse= SendMail.SendMailWithAttachment(ToMail, cc, Subject, Html, true, attachmentPath);
-
-                        }
-                        catch (Exception ex)
+                        string attachmentPath = string.Empty;
+                        var LeaveName = ds.Tables[0].Rows[0]["LeaveName"];
+                        var Fromdate = ds.Tables[0].Rows[0]["FromDate"];
+                        var Todate = ds.Tables[0].Rows[0]["ToDate"];
+                        var AttachmentPath = ds.Tables[0].Rows[0]["AttachmentUrl"];
+                        var L1ManagerName = ds.Tables[1].Rows[0]["EmployeeName"].ToString();
+                        var L1ManagerEmail = ds.Tables[1].Rows[0]["Email"].ToString();
+                        ToMail = L1ManagerEmail;
+                        var EmployeeName = ds.Tables[0].Rows[0]["FullName"];
+                        
+                        var i = 0;
+                        while (i < ds.Tables[2].Rows.Count)
                         {
-
-                            t.Clear();
-                            t.Add(new Outcls1
-                            {
-                                Outtf = false,
-                                Id = -1,
-                                Responsemsg = "Error occured : Mail Not Sent "
-                            });
-                            MailResponse = ex.Message;
+                            cc = ds.Tables[2].Rows[i]["Email"].ToString() + ";" + cc;
+                            i++;
                         }
-                        SqlParameter[] prms = new SqlParameter[]
-                            {
+                        cc = cc.TrimEnd(';');
+
+                        string Subject = "Leave Approval Request";
+
+                        if (ds.Tables[0].Rows[0]["AttachmentUrl"] != null && !DBNull.Value.Equals(ds.Tables[0].Rows[0]["AttachmentUrl"]))
+                        {
+                            attachmentPath = System.IO.Path.Combine(Server.MapPath(ds.Tables[0].Rows[0]["AttachmentUrl"].ToString()));
+                        }
+
+                        var Html = "Dear " + L1ManagerName + ",<br/><br/>";
+                        if (String.Format("{0:ddd, MMM d, yyyy}", Fromdate) == String.Format("{0:ddd, MMM d, yyyy}", Todate))
+                        {
+                            Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave on" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " and it is pending for approval by you.<br/><br/>";
+                        }
+                        else
+                        {
+                            Html = Html + "" + EmployeeName + " has applied for " + LeaveName + " " + "leave from" + " " + String.Format("{0:ddd, MMM d, yyyy}", Fromdate) + " " + "to" + " " + String.Format("{0:ddd, MMM d, yyyy}", Todate) + " and it is pending for approval by you.<br/><br/>";
+                        }
+                        Html = Html + "Best Regards, <br/> Red Dot Distribution";
+                        // Tomail = "mainak@reddotdistribution.com";
+                        // cc = backupmail;
+
+                        //SendMail.Send(Tomail, cc, Subject, Html, true);
+
+                        MailResponse = SendMail.SendMailWithAttachment(ToMail, cc, Subject, Html, true, attachmentPath);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        t.Clear();
+                        t.Add(new Outcls1
+                        {
+                            Outtf = false,
+                            Id = -1,
+                            Responsemsg = "Error occured : Mail Not Sent "
+                        });
+                        MailResponse = ex.Message;
+                    }
+                    SqlParameter[] prms = new SqlParameter[]
+                        {
                                 new SqlParameter("@DocId",t[0].Id),
                                 new SqlParameter("@ModuleName","LMS"),
                                 new SqlParameter("@EventType","LeaveApprovalRequest"),
                                 new SqlParameter("@ToEmailIds",ToMail),
                                 new SqlParameter("@CCEmailIds",cc),
                                 new SqlParameter("@SendMailResponse",MailResponse)
-                            };
-                        string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
-                    }
+                        };
+                    string Msg = Convert.ToString(Com.ExecuteScalars("RDD_InsertSendMailLog", prms));
                 }
             }
 

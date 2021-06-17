@@ -281,7 +281,30 @@
             $(".required-label").text("");
         })
         //#endregion
-        
+        $("#btnSendMail").on("click", function () {
+            debugger
+            _DocKey = $("#PVId").val();
+            var _ObjType = $("#Doc_Object").val();
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                url: "/PV_SendMailToSignatories",
+                data: JSON.stringify({ ObjectType: _ObjType, PVID: _DocKey }),
+                dataType: 'Json',
+                contentType: "Application/json",
+                success: function (value) {
+                    
+                    var t = value;
+                    if (t == false) {
+                        RdotAlerterrtxt('Already Mail sent');
+                    } else {
+                        RdotAlertSucesstxt('Mail Sent Successfully');
+                    }
+                    
+                }
+            });
+        })
         $(document).on("click","#btnActionSave",function () {
             debugger;
             var k = 1;
@@ -492,6 +515,7 @@
                     $("#Div1-ApprovedBy").show();
                     if ($("#ApprovalStatus").val() == "Approved") {
                         $("#btnPrint").show();
+                        $("#btnSendMail").show();
                     }
                 }
 

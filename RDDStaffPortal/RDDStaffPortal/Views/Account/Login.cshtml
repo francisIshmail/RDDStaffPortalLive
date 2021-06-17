@@ -18,6 +18,7 @@
     <script type="text/javascript">
 
         function slideSwitch() {
+            <a href="~/Views/Account/Login.cshtml">~/Views/Account/Login.cshtml</a>
             var $active = $('#slideshow IMG.active');
 
             if ($active.length == 0) $active = $('#slideshow IMG:last');
@@ -189,7 +190,7 @@
                 var t = true;
                 $("#emailHelp").text('');
                 $("#emailid").blur(function () {
-                    var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+                    var testEmail = /^[A-Z0-9._%+-]+@@([A-Z0-9-]+\.)+[A-Z]{2,9}$/i;
                     if (testEmail.test(this.value)) {
                         $("#emailHelp").text('');
                         t = false;

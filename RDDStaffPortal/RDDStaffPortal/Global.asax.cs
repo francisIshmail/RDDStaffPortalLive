@@ -37,7 +37,7 @@ namespace RDDStaffPortal
             notiCom.RegisterNotification(currentDateTime,username);
         }
         protected void Application_BeginRequest(Object sender, EventArgs e)                           
-        {
+       {
             CultureInfo cInfo = new CultureInfo("en-IN");
             cInfo.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
             cInfo.DateTimeFormat.DateSeparator = "-";

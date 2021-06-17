@@ -1,3 +1,4 @@
+
 ﻿@model RDDStaffPortal.DAL.DataModels.LMS.RDD_LeaveApproval
 
 @{
@@ -60,7 +61,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 4%;">
     <div class="row">
         <div class="loader1"></div>
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
@@ -1326,6 +1327,9 @@
             Header += '<h5><label id="lblRemaindays">' + remainleave + '</label> days remaining</h5>';
             $("#Leavedtls").append(Header);
 
+            //var Header = '<h5><label id="lblDays">' + noofdays + '</label> days of annual leave</h5>';
+            //$("#Leavedtls").append(Header);
+
 
         });
     });
@@ -1443,24 +1447,25 @@
             IsPrivateLeave: $('input[name="private"]:checked').val(),
             AttachmentUrl: $("#HdnAttachmentUrl").val(),
             LeaveRequestId: lvrquestId,
+            LeaveDayType: "All-Day",
             LeaveRequestDetailsList: []
         };
 
-        $(".dttype").each(function () {
-            var currow = $(this).closest('tr');
-            var LeaveDate = $(this).find("[id^='divLvDates']").html();
-            var LeaveDay = $(this).find("[id^='ddlDayType']").val();
-            var LeaveDayType = $(this).find("[id^='ddlDayType'] option:selected").text();
-            var LeaveRequestDetails = {
-                LeaveDate: LeaveDate,
-                LeaveDay: LeaveDay,
-                LeaveDayType: LeaveDayType
-            };
-            if (LeaveDate != undefined) {
-                RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
-            }
+        //$(".dttype").each(function () {
+        //    var currow = $(this).closest('tr');
+        //    var LeaveDate = $(this).find("[id^='divLvDates']").html();
+        //    var LeaveDay = $(this).find("[id^='ddlDayType']").val();
+        //    var LeaveDayType = $(this).find("[id^='ddlDayType'] option:selected").text();
+        //    var LeaveRequestDetails = {
+        //        LeaveDate: LeaveDate,
+        //        LeaveDay: LeaveDay,
+        //        LeaveDayType: LeaveDayType
+        //    };
+        //    if (LeaveDate != undefined) {
+        //        RDD_LeaveRequest.LeaveRequestDetailsList.push(LeaveRequestDetails);
+        //    }
 
-        });
+        //});
 
         $.post("/SaveLeaveRequest", { RDD_LeaveRequest: RDD_LeaveRequest }, function (response) {
             debugger
@@ -1480,3 +1485,4 @@
     });
 
 </script>
+

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading;
 using System.Transactions;
 using static RDDStaffPortal.DAL.CommonFunction;
 
@@ -12,6 +13,7 @@ namespace RDDStaffPortal.DAL.HR
     public class EmployeeRegistrationDbOperation
     {
         CommonFunction Com = new CommonFunction();
+        
         // public string Save(RDD_EmployeeRegistration EmpData)
         public List<Outcls1> Save(RDD_EmployeeRegistration EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, List<DocumentList> DocumentList)
         {
@@ -160,7 +162,11 @@ namespace RDDStaffPortal.DAL.HR
                         SqlParameter[] Para1 = {
                                         new SqlParameter("@EmployeeId", Emp_ID)};
                         Com.ExecuteNonQuery("RDD_SetEmployeeProfileCompletedPercentage", Para1);
-                        scope.Complete();
+
+                        // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+                      //  Thread.Sleep(99999);
+                       scope.Complete();
                     }
                     catch (Exception ex)
                     {
@@ -172,7 +178,7 @@ namespace RDDStaffPortal.DAL.HR
                             Responsemsg = "Error occured : " + ex.Message
                         });
                     }
-                }
+               }
             }
             catch (Exception ex)
             {

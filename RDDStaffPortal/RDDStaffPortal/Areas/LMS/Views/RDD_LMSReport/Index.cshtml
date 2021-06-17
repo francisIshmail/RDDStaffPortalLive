@@ -6,7 +6,7 @@
 }
 
 <div class="p-0 dropdown-header py-3 pt-md-5 pb-md-4 mx-auto">
-    <div class="container">
+    <div class="container" style="margin-top: 4%;">
         <div class="row">
             <div class="col-md-2">
                 <form>
@@ -284,35 +284,35 @@
                 
                 while (data.length > i) {
                     if (data[i].AttachmentUrl != "") {
-                        j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td><td>' + '<a href="#" target="_blank" id="attachedfile" data="' + data[i].AttachmentUrl + '"><label id="lbldownload">Download Attachment</label></a>' + '</td></tr>');
-                        break;
+                        j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td><td>' + '<a href="' + data[i].AttachmentUrl + '" target="_blank" id="attacheddocument" data=""><label id="lbldownload">Download Attachment</label></a>' + '</td></tr>');
+                        i++;
+                        //break;
                     }
                     else {
-                        while (data.length > i) {
-                            j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td></tr>');
-                            break;
-                        }
+                        j("#htmltable tbody").append('<tr><td>' + data[i].LeaveName + '</td><td>' + RdotdatefrmtRes1(data[i].FromDate) + '</td><td>' + RdotdatefrmtRes1(data[i].ToDate) + '</td><td>' + data[i].NoOfDays + '</td><td>' + data[i].Remarks + '</td><td style="display:none;">' + data[i].LeaveRequestId + '</td><td style="display:none;">' + data[i].LeaveTypeId + '</td><td style="display:none;">' + data[i].EmployeeId + '</td><td>' + '<button id="showLeaveFormpdf">View Leave Form</button >' + '</td></tr>');
                         i++;
+                        //break;                        
                     }
+
                 }               
             }
         });
     });
-    j(document).on('click', '#attachedfile', function () {
-        var attachment = j(this).attr("data");
-        //var attachment = currow.find("td:eq(9)").html();
-        if (attachment != "") {
-            //$("#lbldownload").show();
-            var filepath = attachment;
-            var fileNameIndex = filepath.lastIndexOf("/") + 1;
-            var filename = filepath.substr(fileNameIndex);
-            //$("#lblattachment").text(filename);
-            $("#attachedfile").attr('href', filepath);
+    //j(document).on('click', '#attachedfile', function () {
+    //    var attachment = j(this).attr("data");
+    //    //var attachment = currow.find("td:eq(9)").html();
+    //    if (attachment != "") {
+    //        //$("#lbldownload").show();
+    //        var filepath = attachment;
+    //        var fileNameIndex = filepath.lastIndexOf("/") + 1;
+    //        var filename = filepath.substr(fileNameIndex);
+    //        //$("#lblattachment").text(filename);
+    //        $("#attachedfile").attr('href', filepath);
 
-        }
+    //    }
       
-        $("#attachedfile").attr("target", "_blank");
-    });
+    //    $("#attachedfile").attr("target", "_blank");
+    //});
     j(document).on('click', '#showLeaveFormpdf', function () {
         debugger
         var currow = j(this).closest("tr");

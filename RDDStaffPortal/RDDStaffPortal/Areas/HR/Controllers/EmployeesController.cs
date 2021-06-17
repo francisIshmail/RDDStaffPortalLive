@@ -18,6 +18,10 @@ using DataTable = System.Data.DataTable;
 using Antlr.Runtime;
 using Newtonsoft.Json;
 using static RDDStaffPortal.DAL.CommonFunction;
+using System.Data.SqlClient;
+using System.Transactions;
+using Microsoft.Office.Interop.Excel;
+using System.Threading;
 
 namespace RDDStaffPortal.Areas.HR.Controllers
 {
@@ -29,16 +33,18 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         Common cm = new Common();
         AccountService accountservice = new AccountService();
 
-       // public ActionResult ToUpdateAcc(string email, string Fname,string Lname)
-       // { 
-       //    // return Json() 
-                
-       //}
+        // public ActionResult ToUpdateAcc(string email, string Fname,string Lname)
+        // { 
+        //    // return Json() 
+
+        //}
 
 
-        public ActionResult GetCreateUserAcc(string username, string useremail, string ques, string ans, string role,string fname,string lname)
+        public ActionResult GetCreateUserAcc(string username, string useremail, string ques, string ans, string
+
+role, string fname, string lname)
         {
-         
+
             string result = string.Empty;
 
             var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
@@ -50,17 +56,17 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 {
                     k.Message = "Error";
                 }
-               // result = rdd_empreg.Update();
+                // result = rdd_empreg.Update();
             }
 
-            return Json(new  { Message=k.Message }, JsonRequestBehavior.AllowGet);
+            return Json(new { Message = k.Message }, JsonRequestBehavior.AllowGet);
 
         }
 
-        public ActionResult gethistory(int empid,string tblname)
+        public ActionResult gethistory(int empid, string tblname)
         {
 
-            return Json(cm.GetChangeLog(empid,tblname),JsonRequestBehavior.AllowGet);
+            return Json(cm.GetChangeLog(empid, tblname), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/EmployeeRegistration
@@ -113,27 +119,27 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         {
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-         
+
             string username = User.Identity.Name;
             DataSet ds;
             if (EmployeeId != null)
             {
 
-                 ds = EmpDbOp.GetDrop2(username, EmployeeId);
+                ds = EmpDbOp.GetDrop2(username, EmployeeId);
                 // DataSet ds1 = Db.myGetDS("exec RDD_UpdateEmployeeLogin");
                 //   DataSet ds1 = Db.myGetDS("exec RDD_CompareUser '" + EmployeeId + "'");
                 string name = "";
                 try
                 {
-                     name= ds.Tables[0].Rows[0]["LoginName"].ToString();
+                    name = ds.Tables[0].Rows[0]["LoginName"].ToString();
                 }
                 catch (Exception)
                 {
 
                     name = "Inavalid";
                 }
-                
-                
+
+
                 if (username.ToLower() == name.ToLower())
                 {
                     string com = "True";
@@ -142,10 +148,10 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             }
             else
             {
-                 ds = EmpDbOp.GetDrop1(username);
+                ds = EmpDbOp.GetDrop1(username);
 
             }
-          
+
             // ds = Db.myGetDS("EXEC RDD_GetUserType '" + username + "'");
             List<RDD_EmployeeRegistration> loginuserList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
@@ -163,8 +169,8 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             ViewBag.loginuserList = loginuserList;
             var loginuser = loginuserList;
 
-           // Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-           // DataSet DS = Db.myGetDS("EXEC EmpReg_GetDDLDataToBind");
+            // Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            // DataSet DS = Db.myGetDS("EXEC EmpReg_GetDDLDataToBind");
             List<RDD_EmployeeRegistration> DeptList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
@@ -231,7 +237,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
 
-          //  ds = Db.myGetDS("EXEC RDD_GetManagerList '"+username+"'");
+            //  ds = Db.myGetDS("EXEC RDD_GetManagerList '"+username+"'");
             List<RDD_EmployeeRegistration> ManagerList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
@@ -264,7 +270,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
 
-           // DS = Db.myGetDS("EXEC RDD_BU");
+            // DS = Db.myGetDS("EXEC RDD_BU");
             List<RDD_EmployeeRegistration> BUList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
@@ -277,7 +283,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
             }
 
-          //  ds = Db.myGetDS("EXEC RDD_GETCountryCode");
+            //  ds = Db.myGetDS("EXEC RDD_GETCountryCode");
             List<RDD_EmployeeRegistration> CountryList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
@@ -291,9 +297,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
                 }
             }
-           
 
-           // DS = Db.myGetDS("EXEC RDD_GETCountryCode");
+
+            // DS = Db.myGetDS("EXEC RDD_GETCountryCode");
             List<RDD_EmployeeRegistration> ddlCountry = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
@@ -307,19 +313,19 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
             }
 
-          
-          //  ds = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
 
-             string NextEmpNo =ds.Tables[10].Rows[0]["EmpNO"].ToString();
+            //  ds = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
+
+            string NextEmpNo = ds.Tables[10].Rows[0]["EmpNO"].ToString();
 
 
-           // DS = Db.myGetDS("EXEC RDD_GETCurrency");
+            // DS = Db.myGetDS("EXEC RDD_GETCurrency");
             List<RDD_EmployeeRegistration> CurrencyList = new List<RDD_EmployeeRegistration>();
             if (ds.Tables.Count > 0)
             {
                 for (
-                    
-                    
+
+
                     int i = 0; i < ds.Tables[11].Rows.Count; i++)
                 {
                     RDD_EmployeeRegistration CurrencyLst = new RDD_EmployeeRegistration();
@@ -343,11 +349,11 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
 
             ViewBag.ddlCountry = new SelectList(ddlCountry, "CountryCodeName", "Country");
-            
+
             ViewBag.CurrencyList = new SelectList(CurrencyList, "Currency", "Currency");
 
             // if (EmployeeId == null)
-            if (EmployeeId == null )
+            if (EmployeeId == null)
             {
                 RDD_EmployeeRegistration objemp = new RDD_EmployeeRegistration();
                 ViewBag.EmployeeNo = NextEmpNo;
@@ -364,7 +370,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     }
                 }
                 objemp.ImagePath = file;
-                
+
                 ds = EmpDbOp.GetEmployeeConfigure(User.Identity.Name, "II");
                 if (ds.Tables.Count > 0)
                 {
@@ -377,7 +383,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
                 objemp.DOB = DateTime.Now;
 
-                
+
                 return View(objemp);
             }
             else
@@ -390,7 +396,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                         ManagerListL2.Remove(itemToRemove);
                     ViewBag.ManagerListL2 = new SelectList(ManagerListL2, "ManagerIdL2", "Managername");
                 }
-                
+
 
                 var itemToRemove1 = ManagerListHRL2.SingleOrDefault(r => r.ManagerIdL2 == objemp.Local_HR);
                 if (itemToRemove1 != null)
@@ -398,12 +404,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     if (itemToRemove1.ManagerIdL2 != 0)
                         ManagerListHRL2.Remove(itemToRemove1);
                 }
-                
+
 
                 ViewBag.ManagerListHR2 = new SelectList(ManagerListHRL2, "ManagerIdL2", "Managername");
                 //  Session["FILE"] = objemp.ImagePath;
                 ViewBag.EmployeeNo = objemp.EmployeeNo;
-                
+
                 objemp.Editflag = true;
                 var t = false;
                 ds = EmpDbOp.GetEmployeeConfigure(User.Identity.Name, "II");
@@ -413,30 +419,37 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     {
                         var columName = (ds.Tables[0].Rows[i]["ColumName"]).ToString();
                         ViewData.Add(columName, true);
-                        if(columName== "ConfigProfileD")
+                        if (columName == "ConfigProfileD")
                         {
                             t = true;
                         }
                     }
                 }
-                if ((t == false) && (User.Identity.Name.ToLower()!=objemp.LoginName.ToLower()))
+                if ((t == false) && (User.Identity.Name.ToLower() != objemp.LoginName.ToLower()))
                 {
-                    return RedirectToAction("Index", new RouteValueDictionary(new { controller = "Employees", action = "Index", EmployeeId = EmpDbOp.GetEmployeeIdByLoginName(User.Identity.Name) }));
+                    return RedirectToAction("Index", new RouteValueDictionary(new
+                    {
+                        controller = "Employees",
+                        action
+
+= "Index",
+                        EmployeeId = EmpDbOp.GetEmployeeIdByLoginName(User.Identity.Name)
+                    }));
                 }
 
                 return View(objemp);
             }
 
 
-           // return View();
+            // return View();
 
 
         }
-       [Route("GetCountrywthFlag")]
+        [Route("GetCountrywthFlag")]
         public ActionResult GetCountrywthFlag()
         {
 
-           DataSet DS = Db.myGetDS("EXEC RDD_GetNationalityList");
+            DataSet DS = Db.myGetDS("EXEC RDD_GetNationalityList");
             List<Rdd_comonDrop> CitizenshipList = new List<Rdd_comonDrop>();
             if (DS.Tables.Count > 0)
             {
@@ -445,15 +458,15 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     Rdd_comonDrop CitizenshipLst = new Rdd_comonDrop();
 
                     CitizenshipLst.CodeName = (DS.Tables[0].Rows[i]["Citizenship"]).ToString();
-                    CitizenshipLst.Code= (DS.Tables[0].Rows[i]["Code"]).ToString();
+                    CitizenshipLst.Code = (DS.Tables[0].Rows[i]["Code"]).ToString();
 
                     CitizenshipList.Add(CitizenshipLst);
                 }
             }
             return Json(CitizenshipList, JsonRequestBehavior.AllowGet);
-           // ViewBag.CitizenshipList = new SelectList(CitizenshipList, "CodeName", "Code");
-           // return View();
-                 
+            // ViewBag.CitizenshipList = new SelectList(CitizenshipList, "CodeName", "Code");
+            // return View();
+
         }
         public ActionResult GetBuList(string bugroup)
         {
@@ -480,20 +493,29 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         {
             //Response.Redirect("/Employee/EmployeeId")
             //;
-            return RedirectToAction("Index", new RouteValueDictionary(new { controller = "Employees", action = "Index", EmployeeId = EmpDbOp.GetEmployeeIdByLoginName(User.Identity.Name) }));
+            return RedirectToAction("Index", new RouteValueDictionary(new
+            {
+                controller = "Employees",
+                action =
+
+"Index",
+                EmployeeId = EmpDbOp.GetEmployeeIdByLoginName(User.Identity.Name)
+            }));
         }
 
         [HttpPost]
-        public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu, IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
+        public JsonResult AddEmpReg(Employees EmpData, List<RDD_EmployeeRegistration> EmpInfoProEdu,
+
+IEnumerable<HttpPostedFileBase> files, List<DocumentList> EmpDatas)
         {
             // string result = string.Empty;
             List<Outcls1> result = new List<Outcls1>();
             try
             {
-               
-                RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();             
-                
-              //  rdd_empreg.ImagePath = EmpData.ImagePath;
+
+                RDD_EmployeeRegistration rdd_empreg = new RDD_EmployeeRegistration();
+
+                //  rdd_empreg.ImagePath = EmpData.ImagePath;
                 rdd_empreg.JobBandId = EmpData.JobBandId;
                 rdd_empreg.JobGradeId = EmpData.JobGradeId;
                 rdd_empreg.ManagerIdL2 = EmpData.ManagerIdL2;
@@ -504,7 +526,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.About = EmpData.About;
                 rdd_empreg.CountryCodeName = EmpData.CountryCodeName;
                 rdd_empreg.ManagerId = EmpData.ManagerId;
-              //  rdd_empreg.ManagerName = EmpData.ManagerName;
+                //  rdd_empreg.ManagerName = EmpData.ManagerName;
                 rdd_empreg.EmployeeNo = EmpData.EmployeeNo;
                 rdd_empreg.FName = EmpData.FName;
                 rdd_empreg.LName = EmpData.LName;
@@ -557,14 +579,14 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 rdd_empreg.CountryCode = EmpData.CountryCode;
 
 
-              
-                if(rdd_empreg.ImagePath1=="" || rdd_empreg.ImagePath1==null)
+
+                if (rdd_empreg.ImagePath1 == "" || rdd_empreg.ImagePath1 == null)
                 {
-                    rdd_empreg.imgbool =false;
+                    rdd_empreg.imgbool = false;
                 }
                 else
                 {
-                    rdd_empreg.imgbool =true;
+                    rdd_empreg.imgbool = true;
                 }
 
                 string TempPath = (string)Session["FILE"];
@@ -576,21 +598,82 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 }
                 else
                 {
-                   
-                  
+
+
                     rdd_empreg.ImagePath1 = Server.MapPath("/Images/TempLogo/defaultimg.jpg");
                     rdd_empreg.LogoType = ".jpg";
-                   
+
                 }
-               
+
+
+
+
+                //using (TransactionScope scope = new TransactionScope())
+                //{
+
 
 
                 result = EmpDbOp.Save(rdd_empreg, EmpInfoProEdu, EmpDatas);
 
-              //  string[] UserName = EmpData.Email.Split('@');
 
-             //  var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
-              // result = response.Message;
+                string[] UserName = EmpData.Email.Split('@');
+                if (result[0].Responsemsg == "Registration saved successfully.")
+                {
+                    var response = accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ? ", "www.reddotdistribution.com", "webReports");
+
+                    var msg = response.Message;
+                    var t = false;
+                    if (response.Success == true)
+                    {
+                        msg = result[0].Responsemsg;
+                        t = EmpDbOp.Update(EmpData.Email, EmpData.FName, EmpData.LName);
+
+                    }
+
+
+                    var empid = result[0].Id;
+                    result.Clear();
+                    if (response.Success == true && t == true)
+                    {
+                        // Thread.Sleep(99999);
+                        //scope.Complete();
+                        result.Add(new Outcls1
+                        {
+                            Outtf = true,
+                            Id = empid,
+                            Responsemsg = msg
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new Outcls1
+                        {
+                            Outtf = false,
+                            Id = -1,
+                            Responsemsg = msg
+                        });
+                    }
+                }
+                else
+                {
+                    //    var response = accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                    // Thread.Sleep(99999);
+                    //  scope.Complete();
+                }
+
+
+
+
+
+
+                //  }
+
+                // var k = accountservice.CreateUserAccount(username, useremail, ques, ans, role);
+
+                //  string[] UserName = EmpData.Email.Split('@');
+
+                //var response =   accountservice.CreateUserAccount(UserName[0], EmpData.Email, "  What is your favorite website ?", "www.reddotdistribution.com", "webReports");
+                // result = response.Message;
 
 
 
@@ -612,7 +695,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         }
 
 
-        
+
         public JsonResult DeleteRecord(int EId)
         {
             string result = string.Empty;
@@ -624,7 +707,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             {
                 result = "Error occured :" + ex.Message;
             }
-            return Json(new { DeleteFlag= result }, JsonRequestBehavior.AllowGet);
+            return Json(new { DeleteFlag = result }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteAttachRecord(int DId)
@@ -650,19 +733,23 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 if (pic.ContentLength > 0)
                 {
                     var _ext = Path.GetExtension(pic.FileName);
-                    if (_ext.ToLower() != ".jpeg" && _ext.ToLower() != ".jpg" && _ext.ToLower() != ".png" && _ext.ToLower() != ".bmp")
+                    if (_ext.ToLower() != ".jpeg" && _ext.ToLower() != ".jpg" && _ext.ToLower() != ".png" &&
+
+_ext.ToLower() != ".bmp")
                         return Json("InvalidError", JsonRequestBehavior.AllowGet);
                     var fileName = Path.GetFileName(pic.FileName);
 
 
-                  // _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
-                    var _comPath = Server.MapPath("/Images/TempLogo/Temp") +"user_" + _imgname + "Abc" + _ext;
-                    _imgname = "Tempuser_" +  "Abc" + _ext;
+                    // _imgname = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var _comPath = Server.MapPath("/Images/TempLogo/Temp") + "user_" + _imgname + "Abc" + _ext;
+                    _imgname = "Tempuser_" + "Abc" + _ext;
 
                     ViewBag.Msg = _comPath;
                     var path = _comPath;
 
-                    string[] files = System.IO.Directory.GetFiles(Server.MapPath("/Images/TempLogo"), "Temp" + "Abc" + ".*");
+                    string[] files = System.IO.Directory.GetFiles(Server.MapPath("/Images/TempLogo"), "Temp" + "Abc"
+
++ ".*");
                     foreach (string f in files)
                     {
                         System.IO.File.Delete(f);
@@ -689,36 +776,36 @@ namespace RDDStaffPortal.Areas.HR.Controllers
 
         public JsonResult GetEmpNxtNo()
         {
-           DataSet DS = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
+            DataSet DS = Db.myGetDS("select dbo.GetRDDEmpNo() as  EmpNo ");
 
             string NextEmpNo = DS.Tables[0].Rows[0]["EmpNO"].ToString();
 
             return Json(NextEmpNo, JsonRequestBehavior.AllowGet);
-            
+
         }
 
 
 
         public FileResult Download(string parentPartId)
         {
-            
-                byte[] fileBytes = null;
-                string FileVirtualPath = null;
-                if (parentPartId != null)
-                {
-                   
-                    FileVirtualPath = "~/Uploads/" + parentPartId;
+
+            byte[] fileBytes = null;
+            string FileVirtualPath = null;
+            if (parentPartId != null)
+            {
+
+                FileVirtualPath = "~/Uploads/" + parentPartId;
 
 
-                }
-                return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
-               
-           
-           }
+            }
+            return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+
+
+        }
         [HttpPost]
         public JsonResult UploadDoc()
         {
-            string fname = "";           
+            string fname = "";
             string _imgname = string.Empty;
             if (Request.Files.Count > 0)
             {
@@ -727,10 +814,12 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                     //  Get all files from Request object  
                     System.Web.HttpFileCollectionBase files = Request.Files;
                     for (int i = 0; i < files.Count; i++)
-                    {       
+                    {
                         HttpPostedFileBase file = files[i];
                         // Checking for Internet Explorer  
-                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() ==
+
+"INTERNETEXPLORER" || Request.Browser.Browser.ToUpper() == "GOOGLE CHROME")
                         {
                             string[] testfiles = file.FileName.Split(new char[] { '\\' });
                             fname = testfiles[testfiles.Length - 1];
@@ -741,7 +830,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                             fname = file.FileName;
 
                             var _ext = Path.GetExtension(fname);
-                           
+
                         }
                         // Get the complete folder path and store the file inside it.  
                         _imgname = Path.Combine(Server.MapPath("/Uploads/"), fname);
@@ -759,15 +848,15 @@ namespace RDDStaffPortal.Areas.HR.Controllers
             {
                 return Json(fname, JsonRequestBehavior.AllowGet);
             }
-           
+
         }
 
 
         public ActionResult Fillmanagerl2(int managerL1Id)
         {
             Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
-            DataSet DS = Db.myGetDS("exec RDD_GetManagerL2 '" + managerL1Id+"'");
-            List <RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
+            DataSet DS = Db.myGetDS("exec RDD_GetManagerL2 '" + managerL1Id + "'");
+            List<RDD_EmployeeRegistration> ManagerListL2 = new List<RDD_EmployeeRegistration>();
             if (DS.Tables.Count > 0)
             {
                 for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
@@ -805,23 +894,24 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         //    return Json(ManagerListL2, JsonRequestBehavior.AllowGet);
         //}
 
-      //  [ChildActionOnly]
+        //  [ChildActionOnly]
         public ActionResult GetEmployeeConfig()
         {
-            List<Employee_ConfigureList> list =new List<Employee_ConfigureList>();
+            List<Employee_ConfigureList> list = new List<Employee_ConfigureList>();
             DataSet ds = EmpDbOp.GetEmployeeConfigure(User.Identity.Name, "I");
             if (ds.Tables.Count > 0)
             {
-               
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++) {
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
                     Employee_ConfigureList Emp = new Employee_ConfigureList();
-                    Emp.ColumnName=ds.Tables[0].Rows[i]["Column"].ToString();
+                    Emp.ColumnName = ds.Tables[0].Rows[i]["Column"].ToString();
                     Emp.Description = ds.Tables[0].Rows[i]["Description"].ToString();
                     Emp.Types = ds.Tables[0].Rows[i]["Types"].ToString();
 
                     list.Add(Emp);
                 }
-               
+
             }
             return PartialView(list);
         }
@@ -849,7 +939,9 @@ namespace RDDStaffPortal.Areas.HR.Controllers
                 {
                     RoleList.Add(new Rdd_comonDrop()
                     {
-                        Code = !string.IsNullOrWhiteSpace(dr["RoleName"].ToString()) ? dr["RoleName"].ToString() : "",
+                        Code = !string.IsNullOrWhiteSpace(dr["RoleName"].ToString()) ? dr["RoleName"].ToString() :
+
+"",
                     });
                 }
             }
@@ -860,7 +952,7 @@ namespace RDDStaffPortal.Areas.HR.Controllers
         [Route("SaveEmpConfig")]
         public ActionResult saveEmpConfig(Employee_Configure EmpConfig)
         {
-            return Json(EmpDbOp.EmployeeConfigure(EmpConfig),JsonRequestBehavior.AllowGet);
+            return Json(EmpDbOp.EmployeeConfigure(EmpConfig), JsonRequestBehavior.AllowGet);
 
         }
 

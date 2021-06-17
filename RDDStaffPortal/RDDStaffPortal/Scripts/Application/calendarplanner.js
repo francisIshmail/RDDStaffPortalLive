@@ -16,6 +16,7 @@
         var tblhead2 = ['EmployeeId'];
         var dateCond = [];
         $(".loader1").hide();
+        debugger
         var seletedDate = moment(new Date());
         var firstDay = new Date(seletedDate.year(), seletedDate.month(), 1);
         var lastDay = new Date(seletedDate.year(), seletedDate.month() + 1, 0);
@@ -33,8 +34,11 @@
         }
         debugger
         var dayt = getDaysArray(seletedDate.year(), seletedDate.month() + 1);
-        
-       
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        $("#calendarid").text(monthNames[seletedDate.month()] + ' ' + seletedDate.year());
         RedDot_DivTable_Header_Fill_Append("I", dayt);
         var curPage = 1;
         var arr = "";
