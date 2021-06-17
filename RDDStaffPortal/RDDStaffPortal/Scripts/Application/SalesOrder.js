@@ -403,7 +403,9 @@ SalesOrder.prototype = {
 
             ItemDetails.splice(Row_Index - 1, 1);
 
-            if ($(".SalesDetail").length > 1) {                tr.remove()            }
+            if ($(".SalesDetail").length > 1) {
+                tr.remove()
+            }
 
             var k = 1;
             $(".SalesDetail").each(function () {
@@ -468,7 +470,9 @@ SalesOrder.prototype = {
             var Row_Index = tr.find(".Abcd").eq(0).text();
 
             PayTermDetails.splice(Row_Index - 1, 1);
-            if ($(".PayDetail").length > 1) {                tr.remove()            }
+            if ($(".PayDetail").length > 1) {
+                tr.remove()
+            }
 
             var k = 1;
             $(".PayDetail").each(function () {
