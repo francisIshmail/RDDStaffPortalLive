@@ -56,7 +56,7 @@
       <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SAPbobsCOM">
-      <HintPath>..\..\..\proj files\Interop.SAPbobsCOM.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\MySAPWork\Live Addons\PartNoCreation\PartNoCreation\obj\x64\Debug\Interop.SAPbobsCOM.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />

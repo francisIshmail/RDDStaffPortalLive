@@ -974,6 +974,7 @@
         while (i < length) {
             if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "" || (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerRating == "" && rDD_MngAppraisal.rDD_EmpAppraisalList[0].MngRatingText == "")) {
                 RedDotAlert_Error("Please comment for at least one question and it's corresponding rating(If Rating Applicable)");
+                $("#btnSaveRating").removeAttr("disabled", true);
                 i++;
             }
             else {
@@ -1018,6 +1019,7 @@
         while (i < length) {
             if (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerComment == "" || (rDD_MngAppraisal.rDD_EmpAppraisalList[0].ManagerRating == "" && rDD_MngAppraisal.rDD_EmpAppraisalList[0].MngRatingText == "")) {
                 RedDotAlert_Error("Please comment for at least one question and it's corresponding rating(If Rating Applicable)");
+                $("#btnUpdateRating").removeAttr("disabled", true);
                 i++;
             }
             else {
