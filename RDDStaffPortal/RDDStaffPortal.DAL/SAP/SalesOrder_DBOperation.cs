@@ -530,5 +530,22 @@ namespace RDDStaffPortal.DAL.SAP
                 throw ex;
             }
         }
+
+        public DataSet CheckCreditLimit(string dbname, double SorDocTotal, string LoggedinUser, string cardcode)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_PDC_CreditLimitUsedValidation '" + LoggedinUser + "','" + SorDocTotal + "','" + dbname + "','" + cardcode + "'");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -391,185 +391,202 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                         if (Header.Length > 0)
                         {
                             SqlCommand cmd = new SqlCommand();
+                            string Dbname = Header[0].DBName.ToString();
+                            double SorDocTotal = Convert.ToDouble(Header[0].DocTotal.ToString());
+                            string loginuser = User.Identity.Name;
+                            string CardCode = Header[0].CardCode.ToString();
 
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.CommandText = "RDD_OSOR_Insert_Update_Records";
-                            cmd.Connection = connection;
-                            cmd.Transaction = transaction;
-
-                            cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = Convert.ToInt16(Header[0].SO_ID.ToString());
-                            cmd.Parameters.Add("@Doc_Object", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Doc_Object.ToString());
-                            cmd.Parameters.Add("@Base_Obj", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Base_Obj.ToString());
-                            cmd.Parameters.Add("@Base_ID", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Base_ID.ToString());
-                            cmd.Parameters.Add("@DBName", SqlDbType.VarChar).Value = Header[0].DBName.ToString();
-                            cmd.Parameters.Add("@PostingDate", SqlDbType.DateTime).Value = Header[0].PostingDate;
-                            cmd.Parameters.Add("@DeliveryDate", SqlDbType.DateTime).Value = Header[0].DeliveryDate;
-                            cmd.Parameters.Add("@DocStatus", SqlDbType.VarChar).Value = Header[0].DocStatus.ToString();
-                            cmd.Parameters.Add("@AprovedBy", SqlDbType.VarChar).Value = Header[0].AprovedBy.ToString();
-                            cmd.Parameters.Add("@CreatedBy", SqlDbType.VarChar).Value = Header[0].CreatedBy.ToString();
-                            cmd.Parameters.Add("@CardCode", SqlDbType.VarChar).Value = Header[0].CardCode.ToString();
-                            cmd.Parameters.Add("@CardName", SqlDbType.NVarChar).Value = Header[0].CardName.ToString();
-                            cmd.Parameters.Add("@RefNo", SqlDbType.VarChar).Value = Header[0].RefNo.ToString();
-                            cmd.Parameters.Add("@RDD_Project", SqlDbType.VarChar).Value = Header[0].RDD_Project.ToString();
-                            cmd.Parameters.Add("@BusinesType", SqlDbType.VarChar).Value = Header[0].BusinesType.ToString();
-                            cmd.Parameters.Add("@InvPayTerms", SqlDbType.VarChar).Value = Header[0].InvPayTerms.ToString();
-                            cmd.Parameters.Add("@CustPayTerms", SqlDbType.VarChar).Value = Header[0].CustPayTerms.ToString();
-                            cmd.Parameters.Add("@Forwarder", SqlDbType.VarChar).Value = Header[0].Forwarder.ToString();
-                            cmd.Parameters.Add("@SalesEmp", SqlDbType.VarChar).Value = Header[0].SalesEmp.ToString();
-                            cmd.Parameters.Add("@SlpName", SqlDbType.VarChar).Value = Header[0].SlpName.ToString();
-                            cmd.Parameters.Add("@DocCur", SqlDbType.VarChar).Value = Header[0].DocCur.ToString();
-
-                            //cmd.Parameters.Add("@Pay_Method_1", SqlDbType.VarChar).Value = Header[0].Pay_Method_1.ToString();
-                            //cmd.Parameters.Add("@Rcpt_check_No_1", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_1.ToString();
-
-                            //if (Header[0].Rcpt_check_Date_1.ToString() != null)
-                            //    cmd.Parameters.Add("@Rcpt_check_Date_1", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_1;
-
-                            //cmd.Parameters.Add("@Remarks_1", SqlDbType.VarChar).Value = Header[0].Remarks_1.ToString();
-                            //cmd.Parameters.Add("@Curr_1", SqlDbType.VarChar).Value = Header[0].Curr_1.ToString();
-                            //cmd.Parameters.Add("@Amount_1", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_1.ToString());
-
-                            //if (Header[0].Pay_Method_2 != null)
-                            //{
-                            //    if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
-                            //    {
-
-                            //        cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
-                            //        cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
-
-                            //        if (Header[0].Rcpt_check_Date_2.ToString() != null)
-                            //            cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
-
-
-                            //        cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
-                            //        cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
-                            //        cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
-
-                            //    }
-                            //}
-
-                            cmd.Parameters.Add("@Total_Bef_Tax", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Bef_Tax.ToString());
-                            cmd.Parameters.Add("@Total_Tx", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Tx.ToString());
-                            cmd.Parameters.Add("@DocTotal", SqlDbType.Float).Value = Convert.ToDouble(Header[0].DocTotal.ToString());
-                            cmd.Parameters.Add("@GP", SqlDbType.Float).Value = Convert.ToDouble(Header[0].GP.ToString());
-                            cmd.Parameters.Add("@GP_Per", SqlDbType.Float).Value = Convert.ToDouble(Header[0].GP_Per.ToString());
-                            cmd.Parameters.Add("@Remarks", SqlDbType.VarChar).Value = Header[0].Remarks.ToString();
-                            cmd.Parameters.Add("@Validate_Status", SqlDbType.VarChar).Value = Header[0].Validate_Status.ToString();
-                            cmd.Parameters.Add("@Post_SAP", SqlDbType.VarChar).Value = Header[0].Post_SAP.ToString();
-                            //if (Header[0].CreatedOn == null)
-                            //    cmd.Parameters.Add("@CreatedOn", SqlDbType.DateTime).Value = DBNull.Value;
-                            //else
-                            //    cmd.Parameters.Add("@CreatedOn", SqlDbType.DateTime).Value = Header[0].CreatedOn.ToString();
-
-                            //if (Header[0].LastUpdatedOn == null)
-                            //    cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = DBNull.Value;
-                            //else
-                            //{
-                            //    string Dt = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
-                            //cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = Dt;// Header[0].LastUpdatedOn.ToString();
-                            //}
-
-                            //if (Header[0].LastUpdatedOn == null)
-                            //    cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = DBNull.Value;
-                            //else
-                            cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = Header[0].LastUpdatedBy.ToString();
-
-                            cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                            cmd.ExecuteNonQuery();
-                            SO_ID = Convert.ToInt32(cmd.Parameters["@id"].Value.ToString());
-
-                            cmd.Dispose();
-
-                            if (SO_ID != 0)
+                            DataSet ds = SalesOrder_DBOperation.CheckCreditLimit(Dbname, SorDocTotal, loginuser, CardCode);
+                            string Dsmsg = ds.Tables[0].Rows[0]["ReturnMsg"].ToString();
+                            if (Dsmsg != "Success")
                             {
-                                if (ItemDetail.Length > 0)
-                                {
-                                    string sql = "Delete From [RDD_SOR1] Where SO_ID=" + SO_ID.ToString();
-                                    Db.myExecuteSQL(sql);
-
-                                    for (int i = 0; i < ItemDetail.Length; i++)
-                                    {
-                                        cmd = new SqlCommand();
-
-                                        cmd.CommandType = CommandType.StoredProcedure;
-                                        cmd.CommandText = "RDD_SOR1_Insert_Update_Records";
-                                        cmd.Connection = connection;
-                                        cmd.Transaction = transaction;
-
-                                        cmd.Parameters.Add("@SO_LineId", SqlDbType.BigInt).Value = ItemDetail[i].SO_LineId.ToString();
-                                        cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = SO_ID;
-                                        cmd.Parameters.Add("@Base_Obj", SqlDbType.NVarChar).Value = ItemDetail[i].Base_Obj.ToString();
-                                        cmd.Parameters.Add("@Base_Id", SqlDbType.NVarChar).Value = ItemDetail[i].Base_Id.ToString();
-                                        cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = ItemDetail[i].Base_LinId.ToString();
-                                        cmd.Parameters.Add("@ItemCode", SqlDbType.NVarChar).Value = ItemDetail[i].ItemCode.ToString();
-                                        cmd.Parameters.Add("@Description", SqlDbType.NVarChar).Value = ItemDetail[i].Description.ToString();
-                                        cmd.Parameters.Add("@Quantity", SqlDbType.Float).Value = ItemDetail[i].Quantity.ToString();
-                                        cmd.Parameters.Add("@UnitPrice", SqlDbType.Float).Value = ItemDetail[i].UnitPrice.ToString();
-                                        cmd.Parameters.Add("@DiscPer", SqlDbType.Float).Value = ItemDetail[i].DiscPer.ToString();
-                                        cmd.Parameters.Add("@LineTotal", SqlDbType.Float).Value = ItemDetail[i].LineTotal.ToString();
-                                        cmd.Parameters.Add("@TaxCode", SqlDbType.NVarChar).Value = ItemDetail[i].TaxCode.ToString();
-                                        cmd.Parameters.Add("@TaxRate", SqlDbType.Float).Value = ItemDetail[i].TaxRate.ToString();
-                                        cmd.Parameters.Add("@WhsCode", SqlDbType.NVarChar).Value = ItemDetail[i].WhsCode.ToString();
-                                        cmd.Parameters.Add("@QtyInWhs", SqlDbType.Float).Value = ItemDetail[i].QtyInWhs.ToString();
-                                        cmd.Parameters.Add("@QtyAval", SqlDbType.Float).Value = ItemDetail[i].QtyAval.ToString();
-                                        cmd.Parameters.Add("@OpgRefAlpha", SqlDbType.NVarChar).Value = ItemDetail[i].OpgRefAlpha.ToString();
-                                        cmd.Parameters.Add("@GP", SqlDbType.Float).Value = ItemDetail[i].GP.ToString();
-                                        cmd.Parameters.Add("@GPPer", SqlDbType.Float).Value = ItemDetail[i].GPPer.ToString();
-
-                                        cmd.ExecuteNonQuery();
-
-                                        cmd.Dispose();
-                                    }
-                                }
-
+                                Result = "False";
                             }
-
-                            if (SO_ID != 0)
+                            else
                             {
-                                if (PayDetail.Length > 0)
+                                Result = "True";
+                                cmd = new SqlCommand();
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.CommandText = "RDD_OSOR_Insert_Update_Records";
+                                cmd.Connection = connection;
+                                cmd.Transaction = transaction;
+
+                                cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = Convert.ToInt16(Header[0].SO_ID.ToString());
+                                cmd.Parameters.Add("@Doc_Object", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Doc_Object.ToString());
+                                cmd.Parameters.Add("@Base_Obj", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Base_Obj.ToString());
+                                cmd.Parameters.Add("@Base_ID", SqlDbType.Int).Value = Convert.ToInt16(Header[0].Base_ID.ToString());
+                                cmd.Parameters.Add("@DBName", SqlDbType.VarChar).Value = Header[0].DBName.ToString();
+                                cmd.Parameters.Add("@PostingDate", SqlDbType.DateTime).Value = Header[0].PostingDate;
+                                cmd.Parameters.Add("@DeliveryDate", SqlDbType.DateTime).Value = Header[0].DeliveryDate;
+                                cmd.Parameters.Add("@DocStatus", SqlDbType.VarChar).Value = Header[0].DocStatus.ToString();
+                                cmd.Parameters.Add("@AprovedBy", SqlDbType.VarChar).Value = Header[0].AprovedBy.ToString();
+                                cmd.Parameters.Add("@CreatedBy", SqlDbType.VarChar).Value = Header[0].CreatedBy.ToString();
+                                cmd.Parameters.Add("@CardCode", SqlDbType.VarChar).Value = Header[0].CardCode.ToString();
+                                cmd.Parameters.Add("@CardName", SqlDbType.NVarChar).Value = Header[0].CardName.ToString();
+                                cmd.Parameters.Add("@RefNo", SqlDbType.VarChar).Value = Header[0].RefNo.ToString();
+                                cmd.Parameters.Add("@RDD_Project", SqlDbType.VarChar).Value = Header[0].RDD_Project.ToString();
+                                cmd.Parameters.Add("@BusinesType", SqlDbType.VarChar).Value = Header[0].BusinesType.ToString();
+                                cmd.Parameters.Add("@InvPayTerms", SqlDbType.VarChar).Value = Header[0].InvPayTerms.ToString();
+                                cmd.Parameters.Add("@CustPayTerms", SqlDbType.VarChar).Value = Header[0].CustPayTerms.ToString();
+                                cmd.Parameters.Add("@Forwarder", SqlDbType.VarChar).Value = Header[0].Forwarder.ToString();
+                                cmd.Parameters.Add("@SalesEmp", SqlDbType.VarChar).Value = Header[0].SalesEmp.ToString();
+                                cmd.Parameters.Add("@SlpName", SqlDbType.VarChar).Value = Header[0].SlpName.ToString();
+                                cmd.Parameters.Add("@DocCur", SqlDbType.VarChar).Value = Header[0].DocCur.ToString();
+
+                                //cmd.Parameters.Add("@Pay_Method_1", SqlDbType.VarChar).Value = Header[0].Pay_Method_1.ToString();
+                                //cmd.Parameters.Add("@Rcpt_check_No_1", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_1.ToString();
+
+                                //if (Header[0].Rcpt_check_Date_1.ToString() != null)
+                                //    cmd.Parameters.Add("@Rcpt_check_Date_1", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_1;
+
+                                //cmd.Parameters.Add("@Remarks_1", SqlDbType.VarChar).Value = Header[0].Remarks_1.ToString();
+                                //cmd.Parameters.Add("@Curr_1", SqlDbType.VarChar).Value = Header[0].Curr_1.ToString();
+                                //cmd.Parameters.Add("@Amount_1", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_1.ToString());
+
+                                //if (Header[0].Pay_Method_2 != null)
+                                //{
+                                //    if (Header[0].Pay_Method_2.ToString() != "" && Header[0].Pay_Method_2.ToString() != "0")
+                                //    {
+
+                                //        cmd.Parameters.Add("@Pay_Method_2", SqlDbType.VarChar).Value = Header[0].Pay_Method_2.ToString();
+                                //        cmd.Parameters.Add("@Rcpt_check_No_2", SqlDbType.VarChar).Value = Header[0].Rcpt_check_No_2.ToString();
+
+                                //        if (Header[0].Rcpt_check_Date_2.ToString() != null)
+                                //            cmd.Parameters.Add("@Rcpt_check_Date_2", SqlDbType.DateTime).Value = Header[0].Rcpt_check_Date_2;
+
+
+                                //        cmd.Parameters.Add("@Remarks_2", SqlDbType.VarChar).Value = Header[0].Remarks_2.ToString();
+                                //        cmd.Parameters.Add("@Curr_2", SqlDbType.VarChar).Value = Header[0].Curr_2.ToString();
+                                //        cmd.Parameters.Add("@Amount_2", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Amount_2.ToString());
+
+                                //    }
+                                //}
+
+                                cmd.Parameters.Add("@Total_Bef_Tax", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Bef_Tax.ToString());
+                                cmd.Parameters.Add("@Total_Tx", SqlDbType.Float).Value = Convert.ToDouble(Header[0].Total_Tx.ToString());
+                                cmd.Parameters.Add("@DocTotal", SqlDbType.Float).Value = Convert.ToDouble(Header[0].DocTotal.ToString());
+                                cmd.Parameters.Add("@GP", SqlDbType.Float).Value = Convert.ToDouble(Header[0].GP.ToString());
+                                cmd.Parameters.Add("@GP_Per", SqlDbType.Float).Value = Convert.ToDouble(Header[0].GP_Per.ToString());
+                                cmd.Parameters.Add("@Remarks", SqlDbType.VarChar).Value = Header[0].Remarks.ToString();
+                                cmd.Parameters.Add("@Validate_Status", SqlDbType.VarChar).Value = Header[0].Validate_Status.ToString();
+                                cmd.Parameters.Add("@Post_SAP", SqlDbType.VarChar).Value = Header[0].Post_SAP.ToString();
+                                //if (Header[0].CreatedOn == null)
+                                //    cmd.Parameters.Add("@CreatedOn", SqlDbType.DateTime).Value = DBNull.Value;
+                                //else
+                                //    cmd.Parameters.Add("@CreatedOn", SqlDbType.DateTime).Value = Header[0].CreatedOn.ToString();
+
+                                //if (Header[0].LastUpdatedOn == null)
+                                //    cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = DBNull.Value;
+                                //else
+                                //{
+                                //    string Dt = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+                                //cmd.Parameters.Add("@LastUpdatedOn", SqlDbType.DateTime).Value = Dt;// Header[0].LastUpdatedOn.ToString();
+                                //}
+
+                                //if (Header[0].LastUpdatedOn == null)
+                                //    cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = DBNull.Value;
+                                //else
+                                cmd.Parameters.Add("@LastUpdatedBy", SqlDbType.VarChar).Value = Header[0].LastUpdatedBy.ToString();
+
+                                cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                cmd.ExecuteNonQuery();
+                                SO_ID = Convert.ToInt32(cmd.Parameters["@id"].Value.ToString());
+
+                                cmd.Dispose();
+
+                                if (SO_ID != 0)
                                 {
-                                    string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
-                                    Db.myExecuteSQL(sql);
-
-                                    for (int i = 0; i < PayDetail.Length; i++)
+                                    if (ItemDetail.Length > 0)
                                     {
-                                        cmd = new SqlCommand();
+                                        string sql = "Delete From [RDD_SOR1] Where SO_ID=" + SO_ID.ToString();
+                                        Db.myExecuteSQL(sql);
 
-                                        cmd.CommandType = CommandType.StoredProcedure;
-                                        cmd.CommandText = "RDD_SOR2_Insert_Update_Records";
-                                        cmd.Connection = connection;
-                                        cmd.Transaction = transaction;
+                                        for (int i = 0; i < ItemDetail.Length; i++)
+                                        {
+                                            cmd = new SqlCommand();
 
-                                        cmd.Parameters.Add("@Pay_Line_Id", SqlDbType.BigInt).Value = PayDetail[i].Pay_Line_Id.ToString();
-                                        cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = SO_ID;
-                                        cmd.Parameters.Add("@Base_Obj", SqlDbType.NVarChar).Value = PayDetail[i].Base_Obj.ToString();
-                                        cmd.Parameters.Add("@Base_Id", SqlDbType.NVarChar).Value = PayDetail[i].Base_Id.ToString();
-                                        cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = PayDetail[i].Base_LinId.ToString();
-                                        cmd.Parameters.Add("@Pay_Method_Id", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method_Id.ToString();
-                                        cmd.Parameters.Add("@Pay_Method", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method.ToString();
-                                        cmd.Parameters.Add("@PDCType", SqlDbType.NVarChar).Value = PayDetail[i].Pdc_Type_Id.ToString();
-                                        cmd.Parameters.Add("@Rcpt_Check_No", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_No.ToString();
-                                        cmd.Parameters.Add("@ExchangeRate", SqlDbType.Float).Value = PayDetail[i].ExchangeRate.ToString();
-                                        cmd.Parameters.Add("@Bank_Code", SqlDbType.NVarChar).Value = PayDetail[i].Bank_Code.ToString();
-                                        cmd.Parameters.Add("@Bank_Name", SqlDbType.NVarChar).Value = PayDetail[i].Bank_Name.ToString();
-                                        if (PayDetail[i].Rcpt_Check_Date.ToString() != null)
-                                            cmd.Parameters.Add("@Rcpt_Check_Date", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_Date;
+                                            cmd.CommandType = CommandType.StoredProcedure;
+                                            cmd.CommandText = "RDD_SOR1_Insert_Update_Records";
+                                            cmd.Connection = connection;
+                                            cmd.Transaction = transaction;
 
-                                        cmd.Parameters.Add("@Curr_Id", SqlDbType.NVarChar).Value = PayDetail[i].Curr_Id.ToString();
-                                        cmd.Parameters.Add("@Currency", SqlDbType.NVarChar).Value = PayDetail[i].Currency.ToString();
-                                        cmd.Parameters.Add("@PDCAmount", SqlDbType.Float).Value = PayDetail[i].PDCAmount.ToString();
-                                        cmd.Parameters.Add("@Rcpt_Check_Amt", SqlDbType.Float).Value = PayDetail[i].Rcpt_Check_Amt.ToString();
-                                        cmd.Parameters.Add("@Allocated_Amt", SqlDbType.Float).Value = PayDetail[i].Allocated_Amt.ToString();
-                                        cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();
-                                        cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = PayDetail[i].Remark.ToString();                                        
+                                            cmd.Parameters.Add("@SO_LineId", SqlDbType.BigInt).Value = ItemDetail[i].SO_LineId.ToString();
+                                            cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = SO_ID;
+                                            cmd.Parameters.Add("@Base_Obj", SqlDbType.NVarChar).Value = ItemDetail[i].Base_Obj.ToString();
+                                            cmd.Parameters.Add("@Base_Id", SqlDbType.NVarChar).Value = ItemDetail[i].Base_Id.ToString();
+                                            cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = ItemDetail[i].Base_LinId.ToString();
+                                            cmd.Parameters.Add("@ItemCode", SqlDbType.NVarChar).Value = ItemDetail[i].ItemCode.ToString();
+                                            cmd.Parameters.Add("@Description", SqlDbType.NVarChar).Value = ItemDetail[i].Description.ToString();
+                                            cmd.Parameters.Add("@Quantity", SqlDbType.Float).Value = ItemDetail[i].Quantity.ToString();
+                                            cmd.Parameters.Add("@UnitPrice", SqlDbType.Float).Value = ItemDetail[i].UnitPrice.ToString();
+                                            cmd.Parameters.Add("@DiscPer", SqlDbType.Float).Value = ItemDetail[i].DiscPer.ToString();
+                                            cmd.Parameters.Add("@LineTotal", SqlDbType.Float).Value = ItemDetail[i].LineTotal.ToString();
+                                            cmd.Parameters.Add("@TaxCode", SqlDbType.NVarChar).Value = ItemDetail[i].TaxCode.ToString();
+                                            cmd.Parameters.Add("@TaxRate", SqlDbType.Float).Value = ItemDetail[i].TaxRate.ToString();
+                                            cmd.Parameters.Add("@WhsCode", SqlDbType.NVarChar).Value = ItemDetail[i].WhsCode.ToString();
+                                            cmd.Parameters.Add("@QtyInWhs", SqlDbType.Float).Value = ItemDetail[i].QtyInWhs.ToString();
+                                            cmd.Parameters.Add("@QtyAval", SqlDbType.Float).Value = ItemDetail[i].QtyAval.ToString();
+                                            cmd.Parameters.Add("@OpgRefAlpha", SqlDbType.NVarChar).Value = ItemDetail[i].OpgRefAlpha.ToString();
+                                            cmd.Parameters.Add("@GP", SqlDbType.Float).Value = ItemDetail[i].GP.ToString();
+                                            cmd.Parameters.Add("@GPPer", SqlDbType.Float).Value = ItemDetail[i].GPPer.ToString();
 
-                                        cmd.ExecuteNonQuery();
-                                        
-                                        cmd.Dispose();
+                                            cmd.ExecuteNonQuery();
+
+                                            cmd.Dispose();
+                                        }
                                     }
+
                                 }
 
+                                if (SO_ID != 0)
+                                {
+                                    if (PayDetail.Length > 0)
+                                    {
+                                        string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
+                                        Db.myExecuteSQL(sql);
+                                        string sql1 = "Delete from [RDD_PDCEntry] where SO_ID=" + SO_ID.ToString();
+                                        Db.myExecuteSQL(sql1);
+
+                                        for (int i = 0; i < PayDetail.Length; i++)
+                                        {
+                                            cmd = new SqlCommand();
+
+                                            cmd.CommandType = CommandType.StoredProcedure;
+                                            cmd.CommandText = "RDD_SOR2_Insert_Update_Records";
+                                            cmd.Connection = connection;
+                                            cmd.Transaction = transaction;
+
+                                            cmd.Parameters.Add("@Pay_Line_Id", SqlDbType.BigInt).Value = PayDetail[i].Pay_Line_Id.ToString();
+                                            cmd.Parameters.Add("@SO_ID", SqlDbType.Int).Value = SO_ID;
+                                            cmd.Parameters.Add("@Base_Obj", SqlDbType.NVarChar).Value = PayDetail[i].Base_Obj.ToString();
+                                            cmd.Parameters.Add("@Base_Id", SqlDbType.NVarChar).Value = PayDetail[i].Base_Id.ToString();
+                                            cmd.Parameters.Add("@Base_LinId", SqlDbType.NVarChar).Value = PayDetail[i].Base_LinId.ToString();
+                                            cmd.Parameters.Add("@Pay_Method_Id", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method_Id.ToString();
+                                            cmd.Parameters.Add("@Pay_Method", SqlDbType.NVarChar).Value = PayDetail[i].Pay_Method.ToString();
+                                            cmd.Parameters.Add("@PDCType", SqlDbType.NVarChar).Value = PayDetail[i].Pdc_Type_Id.ToString();
+                                            cmd.Parameters.Add("@Rcpt_Check_No", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_No.ToString();
+                                            cmd.Parameters.Add("@ExchangeRate", SqlDbType.Float).Value = PayDetail[i].ExchangeRate.ToString();
+                                            cmd.Parameters.Add("@Bank_Code", SqlDbType.NVarChar).Value = PayDetail[i].Bank_Code.ToString();
+                                            cmd.Parameters.Add("@Bank_Name", SqlDbType.NVarChar).Value = PayDetail[i].Bank_Name.ToString();
+                                            if (PayDetail[i].Rcpt_Check_Date.ToString() != null)
+                                                cmd.Parameters.Add("@Rcpt_Check_Date", SqlDbType.NVarChar).Value = PayDetail[i].Rcpt_Check_Date;
+
+                                            cmd.Parameters.Add("@Curr_Id", SqlDbType.NVarChar).Value = PayDetail[i].Curr_Id.ToString();
+                                            cmd.Parameters.Add("@Currency", SqlDbType.NVarChar).Value = PayDetail[i].Currency.ToString();
+                                            cmd.Parameters.Add("@PDCAmount", SqlDbType.Float).Value = PayDetail[i].PDCAmount.ToString();
+                                            cmd.Parameters.Add("@Rcpt_Check_Amt", SqlDbType.Float).Value = PayDetail[i].Rcpt_Check_Amt.ToString();
+                                            cmd.Parameters.Add("@Allocated_Amt", SqlDbType.Float).Value = PayDetail[i].Allocated_Amt.ToString();
+                                            cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();
+                                            cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = PayDetail[i].Remark.ToString();
+
+                                            cmd.ExecuteNonQuery();
+
+                                            cmd.Dispose();
+                                        }
+                                    }
+
+                                }
                             }
                             if (Result == "True")
                             {
@@ -583,6 +600,14 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
 
                                 retVal = Content(JsonConvert.SerializeObject(result_ds), "application/json");
                                 //Result = JsonUtil.ToJSONString(result_ds.Tables[0]);
+
+                                transaction.Commit();
+                            }
+                            else
+                            {
+                                t1.Rows.Add("False", Dsmsg);
+                                result_ds.Tables.Add(t1);
+                                retVal = Content(JsonConvert.SerializeObject(result_ds), "application/json");
 
                                 transaction.Commit();
                             }

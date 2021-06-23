@@ -652,12 +652,12 @@ SalesOrder.prototype = {
                 if (Number.isNaN(TotalAllocatedAmt) == true) {
                     TotalAllocatedAmt = 0.00;
                 }
-                var DocTotal = $("[id$=txtTotal]").val();
+                var DocTotal = parseFloat($("[id$=txtTotal]").val());
                 if ($("#cbPCurency option:selected").val() != $("#cbDocCur option:selected").val()) {
                     var ConvertedOSAmt = "";
-                    var ExchangeRate = $("#txtPExchngRate").val();
+                    var ExchangeRate = parseFloat($("#txtPExchngRate").val());
                     ConvertedOSAmt = parseFloat($("#txtPRcptCheckAmt").val()) / parseFloat(ExchangeRate);
-                    var Total = TotalAllocatedAmt + ConvertedOSAmt;
+                    var Total = parseFloat(TotalAllocatedAmt) + parseFloat(ConvertedOSAmt);
                     
                     if ($("[id$=txtPRcptCheckAmt]").val() != '' && $("[id$=txtTotal]").val() != '') {
                         if (Total >= DocTotal) {
@@ -706,7 +706,7 @@ SalesOrder.prototype = {
                     //}
                 }
                 else {
-                    if (parseFloat($("#txtPRcptCheckAmt").val()) > parseFloat(DocTotal)) {
+                    if (parseFloat($("#txtPRcptCheckAmt").val()) > (parseFloat(DocTotal)-parseFloat(TotalAllocatedAmt))) {
                         var AllocateAmnt = parseFloat(DocTotal) - parseFloat(TotalAllocatedAmt);
 
                         $("[id$=txtPAllocatedAmt]").val(AllocateAmnt);
