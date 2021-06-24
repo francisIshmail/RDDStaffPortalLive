@@ -545,8 +545,8 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                     {
                                         string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
                                         Db.myExecuteSQL(sql);
-                                        string sql1 = "Delete from [RDD_PDCEntry] where SO_ID=" + SO_ID.ToString();
-                                        Db.myExecuteSQL(sql1);
+                                        //string sql1 = "Delete from [RDD_PDCEntry] where SO_ID=" + SO_ID.ToString();
+                                        //Db.myExecuteSQL(sql1);
 
                                         for (int i = 0; i < PayDetail.Length; i++)
                                         {
@@ -782,13 +782,13 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             }
         }
 
-        public ActionResult GetDetailsOfPDC(string dbname, string cardcode)
+        public ActionResult GetDetailsOfPDC(string dbname, string cardcode, string chqno, string bankcode)
         {
             string retVal = string.Empty;
             DataSet DS;
             try
             {
-                DS = SalesOrder_DBOperation.GetDetailsOfPDC(dbname, cardcode);
+                DS = SalesOrder_DBOperation.GetDetailsOfPDC(dbname, cardcode, chqno, bankcode);
                 return Content(JsonConvert.SerializeObject(DS), "application/json");
             }
             catch (Exception ex)

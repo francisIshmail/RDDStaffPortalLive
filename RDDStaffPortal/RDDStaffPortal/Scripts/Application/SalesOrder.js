@@ -1978,6 +1978,7 @@ SalesOrder.prototype = {
         });
 
         $("#cbPPaymentMethod").change(function () {
+            debugger
             //alert("hi");
             var Paymethod = $(this).val();
             var Customercode = $("#txtCardCode").val();
@@ -1997,12 +1998,20 @@ SalesOrder.prototype = {
                 $("#cbPPDCType").append(val);
                 $("#txtPBankName").removeAttr("disabled", true);
                 $("#cbPPDCType").removeAttr("disabled", true);
+                var chqno = "";
+                var bnkcode = "";
+                $('.PayDetail').each(function () {
+                    debugger
+                    //var trs = $(this).parent().parent().html();
+                    chqno += $(this).find('.Abcd').eq(8).text() + ';';
+                    bnkcode += $(this).find('.Abcd').eq(7).text() + ';';
+                });
                 $.ajax({
                     async: false,
                     cache: false,
                     type: "POST",
                     url: "/SAP/SalesOrder/GetDetailsOfPDC",
-                    data: JSON.stringify({ dbname: $("#DBName").val(), cardcode: Customercode }),
+                    data: JSON.stringify({ dbname: $("#DBName").val(), cardcode: Customercode, chqno: chqno, bankcode: bnkcode }),
                     dataType: 'Json',
                     contentType: "Application/json",
                     success: function (data) {

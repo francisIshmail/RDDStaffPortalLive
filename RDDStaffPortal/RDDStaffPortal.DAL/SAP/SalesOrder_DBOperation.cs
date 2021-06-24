@@ -503,7 +503,7 @@ namespace RDDStaffPortal.DAL.SAP
             {
                 Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG '" + dbname + "','" + Pdctype + "','" + cardcode + "','" + Chequeno + "'");
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsForBG,'" + dbname + "','" + Pdctype + "','" + cardcode + "','" + Chequeno + "',''");
 
                 return DS;
 
@@ -514,13 +514,13 @@ namespace RDDStaffPortal.DAL.SAP
             }
         }
 
-        public DataSet GetDetailsOfPDC(string dbname, string cardcode)
+        public DataSet GetDetailsOfPDC(string dbname, string cardcode, string chqno, string bankcode)
         {
             try
             {
                 Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG '" + dbname + "','','" + cardcode + "',''");
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsOfPDC,'" + dbname + "','','" + cardcode + "','" + chqno + "','" + bankcode + "'");
 
                 return DS;
 
