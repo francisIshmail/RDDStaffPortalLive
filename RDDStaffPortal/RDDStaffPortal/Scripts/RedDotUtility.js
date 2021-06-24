@@ -998,7 +998,7 @@ function RedDot_NumberFormat(value) {
         value = -(value);
         abr = '-';
     } else if (value == 0) {
-        return '$ ' + value.toString();
+        return  value.toString();
     }
     if (value >= 1000000000) {
         values = (value / 1000000000).toFixed(2) + ' B';
@@ -1012,6 +1012,9 @@ function RedDot_NumberFormat(value) {
     }
     return abr + '' + values.toString();
 }
+
+
+
 
 
 function RedtDot_CheckAuthorization(url) {

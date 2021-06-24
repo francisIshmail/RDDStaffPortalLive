@@ -14,6 +14,15 @@
 		var Year_arr = [];
 		var ChartSalesCondition = true;
 		var chartfunnel, chartbudget, chartBreadth, chartDebator;
+		var Inventory_Data = '', Stock_Data0 = '', Stock_Data0I = '', Stock_Data0II = '', Stock_Data0III = '';
+		var Stock_Data1 = '', Stock_Data1I = '', Stock_Data1II = '', Stock_Data1III = '';
+		var Inventory_bgs, Inventory_lbl1, Inventory_lbl2;
+		var Stock1_country = [], chartxStockBar1, chartxStockBar0, Stock_country = [];
+		var StockGit_country = [], chartxStockBarGit, lblStockGit1 = [], lblStockGit2 = [], lblStockGit3 = [], ds_Git = [], ds_Git1 = [];
+		var Stock_DataGit = '', Stock_DataGitI = '', Stock_DataGitII = '', Stock_DataGitIII = '';
+		var StockGitdata = [], StockGitdata1 = [];
+
+
 		var ds_Budget = [];
 		var ds_funnel = [];
 		var lbl_funnel = [];
@@ -24,6 +33,7 @@
 		var lbl_budget = [];
 		var lbl_points = [];
 		var points_Graph = [];
+		var StockAgeTemparr = [],StockAgelbl=[];
 		var pointsMonth = [];
 		var now = new Date();
 		var future = now.setMonth(now.getMonth(), 1);
@@ -43,20 +53,16 @@
 			url: "/Get_MainDashBoard_V1",
 			contentType: "Application/json",
 			dataType: 'JSON',
-			success: function (response) {
-				
-				
+			success: function (response) {							
 				$(".loader1").show();
 				Maindata = response;
 				console.log(Maindata);
 				$("#SalesChecklbl").hide();
 				$("#GPChecklbl").hide();
 				$("#SalesCheck").hide();
-				$("#GPCheck").hide();
-				debugger
+				$("#GPCheck").hide();				
 				try {
-					$("#MainChart #MainChart-V1").each(function (index, item) {
-						debugger
+					$("#MainChart #MainChart-V1").each(function (index, item) {						
 						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
 						var url1 = $(this).find("#hdnurl").val();
 						var lbl2 = $(this).find("#hdnlbl2").val().split(",");
@@ -79,20 +85,14 @@
 						if (k3 > 0) {
 							$(".country-amount")[0].remove()
 						}
-						$("#balance-" + ids).html("$ "+RedDot_NumberFormat(totalbalance))
-
-
-						debugger
-
+						$("#balance-" + ids).html("$ " + RedDot_NumberFormat(totalbalance))
 					})
 
 				} catch (e) {
 					console.log(e)
-
-                }
+				}
 				try {
-					$("#lins #BarChart-V1").each(function (index, item) {
-						
+					$("#lins #BarChart-V1").each(function (index, item) {						
 						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
 						var url1 = $(this).find("#hdnurl").val();
 						var lbl2 = $(this).find("#hdnlbl2").val().split(",");
@@ -102,10 +102,8 @@
 						var pts = [];
 						var lblarr1 = [];
 						var lblarr2 = [];
-						var bgarr = [];
-						
+						var bgarr = [];						
 						if (ids == 'DASH022') {
-
 							ids = 'chartSales';
 							$('#first_tab,#pills-tabContent-Sales,#SalesCheck,#SalesChecklbl').show();
 							$("#SalesChecklbl").show();
@@ -115,7 +113,6 @@
 
 						} else if (ids == 'DASH023') {
 							ids = 'chartGP';
-
 							if (ChartSalesCondition == true) {
 
 								$('#first_tab,#pills-tabContent-Sales,#SalesCheck,#SalesChecklbl').hide();
@@ -133,9 +130,6 @@
 								$("#pills-tabContent-GP").hide();
 							}
 							$("#GPChecklbl").show();
-
-
-
 						}
 
 						var i = 0;
@@ -759,39 +753,29 @@
 					console.log(e)
 				}
 				try {
-					$("#GP #GraphChart-V1").each(function (index, item) {
-						
-						
+					$("#GP #GraphChart-V1").each(function (index, item) {											
 						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
 						var url1 = $(this).find("#hdnurl").val();
-						var lbl2 = $(this).find("#hdnlbl2").val().split(",");
-						
+						var lbl2 = $(this).find("#hdnlbl2").val().split(",");						
 						var lbl1 = $(this).find("#hdnlbl1").val().split(",");
 						var bgs = $(this).find("#hdnbgcolors").val().split(",");
 						var ids = $(this).find(".chart-container")[0].childNodes[1].id;
 						var Line_data = ''
 						data_return(Noc, Maindata)
 						Line_data = Maindata_result;
-						
-
-
 						var i;
 						var lbltxt = [];
 						var ds = [];
 						var ds1 = [];
 						var ds_graph = [];
-
-						if (ids == 'DASH030') {
-						//	lbl_funnel = $(this).find("#hdnlbl2").val().split(",");
+						if (ids == 'DASH030') {						
 							var x = document.getElementById("smallSelect-DASH030");
 							var txt = "All options: ";
-
-
 							for (i = 0; i < x.length; i++) {
 								if (x.options[i].text !== 'ALL') {
 									lbltxt.push(x.options[i].text.toString().toUpperCase());
 									lbl_funnel.push(x.options[i].text.toString().toUpperCase());
-                                }
+								}
 								
 								var found_names = $.grep(Line_data, function (v) {
 									return v.Status.toUpperCase() === x.options[i].text.toString().toUpperCase();
@@ -808,24 +792,12 @@
 										points1.push(found_names1[0].TotalAmount)
 									}
 									k++;
-
 								}
-
-
 								if (points1.length > 0) {
 									ds.push(points1);
 									ds_funnel.push(points1);
-
-                                }
-									
-
-
-
-
-
-							}
-
-							
+								}									
+							}							
 							i = 0;
 							while (lbltxt.length > i) {
 								ds_graph.push({
@@ -835,11 +807,8 @@
 								i++;
 							}
 						} else if (ids == 'DASH037') {
-
 							$("#smallSelect-DASH037").empty('');
-							var b = [];
-							
-							//$('#smallSelect-DASH037').append('<option value="ALL" selected="">ALL</option>');
+							var b = [];							
 							$.each(Line_data, function (index, event) {
 								var events = $.grep(b, function (e) {
 									return event.Project === e.Project;
@@ -856,13 +825,12 @@
 
 							var x = document.getElementById("smallSelect-DASH037");
 							var txt = "All options: ";
-
-							//				
+							
 							for (i = 0; i < x.length; i++) {
 								if (x.options[i].text !== 'ALL') {
 									lbltxt.push(x.options[i].text.toString().toUpperCase());
 									
-                                }
+								}
 									
 								var found_names = $.grep(Line_data, function (v) {
 									return v.Project.toUpperCase() === x.options[i].text.toString().toUpperCase();
@@ -891,13 +859,8 @@
 									ds.push(points1);
 									ds.push(points2);
 
-                                }
+								}
 									
-
-
-
-
-
 
 							}
 
@@ -963,7 +926,7 @@
 											points1.push(found_names[0][lbl2[k]])
 
 											k++;
-                                        }
+										}
 										
 								
 									//sk++;
@@ -1196,15 +1159,15 @@
 						else{
 							 chartBreadth = new ApexCharts(document.querySelector("#" + ids + ""), options);
 							chartBreadth.render();
-                    }
+					}
 
 						
 
 					})
 
-                } catch (e) {
+				} catch (e) {
 					console.log(e)
-                }
+				}
 
 				
 				var Line_data = ''
@@ -1220,7 +1183,7 @@
 				$("#pills-Quarter-tab").trigger('click');
 
 				
-                try {
+				try {
 					$("#ThirdCard #ThirdCard-V1").each(function (index, item) {
 						$("#smallSelect-DASH040").hide();
 						$("#smallSelect-DASH039").hide();
@@ -1240,7 +1203,7 @@
 						if (ids =="DASH040") {
 							$("#exampleModal-I-" + ids).find(".modal-dialog").addClass("modal-lg");
 							$("#exampleModal-II-" + ids).find(".modal-dialog").addClass("modal-lg");
-                        }
+						}
 
 						$("#btn-I-" + ids).html(lbl2[0] + "<i class='fas fa-paperclip'></i>");
 						$("#btn-II-" + ids).html(lbl2[1] + "<i class='fas fa-paperclip'></i>");
@@ -1249,14 +1212,14 @@
 						
 						if (Line_data.length == 0) {
 							return
-                        }
+						}
 						$("#lblamt1-I-" + ids).html(Line_data[0][url1[0]]);
 						$("#lblamt2-I-" + ids).html("$ "+Line_data[0][url1[1]].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 						data_return(Noc + 1, Maindata)
 						Line_data = Maindata_result;
 						$('tr#tbl-body-I-' + ids).not(':first').remove();
 						
-                        
+						
 						if (Line_data != null && Line_data.length != 0) {
 							var i1 = 0;
 							$("#tbl-body-I-" + ids).show();
@@ -1351,7 +1314,7 @@
 							$("#tbl-body-I-" + ids).find(".Abcd")[k2 - 1].remove();
 							$("#tbl-body-II-" + ids).find(".Abcd")[k2 - 1].remove();
 							k2++;
-                        }
+						}
 
 
 						
@@ -1360,11 +1323,1298 @@
 
 
 					})
+				} catch (e) {
+					console.log(e)
+				}
+
+
+				try {
+					debugger
+					$("#InventoryChart #InventoryChart-V1").each(function (index, item) {
+						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
+						var url1 = $(this).find("#hdnurl").val().split(",");
+						Inventory_lbl2 = $(this).find("#hdnlbl2").val().split(",");
+
+						Inventory_lbl1 = $(this).find("#hdnlbl1").val().split(",");
+						Inventory_bgs= $(this).find("#hdnbgcolors").val().split(",");
+						var ids = $(this).find(".card-light")[0].childNodes[1].id;
+						Inventory_Data= ''
+						debugger
+						data_return(Noc, Maindata)
+						Inventory_Data= Maindata_result;
+						$("#smallSelect-"+ids).empty('');
+						
+						
+						$.each(Inventory_Data	, function (index, event) {
+							$('#smallSelect-' + ids).append('<option value=' + index + ' selected="">' + Inventory_Data[index].Country + '</option>');
+						});
+						var i2 = 1;
+						while (Inventory_lbl1.length > i2) {
+							var tr = $("#tr-" + ids).clone();
+							if (i2 != 1) {
+								tr.removeClass("border-right");
+								tr.removeClass("col-md-4");
+								tr.addClass("col-md-2");
+							}
+							tr.find("#Amount-" + ids).addClass(Inventory_bgs[i2]);
+							tr.find("#Amount-" + ids).html(RedDot_NumberFormat(Inventory_Data[0][Inventory_lbl1[i2]].toFixed(2)));
+							tr.find("#Amountlbl-" + ids).html([Inventory_lbl2[i2]]);
+							$("#tbody-"+ids).append(tr);
+							i2++;
+						}
+						if (Inventory_Data.length > 0) {
+							$("#tbody-" + ids).find(".ABC")[0].remove();
+						}
+						
+
+
+						$('#smallSelect-' + ids).val('0');
+
+					});
+
+				} catch (e) {
+				console.log(e)
+				}
+
+				try {
+					$("#InventoryBarChart #Inventory_BarChart-V1").each(function (index, item) {
+						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
+						var url1 = $(this).find("#hdnurl").val().split(",");
+						
+						if (index == 0) {
+							Stock_country = [];
+
+							Stock_lbl02 = $(this).find("#hdnlbl2").val().split(",");
+
+							Stock_lbl01 = $(this).find("#hdnlbl1").val().split(",");
+							Stock_bgs0 = $(this).find("#hdnbgcolors").val().split(",");
+							var ids = $(this).find(".chart-container")[0].childNodes[1].id;
+							Stock_Data0 = ''
+							debugger
+							data_return(Noc, Maindata)
+							Stock_Data0 = Maindata_result;
+							data_return(Noc + 1, Maindata)
+							Stock_Data0I = Maindata_result;
+							data_return(Noc + 2, Maindata)
+							Stock_Data0II = Maindata_result;
+							data_return(Noc + 3, Maindata)
+							Stock_Data0III = Maindata_result;
+							$("#smallSelectI-" + ids).empty('');
+							$("#smallSelectII-" + ids).empty('');
+
+
+							var country = [];
+							var Stock_whsstatus = [];
+
+
+							$.each(Stock_Data0II, function (index, event) {
+
+								var events1 = $.grep(Stock_whsstatus, function (e) {
+									return event.WhsStatus === e.WhsStatus;
+								});
+
+								if (events1.length === 0) {
+									Stock_whsstatus.push(event);
+								}
+							});
+
+							debugger
+							$('#smallSelectI-' + ids).append('<option value=0 selected="">ALL</option>');
+							$.each(Stock_whsstatus, function (index, event) {
+								$('#smallSelectI-' + ids).append('<option value=' + index + 1 + ' >' + Stock_whsstatus[index].WhsStatus + '</option>');
+							});
+
+
+
+
+							var Stock_BU = [];
+
+							$('#smallSelectII-' + ids).append('<option value=0 selected="">ALL</option>');
+							$.each(Stock_Data0II, function (index, event) {
+								var events3 = $.grep(Stock_BU, function (e) {
+									return event.BU === e.BU;
+								});
+								if (events3.length === 0) {
+									Stock_BU.push(event);
+								}
+							})
+
+
+
+							$.each(Stock_BU, function (index, event) {
+								$('#smallSelectII-DASH043').append('<option value=' + index + 1 + ' >' + Stock_BU[index].BU + '</option>');
+							});
+
+
+							$('#smallSelectI-' + ids).val('0');
+
+							var events2 = $.grep(Stock_Data0, function (e) {
+								return e.WhsStatus === "ALL";
+							});
+
+							var i2 = 0;
+							var data = [];
+							var data1 = [];
+							while (events2.length > i2) {
+								data.push(events2[i2].TotalStockValue);
+								data1.push(events2[i2].QtyOnHand);
+								Stock_country.push(events2[i2].Country)
+								i2++;
+							}
+
+
+
+							var options = {
+								series: [{
+									name: 'Total Stock Value',
+
+									data: data
+								}, {
+									name: 'Qty On Hand',
+
+									data: data1
+								}],
+								chart: {
+									type: 'bar',
+									height: 240
+								},
+								plotOptions: {
+									bar: {
+										borderRadius: 4,
+										horizontal: true,
+									}
+								},
+								dataLabels: {
+									enabled: false
+								},
+								xaxis: {
+									categories: Stock_country,
+									labels: {
+										formatter: function (value, index, values) {
+											return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+										}
+									}
+								},
+								yaxis: {
+									labels: {
+										formatter: function (value, index, values) {
+											return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+										}
+									}
+								}
+							};
+
+							chartxStockBar0 = new ApexCharts(document.querySelector("#" + ids + ""), options);
+							chartxStockBar0.render();
+							$("input[name=inlineRadioOptionsInv-" + ids + "][value='Total Stock Value']").attr('checked', 'checked');
+
+
+
+							chartxStockBar0.hideSeries("Qty On Hand");
+							chartxStockBar0.showSeries("Total Stock Value");
+
+
+
+							$('#smallSelectII-' + ids).val('0');
+						} else {
+							Stock1_country = [];
+							StockAgelbl = points_Graph[3] + ',' + points_Graph[4] + ',' + points_Graph[5];
+							StockAgelbl = StockAgelbl.split(",");
+							Stock_lbl12 = $(this).find("#hdnlbl2").val().split(",");
+
+							Stock_lbl11 = $(this).find("#hdnlbl1").val().split(",");
+							Stock_bgs1 = $(this).find("#hdnbgcolors").val().split(",");
+							var ids = $(this).find(".chart-container")[0].childNodes[1].id;
+							Stock_Data1 = ''
+							debugger
+							data_return(Noc, Maindata)
+							Stock_Data1 = Maindata_result;
+							data_return(Noc + 1, Maindata)
+							Stock_Data1I = Maindata_result;
+							data_return(Noc + 2, Maindata)
+							Stock_Data1II = Maindata_result;
+							data_return(Noc + 3, Maindata)
+							Stock_Data1III = Maindata_result;
+							$("#smallSelectI-" + ids).empty('');
+							$("#smallSelectII-" + ids).empty('');
+
+
+							var country = [];
+							var Stock_whsstatus = [];
+
+
+							$.each(Stock_Data1II, function (index, event) {
+
+								var events1 = $.grep(Stock_whsstatus, function (e) {
+									return event.WhsStatus === e.WhsStatus;
+								});
+
+								if (events1.length === 0) {
+									Stock_whsstatus.push(event);
+								}
+							});
+
+							debugger
+							$('#smallSelectI-' + ids).append('<option value=0 selected="">ALL</option>');
+							$.each(Stock_whsstatus, function (index, event) {
+								$('#smallSelectI-' + ids).append('<option value=' + index + 1 + ' >' + Stock_whsstatus[index].WhsStatus + '</option>');
+							});
+
+
+
+
+							var Stock_BU = [];
+
+							$('#smallSelectII-' + ids).append('<option value=0 selected="">ALL</option>');
+							$.each(Stock_Data1II, function (index, event) {
+								var events3 = $.grep(Stock_BU, function (e) {
+									return event.BU === e.BU;
+								});
+								if (events3.length === 0) {
+									Stock_BU.push(event);
+								}
+							})
+
+
+
+							$.each(Stock_BU, function (index, event) {
+								$('#smallSelectII-'+ids).append('<option value=' + index + 1 + ' >' + Stock_BU[index].BU + '</option>');
+							});
+
+							$.each(Stock_Data1, function (index, event) {
+								var events4 = $.grep(country, function (e) {
+									return event.Country === e.Country;
+								});
+								if (events4.length === 0) {
+									country.push(event);
+								}
+							})
+							$.each(country, function (index, event) {
+								Stock1_country.push(country[index].Country);
+							});
+
+							$('#smallSelectI-' + ids).val('0');
+							var k = 0;
+							
+							var events2 = $.grep(Stock_Data1, function (e) {
+								return e.WhsStatus === "ALL";
+							});
+							StockAgeTemparr = [];
+							while (k < StockAgelbl.length && events2.length > 0) {
+								var points1 = [], points2 = [];
+								var Monthsplit = StockAgelbl[k].split('-');
+								var found_names1 = $.grep(events2, function (v) {
+									return v.Month.toString() === pointsMonth[k+3].toString() && v.Year == Monthsplit[1].toString();
+								});
+								//,
+								var i2 = 0;
+								while (found_names1.length > i2) {
+									points1.push(found_names1[i2].TotalStockValue);
+									points2.push(found_names1[i2].QtyOnHand);
+									i2++;
+								}
+								StockAgeTemparr.push(points1);
+								StockAgeTemparr.push(points2);
+								k++;
+
+							}
+							debugger
+							
+
+
+
+							var options = {
+								series: [{
+									name: StockAgelbl[0],
+									data: StockAgeTemparr[0],
+
+								}, {
+										name: StockAgelbl[1],
+										data: StockAgeTemparr[2],
+								}, {
+										name: StockAgelbl[2],
+										data: StockAgeTemparr[4],
+								}],
+								chart: {
+									type: 'bar',
+									height: 240
+								},
+								plotOptions: {
+									bar: {
+										horizontal: false,
+										columnWidth: '55%',
+										endingShape: 'rounded'
+									},
+								},
+								dataLabels: {
+									enabled: false
+								},
+								stroke: {
+									show: true,
+									width: 2,
+									colors: ['transparent']
+								},
+								xaxis: {
+									categories: Stock1_country,
+									labels: {
+										formatter: function (value, index, values) {
+											return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+										}
+									}
+								},
+								yaxis: {
+									labels: {
+										formatter: function (value, index, values) {
+											return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+										}
+									}
+								}
+							};
+
+							chartxStockBar1 = new ApexCharts(document.querySelector("#" + ids + ""), options);
+							chartxStockBar1.render();
+							$("input[name=inlineRadioOptionsInv-" + ids + "][value='Total Stock Value']").attr('checked', 'checked');
+
+
+
+							
+
+
+
+							$('#smallSelectII-' + ids).val('0');
+						}
+
+					});
+
+				} catch (e) {
+					console.log(e)
+				}
+				try {
+					$("#InventoryMainBarChart #Inventory_MainBarChart-V1").each(function (index, item) {
+						debugger
+						
+
+						var Noc = parseInt($(this).find("#hdnNoofColumns").val());
+						lblStockGit3 = $(this).find("#hdnurl").val().split(",");
+						lblStockGit2 = $(this).find("#hdnlbl2").val().split(",");
+
+						lblStockGit1  = $(this).find("#hdnlbl1").val().split(",");
+						//Inventory_bgs = $(this).find("#hdnbgcolors").val().split(",");
+						var ids = $(this).find(".chart-container")[0].childNodes[1].id;
+						
+						
+						data_return(Noc, Maindata)
+						Stock_DataGit = Maindata_result;
+						data_return(Noc+1, Maindata)
+						Stock_DataGitI = Maindata_result;
+						data_return(Noc + 2, Maindata)
+						Stock_DataGitII = Maindata_result;
+						data_return(Noc + 3, Maindata)
+						Stock_DataGitIII = Maindata_result;
+						$('#smallSelectI-' + ids).empty('');
+						$('#smallSelectII-' + ids).empty('');
+						$('#smallSelectIII-' + ids).empty('');
+
+						var country = [];
+						var Stock_whsstatus = [];
+
+
+						$.each(Stock_DataGitII, function (index, event) {
+
+							var events1 = $.grep(Stock_whsstatus, function (e) {
+								return event.WhsStatus === e.WhsStatus;
+							});
+
+							if (events1.length === 0) {
+								Stock_whsstatus.push(event);
+							}
+						});
+
+						debugger
+						$('#smallSelectII-' + ids).append('<option value=0 selected="">ALL</option>');
+						$.each(Stock_whsstatus, function (index, event) {
+							$('#smallSelectII-' + ids).append('<option value=' + index + 1 + ' >' + Stock_whsstatus[index].WhsStatus + '</option>');
+						});
+
+
+
+
+						var Stock_BU = [];
+
+						$('#smallSelectIII-' + ids).append('<option value=0 selected="">ALL</option>');
+						$.each(Stock_DataGitII, function (index, event) {
+							var events3 = $.grep(Stock_BU, function (e) {
+								return event.BU === e.BU;
+							});
+							if (events3.length === 0) {
+								Stock_BU.push(event);
+							}
+						})
+
+
+
+						$.each(Stock_BU, function (index, event) {
+							$('#smallSelectIII-' + ids).append('<option value=' + index + 1 + ' >' + Stock_BU[index].BU + '</option>');
+						});
+						$('#smallSelectI-' + ids).append('<option value=0 selected="">ALL</option>');
+						//var StockGitdata = [], StockGitdata1 = [];
+						$.each(Stock_DataGit, function (index, event) {
+							$('#smallSelectI-' + ids).append('<option value=' + index + 1 + ' >' + Stock_DataGit[index].Country + '</option>');
+							StockGit_country.push(Stock_DataGit[index].Country)
+							var i = 0
+							var data = [], data1 = [];
+							while (lblStockGit3.length > i) {
+								data1.push(Stock_DataGit[index][lblStockGit2[i]])
+								data.push(Stock_DataGit[index][lblStockGit3[i]])
+								i++;
+							}
+							StockGitdata.push(data);
+							StockGitdata1.push(data1);
+							
+						})
+
+						
+						var i1 = 0;
+						while (i1 < StockGit_country.length) {
+							ds_Git.push({
+
+								name: StockGit_country[i1],
+
+								data: StockGitdata[i1]
+							});
+							ds_Git1.push({
+
+								name: StockGit_country[i1],
+
+								data: StockGitdata1[i1]
+							});
+							i1++;
+						}
+						
+						
+
+						var options = {
+							series: ds_Git,
+							chart: {
+								type: 'bar',
+								height: 350,
+								stacked: true,
+
+							},
+							responsive: [{
+								breakpoint: 480,
+								options: {
+									legend: {
+										position: 'bottom',
+										offsetX: -10,
+										offsetY: 0
+									}
+								}
+							}],
+							xaxis: {
+
+								categories: lblStockGit1,
+
+							}, dataLabels: {
+
+
+								formatter: function (value, opt) {
+									var abr = "";
+									if (value < 0) {
+										value = -(value);
+										abr = '-';
+									} else if (value == 0) {
+										return  Math.trunc(value).toString();
+									}
+									if (value >= 1000000000) {
+										values =  Math.trunc(value / 1000000000) + 'b';
+									} else if (value >= 1000000) {
+										values = Math.trunc(value / 1000000) + 'm';
+									} else if (value >= 1000) {
+										values =  Math.trunc(value / 1000) + 'k';
+									} else {
+										values = value;
+									}
+
+									return abr + values;
+								},
+
+							},
+							
+							fill: {
+								opacity: 1
+							},
+							yaxis: {
+								labels: {
+									formatter: function (value, index, values) {
+										return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+									}
+								}
+							},
+							legend: {
+								position: 'right',
+								offsetX: 0,
+								offsetY: 50
+							},
+						};
+
+						chartxStockBarGit = new ApexCharts(document.querySelector("#"+ids+""), options);
+						chartxStockBarGit.render();
+						$("input[name=inlineRadioOptionsInvMain-" + ids + "][value='Total Stock Value']").attr('checked', 'checked');
+						
+						
+					})
+
                 } catch (e) {
 					console.log(e)
                 }
 			}
 		})
+
+		$("#smallSelectI-DASH045").on('change', function () {
+			debugger
+			$(".loader1").show();
+			var t = $("#smallSelectI-DASH045 option:selected").text();
+
+			var i = 0;
+
+			while (StockGit_country.length > i) {
+				if (t == "ALL") {
+					chartxStockBarGit.showSeries(StockGit_country[i])
+				} else
+					if (t !== StockGit_country[i]) {
+						//$(".apexcharts-legend-text").text(arr[i]).trigger('click');
+						chartxStockBarGit.hideSeries(StockGit_country[i])
+					} else {
+						chartxStockBarGit.showSeries(StockGit_country[i])
+					}
+				i++;
+			}
+
+			$(".loader1").hide();
+
+		})
+
+		$("input[name ='inlineRadioOptionsInvMain-DASH045']").on("change", function () {
+			debugger
+			var Country_Drop = $("#smallSelectI-DASH045 option:selected").text();
+			if (Country_Drop !== 'ALL') {
+				$.each(StockGit_country, function (index, event) {
+					chartxStockBarGit.showSeries(StockGit_country[index]);
+				})
+			}
+			//if (Country_Drop !== 'ALL') {
+			//	$("#smallSelectI-DASH045").val("0").trigger("change");
+			//}
+			var t = $('input[name="inlineRadioOptionsInvMain-DASH045"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git
+				});
+			} else {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git1
+				});
+			}
+
+			$.each(StockGit_country, function (index, event) {
+				if (Country_Drop !== StockGit_country[index]) {
+					chartxStockBarGit.hideSeries(StockGit_country[index])
+				} else {
+					chartxStockBarGit.showSeries(StockGit_country[index])
+				}
+
+			})
+
+		})
+
+		$("#smallSelectII-DASH045").on('change', function () {
+			debugger
+			$(".loader1").show();
+			
+
+			var Country_Drop = $("#smallSelectI-DASH045 option:selected").text();
+			if (Country_Drop !== 'ALL') {
+			$.each(StockGit_country, function (index, event) {
+				chartxStockBarGit.showSeries(StockGit_country[index]);
+			})
+				}
+			var WareHouse_Drop = $("#smallSelectII-DASH045 option:selected").text();
+			var BU_Drop = $("#smallSelectIII-DASH045 option:selected").text();
+			debugger
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_DataGit, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_DataGitI, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_DataGitII, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_DataGitIII, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+
+			StockGit_country = [];
+			ds_Git = [], ds_Git1 = [];
+			StockGitdata = [], StockGitdata1 = [];
+			//$('#smallSelectI-DASH045').empty('');
+			//$('#smallSelectI-DASH045').append('<option value="0" selected="">ALL</option>');
+			var k = 1;
+			$.each(events2, function (index, event) {		
+				var i = 0
+				var data = [], data1 = [];
+				while (lblStockGit3.length > i) {
+					data1.push(events2[index][lblStockGit2[i]])
+					data.push(events2[index][lblStockGit3[i]])
+					i++;
+				}
+				StockGit_country.push(events2[index].Country)
+
+			//	$('#smallSelectI-DASH045').append('<option value="'+k+'" selected="">'+events2[index].Country+'</option>');
+				StockGitdata.push(data);
+				StockGitdata1.push(data1);
+				k++;
+			})
+
+
+			var i1 = 0;
+			while (i1 < StockGit_country.length) {
+				ds_Git.push({
+
+					name: StockGit_country[i1],
+
+					data: StockGitdata[i1]
+				});
+				ds_Git1.push({
+
+					name: StockGit_country[i1],
+
+					data: StockGitdata1[i1]
+				});
+				i1++;
+			}
+			
+			var t = $('input[name="inlineRadioOptionsInvMain-DASH045"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git
+				});
+			} else {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git1
+				});
+			}
+			if (Country_Drop !== 'ALL') {
+				$.each(StockGit_country, function (index, event) {
+					if (Country_Drop !== StockGit_country[index]) {
+						chartxStockBarGit.hideSeries(StockGit_country[index])
+					} else {
+						chartxStockBarGit.showSeries(StockGit_country[index])
+					}
+
+				})
+			}
+				//$("#smallSelectI-DASH045").val("0").trigger("change");
+			
+			$(".loader1").hide();
+
+		})
+
+
+		$("#smallSelectIII-DASH045").on('change', function () {
+			$(".loader1").show();
+			var Country_Drop = $("#smallSelectI-DASH045 option:selected").text();
+			if (Country_Drop !== 'ALL') {
+				$.each(StockGit_country, function (index, event) {
+					chartxStockBarGit.showSeries(StockGit_country[index]);
+				})
+			}
+			//if (Country_Drop!=='ALL') {
+			//	$("#smallSelectI-DASH045").val("0").trigger("change");
+   //         }
+			
+			var WareHouse_Drop = $("#smallSelectII-DASH045 option:selected").text();
+			var BU_Drop = $("#smallSelectIII-DASH045 option:selected").text();
+			debugger
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_DataGit, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_DataGitI, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_DataGitII, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_DataGitIII, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+
+			StockGit_country = [];
+			StockGitdata = [], StockGitdata1 = [];
+			ds_Git = [], ds_Git1 = []; 
+			//	$('#smallSelectI-DASH045').empty('');
+			//$('#smallSelectI-DASH045').append('<option value="0" selected="">ALL</option>');
+			var k=1;
+			$.each(events2, function (index, event) {
+				var i = 0
+				var data = [], data1 = [];
+				while (lblStockGit3.length > i) {
+					data1.push(events2[index][lblStockGit2[i]])
+					data.push(events2[index][lblStockGit3[i]])
+					i++;
+				}
+				StockGit_country.push(events2[index].Country)
+
+				//$('#smallSelectI-DASH045').append('<option value="' + k + '" selected="">' + events2[index].Country + '</option>');
+				StockGitdata.push(data);
+				StockGitdata1.push(data1);
+				k++;
+			})
+
+
+			var i1 = 0;
+			while (i1 < StockGit_country.length) {
+				ds_Git.push({
+
+					name: StockGit_country[i1],
+
+					data: StockGitdata[i1]
+				});
+				ds_Git1.push({
+
+					name: StockGit_country[i1],
+
+					data: StockGitdata1[i1]
+				});
+				i1++;
+			}
+
+			var t = $('input[name="inlineRadioOptionsInvMain-DASH045"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git
+				});
+			} else {
+				chartxStockBarGit.updateOptions({
+					series: ds_Git1
+				});
+			}
+			//$("#smallSelectI-DASH045").val("0").trigger("change");
+			if (Country_Drop !== 'ALL') {
+				$.each(StockGit_country, function (index, event) {
+					if (Country_Drop !== StockGit_country[index]) {
+						chartxStockBarGit.hideSeries(StockGit_country[index])
+					} else {
+						chartxStockBarGit.showSeries(StockGit_country[index])
+					}
+
+				})
+			}
+			$(".loader1").hide();
+
+		})
+
+		$("input[name='inlineRadioOptionsInv-DASH043']").on('change', function () {
+			var t = $('input[name="inlineRadioOptionsInv-DASH043"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar0.hideSeries("Qty On Hand");
+				chartxStockBar0.showSeries("Total Stock Value");
+			} else {
+				chartxStockBar0.showSeries("Qty On Hand");
+				chartxStockBar0.hideSeries("Total Stock Value");
+			}
+
+
+
+		})
+		$("#smallSelectI-DASH043").on('change', function () {
+			var WareHouse_Drop = $("#smallSelectI-DASH043 option:selected").text();
+			var BU_Drop = $("#smallSelectII-DASH043 option:selected").text();
+			debugger
+			Stock_country = [];
+			chartxStockBar0.showSeries("Qty On Hand");
+			chartxStockBar0.showSeries("Total Stock Value");
+
+
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_Data0, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+
+				events2 = $.grep(Stock_Data0I, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data0II, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_Data0III, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+
+
+
+			//--------------
+
+			//if (t1 !== "ALL" && t == "ALL") {
+			//	events2 = $.grep(Stock_DataIII, function (e) {
+			//		return e.BU === t1;
+			//	});
+
+			//}
+			//
+			//else if (t1 !== "ALL" && t !== "ALL") {
+			//	events2 = $.grep(Stock_DataII, function (e) {
+			//		return e.WhsStatus === t && e.BU === t1;
+			//	});
+			//}
+			//else if (t1 == "ALL" && t == "ALL") {
+			//	events2 = $.grep(Stock_Data, function (e) {
+			//		return e.WhsStatus === t && e.BU === t1;
+			//	});
+			//}
+			//else if (t1 == "ALL" && t !== "ALL") {
+			//	events2 = $.grep(Stock_DataI, function (e) {
+			//		return e.WhsStatus === t && e.BU === t1;
+			//	});
+			//}
+			//else {
+
+			//	events2 = $.grep(Stock_Data, function (e) {
+			//		return e.WhsStatus === t;
+			//	});							
+			//         }
+
+
+			var i2 = 0;
+			var data = [];
+			var data1 = [];
+			while (events2.length > i2) {
+				data.push(events2[i2].TotalStockValue);
+				data1.push(events2[i2].QtyOnHand);
+				Stock_country.push(events2[i2].Country)
+				i2++;
+			}
+			chartxStockBar0.updateOptions({
+				series: [{
+					name: 'Total Stock Value',
+
+					data: data
+				}, {
+					name: 'Qty On Hand',
+
+					data: data1
+				}], xaxis: {
+
+					categories: Stock_country,
+
+
+
+				}
+			});
+
+			var t = $('input[name="inlineRadioOptionsInv-DASH043"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar0.hideSeries("Qty On Hand");
+				chartxStockBar0.showSeries("Total Stock Value");
+			} else {
+				chartxStockBar0.showSeries("Qty On Hand");
+				chartxStockBar0.hideSeries("Total Stock Value");
+			}
+		})
+		$("#smallSelectII-DASH043").on('change', function () {
+			var WareHouse_Drop = $("#smallSelectI-DASH043 option:selected").text();
+			var BU_Drop = $("#smallSelectII-DASH043 option:selected").text();
+			debugger
+			Stock_country = [];
+			chartxStockBar0.showSeries("Qty On Hand");
+			chartxStockBar0.showSeries("Total Stock Value");
+
+
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_Data0, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+
+				events2 = $.grep(Stock_Data0I, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data0II, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_Data0III, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+			//var t = $("#smallSelectI-DASH043 option:selected").text();
+			//var t1 = $("#smallSelectII-DASH043 option:selected").text();
+			//debugger
+			//Stock_country = [];
+			//var events2 = '';
+			//chartxStockBar0.showSeries("Qty On Hand");
+			//chartxStockBar0.showSeries("Total Stock Value");
+
+			//if (t1 !== "ALL" && t == "ALL") {
+			//	events2 = $.grep(Stock_DataIII, function (e) {
+			//		return e.BU === t1;
+			//	});
+
+
+			//} else if (t1 == "ALL" && t == "ALL") {
+			//	events2 = $.grep(Stock_Data, function (e) {
+			//		return e.WhsStatus === t && e.BU === t1;
+			//	});
+			//}else if ( t1 !=="ALL") {
+			//	events2 = $.grep(Stock_DataII, function (e) {
+			//		return e.WhsStatus === t && e.BU === t1;
+			//	});
+			//         }
+			//else {
+
+			//	events2 = $.grep(Stock_DataI, function (e) {
+			//		return e.WhsStatus === t;
+			//	});
+			//}
+
+
+			var i2 = 0;
+			var data = [];
+			var data1 = [];
+			while (events2.length > i2) {
+				data.push(events2[i2].TotalStockValue);
+				data1.push(events2[i2].QtyOnHand);
+				Stock_country.push(events2[i2].Country)
+				i2++;
+			}
+			chartxStockBar0.updateOptions({
+				series: [{
+					name: 'Total Stock Value',
+
+					data: data
+				}, {
+					name: 'Qty On Hand',
+
+					data: data1
+				}], xaxis: {
+
+					categories: Stock_country,
+
+
+
+				}
+			});
+			var t = $('input[name="inlineRadioOptionsInv-DASH043"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar0.hideSeries("Qty On Hand");
+				chartxStockBar0.showSeries("Total Stock Value");
+			} else {
+				chartxStockBar0.showSeries("Qty On Hand");
+				chartxStockBar0.hideSeries("Total Stock Value");
+			}
+		})
+
+		$("#smallSelectI-DASH044").on('change', function () {
+			var WareHouse_Drop = $("#smallSelectI-DASH044 option:selected").text();
+			var BU_Drop = $("#smallSelectII-DASH044 option:selected").text();
+			debugger
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_Data1, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data1I, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data1II, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_Data1III, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+
+			StockAgeTemparr = [];
+			var k = 0;
+			while (k < StockAgelbl.length && events2.length > 0) {
+				Stock1_country = [];
+				var points1 = [], points2 = [];
+				var Monthsplit = StockAgelbl[k].split('-');
+				var found_names1 = $.grep(events2, function (v) {
+					return v.Month.toString() === pointsMonth[k + 3].toString() && v.Year == Monthsplit[1].toString();
+				});
+				//,
+				var i2 = 0;
+				while (found_names1.length > i2) {
+					points1.push(found_names1[i2].TotalStockValue);
+					points2.push(found_names1[i2].QtyOnHand);
+					Stock1_country.push(found_names1[i2].Country);
+					i2++;
+				}
+				StockAgeTemparr.push(points1);
+				StockAgeTemparr.push(points2);
+				k++;
+
+			}
+			var t = $('input[name="inlineRadioOptionsInv-DASH044"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[0],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[2],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[4],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			} else {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[1],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[3],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[5],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			}
+
+		})
+
+
+
+		$("#smallSelectII-DASH044").on('change', function () {
+			var WareHouse_Drop = $("#smallSelectI-DASH044 option:selected").text();
+			var BU_Drop = $("#smallSelectII-DASH044 option:selected").text();
+			debugger
+			var events2 = '';
+			if (BU_Drop == "ALL" && WareHouse_Drop == "ALL") {
+				events2 = $.grep(Stock_Data1, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else if (BU_Drop == "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data1I, function (e) {
+					return e.WhsStatus === WareHouse_Drop;
+				});
+			}
+			else if (BU_Drop !== "ALL" && WareHouse_Drop !== "ALL") {
+				events2 = $.grep(Stock_Data1II, function (e) {
+					return e.WhsStatus === WareHouse_Drop && e.BU === BU_Drop;
+				});
+			}
+			else {
+				events2 = $.grep(Stock_Data1III, function (e) {
+					return e.BU === BU_Drop;
+				});
+
+			}
+
+			StockAgeTemparr = [];
+			var k = 0;
+			while (k < StockAgelbl.length && events2.length > 0) {
+				Stock1_country = [];
+				var points1 = [], points2 = [];
+				var Monthsplit = StockAgelbl[k].split('-');
+				var found_names1 = $.grep(events2, function (v) {
+					return v.Month.toString() === pointsMonth[k + 3].toString() && v.Year == Monthsplit[1].toString();
+				});
+				//,
+				var i2 = 0;
+				while (found_names1.length > i2) {
+					points1.push(found_names1[i2].TotalStockValue);
+					points2.push(found_names1[i2].QtyOnHand);
+					Stock1_country.push(found_names1[i2].Country);
+					i2++;
+				}
+				StockAgeTemparr.push(points1);
+				StockAgeTemparr.push(points2);
+				k++;
+
+			}
+			var t = $('input[name="inlineRadioOptionsInv-DASH044"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[0],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[2],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[4],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			} else {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[1],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[3],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[5],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			}
+
+		})
+		$("input[name='inlineRadioOptionsInv-DASH044']").on('change', function () {
+			var t = $('input[name="inlineRadioOptionsInv-DASH044"]:checked').val();
+			if (t == "Total Stock Value") {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[0],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[2],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[4],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			} else {
+				chartxStockBar1.updateOptions({
+					series: [{
+						name: StockAgelbl[0],
+						data: StockAgeTemparr[1],
+
+					}, {
+						name: StockAgelbl[1],
+						data: StockAgeTemparr[3],
+					}, {
+						name: StockAgelbl[2],
+						data: StockAgeTemparr[5],
+					}], xaxis: {
+
+						categories: Stock1_country,
+
+
+
+					}
+				});
+			}
+
+
+		})
+		
+		$("#smallSelect-DASH042").on('change', function () {
+			var t = $(this).val();
+			var i2 = 1;
+			$("#tbody-DASH042").find(".ABC").not(':first').remove();
+			$("#tr-DASH042").find("#Amount-DASH042").removeClass("text-danger");
+			while (Inventory_lbl1.length > i2) {
+				var tr = $("#tr-DASH042").clone();
+				if (i2 != 1) {
+					tr.removeClass("border-right");
+					tr.removeClass("col-md-4");
+					tr.addClass("col-md-2");
+				}
+				tr.find("#Amount-DASH042").addClass(Inventory_bgs[i2]);
+				tr.find("#Amount-DASH042").html(RedDot_NumberFormat(Inventory_Data[t][Inventory_lbl1[i2]].toFixed(2)));
+				tr.find("#Amountlbl-DASH042").html([Inventory_lbl2[i2]]);
+				$("#tbody-DASH042").append(tr);
+				i2++;
+			}
+			if (Inventory_Data.length > 0) {
+				$("#tbody-DASH042").find(".ABC")[0].remove();
+			}
+		});
 		$("#smallSelect-DASH030").on('change', function () {
 			$("#six_months-DASH030").trigger('click');
 			var t = $(this).val();
@@ -1374,15 +2624,15 @@
 			while (arr.length > i) {
 				if (t == "ALL") {
 					chartfunnel.showSeries(arr[i])
-                }else
+				}else
 				if (t !== arr[i] ) {
 					//$(".apexcharts-legend-text").text(arr[i]).trigger('click');
 					chartfunnel.hideSeries(arr[i])
 				} else {
 					chartfunnel.showSeries(arr[i])
-                }
+				}
 				i++;
-            }
+			}
 			
 
 			
@@ -1508,7 +2758,7 @@
 									values = '$ ' + Math.trunc(value / 1000) + 'k';
 								} else if (value == undefined) {
 									values = 0;
-                                }
+								}
 									else {
 									values = value;
 								}
@@ -1693,7 +2943,7 @@
 				} else {
 					k = ds_Breadth[t + 1][5];
 					k1 = 0;
-                }
+				}
 				var lbl = points_Graph[3] + ',' + points_Graph[4] + ',' + points_Graph[5];
 				lbl = lbl.split(",");
 				var t =  0;
@@ -1856,7 +3106,7 @@
 				$("#Actual").text(Quoter_arr[3]);
 				$("#Forecast").text(Quoter_arr[2]);
 				$("#Delta").text(Quoter_arr[4]);
-            }
+			}
 		})
 		$("#pills-Half-tab").on('click', function () {
 			var t = $('input[name="inlineRadioOptions"]:checked').val();
@@ -1881,7 +3131,7 @@
 			}
 		})
 		//$("input[name=inlineRadioOptions]").trigger('chnage');
-		$("input[name=inlineRadioOptions]").on('change', function () {
+		$("input[name='inlineRadioOptions']").on('change', function () {
 			
 			var t = $('input[name="inlineRadioOptions"]:checked').val();
 			if (t == 'chartSales') {
@@ -2018,6 +3268,36 @@
 				case 35:
 					Maindata_result = Maindata.Table35;
 					break;
+				case 36:
+					Maindata_result = Maindata.Table36;
+					break;
+				case 37:
+					Maindata_result = Maindata.Table37;
+					break;
+				case 38:
+					Maindata_result = Maindata.Table38;
+					break;
+				case 39:
+					Maindata_result = Maindata.Table39;
+					break;
+				case 40:
+					Maindata_result = Maindata.Table40;
+					break;
+				case 41:
+					Maindata_result = Maindata.Table41;
+					break;
+				case 42:
+					Maindata_result = Maindata.Table42;
+					break;
+				case 43:
+					Maindata_result = Maindata.Table43;
+					break;
+				case 44:
+					Maindata_result = Maindata.Table44;
+					break;
+				case 45:
+					Maindata_result = Maindata.Table45;
+					break;
 			}
 		}
 
@@ -2047,5 +3327,46 @@
 				log(ex);
 			}
 		}
+
+
+		var tf1 = true;
+		var UsersWidget = {
+			UserDashWidgets: []
+		};
+		$("#btnsave").on("click", function () {
+
+
+			$(".mar-b10").each(function (index, item) {
+
+				var DashidTxt = $(this).find("[id='Inphdn']").val();
+				var IsActiveTxt = $(this).find("[id='ChkDash']").is(":checked");
+
+				var UserDashWidget = {
+					DashId: DashidTxt,
+					IsActive: IsActiveTxt,
+
+
+				};
+				if (DashidTxt != undefined)
+					UsersWidget.UserDashWidgets.push(UserDashWidget);
+			});
+			$.post("/SaveUserDash", UsersWidget).done(function (response) {
+				if (response.SaveFlag == true) {
+					tf = false;
+
+					RedDotAlert_Success('Save Succcesfully');
+					//$(".leftwidgets").load('/Account/GetDashBoardView');
+					//var newUrl = '/Dashboard/Index';
+					//	window.location.href = newUrl;
+					$('.close').trigger("click");
+
+				} else {
+					//	RedDotAlert_Error('Error Occur');
+				}
+
+			});
+
+		})
+       
 	}
 }
