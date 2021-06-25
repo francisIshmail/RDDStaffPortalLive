@@ -510,7 +510,7 @@ namespace RDDStaffPortal.DAL.InitialSetup
                        });
                     }
 
-                }""
+                }
             }
             catch (Exception ex)
             {
