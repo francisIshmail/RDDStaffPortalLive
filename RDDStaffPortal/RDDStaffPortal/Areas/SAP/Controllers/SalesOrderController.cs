@@ -579,7 +579,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                             cmd.Parameters.Add("@Allocated_Amt", SqlDbType.Float).Value = PayDetail[i].Allocated_Amt.ToString();
                                             cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();
                                             cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = PayDetail[i].Remark.ToString();
-
+                                            cmd.Parameters.Add("@EntryIde", SqlDbType.BigInt).Value = PayDetail[i].EntryId.ToString();
                                             cmd.ExecuteNonQuery();
 
                                             cmd.Dispose();
@@ -789,6 +789,21 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             try
             {
                 DS = SalesOrder_DBOperation.GetDetailsOfPDC(dbname, cardcode, chqno, bankcode);
+                return Content(JsonConvert.SerializeObject(DS), "application/json");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult GetRcptNoForUpdatePayment(string dbname, string cardcode, string chequeno, string bankcode,int entryid)
+        {
+            string retVal = string.Empty;
+            DataSet DS;
+            try
+            {
+                DS = SalesOrder_DBOperation.GetRcptNoForUpdatePayment(dbname, cardcode, chequeno, bankcode, entryid);
                 return Content(JsonConvert.SerializeObject(DS), "application/json");
             }
             catch (Exception ex)

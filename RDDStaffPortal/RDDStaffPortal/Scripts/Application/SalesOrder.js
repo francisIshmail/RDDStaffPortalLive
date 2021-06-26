@@ -145,7 +145,7 @@ SalesOrder.prototype = {
     BindGrid1: function (_PayTermDetails, PayTermDetails) {
         debugger;
         FieldHide = ['pay_line_id', 'pay_menthod_id', 'pdc_type_id', 'bank_code', 'curr_id'];
-        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id', 'pdc_type', 'bank_name', 'bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'ExchangeRate', 'rcpt_check_amt', 'allocated_amt_usd', 'allocated_amt_lc', 'balance_amt', 'remark','pdc_amt'];
+        FieldName = ['SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'pdc_type_id', 'pdc_type', 'bank_name', 'bank_code', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'ExchangeRate', 'rcpt_check_amt', 'allocated_amt_usd', 'allocated_amt_lc', 'balance_amt', 'remark', 'pdc_amt', 'entry_id'];
 
         if (update_Row_Flag1 == true) {
 
@@ -453,7 +453,23 @@ SalesOrder.prototype = {
                 $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(15).text()); 
             }
             $("[id$=txtPExchngRate]").val(tr.find(".Abcd").eq(12).text());
-            $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(13).text());
+            if ($("#hdnEditFlags").val() == false) {
+                $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(13).text());
+            }
+            else {
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/SAP/SalesOrder/GetRcptNoForUpdatePayment",
+                    data: JSON.stringify({ dbname: $("#DBName").val(), cardcode: $("#txtCardCode").val(), bankcode: $("[id$=txtPBankCode]").val(), chequeno: $("[id$=txtPReciptCheckNo]").val(), entryid: parseInt(tr.find(".Abcd").eq(19).text()) }),
+                    dataType: 'Json',
+                    contentType: "Application/json",
+                    success: function (value) {
+                        $("[id$=txtPRcptCheckAmt]").val(value.Table[0].RcptChkAmt);
+                    }
+                });
+            }
             //$("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(14).text());           
             $("[id$=txtPBalanceAmt]").val(tr.find(".Abcd").eq(16).text());
             $("[id$=txtPRemarks]").val(tr.find(".Abcd").eq(17).text());
@@ -1482,8 +1498,8 @@ SalesOrder.prototype = {
         $("[id$=btn_MainSave]").click(function () {
             try {
                 debugger
-
                 if ($("#btn_MainSave").text() == 'New') {
+                    $("#hdnEditFlags").val(false);
                     $("#FilterSection1").hide();
                     $("#FilterSection").hide();
                     $("#tblid").hide();
@@ -1669,10 +1685,11 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(16).text();
                                 SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(17).text();
                                 SalesOrderPayDetail_Obj['PDCAmount'] = $(this).find(".Abcd").eq(18).text();
+                                SalesOrderPayDetail_Obj['EntryId'] = $(this).find(".Abcd").eq(19).text();
                                 SalesOrderPayDetail_Obj['Base_Obj'] = 0;
                                 SalesOrderPayDetail_Obj['Base_Id'] = 0;
                                 SalesOrderPayDetail_Obj['Base_LinId'] = 0;
-
+                                
                                 SalesOrderPayMethod.push(SalesOrderPayDetail_Obj);
                             });
                             debugger
@@ -1896,7 +1913,7 @@ SalesOrder.prototype = {
             var DBName = $(this).closest("IIst").prevObject.find(".Abcd").eq(0).text();
             var CardCode = $(this).closest("IIst").prevObject.find(".Abcd").eq(14).text();
             getId(DBName, _SO_ID);
-
+            $("#hdnEditFlags").val(true);
             $('#btn_MainClear').removeAttr('disabled');
             $('#btn_MainSearch').removeAttr('disabled');
             $('#btn_MainCancel').removeAttr('disabled');

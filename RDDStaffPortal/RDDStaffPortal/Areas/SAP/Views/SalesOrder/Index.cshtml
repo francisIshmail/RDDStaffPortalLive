@@ -13,7 +13,7 @@
         margin-left: 14px !important;
     }*/
 </style>
-
+<input type="hidden" id="hdnEditFlags" />
 <div class="main-panel">
     <div class="container">
         <div class="page-inner">
@@ -664,6 +664,7 @@
                                                                     <div class="reddotTableHead"><div>Balance Amt</div></div>
                                                                     <div class="reddotTableHead"><div>Remarks</div></div>
                                                                     <div class="reddotTableHead" @*style="display:none"*@><div>PDC Amount</div></div>
+                                                                    <div class="reddotTableHead" @*style="display:none"*@><div>EntryId</div></div>
                                                                     <div class="reddotTableHead"><div>Action</div></div>
                                                                 </div>
                                                             </div>
@@ -688,6 +689,7 @@
                                                                     <div class="reddotTableCell Abcd"><div>Balance Amt</div></div>
                                                                     <div class="reddotTableCell Abcd"><div>Remarks</div></div>
                                                                     <div class="reddotTableCell Abcd" @*style="display:none"*@><div>PDC Amount</div></div>
+                                                                    <div class="reddotTableCell Abcd" @*style="display:none"*@><div>EntryId</div></div>
                                                                     <div class="reddotTableCell">
                                                                         <div>
                                                                             <button type="button" id="PGrid_Edit" title="" data-toggle="tooltip" class="btn btn-success btn-sm btn-sm" data-original-title="Edit"> <i class="fas fa-edit"></i></button>

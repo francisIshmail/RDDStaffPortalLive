@@ -503,7 +503,7 @@ namespace RDDStaffPortal.DAL.SAP
             {
                 Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsForBG,'" + dbname + "','" + Pdctype + "','" + cardcode + "','" + Chequeno + "',''");
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsForBG,'" + dbname + "','" + Pdctype + "','" + cardcode + "','" + Chequeno + "','',''");
 
                 return DS;
 
@@ -520,7 +520,24 @@ namespace RDDStaffPortal.DAL.SAP
             {
                 Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
 
-                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsOfPDC,'" + dbname + "','','" + cardcode + "','" + chqno + "','" + bankcode + "'");
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetDetailsOfPDC,'" + dbname + "','','" + cardcode + "','" + chqno + "','" + bankcode + "',''");
+
+                return DS;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataSet GetRcptNoForUpdatePayment(string dbname, string cardcode, string chequeno, string bankcode, int entryid)
+        {
+            try
+            {
+                Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+
+                DataSet DS = Db.myGetDS("EXEC RDD_GetDetails_PaymentTerm_ForBG GetRcptNoForUpdatePayment,'" + dbname + "','','" + cardcode + "','" + chequeno + "','" + bankcode + "','" + entryid + "'");
 
                 return DS;
 

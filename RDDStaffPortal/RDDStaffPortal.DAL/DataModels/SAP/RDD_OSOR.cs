@@ -114,7 +114,7 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
 
     public partial class RDD_SOR2
     {
-
+        public Int64 EntryId { get; set; }
         public Int64 Pay_Line_Id { get; set; }
         public Int32 SO_ID { get; set; }
         public Int32 Base_Obj { get; set; }
