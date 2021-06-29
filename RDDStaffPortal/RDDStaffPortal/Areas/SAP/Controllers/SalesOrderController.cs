@@ -543,8 +543,8 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                 {
                                     if (PayDetail.Length > 0)
                                     {
-                                        string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
-                                        Db.myExecuteSQL(sql);
+                                        //string sql = "Delete From [RDD_SOR2] Where SO_ID=" + SO_ID.ToString();
+                                        // Db.myExecuteSQL(sql);
                                         //string sql1 = "Delete from [RDD_PDCEntry] where SO_ID=" + SO_ID.ToString();
                                         //Db.myExecuteSQL(sql1);
 
@@ -580,6 +580,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                                             cmd.Parameters.Add("@Balance_Amt", SqlDbType.Float).Value = PayDetail[i].Balance_Amt.ToString();
                                             cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = PayDetail[i].Remark.ToString();
                                             cmd.Parameters.Add("@EntryIde", SqlDbType.BigInt).Value = PayDetail[i].EntryId.ToString();
+                                            cmd.Parameters.Add("@Editflag",SqlDbType.NVarChar).Value= Header[0].EditFlag.ToString();
                                             cmd.ExecuteNonQuery();
 
                                             cmd.Dispose();

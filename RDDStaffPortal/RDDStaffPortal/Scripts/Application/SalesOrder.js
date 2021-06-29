@@ -439,6 +439,7 @@ SalesOrder.prototype = {
            // 'SrNo', 'pay_line_id', 'pay_menthod_id', 'pay_method', 'rcpt_check_no', 'rcpt_check_date', 'curr_id', 'currency', 'rcpt_check_amt', 'allocated_amt', 'balance_amt', 'remark'];
 
             $("[id$=uxProwindex]").val(tr.find(".Abcd").eq(0).text());
+            $("#hdnPaylineid").val(tr.find(".Abcd").eq(1).text());
             $("[id$=cbPPaymentMethod]").val(tr.find(".Abcd").eq(2).text()).trigger('change');
             $("[id$=cbPPDCType]").val(tr.find(".Abcd").eq(4).text()).trigger('change');
             $("[id$=txtPBankName]").val(tr.find(".Abcd").eq(6).text());
@@ -453,7 +454,7 @@ SalesOrder.prototype = {
                 $("[id$=txtPAllocatedAmt]").val(tr.find(".Abcd").eq(15).text()); 
             }
             $("[id$=txtPExchngRate]").val(tr.find(".Abcd").eq(12).text());
-            if ($("#hdnEditFlags").val() == false) {
+            if ($("#hdnEditFlags").val() == "false") {
                 $("[id$=txtPRcptCheckAmt]").val(tr.find(".Abcd").eq(13).text());
             }
             else {
@@ -587,7 +588,12 @@ SalesOrder.prototype = {
                         $("[id$=uxProwindex]").val(index);
 
                         parameter.SrNo = index;
-                        parameter.pay_line_id = index - 1;
+                        if ($("#hdnEditFlags").val() == "true") {
+                            parameter.pay_line_id = $("#hdnPaylineid").val();
+                        }
+                        else {
+                            parameter.pay_line_id = '';
+                        }                        
                         parameter.pay_menthod_id = $("[id$=cbPPaymentMethod]").val();
                         parameter.pay_method = $("#cbPPaymentMethod option:selected").text();
                         parameter.pdc_type_id = $("#cbPPDCType option:selected").val();
@@ -1499,7 +1505,7 @@ SalesOrder.prototype = {
             try {
                 debugger
                 if ($("#btn_MainSave").text() == 'New') {
-                    $("#hdnEditFlags").val(false);
+                    $("#hdnEditFlags").val("false");
                     $("#FilterSection1").hide();
                     $("#FilterSection").hide();
                     $("#tblid").hide();
@@ -1526,7 +1532,7 @@ SalesOrder.prototype = {
                             var SalesOrderDetail = new Array();
                             var SalesOrderPayMethod = new Array();
                             var SalesOrder_Obj = new Object();
-
+                            
                             SalesOrder_Obj['SO_ID'] = _SO_ID;
                             SalesOrder_Obj['Doc_Object'] = 17;
                             SalesOrder_Obj['Base_Obj'] = 0;
@@ -1599,7 +1605,8 @@ SalesOrder.prototype = {
                             //    var upDt = GetSqlDateformat(Dt1);
 
                             //    SalesOrder_Obj['LastUpdatedOn'] = upDt;
-                            SalesOrder_Obj['LastUpdatedBy'] = $("[id$=txtCreatedBy]").val();;
+                            SalesOrder_Obj['LastUpdatedBy'] = $("[id$=txtCreatedBy]").val();
+                            SalesOrder_Obj['EditFlag'] = $("#hdnEditFlags").val();
                             //}
 
 
@@ -1650,6 +1657,7 @@ SalesOrder.prototype = {
                                 debugger
                                 var SalesOrderPayDetail_Obj = new Object();
 
+                                SalesOrderPayDetail_Obj['Pay_Line_Id'] = $(this).find(".Abcd").eq(1).text();
                                 SalesOrderPayDetail_Obj['Pay_Method_Id'] = $(this).find(".Abcd").eq(2).text();
                                 SalesOrderPayDetail_Obj['Pay_Method'] = $(this).find(".Abcd").eq(3).text();
                                 SalesOrderPayDetail_Obj['Pdc_Type_Id'] = $(this).find(".Abcd").eq(4).text();
@@ -1685,7 +1693,11 @@ SalesOrder.prototype = {
                                 SalesOrderPayDetail_Obj['Balance_Amt'] = $(this).find(".Abcd").eq(16).text();
                                 SalesOrderPayDetail_Obj['Remark'] = $(this).find(".Abcd").eq(17).text();
                                 SalesOrderPayDetail_Obj['PDCAmount'] = $(this).find(".Abcd").eq(18).text();
-                                SalesOrderPayDetail_Obj['EntryId'] = $(this).find(".Abcd").eq(19).text();
+                                var Entryid = $(this).find(".Abcd").eq(19).text();
+                                if (Entryid == '' || Entryid == undefined)
+                                    Entryid = 0;
+                                
+                                SalesOrderPayDetail_Obj['EntryId'] = Entryid;
                                 SalesOrderPayDetail_Obj['Base_Obj'] = 0;
                                 SalesOrderPayDetail_Obj['Base_Id'] = 0;
                                 SalesOrderPayDetail_Obj['Base_LinId'] = 0;
@@ -1913,7 +1925,7 @@ SalesOrder.prototype = {
             var DBName = $(this).closest("IIst").prevObject.find(".Abcd").eq(0).text();
             var CardCode = $(this).closest("IIst").prevObject.find(".Abcd").eq(14).text();
             getId(DBName, _SO_ID);
-            $("#hdnEditFlags").val(true);
+            $("#hdnEditFlags").val("true");
             $('#btn_MainClear').removeAttr('disabled');
             $('#btn_MainSearch').removeAttr('disabled');
             $('#btn_MainCancel').removeAttr('disabled');

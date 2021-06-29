@@ -9,6 +9,7 @@ namespace RDDStaffPortal.DAL.DataModels.SAP
 {
     public partial class RDD_OSOR
     {
+        public bool EditFlag { get; set; }
         public string Errormsg { get; set; }
         public Int32 SO_ID { get; set; }
         public Int32 Doc_Object { get; set; }
