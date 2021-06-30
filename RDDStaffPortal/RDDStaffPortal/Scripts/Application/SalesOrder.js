@@ -1461,15 +1461,32 @@ SalesOrder.prototype = {
                     var x = confirm("Are you sure you want to delete?");
                     if (x) {
                         var s = _SO_ID;
+                        //var SalesOrder = new Array();
+                        //var SalesOrderDetail = new Array();
+                        var SalesOrderPayMethod = new Array();
+                        //var SalesOrder_Obj = new Object();  
+                        
+                        //SalesOrder_Obj['DBName'] = $("#DBName").val();
+                        //SalesOrder_Obj['CardCode'] = $("[id$=txtCardCode]").val();
+
+                        $(".PayDetail").each(function () {
+                            //if (!this.rowIndex) return; // skip first row
+                            debugger
+                            var SalesOrderPayDetail_Obj = new Object();                            
+                            SalesOrderPayDetail_Obj['Pdc_Type_Id'] = $(this).find(".Abcd").eq(4).text();                            
+                            SalesOrderPayDetail_Obj['Bank_Code'] = $(this).find(".Abcd").eq(7).text();
+                            SalesOrderPayDetail_Obj['Rcpt_Check_No'] = $(this).find(".Abcd").eq(8).text();                          
+                            SalesOrderPayMethod.push(SalesOrderPayDetail_Obj);
+                        });
                         $.ajax({
                             async: false,
                             cache: false,
                             type: "POST",
                             url: "/SAP/SalesOrder/Get_DeleteRecord",
-                            data: JSON.stringify({ so_id: _SO_ID, dbname: $("#DBName").val() }),
+                            data: JSON.stringify({ so_id: _SO_ID, dbname: $("#DBName").val(), cardcode: $("[id$=txtCardCode]").val(),model2: JSON.stringify(SalesOrderPayMethod) }),
+                            //data: JSON.stringify({ so_id: _SO_ID,model2: JSON.stringify(SalesOrderPayMethod), dbname: $("#DBName").val() }),
                             dataType: 'Json',
                             contentType: "Application/json",
-
                             success: function (value) {
                                 debugger;
                                 var jData = value.Table;

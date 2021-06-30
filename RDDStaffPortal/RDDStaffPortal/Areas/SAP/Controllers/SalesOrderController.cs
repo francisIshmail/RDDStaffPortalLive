@@ -664,26 +664,76 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
             }
         }
 
-        public ActionResult Get_DeleteRecord(string so_id, string dbname)
+        //public ActionResult Get_DeleteRecord(string so_id, string dbname,string cardcode,string model2)
+        //{
+        //    ContentResult retVal = null;
+        //    DataSet DS;
+        //    try
+        //    {
+        //        DS = SalesOrder_DBOperation.Get_DeleteRecord(so_id, dbname, cardcode, model2);
+
+        //        if (DS.Tables.Count > 0)
+        //        {
+        //            retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+        //        }
+        //        return retVal;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //}
+
+        public ActionResult Get_DeleteRecord(string so_id, string dbname, string cardcode, string model2)
         {
             ContentResult retVal = null;
-            DataSet DS;
-            try
+            Db.constr = System.Configuration.ConfigurationManager.ConnectionStrings["tejSAP"].ConnectionString;
+            using (var connection = new SqlConnection(Db.constr))
             {
-                DS = SalesOrder_DBOperation.Get_DeleteRecord(so_id, dbname);
-
-                if (DS.Tables.Count > 0)
+                if (connection.State == ConnectionState.Closed)
                 {
-                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                    connection.Open();
+                }
+
+                SqlTransaction transaction;
+                using (transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                       
+                        //DataSet DS;
+                        JavaScriptSerializer js = new JavaScriptSerializer();
+
+                        js = new JavaScriptSerializer();
+                        RDD_SOR2[] PayDetail = js.Deserialize<RDD_SOR2[]>(model2);
+                        SqlCommand cmd = new SqlCommand();
+                        if (PayDetail.Length > 0)
+                        {                            
+                            for (int i = 0; i < PayDetail.Length; i++)
+                            {
+                                string Pdctype = PayDetail[i].Pdc_Type_Id.ToString();                                
+                                string Bankcode= PayDetail[i].Bank_Code.ToString();
+                                string ChqRefno= PayDetail[i].Rcpt_Check_No.ToString();
+                                long Soid = Convert.ToInt64(so_id);
+                                DataSet DS = Db.myGetDS("Execute RDD_Doc_Delete_Record '" + dbname + "','" + Soid + "','" + Pdctype + "','" + cardcode + "','" + Bankcode + "','" + ChqRefno + "'");
+                                if (DS.Tables.Count > 0)
+                                {
+                                    retVal = Content(JsonConvert.SerializeObject(DS), "application/json");
+                                }
+                               
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    
                 }
                 return retVal;
-
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
         }
 
         public ActionResult Post_SalesOrder_InTo_SAP(string dbname, string _so_id)
