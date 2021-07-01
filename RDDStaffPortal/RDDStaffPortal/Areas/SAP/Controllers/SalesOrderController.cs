@@ -701,8 +701,7 @@ namespace RDDStaffPortal.Areas.SAP.Controllers
                 using (transaction = connection.BeginTransaction())
                 {
                     try
-                    {
-                       
+                    {                       
                         //DataSet DS;
                         JavaScriptSerializer js = new JavaScriptSerializer();
 
