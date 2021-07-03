@@ -2528,11 +2528,18 @@ function Validate() {
             debugger
             var Currency = $(this).find(".Abcd").eq(10).text();
             ExchngeRt = $(this).find(".Abcd").eq(12).text();
-            if (Currency == Doccurrncy) {
-                Allocated_Amt = parseFloat(Allocated_Amt) + parseFloat($(this).find(".Abcd").eq(14).text());
+            var Pay_Allocated_Amount = parseFloat(0);
+            if (Currency == "USD") {
+                Pay_Allocated_Amount = parseFloat($(this).find(".Abcd").eq(14).text());
             }
             else {
-                Allocated_Amt = parseFloat(Allocated_Amt) + (parseFloat($(this).find(".Abcd").eq(14).text()) / parseFloat(ExchngeRt));
+                Pay_Allocated_Amount = parseFloat($(this).find(".Abcd").eq(15).text());
+            }
+            if (Currency == Doccurrncy) {
+                Allocated_Amt = parseFloat(Allocated_Amt) + parseFloat(Pay_Allocated_Amount);
+            }
+            else {
+                Allocated_Amt = parseFloat(Allocated_Amt) + (parseFloat(Pay_Allocated_Amount) / parseFloat(ExchngeRt));
             }
         });
         debugger;
