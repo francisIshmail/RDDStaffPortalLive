@@ -592,7 +592,7 @@ SalesOrder.prototype = {
                             parameter.pay_line_id = $("#hdnPaylineid").val();
                         }
                         else {
-                            parameter.pay_line_id = '';
+                            parameter.pay_line_id = "0";
                         }                        
                         parameter.pay_menthod_id = $("[id$=cbPPaymentMethod]").val();
                         parameter.pay_method = $("#cbPPaymentMethod option:selected").text();
@@ -2905,6 +2905,11 @@ function ClearControls() {
 
     $('div#IIIst').not(':first').remove();
     $('div#IIIst').hide();
+    $('.PayDetail').each(function () {        
+        //var trs = $(this).parent().parent().html();
+        $(this).find('.Abcd').eq(8).text('');
+        $(this).find('.Abcd').eq(7).text('');
+    });
     // SalesOrder.prototype.BindGrid({});
 
     ItemDetails = new Array();
